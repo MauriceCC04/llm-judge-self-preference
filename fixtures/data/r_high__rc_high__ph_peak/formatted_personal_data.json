@@ -1,0 +1,58 @@
+{
+  "userInfo": {},
+  "biometricProfile": {
+    "weight_kg": 68.0,
+    "height_cm": 175.0
+  },
+  "derived_activity_profile": {
+    "observed_window": {
+      "as_of_date": "2026-03-17",
+      "first_activity_date": "2024-03-17",
+      "last_activity_date": "2026-03-16",
+      "activity_span_days": 730
+    },
+    "sports": {
+      "trailrunning": {
+        "sport_family": "running",
+        "claimed_years_sport": 2.0,
+        "activity_count": 180,
+        "total_distance_km": 2200.0,
+        "total_moving_time_hours": 280.0,
+        "total_elevation_m": 45000.0,
+        "total_training_load_hours": 310.0
+      }
+    },
+    "top_sports": {
+      "90d": {
+        "primary_sport_discipline": "trailrunning"
+      },
+      "365d": {
+        "primary_sport_discipline": "trailrunning"
+      }
+    },
+    "historical_capacities": {
+      "90d": {
+        "all_sports": {
+          "peak_7d_training_load_hours": 8.5
+        },
+        "running_family": {
+          "peak_7d_distance_km": 65.0
+        }
+      },
+      "365d": {
+        "all_sports": {
+          "peak_7d_training_load_hours": 10.2
+        },
+        "running_family": {
+          "peak_7d_distance_km": 80.0
+        }
+      }
+    }
+  },
+  "profile_metadata": {
+    "generated_at": "2026-03-17T00:00:00Z",
+    "generated_from": [
+      "synthetic_fixture"
+    ]
+  }
+}

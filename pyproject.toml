@@ -1,0 +1,57 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "judge-bias-study"
+version = "0.1.0"
+description = "LLM-judge self-preference study on marathon training plans (Bocconi HPC)"
+readme = "README.md"
+requires-python = ">=3.10"
+license = "MIT"
+authors = [{ name = "Study authors" }]
+
+dependencies = [
+    # trailtraining pinned to a specific commit hash; substitute after cloning.
+    # Install locally:  pip install -e /path/to/trailtraining
+    "trailtraining @ git+https://github.com/MauriceCC04/trailtraining.git@main",
+    "openai>=1.0.0",
+    "pydantic>=2.8",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4",
+    "pytest-cov>=4.1",
+]
+analysis = [
+    "numpy>=1.26",
+    "pandas>=2.2",
+    "statsmodels>=0.14",
+    "scipy>=1.11",
+    "matplotlib>=3.8",
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = [
+    "generate*",
+    "fixtures*",
+    "match*",
+    "judge*",
+    "analyze*",
+    "tools*",
+    "vendor_patches*",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-v --tb=short --strict-markers"
+
+[tool.ruff]
+target-version = "py310"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "RUF"]
+ignore = ["E501"]

@@ -1,0 +1,9 @@
+{
+  "fixture_id": "r_high__rc_low__ph_peak",
+  "readiness": "high",
+  "recovery_capability": "low",
+  "race_phase": "peak",
+  "readiness_status": "primed",
+  "recovery_key": "load_only",
+  "weeks_to_race": 4
+}

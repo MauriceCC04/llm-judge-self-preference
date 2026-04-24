@@ -41,8 +41,7 @@ def cmd_generate(args: argparse.Namespace) -> None:
             sampler_config_path=Path(args.sampler_config) if args.sampler_config else None,
         )
 
-    print(f"
-Generated {n_gen} plans, skipped {n_skip} (already existed) → {output_dir}")
+    print(f"Generated {n_gen} plans, skipped {n_skip} (already existed) → {output_dir}")
 
 
 def cmd_fit_priors(args: argparse.Namespace) -> None:
@@ -107,8 +106,7 @@ def cmd_judge(args: argparse.Namespace) -> None:
 
     if args.pilot:
         gate = check_pilot_bias_gate(pairwise_out)
-        print(f"
-Pilot bias gate: {gate['message']}")
+        print(f"Pilot bias gate: {gate['message']}")
         if not gate["passed"]:
             print("  ⚠ Judge excluded from H1/H2 — do NOT proceed to full run.")
             sys.exit(2)

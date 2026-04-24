@@ -18,13 +18,18 @@ def _load_provenance_index(provenance_dir: Path) -> dict[str, dict[str, Any]]:
     for prov_path in sorted(provenance_dir.glob("*.provenance.json")):
         try:
             prov = json.loads(prov_path.read_text())
-            index[prov["plan_id"]] = prov
+            index[str(prov["plan_id"])] = prov
         except Exception:
             pass
     return index
 
 
-def _get_prov(index: dict[str, dict[str, Any]], plan_id: str, field: str, default: str = "unknown") -> str:
+def _get_prov(
+    index: dict[str, dict[str, Any]],
+    plan_id: str,
+    field: str,
+    default: str = "unknown",
+) -> str:
     return index.get(str(plan_id), {}).get(field, default)
 
 
@@ -46,12 +51,98 @@ def _llm_in_position_a(row: Any) -> int:
     return 1 if llm_side == "b" else 0
 
 
+def _referenced_plan_ids(
+    df: "pd.DataFrame",  # type: ignore[name-defined]  # noqa: F821
+    *,
+    kind: Kind,
+) -> set[str]:
+    ids: set[str] = set()
+    if df.empty:
+        return ids
+
+    if kind == "pairwise":
+        if "plan_a_id" in df.columns:
+            ids.update(str(x) for x in df["plan_a_id"].dropna().tolist())
+        if "plan_b_id" in df.columns:
+            ids.update(str(x) for x in df["plan_b_id"].dropna().tolist())
+    elif kind == "soft_eval" and "plan_id" in df.columns:
+        ids.update(str(x) for x in df["plan_id"].dropna().tolist())
+
+    return ids
+
+
+def collect_invalid_plan_ids(
+    prov_index: dict[str, dict[str, Any]],
+    *,
+    referenced_plan_ids: set[str],
+    expected_explainer: str,
+    require_verified_explainer: bool = False,
+) -> tuple[set[str], list[dict[str, Any]]]:
+    invalid: set[str] = set()
+    exclusions: list[dict[str, Any]] = []
+
+    for plan_id in sorted(referenced_plan_ids):
+        prov = prov_index.get(str(plan_id))
+        reason: str | None = None
+
+        if prov is None:
+            reason = "missing_provenance"
+            explainer_model = None
+            explainer_model_verified = None
+        else:
+            explainer_model = prov.get("explainer_model")
+            explainer_model_verified = prov.get("explainer_model_verified")
+            if explainer_model != expected_explainer:
+                reason = "explainer_model_mismatch"
+            elif require_verified_explainer and not bool(explainer_model_verified):
+                reason = "explainer_model_unverified"
+
+        if reason is not None:
+            invalid.add(str(plan_id))
+            exclusions.append(
+                {
+                    "plan_id": str(plan_id),
+                    "reason": reason,
+                    "explainer_model": explainer_model,
+                    "explainer_model_verified": explainer_model_verified,
+                }
+            )
+
+    return invalid, exclusions
+
+
+def apply_provenance_exclusions(
+    df: "pd.DataFrame",  # type: ignore[name-defined]  # noqa: F821
+    *,
+    kind: Kind,
+    invalid_plan_ids: set[str],
+) -> "pd.DataFrame":  # type: ignore[name-defined]  # noqa: F821
+    if df.empty or not invalid_plan_ids:
+        return df
+
+    if kind == "pairwise":
+        if "plan_a_id" not in df.columns or "plan_b_id" not in df.columns:
+            return df
+        mask = (~df["plan_a_id"].astype(str).isin(invalid_plan_ids)) & (
+            ~df["plan_b_id"].astype(str).isin(invalid_plan_ids)
+        )
+        return df.loc[mask].copy()
+
+    if kind == "soft_eval" and "plan_id" in df.columns:
+        return df.loc[~df["plan_id"].astype(str).isin(invalid_plan_ids)].copy()
+
+    return df
+
+
 def load_judgments(
     judgments_dir: Path,
     provenance_dir: Path,
     *,
     kind: Kind = "pairwise",
-) -> "pd.DataFrame":  # type: ignore[name-defined]  # noqa: F821
+    expected_explainer: str | None = None,
+    require_verified_explainer: bool = False,
+    return_exclusions: bool = False,
+) -> "pd.DataFrame | tuple[pd.DataFrame, list[dict[str, Any]]]":  # type: ignore[name-defined]  # noqa: F821
     """Join judgment JSONL records with provenance sidecars."""
     try:
         import pandas as pd
@@ -68,6 +159,7 @@ def load_judgments(
             continue
         if kind == "soft_eval" and "pairwise" in jpath.name:
             continue
+
         with jpath.open(encoding="utf-8") as fh:
             for line in fh:
                 line = line.strip()
@@ -79,12 +171,17 @@ def load_judgments(
                     pass
 
     if not records:
-        return pd.DataFrame()
+        empty_df = pd.DataFrame()
+        if return_exclusions:
+            return empty_df, []
+        return empty_df
 
     df = pd.DataFrame(records)
 
     if kind == "pairwise":
-        if "plan_a_id" not in df.columns:
+        if "plan_a_id" not in df.columns or "plan_b_id" not in df.columns:
+            if return_exclusions:
+                return df, []
             return df
 
         def _get(plan_id: str, field: str, default: str = "unknown") -> str:
@@ -104,20 +201,26 @@ def load_judgments(
 
         df["llm_side"] = df.apply(_pick_llm_side, axis=1)
         df["llm_plan_id"] = df.apply(
-            lambda r: r["plan_a_id"] if r["llm_side"] == "a"
-            else r["plan_b_id"] if r["llm_side"] == "b"
+            lambda r: r["plan_a_id"]
+            if r["llm_side"] == "a"
+            else r["plan_b_id"]
+            if r["llm_side"] == "b"
             else "",
             axis=1,
         )
         df["programmatic_plan_id"] = df.apply(
-            lambda r: r["plan_b_id"] if r["llm_side"] == "a"
-            else r["plan_a_id"] if r["llm_side"] == "b"
+            lambda r: r["plan_b_id"]
+            if r["llm_side"] == "a"
+            else r["plan_a_id"]
+            if r["llm_side"] == "b"
             else "",
             axis=1,
         )
         df["llm_source_model"] = df.apply(
-            lambda r: r["source_model_a"] if r["llm_side"] == "a"
-            else r["source_model_b"] if r["llm_side"] == "b"
+            lambda r: r["source_model_a"]
+            if r["llm_side"] == "a"
+            else r["source_model_b"]
+            if r["llm_side"] == "b"
             else "",
             axis=1,
         )
@@ -147,6 +250,19 @@ def load_judgments(
             df["fixture_id"] = df["plan_id"].apply(lambda x: _get_prov(prov_index, x, "fixture_id"))
             df["source_model"] = df["plan_id"].apply(lambda x: _get_prov(prov_index, x, "source_model", ""))
 
+    exclusions: list[dict[str, Any]] = []
+    if expected_explainer:
+        referenced_plan_ids = _referenced_plan_ids(df, kind=kind)
+        invalid_plan_ids, exclusions = collect_invalid_plan_ids(
+            prov_index,
+            referenced_plan_ids=referenced_plan_ids,
+            expected_explainer=expected_explainer,
+            require_verified_explainer=require_verified_explainer,
+        )
+        df = apply_provenance_exclusions(df, kind=kind, invalid_plan_ids=invalid_plan_ids)
+
+    if return_exclusions:
+        return df, exclusions
     return df
 
 

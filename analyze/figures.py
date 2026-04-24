@@ -36,7 +36,7 @@ def save_position_bias_audit(
     from analyze.load import detect_position_bias
 
     records = []
-    for judge_name, group in df.groupby("judge"):
+    for _, group in df.groupby("judge"):
         bias = detect_position_bias(group)
         records.append(bias)
 
@@ -57,15 +57,15 @@ def save_position_bias_audit(
 
         ax.barh(judges, p_vals, color=colors, edgecolor="black", linewidth=0.5)
         ax.axvline(0.5, color="black", linewidth=1.5, linestyle="--", label="No bias (0.5)")
-        ax.axvline(0.5 + 0.2, color="#d62728", linewidth=1, linestyle=":", alpha=0.7)
-        ax.axvline(0.5 - 0.2, color="#d62728", linewidth=1, linestyle=":", alpha=0.7)
+        ax.axvline(0.7, color="#d62728", linewidth=1, linestyle=":", alpha=0.7)
+        ax.axvline(0.3, color="#d62728", linewidth=1, linestyle=":", alpha=0.7)
 
         ax.set_xlabel("P(prefer position-A plan)")
-        ax.set_title("Position-bias audit by judge
-(red = biased, threshold |p−0.5| ≥ 0.2)")
+        ax.set_title("Position-bias audit by judge\n(red = biased, threshold |p−0.5| ≥ 0.2)")
         ax.set_xlim(0.2, 0.8)
         ax.legend(fontsize=8)
         fig.tight_layout()
+
         png_path = Path(output_path).with_suffix(".png")
         png_path.parent.mkdir(parents=True, exist_ok=True)
         fig.savefig(png_path, dpi=150)
@@ -97,8 +97,8 @@ def save_h1_forest_plot(
     rows.append({**h1_result, "label": "Overall (mixed-effects)", "is_overall": True})
 
     labels = [r.get("label", r.get("judge", "?")) for r in rows]
-    coefs = [r.get("coef_is_llm", 0.0) for r in rows]
-    ses = [r.get("se", 0.1) for r in rows]
+    coefs = [float(r.get("coef_is_llm", 0.0) or 0.0) for r in rows]
+    ses = [float(r.get("se", 0.1) or 0.1) for r in rows]
     ci_lo = [c - 1.96 * s for c, s in zip(coefs, ses)]
     ci_hi = [c + 1.96 * s for c, s in zip(coefs, ses)]
 
@@ -112,8 +112,7 @@ def save_h1_forest_plot(
     ax.axvline(0.0, color="black", linewidth=1.5, linestyle="--", label="No preference")
     ax.set_yticks(y)
     ax.set_yticklabels(labels)
-    ax.set_xlabel("Log-odds coefficient for LLM plan preference
-(positive = prefer LLM)")
+    ax.set_xlabel("Log-odds coefficient for LLM plan preference\n(positive = prefer LLM)")
     ax.set_title("H1: Forest plot — judge-level and pooled LLM-plan preference")
     ax.legend(fontsize=8)
     fig.tight_layout()
@@ -141,9 +140,9 @@ def save_rubric_heatmap(
     if not rubric_ids:
         return
 
-    deltas = [rubric_results[r].get("delta", 0.0) for r in rubric_ids]
-    pvals_holm = [rubric_results[r].get("pvalue_holm", 1.0) for r in rubric_ids]
-    significant = [rubric_results[r].get("significant", False) for r in rubric_ids]
+    deltas = [float(rubric_results[r].get("delta", 0.0) or 0.0) for r in rubric_ids]
+    pvals_holm = [float(rubric_results[r].get("pvalue_holm", 1.0) or 1.0) for r in rubric_ids]
+    significant = [bool(rubric_results[r].get("significant", False)) for r in rubric_ids]
 
     fig, ax = plt.subplots(figsize=(8, max(3, len(rubric_ids) * 0.7)))
     colors = ["#d62728" if s else "#aec7e8" for s in significant]
@@ -162,8 +161,7 @@ def save_rubric_heatmap(
             fontsize=8,
         )
 
-    ax.set_xlabel("Score delta: mean(LLM) − mean(programmatic)
-(red = Holm-significant)")
+    ax.set_xlabel("Score delta: mean(LLM) − mean(programmatic)\n(red = Holm-significant)")
     ax.set_title("H2: Per-rubric score differences (LLM arm vs programmatic arm)")
     fig.tight_layout()
 
@@ -183,6 +181,7 @@ def save_rubric_heatmap_csv(
         import pandas as pd
     except ImportError:
         return
+
     rows = [{"rubric": rid, **stats} for rid, stats in rubric_results.items()]
     out = Path(output_path)
     out.parent.mkdir(parents=True, exist_ok=True)
@@ -203,25 +202,27 @@ def save_h4_scale_curve(
         print(f"[warn] H4 scale curve skipped: {exc}")
         return
 
-    QWEN_PARAMS = {
+    qwen_params = {
         "qwen_7b_judge": 7e9,
         "qwen_14b_judge": 14e9,
         "qwen_32b_judge": 32e9,
     }
 
     try:
-        sub = df[df["judge"].isin(QWEN_PARAMS)].copy()
+        sub = df[df["judge"].isin(qwen_params)].copy()
         if "llm_source_model" in sub.columns:
             sub = sub[sub["llm_source_model"] == QWEN_SOURCE_MODEL].copy()
         if sub.empty:
             return
-        sub["log_params"] = sub["judge"].map({k: math.log10(v / 1e9) for k, v in QWEN_PARAMS.items()})
-        sub["param_b"] = sub["judge"].map({k: v / 1e9 for k, v in QWEN_PARAMS.items()})
+
+        sub["log_params"] = sub["judge"].map({k: math.log10(v / 1e9) for k, v in qwen_params.items()})
+        sub["param_b"] = sub["judge"].map({k: v / 1e9 for k, v in qwen_params.items()})
 
         by_judge = sub.groupby(["judge", "log_params", "param_b"])["prefers_llm"].mean().reset_index()
 
         fig, ax = plt.subplots(figsize=(6, 4))
         ax.scatter(by_judge["param_b"], by_judge["prefers_llm"], s=80, zorder=5)
+
         for _, row in by_judge.iterrows():
             ax.annotate(
                 f"{row['param_b']:.0f}B",

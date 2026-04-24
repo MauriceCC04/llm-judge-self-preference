@@ -36,8 +36,7 @@ def _collect_narrative_text(plan_obj: dict[str, Any]) -> str:
             parts.append(note)
         elif isinstance(note, dict):
             parts.append(_safe_text(note.get("message")))
-    return "
-".join(p for p in parts if p)
+    return "".join(p for p in parts if p)
 
 
 def extract_surface_features(plan_obj: dict[str, Any]) -> dict[str, float]:

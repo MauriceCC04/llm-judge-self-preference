@@ -245,7 +245,12 @@ def add_same_family_column(
     judge_families: dict[str, str] | None = None,
     source_families: dict[str, str] | None = None,
 ) -> "pd.DataFrame":  # type: ignore[name-defined]
-    """Add `same_family` column using only the LLM plan's source family."""
+    """Add `same_family` column using the LLM plan's source family.
+
+    Supports both:
+    - llm_source_model (preferred enriched column)
+    - source_model_a / source_model_b with arm_a / arm_b fallback
+    """
     if judge_families is None:
         judge_families = {
             "llama_8b_judge": "llama",
@@ -254,19 +259,61 @@ def add_same_family_column(
             "qwen_32b_judge": "qwen",
             "mistral_7b_judge": "mistral",
         }
+
     if source_families is None:
         source_families = {
             "meta-llama/Llama-3.1-8B-Instruct": "llama",
             "Qwen/Qwen2.5-7B-Instruct": "qwen",
+            "Qwen/Qwen2.5-14B-Instruct": "qwen",
+            "Qwen/Qwen2.5-32B-Instruct": "qwen",
+            "mistralai/Mistral-7B-Instruct-v0.3": "mistral",
         }
 
-    df = df.copy()
-    df["judge_family"] = df["judge"].map(judge_families).fillna("unknown") if "judge" in df.columns else "unknown"
+    def _infer_family(model_id: object) -> str:
+        if not model_id:
+            return "unknown"
+        s = str(model_id)
+        if s in source_families:
+            return source_families[s]
+        s_lower = s.lower()
+        if "qwen" in s_lower:
+            return "qwen"
+        if "llama" in s_lower:
+            return "llama"
+        if "mistral" in s_lower:
+            return "mistral"
+        return "unknown"
 
-    if "llm_source_model" in df.columns:
-        df["llm_source_family"] = df["llm_source_model"].map(source_families).fillna("unknown")
-        df["same_family"] = (df["judge_family"] == df["llm_source_family"]).astype(int)
-    elif "same_family" not in df.columns:
-        df["same_family"] = 0
+    def _pick_llm_source_model(row: object) -> str:
+        r = row
+
+        if "llm_source_model" in r and r["llm_source_model"]:
+            return str(r["llm_source_model"])
+
+        arm_a = r["arm_a"] if "arm_a" in r else None
+        arm_b = r["arm_b"] if "arm_b" in r else None
+
+        if arm_a == "llm" and "source_model_a" in r:
+            return str(r["source_model_a"] or "")
+        if arm_b == "llm" and "source_model_b" in r:
+            return str(r["source_model_b"] or "")
+
+        if "source_model_a" in r and r["source_model_a"]:
+            return str(r["source_model_a"])
+        if "source_model_b" in r and r["source_model_b"]:
+            return str(r["source_model_b"])
+
+        return ""
+
+    df = df.copy()
+
+    if "judge" in df.columns:
+        df["judge_family"] = df["judge"].map(judge_families).fillna("unknown")
+    else:
+        df["judge_family"] = "unknown"
+
+    df["llm_source_model_inferred"] = df.apply(_pick_llm_source_model, axis=1)
+    df["llm_source_family"] = df["llm_source_model_inferred"].apply(_infer_family)
+    df["same_family"] = (df["judge_family"] == df["llm_source_family"]).astype(int)
 
     return df

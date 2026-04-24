@@ -8,7 +8,7 @@ its metadata without touching the trailtraining contract.
 """
 from __future__ import annotations
 
-from typing import Literal, Optional
+from typing import Any, Literal, Optional
 
 from pydantic import BaseModel, Field
 
@@ -31,6 +31,12 @@ class PlanProvenance(BaseModel):
 
     # Shared explainer model (identical for both arms — study invariant)
     explainer_model: str
+    explainer_model_verified: bool = False
+
+    # Generation-path audit metadata
+    generation_pipeline: str = "unknown"
+    runtime_backend: Optional[str] = None
+    runtime_metadata: dict[str, Any] = Field(default_factory=dict)
 
     seed: int
     generated_at: str  # ISO-8601 UTC timestamp

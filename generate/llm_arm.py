@@ -1,8 +1,8 @@
 """generate/llm_arm.py — LLM arm plan generation.
 
-Generates one plan per call via run_coach_brief.  Input files (combined_summary,
+Generates one plan per call via run_coach_brief. Input files (combined_summary,
 rollups, etc.) are read from *fixture_dir*; output files are written to
-*output_dir*.  The two directories are kept separate so fixture data is never
+*output_dir*. The two directories are kept separate so fixture data is never
 mutated.
 """
 from __future__ import annotations
@@ -50,6 +50,9 @@ def generate_llm_plan(
 
     # Enable two-stage pipeline so the explainer is the same as programmatic arm
     os.environ["TRAILTRAINING_TWO_STAGE_PLAN"] = "1"
+    runtime_metadata: dict[str, Any] = {
+        "TRAILTRAINING_TWO_STAGE_PLAN": os.environ.get("TRAILTRAINING_TWO_STAGE_PLAN"),
+    }
 
     plan_path = output_dir / f"{plan_id}.json"
 
@@ -65,7 +68,7 @@ def generate_llm_plan(
     # so coach can write temp files there, while input files are read
     # from fixture_dir via explicit input_path= / summary_path= overrides.
     fake_paths = types.SimpleNamespace(
-        prompting_directory=output_dir,   # writes go here
+        prompting_directory=output_dir,
         processing_directory=output_dir,
         base_dir=output_dir,
         rhr_directory=output_dir,
@@ -81,15 +84,21 @@ def generate_llm_plan(
         plan_json, saved_path = run_coach_brief(
             prompt="training-plan",
             cfg=cfg,
-            # Point coach at the fixture files explicitly
             summary_path=str(fixture_dir / "combined_summary.json"),
             personal_path=str(fixture_dir / "formatted_personal_data.json"),
             input_path=str(fixture_dir),
             output_path=str(plan_path),
             runtime=fake_runtime,
         )
+        runtime_metadata["saved_path"] = str(saved_path)
     finally:
         tt_config.ensure_directories = original_ensure
+
+    # Runtime verification hook:
+    # if trailtraining later exposes the actual explainer model used by the
+    # two-stage pipeline, inspect that metadata here and set this True only
+    # when it matches EXPLAINER_MODEL_ID.
+    explainer_verified = False
 
     # Write provenance sidecar
     prov = PlanProvenance(
@@ -98,6 +107,10 @@ def generate_llm_plan(
         arm="llm",
         source_model=source_model,
         explainer_model=EXPLAINER_MODEL_ID,
+        explainer_model_verified=explainer_verified,
+        generation_pipeline="llm_two_stage",
+        runtime_backend="trailtraining.llm.coach.run_coach_brief",
+        runtime_metadata=runtime_metadata,
         seed=seed,
         generated_at=datetime.now(tz=timezone.utc).isoformat(),
         plan_path=str(plan_path),

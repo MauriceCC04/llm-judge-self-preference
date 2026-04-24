@@ -7,29 +7,32 @@ Usage::
     python -m analyze.run_analysis \
         --judgments judgments/ \
         --plans     plans/ \
+        --provenance plans/ \
         --fixtures  fixtures/data/ \
         --output    results/
 
 Output layout::
 
     results/
-    ├── summary.json                  ← machine-readable summary of all H1–H4
-    ├── summary.md                    ← human-readable markdown summary
-    ├── h1_logistic_result.json       ← full H1 model output
-    ├── h1_forest.png                 ← H1 forest plot
-    ├── h2_rubric_deltas.json         ← full H2 per-rubric table
+    ├── summary.json
+    ├── summary.md
+    ├── h1_logistic_result.json
+    ├── h1_forest.png
+    ├── h2_rubric_deltas.json
     ├── h2_rubric_deltas.csv
     ├── h2_rubric_heatmap.png
-    ├── h3_self_preference.json       ← H3 model output
-    ├── h4_scale_result.json          ← H4 slope
+    ├── h3_self_preference.json
+    ├── h4_scale_result.json
     ├── h4_scale_curve.png
     ├── position_bias_audit.csv
     ├── position_bias_audit.png
-    ├── schema_failure_rates.csv      ← judge reliability
-    ├── pair_coverage.csv             ← matching audit
-    ├── style_audit_pairwise.csv      ← style leakage features by matched pair
-    ├── style_audit_summary.csv       ← paired style leakage summary
-    └── style_audit_summary.json      ← machine-readable style leakage summary
+    ├── schema_failure_rates.csv
+    ├── pair_coverage.csv
+    ├── style_audit_pairwise.csv
+    ├── style_audit_summary.csv
+    ├── style_audit_summary.json
+    ├── exclusions_provenance.json
+    └── excluded_plan_ids.txt
 """
 from __future__ import annotations
 
@@ -38,18 +41,28 @@ import json
 import sys
 from pathlib import Path
 
+from generate.constants import EXPLAINER_MODEL_ID
+
 
 def _require_pandas() -> None:
     try:
         import pandas  # noqa: F401
     except ImportError:
         print(
-            "ERROR: pandas is required for analysis.
-"
+            "ERROR: pandas is required for analysis.\n"
             "Install with: pip install -e '.[analysis]'",
             file=sys.stderr,
         )
         sys.exit(1)
+
+
+def write_exclusion_audit(exclusions: list[dict], out: Path) -> None:
+    (out / "exclusions_provenance.json").write_text(
+        json.dumps(exclusions, indent=2, default=str),
+        encoding="utf-8",
+    )
+    plan_ids = sorted({str(e["plan_id"]) for e in exclusions if "plan_id" in e})
+    (out / "excluded_plan_ids.txt").write_text("\n".join(plan_ids), encoding="utf-8")
 
 
 # ── Individual analysis steps ─────────────────────────────────────────────────
@@ -59,8 +72,16 @@ def step_position_bias(df_pair: "pd.DataFrame", out: Path) -> dict:  # type: ign
     from analyze.load import detect_position_bias
     import pandas as pd
 
+    if df_pair.empty:
+        pd.DataFrame(columns=["biased", "p_prefers_a", "judge", "n", "threshold"]).to_csv(
+            out / "position_bias_audit.csv",
+            index=False,
+        )
+        print("  Position-bias audit: no pairwise rows")
+        return {"biased_judges": [], "audit": []}
+
     records = []
-    for judge_name, group in df_pair.groupby("judge"):
+    for _, group in df_pair.groupby("judge"):
         bias = detect_position_bias(group)
         records.append(bias)
 
@@ -72,7 +93,7 @@ def step_position_bias(df_pair: "pd.DataFrame", out: Path) -> dict:  # type: ign
     except Exception as exc:
         print(f"  [warn] position-bias chart: {exc}")
 
-    biased = result_df[result_df["biased"]]["judge"].tolist()
+    biased = result_df[result_df["biased"]]["judge"].tolist() if not result_df.empty else []
     print(f"  Position-bias audit: {len(records)} judges, {len(biased)} biased: {biased}")
     return {"biased_judges": biased, "audit": records}
 
@@ -80,6 +101,15 @@ def step_position_bias(df_pair: "pd.DataFrame", out: Path) -> dict:  # type: ign
 def step_h1(df_pair: "pd.DataFrame", out: Path) -> dict:  # type: ignore[name-defined]
     from analyze.models import fit_h1_model
     from analyze.figures import save_h1_forest_plot
+
+    if df_pair.empty:
+        result = {
+            "n_obs": 0,
+            "note": "no pairwise rows available after exclusions",
+        }
+        (out / "h1_logistic_result.json").write_text(json.dumps(result, indent=2, default=str))
+        print("  H1: skipped (no pairwise rows)")
+        return result
 
     result = fit_h1_model(df_pair)
     (out / "h1_logistic_result.json").write_text(json.dumps(result, indent=2, default=str))
@@ -93,8 +123,10 @@ def step_h1(df_pair: "pd.DataFrame", out: Path) -> dict:  # type: ignore[name-de
         result.get("prob_llm", 0.5) > 0.5
         and (result.get("pvalue_is_llm", 1.0) or 1.0) < 0.05
     ) else "NOT SUPPORTED"
-    print(f"  H1: P(prefer LLM)={result.get('prob_llm', '?')}  "
-          f"p={result.get('pvalue_is_llm', '?')}  [{status}]")
+    print(
+        f"  H1: P(prefer LLM)={result.get('prob_llm', '?')}  "
+        f"p={result.get('pvalue_is_llm', '?')}  [{status}]"
+    )
     return result
 
 
@@ -147,6 +179,15 @@ def step_h2(
 def step_h3(df_pair: "pd.DataFrame", out: Path) -> dict:  # type: ignore[name-defined]
     from analyze.models import fit_h3_model, add_same_family_column
 
+    if df_pair.empty:
+        result = {
+            "n_obs": 0,
+            "note": "no pairwise rows available after exclusions",
+        }
+        (out / "h3_self_preference.json").write_text(json.dumps(result, indent=2, default=str))
+        print("  H3: skipped (no pairwise rows)")
+        return result
+
     if "same_family" not in df_pair.columns:
         df_pair = add_same_family_column(df_pair)
 
@@ -166,6 +207,15 @@ def step_h3(df_pair: "pd.DataFrame", out: Path) -> dict:  # type: ignore[name-de
 def step_h4(df_pair: "pd.DataFrame", out: Path) -> dict:  # type: ignore[name-defined]
     from analyze.models import fit_h4_model
     from analyze.figures import save_h4_scale_curve
+
+    if df_pair.empty:
+        result = {
+            "n_obs": 0,
+            "note": "no pairwise rows available after exclusions",
+        }
+        (out / "h4_scale_result.json").write_text(json.dumps(result, indent=2, default=str))
+        print("  H4: skipped (no pairwise rows)")
+        return result
 
     result = fit_h4_model(df_pair)
     (out / "h4_scale_result.json").write_text(json.dumps(result, indent=2, default=str))
@@ -218,8 +268,7 @@ def step_pair_coverage(pairs_file: Path, out: Path) -> None:
     coverage = df.groupby("fixture_id").size().reset_index(name="n_pairs")
     coverage["mean_gap"] = df.groupby("fixture_id")["score_gap"].mean().values
     coverage.to_csv(out / "pair_coverage.csv", index=False)
-    print(f"  Pair coverage: {len(pairs)} total pairs, "
-          f"mean gap={df['score_gap'].mean():.3f}")
+    print(f"  Pair coverage: {len(pairs)} total pairs, mean gap={df['score_gap'].mean():.3f}")
 
 
 def step_style_audit(
@@ -250,13 +299,17 @@ def step_style_audit(
 # ── Markdown summary ──────────────────────────────────────────────────────────
 
 def write_markdown_summary(
-    h1: dict, h2: dict, h3: dict, h4: dict,
+    h1: dict,
+    h2: dict,
+    h3: dict,
+    h4: dict,
     bias_audit: dict,
     style_audit: dict,
+    provenance_exclusions: list[dict],
     out_path: Path,
 ) -> None:
     def _fmt(v: object) -> str:
-        if isinstance(v, float) and (v != v):  # nan
+        if isinstance(v, float) and (v != v):
             return "—"
         if isinstance(v, float):
             return f"{v:.4f}"
@@ -267,7 +320,12 @@ def write_markdown_summary(
 
     h1_prob = h1.get("prob_llm", float("nan"))
     h1_pval = h1.get("pvalue_is_llm", 1.0)
-    h1_supported = isinstance(h1_prob, float) and h1_prob > 0.5 and isinstance(h1_pval, float) and h1_pval < 0.05
+    h1_supported = (
+        isinstance(h1_prob, float)
+        and h1_prob > 0.5
+        and isinstance(h1_pval, float)
+        and h1_pval < 0.05
+    )
 
     exp_delta = h2.get("explanation_quality", {}).get("delta", float("nan"))
     coh_delta = h2.get("plan_coherence", {}).get("delta", float("nan"))
@@ -296,8 +354,15 @@ def write_markdown_summary(
     biased = bias_audit.get("biased_judges", [])
     style_flagged = style_audit.get("n_flagged_features", 0)
     style_n = style_audit.get("n_features", 0)
+    n_prov_excluded = len({str(e["plan_id"]) for e in provenance_exclusions if "plan_id" in e})
 
     md = f"""# Analysis summary
+
+## Provenance exclusions
+
+Excluded plans due to missing provenance / explainer mismatch checks: {n_prov_excluded}
+
+---
 
 ## Position-bias audit
 
@@ -326,8 +391,11 @@ Matched pairs contributing: {h2_pairs}
 |---|---|---|---|
 """
     for rid, stats in sorted(h2.items()):
-        md += f"| {rid} | {_fmt(stats.get('delta'))} | {_fmt(stats.get('pvalue_holm'))} | {'✅' if stats.get('significant') else '—'} |
-"
+        md += (
+            f"| {rid} | {_fmt(stats.get('delta'))} | "
+            f"{_fmt(stats.get('pvalue_holm'))} | "
+            f"{'✅' if stats.get('significant') else '—'} |\n"
+        )
 
     md += f"""
 **H2 verdict:** explanation_quality Δ={_fmt(exp_delta)}, plan_coherence Δ={_fmt(coh_delta)}.  
@@ -373,9 +441,12 @@ def main(argv: list[str] | None = None) -> None:
     parser = argparse.ArgumentParser(description="Full analysis pipeline → paper outputs")
     parser.add_argument("--judgments", default="judgments/")
     parser.add_argument("--plans", default="plans/")
+    parser.add_argument("--provenance", default=None)
     parser.add_argument("--fixtures", default="fixtures/data/")
     parser.add_argument("--pairs", default="matched_pairs.json")
     parser.add_argument("--output", default="results/")
+    parser.add_argument("--expected-explainer", default=EXPLAINER_MODEL_ID)
+    parser.add_argument("--require-verified-explainer", action="store_true")
     args = parser.parse_args(argv)
 
     _require_pandas()
@@ -385,22 +456,43 @@ def main(argv: list[str] | None = None) -> None:
 
     judgments_dir = Path(args.judgments)
     plans_dir = Path(args.plans)
+    provenance_dir = Path(args.provenance) if args.provenance else plans_dir
     pairs_path = Path(args.pairs)
     out = Path(args.output)
     out.mkdir(parents=True, exist_ok=True)
 
-    print("=== Analysis pipeline ===
-")
+    print("=== Analysis pipeline ===\n")
 
     print("Loading pairwise judgments ...")
-    df_pair = load_judgments(judgments_dir, plans_dir, kind="pairwise")
-    print(f"  {len(df_pair)} pairwise records
-")
+    df_pair, pair_exclusions = load_judgments(
+        judgments_dir,
+        provenance_dir,
+        kind="pairwise",
+        expected_explainer=args.expected_explainer,
+        require_verified_explainer=args.require_verified_explainer,
+        return_exclusions=True,
+    )
+    print(f"  {len(df_pair)} pairwise records\n")
 
     print("Loading soft-eval judgments ...")
-    df_soft = load_judgments(judgments_dir, plans_dir, kind="soft_eval")
-    print(f"  {len(df_soft)} soft-eval records
-")
+    df_soft, soft_exclusions = load_judgments(
+        judgments_dir,
+        provenance_dir,
+        kind="soft_eval",
+        expected_explainer=args.expected_explainer,
+        require_verified_explainer=args.require_verified_explainer,
+        return_exclusions=True,
+    )
+    print(f"  {len(df_soft)} soft-eval records\n")
+
+    provenance_exclusions_by_plan: dict[str, dict] = {}
+    for exclusion in pair_exclusions + soft_exclusions:
+        if "plan_id" in exclusion:
+            provenance_exclusions_by_plan[str(exclusion["plan_id"])] = exclusion
+    provenance_exclusions = list(provenance_exclusions_by_plan.values())
+    write_exclusion_audit(provenance_exclusions, out)
+    if provenance_exclusions:
+        print(f"  Provenance exclusions: {len(provenance_exclusions)} plans excluded")
 
     print("── Position-bias audit ─────────────────────────────────")
     bias_audit = step_position_bias(df_pair, out)
@@ -417,38 +509,31 @@ def main(argv: list[str] | None = None) -> None:
         if "judge" in r and "p_prefers_a" in r
     }
 
-    df_pair_h3h4 = add_position_bias_covariate(df_pair, bias_lookup=bias_lookup)
-    df_pair_h3h4 = add_same_family_column(df_pair_h3h4)
+    df_pair_h3h4 = add_position_bias_covariate(df_pair, bias_lookup=bias_lookup) if not df_pair.empty else df_pair
+    df_pair_h3h4 = add_same_family_column(df_pair_h3h4) if not df_pair_h3h4.empty else df_pair_h3h4
 
-    print("
-── H1: Pairwise LLM preference ─────────────────────────")
+    print("\n── H1: Pairwise LLM preference ─────────────────────────")
     h1 = step_h1(df_pair_clean, out)
 
-    print("
-── H2: Per-rubric gap ──────────────────────────────────")
+    print("\n── H2: Per-rubric gap ──────────────────────────────────")
     h2 = step_h2(df_soft_clean, out, pairs_path=pairs_path)
 
-    print("
-── H3: Self-preference ─────────────────────────────────")
+    print("\n── H3: Self-preference ─────────────────────────────────")
     h3 = step_h3(df_pair_h3h4, out)
 
-    print("
-── H4: Scale effect ────────────────────────────────────")
+    print("\n── H4: Scale effect ────────────────────────────────────")
     h4 = step_h4(df_pair_h3h4, out)
 
-    print("
-── Schema failures ─────────────────────────────────────")
+    print("\n── Schema failures ─────────────────────────────────────")
     step_schema_failures(judgments_dir, out)
 
-    print("
-── Pair coverage ───────────────────────────────────────")
+    print("\n── Pair coverage ───────────────────────────────────────")
     step_pair_coverage(pairs_path, out)
 
-    print("
-── Style leakage audit ─────────────────────────────────")
+    print("\n── Style leakage audit ─────────────────────────────────")
     style_audit = step_style_audit(
         plans_dir=plans_dir,
-        provenance_dir=plans_dir,
+        provenance_dir=provenance_dir,
         pairs_path=pairs_path,
         out=out,
     )
@@ -460,15 +545,26 @@ def main(argv: list[str] | None = None) -> None:
         "h4": h4,
         "bias_audit": bias_audit,
         "style_audit": style_audit,
+        "provenance_exclusions": provenance_exclusions,
+        "expected_explainer": args.expected_explainer,
+        "require_verified_explainer": args.require_verified_explainer,
         "n_pairwise": len(df_pair),
         "n_soft_eval": len(df_soft),
         "biased_judges_excluded": biased,
     }
     (out / "summary.json").write_text(json.dumps(summary, indent=2, default=str))
-    write_markdown_summary(h1, h2, h3, h4, bias_audit, style_audit, out / "summary.md")
+    write_markdown_summary(
+        h1,
+        h2,
+        h3,
+        h4,
+        bias_audit,
+        style_audit,
+        provenance_exclusions,
+        out / "summary.md",
+    )
 
-    print(f"
-=== Done. Results in {out}/ ===")
+    print(f"\n=== Done. Results in {out}/ ===")
 
 
 if __name__ == "__main__":

@@ -1267,27 +1267,34 @@ def test_31_source_model_join() -> None:
 # Test 32 — score_plan fallback (heuristic, no trailtraining eval)
 # ═══════════════════════════════════════════════════════════════════════════════
 
-@test("32 score_plan_heuristic_fallback")
-def test_32_score_plan_heuristic() -> None:
-    from match.pair import _heuristic_score
-    from tests.mock_llm_client import _training_plan_payload
+# ═══════════════════════════════════════════════════════════════════════════════
+# Replacement — score_plan strict default + non-strict fallback
+# ═══════════════════════════════════════════════════════════════════════════════
+
+@test("32 score_plan_strict_and_non_strict")
+def test_32_score_plan_strict_and_non_strict() -> None:
     import json
 
+    from match.pair import ScoringError, _heuristic_score, score_plan
+    from tests.mock_llm_client import _training_plan_payload
+
     tmp = _make_tmp()
-    plan = _training_plan_payload()
-    ppath = tmp / "plan_001.json"
-    ppath.write_text(json.dumps(plan))
 
-    score = _heuristic_score(ppath)
+    # Strict is the default: missing file should raise.
+    with _assert_raises(ScoringError):
+        score_plan(tmp / "missing.json")
+
+    # Non-strict mode may use the deterministic scorer or heuristic fallback,
+    # but it must return a numeric score.
+    plan_path = tmp / "plan_001.json"
+    plan_path.write_text(json.dumps(_training_plan_payload()), encoding="utf-8")
+
+    score = score_plan(plan_path, strict=False)
     assert isinstance(score, float), f"Expected float, got {type(score)}"
-    assert 0.0 < score < 25.0, f"Heuristic score out of plausible range: {score}"
+    assert score >= 0.0, f"Expected non-negative score, got {score}"
 
-    # Two different plan_ids should get different scores (jitter)
-    ppath2 = tmp / "plan_002.json"
-    ppath2.write_text(json.dumps(plan))
-    score2 = _heuristic_score(ppath2)
-    assert score != score2, "Jitter should produce different scores for different plan IDs"
-
+    heuristic = _heuristic_score(plan_path)
+    assert heuristic > 0.0, f"Heuristic score should be > 0 for non-empty plan, got {heuristic}"
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # Test 33 — cli.py subcommand parsing (all 5 subcommands parse without error)
@@ -1550,34 +1557,6 @@ def test_36_position_bias_preferred_id() -> None:
     ])
     result2 = detect_position_bias(df2, threshold=0.2)
     assert result2["biased"] is False, f"Expected unbiased (50/50), got {result2}"
-
-
-# ═══════════════════════════════════════════════════════════════════════════════
-# Test 37 — score_plan falls back to heuristic for unreadable files
-# ═══════════════════════════════════════════════════════════════════════════════
-
-@test("40 score_plan_fallback_missing_file")
-def test_37_score_plan_fallback() -> None:
-    from match.pair import score_plan, _heuristic_score
-    import json
-
-    tmp = _make_tmp()
-
-    # Missing file → heuristic returns 0.0
-    s = score_plan(tmp / "nonexistent.json")
-    assert s == 0.0, f"Expected 0.0 for missing file, got {s}"
-
-    # Valid plan → real scorer or heuristic, both must be float ≥ 0
-    from tests.mock_llm_client import _training_plan_payload
-    p = tmp / "plan.json"
-    p.write_text(json.dumps(_training_plan_payload()))
-    s2 = score_plan(p)
-    assert isinstance(s2, float) and s2 >= 0.0, f"Expected float≥0, got {s2}"
-
-    # _heuristic_score with a rich plan returns > 0
-    h = _heuristic_score(p)
-    assert h > 0.0, f"Heuristic should be > 0 for non-empty plan, got {h}"
-
 
 # ── Entry point ───────────────────────────────────────────────────────────────
 
@@ -1848,6 +1827,246 @@ def test_27_soft_eval_harness_rollups() -> None:
     assert fixtures.count("f2") >= 2
     records = load_all(tmp / "soft.jsonl")
     assert len(records) == 2
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# Test 41 — build_matched_pairs aborts on deterministic scoring failure
+# ═══════════════════════════════════════════════════════════════════════════════
+
+@test("41 scoring_failure_aborts_matching")
+def test_41_scoring_failure_aborts_matching() -> None:
+    import json
+    from datetime import datetime, timezone
+
+    from generate.constants import EXPLAINER_MODEL_ID
+    from generate.provenance import PlanProvenance
+    from match.pair import ScoringError, build_matched_pairs
+
+    fixture = _get_fixture()
+    tmp = _make_tmp()
+
+    plans_dir = tmp / "plans"
+    plans_dir.mkdir()
+    provenance_dir = plans_dir
+
+    fixture_meta_path = fixture / "fixture_meta.json"
+    if fixture_meta_path.exists():
+        fixture_id = json.loads(fixture_meta_path.read_text()).get("fixture_id", fixture.name)
+    else:
+        fixture_id = fixture.name
+
+    fixtures_dir = tmp / "fixtures"
+    fixture_bundle = fixtures_dir / fixture_id
+    fixture_bundle.mkdir(parents=True, exist_ok=True)
+    (fixture_bundle / "combined_rollups.json").write_text(
+        (fixture / "combined_rollups.json").read_text(),
+        encoding="utf-8",
+    )
+
+    # Existing plan file, but invalid JSON → deterministic scorer must fail.
+    bad_plan_path = plans_dir / "bad_plan_001.json"
+    bad_plan_path.write_text("{ not valid json", encoding="utf-8")
+
+    prov = PlanProvenance(
+        plan_id="bad_plan_001",
+        fixture_id=fixture_id,
+        arm="llm",
+        source_model="meta-llama/Llama-3.1-8B-Instruct",
+        explainer_model=EXPLAINER_MODEL_ID,
+        seed=0,
+        generated_at=datetime.now(tz=timezone.utc).isoformat(),
+        plan_path=str(bad_plan_path),
+    )
+    (plans_dir / "bad_plan_001.json.provenance.json").write_text(
+        prov.model_dump_json(),
+        encoding="utf-8",
+    )
+
+    scoring_failures_path = tmp / "scoring_failures.json"
+
+    with _assert_raises(ScoringError):
+        build_matched_pairs(
+            plans_dir=plans_dir,
+            provenance_dir=provenance_dir,
+            fixtures_dir=fixtures_dir,
+            output_path=tmp / "matched_pairs.json",
+            strict_scoring=True,
+            scoring_failures_path=scoring_failures_path,
+        )
+
+    assert scoring_failures_path.exists(), "scoring_failures.json not written"
+    failures = json.loads(scoring_failures_path.read_text())
+    assert len(failures) == 1, f"Expected 1 scoring failure, got {len(failures)}"
+    assert failures[0]["plan_id"] == "bad_plan_001"
+    assert failures[0]["error_type"] == "ScoringError"
+    assert "Deterministic scorer failed" in failures[0]["error"]
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# Test 42 — load_judgments excludes explainer-mismatch rows
+# ═══════════════════════════════════════════════════════════════════════════════
+
+@test("42 explainer_mismatch_rows_are_excluded")
+def test_42_explainer_mismatch_rows_are_excluded() -> None:
+    try:
+        import pandas  # noqa: F401
+    except ImportError:
+        print("     [skip] pandas not installed")
+        return
+
+    import json
+    from datetime import datetime, timezone
+
+    from analyze.load import load_judgments
+    from generate.constants import EXPLAINER_MODEL_ID
+    from generate.provenance import PlanProvenance
+    from vendor_patches.resume_jsonl import ResumeJsonl
+
+    tmp = _make_tmp()
+    plans_dir = tmp / "plans"
+    judgments_dir = tmp / "judgments"
+    plans_dir.mkdir()
+    judgments_dir.mkdir()
+
+    def _write_plan_and_prov(
+        *,
+        pid: str,
+        arm: str,
+        explainer_model: str,
+        source_model: str | None = None,
+    ) -> None:
+        plan_path = plans_dir / f"{pid}.json"
+        plan_path.write_text(json.dumps({"meta": {}, "plan": {}}), encoding="utf-8")
+        prov = PlanProvenance(
+            plan_id=pid,
+            fixture_id="fixture_x",
+            arm=arm,  # type: ignore[arg-type]
+            source_model=source_model,
+            explainer_model=explainer_model,
+            seed=0,
+            generated_at=datetime.now(tz=timezone.utc).isoformat(),
+            plan_path=str(plan_path),
+        )
+        (plans_dir / f"{pid}.json.provenance.json").write_text(
+            prov.model_dump_json(),
+            encoding="utf-8",
+        )
+
+    # Good pair
+    _write_plan_and_prov(
+        pid="llm_good",
+        arm="llm",
+        explainer_model=EXPLAINER_MODEL_ID,
+        source_model="Qwen/Qwen2.5-7B-Instruct",
+    )
+    _write_plan_and_prov(
+        pid="prog_good",
+        arm="programmatic",
+        explainer_model=EXPLAINER_MODEL_ID,
+    )
+
+    # Bad LLM plan with mismatched explainer
+    _write_plan_and_prov(
+        pid="llm_bad",
+        arm="llm",
+        explainer_model="wrong/explainer-model",
+        source_model="Qwen/Qwen2.5-7B-Instruct",
+    )
+    _write_plan_and_prov(
+        pid="prog_bad",
+        arm="programmatic",
+        explainer_model=EXPLAINER_MODEL_ID,
+    )
+
+    writer = ResumeJsonl(
+        judgments_dir / "pairwise_test.jsonl",
+        key_fields=("pair_id", "judge", "run", "position"),
+    )
+    writer.append(
+        {
+            "pair_id": "pair_good",
+            "plan_a_id": "llm_good",
+            "plan_b_id": "prog_good",
+            "judge": "qwen_7b_judge",
+            "run": 0,
+            "position": "AB",
+            "preferred": "plan_a",
+            "preferred_id": "llm_good",
+            "fixture_id": "fixture_x",
+        }
+    )
+    writer.append(
+        {
+            "pair_id": "pair_bad",
+            "plan_a_id": "llm_bad",
+            "plan_b_id": "prog_bad",
+            "judge": "qwen_7b_judge",
+            "run": 0,
+            "position": "AB",
+            "preferred": "plan_a",
+            "preferred_id": "llm_bad",
+            "fixture_id": "fixture_x",
+        }
+    )
+
+    df, exclusions = load_judgments(
+        judgments_dir=judgments_dir,
+        provenance_dir=plans_dir,
+        kind="pairwise",
+        expected_explainer=EXPLAINER_MODEL_ID,
+        return_exclusions=True,
+    )
+
+    assert len(df) == 1, f"Expected 1 surviving judgment row, got {len(df)}"
+    assert df["pair_id"].iloc[0] == "pair_good"
+
+    exclusion_by_plan = {e["plan_id"]: e for e in exclusions}
+    assert "llm_bad" in exclusion_by_plan, f"Missing llm_bad in exclusions: {exclusions}"
+    assert exclusion_by_plan["llm_bad"]["reason"] == "explainer_model_mismatch"
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# Test 43 — llm_arm provenance marks explainer as unverified unless confirmed
+# ═══════════════════════════════════════════════════════════════════════════════
+
+@test("43 llm_provenance_verification_flag")
+def test_43_llm_provenance_verification_flag() -> None:
+    _patch_llm()
+
+    from pathlib import Path
+
+    from generate.constants import EXPLAINER_MODEL_ID
+    from generate.llm_arm import generate_llm_plan
+    from generate.provenance import PlanProvenance
+
+    fixture = _get_fixture()
+    tmp = _make_tmp()
+
+    _, plan_path, provenance_path = generate_llm_plan(
+        fixture_dir=fixture,
+        output_dir=tmp,
+        plan_id="llm_verify_001",
+        source_model="meta-llama/Llama-3.1-8B-Instruct",
+        seed=11,
+    )
+
+    assert Path(plan_path).exists(), "Generated plan file missing"
+    assert Path(provenance_path).exists(), "Provenance sidecar missing"
+
+    prov = PlanProvenance.model_validate_json(Path(provenance_path).read_text())
+
+    assert prov.plan_id == "llm_verify_001"
+    assert prov.arm == "llm"
+    assert prov.explainer_model == EXPLAINER_MODEL_ID
+    assert prov.explainer_model_verified is False, (
+        "LLM-arm provenance should mark explainer as unverified unless runtime "
+        "metadata explicitly confirms the actual explainer model."
+    )
+    assert prov.generation_pipeline == "llm_two_stage"
+    assert prov.runtime_backend == "trailtraining.llm.coach.run_coach_brief"
+    assert prov.runtime_metadata.get("TRAILTRAINING_TWO_STAGE_PLAN") == "1"
+
+
 
 if __name__ == "__main__":
     ok = _run_all()

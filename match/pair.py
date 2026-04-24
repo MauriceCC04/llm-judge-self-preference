@@ -2,8 +2,13 @@
 from __future__ import annotations
 
 import json
+import math
 from pathlib import Path
 from typing import Any
+
+
+def _score_bin(score: float) -> int:
+    return int(math.floor(float(score) + 0.5))
 
 
 def greedy_pair(
@@ -11,19 +16,15 @@ def greedy_pair(
     *,
     tolerance: float = 1.0,
 ) -> list[dict[str, Any]]:
-    """Pair LLM plans with programmatic plans within |Δscore| <= tolerance.
+    """Pair LLM plans with programmatic plans within same fixture and score bin."""
+    llm_plans = [p.copy() for p in plans if p["arm"] == "llm"]
+    prog_plans = [p.copy() for p in plans if p["arm"] == "programmatic"]
 
-    Each entry in *plans* must have:
-        plan_id, fixture_id, score (float), arm ("llm" | "programmatic")
+    for p in llm_plans + prog_plans:
+        p["score_bin"] = _score_bin(float(p["score"]))
 
-    Returns a list of pair dicts:
-        pair_id, plan_a_id, plan_b_id, fixture_id, score_gap, score_a, score_b
-    """
-    llm_plans = [p for p in plans if p["arm"] == "llm"]
-    prog_plans = [p for p in plans if p["arm"] == "programmatic"]
-
-    llm_sorted = sorted(llm_plans, key=lambda p: (p["fixture_id"], p["score"]))
-    prog_sorted = sorted(prog_plans, key=lambda p: (p["fixture_id"], p["score"]))
+    llm_sorted = sorted(llm_plans, key=lambda p: (p["fixture_id"], p["score_bin"], p["score"]))
+    prog_sorted = sorted(prog_plans, key=lambda p: (p["fixture_id"], p["score_bin"], p["score"]))
 
     used_llm: set[str] = set()
     used_prog: set[str] = set()
@@ -40,6 +41,8 @@ def greedy_pair(
                 continue
             if pp["fixture_id"] != lp["fixture_id"]:
                 continue
+            if pp["score_bin"] != lp["score_bin"]:
+                continue
             gap = abs(lp["score"] - pp["score"])
             if gap <= tolerance and gap < best_gap:
                 best_gap = gap
@@ -54,6 +57,10 @@ def greedy_pair(
                 "score_gap": round(best_gap, 3),
                 "score_a": lp["score"],
                 "score_b": best_prog["score"],
+                "score_bin": lp["score_bin"],
+                "score_bin_a": lp["score_bin"],
+                "score_bin_b": best_prog["score_bin"],
+                "match_rule": "same_fixture_same_score_bin_within_tolerance",
                 "arm_a": "llm",
                 "arm_b": "programmatic",
             })
@@ -65,18 +72,10 @@ def greedy_pair(
 
 
 def score_plan(plan_path: Path, rollups_path: Path | None = None) -> float:
-    """Return a quality score for *plan_path*.
-
-    Calls ``evaluate_training_plan_quality`` from trailtraining when available.
-    Falls back to ``_heuristic_score`` so matching works offline without a GPU
-    — useful for integration tests and dry-runs.
-    """
+    """Return a quality score for *plan_path*."""
     try:
         import json as _json
-        from trailtraining.llm.constraints import (
-            ConstraintConfig,
-            evaluate_training_plan_quality,
-        )
+        from trailtraining.llm.constraints import ConstraintConfig, evaluate_training_plan_quality
 
         plan_obj = _json.loads(Path(plan_path).read_text())
         rollups = (
@@ -92,17 +91,7 @@ def score_plan(plan_path: Path, rollups_path: Path | None = None) -> float:
 
 
 def _heuristic_score(plan_path: Path) -> float:
-    """Deterministic structural heuristic score (no LLM required).
-
-    Returns a float in roughly the same range as trailtraining's quality score
-    so greedy pairing still works during offline tests.
-
-    Signals used:
-    - Total scheduled minutes (normalised to 0–10)
-    - Fraction of days that are non-rest (plan utilisation)
-    - Presence of a long run day (+1 bonus)
-    """
-    import json
+    """Deterministic structural heuristic score (no LLM required)."""
     import hashlib
 
     try:
@@ -118,12 +107,10 @@ def _heuristic_score(plan_path: Path) -> float:
     n_active = sum(1 for d in days if not d.get("is_rest_day", False))
     has_long = any(d.get("session_type") == "long" for d in days)
 
-    score = min(total_min / 50.0, 10.0)        # normalise minutes to [0,10]
-    score += (n_active / max(len(days), 1)) * 3  # utilisation bonus [0,3]
-    score += 1.0 if has_long else 0.0           # long-run bonus
+    score = min(total_min / 50.0, 10.0)
+    score += (n_active / max(len(days), 1)) * 3
+    score += 1.0 if has_long else 0.0
 
-    # Add tiny deterministic jitter from plan_id so identical plans get
-    # different scores, preventing degenerate tie-breaking.
     pid = str(plan_path.stem)
     jitter = int(hashlib.md5(pid.encode()).hexdigest()[:4], 16) / 65535 * 0.01
     return round(score + jitter, 4)
@@ -153,11 +140,16 @@ def build_matched_pairs(
         except Exception as exc:
             print(f"  [warn] scoring failed for {prov.plan_id}: {exc}")
             score = 0.0
+
+        prov.deterministic_score = score
+        prov_path.write_text(prov.model_dump_json(indent=2), encoding="utf-8")
+
         plan_records.append({
             "plan_id": prov.plan_id,
             "fixture_id": prov.fixture_id,
             "arm": prov.arm,
             "score": score,
+            "score_bin": _score_bin(score),
             "plan_path": str(plan_path),
         })
 
@@ -169,7 +161,8 @@ def build_matched_pairs(
         json.dumps(pairs, indent=2, ensure_ascii=False, default=str),
         encoding="utf-8",
     )
-    print(f"\n[Saved] {output_path}  ({len(pairs)} pairs)")
+    print(f"
+[Saved] {output_path}  ({len(pairs)} pairs)")
     return pairs
 
 
@@ -186,12 +179,15 @@ def _print_audit(
     for p in pairs:
         by_fixture[p["fixture_id"]] = by_fixture.get(p["fixture_id"], 0) + 1
 
-    print("\n── Matching audit ──────────────────────────────")
+    print("
+── Matching audit ──────────────────────────────")
     print(f"  Pairs yielded:    {n}  (target: {target_pairs})")
     print(f"  Mean score gap:   {mean_gap:.3f}")
     print(f"  Coverage OK:      {n >= int(target_pairs * 0.8)}")
     for fid, cnt in sorted(by_fixture.items()):
         print(f"    {fid}: {cnt} pairs")
     if n < int(target_pairs * 0.8):
-        print("\n  ⚠ Coverage below 80% — retune sampler priors.")
-    print("────────────────────────────────────────────────\n")
+        print("
+  ⚠ Coverage below 80% — retune sampler priors.")
+    print("────────────────────────────────────────────────
+")

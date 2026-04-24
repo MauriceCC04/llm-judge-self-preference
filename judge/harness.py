@@ -20,15 +20,43 @@ def _load_rollups(rollups_path: Path | None) -> Optional[dict[str, Any]]:
     return None
 
 
+def _resolve_rollups_for_fixture(
+    fixture_id: str | None,
+    *,
+    rollups_path: Path | None,
+    fixtures_dir: Path | None,
+    cache: dict[str, Optional[dict[str, Any]]],
+) -> Optional[dict[str, Any]]:
+    if fixture_id and fixtures_dir:
+        if fixture_id not in cache:
+            rp = fixtures_dir / fixture_id / "combined_rollups.json"
+            cache[fixture_id] = _load_rollups(rp)
+        return cache[fixture_id]
+    return _load_rollups(rollups_path)
+
+
+def _fixture_id_from_provenance(plan_id: str, provenance_dir: Path | None) -> str:
+    if provenance_dir is None:
+        return ""
+    p = provenance_dir / f"{plan_id}.json.provenance.json"
+    if not p.exists():
+        return ""
+    try:
+        return str(json.loads(p.read_text(encoding="utf-8")).get("fixture_id", "") or "")
+    except Exception:
+        return ""
+
+
 # ── Pairwise harness ──────────────────────────────────────────────────────────
 
 def run_pairwise_harness(
     pairs: list[dict[str, Any]],
     plans_dir: Path,
-    judge: Any,  # JudgeSpec
+    judge: Any,
     rollups_path: Optional[Path],
     output_path: Path,
     *,
+    fixtures_dir: Optional[Path] = None,
     n_runs: int = 3,
     n_positions: int = 2,
     schema_failures_path: Optional[Path] = None,
@@ -40,8 +68,7 @@ def run_pairwise_harness(
     writer = PairwiseWriter(output_path)
     fail_path = schema_failures_path or output_path.parent / "schema_failures.jsonl"
     fail_writer = SchemaFailWriter(fail_path)
-
-    rollups = _load_rollups(rollups_path)
+    rollups_cache: dict[str, Optional[dict[str, Any]]] = {}
 
     cfg = SoftEvalConfig(
         enabled=True,
@@ -55,6 +82,7 @@ def run_pairwise_harness(
 
     for pair in pairs:
         pair_id = pair["pair_id"]
+        fixture_id = str(pair.get("fixture_id", "") or "")
         path_a = plans_dir / f"{pair['plan_a_id']}.json"
         path_b = plans_dir / f"{pair['plan_b_id']}.json"
 
@@ -64,12 +92,18 @@ def run_pairwise_harness(
 
         plan_a = _load_plan(path_a)
         plan_b = _load_plan(path_b)
+        rollups = _resolve_rollups_for_fixture(
+            fixture_id,
+            rollups_path=rollups_path,
+            fixtures_dir=fixtures_dir,
+            cache=rollups_cache,
+        )
 
         for run in range(n_runs):
             for position in positions:
                 stub = {"pair_id": pair_id, "judge": judge.name, "run": run, "position": position}
                 if writer.exists(stub):
-                    continue  # resume
+                    continue
 
                 a, b = (plan_a, plan_b) if position == "AB" else (plan_b, plan_a)
 
@@ -83,7 +117,7 @@ def run_pairwise_harness(
                             else pair["plan_b_id"] if preferred_raw == "plan_b"
                             else "tie"
                         )
-                    else:  # BA — plans were swapped
+                    else:
                         preferred_id = (
                             pair["plan_b_id"] if preferred_raw == "plan_a"
                             else pair["plan_a_id"] if preferred_raw == "plan_b"
@@ -97,7 +131,7 @@ def run_pairwise_harness(
                         "plan_a_id": pair["plan_a_id"],
                         "plan_b_id": pair["plan_b_id"],
                         "reasoning": result.get("reasoning", ""),
-                        "fixture_id": pair.get("fixture_id", ""),
+                        "fixture_id": fixture_id,
                         "timestamp": datetime.now(tz=timezone.utc).isoformat(),
                     }
                     writer.append(record)
@@ -120,10 +154,12 @@ def run_pairwise_harness(
 def run_soft_eval_harness(
     plan_ids: list[str],
     plans_dir: Path,
-    judge: Any,  # JudgeSpec
+    judge: Any,
     rollups_path: Optional[Path],
     output_path: Path,
     *,
+    fixtures_dir: Optional[Path] = None,
+    provenance_dir: Optional[Path] = None,
     schema_failures_path: Optional[Path] = None,
 ) -> None:
     """Run evaluate_training_plan_soft on every plan, skip already-done."""
@@ -134,8 +170,7 @@ def run_soft_eval_harness(
     writer = SoftEvalWriter(output_path)
     fail_path = schema_failures_path or output_path.parent / "schema_failures.jsonl"
     fail_writer = SchemaFailWriter(fail_path)
-
-    rollups = _load_rollups(rollups_path)
+    rollups_cache: dict[str, Optional[dict[str, Any]]] = {}
 
     cfg = SoftEvalConfig(
         enabled=True,
@@ -149,12 +184,20 @@ def run_soft_eval_harness(
     for plan_id in plan_ids:
         stub = {"plan_id": plan_id, "judge": judge.name}
         if writer.exists(stub):
-            continue  # resume
+            continue
 
         plan_path = plans_dir / f"{plan_id}.json"
         if not plan_path.exists():
             log.warning("Missing plan %s — skipping", plan_id)
             continue
+
+        fixture_id = _fixture_id_from_provenance(plan_id, provenance_dir or plans_dir)
+        rollups = _resolve_rollups_for_fixture(
+            fixture_id,
+            rollups_path=rollups_path,
+            fixtures_dir=fixtures_dir,
+            cache=rollups_cache,
+        )
 
         plan_obj = _load_plan(plan_path)
         det_report = evaluate_training_plan_quality(plan_obj, rollups, det_cfg)
@@ -163,6 +206,7 @@ def run_soft_eval_harness(
             assessment = evaluate_training_plan_soft(plan_obj, det_report, rollups, cfg)
             record = {
                 **stub,
+                "fixture_id": fixture_id,
                 "overall_score": assessment.get("overall_score"),
                 "rubric_scores": assessment.get("rubric_scores", {}),
                 "marker_results": assessment.get("marker_results", []),
@@ -189,11 +233,7 @@ def check_pilot_bias_gate(
     threshold: float = 0.2,
     min_records: int = 20,
 ) -> dict[str, Any]:
-    """Check position-bias gate on a completed pilot run.
-
-    Returns dict with: passed (bool), p_prefers_a (float), n (int), message (str).
-    Call after run_pairwise_harness() on the 30-pair pilot subset.
-    """
+    """Check position-bias gate on a completed pilot run."""
     from vendor_patches.resume_jsonl import load_all
 
     records = load_all(output_path)
@@ -210,7 +250,7 @@ def check_pilot_bias_gate(
     n_prefers_a = sum(1 for r in records if r.get("preferred") == "plan_a")
     p = n_prefers_a / n
     bias = abs(p - 0.5)
-    passed = bias < threshold  # strict < per PREREGISTRATION
+    passed = bias < threshold
 
     return {
         "passed": passed,

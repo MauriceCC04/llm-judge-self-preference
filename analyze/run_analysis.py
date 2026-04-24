@@ -4,10 +4,10 @@ Produces all tables and figures from the raw JSONL judgment files.
 
 Usage::
 
-    python -m analyze.run_analysis \\
-        --judgments judgments/ \\
-        --plans     plans/ \\
-        --fixtures  fixtures/data/ \\
+    python -m analyze.run_analysis \
+        --judgments judgments/ \
+        --plans     plans/ \
+        --fixtures  fixtures/data/ \
         --output    results/
 
 Output layout::
@@ -26,7 +26,10 @@ Output layout::
     ├── position_bias_audit.csv
     ├── position_bias_audit.png
     ├── schema_failure_rates.csv      ← judge reliability
-    └── pair_coverage.csv             ← matching audit
+    ├── pair_coverage.csv             ← matching audit
+    ├── style_audit_pairwise.csv      ← style leakage features by matched pair
+    ├── style_audit_summary.csv       ← paired style leakage summary
+    └── style_audit_summary.json      ← machine-readable style leakage summary
 """
 from __future__ import annotations
 
@@ -41,7 +44,8 @@ def _require_pandas() -> None:
         import pandas  # noqa: F401
     except ImportError:
         print(
-            "ERROR: pandas is required for analysis.\n"
+            "ERROR: pandas is required for analysis.
+"
             "Install with: pip install -e '.[analysis]'",
             file=sys.stderr,
         )
@@ -94,7 +98,12 @@ def step_h1(df_pair: "pd.DataFrame", out: Path) -> dict:  # type: ignore[name-de
     return result
 
 
-def step_h2(df_soft: "pd.DataFrame", out: Path) -> dict:  # type: ignore[name-defined]
+def step_h2(
+    df_soft: "pd.DataFrame",
+    out: Path,
+    *,
+    pairs_path: Path,
+) -> dict:  # type: ignore[name-defined]
     from analyze.rubric_deltas import rubric_paired_contrasts
     from analyze.figures import save_rubric_heatmap, save_rubric_heatmap_csv
 
@@ -102,7 +111,12 @@ def step_h2(df_soft: "pd.DataFrame", out: Path) -> dict:  # type: ignore[name-de
         print("  H2: no soft-eval data")
         return {}
 
-    result = rubric_paired_contrasts(df_soft)
+    if not pairs_path.exists():
+        raise FileNotFoundError(
+            f"H2 requires a matched-pairs manifest, but {pairs_path} does not exist."
+        )
+
+    result = rubric_paired_contrasts(df_soft, pairs_path=pairs_path)
     (out / "h2_rubric_deltas.json").write_text(json.dumps(result, indent=2, default=str))
     save_rubric_heatmap_csv(result, out / "h2_rubric_deltas.csv")
 
@@ -121,7 +135,12 @@ def step_h2(df_soft: "pd.DataFrame", out: Path) -> dict:  # type: ignore[name-de
     except Exception:
         status = "?"
 
-    print(f"  H2: explanation_quality Δ={exp_delta}  plan_coherence Δ={coh_delta}  [{status}]")
+    paired_flag = result.get("explanation_quality", {}).get("paired")
+    n_pairs = result.get("explanation_quality", {}).get("n_pairs")
+    print(
+        f"  H2: explanation_quality Δ={exp_delta}  plan_coherence Δ={coh_delta}  "
+        f"paired={paired_flag}  n_pairs={n_pairs}  [{status}]"
+    )
     return result
 
 
@@ -203,11 +222,37 @@ def step_pair_coverage(pairs_file: Path, out: Path) -> None:
           f"mean gap={df['score_gap'].mean():.3f}")
 
 
+def step_style_audit(
+    *,
+    plans_dir: Path,
+    provenance_dir: Path,
+    pairs_path: Path,
+    out: Path,
+) -> dict:
+    from analyze.style_audit import run_style_audit
+
+    if not pairs_path.exists():
+        print("  Style audit: skipped (matched pairs manifest missing)")
+        return {}
+
+    result = run_style_audit(
+        plans_dir=plans_dir,
+        provenance_dir=provenance_dir,
+        pairs_path=pairs_path,
+        output_dir=out,
+    )
+    flagged = result.get("n_flagged_features", 0)
+    total = result.get("n_features", 0)
+    print(f"  Style audit: {flagged}/{total} features flagged")
+    return result
+
+
 # ── Markdown summary ──────────────────────────────────────────────────────────
 
 def write_markdown_summary(
     h1: dict, h2: dict, h3: dict, h4: dict,
     bias_audit: dict,
+    style_audit: dict,
     out_path: Path,
 ) -> None:
     def _fmt(v: object) -> str:
@@ -227,6 +272,8 @@ def write_markdown_summary(
     exp_delta = h2.get("explanation_quality", {}).get("delta", float("nan"))
     coh_delta = h2.get("plan_coherence", {}).get("delta", float("nan"))
     exp_sig = h2.get("explanation_quality", {}).get("significant", False)
+    h2_paired = h2.get("explanation_quality", {}).get("paired", False)
+    h2_pairs = h2.get("explanation_quality", {}).get("n_pairs", "—")
     try:
         h2_supported = float(exp_delta) > float(coh_delta) and exp_sig
     except Exception:
@@ -247,6 +294,8 @@ def write_markdown_summary(
         h4_supported = False
 
     biased = bias_audit.get("biased_judges", [])
+    style_flagged = style_audit.get("n_flagged_features", 0)
+    style_n = style_audit.get("n_features", 0)
 
     md = f"""# Analysis summary
 
@@ -270,11 +319,15 @@ Judges with |P(prefer_A) − 0.5| ≥ 0.2 (excluded from H1/H2): {biased if bias
 
 ## H2 — Per-rubric gap (mechanism)  {_supported(h2_supported)}
 
+Paired analysis: {h2_paired}  
+Matched pairs contributing: {h2_pairs}
+
 | Rubric | Δ (LLM − prog) | p (Holm) | Significant |
 |---|---|---|---|
 """
     for rid, stats in sorted(h2.items()):
-        md += f"| {rid} | {_fmt(stats.get('delta'))} | {_fmt(stats.get('pvalue_holm'))} | {'✅' if stats.get('significant') else '—'} |\n"
+        md += f"| {rid} | {_fmt(stats.get('delta'))} | {_fmt(stats.get('pvalue_holm'))} | {'✅' if stats.get('significant') else '—'} |
+"
 
     md += f"""
 **H2 verdict:** explanation_quality Δ={_fmt(exp_delta)}, plan_coherence Δ={_fmt(coh_delta)}.  
@@ -298,7 +351,17 @@ Judges with |P(prefer_A) − 0.5| ≥ 0.2 (excluded from H1/H2): {biased if bias
 |---|---|
 | Slope (per log10 B params) | {_fmt(h4_slope)} |
 | p-value | {_fmt(h4_pval)} |
-| N (Qwen judges) | {h4.get("n_obs", "—")} |
+| N (Qwen judges on Qwen-sourced plans) | {h4.get("n_obs", "—")} |
+
+---
+
+## Style leakage audit
+
+| Metric | Value |
+|---|---|
+| Flagged features | {style_flagged} |
+| Total audited features | {style_n} |
+| Summary JSON | style_audit_summary.json |
 """
     out_path.write_text(md, encoding="utf-8")
     print(f"[Saved] {out_path}")
@@ -318,62 +381,94 @@ def main(argv: list[str] | None = None) -> None:
     _require_pandas()
 
     from analyze.load import load_judgments
+    from analyze.models import add_position_bias_covariate, add_same_family_column
 
     judgments_dir = Path(args.judgments)
     plans_dir = Path(args.plans)
+    pairs_path = Path(args.pairs)
     out = Path(args.output)
     out.mkdir(parents=True, exist_ok=True)
 
-    print("=== Analysis pipeline ===\n")
+    print("=== Analysis pipeline ===
+")
 
     print("Loading pairwise judgments ...")
     df_pair = load_judgments(judgments_dir, plans_dir, kind="pairwise")
-    print(f"  {len(df_pair)} pairwise records\n")
+    print(f"  {len(df_pair)} pairwise records
+")
 
     print("Loading soft-eval judgments ...")
     df_soft = load_judgments(judgments_dir, plans_dir, kind="soft_eval")
-    print(f"  {len(df_soft)} soft-eval records\n")
+    print(f"  {len(df_soft)} soft-eval records
+")
 
     print("── Position-bias audit ─────────────────────────────────")
     bias_audit = step_position_bias(df_pair, out)
 
-    # Exclude biased judges from H1/H2
     biased = bias_audit.get("biased_judges", [])
     df_pair_clean = df_pair[~df_pair["judge"].isin(biased)].copy() if not df_pair.empty else df_pair
     df_soft_clean = df_soft[~df_soft["judge"].isin(biased)].copy() if not df_soft.empty else df_soft
     if biased:
         print(f"  Excluded {biased} from H1/H2 (position bias)")
 
-    print("\n── H1: Pairwise LLM preference ─────────────────────────")
+    bias_lookup = {
+        r["judge"]: float(r["p_prefers_a"])
+        for r in bias_audit.get("audit", [])
+        if "judge" in r and "p_prefers_a" in r
+    }
+
+    df_pair_h3h4 = add_position_bias_covariate(df_pair, bias_lookup=bias_lookup)
+    df_pair_h3h4 = add_same_family_column(df_pair_h3h4)
+
+    print("
+── H1: Pairwise LLM preference ─────────────────────────")
     h1 = step_h1(df_pair_clean, out)
 
-    print("\n── H2: Per-rubric gap ──────────────────────────────────")
-    h2 = step_h2(df_soft_clean, out)
+    print("
+── H2: Per-rubric gap ──────────────────────────────────")
+    h2 = step_h2(df_soft_clean, out, pairs_path=pairs_path)
 
-    print("\n── H3: Self-preference ─────────────────────────────────")
-    h3 = step_h3(df_pair, out)  # use all judges for H3
+    print("
+── H3: Self-preference ─────────────────────────────────")
+    h3 = step_h3(df_pair_h3h4, out)
 
-    print("\n── H4: Scale effect ────────────────────────────────────")
-    h4 = step_h4(df_pair, out)
+    print("
+── H4: Scale effect ────────────────────────────────────")
+    h4 = step_h4(df_pair_h3h4, out)
 
-    print("\n── Schema failures ─────────────────────────────────────")
+    print("
+── Schema failures ─────────────────────────────────────")
     step_schema_failures(judgments_dir, out)
 
-    print("\n── Pair coverage ───────────────────────────────────────")
-    step_pair_coverage(Path(args.pairs), out)
+    print("
+── Pair coverage ───────────────────────────────────────")
+    step_pair_coverage(pairs_path, out)
 
-    # Summary files
+    print("
+── Style leakage audit ─────────────────────────────────")
+    style_audit = step_style_audit(
+        plans_dir=plans_dir,
+        provenance_dir=plans_dir,
+        pairs_path=pairs_path,
+        out=out,
+    )
+
     summary = {
-        "h1": h1, "h2": h2, "h3": h3, "h4": h4,
+        "h1": h1,
+        "h2": h2,
+        "h3": h3,
+        "h4": h4,
         "bias_audit": bias_audit,
+        "style_audit": style_audit,
         "n_pairwise": len(df_pair),
         "n_soft_eval": len(df_soft),
         "biased_judges_excluded": biased,
     }
     (out / "summary.json").write_text(json.dumps(summary, indent=2, default=str))
-    write_markdown_summary(h1, h2, h3, h4, bias_audit, out / "summary.md")
+    write_markdown_summary(h1, h2, h3, h4, bias_audit, style_audit, out / "summary.md")
 
-    print(f"\n=== Done. Results in {out}/ ===")
+    print(f"
+=== Done. Results in {out}/ ===")
 
 
 if __name__ == "__main__":

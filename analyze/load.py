@@ -1,8 +1,7 @@
 """analyze/load.py — load JSONL judgments + provenance sidecars → DataFrame.
 
-Provenance sidecars supply arm, fixture_id, source_model, and (for pairwise)
-source_model_a / source_model_b — the columns needed by add_same_family_column()
-for the H3 self-preference test.
+Provenance sidecars supply arm, fixture_id, source_model, and pair-level LLM
+identity columns used by the H3/H4 self-preference analyses.
 """
 from __future__ import annotations
 
@@ -25,38 +24,35 @@ def _load_provenance_index(provenance_dir: Path) -> dict[str, dict[str, Any]]:
     return index
 
 
+def _get_prov(index: dict[str, dict[str, Any]], plan_id: str, field: str, default: str = "unknown") -> str:
+    return index.get(str(plan_id), {}).get(field, default)
+
+
+def _pick_llm_side(row: Any) -> str:
+    if row.get("arm_a") == "llm":
+        return "a"
+    if row.get("arm_b") == "llm":
+        return "b"
+    return ""
+
+
+def _llm_in_position_a(row: Any) -> int:
+    llm_side = row.get("llm_side", "")
+    pos = row.get("position", "")
+    if not llm_side or pos not in {"AB", "BA"}:
+        return 0
+    if pos == "AB":
+        return 1 if llm_side == "a" else 0
+    return 1 if llm_side == "b" else 0
+
+
 def load_judgments(
     judgments_dir: Path,
     provenance_dir: Path,
     *,
     kind: Kind = "pairwise",
 ) -> "pd.DataFrame":  # type: ignore[name-defined]  # noqa: F821
-    """Join judgment JSONL records with provenance sidecars.
-
-    Parameters
-    ----------
-    judgments_dir:
-        Directory containing *.jsonl judgment files.
-        Schema-failure files (matching ``schema_failures*.jsonl``) are skipped.
-    provenance_dir:
-        Directory containing *.provenance.json sidecars for all plans.
-    kind:
-        ``'pairwise'`` — records have pair_id, plan_a_id, plan_b_id.
-        ``'soft_eval'`` — records have plan_id and per-rubric scores.
-
-    Returns
-    -------
-    pd.DataFrame
-        All judgment fields plus columns joined from provenance:
-
-        Pairwise:
-            arm_a, arm_b, fixture_id (if not already in the record),
-            source_model_a, source_model_b,
-            prefers_llm (position-corrected binary: 1 = LLM plan preferred)
-
-        Soft-eval:
-            arm, fixture_id, source_model
-    """
+    """Join judgment JSONL records with provenance sidecars."""
     try:
         import pandas as pd
     except ImportError as exc:
@@ -64,12 +60,10 @@ def load_judgments(
 
     prov_index = _load_provenance_index(provenance_dir)
 
-    # Load all JSONL records, skipping schema-failure files
     records: list[dict[str, Any]] = []
     for jpath in sorted(judgments_dir.glob("*.jsonl")):
         if "schema_failures" in jpath.name:
             continue
-        # Filter by kind: pairwise files contain "pairwise", soft_eval files contain "softeval"
         if kind == "pairwise" and "softeval" in jpath.name:
             continue
         if kind == "soft_eval" and "pairwise" in jpath.name:
@@ -108,18 +102,44 @@ def load_judgments(
                 df["plan_a_id"].apply(lambda x: _get(x, "fixture_id"))
             )
 
-        # Position-corrected preference: 1 = LLM arm plan was preferred
-        def _prefers_llm(row: Any) -> int:
-            preferred_id = row.get("preferred_id") or row.get("preferred", "")
-            if not preferred_id or preferred_id == "tie":
-                return 0
-            if preferred_id == row.get("plan_a_id"):
-                winning_arm = row.get("arm_a", "unknown")
-            else:
-                winning_arm = row.get("arm_b", "unknown")
-            return 1 if winning_arm == "llm" else 0
+        df["llm_side"] = df.apply(_pick_llm_side, axis=1)
+        df["llm_plan_id"] = df.apply(
+            lambda r: r["plan_a_id"] if r["llm_side"] == "a"
+            else r["plan_b_id"] if r["llm_side"] == "b"
+            else "",
+            axis=1,
+        )
+        df["programmatic_plan_id"] = df.apply(
+            lambda r: r["plan_b_id"] if r["llm_side"] == "a"
+            else r["plan_a_id"] if r["llm_side"] == "b"
+            else "",
+            axis=1,
+        )
+        df["llm_source_model"] = df.apply(
+            lambda r: r["source_model_a"] if r["llm_side"] == "a"
+            else r["source_model_b"] if r["llm_side"] == "b"
+            else "",
+            axis=1,
+        )
+        df["llm_in_position_a"] = df.apply(_llm_in_position_a, axis=1)
 
-        df["prefers_llm"] = df.apply(_prefers_llm, axis=1)
+        def _preferred_plan_id(row: Any) -> str:
+            preferred_id = row.get("preferred_id")
+            if preferred_id:
+                return str(preferred_id)
+            preferred = row.get("preferred", "")
+            if preferred == "plan_a":
+                return str(row.get("plan_a_id", ""))
+            if preferred == "plan_b":
+                return str(row.get("plan_b_id", ""))
+            return ""
+
+        df["preferred_plan_id"] = df.apply(_preferred_plan_id, axis=1)
+        df["prefers_llm"] = (
+            (df["preferred_plan_id"] != "")
+            & (df["preferred_plan_id"] != "tie")
+            & (df["preferred_plan_id"] == df["llm_plan_id"])
+        ).astype(int)
 
     elif kind == "soft_eval":
         if "plan_id" in df.columns:
@@ -130,41 +150,30 @@ def load_judgments(
     return df
 
 
-def _get_prov(index: dict[str, dict[str, Any]], plan_id: str, field: str, default: str = "unknown") -> str:
-    return index.get(str(plan_id), {}).get(field, default)
-
-
 def detect_position_bias(
     df: "pd.DataFrame",  # type: ignore[name-defined]  # noqa: F821
     *,
     threshold: float = 0.2,
 ) -> dict[str, Any]:
-    """Detect position bias for a single-judge DataFrame.
-
-    A judge is position-biased if |P(prefer the plan served as plan_a) − 0.5|
-    exceeds *threshold* (PREREGISTRATION: 0.2).
-
-    The raw ``preferred`` column from the harness is either ``"plan_a"`` /
-    ``"plan_b"`` (position labels) or an actual plan ID.  Both cases are
-    handled:
-
-    * If the value is ``"plan_a"`` / ``"plan_b"``, use it directly.
-    * Otherwise check whether ``preferred_id == plan_a_id``.
-    """
+    """Detect position bias for a single-judge DataFrame."""
     judge_name = df["judge"].iloc[0] if "judge" in df.columns and len(df) else "unknown"
     n = len(df)
     if n == 0:
         return {"biased": False, "p_prefers_a": 0.5, "judge": judge_name, "n": 0}
 
-    # Determine whether position-A plan was preferred
     if "preferred" in df.columns and df["preferred"].isin(["plan_a", "plan_b"]).all():
         n_pos_a = int((df["preferred"] == "plan_a").sum())
     elif "preferred_id" in df.columns and "plan_a_id" in df.columns:
         n_pos_a = int((df["preferred_id"] == df["plan_a_id"]).sum())
     else:
-        # Can't determine — assume no bias
-        return {"biased": False, "p_prefers_a": 0.5, "judge": judge_name, "n": n,
-                "threshold": threshold, "note": "cannot determine position preference"}
+        return {
+            "biased": False,
+            "p_prefers_a": 0.5,
+            "judge": judge_name,
+            "n": n,
+            "threshold": threshold,
+            "note": "cannot determine position preference",
+        }
 
     p = n_pos_a / n
     return {

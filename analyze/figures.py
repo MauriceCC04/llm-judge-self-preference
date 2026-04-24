@@ -11,21 +11,17 @@ import math
 from pathlib import Path
 from typing import Any
 
+QWEN_SOURCE_MODEL = "Qwen/Qwen2.5-7B-Instruct"
 
-# ── Guard against missing matplotlib ─────────────────────────────────────────
 
 def _require_matplotlib() -> "types.ModuleType":  # type: ignore[name-defined]
     try:
         import matplotlib
-        matplotlib.use("Agg")  # headless
+        matplotlib.use("Agg")
         return matplotlib
     except ImportError as exc:
-        raise ImportError(
-            "matplotlib is required for figures: pip install matplotlib"
-        ) from exc
+        raise ImportError("matplotlib is required for figures: pip install matplotlib") from exc
 
-
-# ── Position-bias audit ───────────────────────────────────────────────────────
 
 def save_position_bias_audit(
     df: "pd.DataFrame",  # type: ignore[name-defined]
@@ -50,7 +46,6 @@ def save_position_bias_audit(
     result_df.to_csv(csv_path, index=False)
     print(f"[Saved] {csv_path}")
 
-    # Bar chart
     try:
         _require_matplotlib()
         import matplotlib.pyplot as plt
@@ -60,13 +55,14 @@ def save_position_bias_audit(
         p_vals = result_df["p_prefers_a"].tolist()
         colors = ["#d62728" if b else "#2ca02c" for b in result_df["biased"]]
 
-        bars = ax.barh(judges, p_vals, color=colors, edgecolor="black", linewidth=0.5)
+        ax.barh(judges, p_vals, color=colors, edgecolor="black", linewidth=0.5)
         ax.axvline(0.5, color="black", linewidth=1.5, linestyle="--", label="No bias (0.5)")
         ax.axvline(0.5 + 0.2, color="#d62728", linewidth=1, linestyle=":", alpha=0.7)
         ax.axvline(0.5 - 0.2, color="#d62728", linewidth=1, linestyle=":", alpha=0.7)
 
         ax.set_xlabel("P(prefer position-A plan)")
-        ax.set_title("Position-bias audit by judge\n(red = biased, threshold |p−0.5| ≥ 0.2)")
+        ax.set_title("Position-bias audit by judge
+(red = biased, threshold |p−0.5| ≥ 0.2)")
         ax.set_xlim(0.2, 0.8)
         ax.legend(fontsize=8)
         fig.tight_layout()
@@ -79,8 +75,6 @@ def save_position_bias_audit(
         print(f"[warn] position-bias chart failed: {exc}")
 
 
-# ── H1 forest plot ────────────────────────────────────────────────────────────
-
 def save_h1_forest_plot(
     h1_result: dict[str, Any],
     output_path: Path,
@@ -91,7 +85,6 @@ def save_h1_forest_plot(
     try:
         _require_matplotlib()
         import matplotlib.pyplot as plt
-        import numpy as np
     except ImportError as exc:
         print(f"[warn] forest plot skipped: {exc}")
         return
@@ -105,7 +98,6 @@ def save_h1_forest_plot(
 
     labels = [r.get("label", r.get("judge", "?")) for r in rows]
     coefs = [r.get("coef_is_llm", 0.0) for r in rows]
-    # Approximate 95% CI from SE if available, else use ±0.1 placeholder
     ses = [r.get("se", 0.1) for r in rows]
     ci_lo = [c - 1.96 * s for c, s in zip(coefs, ses)]
     ci_hi = [c + 1.96 * s for c, s in zip(coefs, ses)]
@@ -120,7 +112,8 @@ def save_h1_forest_plot(
     ax.axvline(0.0, color="black", linewidth=1.5, linestyle="--", label="No preference")
     ax.set_yticks(y)
     ax.set_yticklabels(labels)
-    ax.set_xlabel("Log-odds coefficient for LLM plan preference\n(positive = prefer LLM)")
+    ax.set_xlabel("Log-odds coefficient for LLM plan preference
+(positive = prefer LLM)")
     ax.set_title("H1: Forest plot — judge-level and pooled LLM-plan preference")
     ax.legend(fontsize=8)
     fig.tight_layout()
@@ -132,17 +125,14 @@ def save_h1_forest_plot(
     print(f"[Saved] {out}")
 
 
-# ── H2 rubric heatmap ─────────────────────────────────────────────────────────
-
 def save_rubric_heatmap(
     rubric_results: dict[str, Any],
     output_path: Path,
 ) -> None:
-    """Heatmap of per-rubric score deltas (LLM − programmatic) across judges."""
+    """Heatmap of per-rubric score deltas (LLM − programmatic)."""
     try:
         _require_matplotlib()
         import matplotlib.pyplot as plt
-        import numpy as np
     except ImportError as exc:
         print(f"[warn] rubric heatmap skipped: {exc}")
         return
@@ -155,9 +145,7 @@ def save_rubric_heatmap(
     pvals_holm = [rubric_results[r].get("pvalue_holm", 1.0) for r in rubric_ids]
     significant = [rubric_results[r].get("significant", False) for r in rubric_ids]
 
-    # Horizontal bar chart (one rubric per row)
     fig, ax = plt.subplots(figsize=(8, max(3, len(rubric_ids) * 0.7)))
-
     colors = ["#d62728" if s else "#aec7e8" for s in significant]
     bars = ax.barh(rubric_ids, deltas, color=colors, edgecolor="black", linewidth=0.5)
     ax.axvline(0.0, color="black", linewidth=1.5, linestyle="--")
@@ -166,11 +154,16 @@ def save_rubric_heatmap(
         label = f"p={pv:.3f}{'*' if sig else ''}"
         x = bar.get_width()
         ax.text(
-            x + (0.5 if x >= 0 else -0.5), i,
-            label, va="center", ha="left" if x >= 0 else "right", fontsize=8
+            x + (0.5 if x >= 0 else -0.5),
+            i,
+            label,
+            va="center",
+            ha="left" if x >= 0 else "right",
+            fontsize=8,
         )
 
-    ax.set_xlabel("Score delta: mean(LLM) − mean(programmatic)\n(red = Holm-significant)")
+    ax.set_xlabel("Score delta: mean(LLM) − mean(programmatic)
+(red = Holm-significant)")
     ax.set_title("H2: Per-rubric score differences (LLM arm vs programmatic arm)")
     fig.tight_layout()
 
@@ -197,13 +190,11 @@ def save_rubric_heatmap_csv(
     print(f"[Saved] {out}")
 
 
-# ── H4 scale curve ────────────────────────────────────────────────────────────
-
 def save_h4_scale_curve(
     df: "pd.DataFrame",  # type: ignore[name-defined]
     output_path: Path,
 ) -> None:
-    """Scatter + regression line for H4 (log param count vs preference rate)."""
+    """Scatter + regression line for H4 (param count vs preference rate)."""
     try:
         _require_matplotlib()
         import matplotlib.pyplot as plt
@@ -219,14 +210,14 @@ def save_h4_scale_curve(
     }
 
     try:
-        import pandas as pd
         sub = df[df["judge"].isin(QWEN_PARAMS)].copy()
+        if "llm_source_model" in sub.columns:
+            sub = sub[sub["llm_source_model"] == QWEN_SOURCE_MODEL].copy()
         if sub.empty:
             return
         sub["log_params"] = sub["judge"].map({k: math.log10(v / 1e9) for k, v in QWEN_PARAMS.items()})
         sub["param_b"] = sub["judge"].map({k: v / 1e9 for k, v in QWEN_PARAMS.items()})
 
-        # Per-judge mean preference rate
         by_judge = sub.groupby(["judge", "log_params", "param_b"])["prefers_llm"].mean().reset_index()
 
         fig, ax = plt.subplots(figsize=(6, 4))
@@ -235,16 +226,16 @@ def save_h4_scale_curve(
             ax.annotate(
                 f"{row['param_b']:.0f}B",
                 (row["param_b"], row["prefers_llm"]),
-                textcoords="offset points", xytext=(5, 3), fontsize=9,
+                textcoords="offset points",
+                xytext=(5, 3),
+                fontsize=9,
             )
 
-        # Regression line if ≥2 points
         if len(by_judge) >= 2:
             x = by_judge["param_b"].values
             y = by_judge["prefers_llm"].values
-            m, b = float("nan"), float("nan")
             try:
-                m, b = float(np.polyfit(x, y, 1))
+                m, b = np.polyfit(x, y, 1)
                 xr = np.linspace(x.min() * 0.8, x.max() * 1.1, 100)
                 ax.plot(xr, m * xr + b, "r--", alpha=0.6, label=f"slope={m:.4f}/B")
                 ax.legend(fontsize=8)
@@ -265,8 +256,6 @@ def save_h4_scale_curve(
     except Exception as exc:
         print(f"[warn] H4 scale curve failed: {exc}")
 
-
-# ── Full figure pack ──────────────────────────────────────────────────────────
 
 def save_all_figures(
     df_pair: "pd.DataFrame",  # type: ignore[name-defined]

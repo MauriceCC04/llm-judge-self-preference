@@ -24,32 +24,45 @@ from __future__ import annotations
 import math
 from typing import Any
 
+QWEN_SOURCE_MODEL = "Qwen/Qwen2.5-7B-Instruct"
+QWEN_PARAMS_B = {
+    "qwen_7b_judge": 7.0,
+    "qwen_14b_judge": 14.0,
+    "qwen_32b_judge": 32.0,
+}
+
+
+def add_position_bias_covariate(
+    df: "pd.DataFrame",
+    *,
+    bias_lookup: dict[str, float],
+) -> "pd.DataFrame":
+    df = df.copy()
+
+    if "llm_in_position_a" not in df.columns:
+        df["llm_in_position_a"] = 0
+
+    df["judge_prefers_a_centered"] = (
+        df["judge"].map(bias_lookup).fillna(0.5).astype(float) - 0.5
+    )
+    df["llm_position_sign"] = df["llm_in_position_a"].map({1: 1.0, 0: -1.0})
+    df["llm_position_bias"] = (
+        df["judge_prefers_a_centered"] * df["llm_position_sign"]
+    )
+    return df
+
 
 # ── H1 ────────────────────────────────────────────────────────────────────────
 
 def fit_h1_model(df: "pd.DataFrame") -> dict[str, Any]:  # type: ignore[name-defined]
-    """H1: Logistic regression with cluster-robust SEs on position-corrected preference.
-
-    Model: prefers_llm ~ C(judge) + C(fixture_id)
-    Standard errors: cluster-robust at pair_id level.
-
-    Returns dict with:
-        coef_is_llm    intercept (log-odds of preferring LLM over programmatic)
-        pvalue_is_llm  p-value for the intercept
-        prob_llm       implied probability P(prefer LLM) at baseline
-        converged      bool
-        n_obs          int
-    """
+    """H1: Logistic regression with cluster-robust SEs on position-corrected preference."""
     try:
-        import pandas as pd
         import statsmodels.formula.api as smf
-        import numpy as np
     except ImportError as exc:
         raise ImportError("pandas + statsmodels required for analysis") from exc
 
     df = df.copy()
 
-    # Derive prefers_llm if not present
     if "prefers_llm" not in df.columns:
         if "arm_a" not in df.columns:
             raise ValueError("DataFrame needs 'prefers_llm' or 'arm_a'/'arm_b' columns")
@@ -58,14 +71,16 @@ def fit_h1_model(df: "pd.DataFrame") -> dict[str, Any]:  # type: ignore[name-def
             ((df["preferred"] == "plan_b") & (df["arm_b"] == "llm"))
         ).astype(int)
 
-    # Drop rows with missing keys
-    needed = ["prefers_llm"]
-    df = df.dropna(subset=needed)
+    df = df.dropna(subset=["prefers_llm"])
     if df.empty:
-        return {"coef_is_llm": float("nan"), "pvalue_is_llm": float("nan"),
-                "prob_llm": float("nan"), "converged": False, "n_obs": 0}
+        return {
+            "coef_is_llm": float("nan"),
+            "pvalue_is_llm": float("nan"),
+            "prob_llm": float("nan"),
+            "converged": False,
+            "n_obs": 0,
+        }
 
-    # Build formula — add judge and fixture fixed effects where cardinality allows
     formula = "prefers_llm ~ 1"
     if "judge" in df.columns and df["judge"].nunique() > 1:
         formula += " + C(judge)"
@@ -88,13 +103,9 @@ def fit_h1_model(df: "pd.DataFrame") -> dict[str, Any]:  # type: ignore[name-def
 
         intercept = float(result.params.get("Intercept", float("nan")))
         pval = float(result.pvalues.get("Intercept", float("nan")))
-        # Mean predicted probability = population-averaged P(prefer LLM).
-        # For a fixed-effects logistic model this equals the raw proportion,
-        # but using predict() is correct and stable regardless of parameterisation.
         prob = float(result.predict().mean())
         converged = bool(result.mle_retvals.get("converged", True))
-    except Exception as exc:
-        # Fallback: simple proportion test
+    except Exception:
         p = float(df["prefers_llm"].mean())
         intercept = math.log(p / (1 - p)) if 0 < p < 1 else 0.0
         pval = float("nan")
@@ -114,13 +125,8 @@ def fit_h1_model(df: "pd.DataFrame") -> dict[str, Any]:  # type: ignore[name-def
 # ── H3 ────────────────────────────────────────────────────────────────────────
 
 def fit_h3_model(df: "pd.DataFrame") -> dict[str, Any]:  # type: ignore[name-defined]
-    """H3: Self-preference — same_family × is_llm interaction.
-
-    Model: prefers_llm ~ same_family + C(fixture_id)
-    Returns: coef_same_family, pvalue_same_family, converged, n_obs.
-    """
+    """H3: Self-preference model with position-bias correction."""
     try:
-        import pandas as pd
         import statsmodels.formula.api as smf
     except ImportError as exc:
         raise ImportError("pandas + statsmodels required") from exc
@@ -130,13 +136,21 @@ def fit_h3_model(df: "pd.DataFrame") -> dict[str, Any]:  # type: ignore[name-def
         df["prefers_llm"] = 0
     if "same_family" not in df.columns:
         df["same_family"] = 0
+    if "llm_position_bias" not in df.columns:
+        df["llm_position_bias"] = 0.0
 
     df = df.dropna(subset=["prefers_llm", "same_family"])
     if len(df) < 5:
-        return {"coef_same_family": float("nan"), "pvalue_same_family": float("nan"),
-                "converged": False, "n_obs": len(df)}
+        return {
+            "coef_same_family": float("nan"),
+            "pvalue_same_family": float("nan"),
+            "converged": False,
+            "n_obs": len(df),
+        }
 
-    formula = "prefers_llm ~ same_family"
+    formula = "prefers_llm ~ same_family + llm_position_bias"
+    if "judge" in df.columns and df["judge"].nunique() > 1:
+        formula += " + C(judge)"
     if "fixture_id" in df.columns and df["fixture_id"].nunique() > 1:
         formula += " + C(fixture_id)"
 
@@ -148,7 +162,8 @@ def fit_h3_model(df: "pd.DataFrame") -> dict[str, Any]:  # type: ignore[name-def
             result = model.fit(
                 cov_type="cluster",
                 cov_kwds={"groups": df[cluster_col]},
-                disp=False, maxiter=200,
+                disp=False,
+                maxiter=200,
             )
         else:
             result = model.fit(disp=False, maxiter=200)
@@ -171,20 +186,8 @@ def fit_h3_model(df: "pd.DataFrame") -> dict[str, Any]:  # type: ignore[name-def
 # ── H4 ────────────────────────────────────────────────────────────────────────
 
 def fit_h4_model(df: "pd.DataFrame") -> dict[str, Any]:  # type: ignore[name-defined]
-    """H4: Scale effect within Qwen family.
-
-    OLS slope of prefers_llm ~ log10(param_count_billions) for Qwen 7B/14B/32B.
-    Restricted to Qwen-sourced plans.
-    """
-    QWEN_PARAMS_B = {
-        "qwen_7b_judge": 7.0,
-        "qwen_14b_judge": 14.0,
-        "qwen_32b_judge": 32.0,
-    }
-
+    """H4: Scale effect within Qwen family, restricted to Qwen-sourced plans."""
     try:
-        import pandas as pd
-        import numpy as np
         import statsmodels.formula.api as smf
     except ImportError as exc:
         raise ImportError("pandas + statsmodels required") from exc
@@ -193,23 +196,34 @@ def fit_h4_model(df: "pd.DataFrame") -> dict[str, Any]:  # type: ignore[name-def
         return {"slope": float("nan"), "pvalue": float("nan"), "n_obs": 0}
 
     sub = df[df["judge"].isin(QWEN_PARAMS_B)].copy()
+    if "llm_source_model" in sub.columns:
+        sub = sub[sub["llm_source_model"] == QWEN_SOURCE_MODEL].copy()
     if sub.empty:
         return {"slope": float("nan"), "pvalue": float("nan"), "n_obs": 0}
 
-    sub["log10_params"] = sub["judge"].map(
-        {k: math.log10(v) for k, v in QWEN_PARAMS_B.items()}
-    )
+    sub["log10_params"] = sub["judge"].map({k: math.log10(v) for k, v in QWEN_PARAMS_B.items()})
 
     if "prefers_llm" not in sub.columns:
         sub["prefers_llm"] = 0
+    if "llm_position_bias" not in sub.columns:
+        sub["llm_position_bias"] = 0.0
 
     sub = sub.dropna(subset=["prefers_llm", "log10_params"])
     if len(sub) < 3:
         return {"slope": float("nan"), "pvalue": float("nan"), "n_obs": len(sub)}
 
+    formula = "prefers_llm ~ log10_params"
+    if "llm_position_bias" in sub.columns:
+        formula += " + llm_position_bias"
+    if "fixture_id" in sub.columns and sub["fixture_id"].nunique() > 1:
+        formula += " + C(fixture_id)"
+
     try:
-        model = smf.ols("prefers_llm ~ log10_params", data=sub)
-        result = model.fit()
+        model = smf.ols(formula, data=sub)
+        if "pair_id" in sub.columns and sub["pair_id"].nunique() > 1:
+            result = model.fit(cov_type="cluster", cov_kwds={"groups": sub["pair_id"]})
+        else:
+            result = model.fit()
         slope = float(result.params.get("log10_params", float("nan")))
         pval = float(result.pvalues.get("log10_params", float("nan")))
     except Exception:
@@ -219,6 +233,7 @@ def fit_h4_model(df: "pd.DataFrame") -> dict[str, Any]:  # type: ignore[name-def
         "slope": round(slope, 4) if not math.isnan(slope) else float("nan"),
         "pvalue": round(pval, 4) if not math.isnan(pval) else float("nan"),
         "n_obs": len(sub),
+        "formula": formula,
     }
 
 
@@ -230,10 +245,7 @@ def add_same_family_column(
     judge_families: dict[str, str] | None = None,
     source_families: dict[str, str] | None = None,
 ) -> "pd.DataFrame":  # type: ignore[name-defined]
-    """Add `same_family` column: 1 if judge model family == LLM source family.
-
-    Default family maps cover the study panel.
-    """
+    """Add `same_family` column using only the LLM plan's source family."""
     if judge_families is None:
         judge_families = {
             "llama_8b_judge": "llama",
@@ -249,29 +261,11 @@ def add_same_family_column(
         }
 
     df = df.copy()
+    df["judge_family"] = df["judge"].map(judge_families).fillna("unknown") if "judge" in df.columns else "unknown"
 
-    # Derive source family from provenance if available
-    def _judge_fam(judge: str) -> str:
-        return judge_families.get(str(judge), "unknown")
-
-    def _source_fam_from_provenance(plan_id: str, prov_col: str) -> str:
-        return "unknown"
-
-    df["judge_family"] = df["judge"].apply(_judge_fam) if "judge" in df.columns else "unknown"
-
-    # For same_family we need to know the source family of the LLM plan in the pair.
-    # This requires joining provenance — done in load.py when building the DataFrame.
-    # Here we just propagate if the column is already present.
-    if "source_model_a" in df.columns:
-        df["source_family_a"] = df["source_model_a"].map(source_families).fillna("unknown")
-        df["source_family_b"] = df.get("source_model_b", df["source_model_a"]).map(
-            source_families
-        ).fillna("unknown")
-        # same_family = 1 if judge family matches either source family in the pair
-        df["same_family"] = (
-            (df["judge_family"] == df["source_family_a"]) |
-            (df["judge_family"] == df["source_family_b"])
-        ).astype(int)
+    if "llm_source_model" in df.columns:
+        df["llm_source_family"] = df["llm_source_model"].map(source_families).fillna("unknown")
+        df["same_family"] = (df["judge_family"] == df["llm_source_family"]).astype(int)
     elif "same_family" not in df.columns:
         df["same_family"] = 0
 

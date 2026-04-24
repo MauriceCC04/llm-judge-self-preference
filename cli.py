@@ -20,10 +20,7 @@ _ROOT = Path(__file__).parent.resolve()
 sys.path.insert(0, str(_ROOT))
 
 
-# ── Sub-commands ──────────────────────────────────────────────────────────────
-
 def cmd_generate(args: argparse.Namespace) -> None:
-    """Delegate to the batch generation orchestrator."""
     from generate.run_generation import run_llm_arm, run_programmatic_arm
 
     output_dir = Path(args.output)
@@ -44,11 +41,11 @@ def cmd_generate(args: argparse.Namespace) -> None:
             sampler_config_path=Path(args.sampler_config) if args.sampler_config else None,
         )
 
-    print(f"\nGenerated {n_gen} plans, skipped {n_skip} (already existed) → {output_dir}")
+    print(f"
+Generated {n_gen} plans, skipped {n_skip} (already existed) → {output_dir}")
 
 
 def cmd_fit_priors(args: argparse.Namespace) -> None:
-    """Fit sampler priors from LLM-arm outputs."""
     from generate.fit_priors import fit_and_save
 
     fit_and_save(
@@ -60,7 +57,6 @@ def cmd_fit_priors(args: argparse.Namespace) -> None:
 
 
 def cmd_match(args: argparse.Namespace) -> None:
-    """Score all plans and build matched_pairs.json."""
     from match.pair import build_matched_pairs
     from generate.constants import MATCH_TOLERANCE, TARGET_PAIRS
 
@@ -80,7 +76,6 @@ def cmd_match(args: argparse.Namespace) -> None:
 
 
 def cmd_judge(args: argparse.Namespace) -> None:
-    """Run pairwise + soft-eval for one judge (requires running vLLM server)."""
     import json
     from judge.panel import get_judge
     from judge.harness import run_pairwise_harness, run_soft_eval_harness, check_pilot_bias_gate
@@ -96,21 +91,15 @@ def cmd_judge(args: argparse.Namespace) -> None:
         pairs = pairs[:30]
         print(f"Pilot mode: {len(pairs)} pairs")
 
-    # Find rollups for context
     fixtures_dir = _ROOT / "fixtures" / "data"
-    rollups_path: Path | None = None
-    for pair in pairs[:1]:
-        candidate = fixtures_dir / pair.get("fixture_id", "") / "combined_rollups.json"
-        if candidate.exists():
-            rollups_path = candidate
-            break
 
     pairwise_out = output_dir / f"pairwise_{judge.name}.jsonl"
     run_pairwise_harness(
         pairs=pairs,
         plans_dir=plans_dir,
         judge=judge,
-        rollups_path=rollups_path,
+        rollups_path=None,
+        fixtures_dir=fixtures_dir,
         output_path=pairwise_out,
         n_runs=3,
         n_positions=2,
@@ -118,7 +107,8 @@ def cmd_judge(args: argparse.Namespace) -> None:
 
     if args.pilot:
         gate = check_pilot_bias_gate(pairwise_out)
-        print(f"\nPilot bias gate: {gate['message']}")
+        print(f"
+Pilot bias gate: {gate['message']}")
         if not gate["passed"]:
             print("  ⚠ Judge excluded from H1/H2 — do NOT proceed to full run.")
             sys.exit(2)
@@ -131,14 +121,15 @@ def cmd_judge(args: argparse.Namespace) -> None:
         plan_ids=plan_ids,
         plans_dir=plans_dir,
         judge=judge,
-        rollups_path=rollups_path,
+        rollups_path=None,
+        fixtures_dir=fixtures_dir,
+        provenance_dir=plans_dir,
         output_path=output_dir / f"softeval_{judge.name}.jsonl",
     )
     print(f"Judge run complete: {judge.name}")
 
 
 def cmd_analyze(args: argparse.Namespace) -> None:
-    """Run the full analysis pipeline — delegates to analyze/run_analysis.py."""
     from analyze.run_analysis import main as run_analysis_main
 
     run_analysis_main([
@@ -149,8 +140,6 @@ def cmd_analyze(args: argparse.Namespace) -> None:
     ])
 
 
-# ── Parser ────────────────────────────────────────────────────────────────────
-
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="judge-bias-study",
@@ -158,7 +147,6 @@ def build_parser() -> argparse.ArgumentParser:
     )
     sub = parser.add_subparsers(dest="command", required=True)
 
-    # generate
     gen = sub.add_parser("generate", help="Generate plans (llm or programmatic arm)")
     gen.add_argument("--arm", choices=["llm", "programmatic"], required=True)
     gen.add_argument("--n", type=int, default=20, help="Plans per fixture (per model for llm arm)")
@@ -166,7 +154,6 @@ def build_parser() -> argparse.ArgumentParser:
     gen.add_argument("--sampler-config", default=None, help="Fitted priors JSON (programmatic arm)")
     gen.set_defaults(func=cmd_generate)
 
-    # fit-priors
     fp = sub.add_parser("fit-priors", help="Fit sampler priors from LLM-arm outputs")
     fp.add_argument("--plans", default="plans/", help="Directory with LLM-arm plan files + provenance")
     fp.add_argument("--output", default="sampler_config.json", help="Output config JSON")
@@ -174,13 +161,11 @@ def build_parser() -> argparse.ArgumentParser:
     fp.add_argument("--seed", type=int, default=0)
     fp.set_defaults(func=cmd_fit_priors)
 
-    # match
     mat = sub.add_parser("match", help="Score plans and build matched_pairs.json")
     mat.add_argument("--plans", default="plans/", help="Directory with plan JSON + provenance files")
     mat.add_argument("--output", default="matched_pairs.json", help="Output manifest")
     mat.set_defaults(func=cmd_match)
 
-    # judge
     jdg = sub.add_parser("judge", help="Run pairwise + soft-eval for one judge")
     jdg.add_argument("--judge", required=True, help="Judge name, e.g. qwen_7b_judge")
     jdg.add_argument("--plans", default="plans/", help="Directory with plan JSON files")
@@ -189,7 +174,6 @@ def build_parser() -> argparse.ArgumentParser:
     jdg.add_argument("--pilot", action="store_true", help="Pilot mode: first 30 pairs only")
     jdg.set_defaults(func=cmd_judge)
 
-    # analyze
     ana = sub.add_parser("analyze", help="Run full analysis pipeline → summary.json + figures")
     ana.add_argument("--judgments", default="judgments/", help="Judgments directory")
     ana.add_argument("--plans",     default="plans/",     help="Plans directory (provenance)")

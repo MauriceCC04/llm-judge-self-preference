@@ -2,8 +2,7 @@
 # slurm/run_judge.sh — Gate 4 workhorse: one judge, full pairwise + soft-eval.
 #
 # Usage (submit from login node):
-#   JUDGE_NAME=qwen_7b_judge sbatch --exclude=gnode04 \
-#       --wrap='cd $PROJECT_ROOT && bash slurm/run_judge.sh'
+#   JUDGE_NAME=qwen_7b_judge sbatch --exclude=gnode04 #       --wrap='cd $PROJECT_ROOT && bash slurm/run_judge.sh'
 #
 #SBATCH --job-name=jbs_judge
 #SBATCH --partition=stud
@@ -28,7 +27,6 @@ echo "=== Judge run: ${JUDGE_NAME} ==="
 log_quota
 preflight_quota_gate
 
-# Require model to be pre-cached (login-node step)
 export HF_HUB_OFFLINE=1
 
 echo "--- Resolving judge spec ---"
@@ -53,12 +51,7 @@ print(j.quant if j.quant != 'fp16' else '')
 ")
 
 echo "--- Starting vLLM (${JUDGE_MODEL}) ---"
-VLLM_CMD="python -m vllm.entrypoints.openai.api_server \
-    --model ${JUDGE_MODEL} \
-    --port ${VLLM_PORT} \
-    --host 127.0.0.1 \
-    --max-model-len 8192 \
-    --disable-log-requests"
+VLLM_CMD="python -m vllm.entrypoints.openai.api_server     --model ${JUDGE_MODEL}     --port ${VLLM_PORT}     --host 127.0.0.1     --max-model-len 8192     --disable-log-requests"
 if [[ -n "${JUDGE_QUANT}" ]]; then
     VLLM_CMD="${VLLM_CMD} --quantization ${JUDGE_QUANT}"
 fi
@@ -102,25 +95,18 @@ if not pairs_file.exists():
     print('[WARN] matched_pairs.json not found — skipping pairwise')
 else:
     pairs = json.loads(pairs_file.read_text())
-    # Use rollups from the first fixture as a representative context
-    rollups_path = None
-    for pair in pairs[:1]:
-        candidate = fixture_dir / pair['fixture_id'] / 'combined_rollups.json'
-        if candidate.exists():
-            rollups_path = candidate
-            break
     run_pairwise_harness(
         pairs=pairs,
         plans_dir=plans_dir,
         judge=judge,
-        rollups_path=rollups_path,
+        rollups_path=None,
+        fixtures_dir=fixture_dir,
         output_path=judgments_dir / f'pairwise_{judge.name}.jsonl',
         n_runs=3,
         n_positions=2,
     )
     print(f'Pairwise done: {judge.name}')
 
-# Soft eval on all plans
 plan_ids = [p.stem for p in plans_dir.glob('*.json')
             if not p.name.endswith('.provenance.json')] if plans_dir.exists() else []
 if plan_ids:
@@ -128,7 +114,9 @@ if plan_ids:
         plan_ids=plan_ids,
         plans_dir=plans_dir,
         judge=judge,
-        rollups_path=rollups_path,
+        rollups_path=None,
+        fixtures_dir=fixture_dir,
+        provenance_dir=plans_dir,
         output_path=judgments_dir / f'softeval_{judge.name}.jsonl',
     )
     print(f'Soft eval done: {judge.name}')

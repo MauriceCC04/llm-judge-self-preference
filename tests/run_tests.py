@@ -1581,6 +1581,274 @@ def test_37_score_plan_fallback() -> None:
 
 # ── Entry point ───────────────────────────────────────────────────────────────
 
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# Test 21 — Matching respects score bins
+# ═══════════════════════════════════════════════════════════════════════════════
+
+@test("21 matching_respects_score_bin")
+def test_21_matching_respects_score_bin() -> None:
+    from match.pair import greedy_pair
+
+    plans = [
+        {"plan_id": "llm_a", "fixture_id": "f0", "score": 9.49, "arm": "llm"},
+        {"plan_id": "prog_a", "fixture_id": "f0", "score": 9.51, "arm": "programmatic"},
+    ]
+    pairs = greedy_pair(plans, tolerance=1.0)
+    assert len(pairs) == 0, "Plans across different rounded score bins should not pair"
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# Test 22 — Analysis load adds LLM pair columns
+# ═══════════════════════════════════════════════════════════════════════════════
+
+@test("22 analysis_load_llm_pair_columns")
+def test_22_analysis_load_llm_pair_columns() -> None:
+    from analyze.load import load_judgments
+    from generate.provenance import PlanProvenance
+    from vendor_patches.resume_jsonl import ResumeJsonl
+
+    tmp = _make_tmp()
+    for pid, arm, source in [
+        ("plan_llm", "llm", "Qwen/Qwen2.5-7B-Instruct"),
+        ("plan_prog", "programmatic", None),
+    ]:
+        prov = PlanProvenance(
+            plan_id=pid,
+            fixture_id="fixture_x",
+            arm=arm,
+            source_model=source,
+            explainer_model="Qwen/Qwen2.5-3B-Instruct",
+            seed=0,
+            generated_at="2026-03-17T00:00:00Z",
+            plan_path=str(tmp / f"{pid}.json"),
+        )
+        (tmp / f"{pid}.json").write_text(json.dumps({}), encoding="utf-8")
+        (tmp / f"{pid}.json.provenance.json").write_text(prov.model_dump_json(), encoding="utf-8")
+
+    writer = ResumeJsonl(tmp / "pairwise_test.jsonl", key_fields=("pair_id", "judge", "run", "position"))
+    writer.append({
+        "pair_id": "pair_0",
+        "plan_a_id": "plan_llm",
+        "plan_b_id": "plan_prog",
+        "judge": "qwen_7b_judge",
+        "run": 0,
+        "position": "AB",
+        "preferred_id": "plan_llm",
+        "fixture_id": "fixture_x",
+    })
+
+    df = load_judgments(tmp, tmp, kind="pairwise")
+    assert df.loc[0, "llm_plan_id"] == "plan_llm"
+    assert df.loc[0, "programmatic_plan_id"] == "plan_prog"
+    assert df.loc[0, "llm_source_model"] == "Qwen/Qwen2.5-7B-Instruct"
+    assert int(df.loc[0, "llm_in_position_a"]) == 1
+    assert int(df.loc[0, "prefers_llm"]) == 1
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# Test 23 — Position-bias covariate construction
+# ═══════════════════════════════════════════════════════════════════════════════
+
+@test("23 position_bias_covariate")
+def test_23_position_bias_covariate() -> None:
+    try:
+        import pandas as pd
+    except ImportError:
+        print("     [skip] pandas not installed")
+        return
+
+    from analyze.models import add_position_bias_covariate
+
+    df = pd.DataFrame({
+        "judge": ["j1", "j1"],
+        "llm_in_position_a": [1, 0],
+    })
+    out = add_position_bias_covariate(df, bias_lookup={"j1": 0.7})
+    assert round(float(out.loc[0, "llm_position_bias"]), 4) == 0.2
+    assert round(float(out.loc[1, "llm_position_bias"]), 4) == -0.2
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# Test 24 — H4 restricts to Qwen source rows
+# ═══════════════════════════════════════════════════════════════════════════════
+
+@test("24 h4_restricts_to_qwen_source")
+def test_24_h4_restricts_to_qwen_source() -> None:
+    try:
+        import pandas as pd
+        import statsmodels  # noqa: F401
+    except ImportError:
+        print("     [skip] pandas/statsmodels not installed")
+        return
+
+    from analyze.models import fit_h4_model
+
+    df = pd.DataFrame({
+        "judge": ["qwen_7b_judge", "qwen_14b_judge", "qwen_32b_judge", "qwen_7b_judge"],
+        "llm_source_model": [
+            "Qwen/Qwen2.5-7B-Instruct",
+            "Qwen/Qwen2.5-7B-Instruct",
+            "Qwen/Qwen2.5-7B-Instruct",
+            "meta-llama/Llama-3.1-8B-Instruct",
+        ],
+        "prefers_llm": [1, 0, 1, 1],
+        "pair_id": ["p1", "p2", "p3", "p4"],
+        "fixture_id": ["f1", "f1", "f1", "f1"],
+        "llm_position_bias": [0.0, 0.0, 0.0, 0.0],
+    })
+    result = fit_h4_model(df)
+    assert result["n_obs"] == 3, f"Expected only Qwen-sourced rows to remain, got {result['n_obs']}"
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# Test 25 — H2 requires matched-pairs manifest
+# ═══════════════════════════════════════════════════════════════════════════════
+
+@test("25 h2_requires_pairs_manifest")
+def test_25_h2_requires_pairs_manifest() -> None:
+    try:
+        import pandas as pd
+    except ImportError:
+        print("     [skip] pandas not installed")
+        return
+
+    from analyze.run_analysis import step_h2
+
+    tmp = _make_tmp()
+    df = pd.DataFrame([
+        {"plan_id": "p1", "rubric_scores": {"goal_alignment": {"score": 4}}, "arm": "llm"},
+    ])
+    with _assert_raises(FileNotFoundError):
+        step_h2(df, tmp, pairs_path=tmp / "does_not_exist.json")
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# Test 26 — Pairwise harness uses fixture-specific rollups
+# ═══════════════════════════════════════════════════════════════════════════════
+
+@test("26 pairwise_harness_uses_fixture_specific_rollups")
+def test_26_pairwise_harness_rollups() -> None:
+    import judge.harness as harness_mod
+    from judge.panel import JudgeSpec
+    from vendor_patches.resume_jsonl import load_all
+
+    tmp = _make_tmp()
+    plans_dir = tmp / "plans"
+    fixtures_dir = tmp / "fixtures"
+    plans_dir.mkdir()
+    (fixtures_dir / "f1").mkdir(parents=True)
+    (fixtures_dir / "f2").mkdir(parents=True)
+    (fixtures_dir / "f1" / "combined_rollups.json").write_text(json.dumps({"fixture": "f1"}), encoding="utf-8")
+    (fixtures_dir / "f2" / "combined_rollups.json").write_text(json.dumps({"fixture": "f2"}), encoding="utf-8")
+
+    for pid in ["a1", "b1", "a2", "b2"]:
+        (plans_dir / f"{pid}.json").write_text(json.dumps({"plan": {"days": []}}), encoding="utf-8")
+
+    calls = []
+    original = None
+    try:
+        import trailtraining.llm.soft_eval as soft_eval_mod
+        original = soft_eval_mod.compare_plans
+        def _fake_compare(a, b, rollups=None, cfg=None):
+            calls.append((a, b, rollups))
+            return {"preferred": "plan_a", "reasoning": "ok"}
+        soft_eval_mod.compare_plans = _fake_compare
+
+        judge = JudgeSpec(name="test_judge", model_id="x", quant="fp16", disk_gb=1, time_hours=1, role="judge")
+        harness_mod.run_pairwise_harness(
+            pairs=[
+                {"pair_id": "p1", "plan_a_id": "a1", "plan_b_id": "b1", "fixture_id": "f1"},
+                {"pair_id": "p2", "plan_a_id": "a2", "plan_b_id": "b2", "fixture_id": "f2"},
+            ],
+            plans_dir=plans_dir,
+            judge=judge,
+            rollups_path=None,
+            fixtures_dir=fixtures_dir,
+            output_path=tmp / "pairwise.jsonl",
+            n_runs=1,
+            n_positions=1,
+        )
+    finally:
+        if original is not None:
+            import trailtraining.llm.soft_eval as soft_eval_mod
+            soft_eval_mod.compare_plans = original
+
+    assert calls[0][2]["fixture"] == "f1"
+    assert calls[1][2]["fixture"] == "f2"
+    records = load_all(tmp / "pairwise.jsonl")
+    assert len(records) == 2
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# Test 27 — Soft-eval harness uses plan-specific rollups
+# ═══════════════════════════════════════════════════════════════════════════════
+
+@test("27 soft_eval_harness_uses_plan_specific_rollups")
+def test_27_soft_eval_harness_rollups() -> None:
+    from generate.provenance import PlanProvenance
+    from judge.panel import JudgeSpec
+    from vendor_patches.resume_jsonl import load_all
+
+    tmp = _make_tmp()
+    plans_dir = tmp / "plans"
+    fixtures_dir = tmp / "fixtures"
+    plans_dir.mkdir()
+    (fixtures_dir / "f1").mkdir(parents=True)
+    (fixtures_dir / "f2").mkdir(parents=True)
+    (fixtures_dir / "f1" / "combined_rollups.json").write_text(json.dumps({"fixture": "f1"}), encoding="utf-8")
+    (fixtures_dir / "f2" / "combined_rollups.json").write_text(json.dumps({"fixture": "f2"}), encoding="utf-8")
+
+    for pid, fixture_id in [("p1", "f1"), ("p2", "f2")]:
+        (plans_dir / f"{pid}.json").write_text(json.dumps({"plan": {"days": []}}), encoding="utf-8")
+        prov = PlanProvenance(
+            plan_id=pid,
+            fixture_id=fixture_id,
+            arm="llm",
+            source_model="Qwen/Qwen2.5-7B-Instruct",
+            explainer_model="Qwen/Qwen2.5-3B-Instruct",
+            seed=0,
+            generated_at="2026-03-17T00:00:00Z",
+            plan_path=str(plans_dir / f"{pid}.json"),
+        )
+        (plans_dir / f"{pid}.json.provenance.json").write_text(prov.model_dump_json(), encoding="utf-8")
+
+    calls = []
+    import trailtraining.llm.constraints as constraints_mod
+    import trailtraining.llm.soft_eval as soft_eval_mod
+    original_quality = constraints_mod.evaluate_training_plan_quality
+    original_soft = soft_eval_mod.evaluate_training_plan_soft
+    try:
+        def _fake_quality(plan_obj, rollups, cfg):
+            calls.append(("quality", rollups))
+            return {"score": 1.0}
+        def _fake_soft(plan_obj, det_report, rollups, cfg):
+            calls.append(("soft", rollups))
+            return {"overall_score": 5, "rubric_scores": {}, "marker_results": []}
+        constraints_mod.evaluate_training_plan_quality = _fake_quality
+        soft_eval_mod.evaluate_training_plan_soft = _fake_soft
+
+        from judge.harness import run_soft_eval_harness
+        judge = JudgeSpec(name="test_judge", model_id="x", quant="fp16", disk_gb=1, time_hours=1, role="judge")
+        run_soft_eval_harness(
+            plan_ids=["p1", "p2"],
+            plans_dir=plans_dir,
+            judge=judge,
+            rollups_path=None,
+            fixtures_dir=fixtures_dir,
+            provenance_dir=plans_dir,
+            output_path=tmp / "soft.jsonl",
+        )
+    finally:
+        constraints_mod.evaluate_training_plan_quality = original_quality
+        soft_eval_mod.evaluate_training_plan_soft = original_soft
+
+    fixtures = [c[1]["fixture"] for c in calls if isinstance(c[1], dict)]
+    assert fixtures.count("f1") >= 2
+    assert fixtures.count("f2") >= 2
+    records = load_all(tmp / "soft.jsonl")
+    assert len(records) == 2
+
 if __name__ == "__main__":
     ok = _run_all()
     sys.exit(0 if ok else 1)

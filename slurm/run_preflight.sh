@@ -1,9 +1,6 @@
 #!/usr/bin/env bash
 # slurm/run_preflight.sh — Gate 1: HPC preflight checks (~5 min).
 #
-# Submit from login node:
-#   sbatch --exclude=gnode04 --wrap='cd $PROJECT_ROOT && bash slurm/run_preflight.sh'
-#
 #SBATCH --job-name=jbs_preflight
 #SBATCH --partition=stud
 #SBATCH --qos=stud
@@ -24,12 +21,19 @@ echo "=== Gate 1: HPC Preflight ==="
 log_quota
 preflight_quota_gate
 
+echo "--- Frozen dependency surface ---"
+python tools/verify_dependency_surface.py
+
 echo "--- Python imports ---"
 python -c "
-import trailtraining, openai, pydantic
+import trailtraining, openai, pydantic, torch, vllm
 print('imports OK')
 print('trailtraining:', trailtraining.__file__)
+print('vllm:', getattr(vllm, '__version__', 'unknown'))
 "
+
+echo "--- vLLM entrypoint ---"
+python -m vllm.entrypoints.openai.api_server --help >/dev/null
 
 echo "--- GPU visibility ---"
 python -c "
@@ -40,16 +44,15 @@ if torch.cuda.is_available():
     print('VRAM:', torch.cuda.get_device_properties(0).total_memory // 1024**3, 'GB')
 "
 
-echo "--- Study imports ---"
+echo "--- Frozen study summary ---"
 python -c "
 import sys; sys.path.insert(0, '.')
-from fixtures.spec import ALL_FIXTURE_SPECS
-from generate.constants import EXPLAINER_MODEL_ID
-from judge.panel import JUDGES
-print(f'Fixtures: {len(ALL_FIXTURE_SPECS)}')
-print(f'Explainer: {EXPLAINER_MODEL_ID}')
-print(f'Judges: {[j.name for j in JUDGES]}')
+from generate.study_manifest import frozen_study_summary
+print(frozen_study_summary())
 "
+
+echo "--- Required model caches ---"
+python tools/check_model_cache.py Qwen/Qwen2.5-3B-Instruct
 
 echo "--- Mock LLM call ---"
 python -c "
@@ -58,10 +61,9 @@ from tests.mock_llm_client import MockLLMClient, _training_plan_payload
 import trailtraining.llm.shared as sh
 sh.make_openrouter_client = lambda: MockLLMClient()
 from trailtraining.contracts import TrainingPlanArtifact
-import json
 plan = _training_plan_payload()
-art = TrainingPlanArtifact.model_validate(plan)
-print('Mock LLM → valid TrainingPlanArtifact: OK')
+TrainingPlanArtifact.model_validate(plan)
+print('Mock LLM -> valid TrainingPlanArtifact: OK')
 "
 
 log_quota

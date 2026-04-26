@@ -8,7 +8,8 @@ from pathlib import Path
 from typing import Any, Optional
 
 from compat.trailtraining_client import install_trailtraining_client_compat
-from generate.constants import PAIRWISE_TEXT_CHAR_LIMITS
+from generate.constants import PAIRWISE_TEXT_CHAR_LIMITS, PAIRWISE_VIEW_DEFAULT
+from judge.canonicalize import canonicalize_pair_for_pairwise
 from judge.normalize import normalize_pair_for_pairwise
 
 log = logging.getLogger(__name__)
@@ -52,6 +53,27 @@ def _fixture_id_from_provenance(plan_id: str, provenance_dir: Path | None) -> st
         return ""
 
 
+def _prepare_pairwise_view(
+    plan_a: dict[str, Any],
+    plan_b: dict[str, Any],
+    *,
+    pairwise_view: str,
+    normalize_inputs: bool,
+) -> tuple[dict[str, Any], dict[str, Any]]:
+    out_a, out_b = plan_a, plan_b
+    if normalize_inputs:
+        out_a, out_b = normalize_pair_for_pairwise(
+            out_a,
+            out_b,
+            text_char_limits=PAIRWISE_TEXT_CHAR_LIMITS,
+        )
+    if pairwise_view == "canonical_masked":
+        out_a, out_b = canonicalize_pair_for_pairwise(out_a, out_b)
+    elif pairwise_view != "raw_normalized":
+        raise ValueError(f"Unknown pairwise_view: {pairwise_view!r}")
+    return out_a, out_b
+
+
 def run_pairwise_harness(
     pairs: list[dict[str, Any]],
     plans_dir: Path,
@@ -63,6 +85,7 @@ def run_pairwise_harness(
     n_runs: int = 3,
     n_positions: int = 2,
     normalize_inputs: bool = True,
+    pairwise_view: str = PAIRWISE_VIEW_DEFAULT,
     schema_failures_path: Optional[Path] = None,
 ) -> None:
     install_trailtraining_client_compat()
@@ -110,12 +133,12 @@ def run_pairwise_harness(
                     continue
 
                 plan_a, plan_b = (raw_plan_a, raw_plan_b) if position == "AB" else (raw_plan_b, raw_plan_a)
-                if normalize_inputs:
-                    plan_a, plan_b = normalize_pair_for_pairwise(
-                        plan_a,
-                        plan_b,
-                        text_char_limits=PAIRWISE_TEXT_CHAR_LIMITS,
-                    )
+                plan_a, plan_b = _prepare_pairwise_view(
+                    plan_a,
+                    plan_b,
+                    pairwise_view=pairwise_view,
+                    normalize_inputs=normalize_inputs,
+                )
 
                 try:
                     result = compare_plans(plan_a, plan_b, rollups=rollups, cfg=cfg)
@@ -160,6 +183,7 @@ def run_pairwise_harness(
                     "reasoning": reasoning,
                     "fixture_id": fixture_id,
                     "normalized_inputs": normalize_inputs,
+                    "pairwise_view": pairwise_view,
                     "timestamp": datetime.now(tz=timezone.utc).isoformat(),
                 })
 

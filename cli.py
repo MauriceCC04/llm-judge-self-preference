@@ -143,6 +143,7 @@ def cmd_judge(args: argparse.Namespace) -> None:
             output_path=pairwise_out,
             n_runs=PAIRWISE_N_RUNS,
             n_positions=PAIRWISE_N_POSITIONS,
+            pairwise_view=args.pairwise_view,
         )
 
         if args.pilot:
@@ -211,7 +212,7 @@ def cmd_analyze(args: argparse.Namespace) -> None:
 
 
 def build_parser() -> argparse.ArgumentParser:
-    from generate.constants import ACTIVE_JUDGE_NAMES, LLM_SOURCE_MODELS
+    from generate.constants import ACTIVE_JUDGE_NAMES, LLM_SOURCE_MODELS, PAIRWISE_VIEW_CHOICES, PAIRWISE_VIEW_DEFAULT
 
     parser = argparse.ArgumentParser(prog="judge-bias-study", description="LLM-judge self-preference study pipeline")
     sub = parser.add_subparsers(dest="command", required=True)
@@ -250,6 +251,7 @@ def build_parser() -> argparse.ArgumentParser:
     jdg.add_argument("--skip-soft-eval", action="store_true")
     jdg.add_argument("--require-style-gate", action="store_true")
     jdg.add_argument("--style-gate-summary", default=None)
+    jdg.add_argument("--pairwise-view", choices=PAIRWISE_VIEW_CHOICES, default=PAIRWISE_VIEW_DEFAULT)
     jdg.set_defaults(func=cmd_judge)
 
     sty = sub.add_parser("audit-style", help="Run paired surface-form leakage audit and gate")

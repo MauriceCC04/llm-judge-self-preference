@@ -16,7 +16,7 @@ TARGET_PAIRS = 250
 STUDY_STYLE = "trailrunning"
 DEFAULT_PRIMARY_GOAL = "to become a faster and more durable trail runner"
 
-# Exactly four active judges, aligned with the project goal.
+# Exactly four active judges, aligned with the frozen study goal.
 ACTIVE_JUDGE_NAMES: list[str] = [
     "llama_8b_judge",
     "qwen_7b_judge",
@@ -27,15 +27,20 @@ ACTIVE_JUDGE_NAMES: list[str] = [
 PAIRWISE_N_RUNS = 5
 PAIRWISE_N_POSITIONS = 2
 PILOT_PAIR_LIMIT = 30
+PAIRWISE_VIEW_DEFAULT = "raw_normalized"
+PAIRWISE_VIEW_CHOICES: tuple[str, ...] = (
+    "raw_normalized",
+    "canonical_masked",
+)
 
-# Defaults are kept modest so exact 250/250 study totals can be reached using
-# the shard flags (fixture subsets + seed offsets) without overproducing too
-# many plans by default.
-DEFAULT_LLM_PLANS_PER_FIXTURE_PER_MODEL = 15
-DEFAULT_PROGRAMMATIC_PLANS_PER_FIXTURE = 31
+# The frozen 512-plan study uses exact-count generation:
+#   * LLM arm: 16 plans per fixture per model across 8 fixtures and 2 models = 256
+#   * Programmatic arm: 32 plans per fixture across 8 fixtures = 256
+DEFAULT_LLM_PLANS_PER_FIXTURE_PER_MODEL = 16
+DEFAULT_PROGRAMMATIC_PLANS_PER_FIXTURE = 32
 
-TARGET_LLM_PLAN_COUNT = 250
-TARGET_PROGRAMMATIC_PLAN_COUNT = 250
+TARGET_LLM_PLAN_COUNT = 256
+TARGET_PROGRAMMATIC_PLAN_COUNT = 256
 TARGET_TOTAL_PLAN_COUNT = TARGET_LLM_PLAN_COUNT + TARGET_PROGRAMMATIC_PLAN_COUNT
 
 MATCH_FEATURE_WEIGHTS: dict[str, float] = {

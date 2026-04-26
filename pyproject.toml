@@ -12,19 +12,9 @@ license = "MIT"
 authors = [{ name = "Study authors" }]
 
 dependencies = [
-    # Pin trailtraining to the SHA verified by tests/verify_trailtraining_surface
-    # (or by manual symbol audit). DO NOT use @main — the study reaches into
-    # several private helpers (_apply_eval_coach_guardrails_compat,
-    # _finalize_training_plan_artifact, _merge_machine_plan_and_explanations,
-    # _parse_machine_plan, _parse_plan_explanation) whose signatures are not
-    # part of any public stability contract.
-    #
-    # Replace <PINNED_SHA> with the SHA you have verified against. To bump:
-    #   1. git -C trailtraining log -1 --pretty=%H
-    #   2. update the SHA below
-    #   3. re-run `python tests/run_tests.py`
-    #   4. add an INC entry in INCIDENTS.md recording the new SHA
-    "trailtraining @ git+https://github.com/MauriceCC04/trailtraining.git@<PINNED_SHA>",
+    # Frozen upstream pin for the 512-plan study.
+    # Keep this in sync with requirements-hpc.txt and generate.study_manifest.
+    "trailtraining @ git+https://github.com/MauriceCC04/trailtraining.git@3e7f1793ca051ba1aae05f1714d594691202ad7e",
     "openai>=1.0.0",
     "pydantic>=2.8",
 ]

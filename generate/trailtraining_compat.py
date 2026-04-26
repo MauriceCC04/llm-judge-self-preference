@@ -28,6 +28,18 @@ def _load_fixture(fixture_dir: Path) -> dict[str, Any]:
     }
 
 
+def _extract_response_model_id(response: Any, fallback: str | None = None) -> str | None:
+    candidates = [
+        getattr(response, "model", None),
+        getattr(getattr(response, "response", None), "model", None),
+        (response.get("model") if isinstance(response, dict) else None),
+    ]
+    for candidate in candidates:
+        if isinstance(candidate, str) and candidate.strip():
+            return candidate.strip()
+    return fallback
+
+
 def run_two_stage_generation_compat(
     *,
     fixture_dir: Path,
@@ -112,6 +124,7 @@ def run_two_stage_generation_compat(
     if source_cfg.temperature is not None:
         machine_kwargs["temperature"] = source_cfg.temperature
     machine_resp = call_with_schema(source_client, machine_kwargs, MACHINE_PLAN_SCHEMA)
+    actual_source_model = _extract_response_model_id(machine_resp, fallback=source_model)
     machine_text = getattr(machine_resp, "output_text", None) or str(machine_resp)
     machine_obj = _parse_machine_plan(
         machine_text,
@@ -201,6 +214,8 @@ def run_two_stage_generation_compat(
     if explainer_cfg.temperature is not None:
         explain_kwargs["temperature"] = explainer_cfg.temperature
     explain_resp = call_with_schema(explainer_client, explain_kwargs, PLAN_EXPLANATION_SCHEMA)
+    actual_explainer_model = _extract_response_model_id(explain_resp, fallback=explainer_model)
+    explainer_model_verified = bool(actual_explainer_model and actual_explainer_model == explainer_model)
     explain_text = getattr(explain_resp, "output_text", None) or str(explain_resp)
     explanation_obj = _parse_plan_explanation(
         explain_text,
@@ -231,7 +246,9 @@ def run_two_stage_generation_compat(
     runtime_metadata = {
         **describe_client_routing(),
         "source_model": source_model,
-        "actual_explainer_model": explainer_model,
+        "actual_source_model": actual_source_model,
+        "actual_explainer_model": actual_explainer_model,
+        "explainer_model_verified": explainer_model_verified,
         "seed": seed,
     }
     return json.dumps(obj, indent=2, ensure_ascii=False, default=_json_default), runtime_metadata

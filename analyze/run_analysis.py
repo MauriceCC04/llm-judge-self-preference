@@ -1,7 +1,4 @@
-"""analyze/run_analysis.py — complete paper-ready analysis pipeline.
-
-Produces all tables and figures from the raw JSONL judgment files.
-"""
+"""analyze/run_analysis.py — complete paper-ready analysis pipeline."""
 from __future__ import annotations
 
 import argparse
@@ -65,8 +62,8 @@ def step_position_bias(df_pair: "pd.DataFrame", out: Path) -> dict:
 
 
 def step_h1(df_pair: "pd.DataFrame", out: Path) -> dict:
-    from analyze.models import fit_h1_model
     from analyze.figures import save_h1_forest_plot
+    from analyze.models import fit_h1_model
 
     if df_pair.empty:
         result = {
@@ -78,20 +75,37 @@ def step_h1(df_pair: "pd.DataFrame", out: Path) -> dict:
         return result
 
     result = fit_h1_model(df_pair)
-    (out / "h1_logistic_result.json").write_text(json.dumps(result, indent=2, default=str))
+    per_judge_results = []
+    for judge, group in df_pair.groupby("judge"):
+        judge_result = fit_h1_model(group)
+        judge_result["label"] = str(judge)
+        judge_result["judge"] = str(judge)
+        per_judge_results.append(judge_result)
+
+    payload = {
+        "overall": result,
+        "by_judge": per_judge_results,
+    }
+    (out / "h1_logistic_result.json").write_text(json.dumps(payload, indent=2, default=str))
 
     try:
-        save_h1_forest_plot(result, out / "h1_forest.png")
+        save_h1_forest_plot(result, out / "h1_forest.png", per_judge_results=per_judge_results)
     except Exception as exc:
         print(f"  [warn] H1 forest plot: {exc}")
 
+    ci_low = result.get("prob_llm_ci_low", float("nan"))
+    ci_high = result.get("prob_llm_ci_high", float("nan"))
+    pval = result.get("pvalue_is_llm", float("nan"))
     status = "SUPPORTED" if (
         result.get("prob_llm", 0.5) > 0.5
-        and (result.get("pvalue_is_llm", 1.0) or 1.0) < 0.05
+        and ci_low == ci_low
+        and ci_low > 0.5
+        and (pval == pval and pval < 0.05)
     ) else "NOT SUPPORTED"
     print(
         f"  H1: P(prefer LLM)={result.get('prob_llm', '?')}  "
-        f"p={result.get('pvalue_is_llm', '?')}  [{status}]"
+        f"95% CI=[{ci_low}, {ci_high}]  "
+        f"p(one-sided >0.5)={pval}  [{status}]"
     )
     return result
 
@@ -102,8 +116,8 @@ def step_h2(
     *,
     pairs_path: Path,
 ) -> dict:
-    from analyze.rubric_deltas import rubric_paired_contrasts
     from analyze.figures import save_rubric_heatmap, save_rubric_heatmap_csv
+    from analyze.rubric_deltas import rubric_paired_contrasts
 
     if df_soft.empty:
         print("  H2: no soft-eval data")
@@ -115,17 +129,18 @@ def step_h2(
         )
 
     result = rubric_paired_contrasts(df_soft, pairs_path=pairs_path)
+    overall = result.get("overall", {})
     (out / "h2_rubric_deltas.json").write_text(json.dumps(result, indent=2, default=str))
-    save_rubric_heatmap_csv(result, out / "h2_rubric_deltas.csv")
+    save_rubric_heatmap_csv(overall, out / "h2_rubric_deltas.csv")
 
     try:
-        save_rubric_heatmap(result, out / "h2_rubric_heatmap.png")
+        save_rubric_heatmap(overall, out / "h2_rubric_heatmap.png")
     except Exception as exc:
         print(f"  [warn] H2 heatmap: {exc}")
 
-    exp_delta = result.get("explanation_quality", {}).get("delta", float("nan"))
-    coh_delta = result.get("plan_coherence", {}).get("delta", float("nan"))
-    exp_sig = result.get("explanation_quality", {}).get("significant", False)
+    exp_delta = overall.get("explanation_quality", {}).get("delta", float("nan"))
+    coh_delta = overall.get("plan_coherence", {}).get("delta", float("nan"))
+    exp_sig = overall.get("explanation_quality", {}).get("significant", False)
 
     try:
         h2_supported = float(exp_delta) > float(coh_delta) and exp_sig
@@ -133,17 +148,16 @@ def step_h2(
     except Exception:
         status = "?"
 
-    paired_flag = result.get("explanation_quality", {}).get("paired")
-    n_pairs = result.get("explanation_quality", {}).get("n_pairs")
+    n_obs = overall.get("explanation_quality", {}).get("n_obs")
     print(
         f"  H2: explanation_quality Δ={exp_delta}  plan_coherence Δ={coh_delta}  "
-        f"paired={paired_flag}  n_pairs={n_pairs}  [{status}]"
+        f"paired=True  n_obs={n_obs}  [{status}]"
     )
     return result
 
 
 def step_h3(df_pair: "pd.DataFrame", out: Path) -> dict:
-    from analyze.models import fit_h3_model, add_same_family_column
+    from analyze.models import add_same_family_column, fit_h3_model
 
     if df_pair.empty:
         result = {
@@ -157,11 +171,23 @@ def step_h3(df_pair: "pd.DataFrame", out: Path) -> dict:
     if "same_family" not in df_pair.columns:
         df_pair = add_same_family_column(df_pair)
 
-    result = fit_h3_model(df_pair)
+    overall = fit_h3_model(df_pair)
+    by_family = {}
+    for judge_family, group in df_pair.groupby("judge_family"):
+        by_family[str(judge_family)] = fit_h3_model(group)
+    by_judge = {}
+    for judge, group in df_pair.groupby("judge"):
+        by_judge[str(judge)] = fit_h3_model(group)
+
+    result = {
+        "overall": overall,
+        "by_judge_family": by_family,
+        "by_judge": by_judge,
+    }
     (out / "h3_self_preference.json").write_text(json.dumps(result, indent=2, default=str))
 
-    coef = result.get("coef_same_family", float("nan"))
-    pval = result.get("pvalue_same_family", float("nan"))
+    coef = overall.get("coef_same_family", float("nan"))
+    pval = overall.get("pvalue_same_family", float("nan"))
     try:
         status = "SUPPORTED" if float(coef) > 0 and float(pval) < 0.05 else "NOT SUPPORTED"
     except Exception:
@@ -171,8 +197,8 @@ def step_h3(df_pair: "pd.DataFrame", out: Path) -> dict:
 
 
 def step_h4(df_pair: "pd.DataFrame", out: Path) -> dict:
-    from analyze.models import fit_h4_model
     from analyze.figures import save_h4_scale_curve
+    from analyze.models import fit_h4_model
 
     if df_pair.empty:
         result = {
@@ -215,7 +241,7 @@ def step_schema_failures(judgments_dir: Path, out: Path) -> None:
         return
 
     df = pd.DataFrame(records)
-    by_judge = df.groupby("judge").size().reset_index(name="n_failures")
+    by_judge = df.groupby(["judge", "call_type"]).size().reset_index(name="n_failures")
     by_judge.to_csv(out / "schema_failure_rates.csv", index=False)
     print(f"  Schema failures: {len(records)} total across {by_judge['judge'].nunique()} judges")
 
@@ -283,26 +309,31 @@ def write_markdown_summary(
         return "✅ **Supported**" if cond else "❌ Not supported"
 
     h1_prob = h1.get("prob_llm", float("nan"))
-    h1_pval = h1.get("pvalue_is_llm", 1.0)
+    h1_ci_low = h1.get("prob_llm_ci_low", float("nan"))
+    h1_ci_high = h1.get("prob_llm_ci_high", float("nan"))
+    h1_pval = h1.get("pvalue_is_llm", float("nan"))
     h1_supported = (
         isinstance(h1_prob, float)
+        and isinstance(h1_ci_low, float)
         and h1_prob > 0.5
+        and h1_ci_low > 0.5
         and isinstance(h1_pval, float)
         and h1_pval < 0.05
     )
 
-    exp_delta = h2.get("explanation_quality", {}).get("delta", float("nan"))
-    coh_delta = h2.get("plan_coherence", {}).get("delta", float("nan"))
-    exp_sig = h2.get("explanation_quality", {}).get("significant", False)
-    h2_paired = h2.get("explanation_quality", {}).get("paired", False)
-    h2_pairs = h2.get("explanation_quality", {}).get("n_pairs", "—")
+    h2_overall = h2.get("overall", {})
+    exp_delta = h2_overall.get("explanation_quality", {}).get("delta", float("nan"))
+    coh_delta = h2_overall.get("plan_coherence", {}).get("delta", float("nan"))
+    exp_sig = h2_overall.get("explanation_quality", {}).get("significant", False)
+    h2_obs = h2_overall.get("explanation_quality", {}).get("n_obs", "—")
     try:
         h2_supported = float(exp_delta) > float(coh_delta) and exp_sig
     except Exception:
         h2_supported = False
 
-    h3_coef = h3.get("coef_same_family", float("nan"))
-    h3_pval = h3.get("pvalue_same_family", 1.0)
+    h3_overall = h3.get("overall", h3)
+    h3_coef = h3_overall.get("coef_same_family", float("nan"))
+    h3_pval = h3_overall.get("pvalue_same_family", 1.0)
     try:
         h3_supported = float(h3_coef) > 0 and float(h3_pval) < 0.05
     except Exception:
@@ -339,22 +370,23 @@ Judges with |P(prefer_A) − 0.5| ≥ 0.2 (excluded from H1/H2): {biased if bias
 | Metric | Value |
 |---|---|
 | P(prefer LLM plan) | {_fmt(h1_prob)} |
-| Log-odds intercept | {_fmt(h1.get("coef_is_llm"))} |
-| p-value (cluster-robust) | {_fmt(h1_pval)} |
+| 95% CI | [{_fmt(h1_ci_low)}, {_fmt(h1_ci_high)}] |
+| One-sided p-value for P(prefer LLM) > 0.5 | {_fmt(h1_pval)} |
+| Descriptive log-odds at observed rate | {_fmt(h1.get("coef_is_llm"))} |
 | N observations | {h1.get("n_obs", "—")} |
-| Converged | {h1.get("converged", "—")} |
+| Method | {h1.get("method", "—")} |
 
 ---
 
 ## H2 — Per-rubric gap (mechanism)  {_supported(h2_supported)}
 
-Paired analysis: {h2_paired}  
-Matched pairs contributing: {h2_pairs}
+Paired analysis: True  
+Matched judge-pair observations contributing (explanation_quality): {h2_obs}
 
 | Rubric | Δ (LLM − prog) | p (Holm) | Significant |
 |---|---|---|---|
 """
-    for rid, stats in sorted(h2.items()):
+    for rid, stats in sorted(h2_overall.items()):
         md += (
             f"| {rid} | {_fmt(stats.get('delta'))} | "
             f"{_fmt(stats.get('pvalue_holm'))} | "
@@ -365,6 +397,18 @@ Matched pairs contributing: {h2_pairs}
 **H2 verdict:** explanation_quality Δ={_fmt(exp_delta)}, plan_coherence Δ={_fmt(coh_delta)}.  
 {"Mechanism hypothesis supported: explanation gap > coherence gap." if h2_supported else "Mechanism hypothesis not supported."}
 
+### H2 by judge family
+"""
+    for family, family_stats in sorted(h2.get("by_judge_family", {}).items()):
+        md += f"\n#### {family}\n\n| Rubric | Δ | p (Holm) | Significant |\n|---|---|---|---|\n"
+        for rid, stats in sorted(family_stats.items()):
+            md += (
+                f"| {rid} | {_fmt(stats.get('delta'))} | "
+                f"{_fmt(stats.get('pvalue_holm'))} | "
+                f"{'✅' if stats.get('significant') else '—'} |\n"
+            )
+
+    md += f"""
 ---
 
 ## H3 — Self-preference  {_supported(h3_supported)}
@@ -373,7 +417,14 @@ Matched pairs contributing: {h2_pairs}
 |---|---|
 | coef (same_family) | {_fmt(h3_coef)} |
 | p-value | {_fmt(h3_pval)} |
-| N | {h3.get("n_obs", "—")} |
+| N | {h3_overall.get("n_obs", "—")} |
+
+### H3 by judge family
+"""
+    for family, stats in sorted(h3.get("by_judge_family", {}).items()):
+        md += f"\n- **{family}**: coef={_fmt(stats.get('coef_same_family'))}, p={_fmt(stats.get('pvalue_same_family'))}, n={stats.get('n_obs', '—')}"
+
+    md += f"""
 
 ---
 
@@ -393,6 +444,7 @@ Matched pairs contributing: {h2_pairs}
 |---|---|
 | Flagged features | {style_flagged} |
 | Total audited features | {style_n} |
+| Interpretation | No flagged leakage above the audit threshold, not proof of zero leakage |
 | Summary JSON | style_audit_summary.json |
 """
     out_path.write_text(md, encoding="utf-8")
@@ -409,6 +461,7 @@ def main(argv: list[str] | None = None) -> None:
     parser.add_argument("--output", default="results/")
     parser.add_argument("--expected-explainer", default=EXPLAINER_MODEL_ID)
     parser.add_argument("--require-verified-explainer", action="store_true")
+    parser.add_argument("--pairwise-view", default=None)
     args = parser.parse_args(argv)
 
     _require_pandas()
@@ -433,6 +486,7 @@ def main(argv: list[str] | None = None) -> None:
         expected_explainer=args.expected_explainer,
         require_verified_explainer=args.require_verified_explainer,
         return_exclusions=True,
+        pairwise_view=args.pairwise_view,
     )
     print(f"  {len(df_pair)} pairwise records\n")
 
@@ -510,6 +564,7 @@ def main(argv: list[str] | None = None) -> None:
         "provenance_exclusions": provenance_exclusions,
         "expected_explainer": args.expected_explainer,
         "require_verified_explainer": args.require_verified_explainer,
+        "pairwise_view": args.pairwise_view,
         "n_pairwise": len(df_pair),
         "n_soft_eval": len(df_soft),
         "biased_judges_excluded": biased,

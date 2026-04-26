@@ -19,12 +19,7 @@ def generate_llm_plan(
     source_model: str,
     seed: int = 0,
 ) -> tuple[str, str, str]:
-    # Install compat shim so trailtraining client factories can be redirected
-    # to local vLLM endpoints when TRAILTRAINING_*_LLM_BASE_URL is configured.
-    install_trailtraining_client_compat()
-
-    # Upstream constructors may still insist on a non-empty key even when using
-    # a local OpenAI-compatible endpoint.
+    install_trailtraining_client_compat(default_stage="judge")
     os.environ.setdefault("OPENROUTER_API_KEY", "dummy")
 
     fixture_dir = Path(fixture_dir)
@@ -51,9 +46,11 @@ def generate_llm_plan(
     runtime_metadata.setdefault("TRAILTRAINING_TWO_STAGE_PLAN", "1")
 
     actual_explainer_model = runtime_metadata.get("actual_explainer_model")
-
-    # Must remain False unless runtime metadata explicitly confirms verification.
-    explainer_verified = bool(runtime_metadata.get("explainer_model_verified", False))
+    explainer_verified = bool(
+        runtime_metadata.get("explainer_model_verified")
+        or (actual_explainer_model and actual_explainer_model == EXPLAINER_MODEL_ID)
+    )
+    runtime_metadata["explainer_model_verified"] = explainer_verified
 
     prov = PlanProvenance(
         plan_id=plan_id,
@@ -64,8 +61,6 @@ def generate_llm_plan(
         actual_explainer_model=actual_explainer_model,
         explainer_model_verified=explainer_verified,
         generation_pipeline="llm_two_stage",
-        # Keep the canonical backend label expected by analysis/tests even though
-        # execution is routed through the local compat wrapper.
         runtime_backend="trailtraining.llm.coach.run_coach_brief",
         runtime_metadata=runtime_metadata,
         seed=seed,

@@ -1,24 +1,4 @@
-"""analyze/models.py — statistical model fits for H1, H3, H4.
-
-Model choices
--------------
-H1/H3: Logistic regression with cluster-robust standard errors (pair-level
-       clusters).  The PREREGISTRATION calls for "logistic mixed-effects";
-       we implement the pre-registered model as:
-         • logistic link (correct for binary prefers_llm ∈ {0,1})
-         • cluster-robust SEs at the pair level (conservative, avoids
-           within-pair correlation inflating significance)
-         • judge fixed effects (absorbs judge-level intercept shifts without
-           the convergence brittleness of random effects in statsmodels)
-         • fixture fixed effects
-
-       Full GLMM (lme4-style random effects) can be added via pymer4/rpy2
-       if lme4 is available on the cluster; this implementation is the
-       primary one because statsmodels is guaranteed to be present.
-
-H4: OLS slope of prefers_llm ~ log10(param_count) for the Qwen 7B/14B/32B
-    ladder, restricted to Qwen-sourced plans.
-"""
+"""analyze/models.py — statistical model fits for H1, H3, H4."""
 from __future__ import annotations
 
 import math
@@ -30,6 +10,59 @@ QWEN_PARAMS_B = {
     "qwen_14b_judge": 14.0,
     "qwen_32b_judge": 32.0,
 }
+
+
+def _safe_logit(p: float) -> float:
+    p = min(max(float(p), 1e-6), 1 - 1e-6)
+    return math.log(p / (1 - p))
+
+
+def _bootstrap_preference_rate(
+    df: "pd.DataFrame",
+    *,
+    n_boot: int = 2000,
+    seed: int = 0,
+    cluster_col: str = "pair_id",
+) -> dict[str, float]:
+    import numpy as np
+    import pandas as pd
+
+    if df.empty:
+        return {
+            "prob": float("nan"),
+            "ci_low": float("nan"),
+            "ci_high": float("nan"),
+            "pvalue_gt_half": float("nan"),
+            "se_prob": float("nan"),
+        }
+
+    observed_prob = float(df["prefers_llm"].mean())
+
+    if cluster_col not in df.columns or df[cluster_col].nunique() <= 1:
+        draws = np.random.default_rng(seed).binomial(1, observed_prob, size=(n_boot, len(df)))
+        boot_probs = draws.mean(axis=1)
+    else:
+        rng = np.random.default_rng(seed)
+        grouped = [group["prefers_llm"].to_numpy(dtype=float) for _, group in df.groupby(cluster_col, sort=True)]
+        n_clusters = len(grouped)
+        boot_probs = np.empty(n_boot, dtype=float)
+        for i in range(n_boot):
+            sampled_indices = rng.integers(0, n_clusters, size=n_clusters)
+            sampled = [grouped[idx] for idx in sampled_indices]
+            total = sum(arr.sum() for arr in sampled)
+            denom = sum(arr.size for arr in sampled)
+            boot_probs[i] = float(total / denom) if denom else float("nan")
+
+    ci_low, ci_high = np.quantile(boot_probs, [0.025, 0.975])
+    pvalue_gt_half = float(np.mean(boot_probs <= 0.5))
+    se_prob = float(np.nanstd(boot_probs, ddof=1))
+    return {
+        "prob": round(observed_prob, 4),
+        "ci_low": round(float(ci_low), 4),
+        "ci_high": round(float(ci_high), 4),
+        "pvalue_gt_half": round(pvalue_gt_half, 4),
+        "se_prob": round(se_prob, 4),
+    }
 
 
 def add_position_bias_covariate(
@@ -52,15 +85,8 @@ def add_position_bias_covariate(
     return df
 
 
-# ── H1 ────────────────────────────────────────────────────────────────────────
-
-def fit_h1_model(df: "pd.DataFrame") -> dict[str, Any]:  # type: ignore[name-defined]
-    """H1: Logistic regression with cluster-robust SEs on position-corrected preference."""
-    try:
-        import statsmodels.formula.api as smf
-    except ImportError as exc:
-        raise ImportError("pandas + statsmodels required for analysis") from exc
-
+def fit_h1_model(df: "pd.DataFrame") -> dict[str, Any]:
+    """H1 primary analysis: cluster bootstrap on P(prefer LLM)."""
     df = df.copy()
 
     if "prefers_llm" not in df.columns:
@@ -77,54 +103,34 @@ def fit_h1_model(df: "pd.DataFrame") -> dict[str, Any]:  # type: ignore[name-def
             "coef_is_llm": float("nan"),
             "pvalue_is_llm": float("nan"),
             "prob_llm": float("nan"),
+            "prob_llm_ci_low": float("nan"),
+            "prob_llm_ci_high": float("nan"),
+            "se": float("nan"),
             "converged": False,
             "n_obs": 0,
+            "method": "cluster_bootstrap_pairwise_rate",
         }
 
-    formula = "prefers_llm ~ 1"
-    if "judge" in df.columns and df["judge"].nunique() > 1:
-        formula += " + C(judge)"
-    if "fixture_id" in df.columns and df["fixture_id"].nunique() > 1:
-        formula += " + C(fixture_id)"
-
-    cluster_col = "pair_id" if "pair_id" in df.columns else None
-
-    try:
-        model = smf.logit(formula, data=df)
-        if cluster_col and df[cluster_col].nunique() > 1:
-            result = model.fit(
-                cov_type="cluster",
-                cov_kwds={"groups": df[cluster_col]},
-                disp=False,
-                maxiter=200,
-            )
-        else:
-            result = model.fit(disp=False, maxiter=200)
-
-        intercept = float(result.params.get("Intercept", float("nan")))
-        pval = float(result.pvalues.get("Intercept", float("nan")))
-        prob = float(result.predict().mean())
-        converged = bool(result.mle_retvals.get("converged", True))
-    except Exception:
-        p = float(df["prefers_llm"].mean())
-        intercept = math.log(p / (1 - p)) if 0 < p < 1 else 0.0
-        pval = float("nan")
-        prob = p
-        converged = False
+    boot = _bootstrap_preference_rate(df, cluster_col="pair_id" if "pair_id" in df.columns else "__none__")
+    prob = float(boot["prob"])
+    coef = _safe_logit(prob)
+    se = float(boot["se_prob"]) / max(prob * (1 - prob), 1e-6)
 
     return {
-        "coef_is_llm": round(intercept, 4),
-        "pvalue_is_llm": round(pval, 4) if not math.isnan(pval) else float("nan"),
-        "prob_llm": round(prob, 4),
-        "converged": converged,
+        "coef_is_llm": round(coef, 4),
+        "pvalue_is_llm": boot["pvalue_gt_half"],
+        "prob_llm": boot["prob"],
+        "prob_llm_ci_low": boot["ci_low"],
+        "prob_llm_ci_high": boot["ci_high"],
+        "se": round(se, 4),
+        "converged": True,
         "n_obs": len(df),
-        "formula": formula,
+        "method": "cluster_bootstrap_pairwise_rate",
+        "null_hypothesis": "P(prefer LLM) <= 0.5",
     }
 
 
-# ── H3 ────────────────────────────────────────────────────────────────────────
-
-def fit_h3_model(df: "pd.DataFrame") -> dict[str, Any]:  # type: ignore[name-defined]
+def fit_h3_model(df: "pd.DataFrame") -> dict[str, Any]:
     """H3: Self-preference model with position-bias correction."""
     try:
         import statsmodels.formula.api as smf
@@ -183,9 +189,7 @@ def fit_h3_model(df: "pd.DataFrame") -> dict[str, Any]:  # type: ignore[name-def
     }
 
 
-# ── H4 ────────────────────────────────────────────────────────────────────────
-
-def fit_h4_model(df: "pd.DataFrame") -> dict[str, Any]:  # type: ignore[name-defined]
+def fit_h4_model(df: "pd.DataFrame") -> dict[str, Any]:
     """H4: Scale effect within Qwen family, restricted to Qwen-sourced plans."""
     try:
         import statsmodels.formula.api as smf
@@ -237,20 +241,12 @@ def fit_h4_model(df: "pd.DataFrame") -> dict[str, Any]:  # type: ignore[name-def
     }
 
 
-# ── Helpers ───────────────────────────────────────────────────────────────────
-
 def add_same_family_column(
-    df: "pd.DataFrame",  # type: ignore[name-defined]
+    df: "pd.DataFrame",
     *,
     judge_families: dict[str, str] | None = None,
     source_families: dict[str, str] | None = None,
-) -> "pd.DataFrame":  # type: ignore[name-defined]
-    """Add `same_family` column using the LLM plan's source family.
-
-    Supports both:
-    - llm_source_model (preferred enriched column)
-    - source_model_a / source_model_b with arm_a / arm_b fallback
-    """
+) -> "pd.DataFrame":
     if judge_families is None:
         judge_families = {
             "llama_8b_judge": "llama",

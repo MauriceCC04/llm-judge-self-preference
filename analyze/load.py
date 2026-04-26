@@ -1,8 +1,4 @@
-"""analyze/load.py — load JSONL judgments + provenance sidecars → DataFrame.
-
-Provenance sidecars supply arm, fixture_id, source_model, and pair-level LLM
-identity columns used by the H3/H4 self-preference analyses.
-"""
+"""analyze/load.py — load JSONL judgments + provenance sidecars → DataFrame."""
 from __future__ import annotations
 
 import json
@@ -13,7 +9,6 @@ Kind = Literal["pairwise", "soft_eval"]
 
 
 def _load_provenance_index(provenance_dir: Path) -> dict[str, dict[str, Any]]:
-    """Return {plan_id: prov_dict} for all *.provenance.json files found."""
     index: dict[str, dict[str, Any]] = {}
     for prov_path in sorted(provenance_dir.glob("*.provenance.json")):
         try:
@@ -90,15 +85,20 @@ def collect_invalid_plan_ids(
             explainer_model = None
             actual_explainer_model = None
             explainer_model_verified = None
+            effective_verified = False
         else:
             explainer_model = prov.get("explainer_model")
             actual_explainer_model = prov.get("actual_explainer_model")
             explainer_model_verified = prov.get("explainer_model_verified")
+            effective_verified = bool(explainer_model_verified) or (
+                explainer_model == expected_explainer and actual_explainer_model == expected_explainer
+            )
+
             if explainer_model != expected_explainer:
                 reason = "explainer_model_mismatch"
             elif actual_explainer_model and actual_explainer_model != expected_explainer:
                 reason = "actual_explainer_model_mismatch"
-            elif require_verified_explainer and not bool(explainer_model_verified):
+            elif require_verified_explainer and not effective_verified:
                 reason = "explainer_model_unverified"
 
         if reason is not None:
@@ -110,6 +110,7 @@ def collect_invalid_plan_ids(
                     "explainer_model": explainer_model,
                     "actual_explainer_model": actual_explainer_model,
                     "explainer_model_verified": explainer_model_verified,
+                    "effective_explainer_verified": effective_verified,
                 }
             )
 
@@ -147,8 +148,8 @@ def load_judgments(
     expected_explainer: str | None = None,
     require_verified_explainer: bool = False,
     return_exclusions: bool = False,
+    pairwise_view: str | None = None,
 ) -> "pd.DataFrame | tuple[pd.DataFrame, list[dict[str, Any]]]":
-    """Join judgment JSONL records with provenance sidecars."""
     try:
         import pandas as pd
     except ImportError as exc:
@@ -171,9 +172,14 @@ def load_judgments(
                 if not line:
                     continue
                 try:
-                    records.append(json.loads(line))
+                    record = json.loads(line)
                 except json.JSONDecodeError:
-                    pass
+                    continue
+                if kind == "pairwise" and pairwise_view is not None:
+                    record_view = str(record.get("pairwise_view") or "raw_normalized")
+                    if record_view != pairwise_view:
+                        continue
+                records.append(record)
 
     if not records:
         empty_df = pd.DataFrame()
@@ -204,6 +210,7 @@ def load_judgments(
                 df["plan_a_id"].apply(lambda x: _get(x, "fixture_id"))
             )
 
+        df["pairwise_view"] = df.get("pairwise_view", "raw_normalized").fillna("raw_normalized")
         df["llm_side"] = df.apply(_pick_llm_side, axis=1)
         df["llm_plan_id"] = df.apply(
             lambda r: r["plan_a_id"]
@@ -276,7 +283,6 @@ def detect_position_bias(
     *,
     threshold: float = 0.2,
 ) -> dict[str, Any]:
-    """Detect position bias for a single-judge DataFrame."""
     judge_name = df["judge"].iloc[0] if "judge" in df.columns and len(df) else "unknown"
     n = len(df)
     if n == 0:

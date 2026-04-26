@@ -1,10 +1,4 @@
-"""analyze/figures.py — forest plots, rubric heatmaps, position-bias audit.
-
-All functions are matplotlib-based and write to files so they can be called
-from a headless HPC node (no display required).
-
-Requires: matplotlib, pandas, numpy (all in the [analysis] extra).
-"""
+"""analyze/figures.py — forest plots, rubric heatmaps, position-bias audit."""
 from __future__ import annotations
 
 import math
@@ -24,10 +18,9 @@ def _require_matplotlib() -> "types.ModuleType":  # type: ignore[name-defined]
 
 
 def save_position_bias_audit(
-    df: "pd.DataFrame",  # type: ignore[name-defined]
+    df: "pd.DataFrame",
     output_path: Path,
 ) -> None:
-    """Write per-judge position-bias statistics as a CSV and a bar chart."""
     try:
         import pandas as pd
     except ImportError:
@@ -81,7 +74,6 @@ def save_h1_forest_plot(
     *,
     per_judge_results: list[dict[str, Any]] | None = None,
 ) -> None:
-    """Forest plot showing overall H1 estimate and per-judge estimates."""
     try:
         _require_matplotlib()
         import matplotlib.pyplot as plt
@@ -94,7 +86,7 @@ def save_h1_forest_plot(
     rows: list[dict[str, Any]] = []
     if per_judge_results:
         rows.extend(per_judge_results)
-    rows.append({**h1_result, "label": "Overall (mixed-effects)", "is_overall": True})
+    rows.append({**h1_result, "label": "Overall (descriptive bootstrap)", "is_overall": True})
 
     labels = [r.get("label", r.get("judge", "?")) for r in rows]
     coefs = [float(r.get("coef_is_llm", 0.0) or 0.0) for r in rows]
@@ -112,8 +104,8 @@ def save_h1_forest_plot(
     ax.axvline(0.0, color="black", linewidth=1.5, linestyle="--", label="No preference")
     ax.set_yticks(y)
     ax.set_yticklabels(labels)
-    ax.set_xlabel("Log-odds coefficient for LLM plan preference\n(positive = prefer LLM)")
-    ax.set_title("H1: Forest plot — judge-level and pooled LLM-plan preference")
+    ax.set_xlabel("Descriptive log-odds for LLM-plan preference\n(positive = prefer LLM)")
+    ax.set_title("H1: Judge-level and pooled LLM-plan preference")
     ax.legend(fontsize=8)
     fig.tight_layout()
 
@@ -128,7 +120,6 @@ def save_rubric_heatmap(
     rubric_results: dict[str, Any],
     output_path: Path,
 ) -> None:
-    """Heatmap of per-rubric score deltas (LLM − programmatic)."""
     try:
         _require_matplotlib()
         import matplotlib.pyplot as plt
@@ -162,7 +153,7 @@ def save_rubric_heatmap(
         )
 
     ax.set_xlabel("Score delta: mean(LLM) − mean(programmatic)\n(red = Holm-significant)")
-    ax.set_title("H2: Per-rubric score differences (LLM arm vs programmatic arm)")
+    ax.set_title("H2: Per-rubric score differences (paired judge-level deltas)")
     fig.tight_layout()
 
     out = Path(output_path)
@@ -176,7 +167,6 @@ def save_rubric_heatmap_csv(
     rubric_results: dict[str, Any],
     output_path: Path,
 ) -> None:
-    """Write rubric delta table as CSV."""
     try:
         import pandas as pd
     except ImportError:
@@ -190,10 +180,9 @@ def save_rubric_heatmap_csv(
 
 
 def save_h4_scale_curve(
-    df: "pd.DataFrame",  # type: ignore[name-defined]
+    df: "pd.DataFrame",
     output_path: Path,
 ) -> None:
-    """Scatter + regression line for H4 (param count vs preference rate)."""
     try:
         _require_matplotlib()
         import matplotlib.pyplot as plt
@@ -259,13 +248,12 @@ def save_h4_scale_curve(
 
 
 def save_all_figures(
-    df_pair: "pd.DataFrame",  # type: ignore[name-defined]
-    df_soft: "pd.DataFrame",  # type: ignore[name-defined]
+    df_pair: "pd.DataFrame",
+    df_soft: "pd.DataFrame",
     h1_result: dict[str, Any],
     h2_result: dict[str, Any],
     output_dir: Path,
 ) -> None:
-    """Generate the full figure pack into *output_dir*."""
     output_dir = Path(output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
 

@@ -5,7 +5,7 @@ Pipeline per plan:
     2. derive a fixture-aware structural sampler config
     3. sample machine plan
     4. apply guardrails
-    5. run shared explainer
+    5. run shared explainer with explicit explainer-stage routing
 """
 from __future__ import annotations
 
@@ -50,23 +50,6 @@ def _next_day(iso_date: str) -> str:
     return (date.fromisoformat(iso_date) + timedelta(days=1)).isoformat()
 
 
-def _make_client_from_env():
-    from openai import OpenAI
-
-    base_url = (os.getenv("TRAILTRAINING_LLM_BASE_URL") or "").strip()
-    api_key = (os.getenv("OPENROUTER_API_KEY") or os.getenv("TRAILTRAINING_OPENROUTER_API_KEY") or "").strip()
-    if api_key.lower() == "dummy":
-        api_key = ""
-    if base_url:
-        return OpenAI(base_url=base_url, api_key=api_key or "dummy")
-    if not api_key:
-        raise RuntimeError(
-            "No LLM endpoint configured. Set TRAILTRAINING_LLM_BASE_URL "
-            "(local vLLM) or OPENROUTER_API_KEY / TRAILTRAINING_OPENROUTER_API_KEY."
-        )
-    return OpenAI(base_url="https://openrouter.ai/api/v1", api_key=api_key)
-
-
 def _sampler_cfg_from_fixture(
     data: dict[str, Any],
     *,
@@ -86,6 +69,18 @@ def _sampler_cfg_from_fixture(
     )
 
 
+def _extract_response_model_id(response: Any, fallback: str | None = None) -> str | None:
+    candidates = [
+        getattr(response, "model", None),
+        getattr(getattr(response, "response", None), "model", None),
+        (response.get("model") if isinstance(response, dict) else None),
+    ]
+    for candidate in candidates:
+        if isinstance(candidate, str) and candidate.strip():
+            return candidate.strip()
+    return fallback
+
+
 def generate_programmatic_plan(
     fixture_dir: Path,
     output_dir: Path,
@@ -93,7 +88,7 @@ def generate_programmatic_plan(
     seed: int = 0,
     sampler_cfg: Optional[StructuralSamplerConfig] = None,
 ) -> tuple[str, str, str]:
-    install_trailtraining_client_compat()
+    install_trailtraining_client_compat(default_stage="judge")
     os.environ.setdefault("OPENROUTER_API_KEY", "dummy")
 
     from trailtraining.llm.coach import CoachConfig
@@ -137,28 +132,16 @@ def generate_programmatic_plan(
     )
     output_path = output_dir / f"{plan_id}.json"
 
-    try:
-        from trailtraining.llm.coach import run_training_plan_from_machine_plan
+    plan_json, actual_explainer_model = _run_explainer_directly(
+        skeleton=skeleton,
+        cfg=coach_cfg,
+        source_data=source_data,
+        deterministic_forecast=data["forecast"],
+        effective=effective,
+        out_path=output_path,
+    )
 
-        plan_json, _ = run_training_plan_from_machine_plan(
-            skeleton,
-            cfg=coach_cfg,
-            source_data=source_data,
-            deterministic_forecast=data["forecast"],
-            effective=effective,
-            output_path=str(output_path),
-        )
-        runtime_backend = "trailtraining.llm.coach.run_training_plan_from_machine_plan"
-    except (ImportError, AttributeError):
-        plan_json = _run_explainer_directly(
-            skeleton=skeleton,
-            cfg=coach_cfg,
-            source_data=source_data,
-            deterministic_forecast=data["forecast"],
-            effective=effective,
-            out_path=output_path,
-        )
-        runtime_backend = "generate.programmatic_arm._run_explainer_directly"
+    explainer_verified = bool(actual_explainer_model and actual_explainer_model == EXPLAINER_MODEL_ID)
 
     prov = PlanProvenance(
         plan_id=plan_id,
@@ -166,13 +149,14 @@ def generate_programmatic_plan(
         arm="programmatic",
         source_model=None,
         explainer_model=EXPLAINER_MODEL_ID,
-        actual_explainer_model=EXPLAINER_MODEL_ID,
-        explainer_model_verified=True,
+        actual_explainer_model=actual_explainer_model,
+        explainer_model_verified=explainer_verified,
         generation_pipeline="programmatic_guardrailed_explainer",
-        runtime_backend=runtime_backend,
+        runtime_backend="generate.programmatic_arm._run_explainer_directly",
         runtime_metadata={
             **describe_client_routing(),
-            "actual_explainer_model": EXPLAINER_MODEL_ID,
+            "actual_explainer_model": actual_explainer_model,
+            "explainer_model_verified": explainer_verified,
             "fixture_block_label": fixture_meta.get("block_label"),
             "fixture_primary_goal": fixture_meta.get("primary_goal"),
             "fixture_weeks_to_race": fixture_meta.get("weeks_to_race"),
@@ -194,7 +178,7 @@ def _run_explainer_directly(
     deterministic_forecast: Any,
     effective: Any,
     out_path: Path,
-) -> str:
+) -> tuple[str, str | None]:
     import json
 
     import trailtraining.llm.coach_prompting as coach_prompting
@@ -238,6 +222,7 @@ def _run_explainer_directly(
 
     client = make_stage_client(stage="explainer", model_id=EXPLAINER_MODEL_ID)
     response = call_with_schema(client, explain_kwargs, PLAN_EXPLANATION_SCHEMA)
+    actual_explainer_model = _extract_response_model_id(response, fallback=EXPLAINER_MODEL_ID)
     explain_text = getattr(response, "output_text", None) or str(response)
     explanation_obj = _parse_plan_explanation(
         explain_text,
@@ -265,4 +250,4 @@ def _run_explainer_directly(
     )
 
     save_json(out_path, obj, compact=False)
-    return json.dumps(obj, indent=2, ensure_ascii=False, default=_json_default)
+    return json.dumps(obj, indent=2, ensure_ascii=False, default=_json_default), actual_explainer_model

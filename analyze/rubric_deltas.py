@@ -1,16 +1,4 @@
-"""analyze/rubric_deltas.py — H2 per-rubric paired contrasts with Holm correction.
-
-Study design note
------------------
-Soft-eval scores are produced for **every plan** independently.  To use a
-paired contrast (as PREREGISTRATION §H2 requires) we join on ``pair_id`` from
-the matched-pairs manifest: for each matched pair (llm_plan_id, prog_plan_id)
-we compute Δ = score(llm) − score(prog) and test whether mean(Δ) > 0.
-
-If the pairs manifest is not provided (e.g. during unit tests) we fall back to
-an independent-samples t-test across all plans in each arm; the results will
-then be labelled as unpaired in the returned dict.
-"""
+"""analyze/rubric_deltas.py — H2 per-rubric paired contrasts with Holm correction."""
 from __future__ import annotations
 
 import json
@@ -27,7 +15,6 @@ RUBRIC_IDS = [
 
 
 def _extract_rubric_score(row: Any, rubric_id: str) -> float | None:
-    """Pull a float score from a soft-eval DataFrame row."""
     rs = row.get("rubric_scores") or {}
     item = rs.get(rubric_id)
     if item is None:
@@ -42,109 +29,24 @@ def _extract_rubric_score(row: Any, rubric_id: str) -> float | None:
         return None
 
 
-def rubric_paired_contrasts(
-    df: "pd.DataFrame",
-    *,
-    pairs_path: "Path | str | None" = None,
-) -> dict[str, Any]:
-    """H2: per-rubric paired contrasts, Holm-corrected."""
-    try:
-        import pandas as pd
-        from scipy import stats
-    except ImportError as exc:
-        raise ImportError("pandas + scipy required for rubric analysis") from exc
+def _judge_family(judge_name: str) -> str:
+    name = (judge_name or "").lower()
+    if "qwen" in name:
+        return "qwen"
+    if "llama" in name:
+        return "llama"
+    if "mistral" in name:
+        return "mistral"
+    return "unknown"
 
-    if df.empty or "rubric_scores" not in df.columns:
-        return {}
 
-    pairs_lookup: dict[str, str] | None = None
-    if pairs_path is not None:
-        try:
-            pairs = json.loads(Path(pairs_path).read_text())
-            pairs_lookup = {p["plan_a_id"]: p["plan_b_id"] for p in pairs if p.get("arm_a") == "llm"}
-            for p in pairs:
-                if p.get("arm_b") == "llm":
-                    pairs_lookup[p["plan_b_id"]] = p["plan_a_id"]
-        except Exception:
-            pairs_lookup = None
-
-    plan_scores: dict[str, dict[str, list[float]]] = {}
-    for _, row in df.iterrows():
-        pid = str(row.get("plan_id", ""))
-        if not pid:
-            continue
-        plan_scores.setdefault(pid, {})
-        for rid in RUBRIC_IDS:
-            s = _extract_rubric_score(row, rid)
-            if s is not None:
-                plan_scores[pid].setdefault(rid, []).append(s)
-
-    plan_mean: dict[str, dict[str, float]] = {
-        pid: {rid: sum(vs) / len(vs) for rid, vs in rubs.items()}
-        for pid, rubs in plan_scores.items()
-    }
-
-    arm_of: dict[str, str] = {}
-    if "plan_id" in df.columns and "arm" in df.columns:
-        for _, row in df[["plan_id", "arm"]].drop_duplicates().iterrows():
-            arm_of[str(row["plan_id"])] = str(row.get("arm", "unknown"))
-
-    results: dict[str, dict[str, Any]] = {}
-    raw_pvalues: list[float] = []
-
-    for rid in RUBRIC_IDS:
-        if pairs_lookup is not None:
-            deltas: list[float] = []
-            for llm_id, prog_id in pairs_lookup.items():
-                llm_s = plan_mean.get(llm_id, {}).get(rid)
-                prog_s = plan_mean.get(prog_id, {}).get(rid)
-                if llm_s is not None and prog_s is not None:
-                    deltas.append(llm_s - prog_s)
-
-            if len(deltas) < 2:
-                results[rid] = {"delta": float("nan"), "pvalue": float("nan"), "paired": True, "n_pairs": len(deltas)}
-                raw_pvalues.append(1.0)
-                continue
-
-            mean_delta = sum(deltas) / len(deltas)
-            _, pval = stats.ttest_1samp(deltas, popmean=0)
-            results[rid] = {
-                "delta": round(float(mean_delta), 3),
-                "pvalue": float(pval),
-                "paired": True,
-                "n_pairs": len(deltas),
-            }
-            raw_pvalues.append(float(pval))
-
-        else:
-            llm_scores = [
-                plan_mean[pid][rid]
-                for pid in plan_mean
-                if arm_of.get(pid) == "llm" and rid in plan_mean[pid]
-            ]
-            prog_scores = [
-                plan_mean[pid][rid]
-                for pid in plan_mean
-                if arm_of.get(pid) == "programmatic" and rid in plan_mean[pid]
-            ]
-
-            if len(llm_scores) < 2 or len(prog_scores) < 2:
-                results[rid] = {"delta": float("nan"), "pvalue": float("nan"), "paired": False}
-                raw_pvalues.append(1.0)
-                continue
-
-            delta = float(sum(llm_scores) / len(llm_scores) - sum(prog_scores) / len(prog_scores))
-            _, pval = stats.ttest_ind(llm_scores, prog_scores)
-            results[rid] = {
-                "delta": round(delta, 3),
-                "pvalue": float(pval),
-                "paired": False,
-                "n_llm": len(llm_scores),
-                "n_prog": len(prog_scores),
-            }
-            raw_pvalues.append(float(pval))
-
+def _holm_correct(results: dict[str, dict[str, Any]]) -> dict[str, dict[str, Any]]:
+    raw_pvalues = [float(results[rid].get("pvalue", 1.0) or 1.0) for rid in RUBRIC_IDS if rid in results]
+    rubric_order = [rid for rid in RUBRIC_IDS if rid in results]
     n = len(raw_pvalues)
+    if n == 0:
+        return results
+
     sorted_idx = sorted(range(n), key=lambda i: raw_pvalues[i])
     holm_pvals = [1.0] * n
     prev = 0.0
@@ -154,9 +56,141 @@ def rubric_paired_contrasts(
         holm_pvals[idx] = corrected
         prev = corrected
 
-    for i, rid in enumerate(RUBRIC_IDS):
-        if rid in results:
-            results[rid]["pvalue_holm"] = round(holm_pvals[i], 4)
-            results[rid]["significant"] = holm_pvals[i] < 0.05
-
+    for i, rid in enumerate(rubric_order):
+        results[rid]["pvalue_holm"] = round(holm_pvals[i], 4)
+        results[rid]["significant"] = holm_pvals[i] < 0.05
     return results
+
+
+def _paired_results_from_deltas(grouped: dict[str, list[float]]) -> dict[str, dict[str, Any]]:
+    from scipy import stats
+
+    results: dict[str, dict[str, Any]] = {}
+    for rid in RUBRIC_IDS:
+        deltas = grouped.get(rid, [])
+        if len(deltas) < 2:
+            results[rid] = {
+                "delta": float("nan"),
+                "pvalue": float("nan"),
+                "paired": True,
+                "n_obs": len(deltas),
+            }
+            continue
+        mean_delta = sum(deltas) / len(deltas)
+        _, pval = stats.ttest_1samp(deltas, popmean=0.0)
+        results[rid] = {
+            "delta": round(float(mean_delta), 3),
+            "pvalue": float(pval),
+            "paired": True,
+            "n_obs": len(deltas),
+        }
+    return _holm_correct(results)
+
+
+def rubric_paired_contrasts(
+    df: "pd.DataFrame",
+    *,
+    pairs_path: "Path | str | None" = None,
+) -> dict[str, Any]:
+    try:
+        import pandas as pd
+    except ImportError as exc:
+        raise ImportError("pandas + scipy required for rubric analysis") from exc
+
+    if df.empty or "rubric_scores" not in df.columns:
+        return {"overall": {}, "by_judge_family": {}, "by_judge": {}, "metadata": {}}
+
+    if pairs_path is None:
+        raise ValueError("rubric_paired_contrasts requires a matched-pairs manifest")
+
+    pairs = json.loads(Path(pairs_path).read_text())
+    llm_to_prog: dict[str, str] = {}
+    for pair in pairs:
+        if pair.get("arm_a") == "llm":
+            llm_to_prog[str(pair["plan_a_id"])] = str(pair["plan_b_id"])
+        if pair.get("arm_b") == "llm":
+            llm_to_prog[str(pair["plan_b_id"])] = str(pair["plan_a_id"])
+
+    records: list[dict[str, Any]] = []
+    for _, row in df.iterrows():
+        plan_id = str(row.get("plan_id", "") or "")
+        judge = str(row.get("judge", "") or "")
+        arm = str(row.get("arm", "") or "")
+        if not plan_id or not judge or arm not in {"llm", "programmatic"}:
+            continue
+        for rid in RUBRIC_IDS:
+            score = _extract_rubric_score(row, rid)
+            if score is None:
+                continue
+            records.append(
+                {
+                    "plan_id": plan_id,
+                    "judge": judge,
+                    "judge_family": _judge_family(judge),
+                    "arm": arm,
+                    "rubric_id": rid,
+                    "score": score,
+                }
+            )
+
+    if not records:
+        return {"overall": {}, "by_judge_family": {}, "by_judge": {}, "metadata": {}}
+
+    long_df = pd.DataFrame(records)
+    plan_judge_scores: dict[tuple[str, str], dict[str, float]] = {}
+    for _, row in long_df.iterrows():
+        key = (str(row["plan_id"]), str(row["judge"]))
+        plan_judge_scores.setdefault(key, {})
+        plan_judge_scores[key][str(row["rubric_id"])] = float(row["score"])
+
+    overall_grouped: dict[str, list[float]] = {rid: [] for rid in RUBRIC_IDS}
+    by_family_grouped: dict[str, dict[str, list[float]]] = {}
+    by_judge_grouped: dict[str, dict[str, list[float]]] = {}
+
+    contributing_pairs: set[str] = set()
+    for pair in pairs:
+        llm_plan_id = ""
+        prog_plan_id = ""
+        if pair.get("arm_a") == "llm":
+            llm_plan_id = str(pair["plan_a_id"])
+            prog_plan_id = str(pair["plan_b_id"])
+        elif pair.get("arm_b") == "llm":
+            llm_plan_id = str(pair["plan_b_id"])
+            prog_plan_id = str(pair["plan_a_id"])
+        if not llm_plan_id or not prog_plan_id:
+            continue
+
+        judges = sorted({judge for plan_id, judge in plan_judge_scores if plan_id in {llm_plan_id, prog_plan_id}})
+        for judge in judges:
+            llm_scores = plan_judge_scores.get((llm_plan_id, judge), {})
+            prog_scores = plan_judge_scores.get((prog_plan_id, judge), {})
+            if not llm_scores or not prog_scores:
+                continue
+            family = _judge_family(judge)
+            by_family_grouped.setdefault(family, {rid: [] for rid in RUBRIC_IDS})
+            by_judge_grouped.setdefault(judge, {rid: [] for rid in RUBRIC_IDS})
+            for rid in RUBRIC_IDS:
+                if rid not in llm_scores or rid not in prog_scores:
+                    continue
+                delta = float(llm_scores[rid] - prog_scores[rid])
+                overall_grouped[rid].append(delta)
+                by_family_grouped[family][rid].append(delta)
+                by_judge_grouped[judge][rid].append(delta)
+                contributing_pairs.add(str(pair.get("pair_id") or ""))
+
+    return {
+        "overall": _paired_results_from_deltas(overall_grouped),
+        "by_judge_family": {
+            family: _paired_results_from_deltas(grouped)
+            for family, grouped in sorted(by_family_grouped.items())
+        },
+        "by_judge": {
+            judge: _paired_results_from_deltas(grouped)
+            for judge, grouped in sorted(by_judge_grouped.items())
+        },
+        "metadata": {
+            "paired": True,
+            "n_pairs_with_any_rubric_observation": len([p for p in contributing_pairs if p]),
+            "n_soft_eval_rows": int(len(long_df)),
+        },
+    }

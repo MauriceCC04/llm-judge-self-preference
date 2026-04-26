@@ -14,6 +14,10 @@ class ScoringError(RuntimeError):
     """Raised when the deterministic scorer cannot produce a study-valid score."""
 
 
+class MatchingCoverageError(RuntimeError):
+    """Raised when matching falls below the configured coverage floor."""
+
+
 def _score_bin(score: float) -> int:
     return int(math.floor(float(score) + 0.5))
 
@@ -24,7 +28,6 @@ def greedy_pair(
     tolerance: float = 1.0,
     feature_weights: dict[str, float] | None = None,
 ) -> list[dict[str, Any]]:
-    """Pair LLM plans with programmatic plans within same fixture and score bin."""
     feature_weights = feature_weights or MATCH_FEATURE_WEIGHTS
     llm_plans = [p.copy() for p in plans if p["arm"] == "llm"]
     prog_plans = [p.copy() for p in plans if p["arm"] == "programmatic"]
@@ -105,7 +108,6 @@ def score_plan(
     *,
     strict: bool = True,
 ) -> float:
-    """Return a quality score for *plan_path*."""
     try:
         import json as _json
         from trailtraining.llm.constraints import ConstraintConfig, evaluate_training_plan_quality
@@ -152,12 +154,37 @@ def _heuristic_score(plan_path: Path) -> float:
     return round(score + jitter, 4)
 
 
-def _write_scoring_failures(path: Path, failures: list[dict[str, Any]]) -> None:
+def _write_json(path: Path, payload: Any) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(
-        json.dumps(failures, indent=2, ensure_ascii=False, default=str),
+        json.dumps(payload, indent=2, ensure_ascii=False, default=str),
         encoding="utf-8",
     )
+
+
+def _build_matching_audit(
+    *,
+    pairs: list[dict[str, Any]],
+    target_pairs: int,
+) -> dict[str, Any]:
+    n = len(pairs)
+    gaps = [float(p["score_gap"]) for p in pairs]
+    mean_gap = sum(gaps) / n if n else float("nan")
+    by_fixture: dict[str, int] = {}
+    for p in pairs:
+        fid = str(p["fixture_id"])
+        by_fixture[fid] = by_fixture.get(fid, 0) + 1
+    coverage_ratio = (n / target_pairs) if target_pairs else float("nan")
+    coverage_ok = bool(target_pairs and n >= int(target_pairs * 0.8))
+    return {
+        "n_pairs": n,
+        "target_pairs": target_pairs,
+        "coverage_ratio": round(coverage_ratio, 4) if coverage_ratio == coverage_ratio else float("nan"),
+        "coverage_ok": coverage_ok,
+        "mean_score_gap": round(mean_gap, 4) if mean_gap == mean_gap else float("nan"),
+        "pairs_by_fixture": dict(sorted(by_fixture.items())),
+        "match_rule": "same_fixture_same_score_bin_within_tolerance_min_weighted_distance",
+    }
 
 
 def build_matched_pairs(
@@ -171,6 +198,7 @@ def build_matched_pairs(
     strict_scoring: bool = True,
     scoring_failures_path: Path | None = None,
     feature_weights: dict[str, float] | None = None,
+    fail_below_target_ratio: float | None = None,
 ) -> list[dict[str, Any]]:
     from generate.provenance import PlanProvenance
 
@@ -223,44 +251,41 @@ def build_matched_pairs(
 
     if scoring_failures:
         fail_path = scoring_failures_path or output_path.with_name("scoring_failures.json")
-        _write_scoring_failures(fail_path, scoring_failures)
+        _write_json(fail_path, scoring_failures)
         if strict_scoring:
             raise ScoringError(
                 f"{len(scoring_failures)} plans failed deterministic scoring; see {fail_path}"
             )
 
     pairs = greedy_pair(plan_records, tolerance=tolerance, feature_weights=feature_weights)
-    _print_audit(pairs, plan_records, target_pairs=target_pairs)
+    audit = _build_matching_audit(pairs=pairs, target_pairs=target_pairs)
+    _print_audit(audit)
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
     output_path.write_text(
         json.dumps(pairs, indent=2, ensure_ascii=False, default=str),
         encoding="utf-8",
     )
+    _write_json(output_path.with_name("matching_audit.json"), audit)
+
+    if fail_below_target_ratio is not None and audit["coverage_ratio"] < fail_below_target_ratio:
+        raise MatchingCoverageError(
+            f"Matching coverage {audit['coverage_ratio']:.3f} is below required ratio {fail_below_target_ratio:.3f}. "
+            f"See {output_path.with_name('matching_audit.json')}"
+        )
+
     print(f"\n[Saved] {output_path}  ({len(pairs)} pairs)")
     return pairs
 
 
-def _print_audit(
-    pairs: list[dict[str, Any]],
-    plans: list[dict[str, Any]],
-    *,
-    target_pairs: int,
-) -> None:
-    del plans
-    n = len(pairs)
-    gaps = [p["score_gap"] for p in pairs]
-    mean_gap = sum(gaps) / n if n else 0.0
-    by_fixture: dict[str, int] = {}
-    for p in pairs:
-        by_fixture[p["fixture_id"]] = by_fixture.get(p["fixture_id"], 0) + 1
-
+def _print_audit(audit: dict[str, Any]) -> None:
     print("\n── Matching audit ──────────────────────────────")
-    print(f"  Pairs yielded:    {n}  (target: {target_pairs})")
-    print(f"  Mean score gap:   {mean_gap:.3f}")
-    print(f"  Coverage OK:      {n >= int(target_pairs * 0.8)}")
-    for fid, cnt in sorted(by_fixture.items()):
+    print(f"  Pairs yielded:    {audit['n_pairs']}  (target: {audit['target_pairs']})")
+    print(f"  Mean score gap:   {audit['mean_score_gap']:.3f}")
+    print(f"  Coverage ratio:   {audit['coverage_ratio']:.3f}")
+    print(f"  Coverage OK:      {audit['coverage_ok']}")
+    for fid, cnt in sorted((audit.get('pairs_by_fixture') or {}).items()):
         print(f"    {fid}: {cnt} pairs")
-    if n < int(target_pairs * 0.8):
-        print("\n  ⚠ Coverage below 80% — retune sampler priors.")
+    if not audit["coverage_ok"]:
+        print("\n  ⚠ Coverage below 80% — retune sampler priors or generate more programmatic plans.")
     print("────────────────────────────────────────────────\n")

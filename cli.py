@@ -31,6 +31,26 @@ def _load_style_gate_summary(path: Path) -> dict:
     return payload
 
 
+def _ensure_style_gate(args: argparse.Namespace, summary_path: Path) -> dict:
+    from analyze.style_audit import run_style_audit
+    from generate.constants import STYLE_AUDIT_CRITICAL_FEATURES, STYLE_AUDIT_Z_THRESHOLD
+
+    if summary_path.exists():
+        return _load_style_gate_summary(summary_path)
+
+    output_dir = summary_path.parent
+    output_dir.mkdir(parents=True, exist_ok=True)
+    result = run_style_audit(
+        plans_dir=Path(args.plans),
+        provenance_dir=Path(args.provenance or args.plans),
+        pairs_path=Path(args.pairs),
+        output_dir=output_dir,
+        critical_features=STYLE_AUDIT_CRITICAL_FEATURES,
+        z_threshold=STYLE_AUDIT_Z_THRESHOLD,
+    )
+    return result
+
+
 def cmd_generate(args: argparse.Namespace) -> None:
     from generate.constants import default_plans_per_fixture
     from generate.run_generation import run_llm_arm, run_programmatic_arm
@@ -111,7 +131,7 @@ def cmd_judge(args: argparse.Namespace) -> None:
 
     if args.require_style_gate:
         summary_path = Path(args.style_gate_summary or DEFAULT_STYLE_GATE_SUMMARY_PATH)
-        summary = _load_style_gate_summary(summary_path)
+        summary = _ensure_style_gate(args, summary_path)
         gate = summary["gate"]
         if not gate.get("passed", False):
             flagged = ", ".join(gate.get("flagged_critical_features", [])) or "unknown critical features"
@@ -129,11 +149,14 @@ def cmd_judge(args: argparse.Namespace) -> None:
         if args.pilot:
             pairs = pairs[:PILOT_PAIR_LIMIT]
             print(f"Pilot mode: {len(pairs)} pairs")
-        elif args.pair_limit is not None:
-            pairs = pairs[: args.pair_limit]
-            print(f"Pairwise subset: {len(pairs)} pairs")
+        else:
+            if args.pair_offset:
+                pairs = pairs[args.pair_offset :]
+            if args.pair_limit is not None:
+                pairs = pairs[: args.pair_limit]
+            print(f"Pairwise subset: {len(pairs)} pairs (offset={args.pair_offset}, limit={args.pair_limit})")
 
-        pairwise_out = output_dir / f"pairwise_{judge.name}.jsonl"
+        pairwise_out = output_dir / f"pairwise_{judge.name}_{args.pairwise_view}.jsonl"
         run_pairwise_harness(
             pairs=pairs,
             plans_dir=plans_dir,
@@ -163,9 +186,11 @@ def cmd_judge(args: argparse.Namespace) -> None:
             for plan_path in plans_dir.glob("*.json")
             if not plan_path.name.endswith(".provenance.json")
         ]
+        if args.plan_offset:
+            plan_ids = plan_ids[args.plan_offset :]
         if args.plan_limit is not None:
             plan_ids = plan_ids[: args.plan_limit]
-            print(f"Soft-eval subset: {len(plan_ids)} plans")
+        print(f"Soft-eval subset: {len(plan_ids)} plans (offset={args.plan_offset}, limit={args.plan_limit})")
         run_soft_eval_harness(
             plan_ids=plan_ids,
             plans_dir=plans_dir,
@@ -201,13 +226,19 @@ def cmd_analyze(args: argparse.Namespace) -> None:
     from analyze.run_analysis import main as run_analysis_main
 
     argv = [
-        "--judgments", args.judgments,
-        "--plans", args.plans,
-        "--output", args.output,
-        "--pairs", args.pairs,
+        "--judgments",
+        args.judgments,
+        "--plans",
+        args.plans,
+        "--output",
+        args.output,
+        "--pairs",
+        args.pairs,
     ]
     if args.provenance:
         argv.extend(["--provenance", args.provenance])
+    if args.pairwise_view:
+        argv.extend(["--pairwise-view", args.pairwise_view])
     run_analysis_main(argv)
 
 
@@ -245,12 +276,15 @@ def build_parser() -> argparse.ArgumentParser:
     jdg.add_argument("--pairs", default="matched_pairs.json")
     jdg.add_argument("--output", default="judgments/")
     jdg.add_argument("--pilot", action="store_true")
+    jdg.add_argument("--pair-offset", type=int, default=0)
     jdg.add_argument("--pair-limit", type=int, default=None)
+    jdg.add_argument("--plan-offset", type=int, default=0)
     jdg.add_argument("--plan-limit", type=int, default=None)
     jdg.add_argument("--skip-pairwise", action="store_true")
     jdg.add_argument("--skip-soft-eval", action="store_true")
     jdg.add_argument("--require-style-gate", action="store_true")
     jdg.add_argument("--style-gate-summary", default=None)
+    jdg.add_argument("--provenance", default=None)
     jdg.add_argument("--pairwise-view", choices=PAIRWISE_VIEW_CHOICES, default=PAIRWISE_VIEW_DEFAULT)
     jdg.set_defaults(func=cmd_judge)
 
@@ -267,6 +301,7 @@ def build_parser() -> argparse.ArgumentParser:
     ana.add_argument("--provenance", default=None)
     ana.add_argument("--pairs", default="matched_pairs.json")
     ana.add_argument("--output", default="results/")
+    ana.add_argument("--pairwise-view", default=None)
     ana.set_defaults(func=cmd_analyze)
     return parser
 

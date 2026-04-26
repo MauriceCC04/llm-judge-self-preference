@@ -1,6 +1,7 @@
 """judge/panel.py — judge panel definitions."""
 from __future__ import annotations
 
+import math
 from typing import Literal
 
 from pydantic import BaseModel
@@ -111,6 +112,26 @@ def assert_judge_fits_quota(judge: JudgeSpec) -> None:
 
 
 def walltime_hours_with_buffer(judge: JudgeSpec, *, multiplier: float = 1.2) -> int:
-    import math
-
     return int(math.ceil(judge.time_hours * multiplier))
+
+
+def recommend_pair_shards(
+    judge: JudgeSpec,
+    *,
+    n_pairs: int,
+    n_runs: int,
+    n_positions: int,
+    mean_pairwise_seconds: float,
+    n_soft_eval_plans: int = 0,
+    mean_soft_eval_seconds: float = 0.0,
+    target_utilization: float = 0.85,
+    walltime_multiplier: float = 1.2,
+) -> int:
+    available_seconds = walltime_hours_with_buffer(judge, multiplier=walltime_multiplier) * 3600 * target_utilization
+    projected_seconds = (
+        (n_pairs * n_runs * n_positions * mean_pairwise_seconds)
+        + (n_soft_eval_plans * mean_soft_eval_seconds)
+    )
+    if available_seconds <= 0:
+        return 1
+    return max(1, int(math.ceil(projected_seconds / available_seconds)))

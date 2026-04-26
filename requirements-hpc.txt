@@ -1,0 +1,21 @@
+# requirements-hpc.txt
+#
+# Canonical dependency set for reproducible HPC runs without relying on the
+# current pyproject dependency placeholder.
+#
+# Install torch and vllm using the cluster-compatible wheels first, then:
+#   pip install -r requirements-hpc.txt
+#
+# Run all study commands from the repo root with:
+#   export PYTHONPATH=$PWD:${PYTHONPATH:-}
+
+trailtraining @ git+https://github.com/MauriceCC04/trailtraining.git@3e7f1793ca051ba1aae05f1714d594691202ad7e
+openai>=1.0.0
+pydantic>=2.8
+numpy>=1.26
+pandas>=2.2
+statsmodels>=0.14
+scipy>=1.11
+matplotlib>=3.8
+pytest>=7.4
+pytest-cov>=4.1

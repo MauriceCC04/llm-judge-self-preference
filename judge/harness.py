@@ -12,10 +12,6 @@ from generate.constants import PAIRWISE_TEXT_CHAR_LIMITS
 from judge.normalize import normalize_pair_for_pairwise
 
 log = logging.getLogger(__name__)
-
-# Sentinel returned by trailtraining.llm.soft_eval.compare_plans when the
-# judge LLM returns unparseable JSON. We must detect this so it doesn't get
-# silently logged as a "tie" and biased into H1/H2 as a real observation.
 _COMPARE_PARSE_SENTINEL = "Could not parse comparison response."
 
 
@@ -38,8 +34,8 @@ def _resolve_rollups_for_fixture(
 ) -> Optional[dict[str, Any]]:
     if fixture_id and fixtures_dir:
         if fixture_id not in cache:
-            rp = fixtures_dir / fixture_id / "combined_rollups.json"
-            cache[fixture_id] = _load_rollups(rp)
+            fixture_rollups = fixtures_dir / fixture_id / "combined_rollups.json"
+            cache[fixture_id] = _load_rollups(fixture_rollups)
         return cache[fixture_id]
     return _load_rollups(rollups_path)
 
@@ -47,16 +43,14 @@ def _resolve_rollups_for_fixture(
 def _fixture_id_from_provenance(plan_id: str, provenance_dir: Path | None) -> str:
     if provenance_dir is None:
         return ""
-    p = provenance_dir / f"{plan_id}.json.provenance.json"
-    if not p.exists():
+    provenance_path = provenance_dir / f"{plan_id}.json.provenance.json"
+    if not provenance_path.exists():
         return ""
     try:
-        return str(json.loads(p.read_text(encoding="utf-8")).get("fixture_id", "") or "")
+        return str(json.loads(provenance_path.read_text(encoding="utf-8")).get("fixture_id", "") or "")
     except Exception:
         return ""
 
-
-# ── Pairwise harness ──────────────────────────────────────────────────────────
 
 def run_pairwise_harness(
     pairs: list[dict[str, Any]],
@@ -71,23 +65,12 @@ def run_pairwise_harness(
     normalize_inputs: bool = True,
     schema_failures_path: Optional[Path] = None,
 ) -> None:
-    """Run compare_plans for every (pair × run × position), skip already-done.
-
-    Schema-failure handling
-    -----------------------
-    Upstream ``compare_plans`` swallows JSON parse errors and returns a
-    structured "tie" with reasoning ``Could not parse comparison response.``.
-    We detect that sentinel and route the row to ``schema_failures.jsonl``
-    instead of writing a normal pairwise record.  This keeps schema-failure
-    rates honest and prevents silent ties from polluting H1/H2 estimates.
-    """
     install_trailtraining_client_compat()
     from judge.outputs import PairwiseWriter, SchemaFailWriter
     from trailtraining.llm.soft_eval import SoftEvalConfig, compare_plans
 
     writer = PairwiseWriter(output_path)
-    fail_path = schema_failures_path or output_path.parent / "schema_failures.jsonl"
-    fail_writer = SchemaFailWriter(fail_path)
+    fail_writer = SchemaFailWriter(schema_failures_path or output_path.parent / "schema_failures.jsonl")
     rollups_cache: dict[str, Optional[dict[str, Any]]] = {}
 
     cfg = SoftEvalConfig(
@@ -97,30 +80,22 @@ def run_pairwise_harness(
         skip_synthesis=True,
         parallel_batches=False,
     )
-
-    # Defensive assertion: SoftEvalConfig.enabled must be True. Upstream
-    # raises ValueError("Soft evaluation is disabled.") in evaluate_training_plan_soft
-    # if this is False; compare_plans does not check, but we want symmetry.
     if not cfg.enabled:
-        raise RuntimeError(
-            "SoftEvalConfig.enabled must be True to call compare_plans / "
-            "evaluate_training_plan_soft."
-        )
+        raise RuntimeError("SoftEvalConfig.enabled must be True to call compare_plans.")
 
     positions = ["AB", "BA"][:n_positions]
 
     for pair in pairs:
         pair_id = pair["pair_id"]
         fixture_id = str(pair.get("fixture_id", "") or "")
-        path_a = plans_dir / f"{pair['plan_a_id']}.json"
-        path_b = plans_dir / f"{pair['plan_b_id']}.json"
-
-        if not path_a.exists() or not path_b.exists():
+        plan_a_path = plans_dir / f"{pair['plan_a_id']}.json"
+        plan_b_path = plans_dir / f"{pair['plan_b_id']}.json"
+        if not plan_a_path.exists() or not plan_b_path.exists():
             log.warning("Missing plan files for pair %s — skipping", pair_id)
             continue
 
-        raw_plan_a = _load_plan(path_a)
-        raw_plan_b = _load_plan(path_b)
+        raw_plan_a = _load_plan(plan_a_path)
+        raw_plan_b = _load_plan(plan_b_path)
         rollups = _resolve_rollups_for_fixture(
             fixture_id,
             rollups_path=rollups_path,
@@ -134,21 +109,18 @@ def run_pairwise_harness(
                 if writer.exists(stub):
                     continue
 
-                a, b = (raw_plan_a, raw_plan_b) if position == "AB" else (raw_plan_b, raw_plan_a)
+                plan_a, plan_b = (raw_plan_a, raw_plan_b) if position == "AB" else (raw_plan_b, raw_plan_a)
                 if normalize_inputs:
-                    a, b = normalize_pair_for_pairwise(
-                        a,
-                        b,
+                    plan_a, plan_b = normalize_pair_for_pairwise(
+                        plan_a,
+                        plan_b,
                         text_char_limits=PAIRWISE_TEXT_CHAR_LIMITS,
                     )
 
                 try:
-                    result = compare_plans(a, b, rollups=rollups, cfg=cfg)
+                    result = compare_plans(plan_a, plan_b, rollups=rollups, cfg=cfg)
                 except Exception as exc:
-                    log.warning(
-                        "compare_plans raised pair=%s run=%d pos=%s: %s",
-                        pair_id, run, position, exc,
-                    )
+                    log.warning("compare_plans raised pair=%s run=%d pos=%s: %s", pair_id, run, position, exc)
                     fail_writer.append({
                         "plan_id": pair_id,
                         "judge": judge.name,
@@ -162,14 +134,7 @@ def run_pairwise_harness(
 
                 preferred_raw = result.get("preferred", "tie")
                 reasoning = (result.get("reasoning") or "").strip()
-
-                # Detect upstream's JSON-parse-failure sentinel and treat it
-                # as a schema failure rather than a real tie.
                 if preferred_raw == "tie" and reasoning == _COMPARE_PARSE_SENTINEL:
-                    log.info(
-                        "compare_plans schema sentinel pair=%s run=%d pos=%s",
-                        pair_id, run, position,
-                    )
                     fail_writer.append({
                         "plan_id": pair_id,
                         "judge": judge.name,
@@ -182,19 +147,11 @@ def run_pairwise_harness(
                     continue
 
                 if position == "AB":
-                    preferred_id = (
-                        pair["plan_a_id"] if preferred_raw == "plan_a"
-                        else pair["plan_b_id"] if preferred_raw == "plan_b"
-                        else "tie"
-                    )
+                    preferred_id = pair["plan_a_id"] if preferred_raw == "plan_a" else pair["plan_b_id"] if preferred_raw == "plan_b" else "tie"
                 else:
-                    preferred_id = (
-                        pair["plan_b_id"] if preferred_raw == "plan_a"
-                        else pair["plan_a_id"] if preferred_raw == "plan_b"
-                        else "tie"
-                    )
+                    preferred_id = pair["plan_b_id"] if preferred_raw == "plan_a" else pair["plan_a_id"] if preferred_raw == "plan_b" else "tie"
 
-                record = {
+                writer.append({
                     **stub,
                     "preferred": preferred_raw,
                     "preferred_id": preferred_id,
@@ -204,11 +161,8 @@ def run_pairwise_harness(
                     "fixture_id": fixture_id,
                     "normalized_inputs": normalize_inputs,
                     "timestamp": datetime.now(tz=timezone.utc).isoformat(),
-                }
-                writer.append(record)
+                })
 
-
-# ── Soft-eval harness ─────────────────────────────────────────────────────────
 
 def run_soft_eval_harness(
     plan_ids: list[str],
@@ -221,15 +175,13 @@ def run_soft_eval_harness(
     provenance_dir: Optional[Path] = None,
     schema_failures_path: Optional[Path] = None,
 ) -> None:
-    """Run evaluate_training_plan_soft on every plan, skip already-done."""
     install_trailtraining_client_compat()
     from judge.outputs import SchemaFailWriter, SoftEvalWriter
     from trailtraining.llm.constraints import ConstraintConfig, evaluate_training_plan_quality
     from trailtraining.llm.soft_eval import SoftEvalConfig, evaluate_training_plan_soft
 
     writer = SoftEvalWriter(output_path)
-    fail_path = schema_failures_path or output_path.parent / "schema_failures.jsonl"
-    fail_writer = SchemaFailWriter(fail_path)
+    fail_writer = SchemaFailWriter(schema_failures_path or output_path.parent / "schema_failures.jsonl")
     rollups_cache: dict[str, Optional[dict[str, Any]]] = {}
 
     cfg = SoftEvalConfig(
@@ -239,12 +191,8 @@ def run_soft_eval_harness(
         skip_synthesis=True,
         parallel_batches=False,
     )
-    # Mirror the pairwise harness assertion. Upstream raises ValueError when
-    # cfg.enabled is False; we want a louder error before any work starts.
     if not cfg.enabled:
-        raise RuntimeError(
-            "SoftEvalConfig.enabled must be True to call evaluate_training_plan_soft."
-        )
+        raise RuntimeError("SoftEvalConfig.enabled must be True to call evaluate_training_plan_soft.")
 
     det_cfg = ConstraintConfig(min_signal_ids_per_day=0)
 
@@ -252,7 +200,6 @@ def run_soft_eval_harness(
         stub = {"plan_id": plan_id, "judge": judge.name}
         if writer.exists(stub):
             continue
-
         plan_path = plans_dir / f"{plan_id}.json"
         if not plan_path.exists():
             log.warning("Missing plan %s — skipping", plan_id)
@@ -265,22 +212,19 @@ def run_soft_eval_harness(
             fixtures_dir=fixtures_dir,
             cache=rollups_cache,
         )
-
         plan_obj = _load_plan(plan_path)
         det_report = evaluate_training_plan_quality(plan_obj, rollups, det_cfg)
 
         try:
             assessment = evaluate_training_plan_soft(plan_obj, det_report, rollups, cfg)
-            record = {
+            writer.append({
                 **stub,
                 "fixture_id": fixture_id,
                 "overall_score": assessment.get("overall_score"),
                 "rubric_scores": assessment.get("rubric_scores", {}),
                 "marker_results": assessment.get("marker_results", []),
                 "timestamp": datetime.now(tz=timezone.utc).isoformat(),
-            }
-            writer.append(record)
-
+            })
         except Exception as exc:
             log.warning("Failure plan=%s judge=%s: %s", plan_id, judge.name, exc)
             fail_writer.append({
@@ -292,20 +236,16 @@ def run_soft_eval_harness(
             })
 
 
-# ── Pilot gate ────────────────────────────────────────────────────────────────
-
 def check_pilot_bias_gate(
     output_path: Path,
     *,
     threshold: float = 0.2,
     min_records: int = 20,
 ) -> dict[str, Any]:
-    """Check position-bias gate on a completed pilot run."""
     from vendor_patches.resume_jsonl import load_all
 
     records = load_all(output_path)
     n = len(records)
-
     if n < min_records:
         return {
             "passed": False,
@@ -314,11 +254,10 @@ def check_pilot_bias_gate(
             "message": f"Too few records ({n} < {min_records}) for reliable bias check.",
         }
 
-    n_prefers_a = sum(1 for r in records if r.get("preferred") == "plan_a")
+    n_prefers_a = sum(1 for record in records if record.get("preferred") == "plan_a")
     p = n_prefers_a / n
     bias = abs(p - 0.5)
     passed = bias < threshold
-
     return {
         "passed": passed,
         "p_prefers_a": round(p, 4),
@@ -326,8 +265,8 @@ def check_pilot_bias_gate(
         "threshold": threshold,
         "n": n,
         "message": (
-            f"PASS: |P(prefer_a)−0.5|={bias:.3f} < {threshold}"
+            f"PASS: |P(prefer_a)-0.5|={bias:.3f} < {threshold}"
             if passed
-            else f"FAIL: |P(prefer_a)−0.5|={bias:.3f} ≥ {threshold} — judge excluded from H1/H2"
+            else f"FAIL: |P(prefer_a)-0.5|={bias:.3f} >= {threshold} — judge excluded from H1/H2"
         ),
     }

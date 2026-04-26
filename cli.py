@@ -2,11 +2,33 @@
 from __future__ import annotations
 
 import argparse
+import json
 import sys
 from pathlib import Path
 
 _ROOT = Path(__file__).parent.resolve()
 sys.path.insert(0, str(_ROOT))
+
+
+def _split_fixture_ids(raw_values: list[str] | None) -> list[str] | None:
+    if not raw_values:
+        return None
+    fixture_ids: list[str] = []
+    for raw in raw_values:
+        fixture_ids.extend(part.strip() for part in raw.split(",") if part.strip())
+    return fixture_ids or None
+
+
+def _load_style_gate_summary(path: Path) -> dict:
+    if not path.exists():
+        raise FileNotFoundError(
+            f"Required style-gate summary not found at {path}. Run `python cli.py audit-style ...` first."
+        )
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    gate = payload.get("gate")
+    if not isinstance(gate, dict):
+        raise RuntimeError(f"Style-gate summary at {path} does not contain a `gate` object.")
+    return payload
 
 
 def cmd_generate(args: argparse.Namespace) -> None:
@@ -16,24 +38,44 @@ def cmd_generate(args: argparse.Namespace) -> None:
     output_dir = Path(args.output)
     output_dir.mkdir(parents=True, exist_ok=True)
     plans_per_fixture = args.n if args.n is not None else default_plans_per_fixture(args.arm)
+    fixture_ids = _split_fixture_ids(args.fixture_id)
 
     print(f"Arm: {args.arm}")
     print(f"Plans per fixture: {plans_per_fixture}")
+    print(f"Seed offset: {args.seed_offset}")
+    print(f"Fixture subset: {fixture_ids or 'ALL'}")
 
     if args.arm == "llm":
-        n_gen, n_skip = run_llm_arm(output_dir=output_dir, plans_per_fixture=plans_per_fixture)
+        if not args.source_model:
+            raise SystemExit("--source-model is required for the llm arm")
+        print(f"Source model: {args.source_model}")
+        n_gen, n_skip = run_llm_arm(
+            output_dir=output_dir,
+            plans_per_fixture=plans_per_fixture,
+            source_model=args.source_model,
+            seed_offset=args.seed_offset,
+            fixture_ids=fixture_ids,
+        )
     else:
         n_gen, n_skip = run_programmatic_arm(
             output_dir=output_dir,
             plans_per_fixture=plans_per_fixture,
             sampler_config_path=Path(args.sampler_config) if args.sampler_config else None,
+            seed_offset=args.seed_offset,
+            fixture_ids=fixture_ids,
         )
-    print(f"Generated {n_gen} plans, skipped {n_skip} (already existed) → {output_dir}")
+    print(f"Generated {n_gen} plans, skipped {n_skip} (already existed) -> {output_dir}")
 
 
 def cmd_fit_priors(args: argparse.Namespace) -> None:
     from generate.fit_priors import fit_and_save
-    fit_and_save(plans_dir=Path(args.plans), output_path=Path(args.output), min_plans=args.min_plans, seed=args.seed)
+
+    fit_and_save(
+        plans_dir=Path(args.plans),
+        output_path=Path(args.output),
+        min_plans=args.min_plans,
+        seed=args.seed,
+    )
 
 
 def cmd_match(args: argparse.Namespace) -> None:
@@ -55,54 +97,83 @@ def cmd_match(args: argparse.Namespace) -> None:
 
 
 def cmd_judge(args: argparse.Namespace) -> None:
-    import json
-    from generate.constants import PAIRWISE_N_POSITIONS, PAIRWISE_N_RUNS, PILOT_PAIR_LIMIT
+    from generate.constants import (
+        DEFAULT_STYLE_GATE_SUMMARY_PATH,
+        PAIRWISE_N_POSITIONS,
+        PAIRWISE_N_RUNS,
+        PILOT_PAIR_LIMIT,
+    )
     from judge.harness import check_pilot_bias_gate, run_pairwise_harness, run_soft_eval_harness
     from judge.panel import assert_judge_fits_quota, get_judge
 
     judge = get_judge(args.judge)
     assert_judge_fits_quota(judge)
 
+    if args.require_style_gate:
+        summary_path = Path(args.style_gate_summary or DEFAULT_STYLE_GATE_SUMMARY_PATH)
+        summary = _load_style_gate_summary(summary_path)
+        gate = summary["gate"]
+        if not gate.get("passed", False):
+            flagged = ", ".join(gate.get("flagged_critical_features", [])) or "unknown critical features"
+            raise SystemExit(f"Style gate failed at {summary_path}: {flagged}")
+        print(f"Style gate passed: {summary_path}")
+
     plans_dir = Path(args.plans)
     pairs_file = Path(args.pairs)
     output_dir = Path(args.output)
     output_dir.mkdir(parents=True, exist_ok=True)
-
-    pairs = json.loads(pairs_file.read_text()) if pairs_file.exists() else []
-    if args.pilot:
-        pairs = pairs[:PILOT_PAIR_LIMIT]
-        print(f"Pilot mode: {len(pairs)} pairs")
-
     fixtures_dir = _ROOT / "fixtures" / "data"
-    pairwise_out = output_dir / f"pairwise_{judge.name}.jsonl"
-    run_pairwise_harness(
-        pairs=pairs,
-        plans_dir=plans_dir,
-        judge=judge,
-        rollups_path=None,
-        fixtures_dir=fixtures_dir,
-        output_path=pairwise_out,
-        n_runs=PAIRWISE_N_RUNS,
-        n_positions=PAIRWISE_N_POSITIONS,
-    )
 
-    if args.pilot:
-        gate = check_pilot_bias_gate(pairwise_out)
-        print(f"Pilot bias gate: {gate['message']}")
-        if not gate["passed"]:
-            print("  ⚠ Judge excluded from H1/H2 — do NOT proceed to full run.")
-            sys.exit(2)
+    if not args.skip_pairwise:
+        pairs = json.loads(pairs_file.read_text(encoding="utf-8")) if pairs_file.exists() else []
+        if args.pilot:
+            pairs = pairs[:PILOT_PAIR_LIMIT]
+            print(f"Pilot mode: {len(pairs)} pairs")
+        elif args.pair_limit is not None:
+            pairs = pairs[: args.pair_limit]
+            print(f"Pairwise subset: {len(pairs)} pairs")
 
-    plan_ids = [p.stem for p in plans_dir.glob("*.json") if not p.name.endswith(".provenance.json")]
-    run_soft_eval_harness(
-        plan_ids=plan_ids,
-        plans_dir=plans_dir,
-        judge=judge,
-        rollups_path=None,
-        fixtures_dir=fixtures_dir,
-        provenance_dir=plans_dir,
-        output_path=output_dir / f"softeval_{judge.name}.jsonl",
-    )
+        pairwise_out = output_dir / f"pairwise_{judge.name}.jsonl"
+        run_pairwise_harness(
+            pairs=pairs,
+            plans_dir=plans_dir,
+            judge=judge,
+            rollups_path=None,
+            fixtures_dir=fixtures_dir,
+            output_path=pairwise_out,
+            n_runs=PAIRWISE_N_RUNS,
+            n_positions=PAIRWISE_N_POSITIONS,
+        )
+
+        if args.pilot:
+            gate = check_pilot_bias_gate(pairwise_out)
+            print(f"Pilot bias gate: {gate['message']}")
+            if not gate["passed"]:
+                print("  Judge excluded from H1/H2 — do not proceed to a full run.")
+                raise SystemExit(2)
+    else:
+        print("Skipping pairwise harness")
+
+    if args.skip_soft_eval:
+        print("Skipping soft-eval harness")
+    else:
+        plan_ids = [
+            plan_path.stem
+            for plan_path in plans_dir.glob("*.json")
+            if not plan_path.name.endswith(".provenance.json")
+        ]
+        if args.plan_limit is not None:
+            plan_ids = plan_ids[: args.plan_limit]
+            print(f"Soft-eval subset: {len(plan_ids)} plans")
+        run_soft_eval_harness(
+            plan_ids=plan_ids,
+            plans_dir=plans_dir,
+            judge=judge,
+            rollups_path=None,
+            fixtures_dir=fixtures_dir,
+            provenance_dir=plans_dir,
+            output_path=output_dir / f"softeval_{judge.name}.jsonl",
+        )
     print(f"Judge run complete: {judge.name}")
 
 
@@ -122,26 +193,37 @@ def cmd_audit_style(args: argparse.Namespace) -> None:
     print(f"Style gate passed: {gate['passed']}")
     if not gate["passed"]:
         print(f"Flagged critical features: {gate['flagged_critical_features']}")
-        sys.exit(2)
+        raise SystemExit(2)
 
 
 def cmd_analyze(args: argparse.Namespace) -> None:
     from analyze.run_analysis import main as run_analysis_main
-    argv = ["--judgments", args.judgments, "--plans", args.plans, "--output", args.output, "--pairs", args.pairs]
+
+    argv = [
+        "--judgments", args.judgments,
+        "--plans", args.plans,
+        "--output", args.output,
+        "--pairs", args.pairs,
+    ]
     if args.provenance:
         argv.extend(["--provenance", args.provenance])
     run_analysis_main(argv)
 
 
 def build_parser() -> argparse.ArgumentParser:
+    from generate.constants import ACTIVE_JUDGE_NAMES, LLM_SOURCE_MODELS
+
     parser = argparse.ArgumentParser(prog="judge-bias-study", description="LLM-judge self-preference study pipeline")
     sub = parser.add_subparsers(dest="command", required=True)
 
-    gen = sub.add_parser("generate", help="Generate plans (llm or programmatic arm)")
+    gen = sub.add_parser("generate", help="Generate plans for one arm")
     gen.add_argument("--arm", choices=["llm", "programmatic"], required=True)
-    gen.add_argument("--n", type=int, default=None, help="Plans per fixture (per model for llm arm); default uses frozen study config")
+    gen.add_argument("--n", type=int, default=None, help="Plans per fixture (per model for llm arm)")
     gen.add_argument("--output", default="plans/")
     gen.add_argument("--sampler-config", default=None)
+    gen.add_argument("--seed-offset", type=int, default=0)
+    gen.add_argument("--source-model", choices=LLM_SOURCE_MODELS, default=None)
+    gen.add_argument("--fixture-id", action="append", default=None, help="Optional fixture subset; repeat or pass comma-separated ids")
     gen.set_defaults(func=cmd_generate)
 
     fp = sub.add_parser("fit-priors", help="Fit sampler priors from LLM-arm outputs")
@@ -156,12 +238,18 @@ def build_parser() -> argparse.ArgumentParser:
     mat.add_argument("--output", default="matched_pairs.json")
     mat.set_defaults(func=cmd_match)
 
-    jdg = sub.add_parser("judge", help="Run pairwise + soft-eval for one judge")
-    jdg.add_argument("--judge", required=True)
+    jdg = sub.add_parser("judge", help="Run pairwise and or soft-eval for one judge")
+    jdg.add_argument("--judge", required=True, choices=ACTIVE_JUDGE_NAMES)
     jdg.add_argument("--plans", default="plans/")
     jdg.add_argument("--pairs", default="matched_pairs.json")
     jdg.add_argument("--output", default="judgments/")
     jdg.add_argument("--pilot", action="store_true")
+    jdg.add_argument("--pair-limit", type=int, default=None)
+    jdg.add_argument("--plan-limit", type=int, default=None)
+    jdg.add_argument("--skip-pairwise", action="store_true")
+    jdg.add_argument("--skip-soft-eval", action="store_true")
+    jdg.add_argument("--require-style-gate", action="store_true")
+    jdg.add_argument("--style-gate-summary", default=None)
     jdg.set_defaults(func=cmd_judge)
 
     sty = sub.add_parser("audit-style", help="Run paired surface-form leakage audit and gate")

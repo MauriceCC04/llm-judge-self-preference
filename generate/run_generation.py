@@ -1,4 +1,10 @@
-"""generate/run_generation.py — batch generation orchestrator."""
+"""generate/run_generation.py — batch generation orchestrator.
+
+Key fixes in this version:
+- the LLM arm now targets exactly one source model per job
+- fixture subsets can be selected for HPC sharding and exact-count top-ups
+- seed offsets are wired through consistently
+"""
 from __future__ import annotations
 
 import argparse
@@ -6,6 +12,7 @@ import json
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
+from typing import Iterable
 
 _ROOT = Path(__file__).parent.parent
 
@@ -21,91 +28,131 @@ def _write_failure(failures_path: Path, plan_id: str, exc: Exception) -> None:
         "error": str(exc),
         "timestamp": datetime.now(tz=timezone.utc).isoformat(),
     }
-    with failures_path.open("a", encoding="utf-8") as fh:
-        fh.write(json.dumps(entry, default=str) + "\n")
+    with failures_path.open("a", encoding="utf-8") as handle:
+        handle.write(json.dumps(entry, default=str) + "\n")
 
 
-def run_llm_arm(output_dir: Path, *, plans_per_fixture: int, seed_offset: int = 0) -> tuple[int, int]:
-    from fixtures.spec import ALL_FIXTURE_SPECS
-    from generate.constants import LLM_SOURCE_MODELS
+def _resolve_fixture_specs(fixture_ids: Iterable[str] | None):
+    from fixtures.spec import ALL_FIXTURE_SPECS, FIXTURE_BY_ID
+
+    if not fixture_ids:
+        return list(ALL_FIXTURE_SPECS)
+
+    resolved = []
+    for fixture_id in fixture_ids:
+        if fixture_id not in FIXTURE_BY_ID:
+            valid = ", ".join(sorted(FIXTURE_BY_ID))
+            raise KeyError(f"Unknown fixture id {fixture_id!r}. Valid ids: {valid}")
+        resolved.append(FIXTURE_BY_ID[fixture_id])
+    return resolved
+
+
+def run_llm_arm(
+    output_dir: Path,
+    *,
+    plans_per_fixture: int,
+    source_model: str,
+    seed_offset: int = 0,
+    fixture_ids: list[str] | None = None,
+) -> tuple[int, int]:
     from generate.llm_arm import generate_llm_plan
 
+    specs = _resolve_fixture_specs(fixture_ids)
     output_dir.mkdir(parents=True, exist_ok=True)
     failures_path = output_dir / "failed_plans.jsonl"
     generated = 0
     skipped = 0
-    total = len(ALL_FIXTURE_SPECS) * len(LLM_SOURCE_MODELS) * plans_per_fixture
-    done = 0
-    for spec in ALL_FIXTURE_SPECS:
-        fixture_dir = _ROOT / "fixtures" / "data" / spec.fixture_id
-        if not fixture_dir.exists():
-            print(f"  [warn] fixture dir not found: {fixture_dir}", file=sys.stderr)
-            continue
-        for model in LLM_SOURCE_MODELS:
-            model_tag = model.split("/")[-1].replace("-", "_").lower()
-            for seed in range(plans_per_fixture):
-                plan_id = f"{spec.fixture_id}__{model_tag}__s{seed_offset + seed:03d}"
-                done += 1
-                if _plan_exists(output_dir, plan_id):
-                    skipped += 1
-                    continue
-                print(f"  [{done}/{total}] {plan_id} ...", end="", flush=True)
-                try:
-                    generate_llm_plan(fixture_dir=fixture_dir, output_dir=output_dir, plan_id=plan_id, source_model=model, seed=seed_offset + seed)
-                    print(" OK")
-                    generated += 1
-                except Exception as exc:
-                    print(f" FAILED: {exc}")
-                    _write_failure(failures_path, plan_id, exc)
-    return generated, skipped
+    total = len(specs) * plans_per_fixture
+    model_tag = source_model.split("/")[-1].replace("-", "_").lower()
 
-
-def run_programmatic_arm(output_dir: Path, *, plans_per_fixture: int, sampler_config_path: Path | None = None, seed_offset: int = 0) -> tuple[int, int]:
-    from fixtures.spec import ALL_FIXTURE_SPECS
-    from generate.programmatic_arm import generate_programmatic_plan
-    from generate.sampler import StructuralSamplerConfig
-
-    output_dir.mkdir(parents=True, exist_ok=True)
-    failures_path = output_dir / "failed_plans.jsonl"
-    base_cfg: StructuralSamplerConfig | None = None
-    if sampler_config_path and sampler_config_path.exists():
-        from generate.fit_priors import load_sampler_config
-        base_cfg = load_sampler_config(sampler_config_path)
-    generated = 0
-    skipped = 0
-    total = len(ALL_FIXTURE_SPECS) * plans_per_fixture
-    done = 0
-    for spec in ALL_FIXTURE_SPECS:
+    for idx, spec in enumerate(specs, start=1):
         fixture_dir = _ROOT / "fixtures" / "data" / spec.fixture_id
         if not fixture_dir.exists():
             print(f"  [warn] fixture dir not found: {fixture_dir}", file=sys.stderr)
             continue
         for seed in range(plans_per_fixture):
-            plan_id = f"{spec.fixture_id}__prog__s{seed_offset + seed:03d}"
-            done += 1
+            actual_seed = seed_offset + seed
+            plan_id = f"{spec.fixture_id}__{model_tag}__s{actual_seed:03d}"
+            progress = ((idx - 1) * plans_per_fixture) + seed + 1
             if _plan_exists(output_dir, plan_id):
                 skipped += 1
                 continue
-            if base_cfg is not None:
-                import copy
-                cfg = copy.copy(base_cfg)
-                cfg.seed = seed_offset + seed
-                cfg.readiness_status = spec.readiness_status
-            else:
-                cfg = StructuralSamplerConfig(plan_days=7, seed=seed_offset + seed, readiness_status=spec.readiness_status)
-            print(f"  [{done}/{total}] {plan_id} ...", end="", flush=True)
+            print(f"  [{progress}/{total}] {plan_id} ...", end="", flush=True)
             try:
-                generate_programmatic_plan(fixture_dir=fixture_dir, output_dir=output_dir, plan_id=plan_id, seed=seed_offset + seed, sampler_cfg=cfg)
+                generate_llm_plan(
+                    fixture_dir=fixture_dir,
+                    output_dir=output_dir,
+                    plan_id=plan_id,
+                    source_model=source_model,
+                    seed=actual_seed,
+                )
                 print(" OK")
                 generated += 1
-            except Exception as exc:
+            except Exception as exc:  # pragma: no cover - failure logging path
                 print(f" FAILED: {exc}")
                 _write_failure(failures_path, plan_id, exc)
     return generated, skipped
 
 
-def main() -> None:
-    from generate.constants import default_plans_per_fixture
+def run_programmatic_arm(
+    output_dir: Path,
+    *,
+    plans_per_fixture: int,
+    sampler_config_path: Path | None = None,
+    seed_offset: int = 0,
+    fixture_ids: list[str] | None = None,
+) -> tuple[int, int]:
+    from generate.fit_priors import load_sampler_config
+    from generate.programmatic_arm import generate_programmatic_plan
+
+    specs = _resolve_fixture_specs(fixture_ids)
+    output_dir.mkdir(parents=True, exist_ok=True)
+    failures_path = output_dir / "failed_plans.jsonl"
+    base_cfg = load_sampler_config(sampler_config_path) if sampler_config_path and sampler_config_path.exists() else None
+    generated = 0
+    skipped = 0
+    total = len(specs) * plans_per_fixture
+
+    for idx, spec in enumerate(specs, start=1):
+        fixture_dir = _ROOT / "fixtures" / "data" / spec.fixture_id
+        if not fixture_dir.exists():
+            print(f"  [warn] fixture dir not found: {fixture_dir}", file=sys.stderr)
+            continue
+        for seed in range(plans_per_fixture):
+            actual_seed = seed_offset + seed
+            plan_id = f"{spec.fixture_id}__prog__s{actual_seed:03d}"
+            progress = ((idx - 1) * plans_per_fixture) + seed + 1
+            if _plan_exists(output_dir, plan_id):
+                skipped += 1
+                continue
+            print(f"  [{progress}/{total}] {plan_id} ...", end="", flush=True)
+            try:
+                generate_programmatic_plan(
+                    fixture_dir=fixture_dir,
+                    output_dir=output_dir,
+                    plan_id=plan_id,
+                    seed=actual_seed,
+                    sampler_cfg=base_cfg,
+                )
+                print(" OK")
+                generated += 1
+            except Exception as exc:  # pragma: no cover - failure logging path
+                print(f" FAILED: {exc}")
+                _write_failure(failures_path, plan_id, exc)
+    return generated, skipped
+
+
+def _split_fixture_ids(raw_values: list[str] | None) -> list[str] | None:
+    if not raw_values:
+        return None
+    fixture_ids: list[str] = []
+    for raw in raw_values:
+        fixture_ids.extend(part.strip() for part in raw.split(",") if part.strip())
+    return fixture_ids or None
+
+
+def build_parser() -> argparse.ArgumentParser:
+    from generate.constants import LLM_SOURCE_MODELS
 
     parser = argparse.ArgumentParser(description="Batch generation orchestrator for both study arms.")
     parser.add_argument("--arm", choices=["llm", "programmatic"], required=True)
@@ -113,20 +160,56 @@ def main() -> None:
     parser.add_argument("--output", default="plans/")
     parser.add_argument("--sampler-config", default=None)
     parser.add_argument("--seed-offset", type=int, default=0)
-    args = parser.parse_args()
+    parser.add_argument(
+        "--source-model",
+        default=None,
+        help=f"Required for llm arm. One of: {', '.join(LLM_SOURCE_MODELS)}",
+    )
+    parser.add_argument(
+        "--fixture-id",
+        action="append",
+        default=None,
+        help="Optional fixture subset. Repeat or pass a comma-separated list for sharded HPC runs.",
+    )
+    return parser
 
+
+def main(argv: list[str] | None = None) -> None:
+    from generate.constants import default_plans_per_fixture
+
+    parser = build_parser()
+    args = parser.parse_args(argv)
     output_dir = Path(args.output)
     plans_per_fixture = args.plans_per_fixture or default_plans_per_fixture(args.arm)
+    fixture_ids = _split_fixture_ids(args.fixture_id)
+
     print(f"=== Generation: {args.arm} arm ===")
     print(f"  plans_per_fixture: {plans_per_fixture}")
     print(f"  output_dir:        {output_dir}")
     print(f"  seed_offset:       {args.seed_offset}")
-    t0 = datetime.now(tz=timezone.utc)
-
+    print(f"  fixture_ids:       {fixture_ids or 'ALL'}")
     if args.arm == "llm":
-        n_gen, n_skip = run_llm_arm(output_dir=output_dir, plans_per_fixture=plans_per_fixture, seed_offset=args.seed_offset)
+        if not args.source_model:
+            parser.error("--source-model is required when --arm llm")
+        print(f"  source_model:      {args.source_model}")
+
+    t0 = datetime.now(tz=timezone.utc)
+    if args.arm == "llm":
+        n_gen, n_skip = run_llm_arm(
+            output_dir=output_dir,
+            plans_per_fixture=plans_per_fixture,
+            source_model=args.source_model,
+            seed_offset=args.seed_offset,
+            fixture_ids=fixture_ids,
+        )
     else:
-        n_gen, n_skip = run_programmatic_arm(output_dir=output_dir, plans_per_fixture=plans_per_fixture, sampler_config_path=Path(args.sampler_config) if args.sampler_config else None, seed_offset=args.seed_offset)
+        n_gen, n_skip = run_programmatic_arm(
+            output_dir=output_dir,
+            plans_per_fixture=plans_per_fixture,
+            sampler_config_path=Path(args.sampler_config) if args.sampler_config else None,
+            seed_offset=args.seed_offset,
+            fixture_ids=fixture_ids,
+        )
 
     elapsed = (datetime.now(tz=timezone.utc) - t0).total_seconds()
     print("\n=== Done ===")

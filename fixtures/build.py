@@ -3,331 +3,471 @@
 Run once (idempotent):
     python -m fixtures.build
 
-Each bundle is written to ``fixtures/data/<fixture_id>/`` and contains:
-    combined_summary.json              – 35 days of synthetic daily records
-    combined_rollups.json              – pre-computed 7d / 28d rollups
-    readiness_and_risk_forecast.json   – deterministic forecast artifact
-    formatted_personal_data.json       – minimal personal profile stub
-    fixture_meta.json                  – FixtureMeta serialised
-
-The data is *synthetic*, not scraped, so there are no IRB concerns.
-The values are chosen to be internally consistent (e.g. a "fatigued /
-load_only" fixture has elevated RHR vs baseline and no sleep records).
+This version fixes the earlier phase-leakage bug: ``race_phase`` now changes
+substantive prompt-visible payloads, not only ``fixture_meta.json``.
 """
 from __future__ import annotations
 
 import json
-import math
 from datetime import date, timedelta
 from pathlib import Path
+from statistics import mean
 from typing import Any
 
-from fixtures.spec import ALL_FIXTURE_SPECS, FixtureMeta, RecoveryCapabilityLevel, ReadinessLevel
+from fixtures.spec import ALL_FIXTURE_SPECS, FIXTURE_BY_ID, FixtureMeta, PHASE_PROFILES
 
 DATA_DIR = Path(__file__).parent / "data"
 
-# ── Numeric parameters per axis level ───────────────────────────────────────
+_BASELINE_LOAD_HOURS = {
+    "developing_runner": 4.6,
+    "experienced_runner": 5.4,
+    "durable_high_volume_runner": 6.4,
+    "fatigue_prone_runner": 4.2,
+}
 
-_LOAD_HIGH = 6.5   # training_load_hours last7  (primed)
-_LOAD_LOW = 3.0    # training_load_hours last7  (fatigued — elevated relative to baseline)
-_BASELINE_LOAD = 4.0  # rolling-baseline load_h (same for both — controls ramp perception)
+_BASELINE_DISTANCE_KM = {
+    "developing_runner": 38.0,
+    "experienced_runner": 48.0,
+    "durable_high_volume_runner": 58.0,
+    "fatigue_prone_runner": 34.0,
+}
 
-_RHR_NORMAL = 45   # bpm  (primed)
-_RHR_ELEVATED = 52  # bpm  (fatigued)
+_BASELINE_ELEVATION_M = {
+    "developing_runner": 1200.0,
+    "experienced_runner": 1600.0,
+    "durable_high_volume_runner": 2100.0,
+    "fatigue_prone_runner": 1050.0,
+}
 
-_HRV_NORMAL = 70   # ms   (primed)
-_HRV_LOW = 52      # ms   (fatigued — though fatigued fixtures may omit it)
+_WEIGHT_KG = {
+    "developing_runner": 70.0,
+    "experienced_runner": 67.0,
+    "durable_high_volume_runner": 65.0,
+    "fatigue_prone_runner": 69.0,
+}
 
-_SLEEP_NORMAL = 7.8  # hours
-_SLEEP_LOW = 6.2     # hours
+_HEIGHT_CM = {
+    "developing_runner": 176.0,
+    "experienced_runner": 174.0,
+    "durable_high_volume_runner": 173.0,
+    "fatigue_prone_runner": 175.0,
+}
+
+_YEARS_IN_SPORT = {
+    "developing_runner": 1.8,
+    "experienced_runner": 4.5,
+    "durable_high_volume_runner": 6.5,
+    "fatigue_prone_runner": 3.2,
+}
 
 
-def _isodate(d: date) -> str:
-    return d.isoformat()
+def _json_write(path: Path, payload: Any) -> None:
+    path.write_text(json.dumps(payload, indent=2, ensure_ascii=False), encoding="utf-8")
 
 
-def _activity(day: date, *, moving_time_s: int = 3600, avg_hr: int = 148) -> dict[str, Any]:
+def _rest_day_for_week(week_idx: int, spec: FixtureMeta) -> int:
+    if spec.readiness == "low":
+        return [1, 3, 1, 2, 4][week_idx]
+    if spec.race_phase == "peak":
+        return [1, 1, 2, 3, 4][week_idx]
+    return [2, 1, 2, 1, 3][week_idx]
+
+
+def _long_run_day_for_week(week_idx: int, spec: FixtureMeta) -> int:
+    return 5 if spec.race_phase == "base" else 4 + (week_idx % 2)
+
+
+def _phase_training_multiplier(spec: FixtureMeta, day_idx: int) -> float:
+    profile = PHASE_PROFILES[spec.race_phase]
+    if day_idx < 28:
+        return profile.baseline28_load_mult
+    return profile.last7_load_mult
+
+
+def _readiness_training_multiplier(spec: FixtureMeta, day_idx: int) -> float:
+    if spec.readiness == "high":
+        return 1.10 if day_idx >= 28 else 1.00
+    return 0.90 if day_idx < 28 else 0.82
+
+
+def _duration_minutes(spec: FixtureMeta, day_idx: int, weekday: int, *, is_rest: bool, is_long_run: bool) -> int:
+    if is_rest:
+        return 0
+    archetype = spec.athlete_archetype
+    baseline_minutes = (_BASELINE_LOAD_HOURS[archetype] * 60.0) / 5.5
+    structure_mult = 0.82 + (weekday * 0.06)
+    if is_long_run:
+        structure_mult *= 1.60 * PHASE_PROFILES[spec.race_phase].long_run_emphasis
+    if weekday == 2 and spec.readiness == "high":
+        structure_mult *= 1.12
+    if weekday == 2 and spec.readiness == "low":
+        structure_mult *= 0.90
+    duration = baseline_minutes * structure_mult
+    duration *= _phase_training_multiplier(spec, day_idx)
+    duration *= _readiness_training_multiplier(spec, day_idx)
+    return max(35, int(round(duration)))
+
+
+def _distance_km(spec: FixtureMeta, duration_minutes: int, *, is_rest: bool, is_long_run: bool) -> float | None:
+    if is_rest:
+        return None
+    archetype = spec.athlete_archetype
+    base_speed_kmh = {
+        "developing_runner": 8.0,
+        "experienced_runner": 8.6,
+        "durable_high_volume_runner": 8.9,
+        "fatigue_prone_runner": 7.8,
+    }[archetype]
+    if spec.race_phase == "peak":
+        base_speed_kmh *= 1.02
+    if spec.readiness == "low":
+        base_speed_kmh *= 0.94
+    distance = (duration_minutes / 60.0) * base_speed_kmh
+    distance *= PHASE_PROFILES[spec.race_phase].distance_mult
+    if is_long_run:
+        distance *= 1.08
+    return round(distance, 1)
+
+
+def _elevation_m(spec: FixtureMeta, duration_minutes: int, *, is_rest: bool, is_long_run: bool) -> float | None:
+    if is_rest:
+        return None
+    climb_rate = 4.8 if spec.race_phase == "base" else 4.1
+    if spec.readiness == "low":
+        climb_rate *= 0.90
+    elevation = duration_minutes * climb_rate * PHASE_PROFILES[spec.race_phase].elevation_mult
+    if is_long_run:
+        elevation *= 1.12
+    return round(elevation, 1)
+
+
+def _average_hr(spec: FixtureMeta, *, is_rest: bool, is_long_run: bool) -> int | None:
+    if is_rest:
+        return None
+    base = 146 if spec.readiness == "high" else 153
+    if is_long_run:
+        base -= 2
+    if spec.race_phase == "peak":
+        base += 1
+    return base
+
+
+def _session_type(spec: FixtureMeta, weekday: int, *, is_rest: bool, is_long_run: bool) -> str:
+    if is_rest:
+        return "rest"
+    if is_long_run:
+        return "long"
+    if weekday in (1, 2):
+        return "hills" if spec.race_phase == "base" else "tempo"
+    if weekday == 4:
+        return "strength" if spec.readiness == "low" else "aerobic"
+    return "easy"
+
+
+def _sleep_record(spec: FixtureMeta, current_day: date, day_idx: int, *, is_rest: bool) -> dict[str, Any] | None:
+    if spec.recovery_capability == "low":
+        return None
+    if spec.readiness == "high":
+        sleep_hours = 7.8 if not is_rest else 8.1
+        resting_hr = 45 if spec.race_phase == "base" else 46
+        hrv = 71 if spec.race_phase == "base" else 69
+    else:
+        sleep_hours = 6.3 if not is_rest else 6.7
+        resting_hr = 52 if spec.race_phase == "base" else 50
+        hrv = 53 if spec.race_phase == "base" else 56
+    if day_idx >= 28 and spec.race_phase == "peak" and spec.readiness == "high":
+        sleep_hours += 0.2
     return {
-        "id": abs(hash(day.isoformat())) % (10**9),
-        "sport_type": "TrailRun",
-        "start_date_local": f"{day.isoformat()}T08:00:00",
-        "distance": 10000.0,
-        "moving_time": moving_time_s,
-        "total_elevation_gain": 250.0,
-        "average_heartrate": avg_hr,
-        "max_heartrate": 172,
-    }
-
-
-def _sleep_record(
-    day: date,
-    *,
-    readiness: ReadinessLevel,
-    recovery_capability: RecoveryCapabilityLevel,
-) -> dict[str, Any] | None:
-    """Return a sleep dict or None (when recovery_capability=='low')."""
-    if recovery_capability == "low":
-        return None  # no sleep/HRV data for load_only fixtures
-
-    sleep_h = _SLEEP_NORMAL if readiness == "high" else _SLEEP_LOW
-    rhr = _RHR_NORMAL if readiness == "high" else _RHR_ELEVATED
-    hrv = _HRV_NORMAL if readiness == "high" else _HRV_LOW
-    return {
-        "calendarDate": day.isoformat(),
-        "sleepTimeSeconds": int(sleep_h * 3600),
-        "restingHeartRate": rhr,
+        "calendarDate": current_day.isoformat(),
+        "sleepTimeSeconds": int(round(sleep_hours * 3600)),
+        "restingHeartRate": resting_hr,
         "avgOvernightHrv": hrv,
     }
 
 
+def _activity_record(
+    current_day: date,
+    duration_minutes: int,
+    distance_km: float | None,
+    elevation_m: float | None,
+    avg_hr: int | None,
+) -> dict[str, Any]:
+    return {
+        "id": abs(hash((current_day.isoformat(), duration_minutes, distance_km))) % (10**9),
+        "sport_type": "TrailRun",
+        "start_date_local": f"{current_day.isoformat()}T07:30:00",
+        "distance": None if distance_km is None else round(distance_km * 1000.0, 1),
+        "moving_time": int(duration_minutes * 60),
+        "total_elevation_gain": elevation_m,
+        "average_heartrate": avg_hr,
+        "max_heartrate": None if avg_hr is None else avg_hr + 22,
+    }
+
+
 def _build_combined_summary(spec: FixtureMeta, *, as_of: date) -> list[dict[str, Any]]:
-    """35 days of daily records ending on *as_of*."""
     combined: list[dict[str, Any]] = []
-    last7_load = _LOAD_HIGH if spec.readiness == "high" else _LOAD_LOW
-    # We want the last-7 load to be noticeably different from the 28-day baseline.
-    # For primed: last7 > baseline slightly (athlete training well)
-    # For fatigued: last7 > baseline by more (overcooked)
-    baseline_per_day = _BASELINE_LOAD / 7.0
-
-    for i in range(35):
-        day = as_of - timedelta(days=34 - i)
-        is_recent = i >= 28  # last 7 days
-
-        # Determine daily load — ramp up in last 7 for fatigued athlete
-        if is_recent:
-            target_week_load = last7_load
-        else:
-            target_week_load = _BASELINE_LOAD
-
-        daily_load_h = (target_week_load / 7.0) * (0.9 + 0.2 * ((i % 3) / 2.0))
-        moving_time_s = int(daily_load_h * 3600)
-
-        # Rest days: every 4th day has no activity
-        if i % 4 == 3:
-            activities: list[dict[str, Any]] = []
-        else:
-            avg_hr = 155 if spec.readiness == "low" else 145
-            activities = [_activity(day, moving_time_s=max(600, moving_time_s), avg_hr=avg_hr)]
-
-        sleep = _sleep_record(
-            day,
-            readiness=spec.readiness,
-            recovery_capability=spec.recovery_capability,
+    start_day = as_of - timedelta(days=34)
+    for day_idx in range(35):
+        current_day = start_day + timedelta(days=day_idx)
+        week_idx = day_idx // 7
+        weekday = day_idx % 7
+        is_rest = weekday == _rest_day_for_week(week_idx, spec)
+        is_long_run = (weekday == _long_run_day_for_week(week_idx, spec)) and not is_rest
+        session_type = _session_type(spec, weekday, is_rest=is_rest, is_long_run=is_long_run)
+        duration_minutes = _duration_minutes(spec, day_idx, weekday, is_rest=is_rest, is_long_run=is_long_run)
+        distance_km = _distance_km(spec, duration_minutes, is_rest=is_rest, is_long_run=is_long_run)
+        elevation_m = _elevation_m(spec, duration_minutes, is_rest=is_rest, is_long_run=is_long_run)
+        avg_hr = _average_hr(spec, is_rest=is_rest, is_long_run=is_long_run)
+        activities = []
+        if not is_rest:
+            activities.append(_activity_record(current_day, duration_minutes, distance_km, elevation_m, avg_hr))
+        combined.append(
+            {
+                "date": current_day.isoformat(),
+                "sleep": _sleep_record(spec, current_day, day_idx, is_rest=is_rest),
+                "activities": activities,
+                "notes": {
+                    "session_type": session_type,
+                    "phase_block": spec.block_label,
+                },
+            }
         )
-
-        combined.append({"date": day.isoformat(), "sleep": sleep, "activities": activities})
-
     return combined
 
 
-def _build_rollups(spec: FixtureMeta, *, as_of: date) -> dict[str, Any]:
-    last7_load = _LOAD_HIGH if spec.readiness == "high" else _LOAD_LOW
-    last7_dist = 55.0 if spec.readiness == "high" else 28.0
-    baseline28_load = _BASELINE_LOAD * 4  # 4 weeks
-    baseline28_dist = last7_dist * 3.8
-
-    w7_start = as_of - timedelta(days=6)
-    w28_start = as_of - timedelta(days=27)
+def _window_summary(records: list[dict[str, Any]], *, start_day: date, end_day: date) -> dict[str, Any]:
+    in_window = [r for r in records if start_day <= date.fromisoformat(r["date"]) <= end_day]
+    sleep_days = sum(1 for r in in_window if r.get("sleep"))
+    activities = [a for r in in_window for a in (r.get("activities") or [])]
+    distances = [float(a.get("distance") or 0.0) / 1000.0 for a in activities]
+    elevations = [float(a.get("total_elevation_gain") or 0.0) for a in activities]
+    moving_hours = [float(a.get("moving_time") or 0.0) / 3600.0 for a in activities]
+    avg_hrs = [float(a.get("average_heartrate")) for a in activities if a.get("average_heartrate") is not None]
+    sport_counts: dict[str, int] = {}
+    for activity in activities:
+        sport = str(activity.get("sport_type") or "unknown")
+        sport_counts[sport] = sport_counts.get(sport, 0) + 1
     return {
-        "generated_at": f"{as_of.isoformat()}T00:00:00Z",
-        "windows": {
-            "7": {
-                "window_days": 7,
-                "start_date": w7_start.isoformat(),
-                "end_date": as_of.isoformat(),
-                "sleep_days_with_data": 5 if spec.recovery_capability == "high" else 0,
-                "activities": {
-                    "count": 5,
-                    "total_distance_km": round(last7_dist, 1),
-                    "total_elevation_m": 1250.0 if spec.readiness == "high" else 650.0,
-                    "total_moving_time_hours": round(last7_load / 1.15, 2),
-                    "total_training_load_hours": round(last7_load, 2),
-                    "average_heartrate_mean": 148.0 if spec.readiness == "high" else 156.0,
-                    "count_by_sport": {"TrailRun": 5},
-                },
-            },
-            "28": {
-                "window_days": 28,
-                "start_date": w28_start.isoformat(),
-                "end_date": as_of.isoformat(),
-                "sleep_days_with_data": 20 if spec.recovery_capability == "high" else 0,
-                "activities": {
-                    "count": 20,
-                    "total_distance_km": round(baseline28_dist, 1),
-                    "total_elevation_m": 5000.0,
-                    "total_moving_time_hours": round(baseline28_load / 1.10, 2),
-                    "total_training_load_hours": round(baseline28_load, 2),
-                    "average_heartrate_mean": 147.0,
-                    "count_by_sport": {"TrailRun": 20},
-                },
-            },
+        "window_days": (end_day - start_day).days + 1,
+        "start_date": start_day.isoformat(),
+        "end_date": end_day.isoformat(),
+        "sleep_days_with_data": sleep_days,
+        "activities": {
+            "count": len(activities),
+            "total_distance_km": round(sum(distances), 1),
+            "total_elevation_m": round(sum(elevations), 1),
+            "total_moving_time_hours": round(sum(moving_hours), 2),
+            "total_training_load_hours": round(sum(moving_hours), 2),
+            "average_heartrate_mean": round(mean(avg_hrs), 1) if avg_hrs else None,
+            "count_by_sport": sport_counts,
         },
     }
 
 
-def _build_forecast(spec: FixtureMeta, *, as_of: date) -> dict[str, Any]:
-    readiness_score = 78.0 if spec.readiness == "high" else 42.0
-    readiness_status = spec.readiness_status  # "primed" or "fatigued"
-    risk_score = 28.0 if spec.readiness == "high" else 68.0
-    risk_level = "low" if spec.readiness == "high" else "high"
+def _build_rollups(spec: FixtureMeta, *, as_of: date, combined: list[dict[str, Any]]) -> dict[str, Any]:
+    return {
+        "generated_at": f"{as_of.isoformat()}T00:00:00Z",
+        "windows": {
+            "7": _window_summary(combined, start_day=as_of - timedelta(days=6), end_day=as_of),
+            "28": _window_summary(combined, start_day=as_of - timedelta(days=27), end_day=as_of),
+        },
+    }
 
-    rhr_7d = _RHR_NORMAL if spec.readiness == "high" else _RHR_ELEVATED
-    rhr_28d = _RHR_NORMAL
-    hrv_7d = _HRV_NORMAL if spec.readiness == "high" else _HRV_LOW
-    hrv_28d = _HRV_NORMAL
-    sleep_7d: float | None
-    sleep_28d: float | None
-    if spec.recovery_capability == "high":
-        sleep_7d = _SLEEP_NORMAL if spec.readiness == "high" else _SLEEP_LOW
-        sleep_28d = _SLEEP_NORMAL
+
+def _mean_optional(values: list[float | None]) -> float | None:
+    clean = [float(v) for v in values if v is not None]
+    if not clean:
+        return None
+    return round(mean(clean), 2)
+
+
+def _build_forecast(spec: FixtureMeta, *, as_of: date, combined: list[dict[str, Any]], rollups: dict[str, Any]) -> dict[str, Any]:
+    recent = combined[-7:]
+    historical = combined[-28:]
+    sleep_7d = _mean_optional([
+        None if r.get("sleep") is None else float(r["sleep"]["sleepTimeSeconds"]) / 3600.0 for r in recent
+    ])
+    sleep_28d = _mean_optional([
+        None if r.get("sleep") is None else float(r["sleep"]["sleepTimeSeconds"]) / 3600.0 for r in historical
+    ])
+    rhr_7d = _mean_optional([None if r.get("sleep") is None else r["sleep"].get("restingHeartRate") for r in recent])
+    rhr_28d = _mean_optional([None if r.get("sleep") is None else r["sleep"].get("restingHeartRate") for r in historical])
+    hrv_7d = _mean_optional([None if r.get("sleep") is None else r["sleep"].get("avgOvernightHrv") for r in recent])
+    hrv_28d = _mean_optional([None if r.get("sleep") is None else r["sleep"].get("avgOvernightHrv") for r in historical])
+
+    load_7d = float(rollups["windows"]["7"]["activities"]["total_training_load_hours"])
+    load_28d = float(rollups["windows"]["28"]["activities"]["total_training_load_hours"])
+    rolling_7_mean = round(load_28d / 4.0, 2)
+
+    if spec.readiness == "high":
+        readiness_score = 77.0 if spec.race_phase == "base" else 81.0
+        risk_score = 29.0 if spec.race_phase == "base" else 24.0
     else:
-        sleep_7d = None
-        sleep_28d = None
-        rhr_7d = None  # type: ignore[assignment]
-        rhr_28d = None  # type: ignore[assignment]
-        hrv_7d = None  # type: ignore[assignment]
-        hrv_28d = None  # type: ignore[assignment]
+        readiness_score = 43.0 if spec.race_phase == "base" else 49.0
+        risk_score = 69.0 if spec.race_phase == "base" else 58.0
 
-    last7_load = _LOAD_HIGH if spec.readiness == "high" else _LOAD_LOW
+    readiness_drivers = []
+    risk_drivers = []
+    if spec.readiness == "high":
+        readiness_drivers.append("Recent load is compatible with current preparedness.")
+        if spec.race_phase == "peak":
+            readiness_drivers.append("Freshness indicators fit a race-specific sharpening phase.")
+        else:
+            readiness_drivers.append("Load supports continued aerobic development without obvious strain.")
+        risk_drivers.append("Recent training remains within sustainable range for this athlete profile.")
+    else:
+        readiness_drivers.append("Recent signals indicate meaningful fatigue relative to the athlete baseline.")
+        risk_drivers.append("Readiness context suggests reduced tolerance for extra hard volume.")
+        if spec.recovery_capability == "high":
+            risk_drivers.append("Recovery signals do not fully support aggressive progression right now.")
+        else:
+            risk_drivers.append("Recovery instrumentation is limited, increasing uncertainty around strain.")
+
+    readiness_drivers.extend(PHASE_PROFILES[spec.race_phase].forecast_driver_notes)
+    risk_drivers.extend(PHASE_PROFILES[spec.race_phase].forecast_driver_notes)
 
     return {
         "generated_at": f"{as_of.isoformat()}T00:00:00Z",
         "result": {
             "date": as_of.isoformat(),
-            "readiness": {"score": readiness_score, "status": readiness_status},
-            "overreach_risk": {"score": risk_score, "level": risk_level},
+            "readiness": {"score": readiness_score, "status": spec.readiness_status},
+            "overreach_risk": {
+                "score": risk_score,
+                "level": "low" if risk_score < 40 else "moderate" if risk_score < 60 else "high",
+            },
             "inputs": {
                 "as_of_date": as_of.isoformat(),
                 "rhr_7d_mean_bpm": rhr_7d,
                 "rhr_28d_mean_bpm": rhr_28d,
-                "rhr_28d_std_bpm": 2.0 if rhr_28d else None,
-                "rhr_delta_bpm": (rhr_7d - rhr_28d) if (rhr_7d and rhr_28d) else None,
-                "rhr_z": ((rhr_7d - rhr_28d) / 2.0) if (rhr_7d and rhr_28d) else None,
-                "training_load_7d_hours": round(last7_load, 2),
-                "training_load_rolling7_mean_hours": _BASELINE_LOAD,
+                "rhr_28d_std_bpm": 2.0 if rhr_28d is not None else None,
+                "rhr_delta_bpm": None if (rhr_7d is None or rhr_28d is None) else round(rhr_7d - rhr_28d, 2),
+                "rhr_z": None if (rhr_7d is None or rhr_28d is None) else round((rhr_7d - rhr_28d) / 2.0, 3),
+                "training_load_7d_hours": round(load_7d, 2),
+                "training_load_rolling7_mean_hours": rolling_7_mean,
                 "training_load_rolling7_std_hours": 0.8,
-                "training_load_delta_hours": round(last7_load - _BASELINE_LOAD, 2),
-                "training_load_z": round((last7_load - _BASELINE_LOAD) / 0.8, 3),
-                "atl_load_hours": round(last7_load * 0.9, 3),
-                "ctl_load_hours": round(_BASELINE_LOAD * 0.95, 3),
-                "tsb_load_hours": round(_BASELINE_LOAD * 0.95 - last7_load * 0.9, 3),
+                "training_load_delta_hours": round(load_7d - rolling_7_mean, 2),
+                "training_load_z": round((load_7d - rolling_7_mean) / 0.8, 3),
+                "atl_load_hours": round(load_7d * 0.92, 3),
+                "ctl_load_hours": round(rolling_7_mean * 0.97, 3),
+                "tsb_load_hours": round((rolling_7_mean * 0.97) - (load_7d * 0.92), 3),
                 "sleep_7d_mean_hours": sleep_7d,
                 "sleep_28d_mean_hours": sleep_28d,
-                "sleep_28d_std_hours": 0.5 if sleep_28d else None,
-                "sleep_delta_hours": ((sleep_7d - sleep_28d) if (sleep_7d and sleep_28d) else None),
-                "sleep_z": None,
+                "sleep_28d_std_hours": 0.45 if sleep_28d is not None else None,
+                "sleep_delta_hours": None if (sleep_7d is None or sleep_28d is None) else round(sleep_7d - sleep_28d, 2),
                 "hrv_7d_mean_ms": hrv_7d,
                 "hrv_28d_mean_ms": hrv_28d,
-                "hrv_28d_std_ms": 5.0 if hrv_28d else None,
-                "hrv_delta_ms": ((hrv_7d - hrv_28d) if (hrv_7d and hrv_28d) else None),
-                "hrv_z": None,
+                "hrv_28d_std_ms": 5.0 if hrv_28d is not None else None,
+                "hrv_delta_ms": None if (hrv_7d is None or hrv_28d is None) else round(hrv_7d - hrv_28d, 2),
                 "recovery_capability_key": spec.recovery_key,
                 "recovery_capability_label": (
                     "I have load + sleep + resting HR + HRV"
                     if spec.recovery_capability == "high"
                     else "I only have training data"
                 ),
-                "sleep_days_7d": 5 if spec.recovery_capability == "high" else 0,
-                "resting_hr_days_7d": 5 if spec.recovery_capability == "high" else 0,
-                "hrv_days_7d": 5 if spec.recovery_capability == "high" else 0,
-                "notes": ["Synthetic fixture generated by fixtures/build.py."],
+                "sleep_days_7d": int(rollups["windows"]["7"]["sleep_days_with_data"]),
+                "resting_hr_days_7d": int(rollups["windows"]["7"]["sleep_days_with_data"]),
+                "hrv_days_7d": int(rollups["windows"]["7"]["sleep_days_with_data"]),
+                "weeks_to_race": spec.weeks_to_race,
+                "block_label": spec.block_label,
+                "notes": [
+                    "Synthetic fixture generated by fixtures/build.py.",
+                    f"Athlete archetype: {spec.athlete_archetype}.",
+                    f"Phase context: {spec.block_label}.",
+                ],
             },
             "drivers": {
-                "readiness": (
-                    ["Load is within comfortable range of 28-day baseline"]
-                    if spec.readiness == "high"
-                    else ["7d training load is elevated vs rolling baseline",
-                          "Resting HR above 28d baseline"]
-                ),
-                "overreach_risk": (
-                    ["Training load within sustainable range"]
-                    if spec.readiness == "high"
-                    else ["7d training load elevated", "Resting HR elevation signals fatigue"]
-                ),
+                "readiness": readiness_drivers,
+                "overreach_risk": risk_drivers,
             },
         },
     }
 
 
 def _build_personal_data(spec: FixtureMeta, *, as_of: date) -> dict[str, Any]:
+    archetype = spec.athlete_archetype
+    base_load = _BASELINE_LOAD_HOURS[archetype]
+    base_distance = _BASELINE_DISTANCE_KM[archetype]
     return {
         "userInfo": {},
         "biometricProfile": {
-            "weight_kg": 68.0,
-            "height_cm": 175.0,
+            "weight_kg": _WEIGHT_KG[archetype],
+            "height_cm": _HEIGHT_CM[archetype],
         },
         "derived_activity_profile": {
             "observed_window": {
                 "as_of_date": as_of.isoformat(),
-                "first_activity_date": (as_of - timedelta(days=730)).isoformat(),
+                "first_activity_date": (as_of - timedelta(days=780)).isoformat(),
                 "last_activity_date": (as_of - timedelta(days=1)).isoformat(),
-                "activity_span_days": 730,
+                "activity_span_days": 780,
             },
             "sports": {
-                "trailrunning": {
+                spec.style: {
                     "sport_family": "running",
-                    "claimed_years_sport": 2.0,
-                    "activity_count": 180,
-                    "total_distance_km": 2200.0,
-                    "total_moving_time_hours": 280.0,
-                    "total_elevation_m": 45000.0,
-                    "total_training_load_hours": 310.0,
+                    "claimed_years_sport": _YEARS_IN_SPORT[archetype],
+                    "activity_count": int(150 + (_YEARS_IN_SPORT[archetype] * 30)),
+                    "total_distance_km": round(base_distance * 52.0, 1),
+                    "total_moving_time_hours": round(base_load * 52.0, 1),
+                    "total_elevation_m": round(_BASELINE_ELEVATION_M[archetype] * 52.0, 1),
+                    "total_training_load_hours": round(base_load * 56.0, 1),
                 }
             },
             "top_sports": {
-                "90d": {"primary_sport_discipline": "trailrunning"},
-                "365d": {"primary_sport_discipline": "trailrunning"},
+                "90d": {"primary_sport_discipline": spec.style},
+                "365d": {"primary_sport_discipline": spec.style},
             },
             "historical_capacities": {
                 "90d": {
-                    "all_sports": {"peak_7d_training_load_hours": 8.5},
-                    "running_family": {"peak_7d_distance_km": 65.0},
+                    "all_sports": {"peak_7d_training_load_hours": round(base_load * 1.45, 2)},
+                    "running_family": {"peak_7d_distance_km": round(base_distance * 1.35, 2)},
                 },
                 "365d": {
-                    "all_sports": {"peak_7d_training_load_hours": 10.2},
-                    "running_family": {"peak_7d_distance_km": 80.0},
+                    "all_sports": {"peak_7d_training_load_hours": round(base_load * 1.70, 2)},
+                    "running_family": {"peak_7d_distance_km": round(base_distance * 1.55, 2)},
                 },
             },
         },
         "profile_metadata": {
             "generated_at": f"{as_of.isoformat()}T00:00:00Z",
             "generated_from": ["synthetic_fixture"],
+            "fixture_id": spec.fixture_id,
+            "athlete_archetype": archetype,
+            "race_phase": spec.race_phase,
+            "block_label": spec.block_label,
+            "primary_goal": spec.primary_goal,
+            "lifestyle_notes": spec.lifestyle_notes,
+            "weeks_to_race": spec.weeks_to_race,
         },
     }
 
 
 def build_fixture(spec: FixtureMeta, *, as_of: date, out_dir: Path) -> None:
-    """Write all four JSON files + fixture_meta.json into *out_dir*."""
     out_dir.mkdir(parents=True, exist_ok=True)
-
     combined = _build_combined_summary(spec, as_of=as_of)
-    rollups = _build_rollups(spec, as_of=as_of)
-    forecast = _build_forecast(spec, as_of=as_of)
+    rollups = _build_rollups(spec, as_of=as_of, combined=combined)
+    forecast = _build_forecast(spec, as_of=as_of, combined=combined, rollups=rollups)
     personal = _build_personal_data(spec, as_of=as_of)
 
-    def _write(name: str, obj: Any) -> None:
-        (out_dir / name).write_text(
-            json.dumps(obj, indent=2, ensure_ascii=False, default=str),
-            encoding="utf-8",
-        )
-
-    _write("combined_summary.json", combined)
-    _write("combined_rollups.json", rollups)
-    _write("readiness_and_risk_forecast.json", forecast)
-    _write("formatted_personal_data.json", personal)
-    _write("fixture_meta.json", spec.model_dump())
-
+    _json_write(out_dir / "combined_summary.json", combined)
+    _json_write(out_dir / "combined_rollups.json", rollups)
+    _json_write(out_dir / "readiness_and_risk_forecast.json", forecast)
+    _json_write(out_dir / "formatted_personal_data.json", personal)
+    _json_write(out_dir / "fixture_meta.json", spec.model_dump())
     print(f"  [built] {out_dir.name}/")
 
 
 def build_all(out_root: Path | None = None) -> None:
-    if out_root is None:
-        out_root = DATA_DIR
-    as_of = date(2026, 3, 17)  # frozen reference date
-    print(f"Building 8 fixture bundles into {out_root}/")
+    root = out_root or DATA_DIR
+    as_of = date(2026, 3, 17)
+    print(f"Building {len(ALL_FIXTURE_SPECS)} fixture bundles into {root}/")
     for spec in ALL_FIXTURE_SPECS:
-        build_fixture(spec, as_of=as_of, out_dir=out_root / spec.fixture_id)
+        build_fixture(spec, as_of=as_of, out_dir=root / spec.fixture_id)
     print("Done.")
+
+
+def build_one(fixture_id: str, out_root: Path | None = None) -> None:
+    root = out_root or DATA_DIR
+    spec = FIXTURE_BY_ID[fixture_id]
+    build_fixture(spec, as_of=date(2026, 3, 17), out_dir=root / fixture_id)
 
 
 if __name__ == "__main__":

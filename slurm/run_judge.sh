@@ -1,10 +1,17 @@
 #!/usr/bin/env bash
-# slurm/run_judge.sh — Gate 4 workhorse: one judge, full pairwise + soft-eval.
+# slurm/run_judge.sh — one judge, routed through the real Python CLI.
 #
-# Usage (submit from login node):
-#   JUDGE_NAME=qwen_7b_judge sbatch --exclude=gnode04 \
-#       --wrap='cd $PROJECT_ROOT && bash slurm/run_judge.sh'
-#
+# Optional env:
+#   JUDGE_NAME            default qwen_7b_judge
+#   JUDGE_MODE            pilot | full
+#   RUN_PAIRWISE          1 | 0
+#   RUN_SOFT_EVAL         1 | 0
+#   PAIR_LIMIT            integer limit for sharded pairwise runs
+#   PLAN_LIMIT            integer limit for sharded soft-eval runs
+#   REQUIRE_STYLE_GATE    1 | 0
+#   STYLE_GATE_SUMMARY    path to style gate summary JSON
+#   VLLM_PORT             default 8772
+
 #SBATCH --job-name=jbs_judge
 #SBATCH --partition=stud
 #SBATCH --qos=stud
@@ -22,23 +29,29 @@ cd "${PROJECT_ROOT}"
 mkdir -p out err judgments
 
 JUDGE_NAME="${JUDGE_NAME:-qwen_7b_judge}"
+JUDGE_MODE="${JUDGE_MODE:-full}"
+RUN_PAIRWISE="${RUN_PAIRWISE:-1}"
+RUN_SOFT_EVAL="${RUN_SOFT_EVAL:-1}"
+PAIR_LIMIT="${PAIR_LIMIT:-}"
+PLAN_LIMIT="${PLAN_LIMIT:-}"
+REQUIRE_STYLE_GATE="${REQUIRE_STYLE_GATE:-1}"
+STYLE_GATE_SUMMARY="${STYLE_GATE_SUMMARY:-results/style_audit_summary.json}"
 export VLLM_PORT="${VLLM_PORT:-8772}"
 
-echo "=== Judge run: ${JUDGE_NAME} ==="
+echo "=== Judge run: ${JUDGE_NAME} (${JUDGE_MODE}) ==="
 log_quota
 preflight_quota_gate
 
 export HF_HUB_OFFLINE=1
-# Satisfy upstream make_openrouter_client even though the compat layer
-# redirects to local vLLM when TRAILTRAINING_LLM_BASE_URL is set.
 export OPENROUTER_API_KEY=dummy
 
 echo "--- Resolving judge spec ---"
 python -c "
 import sys; sys.path.insert(0, '.')
-from judge.panel import get_judge
-j = get_judge('${JUDGE_NAME}')
-print(f'model_id={j.model_id}  quant={j.quant}  disk_gb={j.disk_gb}')
+from judge.panel import get_judge, assert_judge_fits_quota
+judge = get_judge('${JUDGE_NAME}')
+assert_judge_fits_quota(judge)
+print(f'model_id={judge.model_id} quant={judge.quant} disk_gb={judge.disk_gb} time_hours={judge.time_hours}')
 "
 
 JUDGE_MODEL=$(python -c "
@@ -50,90 +63,64 @@ print(get_judge('${JUDGE_NAME}').model_id)
 JUDGE_QUANT=$(python -c "
 import sys; sys.path.insert(0, '.')
 from judge.panel import get_judge
-j = get_judge('${JUDGE_NAME}')
-print(j.quant if j.quant != 'fp16' else '')
+judge = get_judge('${JUDGE_NAME}')
+print(judge.quant if judge.quant != 'fp16' else '')
 ")
 
 echo "--- Starting vLLM (${JUDGE_MODEL}) ---"
-VLLM_CMD="python -m vllm.entrypoints.openai.api_server     --model ${JUDGE_MODEL}     --port ${VLLM_PORT}     --host 127.0.0.1     --max-model-len 8192     --disable-log-requests"
+VLLM_CMD="python -m vllm.entrypoints.openai.api_server --model ${JUDGE_MODEL} --port ${VLLM_PORT} --host 127.0.0.1 --max-model-len 8192 --disable-log-requests"
 if [[ -n "${JUDGE_QUANT}" ]]; then
     VLLM_CMD="${VLLM_CMD} --quantization ${JUDGE_QUANT}"
 fi
-eval "${VLLM_CMD}" &
+eval "${VLLM_CMD}" > out/vllm_judge_${JUDGE_NAME}.log 2>&1 &
 VLLM_PID=$!
-echo "vLLM PID: ${VLLM_PID}"
 
 echo "--- Health poll (up to 15 min) ---"
 python -c "
 import sys; sys.path.insert(0, '.')
 from judge.vllm_server import VllmServer
 from pathlib import Path
-s = VllmServer('${JUDGE_MODEL}', ${VLLM_PORT}, log_dir=Path('out'), max_model_len=8192)
-healthy = s.health_poll(timeout_s=900, interval_s=15)
-if not healthy:
-    print('[ABORT] vLLM failed to become healthy.', flush=True)
-    import os, signal
-    os.killpg(os.getpgid(${VLLM_PID}), signal.SIGKILL)
-    sys.exit(1)
-print('vLLM healthy')
+server = VllmServer('${JUDGE_MODEL}', ${VLLM_PORT}, log_dir=Path('out'), max_model_len=8192)
+sys.exit(0 if server.health_poll(timeout_s=900, interval_s=15) else 1)
 "
+
+cleanup() {
+    set +e
+    kill "${VLLM_PID}" 2>/dev/null || true
+    sleep 15
+    kill -9 "${VLLM_PID}" 2>/dev/null || true
+    set -e
+}
+trap cleanup EXIT
 
 export TRAILTRAINING_LLM_BASE_URL="http://127.0.0.1:${VLLM_PORT}/v1"
 
-echo "--- Running pairwise + soft-eval harness ---"
-python -c "
-import sys, json; sys.path.insert(0, '.')
-from pathlib import Path
-from generate.constants import PAIRWISE_N_RUNS, PAIRWISE_N_POSITIONS
-from judge.panel import get_judge
-from judge.harness import run_pairwise_harness, run_soft_eval_harness
+CLI_ARGS=(judge --judge "${JUDGE_NAME}" --plans plans/ --pairs matched_pairs.json --output judgments/)
+if [[ "${JUDGE_MODE}" == "pilot" ]]; then
+    CLI_ARGS+=(--pilot)
+fi
+if [[ "${RUN_PAIRWISE}" == "0" ]]; then
+    CLI_ARGS+=(--skip-pairwise)
+fi
+if [[ "${RUN_SOFT_EVAL}" == "0" ]]; then
+    CLI_ARGS+=(--skip-soft-eval)
+fi
+if [[ -n "${PAIR_LIMIT}" ]]; then
+    CLI_ARGS+=(--pair-limit "${PAIR_LIMIT}")
+fi
+if [[ -n "${PLAN_LIMIT}" ]]; then
+    CLI_ARGS+=(--plan-limit "${PLAN_LIMIT}")
+fi
+if [[ "${REQUIRE_STYLE_GATE}" == "1" ]]; then
+    CLI_ARGS+=(--require-style-gate --style-gate-summary "${STYLE_GATE_SUMMARY}")
+fi
 
-judge = get_judge('${JUDGE_NAME}')
-pairs_file = Path('matched_pairs.json')
-plans_dir = Path('plans')
-fixture_dir = Path('fixtures/data')
-judgments_dir = Path('judgments')
-judgments_dir.mkdir(exist_ok=True)
-
-if not pairs_file.exists():
-    print('[WARN] matched_pairs.json not found — skipping pairwise')
-else:
-    pairs = json.loads(pairs_file.read_text())
-    run_pairwise_harness(
-        pairs=pairs,
-        plans_dir=plans_dir,
-        judge=judge,
-        rollups_path=None,
-        fixtures_dir=fixture_dir,
-        output_path=judgments_dir / f'pairwise_{judge.name}.jsonl',
-        n_runs=PAIRWISE_N_RUNS,
-        n_positions=PAIRWISE_N_POSITIONS,
-    )
-    print(f'Pairwise done: {judge.name}  (n_runs={PAIRWISE_N_RUNS}, n_positions={PAIRWISE_N_POSITIONS})')
-
-plan_ids = [p.stem for p in plans_dir.glob('*.json')
-            if not p.name.endswith('.provenance.json')] if plans_dir.exists() else []
-if plan_ids:
-    run_soft_eval_harness(
-        plan_ids=plan_ids,
-        plans_dir=plans_dir,
-        judge=judge,
-        rollups_path=None,
-        fixtures_dir=fixture_dir,
-        provenance_dir=plans_dir,
-        output_path=judgments_dir / f'softeval_{judge.name}.jsonl',
-    )
-    print(f'Soft eval done: {judge.name}')
-"
-
-echo "--- Shutting down vLLM ---"
-kill "${VLLM_PID}" 2>/dev/null || true
-sleep 15
-kill -9 "${VLLM_PID}" 2>/dev/null || true
+echo "--- Running CLI judge path ---"
+python cli.py "${CLI_ARGS[@]}"
 
 echo "--- Deleting model weights ---"
-MODEL_DIR_NAME="models--$(echo '${JUDGE_MODEL}' | tr '/' '--')"
-rm -rf "${HF_HUB_CACHE}/${MODEL_DIR_NAME}" 2>/dev/null && echo "Deleted" || echo "(not found)"
+MODEL_DIR_NAME="models--$(echo "${JUDGE_MODEL}" | tr '/' '--')"
+rm -rf "${HF_HUB_CACHE}/${MODEL_DIR_NAME}" 2>/dev/null || true
 
 log_quota
 echo "=== Judge run COMPLETE: ${JUDGE_NAME} ==="

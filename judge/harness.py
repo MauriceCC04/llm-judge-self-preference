@@ -7,6 +7,10 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Optional
 
+from compat.trailtraining_client import install_trailtraining_client_compat
+from generate.constants import PAIRWISE_TEXT_CHAR_LIMITS
+from judge.normalize import normalize_pair_for_pairwise
+
 log = logging.getLogger(__name__)
 
 
@@ -59,9 +63,11 @@ def run_pairwise_harness(
     fixtures_dir: Optional[Path] = None,
     n_runs: int = 3,
     n_positions: int = 2,
+    normalize_inputs: bool = True,
     schema_failures_path: Optional[Path] = None,
 ) -> None:
     """Run compare_plans for every (pair × run × position), skip already-done."""
+    install_trailtraining_client_compat()
     from judge.outputs import PairwiseWriter, SchemaFailWriter
     from trailtraining.llm.soft_eval import SoftEvalConfig, compare_plans
 
@@ -90,8 +96,8 @@ def run_pairwise_harness(
             log.warning("Missing plan files for pair %s — skipping", pair_id)
             continue
 
-        plan_a = _load_plan(path_a)
-        plan_b = _load_plan(path_b)
+        raw_plan_a = _load_plan(path_a)
+        raw_plan_b = _load_plan(path_b)
         rollups = _resolve_rollups_for_fixture(
             fixture_id,
             rollups_path=rollups_path,
@@ -105,7 +111,13 @@ def run_pairwise_harness(
                 if writer.exists(stub):
                     continue
 
-                a, b = (plan_a, plan_b) if position == "AB" else (plan_b, plan_a)
+                a, b = (raw_plan_a, raw_plan_b) if position == "AB" else (raw_plan_b, raw_plan_a)
+                if normalize_inputs:
+                    a, b = normalize_pair_for_pairwise(
+                        a,
+                        b,
+                        text_char_limits=PAIRWISE_TEXT_CHAR_LIMITS,
+                    )
 
                 try:
                     result = compare_plans(a, b, rollups=rollups, cfg=cfg)
@@ -132,6 +144,7 @@ def run_pairwise_harness(
                         "plan_b_id": pair["plan_b_id"],
                         "reasoning": result.get("reasoning", ""),
                         "fixture_id": fixture_id,
+                        "normalized_inputs": normalize_inputs,
                         "timestamp": datetime.now(tz=timezone.utc).isoformat(),
                     }
                     writer.append(record)
@@ -163,6 +176,7 @@ def run_soft_eval_harness(
     schema_failures_path: Optional[Path] = None,
 ) -> None:
     """Run evaluate_training_plan_soft on every plan, skip already-done."""
+    install_trailtraining_client_compat()
     from judge.outputs import SchemaFailWriter, SoftEvalWriter
     from trailtraining.llm.constraints import ConstraintConfig, evaluate_training_plan_quality
     from trailtraining.llm.soft_eval import SoftEvalConfig, evaluate_training_plan_soft

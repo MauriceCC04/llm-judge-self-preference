@@ -1,38 +1,6 @@
 """analyze/run_analysis.py — complete paper-ready analysis pipeline.
 
 Produces all tables and figures from the raw JSONL judgment files.
-
-Usage::
-
-    python -m analyze.run_analysis \
-        --judgments judgments/ \
-        --plans     plans/ \
-        --provenance plans/ \
-        --fixtures  fixtures/data/ \
-        --output    results/
-
-Output layout::
-
-    results/
-    ├── summary.json
-    ├── summary.md
-    ├── h1_logistic_result.json
-    ├── h1_forest.png
-    ├── h2_rubric_deltas.json
-    ├── h2_rubric_deltas.csv
-    ├── h2_rubric_heatmap.png
-    ├── h3_self_preference.json
-    ├── h4_scale_result.json
-    ├── h4_scale_curve.png
-    ├── position_bias_audit.csv
-    ├── position_bias_audit.png
-    ├── schema_failure_rates.csv
-    ├── pair_coverage.csv
-    ├── style_audit_pairwise.csv
-    ├── style_audit_summary.csv
-    ├── style_audit_summary.json
-    ├── exclusions_provenance.json
-    └── excluded_plan_ids.txt
 """
 from __future__ import annotations
 
@@ -65,9 +33,7 @@ def write_exclusion_audit(exclusions: list[dict], out: Path) -> None:
     (out / "excluded_plan_ids.txt").write_text("\n".join(plan_ids), encoding="utf-8")
 
 
-# ── Individual analysis steps ─────────────────────────────────────────────────
-
-def step_position_bias(df_pair: "pd.DataFrame", out: Path) -> dict:  # type: ignore[name-defined]
+def step_position_bias(df_pair: "pd.DataFrame", out: Path) -> dict:
     from analyze.figures import save_position_bias_audit
     from analyze.load import detect_position_bias
     import pandas as pd
@@ -98,7 +64,7 @@ def step_position_bias(df_pair: "pd.DataFrame", out: Path) -> dict:  # type: ign
     return {"biased_judges": biased, "audit": records}
 
 
-def step_h1(df_pair: "pd.DataFrame", out: Path) -> dict:  # type: ignore[name-defined]
+def step_h1(df_pair: "pd.DataFrame", out: Path) -> dict:
     from analyze.models import fit_h1_model
     from analyze.figures import save_h1_forest_plot
 
@@ -135,7 +101,7 @@ def step_h2(
     out: Path,
     *,
     pairs_path: Path,
-) -> dict:  # type: ignore[name-defined]
+) -> dict:
     from analyze.rubric_deltas import rubric_paired_contrasts
     from analyze.figures import save_rubric_heatmap, save_rubric_heatmap_csv
 
@@ -176,7 +142,7 @@ def step_h2(
     return result
 
 
-def step_h3(df_pair: "pd.DataFrame", out: Path) -> dict:  # type: ignore[name-defined]
+def step_h3(df_pair: "pd.DataFrame", out: Path) -> dict:
     from analyze.models import fit_h3_model, add_same_family_column
 
     if df_pair.empty:
@@ -204,7 +170,7 @@ def step_h3(df_pair: "pd.DataFrame", out: Path) -> dict:  # type: ignore[name-de
     return result
 
 
-def step_h4(df_pair: "pd.DataFrame", out: Path) -> dict:  # type: ignore[name-defined]
+def step_h4(df_pair: "pd.DataFrame", out: Path) -> dict:
     from analyze.models import fit_h4_model
     from analyze.figures import save_h4_scale_curve
 
@@ -295,8 +261,6 @@ def step_style_audit(
     print(f"  Style audit: {flagged}/{total} features flagged")
     return result
 
-
-# ── Markdown summary ──────────────────────────────────────────────────────────
 
 def write_markdown_summary(
     h1: dict,
@@ -434,8 +398,6 @@ Matched pairs contributing: {h2_pairs}
     out_path.write_text(md, encoding="utf-8")
     print(f"[Saved] {out_path}")
 
-
-# ── Entry point ───────────────────────────────────────────────────────────────
 
 def main(argv: list[str] | None = None) -> None:
     parser = argparse.ArgumentParser(description="Full analysis pipeline → paper outputs")

@@ -6,6 +6,9 @@ import math
 from pathlib import Path
 from typing import Any
 
+from generate.constants import MATCH_FEATURE_WEIGHTS
+from match.features import load_match_features, weighted_feature_distance
+
 
 class ScoringError(RuntimeError):
     """Raised when the deterministic scorer cannot produce a study-valid score."""
@@ -19,8 +22,10 @@ def greedy_pair(
     plans: list[dict[str, Any]],
     *,
     tolerance: float = 1.0,
+    feature_weights: dict[str, float] | None = None,
 ) -> list[dict[str, Any]]:
     """Pair LLM plans with programmatic plans within same fixture and score bin."""
+    feature_weights = feature_weights or MATCH_FEATURE_WEIGHTS
     llm_plans = [p.copy() for p in plans if p["arm"] == "llm"]
     prog_plans = [p.copy() for p in plans if p["arm"] == "programmatic"]
 
@@ -41,6 +46,7 @@ def greedy_pair(
 
         best_prog = None
         best_gap = float("inf")
+        best_distance = float("inf")
 
         for pp in prog_sorted:
             if pp["plan_id"] in used_prog:
@@ -51,8 +57,12 @@ def greedy_pair(
                 continue
 
             gap = abs(float(lp["score"]) - float(pp["score"]))
-            if gap <= tolerance and gap < best_gap:
+            if gap > tolerance:
+                continue
+            distance = weighted_feature_distance(lp, pp, weights=feature_weights)
+            if (distance, gap) < (best_distance, best_gap):
                 best_gap = gap
+                best_distance = distance
                 best_prog = pp
 
         if best_prog is not None:
@@ -63,18 +73,21 @@ def greedy_pair(
                     "plan_b_id": best_prog["plan_id"],
                     "fixture_id": lp["fixture_id"],
                     "score_gap": round(best_gap, 3),
+                    "match_distance": round(best_distance, 3),
                     "score_a": lp["score"],
                     "score_b": best_prog["score"],
                     "source_model_a": lp.get("source_model"),
                     "source_model_b": best_prog.get("source_model"),
                     "explainer_model_a": lp.get("explainer_model"),
                     "explainer_model_b": best_prog.get("explainer_model"),
+                    "actual_explainer_model_a": lp.get("actual_explainer_model"),
+                    "actual_explainer_model_b": best_prog.get("actual_explainer_model"),
                     "explainer_verified_a": lp.get("explainer_model_verified"),
                     "explainer_verified_b": best_prog.get("explainer_model_verified"),
                     "score_bin": lp["score_bin"],
                     "score_bin_a": lp["score_bin"],
                     "score_bin_b": best_prog["score_bin"],
-                    "match_rule": "same_fixture_same_score_bin_within_tolerance",
+                    "match_rule": "same_fixture_same_score_bin_within_tolerance_min_weighted_distance",
                     "arm_a": "llm",
                     "arm_b": "programmatic",
                 }
@@ -92,12 +105,7 @@ def score_plan(
     *,
     strict: bool = True,
 ) -> float:
-    """Return a quality score for *plan_path*.
-
-    In strict mode, deterministic scoring failures raise ScoringError.
-    In non-strict mode, the function falls back to a deterministic structural
-    heuristic score for local/dev workflows.
-    """
+    """Return a quality score for *plan_path*."""
     try:
         import json as _json
         from trailtraining.llm.constraints import ConstraintConfig, evaluate_training_plan_quality
@@ -120,7 +128,6 @@ def score_plan(
 
 
 def _heuristic_score(plan_path: Path) -> float:
-    """Deterministic structural heuristic score (no LLM required)."""
     import hashlib
 
     try:
@@ -163,6 +170,7 @@ def build_matched_pairs(
     target_pairs: int = 250,
     strict_scoring: bool = True,
     scoring_failures_path: Path | None = None,
+    feature_weights: dict[str, float] | None = None,
 ) -> list[dict[str, Any]]:
     from generate.provenance import PlanProvenance
 
@@ -207,7 +215,9 @@ def build_matched_pairs(
                 "plan_path": str(plan_path),
                 "source_model": prov.source_model,
                 "explainer_model": prov.explainer_model,
+                "actual_explainer_model": prov.actual_explainer_model,
                 "explainer_model_verified": prov.explainer_model_verified,
+                **load_match_features(plan_path),
             }
         )
 
@@ -219,7 +229,7 @@ def build_matched_pairs(
                 f"{len(scoring_failures)} plans failed deterministic scoring; see {fail_path}"
             )
 
-    pairs = greedy_pair(plan_records, tolerance=tolerance)
+    pairs = greedy_pair(plan_records, tolerance=tolerance, feature_weights=feature_weights)
     _print_audit(pairs, plan_records, target_pairs=target_pairs)
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
@@ -237,6 +247,7 @@ def _print_audit(
     *,
     target_pairs: int,
 ) -> None:
+    del plans
     n = len(pairs)
     gaps = [p["score_gap"] for p in pairs]
     mean_gap = sum(gaps) / n if n else 0.0

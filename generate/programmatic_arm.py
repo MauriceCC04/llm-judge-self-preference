@@ -15,6 +15,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Optional
 
+from compat.trailtraining_client import describe_client_routing, make_stage_client
 from generate.constants import EXPLAINER_MODEL_ID, PLAN_DAYS
 from generate.provenance import PlanProvenance
 from generate.sampler import StructuralSamplerConfig, sample_machine_plan
@@ -44,6 +45,31 @@ def _next_day(iso_date: str) -> str:
     return (d + timedelta(days=1)).isoformat()
 
 
+def _make_client_from_env():
+    from openai import OpenAI
+    import os
+
+    base_url = (os.getenv("TRAILTRAINING_LLM_BASE_URL") or "").strip()
+    api_key = (
+        os.getenv("OPENROUTER_API_KEY")
+        or os.getenv("TRAILTRAINING_OPENROUTER_API_KEY")
+        or ""
+    ).strip()
+
+    if api_key.lower() == "dummy":
+        api_key = ""
+
+    if base_url:
+        return OpenAI(base_url=base_url, api_key=api_key or "dummy")
+
+    if not api_key:
+        raise RuntimeError(
+            "No LLM endpoint configured. Set TRAILTRAINING_LLM_BASE_URL "
+            "(local vLLM) or OPENROUTER_API_KEY / TRAILTRAINING_OPENROUTER_API_KEY."
+        )
+
+    return OpenAI(base_url="https://openrouter.ai/api/v1", api_key=api_key)
+
 def generate_programmatic_plan(
     fixture_dir: Path,
     output_dir: Path,
@@ -71,7 +97,6 @@ def generate_programmatic_plan(
     fixture_meta = data["fixture_meta"]
     fixture_id = fixture_meta.get("fixture_id", fixture_dir.name)
 
-    # Build StructuralSamplerConfig from fixture metadata
     if sampler_cfg is None:
         readiness_status = fixture_meta.get("readiness_status", "steady")
         last_date = data["combined"][-1]["date"] if data["combined"] else "2026-03-17"
@@ -83,13 +108,9 @@ def generate_programmatic_plan(
             plan_start=_next_day(last_date),
         )
 
-    # 1. Sample skeleton
     skeleton = sample_machine_plan(sampler_cfg, combined=data["combined"], rollups=data["rollups"])
-
-    # 2. Validate shape
     skeleton = ensure_machine_plan_shape(skeleton)
 
-    # 3. Guardrails
     effective = derive_effective_constraints(
         det_forecast=data["forecast"],
         rollups=data["rollups"],
@@ -97,7 +118,6 @@ def generate_programmatic_plan(
     )
     apply_eval_coach_guardrails(skeleton, data["rollups"], effective=effective)
 
-    # 4. Run explainer
     cfg = CoachConfig(
         model=EXPLAINER_MODEL_ID,
         reasoning_effort="none",
@@ -113,7 +133,6 @@ def generate_programmatic_plan(
 
     out_path = output_dir / f"{plan_id}.json"
 
-    # Try PR-2 public helper first, then fall back to manual explainer call
     try:
         from trailtraining.llm.coach import run_training_plan_from_machine_plan
         plan_json, _ = run_training_plan_from_machine_plan(
@@ -124,6 +143,7 @@ def generate_programmatic_plan(
             effective=effective,
             output_path=str(out_path),
         )
+        runtime_backend = "trailtraining.llm.coach.run_training_plan_from_machine_plan"
     except (ImportError, AttributeError):
         plan_json = _run_explainer_directly(
             skeleton=skeleton,
@@ -133,14 +153,22 @@ def generate_programmatic_plan(
             effective=effective,
             out_path=out_path,
         )
+        runtime_backend = "generate.programmatic_arm._run_explainer_directly"
 
-    # Write provenance sidecar
     prov = PlanProvenance(
         plan_id=plan_id,
         fixture_id=fixture_id,
         arm="programmatic",
         source_model=None,
         explainer_model=EXPLAINER_MODEL_ID,
+        actual_explainer_model=EXPLAINER_MODEL_ID,
+        explainer_model_verified=True,
+        generation_pipeline="programmatic_guardrailed_explainer",
+        runtime_backend=runtime_backend,
+        runtime_metadata={
+            **describe_client_routing(),
+            "actual_explainer_model": EXPLAINER_MODEL_ID,
+        },
         seed=seed,
         generated_at=datetime.now(tz=timezone.utc).isoformat(),
         plan_path=str(out_path),
@@ -149,34 +177,6 @@ def generate_programmatic_plan(
     prov_path.write_text(prov.model_dump_json(indent=2), encoding="utf-8")
 
     return plan_json, str(out_path), str(prov_path)
-
-
-def _make_client_from_env() -> "OpenAI":  # type: ignore[name-defined]
-    """Build an OpenAI-compatible client from env vars without PR-1.
-
-    Works with both OpenRouter (production) and a local vLLM server (HPC).
-    Priority:
-        TRAILTRAINING_LLM_BASE_URL  → local vLLM override (study HPC path)
-        OPENROUTER_API_KEY          → openrouter production
-    """
-    from openai import OpenAI
-
-    base_url = (os.getenv("TRAILTRAINING_LLM_BASE_URL") or "").strip()
-    api_key = (
-        os.getenv("OPENROUTER_API_KEY")
-        or os.getenv("TRAILTRAINING_OPENROUTER_API_KEY")
-        or ""
-    ).strip()
-
-    if base_url:
-        return OpenAI(base_url=base_url, api_key=api_key or "dummy")
-
-    if not api_key:
-        raise RuntimeError(
-            "No LLM endpoint configured.  Set TRAILTRAINING_LLM_BASE_URL "
-            "(local vLLM) or OPENROUTER_API_KEY (OpenRouter production)."
-        )
-    return OpenAI(base_url="https://openrouter.ai/api/v1", api_key=api_key)
 
 
 def _run_explainer_directly(
@@ -188,13 +188,7 @@ def _run_explainer_directly(
     effective: Any,
     out_path: Path,
 ) -> str:
-    """Fallback: call the explainer directly using the public coach machinery.
-
-    This path is taken when PR-2 (run_training_plan_from_machine_plan) has not
-    yet been merged into trailtraining.  It avoids calling private coach
-    functions directly; instead it delegates to the public ``run_coach_brief``
-    interface with a pre-built machine plan injected via environment.
-    """
+    """Fallback: call the explainer directly using the public coach machinery."""
     import json
     from trailtraining.llm.coach import (
         _merge_machine_plan_and_explanations,
@@ -239,7 +233,6 @@ def _run_explainer_directly(
     if cfg.reasoning_effort == "none" and cfg.temperature is not None:
         explain_kwargs["temperature"] = cfg.temperature
 
-    # Build client without depending on private _make_openrouter_client (PR-1)
     client = _make_client_from_env()
     explain_resp = call_with_schema(client, explain_kwargs, PLAN_EXPLANATION_SCHEMA)
     explain_text = getattr(explain_resp, "output_text", None) or str(explain_resp)

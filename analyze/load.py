@@ -52,7 +52,7 @@ def _llm_in_position_a(row: Any) -> int:
 
 
 def _referenced_plan_ids(
-    df: "pd.DataFrame",  # type: ignore[name-defined]  # noqa: F821
+    df: "pd.DataFrame",
     *,
     kind: Kind,
 ) -> set[str]:
@@ -88,12 +88,16 @@ def collect_invalid_plan_ids(
         if prov is None:
             reason = "missing_provenance"
             explainer_model = None
+            actual_explainer_model = None
             explainer_model_verified = None
         else:
             explainer_model = prov.get("explainer_model")
+            actual_explainer_model = prov.get("actual_explainer_model")
             explainer_model_verified = prov.get("explainer_model_verified")
             if explainer_model != expected_explainer:
                 reason = "explainer_model_mismatch"
+            elif actual_explainer_model and actual_explainer_model != expected_explainer:
+                reason = "actual_explainer_model_mismatch"
             elif require_verified_explainer and not bool(explainer_model_verified):
                 reason = "explainer_model_unverified"
 
@@ -104,6 +108,7 @@ def collect_invalid_plan_ids(
                     "plan_id": str(plan_id),
                     "reason": reason,
                     "explainer_model": explainer_model,
+                    "actual_explainer_model": actual_explainer_model,
                     "explainer_model_verified": explainer_model_verified,
                 }
             )
@@ -112,11 +117,11 @@ def collect_invalid_plan_ids(
 
 
 def apply_provenance_exclusions(
-    df: "pd.DataFrame",  # type: ignore[name-defined]  # noqa: F821
+    df: "pd.DataFrame",
     *,
     kind: Kind,
     invalid_plan_ids: set[str],
-) -> "pd.DataFrame":  # type: ignore[name-defined]  # noqa: F821
+) -> "pd.DataFrame":
     if df.empty or not invalid_plan_ids:
         return df
 
@@ -142,7 +147,7 @@ def load_judgments(
     expected_explainer: str | None = None,
     require_verified_explainer: bool = False,
     return_exclusions: bool = False,
-) -> "pd.DataFrame | tuple[pd.DataFrame, list[dict[str, Any]]]":  # type: ignore[name-defined]  # noqa: F821
+) -> "pd.DataFrame | tuple[pd.DataFrame, list[dict[str, Any]]]":
     """Join judgment JSONL records with provenance sidecars."""
     try:
         import pandas as pd
@@ -267,7 +272,7 @@ def load_judgments(
 
 
 def detect_position_bias(
-    df: "pd.DataFrame",  # type: ignore[name-defined]  # noqa: F821
+    df: "pd.DataFrame",
     *,
     threshold: float = 0.2,
 ) -> dict[str, Any]:

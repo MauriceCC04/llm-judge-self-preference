@@ -96,6 +96,9 @@ def run_style_audit(
     provenance_dir: Path,
     pairs_path: Path,
     output_dir: Path,
+    *,
+    critical_features: set[str] | None = None,
+    z_threshold: float = 0.2,
 ) -> dict[str, Any]:
     try:
         import pandas as pd
@@ -110,7 +113,6 @@ def run_style_audit(
         prog_plan_id = pair["plan_b_id"] if pair.get("arm_a") == "llm" else pair["plan_a_id"]
         llm_plan = _load_plan(plans_dir / f"{llm_plan_id}.json")
         prog_plan = _load_plan(plans_dir / f"{prog_plan_id}.json")
-
         llm_features = extract_surface_features(llm_plan)
         prog_features = extract_surface_features(prog_plan)
 
@@ -134,42 +136,47 @@ def run_style_audit(
     summary_rows: list[dict[str, Any]] = []
     feature_names = sorted(k[len("delta_"):] for k in pair_df.columns if k.startswith("delta_"))
     flagged = 0
-
     for feat in feature_names:
         deltas = [float(v) for v in pair_df[f"delta_{feat}"].dropna().tolist()]
         mean_delta = _mean(deltas) if deltas else float("nan")
         sd_delta = _sd(deltas) if deltas else float("nan")
         standardized = (mean_delta / sd_delta) if deltas and sd_delta not in (0.0, float("nan")) else 0.0
-        is_flagged = abs(standardized) >= 0.2
+        is_flagged = abs(standardized) >= z_threshold
         if is_flagged:
             flagged += 1
-        summary_rows.append({
-            "feature": feat,
-            "mean_delta": mean_delta,
-            "sd_delta": sd_delta,
-            "standardized_delta": standardized,
-            "pvalue": float("nan"),
-            "n_pairs": len(deltas),
-            "flagged": is_flagged,
-        })
+        summary_rows.append(
+            {
+                "feature": feat,
+                "mean_delta": mean_delta,
+                "sd_delta": sd_delta,
+                "standardized_delta": standardized,
+                "pvalue": float("nan"),
+                "n_pairs": len(deltas),
+                "flagged": is_flagged,
+            }
+        )
 
     summary_df = pd.DataFrame(summary_rows)
     summary_csv = output_dir / "style_audit_summary.csv"
     summary_json = output_dir / "style_audit_summary.json"
     summary_df.to_csv(summary_csv, index=False)
-    summary_json.write_text(
-        json.dumps(
-            {
-                "n_pairs": int(len(pair_df)),
-                "n_features": int(len(summary_rows)),
-                "n_flagged_features": int(flagged),
-                "features": summary_rows,
-            },
-            indent=2,
-            default=str,
-        ),
-        encoding="utf-8",
-    )
+    summary_payload = {
+        "n_pairs": int(len(pair_df)),
+        "n_features": int(len(summary_rows)),
+        "n_flagged_features": int(flagged),
+        "features": summary_rows,
+    }
+    summary_json.write_text(json.dumps(summary_payload, indent=2, default=str), encoding="utf-8")
+
+    critical_features = critical_features or set()
+    flagged_features = [r["feature"] for r in summary_rows if r["flagged"]]
+    flagged_critical = [f for f in flagged_features if f in critical_features]
+    gate = {
+        "passed": len(flagged_critical) == 0,
+        "flagged_features": flagged_features,
+        "flagged_critical_features": flagged_critical,
+        "z_threshold": z_threshold,
+    }
 
     return {
         "n_pairs": int(len(pair_df)),
@@ -178,4 +185,5 @@ def run_style_audit(
         "pairwise_csv": str(pair_path),
         "summary_csv": str(summary_csv),
         "summary_json": str(summary_json),
+        "gate": gate,
     }

@@ -1,21 +1,14 @@
-"""generate/llm_arm.py — LLM arm plan generation.
-
-Generates one plan per call via run_coach_brief. Input files (combined_summary,
-rollups, etc.) are read from *fixture_dir*; output files are written to
-*output_dir*. The two directories are kept separate so fixture data is never
-mutated.
-"""
+"""generate/llm_arm.py — LLM arm plan generation with local two-stage compatibility."""
 from __future__ import annotations
 
 import json
-import os
-import types
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any
 
-from generate.constants import EXPLAINER_MODEL_ID, PLAN_DAYS
+from generate.constants import EXPLAINER_MODEL_ID
 from generate.provenance import PlanProvenance
+from generate.trailtraining_compat import run_two_stage_generation_compat
+
 
 
 def generate_llm_plan(
@@ -25,88 +18,37 @@ def generate_llm_plan(
     source_model: str,
     seed: int = 0,
 ) -> tuple[str, str, str]:
-    """Generate one LLM-arm plan via run_coach_brief.
-
-    Input files are read from *fixture_dir* (combined_summary.json, etc.).
-    The plan JSON and provenance sidecar are written to *output_dir*.
-
-    The TRAILTRAINING_TWO_STAGE_PLAN=1 env var activates the two-stage pipeline
-    (machine plan → guardrails → explainer) so both arms share the same explainer
-    model path.
-
-    Returns (plan_json_str, plan_path, provenance_path).
-    """
-    from trailtraining.llm.coach import CoachConfig, run_coach_brief
-    import trailtraining.config as tt_config
-
     fixture_dir = Path(fixture_dir)
     output_dir = Path(output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    # Load fixture metadata for provenance
     meta_path = fixture_dir / "fixture_meta.json"
-    fixture_meta = json.loads(meta_path.read_text()) if meta_path.exists() else {}
+    fixture_meta = json.loads(meta_path.read_text(encoding="utf-8")) if meta_path.exists() else {}
     fixture_id = fixture_meta.get("fixture_id", fixture_dir.name)
-
-    # Enable two-stage pipeline so the explainer is the same as programmatic arm
-    os.environ["TRAILTRAINING_TWO_STAGE_PLAN"] = "1"
-    runtime_metadata: dict[str, Any] = {
-        "TRAILTRAINING_TWO_STAGE_PLAN": os.environ.get("TRAILTRAINING_TWO_STAGE_PLAN"),
-    }
-
     plan_path = output_dir / f"{plan_id}.json"
 
-    cfg = CoachConfig(
-        model=source_model,
-        reasoning_effort="none",
-        temperature=0.7,
-        plan_days=PLAN_DAYS,
+    plan_json, runtime_metadata = run_two_stage_generation_compat(
+        fixture_dir=fixture_dir,
+        output_path=plan_path,
+        source_model=source_model,
+        explainer_model=EXPLAINER_MODEL_ID,
         primary_goal="to become a faster trail runner",
+        seed=seed,
     )
 
-    # Build a runtime whose prompting_directory points to OUTPUT_DIR
-    # so coach can write temp files there, while input files are read
-    # from fixture_dir via explicit input_path= / summary_path= overrides.
-    fake_paths = types.SimpleNamespace(
-        prompting_directory=output_dir,
-        processing_directory=output_dir,
-        base_dir=output_dir,
-        rhr_directory=output_dir,
-        sleep_directory=output_dir,
-        fit_directory=output_dir,
-    )
-    fake_runtime = types.SimpleNamespace(paths=fake_paths)
+    runtime_metadata = dict(runtime_metadata or {})
+    runtime_metadata.setdefault("TRAILTRAINING_TWO_STAGE_PLAN", "1")
 
-    # Patch ensure_directories to be a no-op (output_dir already exists)
-    original_ensure = tt_config.ensure_directories
-    tt_config.ensure_directories = lambda runtime=None: None
-    try:
-        plan_json, saved_path = run_coach_brief(
-            prompt="training-plan",
-            cfg=cfg,
-            summary_path=str(fixture_dir / "combined_summary.json"),
-            personal_path=str(fixture_dir / "formatted_personal_data.json"),
-            input_path=str(fixture_dir),
-            output_path=str(plan_path),
-            runtime=fake_runtime,
-        )
-        runtime_metadata["saved_path"] = str(saved_path)
-    finally:
-        tt_config.ensure_directories = original_ensure
+    actual_explainer_model = runtime_metadata.get("actual_explainer_model")
+    explainer_verified = bool(runtime_metadata.get("explainer_model_verified", False))
 
-    # Runtime verification hook:
-    # if trailtraining later exposes the actual explainer model used by the
-    # two-stage pipeline, inspect that metadata here and set this True only
-    # when it matches EXPLAINER_MODEL_ID.
-    explainer_verified = False
-
-    # Write provenance sidecar
     prov = PlanProvenance(
         plan_id=plan_id,
         fixture_id=fixture_id,
         arm="llm",
         source_model=source_model,
         explainer_model=EXPLAINER_MODEL_ID,
+        actual_explainer_model=actual_explainer_model,
         explainer_model_verified=explainer_verified,
         generation_pipeline="llm_two_stage",
         runtime_backend="trailtraining.llm.coach.run_coach_brief",
@@ -117,5 +59,4 @@ def generate_llm_plan(
     )
     prov_path = output_dir / f"{plan_id}.json.provenance.json"
     prov_path.write_text(prov.model_dump_json(indent=2), encoding="utf-8")
-
     return plan_json, str(plan_path), str(prov_path)

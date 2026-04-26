@@ -2,7 +2,8 @@
 # slurm/run_judge.sh — Gate 4 workhorse: one judge, full pairwise + soft-eval.
 #
 # Usage (submit from login node):
-#   JUDGE_NAME=qwen_7b_judge sbatch --exclude=gnode04 #       --wrap='cd $PROJECT_ROOT && bash slurm/run_judge.sh'
+#   JUDGE_NAME=qwen_7b_judge sbatch --exclude=gnode04 \
+#       --wrap='cd $PROJECT_ROOT && bash slurm/run_judge.sh'
 #
 #SBATCH --job-name=jbs_judge
 #SBATCH --partition=stud
@@ -28,6 +29,9 @@ log_quota
 preflight_quota_gate
 
 export HF_HUB_OFFLINE=1
+# Satisfy upstream make_openrouter_client even though the compat layer
+# redirects to local vLLM when TRAILTRAINING_LLM_BASE_URL is set.
+export OPENROUTER_API_KEY=dummy
 
 echo "--- Resolving judge spec ---"
 python -c "
@@ -75,12 +79,12 @@ print('vLLM healthy')
 "
 
 export TRAILTRAINING_LLM_BASE_URL="http://127.0.0.1:${VLLM_PORT}/v1"
-export OPENROUTER_API_KEY=dummy
 
 echo "--- Running pairwise + soft-eval harness ---"
 python -c "
 import sys, json; sys.path.insert(0, '.')
 from pathlib import Path
+from generate.constants import PAIRWISE_N_RUNS, PAIRWISE_N_POSITIONS
 from judge.panel import get_judge
 from judge.harness import run_pairwise_harness, run_soft_eval_harness
 
@@ -102,10 +106,10 @@ else:
         rollups_path=None,
         fixtures_dir=fixture_dir,
         output_path=judgments_dir / f'pairwise_{judge.name}.jsonl',
-        n_runs=3,
-        n_positions=2,
+        n_runs=PAIRWISE_N_RUNS,
+        n_positions=PAIRWISE_N_POSITIONS,
     )
-    print(f'Pairwise done: {judge.name}')
+    print(f'Pairwise done: {judge.name}  (n_runs={PAIRWISE_N_RUNS}, n_positions={PAIRWISE_N_POSITIONS})')
 
 plan_ids = [p.stem for p in plans_dir.glob('*.json')
             if not p.name.endswith('.provenance.json')] if plans_dir.exists() else []

@@ -2,13 +2,14 @@
 from __future__ import annotations
 
 import json
+import os
 from datetime import datetime, timezone
 from pathlib import Path
 
+from compat.trailtraining_client import install_trailtraining_client_compat
 from generate.constants import EXPLAINER_MODEL_ID
 from generate.provenance import PlanProvenance
 from generate.trailtraining_compat import run_two_stage_generation_compat
-
 
 
 def generate_llm_plan(
@@ -18,6 +19,16 @@ def generate_llm_plan(
     source_model: str,
     seed: int = 0,
 ) -> tuple[str, str, str]:
+    # Every entry-point installs the compat shim so make_openrouter_client can
+    # be redirected to local vLLM when TRAILTRAINING_*_LLM_BASE_URL is set.
+    # When no local URLs are configured (e.g. unit tests), the install is a
+    # no-op and upstream factories — possibly already monkey-patched — run.
+    install_trailtraining_client_compat()
+    # Belt-and-suspenders: trailtraining.llm.shared.make_openrouter_client
+    # raises if OPENROUTER_API_KEY is empty even when a local base URL is
+    # configured. A dummy key prevents that constructor-time RuntimeError.
+    os.environ.setdefault("OPENROUTER_API_KEY", "dummy")
+
     fixture_dir = Path(fixture_dir)
     output_dir = Path(output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
@@ -50,8 +61,11 @@ def generate_llm_plan(
         explainer_model=EXPLAINER_MODEL_ID,
         actual_explainer_model=actual_explainer_model,
         explainer_model_verified=explainer_verified,
-        generation_pipeline="llm_two_stage",
-        runtime_backend="trailtraining.llm.coach.run_coach_brief",
+        # Honest pipeline label: we replicate run_coach_brief's two-stage loop
+        # locally rather than calling the public entry-point (it requires a
+        # full runtime/profile setup that doesn't exist in the study repo).
+        generation_pipeline="llm_two_stage_compat",
+        runtime_backend="generate.trailtraining_compat.run_two_stage_generation_compat",
         runtime_metadata=runtime_metadata,
         seed=seed,
         generated_at=datetime.now(tz=timezone.utc).isoformat(),

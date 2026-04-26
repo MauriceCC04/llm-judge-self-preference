@@ -52,7 +52,6 @@ The LLM-preference gap is larger on `explanation_quality` than on
   family matches source model family, 0 otherwise).
   - Llama judge + Llama source = same_family=1
   - Qwen judge + Qwen source = same_family=1
-  - Mistral judge + Llama/Qwen source = same_family=0
 - **Test:** interaction term `same_family` in the mixed-effects model (H3 model,
   see §Statistical models).
 - **Decision rule:** positive and significant `same_family` coefficient (p < 0.05).
@@ -85,11 +84,13 @@ across the 7B / 14B / 32B ladder.
 
 | Parameter | Value |
 |---|---|
-| Plans per arm | ~320 |
+| Plans per arm (target) | ~256 (8 fixtures × 16 plans/fixture/source × 2 source models for LLM; 8 × 32 for programmatic) |
+| Total plans (target) | ~512 |
 | LLM arm source models | meta-llama/Llama-3.1-8B-Instruct, Qwen/Qwen2.5-7B-Instruct |
 | Programmatic arm | sampler → guardrails → shared explainer |
 | Shared explainer model | **Qwen/Qwen2.5-3B-Instruct** (constant `EXPLAINER_MODEL_ID`) |
 | Two-stage pipeline | `TRAILTRAINING_TWO_STAGE_PLAN=1` |
+| Endpoint configuration | two vLLMs: `TRAILTRAINING_SOURCE_LLM_BASE_URL` + `TRAILTRAINING_EXPLAINER_LLM_BASE_URL` |
 
 **Critical invariant:** `EXPLAINER_MODEL_ID` must be identical for both arms.
 Any divergence is a study-fatal writing-style confound. Test 8 in `run_tests.py`
@@ -110,9 +111,11 @@ enforces this at Gate 0.
 
 | Parameter | Value |
 |---|---|
-| Pairwise calls | 250 pairs × 5 judges × 3 runs × 2 positions ≈ 7500 |
-| Per-rubric calls | 500 plans × 5 judges ≈ 2500 |
-| Position swap | mandatory AB and BA for every pair |
+| Active judges | 4 (`llama_8b_judge`, `qwen_7b_judge`, `qwen_14b_judge`, `qwen_32b_judge`) |
+| Pairwise calls | 250 pairs × 4 judges × 5 runs × 2 positions = **10 000** |
+| Per-rubric calls | ~512 plans × 4 judges ≈ **2 048** |
+| `PAIRWISE_N_RUNS` | 5 (single source of truth: `generate.constants`) |
+| `PAIRWISE_N_POSITIONS` | 2 (mandatory AB and BA) |
 | Pilot gate | reject any judge with `|P(prefer position_a) − 0.5| > 0.2` on a 30-pair pilot |
 | Dedup key (pairwise) | `(pair_id, judge, run, position)` |
 | Dedup key (per-rubric) | `(plan_id, judge)` |
@@ -120,13 +123,17 @@ enforces this at Gate 0.
 
 ### Judge panel
 
-| Judge name | Model | Quant | Disk (GiB) |
-|---|---|---|---:|
-| `llama_8b_judge` | meta-llama/Llama-3.1-8B-Instruct | FP16 | 15 |
-| `qwen_7b_judge` | Qwen/Qwen2.5-7B-Instruct | FP16 | 15 |
-| `qwen_14b_judge` | Qwen/Qwen2.5-14B-Instruct-AWQ | AWQ-INT4 | 8 |
-| `qwen_32b_judge` | Qwen/Qwen2.5-32B-Instruct-AWQ | AWQ-INT4 | 18 |
-| `mistral_7b_judge` | mistralai/Mistral-7B-Instruct-v0.3 | FP16 | 14 |
+| Judge name | Model | Quant | Disk (GiB) | Active? |
+|---|---|---|---:|---|
+| `llama_8b_judge` | meta-llama/Llama-3.1-8B-Instruct | FP16 | 15 | ✓ |
+| `qwen_7b_judge` | Qwen/Qwen2.5-7B-Instruct | FP16 | 15 | ✓ |
+| `qwen_14b_judge` | Qwen/Qwen2.5-14B-Instruct-AWQ | AWQ-INT4 | 8 | ✓ |
+| `qwen_32b_judge` | Qwen/Qwen2.5-32B-Instruct-AWQ | AWQ-INT4 | 18 | ✓ |
+| `mistral_7b_judge` | mistralai/Mistral-7B-Instruct-v0.3 | FP16 | 14 | reserved (not in active set) |
+
+The Mistral judge remains in `judge.panel.PANEL` for completeness but is **not**
+included in `ACTIVE_JUDGE_NAMES` and is therefore excluded from H1/H2/H3/H4
+analyses unless explicitly added before generation begins.
 
 ---
 
@@ -175,7 +182,9 @@ prefers_llm ~ log(param_count)   [OLS, Qwen judges only]
 ## Exclusion criteria (pre-registered)
 
 1. **Schema-invalid responses:** records in `schema_failures.jsonl` are excluded
-   from all analyses. They are retained as data on judge reliability.
+   from all analyses. They are retained as data on judge reliability. This now
+   explicitly includes `compare_plans` rows where the upstream JSON-parse
+   sentinel `"Could not parse comparison response."` is detected by the harness.
 2. **Oversized prompts:** any pair where `len(prompt) > 8192 tokens` after
    context assembly is excluded. Logged in `data_notes`.
 3. **Position-biased judges:** any judge failing the pilot gate

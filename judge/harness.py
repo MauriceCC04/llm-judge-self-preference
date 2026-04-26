@@ -13,6 +13,11 @@ from judge.normalize import normalize_pair_for_pairwise
 
 log = logging.getLogger(__name__)
 
+# Sentinel returned by trailtraining.llm.soft_eval.compare_plans when the
+# judge LLM returns unparseable JSON. We must detect this so it doesn't get
+# silently logged as a "tie" and biased into H1/H2 as a real observation.
+_COMPARE_PARSE_SENTINEL = "Could not parse comparison response."
+
 
 def _load_plan(path: Path) -> dict[str, Any]:
     return json.loads(path.read_text(encoding="utf-8"))
@@ -66,7 +71,16 @@ def run_pairwise_harness(
     normalize_inputs: bool = True,
     schema_failures_path: Optional[Path] = None,
 ) -> None:
-    """Run compare_plans for every (pair × run × position), skip already-done."""
+    """Run compare_plans for every (pair × run × position), skip already-done.
+
+    Schema-failure handling
+    -----------------------
+    Upstream ``compare_plans`` swallows JSON parse errors and returns a
+    structured "tie" with reasoning ``Could not parse comparison response.``.
+    We detect that sentinel and route the row to ``schema_failures.jsonl``
+    instead of writing a normal pairwise record.  This keeps schema-failure
+    rates honest and prevents silent ties from polluting H1/H2 estimates.
+    """
     install_trailtraining_client_compat()
     from judge.outputs import PairwiseWriter, SchemaFailWriter
     from trailtraining.llm.soft_eval import SoftEvalConfig, compare_plans
@@ -83,6 +97,15 @@ def run_pairwise_harness(
         skip_synthesis=True,
         parallel_batches=False,
     )
+
+    # Defensive assertion: SoftEvalConfig.enabled must be True. Upstream
+    # raises ValueError("Soft evaluation is disabled.") in evaluate_training_plan_soft
+    # if this is False; compare_plans does not check, but we want symmetry.
+    if not cfg.enabled:
+        raise RuntimeError(
+            "SoftEvalConfig.enabled must be True to call compare_plans / "
+            "evaluate_training_plan_soft."
+        )
 
     positions = ["AB", "BA"][:n_positions]
 
@@ -121,36 +144,11 @@ def run_pairwise_harness(
 
                 try:
                     result = compare_plans(a, b, rollups=rollups, cfg=cfg)
-                    preferred_raw = result.get("preferred", "tie")
-
-                    if position == "AB":
-                        preferred_id = (
-                            pair["plan_a_id"] if preferred_raw == "plan_a"
-                            else pair["plan_b_id"] if preferred_raw == "plan_b"
-                            else "tie"
-                        )
-                    else:
-                        preferred_id = (
-                            pair["plan_b_id"] if preferred_raw == "plan_a"
-                            else pair["plan_a_id"] if preferred_raw == "plan_b"
-                            else "tie"
-                        )
-
-                    record = {
-                        **stub,
-                        "preferred": preferred_raw,
-                        "preferred_id": preferred_id,
-                        "plan_a_id": pair["plan_a_id"],
-                        "plan_b_id": pair["plan_b_id"],
-                        "reasoning": result.get("reasoning", ""),
-                        "fixture_id": fixture_id,
-                        "normalized_inputs": normalize_inputs,
-                        "timestamp": datetime.now(tz=timezone.utc).isoformat(),
-                    }
-                    writer.append(record)
-
                 except Exception as exc:
-                    log.warning("Failure pair=%s run=%d pos=%s: %s", pair_id, run, position, exc)
+                    log.warning(
+                        "compare_plans raised pair=%s run=%d pos=%s: %s",
+                        pair_id, run, position, exc,
+                    )
                     fail_writer.append({
                         "plan_id": pair_id,
                         "judge": judge.name,
@@ -160,6 +158,54 @@ def run_pairwise_harness(
                         "error": str(exc),
                         "timestamp": datetime.now(tz=timezone.utc).isoformat(),
                     })
+                    continue
+
+                preferred_raw = result.get("preferred", "tie")
+                reasoning = (result.get("reasoning") or "").strip()
+
+                # Detect upstream's JSON-parse-failure sentinel and treat it
+                # as a schema failure rather than a real tie.
+                if preferred_raw == "tie" and reasoning == _COMPARE_PARSE_SENTINEL:
+                    log.info(
+                        "compare_plans schema sentinel pair=%s run=%d pos=%s",
+                        pair_id, run, position,
+                    )
+                    fail_writer.append({
+                        "plan_id": pair_id,
+                        "judge": judge.name,
+                        "call_type": "compare_plans",
+                        "run": run,
+                        "position": position,
+                        "error": "compare_plans returned schema-failure sentinel",
+                        "timestamp": datetime.now(tz=timezone.utc).isoformat(),
+                    })
+                    continue
+
+                if position == "AB":
+                    preferred_id = (
+                        pair["plan_a_id"] if preferred_raw == "plan_a"
+                        else pair["plan_b_id"] if preferred_raw == "plan_b"
+                        else "tie"
+                    )
+                else:
+                    preferred_id = (
+                        pair["plan_b_id"] if preferred_raw == "plan_a"
+                        else pair["plan_a_id"] if preferred_raw == "plan_b"
+                        else "tie"
+                    )
+
+                record = {
+                    **stub,
+                    "preferred": preferred_raw,
+                    "preferred_id": preferred_id,
+                    "plan_a_id": pair["plan_a_id"],
+                    "plan_b_id": pair["plan_b_id"],
+                    "reasoning": reasoning,
+                    "fixture_id": fixture_id,
+                    "normalized_inputs": normalize_inputs,
+                    "timestamp": datetime.now(tz=timezone.utc).isoformat(),
+                }
+                writer.append(record)
 
 
 # ── Soft-eval harness ─────────────────────────────────────────────────────────
@@ -193,6 +239,13 @@ def run_soft_eval_harness(
         skip_synthesis=True,
         parallel_batches=False,
     )
+    # Mirror the pairwise harness assertion. Upstream raises ValueError when
+    # cfg.enabled is False; we want a louder error before any work starts.
+    if not cfg.enabled:
+        raise RuntimeError(
+            "SoftEvalConfig.enabled must be True to call evaluate_training_plan_soft."
+        )
+
     det_cfg = ConstraintConfig(min_signal_ids_per_day=0)
 
     for plan_id in plan_ids:

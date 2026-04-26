@@ -15,7 +15,11 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Optional
 
-from compat.trailtraining_client import describe_client_routing, make_stage_client
+from compat.trailtraining_client import (
+    describe_client_routing,
+    install_trailtraining_client_compat,
+    make_stage_client,
+)
 from generate.constants import EXPLAINER_MODEL_ID, PLAN_DAYS
 from generate.provenance import PlanProvenance
 from generate.sampler import StructuralSamplerConfig, sample_machine_plan
@@ -46,8 +50,13 @@ def _next_day(iso_date: str) -> str:
 
 
 def _make_client_from_env():
+    """Legacy helper retained for test compatibility (tests/run_tests.py test 36).
+
+    Production code now uses ``make_stage_client(stage='explainer')`` instead,
+    which honours TRAILTRAINING_EXPLAINER_LLM_BASE_URL with a fallback to
+    TRAILTRAINING_LLM_BASE_URL. Behavior of this helper is unchanged.
+    """
     from openai import OpenAI
-    import os
 
     base_url = (os.getenv("TRAILTRAINING_LLM_BASE_URL") or "").strip()
     api_key = (
@@ -70,6 +79,7 @@ def _make_client_from_env():
 
     return OpenAI(base_url="https://openrouter.ai/api/v1", api_key=api_key)
 
+
 def generate_programmatic_plan(
     fixture_dir: Path,
     output_dir: Path,
@@ -81,6 +91,13 @@ def generate_programmatic_plan(
 
     Returns (plan_json_str, plan_path, provenance_path).
     """
+    # Compat shim must be installed before any trailtraining LLM call. No-op
+    # when no TRAILTRAINING_*_LLM_BASE_URL is configured (lets unit tests run
+    # against monkey-patched MockLLMClient unchanged).
+    install_trailtraining_client_compat()
+    # Prevents trailtraining.llm.shared.make_openrouter_client from raising.
+    os.environ.setdefault("OPENROUTER_API_KEY", "dummy")
+
     from trailtraining.llm.coach import CoachConfig
     from trailtraining.llm.constraints import (
         derive_effective_constraints,
@@ -233,7 +250,12 @@ def _run_explainer_directly(
     if cfg.reasoning_effort == "none" and cfg.temperature is not None:
         explain_kwargs["temperature"] = cfg.temperature
 
-    client = _make_client_from_env()
+    # Use the stage-aware client so the explainer call hits
+    # TRAILTRAINING_EXPLAINER_LLM_BASE_URL (with a fallback to the generic
+    # TRAILTRAINING_LLM_BASE_URL).  When neither is configured the stage shim
+    # delegates to upstream make_openrouter_client (possibly monkey-patched
+    # to MockLLMClient by the test harness).
+    client = make_stage_client(stage="explainer", model_id=EXPLAINER_MODEL_ID)
     explain_resp = call_with_schema(client, explain_kwargs, PLAN_EXPLANATION_SCHEMA)
     explain_text = getattr(explain_resp, "output_text", None) or str(explain_resp)
     explanation_obj = _parse_plan_explanation(

@@ -19,11 +19,16 @@ from typing import Any, Optional
 from compat.trailtraining_client import (
     describe_client_routing,
     install_trailtraining_client_compat,
-    make_stage_client,
+    make_client_from_env,
 )
 from generate.constants import EXPLAINER_MODEL_ID, PLAN_DAYS
 from generate.provenance import PlanProvenance
 from generate.sampler import StructuralSamplerConfig, sample_machine_plan, sampler_config_from_fixture_meta
+
+
+def _make_client_from_env() -> Any:
+    """Compatibility helper retained for tests and fallback patching."""
+    return make_client_from_env(stage="explainer", model_id=EXPLAINER_MODEL_ID)
 
 
 def _load_fixture(fixture_dir: Path) -> dict[str, Any]:
@@ -220,7 +225,7 @@ def _run_explainer_directly(
     if cfg.reasoning_effort == "none" and cfg.temperature is not None:
         explain_kwargs["temperature"] = cfg.temperature
 
-    client = make_stage_client(stage="explainer", model_id=EXPLAINER_MODEL_ID)
+    client = _make_client_from_env()
     response = call_with_schema(client, explain_kwargs, PLAN_EXPLANATION_SCHEMA)
     actual_explainer_model = _extract_response_model_id(response, fallback=EXPLAINER_MODEL_ID)
     explain_text = getattr(response, "output_text", None) or str(response)

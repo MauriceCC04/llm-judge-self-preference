@@ -1,4 +1,8 @@
-"""generate/study_manifest.py — structured frozen-study manifest."""
+"""generate/study_manifest.py — structured frozen-study manifest.
+
+This revision fixes the malformed markdown rendering so audit tools can import
+and summarize the frozen study manifest without syntax errors.
+"""
 from __future__ import annotations
 
 from typing import Any
@@ -18,6 +22,7 @@ from generate.constants import (
 from generate.exact_counts import exact_count_summary
 
 TRAILTRAINING_PIN_SHA = "3e7f1793ca051ba1aae05f1714d594691202ad7e"
+
 
 
 def frozen_study_summary() -> dict[str, Any]:
@@ -42,10 +47,10 @@ def frozen_study_summary() -> dict[str, Any]:
     }
 
 
+
 def render_study_summary_markdown() -> str:
     summary = frozen_study_summary()
-    return "
-".join([
+    lines = [
         f"- Fixtures: {summary['fixtures']}",
         f"- LLM arm: {summary['llm_plans']} plans",
         f"- Programmatic arm: {summary['programmatic_plans']} plans",
@@ -55,4 +60,5 @@ def render_study_summary_markdown() -> str:
         f"- Pairwise calls: {summary['expected_pairwise_calls']}",
         f"- Soft-eval calls: {summary['expected_soft_eval_calls']}",
         f"- trailtraining pin: {summary['trailtraining_pin_sha']}",
-    ])
+    ]
+    return "\n".join(lines)

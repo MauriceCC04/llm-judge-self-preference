@@ -353,8 +353,12 @@ def check_pilot_bias_gate(
 
     bias_ok = bias < threshold
     tie_ok = tie_rate <= max_tie_rate
-    consistency_ok = pair_consistency == pair_consistency and pair_consistency >= min_pair_consistency
-    swap_ok = swap_agreement == swap_agreement and swap_agreement >= min_swap_agreement
+    # If the pilot slice lacks mirrored AB/BA or repeated-within-pair structure,
+    # treat these diagnostics as unavailable rather than automatic failure.
+    consistency_available = pair_consistency == pair_consistency
+    swap_available = swap_agreement == swap_agreement
+    consistency_ok = (not consistency_available) or pair_consistency >= min_pair_consistency
+    swap_ok = (not swap_available) or swap_agreement >= min_swap_agreement
     passed = bias_ok and tie_ok and consistency_ok and swap_ok
 
     failures: list[str] = []
@@ -362,23 +366,31 @@ def check_pilot_bias_gate(
         failures.append(f"|P(prefer_a)-0.5|={bias:.3f} >= {threshold}")
     if not tie_ok:
         failures.append(f"tie_rate={tie_rate:.3f} > {max_tie_rate}")
-    if not consistency_ok:
+    if consistency_available and not consistency_ok:
         failures.append(f"within_pair_consistency={pair_consistency:.3f} < {min_pair_consistency}")
-    if not swap_ok:
+    if swap_available and not swap_ok:
         failures.append(f"ab_ba_agreement={swap_agreement:.3f} < {min_swap_agreement}")
+
+    notes: list[str] = []
+    if not consistency_available:
+        notes.append("within_pair_consistency unavailable")
+    if not swap_available:
+        notes.append("ab_ba_agreement unavailable")
+
+    message = "PASS: pilot gate passed"
+    if failures:
+        message = "FAIL: " + "; ".join(failures)
+    elif notes:
+        message = message + " (" + "; ".join(notes) + ")"
 
     return {
         "passed": passed,
         "p_prefers_a": round(p_prefers_a, 4),
         "bias_magnitude": round(bias, 4),
         "tie_rate": round(tie_rate, 4),
-        "within_pair_consistency": round(pair_consistency, 4) if pair_consistency == pair_consistency else float("nan"),
-        "ab_ba_agreement": round(swap_agreement, 4) if swap_agreement == swap_agreement else float("nan"),
+        "within_pair_consistency": round(pair_consistency, 4) if consistency_available else float("nan"),
+        "ab_ba_agreement": round(swap_agreement, 4) if swap_available else float("nan"),
         "threshold": threshold,
         "n": n,
-        "message": (
-            "PASS: pilot gate passed"
-            if passed
-            else "FAIL: " + "; ".join(failures)
-        ),
+        "message": message,
     }

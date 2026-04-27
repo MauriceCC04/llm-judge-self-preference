@@ -1,13 +1,24 @@
 """tools/hpc_preflight.py — HPC preflight checks.
 
-Imported by run_preflight.sh and by Gate-0 test 20.
+Imported by run_preflight.sh and by Gate-0 tests.
 """
 from __future__ import annotations
 
 import importlib
+import json
+import os
 import sys
 from pathlib import Path
 from typing import Any
+
+try:
+    from hpc.quota import SOFT_QUOTA_GB_DEFAULT, TOTAL_QUOTA_GB, hf_cache_root
+except Exception:
+    TOTAL_QUOTA_GB = 50.0
+    SOFT_QUOTA_GB_DEFAULT = 30.0
+
+    def hf_cache_root() -> Path:
+        return Path.home() / ".cache" / "huggingface" / "hub"
 
 
 def estimate_dir_gb(path: Path) -> float:
@@ -64,15 +75,20 @@ def check_imports() -> dict[str, bool]:
     return results
 
 
+def _resolve_hf_cache_dir(hf_cache_dir: Path | None = None) -> Path:
+    if hf_cache_dir is not None:
+        return Path(hf_cache_dir)
+    return hf_cache_root()
+
+
 def build_preflight_report(
     *,
-    home_quota_gb: float = 50.0,
+    home_quota_gb: float = TOTAL_QUOTA_GB,
     used_gb: float | None = None,
     has_gpu: bool = False,
     hf_cache_dir: Path | None = None,
+    soft_ceiling_gb: float = SOFT_QUOTA_GB_DEFAULT,
 ) -> dict[str, Any]:
-    import shutil
-
     if used_gb is None:
         home = Path.home()
         used_gb = estimate_dir_gb(home)
@@ -80,14 +96,17 @@ def build_preflight_report(
     storage = classify_storage(
         used_gb=used_gb,
         quota_gb=home_quota_gb,
-        soft_ceiling_gb=30.0,
+        soft_ceiling_gb=soft_ceiling_gb,
     )
 
     import_results = check_imports()
+    cache_dir = _resolve_hf_cache_dir(hf_cache_dir)
 
-    cache_dirs: dict[str, bool] = {}
-    if hf_cache_dir:
-        cache_dirs["hf_cache"] = Path(hf_cache_dir).exists()
+    project_root_env = (os.getenv("PROJECT_ROOT") or "").strip()
+    cwd = Path.cwd()
+    cache_dirs = {
+        "hf_cache": cache_dir.exists(),
+    }
 
     return {
         "quota_ok": storage["quota_ok"],
@@ -99,12 +118,15 @@ def build_preflight_report(
         "import_details": import_results,
         "cache_dirs_exist": cache_dirs,
         "storage": storage,
+        "project_root_env": project_root_env or None,
+        "cwd": str(cwd),
+        "soft_ceiling_gb": soft_ceiling_gb,
+        "hf_cache_dir": str(cache_dir),
     }
 
 
 def main() -> None:
     report = build_preflight_report()
-    import json
     print(json.dumps(report, indent=2, default=str))
     if not report["imports_ok"]:
         print("\n[FAIL] Missing imports — fix before sbatch.", file=sys.stderr)

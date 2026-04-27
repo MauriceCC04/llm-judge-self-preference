@@ -90,9 +90,8 @@ def collect_invalid_plan_ids(
             explainer_model = prov.get("explainer_model")
             actual_explainer_model = prov.get("actual_explainer_model")
             explainer_model_verified = prov.get("explainer_model_verified")
-            effective_verified = bool(explainer_model_verified) or (
-                explainer_model == expected_explainer and actual_explainer_model == expected_explainer
-            )
+            # Only an explicit verification flag counts as verified.
+            effective_verified = bool(explainer_model_verified)
 
             if explainer_model != expected_explainer:
                 reason = "explainer_model_mismatch"
@@ -210,7 +209,11 @@ def load_judgments(
                 df["plan_a_id"].apply(lambda x: _get(x, "fixture_id"))
             )
 
-        df["pairwise_view"] = df.get("pairwise_view", "raw_normalized").fillna("raw_normalized")
+        if "pairwise_view" in df.columns:
+            df["pairwise_view"] = df["pairwise_view"].fillna("raw_normalized").astype(str)
+        else:
+            df["pairwise_view"] = "raw_normalized"
+
         df["llm_side"] = df.apply(_pick_llm_side, axis=1)
         df["llm_plan_id"] = df.apply(
             lambda r: r["plan_a_id"]

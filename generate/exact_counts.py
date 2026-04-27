@@ -1,25 +1,13 @@
 """generate/exact_counts.py — exact-count generation orchestrator.
 
-This module removes manual shard arithmetic for the study's frozen 512-plan
-design:
-    * 256 LLM-arm plans total
-    * 256 programmatic-arm plans total
-
-LLM arm
--------
-The LLM arm is generated one source model at a time.  For each source model we
-produce exactly 128 plans via one deterministic shard:
-    1. base shard: 16 plans per fixture across all 8 fixtures -> 128
-
-Programmatic arm
-----------------
-The programmatic arm produces exactly 256 plans via one deterministic shard:
-    1. base shard: 32 plans per fixture across all 8 fixtures -> 256
+This revision fixes the broken terminal summary string and keeps the module
+importable by downstream tools such as generate.study_manifest and repo audits.
 """
 from __future__ import annotations
 
 import argparse
 from pathlib import Path
+from typing import Any
 
 from fixtures.spec import FIXTURE_IDS
 from generate.run_generation import run_llm_arm, run_programmatic_arm
@@ -34,7 +22,8 @@ assert EXPECTED_LLM_PER_MODEL == 128
 assert EXPECTED_PROGRAMMATIC_TOTAL == 256
 
 
-def exact_count_summary() -> dict[str, object]:
+
+def exact_count_summary() -> dict[str, Any]:
     return {
         "n_fixtures": len(FIXTURE_IDS),
         "llm": {
@@ -49,6 +38,7 @@ def exact_count_summary() -> dict[str, object]:
     }
 
 
+
 def run_exact_llm(*, output_dir: Path, source_model: str) -> tuple[int, int]:
     return run_llm_arm(
         output_dir=output_dir,
@@ -57,6 +47,7 @@ def run_exact_llm(*, output_dir: Path, source_model: str) -> tuple[int, int]:
         seed_offset=0,
         fixture_ids=None,
     )
+
 
 
 def run_exact_programmatic(*, output_dir: Path, sampler_config_path: Path | None = None) -> tuple[int, int]:
@@ -69,6 +60,7 @@ def run_exact_programmatic(*, output_dir: Path, sampler_config_path: Path | None
     )
 
 
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="Run exact-count study generation shards.")
     parser.add_argument("--arm", choices=["llm", "programmatic"], required=True)
@@ -79,13 +71,13 @@ def build_parser() -> argparse.ArgumentParser:
     return parser
 
 
+
 def main(argv: list[str] | None = None) -> None:
     parser = build_parser()
     args = parser.parse_args(argv)
 
     if args.print_summary:
-        summary = exact_count_summary()
-        print(summary)
+        print(exact_count_summary())
 
     output_dir = Path(args.output)
     output_dir.mkdir(parents=True, exist_ok=True)
@@ -107,8 +99,7 @@ def main(argv: list[str] | None = None) -> None:
         )
         expected = EXPECTED_PROGRAMMATIC_TOTAL
 
-    print("
-=== Exact-count generation complete ===")
+    print("\n=== Exact-count generation complete ===")
     print(f"Generated this run: {generated}")
     print(f"Skipped (already existed): {skipped}")
     print(f"Expected logical total for this study branch: {expected}")

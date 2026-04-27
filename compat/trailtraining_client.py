@@ -22,15 +22,24 @@ def _normalize_stage(stage: str | None) -> str:
     return value
 
 
+def _generic_base_url() -> str:
+    return (
+        _env("TRAILTRAINING_LLM_BASE_URL")
+        or _env("OPENAI_BASE_URL")
+        or _env("OPENAI_API_BASE")
+        or _env("OPENAI_API_BASE_URL")
+    )
+
+
 def _stage_base_url(stage: str) -> str:
     stage = _normalize_stage(stage)
     if stage == "source":
-        return _env("TRAILTRAINING_SOURCE_LLM_BASE_URL") or _env("TRAILTRAINING_LLM_BASE_URL")
+        return _env("TRAILTRAINING_SOURCE_LLM_BASE_URL") or _generic_base_url()
     if stage == "explainer":
-        return _env("TRAILTRAINING_EXPLAINER_LLM_BASE_URL") or _env("TRAILTRAINING_LLM_BASE_URL")
+        return _env("TRAILTRAINING_EXPLAINER_LLM_BASE_URL") or _generic_base_url()
     if stage == "judge":
-        return _env("TRAILTRAINING_JUDGE_LLM_BASE_URL") or _env("TRAILTRAINING_LLM_BASE_URL")
-    return _env("TRAILTRAINING_LLM_BASE_URL")
+        return _env("TRAILTRAINING_JUDGE_LLM_BASE_URL") or _generic_base_url()
+    return _generic_base_url()
 
 
 def _stage_api_key(stage: str) -> str:
@@ -38,12 +47,17 @@ def _stage_api_key(stage: str) -> str:
     stage_key = _env(f"TRAILTRAINING_{stage.upper()}_API_KEY")
     if stage_key:
         return stage_key
-    return _env("OPENROUTER_API_KEY") or _env("TRAILTRAINING_OPENROUTER_API_KEY") or ""
+    return (
+        _env("OPENAI_API_KEY")
+        or _env("OPENROUTER_API_KEY")
+        or _env("TRAILTRAINING_OPENROUTER_API_KEY")
+        or ""
+    )
 
 
 def has_local_base_url_config() -> bool:
     return bool(
-        _env("TRAILTRAINING_LLM_BASE_URL")
+        _generic_base_url()
         or _env("TRAILTRAINING_SOURCE_LLM_BASE_URL")
         or _env("TRAILTRAINING_EXPLAINER_LLM_BASE_URL")
         or _env("TRAILTRAINING_JUDGE_LLM_BASE_URL")
@@ -80,6 +94,24 @@ def _make_openrouter_client_fallback(stage: str = "judge") -> Any:
     return OpenAI(base_url=OPENROUTER_BASE_URL, api_key=api_key, default_headers=headers)
 
 
+def make_client_from_env(*, stage: str = "judge", model_id: str | None = None) -> Any:
+    """Return a strictly local/OpenAI-compatible client from env.
+
+    This helper intentionally does *not* fall back to OpenRouter. Tests use it to
+    verify that local endpoint routing is configured explicitly.
+    """
+    del model_id
+    stage = _normalize_stage(stage)
+    base_url = _stage_base_url(stage)
+    if not base_url:
+        raise RuntimeError(
+            "No local LLM endpoint configured. Set a stage-specific or generic "
+            "TRAILTRAINING_*_LLM_BASE_URL before using make_client_from_env()."
+        )
+    api_key = _stage_api_key(stage) or "dummy"
+    return OpenAI(base_url=base_url.rstrip("/"), api_key=api_key)
+
+
 def make_stage_client(*, stage: str, model_id: str | None = None) -> Any:
     del model_id
     stage = _normalize_stage(stage)
@@ -91,7 +123,7 @@ def make_stage_client(*, stage: str, model_id: str | None = None) -> Any:
 
 
 def ensure_dual_endpoint_support(*, source_model: str, explainer_model: str) -> None:
-    generic = _env("TRAILTRAINING_LLM_BASE_URL")
+    generic = _generic_base_url()
     src = _env("TRAILTRAINING_SOURCE_LLM_BASE_URL")
     exp = _env("TRAILTRAINING_EXPLAINER_LLM_BASE_URL")
     if generic and not src and not exp and source_model != explainer_model:

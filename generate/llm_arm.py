@@ -12,6 +12,10 @@ from generate.provenance import PlanProvenance
 from generate.trailtraining_compat import run_two_stage_generation_compat
 
 
+def _bool_strict(value: object) -> bool:
+    return value is True
+
+
 def generate_llm_plan(
     fixture_dir: Path,
     output_dir: Path,
@@ -45,13 +49,18 @@ def generate_llm_plan(
     runtime_metadata = dict(runtime_metadata or {})
     runtime_metadata.setdefault("TRAILTRAINING_TWO_STAGE_PLAN", "1")
 
-    actual_explainer_model = runtime_metadata.get("actual_explainer_model")
+    actual_explainer_model_raw = runtime_metadata.get("actual_explainer_model")
+    actual_explainer_model = (
+        str(actual_explainer_model_raw).strip()
+        if isinstance(actual_explainer_model_raw, str) and actual_explainer_model_raw.strip()
+        else None
+    )
+
     explainer_verified = bool(
-        runtime_metadata.get("explainer_model_verified")
-        or (actual_explainer_model and actual_explainer_model == EXPLAINER_MODEL_ID)
+        _bool_strict(runtime_metadata.get("explainer_model_verified"))
+        and actual_explainer_model == EXPLAINER_MODEL_ID
     )
     runtime_metadata["explainer_model_verified"] = explainer_verified
-
     prov = PlanProvenance(
         plan_id=plan_id,
         fixture_id=fixture_id,

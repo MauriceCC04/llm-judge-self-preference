@@ -1,51 +1,161 @@
 from __future__ import annotations
 
+"""hpc/quota.py — quota and Hugging Face cache helpers for Bocconi HPC.
+
+This revision addresses three operational issues found in the repo review:
+
+1. Cache-root resolution must agree with the shell scripts that export HF_HUB_CACHE.
+2. The soft quota ceiling should be configurable and distinct from the hard quota.
+3. Storage reports should reflect the actual active models in judge.panel.
+
+The module stays import-light so it can be used from preflight or small helper
+scripts before the full runtime stack is exercised.
+"""
+
+import os
 import shutil
+from dataclasses import asdict, dataclass
 from pathlib import Path
-from typing import Any
+from typing import Any, Iterable
 
 from judge.panel import PANEL, get_active_judges
 
 TOTAL_QUOTA_GB = 50.0
+DEFAULT_SOFT_QUOTA_GB = 40.0
+DEFAULT_HF_CACHE_ROOT = Path.home() / "hf_cache" / "hub"
+
+
+@dataclass(frozen=True)
+class QuotaReport:
+    total_quota_gb: float
+    soft_quota_gb: float
+    generation_peak_gb: float
+    judge_peak_gb: float
+    generation_fits_hard_quota: bool
+    judge_fits_hard_quota: bool
+    generation_fits_soft_quota: bool
+    judge_fits_soft_quota: bool
+    note: str
+    hf_cache_root: str
+
+    def to_dict(self) -> dict[str, Any]:
+        return asdict(self)
+
 
 
 def _model_size_lookup() -> dict[str, float]:
-    return {spec.model_id: spec.disk_gb for spec in PANEL}
+    return {spec.model_id: float(spec.disk_gb) for spec in PANEL}
+
+
+
+def _max_disk_gb(model_ids: Iterable[str], fallback_gb: float) -> float:
+    sizes = _model_size_lookup()
+    return max((sizes.get(model_id, fallback_gb) for model_id in model_ids), default=fallback_gb)
+
 
 
 def estimate_generation_peak_gb() -> float:
-    sizes = _model_size_lookup()
-    source_peak = max(sizes.get("meta-llama/Llama-3.1-8B-Instruct", 15.0), sizes.get("Qwen/Qwen2.5-7B-Instruct", 15.0))
-    explainer = sizes.get("Qwen/Qwen2.5-3B-Instruct", 6.0)
+    """Estimate generation-time model-cache pressure.
+
+    The study generation path runs one explainer model alongside one source model
+    at a time. We therefore budget for the largest source plus the explainer.
+    """
+
+    source_peak = _max_disk_gb(
+        [
+            "meta-llama/Llama-3.1-8B-Instruct",
+            "Qwen/Qwen2.5-7B-Instruct",
+        ],
+        fallback_gb=15.0,
+    )
+    explainer = _model_size_lookup().get("Qwen/Qwen2.5-3B-Instruct", 6.0)
     return float(source_peak + explainer)
 
 
+
 def estimate_judge_peak_gb() -> float:
+    """Estimate judge-time model-cache pressure for the active panel."""
+
     judges = get_active_judges()
-    return float(max(j.disk_gb for j in judges)) if judges else 0.0
+    return float(max((float(j.disk_gb) for j in judges), default=0.0))
 
 
-def study_quota_report(total_quota_gb: float = TOTAL_QUOTA_GB) -> dict[str, Any]:
+
+def resolve_soft_quota_gb(
+    soft_quota_gb: float | None = None,
+    *,
+    env: dict[str, str] | None = None,
+) -> float:
+    env_map = env or os.environ
+    if soft_quota_gb is not None:
+        return float(soft_quota_gb)
+    env_value = env_map.get("SOFT_QUOTA_GB")
+    if env_value:
+        try:
+            return float(env_value)
+        except ValueError:
+            pass
+    return DEFAULT_SOFT_QUOTA_GB
+
+
+
+def hf_cache_root(*, env: dict[str, str] | None = None) -> Path:
+    """Resolve the active Hugging Face hub cache.
+
+    Priority:
+    1. HF_HUB_CACHE (matches the shell scripts)
+    2. HUGGINGFACE_HUB_CACHE
+    3. repo default under ~/hf_cache/hub
+    4. legacy ~/.cache/huggingface/hub if it already exists
+    """
+
+    env_map = env or os.environ
+    for key in ("HF_HUB_CACHE", "HUGGINGFACE_HUB_CACHE"):
+        value = env_map.get(key)
+        if value:
+            return Path(value).expanduser()
+
+    legacy = Path.home() / ".cache" / "huggingface" / "hub"
+    if legacy.exists() and not DEFAULT_HF_CACHE_ROOT.exists():
+        return legacy
+    return DEFAULT_HF_CACHE_ROOT
+
+
+
+def study_quota_report(
+    *,
+    total_quota_gb: float = TOTAL_QUOTA_GB,
+    soft_quota_gb: float | None = None,
+    env: dict[str, str] | None = None,
+) -> dict[str, Any]:
     generation_peak = estimate_generation_peak_gb()
     judge_peak = estimate_judge_peak_gb()
-    return {
-        "total_quota_gb": total_quota_gb,
-        "generation_peak_gb": generation_peak,
-        "judge_peak_gb": judge_peak,
-        "generation_fits": generation_peak < total_quota_gb,
-        "judge_fits": judge_peak < total_quota_gb,
-        "note": "This assumes quota-safe sequencing and cache cleanup between jobs."
-    }
+    soft = resolve_soft_quota_gb(soft_quota_gb, env=env)
+    report = QuotaReport(
+        total_quota_gb=float(total_quota_gb),
+        soft_quota_gb=float(soft),
+        generation_peak_gb=generation_peak,
+        judge_peak_gb=judge_peak,
+        generation_fits_hard_quota=generation_peak < total_quota_gb,
+        judge_fits_hard_quota=judge_peak < total_quota_gb,
+        generation_fits_soft_quota=generation_peak < soft,
+        judge_fits_soft_quota=judge_peak < soft,
+        note="Assumes quota-safe sequencing and cache cleanup between jobs.",
+        hf_cache_root=str(hf_cache_root(env=env)),
+    )
+    return report.to_dict()
 
 
-def hf_cache_root() -> Path:
-    return Path.home() / ".cache" / "huggingface" / "hub"
 
-
-def purge_hf_model_cache(model_id: str, *, cache_root: Path | None = None) -> bool:
-    cache_root = cache_root or hf_cache_root()
+def purge_hf_model_cache(
+    model_id: str,
+    *,
+    cache_root: Path | None = None,
+    env: dict[str, str] | None = None,
+) -> bool:
+    root = (cache_root or hf_cache_root(env=env)).expanduser()
     dir_name = f"models--{model_id.replace('/', '--')}"
-    path = cache_root / dir_name
+    path = root / dir_name
     if not path.exists():
         return False
     shutil.rmtree(path, ignore_errors=True)

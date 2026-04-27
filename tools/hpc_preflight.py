@@ -10,16 +10,27 @@ import os
 import sys
 from pathlib import Path
 from typing import Any
+import logging
+
+_log = logging.getLogger(__name__)
 
 try:
-    from hpc.quota import SOFT_QUOTA_GB_DEFAULT, TOTAL_QUOTA_GB, hf_cache_root
-except Exception:
+    from hpc.quota import (
+        DEFAULT_SOFT_QUOTA_GB as SOFT_QUOTA_GB_DEFAULT,
+        TOTAL_QUOTA_GB,
+        hf_cache_root,
+    )
+except ImportError as exc:
+    _log.warning(
+        "hpc.quota not importable (%s); falling back to hardcoded constants. "
+        "Preflight numbers may not match cluster-actual quota.",
+        exc,
+    )
     TOTAL_QUOTA_GB = 50.0
     SOFT_QUOTA_GB_DEFAULT = 30.0
 
     def hf_cache_root() -> Path:
         return Path.home() / ".cache" / "huggingface" / "hub"
-
 
 def estimate_dir_gb(path: Path) -> float:
     """Return disk usage of *path* in GiB; returns 0.0 if path doesn't exist."""

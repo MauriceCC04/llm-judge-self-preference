@@ -2066,7 +2066,104 @@ def test_43_llm_provenance_verification_flag() -> None:
     assert prov.runtime_backend == "trailtraining.llm.coach.run_coach_brief"
     assert prov.runtime_metadata.get("TRAILTRAINING_TWO_STAGE_PLAN") == "1"
 
+@test("44 fixture_payloads_unique")
+def test_44_fixture_payloads_unique() -> None:
+    """All 8 committed fixture bundles must produce unique payload hashes.
 
+    Guards against the phase-leakage bug where race_phase didn't actually
+    affect prompt-visible payloads.
+    """
+    import hashlib
+    from pathlib import Path
+    from fixtures.spec import FIXTURE_IDS
+
+    fixtures_dir = _PROJECT_ROOT / "fixtures" / "data"
+    if not fixtures_dir.exists():
+        print("     [skip] fixtures/data/ not built yet")
+        return
+
+    sigs = {}
+    for fid in FIXTURE_IDS:
+        bundle = fixtures_dir / fid
+        if not bundle.exists():
+            continue
+        h = hashlib.sha256()
+        for name in ("combined_summary.json", "combined_rollups.json",
+                     "readiness_and_risk_forecast.json", "formatted_personal_data.json"):
+            h.update((bundle / name).read_bytes())
+        sigs[fid] = h.hexdigest()
+
+    if len(sigs) < 8:
+        print(f"     [skip] only {len(sigs)}/8 bundles built")
+        return
+
+    n_unique = len(set(sigs.values()))
+    assert n_unique == 8, (
+        f"Expected 8 unique fixture payloads, found {n_unique}. "
+        f"Duplicates indicate an axis (likely race_phase) doesn't affect payloads."
+    )
+
+
+@test("45 fixture_meta_validates")
+def test_45_fixture_meta_validates() -> None:
+    """Every committed fixture_meta.json must validate against current FixtureMeta."""
+    import json
+    from fixtures.spec import FIXTURE_IDS, FixtureMeta
+
+    fixtures_dir = _PROJECT_ROOT / "fixtures" / "data"
+    if not fixtures_dir.exists():
+        print("     [skip] fixtures/data/ not built yet")
+        return
+
+    for fid in FIXTURE_IDS:
+        meta_path = fixtures_dir / fid / "fixture_meta.json"
+        if not meta_path.exists():
+            continue
+        data = json.loads(meta_path.read_text(encoding="utf-8"))
+        # Must validate; will raise pydantic.ValidationError on mismatch.
+        FixtureMeta.model_validate(data)
+
+@test("46 hpc_scripts_have_essential_tokens")
+def test_46_hpc_scripts_essential_tokens() -> None:
+    """The canonical _hpc.sh scripts must run real work, not be stubs.
+
+    Catches the failure mode where someone refactors run_generation.sh ->
+    run_generation_hpc.sh but forgets to port the body.
+    """
+    slurm_dir = _PROJECT_ROOT / "slurm"
+    if not slurm_dir.exists():
+        print("     [skip] slurm/ not present")
+        return
+
+    expected_tokens = {
+        "run_generation_hpc.sh": [
+            "vllm.entrypoints.openai.api_server",   # vLLM started
+            "python -m generate.run_generation",    # generation invoked
+            "TRAILTRAINING_EXPLAINER_LLM_BASE_URL", # explainer routing set
+            "rm -rf",                                # cache cleanup
+            "trap cleanup EXIT",                    # signal handling
+        ],
+        "run_judge_hpc.sh": [
+            "vllm.entrypoints.openai.api_server",
+            "python cli.py",
+            "TRAILTRAINING_LLM_BASE_URL",
+            "trap cleanup EXIT",
+            "--pairwise-view",                      # view threading
+        ],
+    }
+
+    failures = []
+    for script_name, tokens in expected_tokens.items():
+        path = slurm_dir / script_name
+        if not path.exists():
+            failures.append(f"{script_name}: file missing")
+            continue
+        text = path.read_text(encoding="utf-8")
+        missing = [t for t in tokens if t not in text]
+        if missing:
+            failures.append(f"{script_name}: missing tokens {missing}")
+
+    assert not failures, "HPC script structural check failed:\n  " + "\n  ".join(failures)
 
 if __name__ == "__main__":
     ok = _run_all()

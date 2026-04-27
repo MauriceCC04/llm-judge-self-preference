@@ -52,13 +52,15 @@ log_quota() {
 
 # ── Preflight: refuse to run if used > 30 GB ─────────────────────────────────
 preflight_quota_gate() {
+    local soft_gb
+    soft_gb=$(python -c "from hpc.quota import DEFAULT_SOFT_QUOTA_GB; print(DEFAULT_SOFT_QUOTA_GB)" 2>/dev/null || echo "30")
     local used_kb
     used_kb=$(du -sk "${HOME}" 2>/dev/null | awk '{print $1}' || echo 0)
     local used_gb
     used_gb=$(echo "scale=1; ${used_kb}/1048576" | bc 2>/dev/null || echo 99)
-    if (( $(echo "${used_gb} > 30" | bc -l 2>/dev/null || echo 0) )); then
-        echo "[ABORT] Disk usage ${used_gb} GB > 30 GB soft ceiling. Clean caches first." >&2
+    if (( $(echo "${used_gb} > ${soft_gb}" | bc -l 2>/dev/null || echo 0) )); then
+        echo "[ABORT] Disk usage ${used_gb} GB > ${soft_gb} GB soft ceiling. Clean caches first." >&2
         exit 1
     fi
-    echo "[OK] Disk usage: ${used_gb} GB"
+    echo "[OK] Disk usage: ${used_gb} GB (soft ceiling: ${soft_gb} GB)"
 }

@@ -7,14 +7,14 @@
       "end_date": "2026-03-17",
       "sleep_days_with_data": 0,
       "activities": {
-        "count": 5,
-        "total_distance_km": 55.0,
-        "total_elevation_m": 1250.0,
-        "total_moving_time_hours": 5.65,
-        "total_training_load_hours": 6.5,
-        "average_heartrate_mean": 148.0,
+        "count": 6,
+        "total_distance_km": 55.6,
+        "total_elevation_m": 2101.2,
+        "total_moving_time_hours": 6.53,
+        "total_training_load_hours": 6.53,
+        "average_heartrate_mean": 145.7,
         "count_by_sport": {
-          "TrailRun": 5
+          "TrailRun": 6
         }
       }
     },
@@ -24,14 +24,14 @@
       "end_date": "2026-03-17",
       "sleep_days_with_data": 0,
       "activities": {
-        "count": 20,
-        "total_distance_km": 209.0,
-        "total_elevation_m": 5000.0,
-        "total_moving_time_hours": 14.55,
-        "total_training_load_hours": 16.0,
-        "average_heartrate_mean": 147.0,
+        "count": 24,
+        "total_distance_km": 205.0,
+        "total_elevation_m": 7760.5,
+        "total_moving_time_hours": 24.13,
+        "total_training_load_hours": 24.13,
+        "average_heartrate_mean": 145.7,
         "count_by_sport": {
-          "TrailRun": 20
+          "TrailRun": 24
         }
       }
     }

@@ -21,7 +21,7 @@ from typing import Any, Iterable
 from judge.panel import PANEL, get_active_judges
 
 TOTAL_QUOTA_GB = 50.0
-DEFAULT_SOFT_QUOTA_GB = 40.0
+DEFAULT_SOFT_QUOTA_GB = 30.0
 DEFAULT_HF_CACHE_ROOT = Path.home() / "hf_cache" / "hub"
 
 

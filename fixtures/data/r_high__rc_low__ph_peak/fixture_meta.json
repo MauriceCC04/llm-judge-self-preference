@@ -5,5 +5,10 @@
   "race_phase": "peak",
   "readiness_status": "primed",
   "recovery_key": "load_only",
-  "weeks_to_race": 4
+  "weeks_to_race": 4,
+  "block_label": "peak specificity block",
+  "style": "trailrunning",
+  "primary_goal": "to arrive race-ready for an upcoming trail event",
+  "lifestyle_notes": "Bias toward race specificity, freshness, and avoiding unnecessary fatigue accumulation.",
+  "athlete_archetype": "experienced_runner"
 }

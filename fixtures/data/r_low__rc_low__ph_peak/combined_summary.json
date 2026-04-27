@@ -4,471 +4,644 @@
     "sleep": null,
     "activities": [
       {
-        "id": 542489775,
+        "id": 430439406,
         "sport_type": "TrailRun",
-        "start_date_local": "2026-02-11T08:00:00",
-        "distance": 10000.0,
-        "moving_time": 1851,
-        "total_elevation_gain": 250.0,
-        "average_heartrate": 155,
-        "max_heartrate": 172
+        "start_date_local": "2026-02-11T07:30:00",
+        "distance": 6000.0,
+        "moving_time": 2700,
+        "total_elevation_gain": 169.4,
+        "average_heartrate": 154,
+        "max_heartrate": 176
       }
-    ]
+    ],
+    "notes": {
+      "session_type": "easy",
+      "phase_block": "peak specificity block"
+    }
   },
   {
     "date": "2026-02-12",
     "sleep": null,
-    "activities": [
-      {
-        "id": 120837167,
-        "sport_type": "TrailRun",
-        "start_date_local": "2026-02-12T08:00:00",
-        "distance": 10000.0,
-        "moving_time": 2057,
-        "total_elevation_gain": 250.0,
-        "average_heartrate": 155,
-        "max_heartrate": 172
-      }
-    ]
+    "activities": [],
+    "notes": {
+      "session_type": "rest",
+      "phase_block": "peak specificity block"
+    }
   },
   {
     "date": "2026-02-13",
     "sleep": null,
     "activities": [
       {
-        "id": 423952900,
+        "id": 816834413,
         "sport_type": "TrailRun",
-        "start_date_local": "2026-02-13T08:00:00",
-        "distance": 10000.0,
-        "moving_time": 2262,
-        "total_elevation_gain": 250.0,
-        "average_heartrate": 155,
-        "max_heartrate": 172
+        "start_date_local": "2026-02-13T07:30:00",
+        "distance": 6100.0,
+        "moving_time": 2760,
+        "total_elevation_gain": 173.1,
+        "average_heartrate": 154,
+        "max_heartrate": 176
       }
-    ]
+    ],
+    "notes": {
+      "session_type": "tempo",
+      "phase_block": "peak specificity block"
+    }
   },
   {
     "date": "2026-02-14",
     "sleep": null,
-    "activities": []
+    "activities": [
+      {
+        "id": 599328595,
+        "sport_type": "TrailRun",
+        "start_date_local": "2026-02-14T07:30:00",
+        "distance": 7300.0,
+        "moving_time": 3300,
+        "total_elevation_gain": 207.0,
+        "average_heartrate": 154,
+        "max_heartrate": 176
+      }
+    ],
+    "notes": {
+      "session_type": "easy",
+      "phase_block": "peak specificity block"
+    }
   },
   {
     "date": "2026-02-15",
     "sleep": null,
     "activities": [
       {
-        "id": 303254238,
+        "id": 412429433,
         "sport_type": "TrailRun",
-        "start_date_local": "2026-02-15T08:00:00",
-        "distance": 10000.0,
-        "moving_time": 2057,
-        "total_elevation_gain": 250.0,
-        "average_heartrate": 155,
-        "max_heartrate": 172
+        "start_date_local": "2026-02-15T07:30:00",
+        "distance": 12200.0,
+        "moving_time": 5100,
+        "total_elevation_gain": 358.3,
+        "average_heartrate": 152,
+        "max_heartrate": 174
       }
-    ]
+    ],
+    "notes": {
+      "session_type": "long",
+      "phase_block": "peak specificity block"
+    }
   },
   {
     "date": "2026-02-16",
     "sleep": null,
     "activities": [
       {
-        "id": 119272375,
+        "id": 361945485,
         "sport_type": "TrailRun",
-        "start_date_local": "2026-02-16T08:00:00",
-        "distance": 10000.0,
-        "moving_time": 2262,
-        "total_elevation_gain": 250.0,
-        "average_heartrate": 155,
-        "max_heartrate": 172
+        "start_date_local": "2026-02-16T07:30:00",
+        "distance": 8100.0,
+        "moving_time": 3660,
+        "total_elevation_gain": 229.6,
+        "average_heartrate": 154,
+        "max_heartrate": 176
       }
-    ]
+    ],
+    "notes": {
+      "session_type": "easy",
+      "phase_block": "peak specificity block"
+    }
   },
   {
     "date": "2026-02-17",
     "sleep": null,
     "activities": [
       {
-        "id": 400852638,
+        "id": 576764590,
         "sport_type": "TrailRun",
-        "start_date_local": "2026-02-17T08:00:00",
-        "distance": 10000.0,
-        "moving_time": 1851,
-        "total_elevation_gain": 250.0,
-        "average_heartrate": 155,
-        "max_heartrate": 172
+        "start_date_local": "2026-02-17T07:30:00",
+        "distance": 8500.0,
+        "moving_time": 3840,
+        "total_elevation_gain": 240.9,
+        "average_heartrate": 154,
+        "max_heartrate": 176
       }
-    ]
+    ],
+    "notes": {
+      "session_type": "easy",
+      "phase_block": "peak specificity block"
+    }
   },
   {
     "date": "2026-02-18",
     "sleep": null,
-    "activities": []
+    "activities": [
+      {
+        "id": 328696636,
+        "sport_type": "TrailRun",
+        "start_date_local": "2026-02-18T07:30:00",
+        "distance": 6000.0,
+        "moving_time": 2700,
+        "total_elevation_gain": 169.4,
+        "average_heartrate": 154,
+        "max_heartrate": 176
+      }
+    ],
+    "notes": {
+      "session_type": "easy",
+      "phase_block": "peak specificity block"
+    }
   },
   {
     "date": "2026-02-19",
     "sleep": null,
     "activities": [
       {
-        "id": 356363997,
+        "id": 954104247,
         "sport_type": "TrailRun",
-        "start_date_local": "2026-02-19T08:00:00",
-        "distance": 10000.0,
-        "moving_time": 2262,
-        "total_elevation_gain": 250.0,
-        "average_heartrate": 155,
-        "max_heartrate": 172
+        "start_date_local": "2026-02-19T07:30:00",
+        "distance": 6400.0,
+        "moving_time": 2880,
+        "total_elevation_gain": 180.7,
+        "average_heartrate": 154,
+        "max_heartrate": 176
       }
-    ]
+    ],
+    "notes": {
+      "session_type": "tempo",
+      "phase_block": "peak specificity block"
+    }
   },
   {
     "date": "2026-02-20",
     "sleep": null,
     "activities": [
       {
-        "id": 572844939,
+        "id": 950373896,
         "sport_type": "TrailRun",
-        "start_date_local": "2026-02-20T08:00:00",
-        "distance": 10000.0,
-        "moving_time": 1851,
-        "total_elevation_gain": 250.0,
-        "average_heartrate": 155,
-        "max_heartrate": 172
+        "start_date_local": "2026-02-20T07:30:00",
+        "distance": 6100.0,
+        "moving_time": 2760,
+        "total_elevation_gain": 173.1,
+        "average_heartrate": 154,
+        "max_heartrate": 176
       }
-    ]
+    ],
+    "notes": {
+      "session_type": "tempo",
+      "phase_block": "peak specificity block"
+    }
   },
   {
     "date": "2026-02-21",
     "sleep": null,
-    "activities": [
-      {
-        "id": 97912072,
-        "sport_type": "TrailRun",
-        "start_date_local": "2026-02-21T08:00:00",
-        "distance": 10000.0,
-        "moving_time": 2057,
-        "total_elevation_gain": 250.0,
-        "average_heartrate": 155,
-        "max_heartrate": 172
-      }
-    ]
+    "activities": [],
+    "notes": {
+      "session_type": "rest",
+      "phase_block": "peak specificity block"
+    }
   },
   {
     "date": "2026-02-22",
     "sleep": null,
-    "activities": []
+    "activities": [
+      {
+        "id": 736763667,
+        "sport_type": "TrailRun",
+        "start_date_local": "2026-02-22T07:30:00",
+        "distance": 7700.0,
+        "moving_time": 3480,
+        "total_elevation_gain": 218.3,
+        "average_heartrate": 154,
+        "max_heartrate": 176
+      }
+    ],
+    "notes": {
+      "session_type": "strength",
+      "phase_block": "peak specificity block"
+    }
   },
   {
     "date": "2026-02-23",
     "sleep": null,
     "activities": [
       {
-        "id": 472323130,
+        "id": 430518939,
         "sport_type": "TrailRun",
-        "start_date_local": "2026-02-23T08:00:00",
-        "distance": 10000.0,
-        "moving_time": 1851,
-        "total_elevation_gain": 250.0,
-        "average_heartrate": 155,
-        "max_heartrate": 172
+        "start_date_local": "2026-02-23T07:30:00",
+        "distance": 13000.0,
+        "moving_time": 5400,
+        "total_elevation_gain": 379.4,
+        "average_heartrate": 152,
+        "max_heartrate": 174
       }
-    ]
+    ],
+    "notes": {
+      "session_type": "long",
+      "phase_block": "peak specificity block"
+    }
   },
   {
     "date": "2026-02-24",
     "sleep": null,
     "activities": [
       {
-        "id": 803373459,
+        "id": 743960685,
         "sport_type": "TrailRun",
-        "start_date_local": "2026-02-24T08:00:00",
-        "distance": 10000.0,
-        "moving_time": 2057,
-        "total_elevation_gain": 250.0,
-        "average_heartrate": 155,
-        "max_heartrate": 172
+        "start_date_local": "2026-02-24T07:30:00",
+        "distance": 8500.0,
+        "moving_time": 3840,
+        "total_elevation_gain": 240.9,
+        "average_heartrate": 154,
+        "max_heartrate": 176
       }
-    ]
+    ],
+    "notes": {
+      "session_type": "easy",
+      "phase_block": "peak specificity block"
+    }
   },
   {
     "date": "2026-02-25",
     "sleep": null,
     "activities": [
       {
-        "id": 854586792,
+        "id": 877710633,
         "sport_type": "TrailRun",
-        "start_date_local": "2026-02-25T08:00:00",
-        "distance": 10000.0,
-        "moving_time": 2262,
-        "total_elevation_gain": 250.0,
-        "average_heartrate": 155,
-        "max_heartrate": 172
+        "start_date_local": "2026-02-25T07:30:00",
+        "distance": 6000.0,
+        "moving_time": 2700,
+        "total_elevation_gain": 169.4,
+        "average_heartrate": 154,
+        "max_heartrate": 176
       }
-    ]
+    ],
+    "notes": {
+      "session_type": "easy",
+      "phase_block": "peak specificity block"
+    }
   },
   {
     "date": "2026-02-26",
     "sleep": null,
-    "activities": []
+    "activities": [],
+    "notes": {
+      "session_type": "rest",
+      "phase_block": "peak specificity block"
+    }
   },
   {
     "date": "2026-02-27",
     "sleep": null,
     "activities": [
       {
-        "id": 788953553,
+        "id": 279090756,
         "sport_type": "TrailRun",
-        "start_date_local": "2026-02-27T08:00:00",
-        "distance": 10000.0,
-        "moving_time": 2057,
-        "total_elevation_gain": 250.0,
-        "average_heartrate": 155,
-        "max_heartrate": 172
+        "start_date_local": "2026-02-27T07:30:00",
+        "distance": 6100.0,
+        "moving_time": 2760,
+        "total_elevation_gain": 173.1,
+        "average_heartrate": 154,
+        "max_heartrate": 176
       }
-    ]
+    ],
+    "notes": {
+      "session_type": "tempo",
+      "phase_block": "peak specificity block"
+    }
   },
   {
     "date": "2026-02-28",
     "sleep": null,
     "activities": [
       {
-        "id": 812054239,
+        "id": 457200742,
         "sport_type": "TrailRun",
-        "start_date_local": "2026-02-28T08:00:00",
-        "distance": 10000.0,
-        "moving_time": 2262,
-        "total_elevation_gain": 250.0,
-        "average_heartrate": 155,
-        "max_heartrate": 172
+        "start_date_local": "2026-02-28T07:30:00",
+        "distance": 7300.0,
+        "moving_time": 3300,
+        "total_elevation_gain": 207.0,
+        "average_heartrate": 154,
+        "max_heartrate": 176
       }
-    ]
+    ],
+    "notes": {
+      "session_type": "easy",
+      "phase_block": "peak specificity block"
+    }
   },
   {
     "date": "2026-03-01",
     "sleep": null,
     "activities": [
       {
-        "id": 500822218,
+        "id": 932379688,
         "sport_type": "TrailRun",
-        "start_date_local": "2026-03-01T08:00:00",
-        "distance": 10000.0,
-        "moving_time": 1851,
-        "total_elevation_gain": 250.0,
-        "average_heartrate": 155,
-        "max_heartrate": 172
+        "start_date_local": "2026-03-01T07:30:00",
+        "distance": 12200.0,
+        "moving_time": 5100,
+        "total_elevation_gain": 358.3,
+        "average_heartrate": 152,
+        "max_heartrate": 174
       }
-    ]
+    ],
+    "notes": {
+      "session_type": "long",
+      "phase_block": "peak specificity block"
+    }
   },
   {
     "date": "2026-03-02",
     "sleep": null,
-    "activities": []
+    "activities": [
+      {
+        "id": 278977524,
+        "sport_type": "TrailRun",
+        "start_date_local": "2026-03-02T07:30:00",
+        "distance": 8100.0,
+        "moving_time": 3660,
+        "total_elevation_gain": 229.6,
+        "average_heartrate": 154,
+        "max_heartrate": 176
+      }
+    ],
+    "notes": {
+      "session_type": "easy",
+      "phase_block": "peak specificity block"
+    }
   },
   {
     "date": "2026-03-03",
     "sleep": null,
     "activities": [
       {
-        "id": 181389189,
+        "id": 517364006,
         "sport_type": "TrailRun",
-        "start_date_local": "2026-03-03T08:00:00",
-        "distance": 10000.0,
-        "moving_time": 2262,
-        "total_elevation_gain": 250.0,
-        "average_heartrate": 155,
-        "max_heartrate": 172
+        "start_date_local": "2026-03-03T07:30:00",
+        "distance": 8500.0,
+        "moving_time": 3840,
+        "total_elevation_gain": 240.9,
+        "average_heartrate": 154,
+        "max_heartrate": 176
       }
-    ]
+    ],
+    "notes": {
+      "session_type": "easy",
+      "phase_block": "peak specificity block"
+    }
   },
   {
     "date": "2026-03-04",
     "sleep": null,
     "activities": [
       {
-        "id": 564778668,
+        "id": 894857263,
         "sport_type": "TrailRun",
-        "start_date_local": "2026-03-04T08:00:00",
-        "distance": 10000.0,
-        "moving_time": 1851,
-        "total_elevation_gain": 250.0,
-        "average_heartrate": 155,
-        "max_heartrate": 172
+        "start_date_local": "2026-03-04T07:30:00",
+        "distance": 6000.0,
+        "moving_time": 2700,
+        "total_elevation_gain": 169.4,
+        "average_heartrate": 154,
+        "max_heartrate": 176
       }
-    ]
+    ],
+    "notes": {
+      "session_type": "easy",
+      "phase_block": "peak specificity block"
+    }
   },
   {
     "date": "2026-03-05",
     "sleep": null,
     "activities": [
       {
-        "id": 287644861,
+        "id": 895781942,
         "sport_type": "TrailRun",
-        "start_date_local": "2026-03-05T08:00:00",
-        "distance": 10000.0,
-        "moving_time": 2057,
-        "total_elevation_gain": 250.0,
-        "average_heartrate": 155,
-        "max_heartrate": 172
+        "start_date_local": "2026-03-05T07:30:00",
+        "distance": 6400.0,
+        "moving_time": 2880,
+        "total_elevation_gain": 180.7,
+        "average_heartrate": 154,
+        "max_heartrate": 176
       }
-    ]
+    ],
+    "notes": {
+      "session_type": "tempo",
+      "phase_block": "peak specificity block"
+    }
   },
   {
     "date": "2026-03-06",
     "sleep": null,
-    "activities": []
+    "activities": [],
+    "notes": {
+      "session_type": "rest",
+      "phase_block": "peak specificity block"
+    }
   },
   {
     "date": "2026-03-07",
     "sleep": null,
     "activities": [
       {
-        "id": 565239008,
+        "id": 736781908,
         "sport_type": "TrailRun",
-        "start_date_local": "2026-03-07T08:00:00",
-        "distance": 10000.0,
-        "moving_time": 1851,
-        "total_elevation_gain": 250.0,
-        "average_heartrate": 155,
-        "max_heartrate": 172
+        "start_date_local": "2026-03-07T07:30:00",
+        "distance": 7300.0,
+        "moving_time": 3300,
+        "total_elevation_gain": 207.0,
+        "average_heartrate": 154,
+        "max_heartrate": 176
       }
-    ]
+    ],
+    "notes": {
+      "session_type": "easy",
+      "phase_block": "peak specificity block"
+    }
   },
   {
     "date": "2026-03-08",
     "sleep": null,
     "activities": [
       {
-        "id": 74230557,
+        "id": 692914592,
         "sport_type": "TrailRun",
-        "start_date_local": "2026-03-08T08:00:00",
-        "distance": 10000.0,
-        "moving_time": 2057,
-        "total_elevation_gain": 250.0,
-        "average_heartrate": 155,
-        "max_heartrate": 172
+        "start_date_local": "2026-03-08T07:30:00",
+        "distance": 7700.0,
+        "moving_time": 3480,
+        "total_elevation_gain": 218.3,
+        "average_heartrate": 154,
+        "max_heartrate": 176
       }
-    ]
+    ],
+    "notes": {
+      "session_type": "strength",
+      "phase_block": "peak specificity block"
+    }
   },
   {
     "date": "2026-03-09",
     "sleep": null,
     "activities": [
       {
-        "id": 946475176,
+        "id": 560276242,
         "sport_type": "TrailRun",
-        "start_date_local": "2026-03-09T08:00:00",
-        "distance": 10000.0,
-        "moving_time": 2262,
-        "total_elevation_gain": 250.0,
-        "average_heartrate": 155,
-        "max_heartrate": 172
+        "start_date_local": "2026-03-09T07:30:00",
+        "distance": 13000.0,
+        "moving_time": 5400,
+        "total_elevation_gain": 379.4,
+        "average_heartrate": 152,
+        "max_heartrate": 174
       }
-    ]
+    ],
+    "notes": {
+      "session_type": "long",
+      "phase_block": "peak specificity block"
+    }
   },
   {
     "date": "2026-03-10",
     "sleep": null,
-    "activities": []
+    "activities": [
+      {
+        "id": 22366928,
+        "sport_type": "TrailRun",
+        "start_date_local": "2026-03-10T07:30:00",
+        "distance": 8500.0,
+        "moving_time": 3840,
+        "total_elevation_gain": 240.9,
+        "average_heartrate": 154,
+        "max_heartrate": 176
+      }
+    ],
+    "notes": {
+      "session_type": "easy",
+      "phase_block": "peak specificity block"
+    }
   },
   {
     "date": "2026-03-11",
     "sleep": null,
     "activities": [
       {
-        "id": 288351839,
+        "id": 258654458,
         "sport_type": "TrailRun",
-        "start_date_local": "2026-03-11T08:00:00",
-        "distance": 10000.0,
-        "moving_time": 1542,
-        "total_elevation_gain": 250.0,
-        "average_heartrate": 155,
-        "max_heartrate": 172
+        "start_date_local": "2026-03-11T07:30:00",
+        "distance": 4900.0,
+        "moving_time": 2220,
+        "total_elevation_gain": 139.3,
+        "average_heartrate": 154,
+        "max_heartrate": 176
       }
-    ]
+    ],
+    "notes": {
+      "session_type": "easy",
+      "phase_block": "peak specificity block"
+    }
   },
   {
     "date": "2026-03-12",
     "sleep": null,
     "activities": [
       {
-        "id": 151569482,
+        "id": 907840863,
         "sport_type": "TrailRun",
-        "start_date_local": "2026-03-12T08:00:00",
-        "distance": 10000.0,
-        "moving_time": 1697,
-        "total_elevation_gain": 250.0,
-        "average_heartrate": 155,
-        "max_heartrate": 172
+        "start_date_local": "2026-03-12T07:30:00",
+        "distance": 5300.0,
+        "moving_time": 2400,
+        "total_elevation_gain": 150.6,
+        "average_heartrate": 154,
+        "max_heartrate": 176
       }
-    ]
+    ],
+    "notes": {
+      "session_type": "tempo",
+      "phase_block": "peak specificity block"
+    }
   },
   {
     "date": "2026-03-13",
     "sleep": null,
     "activities": [
       {
-        "id": 290580006,
+        "id": 623793355,
         "sport_type": "TrailRun",
-        "start_date_local": "2026-03-13T08:00:00",
-        "distance": 10000.0,
-        "moving_time": 1388,
-        "total_elevation_gain": 250.0,
-        "average_heartrate": 155,
-        "max_heartrate": 172
+        "start_date_local": "2026-03-13T07:30:00",
+        "distance": 5100.0,
+        "moving_time": 2280,
+        "total_elevation_gain": 143.0,
+        "average_heartrate": 154,
+        "max_heartrate": 176
       }
-    ]
+    ],
+    "notes": {
+      "session_type": "tempo",
+      "phase_block": "peak specificity block"
+    }
   },
   {
     "date": "2026-03-14",
     "sleep": null,
-    "activities": []
+    "activities": [
+      {
+        "id": 433407,
+        "sport_type": "TrailRun",
+        "start_date_local": "2026-03-14T07:30:00",
+        "distance": 6000.0,
+        "moving_time": 2700,
+        "total_elevation_gain": 169.4,
+        "average_heartrate": 154,
+        "max_heartrate": 176
+      }
+    ],
+    "notes": {
+      "session_type": "easy",
+      "phase_block": "peak specificity block"
+    }
   },
   {
     "date": "2026-03-15",
     "sleep": null,
-    "activities": [
-      {
-        "id": 907118447,
-        "sport_type": "TrailRun",
-        "start_date_local": "2026-03-15T08:00:00",
-        "distance": 10000.0,
-        "moving_time": 1697,
-        "total_elevation_gain": 250.0,
-        "average_heartrate": 155,
-        "max_heartrate": 172
-      }
-    ]
+    "activities": [],
+    "notes": {
+      "session_type": "rest",
+      "phase_block": "peak specificity block"
+    }
   },
   {
     "date": "2026-03-16",
     "sleep": null,
     "activities": [
       {
-        "id": 821378692,
+        "id": 778577441,
         "sport_type": "TrailRun",
-        "start_date_local": "2026-03-16T08:00:00",
-        "distance": 10000.0,
-        "moving_time": 1388,
-        "total_elevation_gain": 250.0,
-        "average_heartrate": 155,
-        "max_heartrate": 172
+        "start_date_local": "2026-03-16T07:30:00",
+        "distance": 6800.0,
+        "moving_time": 3060,
+        "total_elevation_gain": 192.0,
+        "average_heartrate": 154,
+        "max_heartrate": 176
       }
-    ]
+    ],
+    "notes": {
+      "session_type": "easy",
+      "phase_block": "peak specificity block"
+    }
   },
   {
     "date": "2026-03-17",
     "sleep": null,
     "activities": [
       {
-        "id": 705305812,
+        "id": 856674180,
         "sport_type": "TrailRun",
-        "start_date_local": "2026-03-17T08:00:00",
-        "distance": 10000.0,
-        "moving_time": 1542,
-        "total_elevation_gain": 250.0,
-        "average_heartrate": 155,
-        "max_heartrate": 172
+        "start_date_local": "2026-03-17T07:30:00",
+        "distance": 7200.0,
+        "moving_time": 3240,
+        "total_elevation_gain": 203.2,
+        "average_heartrate": 154,
+        "max_heartrate": 176
       }
-    ]
+    ],
+    "notes": {
+      "session_type": "easy",
+      "phase_block": "peak specificity block"
+    }
   }
 ]

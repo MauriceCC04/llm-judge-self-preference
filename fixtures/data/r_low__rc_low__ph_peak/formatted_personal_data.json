@@ -1,25 +1,25 @@
 {
   "userInfo": {},
   "biometricProfile": {
-    "weight_kg": 68.0,
-    "height_cm": 175.0
+    "weight_kg": 67.0,
+    "height_cm": 174.0
   },
   "derived_activity_profile": {
     "observed_window": {
       "as_of_date": "2026-03-17",
-      "first_activity_date": "2024-03-17",
+      "first_activity_date": "2024-01-27",
       "last_activity_date": "2026-03-16",
-      "activity_span_days": 730
+      "activity_span_days": 780
     },
     "sports": {
       "trailrunning": {
         "sport_family": "running",
-        "claimed_years_sport": 2.0,
-        "activity_count": 180,
-        "total_distance_km": 2200.0,
-        "total_moving_time_hours": 280.0,
-        "total_elevation_m": 45000.0,
-        "total_training_load_hours": 310.0
+        "claimed_years_sport": 4.5,
+        "activity_count": 285,
+        "total_distance_km": 2496.0,
+        "total_moving_time_hours": 280.8,
+        "total_elevation_m": 83200.0,
+        "total_training_load_hours": 302.4
       }
     },
     "top_sports": {
@@ -33,18 +33,18 @@
     "historical_capacities": {
       "90d": {
         "all_sports": {
-          "peak_7d_training_load_hours": 8.5
+          "peak_7d_training_load_hours": 7.83
         },
         "running_family": {
-          "peak_7d_distance_km": 65.0
+          "peak_7d_distance_km": 64.8
         }
       },
       "365d": {
         "all_sports": {
-          "peak_7d_training_load_hours": 10.2
+          "peak_7d_training_load_hours": 9.18
         },
         "running_family": {
-          "peak_7d_distance_km": 80.0
+          "peak_7d_distance_km": 74.4
         }
       }
     }
@@ -53,6 +53,13 @@
     "generated_at": "2026-03-17T00:00:00Z",
     "generated_from": [
       "synthetic_fixture"
-    ]
+    ],
+    "fixture_id": "r_low__rc_low__ph_peak",
+    "athlete_archetype": "experienced_runner",
+    "race_phase": "peak",
+    "block_label": "peak specificity block",
+    "primary_goal": "to arrive race-ready for an upcoming trail event",
+    "lifestyle_notes": "Bias toward race specificity, freshness, and avoiding unnecessary fatigue accumulation.",
+    "weeks_to_race": 4
   }
 }

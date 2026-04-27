@@ -9,6 +9,7 @@ from pathlib import Path
 from compat.trailtraining_client import install_trailtraining_client_compat
 from generate.constants import EXPLAINER_MODEL_ID
 from generate.provenance import PlanProvenance
+from generate.temperature import build_llm_generation_condition
 from generate.trailtraining_compat import run_two_stage_generation_compat
 
 
@@ -22,6 +23,9 @@ def generate_llm_plan(
     plan_id: str,
     source_model: str,
     seed: int = 0,
+    source_temperature: float = 0.7,
+    explainer_temperature: float = 0.0,
+    generation_condition: str | None = None,
 ) -> tuple[str, str, str]:
     install_trailtraining_client_compat(default_stage="judge")
     os.environ.setdefault("OPENROUTER_API_KEY", "dummy")
@@ -35,6 +39,12 @@ def generate_llm_plan(
     fixture_id = fixture_meta.get("fixture_id", fixture_dir.name)
     primary_goal = str(fixture_meta.get("primary_goal") or "to become a faster trail runner")
 
+    if generation_condition is None:
+        generation_condition = build_llm_generation_condition(
+            source_temperature=source_temperature,
+            explainer_temperature=explainer_temperature,
+        )
+
     plan_path = output_dir / f"{plan_id}.json"
 
     plan_json, runtime_metadata = run_two_stage_generation_compat(
@@ -44,10 +54,15 @@ def generate_llm_plan(
         explainer_model=EXPLAINER_MODEL_ID,
         primary_goal=primary_goal,
         seed=seed,
+        source_temperature=source_temperature,
+        explainer_temperature=explainer_temperature,
     )
 
     runtime_metadata = dict(runtime_metadata or {})
     runtime_metadata.setdefault("TRAILTRAINING_TWO_STAGE_PLAN", "1")
+    runtime_metadata.setdefault("source_temperature", source_temperature)
+    runtime_metadata.setdefault("explainer_temperature", explainer_temperature)
+    runtime_metadata.setdefault("generation_condition", generation_condition)
 
     actual_explainer_model_raw = runtime_metadata.get("actual_explainer_model")
     actual_explainer_model = (
@@ -61,6 +76,7 @@ def generate_llm_plan(
         and actual_explainer_model == EXPLAINER_MODEL_ID
     )
     runtime_metadata["explainer_model_verified"] = explainer_verified
+
     prov = PlanProvenance(
         plan_id=plan_id,
         fixture_id=fixture_id,
@@ -72,6 +88,9 @@ def generate_llm_plan(
         generation_pipeline="llm_two_stage",
         runtime_backend="trailtraining.llm.coach.run_coach_brief",
         runtime_metadata=runtime_metadata,
+        source_temperature=source_temperature,
+        explainer_temperature=explainer_temperature,
+        generation_condition=generation_condition,
         seed=seed,
         generated_at=datetime.now(tz=timezone.utc).isoformat(),
         plan_path=str(plan_path),

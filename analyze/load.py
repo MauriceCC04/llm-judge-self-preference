@@ -19,13 +19,32 @@ def _load_provenance_index(provenance_dir: Path) -> dict[str, dict[str, Any]]:
     return index
 
 
+def _get_prov_raw(
+    index: dict[str, dict[str, Any]],
+    plan_id: str,
+    field: str,
+    default: Any = None,
+) -> Any:
+    return index.get(str(plan_id), {}).get(field, default)
+
+
 def _get_prov(
     index: dict[str, dict[str, Any]],
     plan_id: str,
     field: str,
     default: str = "unknown",
 ) -> str:
-    return index.get(str(plan_id), {}).get(field, default)
+    value = _get_prov_raw(index, plan_id, field, default)
+    return default if value is None else value
+
+
+def _as_float(value: Any) -> float | None:
+    if value is None:
+        return None
+    try:
+        return float(value)
+    except Exception:
+        return None
 
 
 def _pick_llm_side(row: Any) -> str:
@@ -90,7 +109,6 @@ def collect_invalid_plan_ids(
             explainer_model = prov.get("explainer_model")
             actual_explainer_model = prov.get("actual_explainer_model")
             explainer_model_verified = prov.get("explainer_model_verified")
-            # Only an explicit verification flag counts as verified.
             effective_verified = bool(explainer_model_verified)
 
             if explainer_model != expected_explainer:
@@ -188,19 +206,31 @@ def load_judgments(
 
     df = pd.DataFrame(records)
 
+    if "judge_temperature" in df.columns:
+        df["judge_temperature"] = pd.to_numeric(df["judge_temperature"], errors="coerce").fillna(0.0)
+    else:
+        df["judge_temperature"] = 0.0
+
     if kind == "pairwise":
         if "plan_a_id" not in df.columns or "plan_b_id" not in df.columns:
             if return_exclusions:
                 return df, []
             return df
 
-        def _get(plan_id: str, field: str, default: str = "unknown") -> str:
-            return prov_index.get(str(plan_id), {}).get(field, default)
+        def _get(plan_id: str, field: str, default: Any = "unknown") -> Any:
+            return _get_prov_raw(prov_index, plan_id, field, default)
 
         df["arm_a"] = df["plan_a_id"].apply(lambda x: _get(x, "arm"))
         df["arm_b"] = df["plan_b_id"].apply(lambda x: _get(x, "arm"))
         df["source_model_a"] = df["plan_a_id"].apply(lambda x: _get(x, "source_model", ""))
         df["source_model_b"] = df["plan_b_id"].apply(lambda x: _get(x, "source_model", ""))
+
+        df["source_temperature_a"] = df["plan_a_id"].apply(lambda x: _as_float(_get(x, "source_temperature")))
+        df["source_temperature_b"] = df["plan_b_id"].apply(lambda x: _as_float(_get(x, "source_temperature")))
+        df["explainer_temperature_a"] = df["plan_a_id"].apply(lambda x: _as_float(_get(x, "explainer_temperature")))
+        df["explainer_temperature_b"] = df["plan_b_id"].apply(lambda x: _as_float(_get(x, "explainer_temperature")))
+        df["generation_condition_a"] = df["plan_a_id"].apply(lambda x: _get(x, "generation_condition", ""))
+        df["generation_condition_b"] = df["plan_b_id"].apply(lambda x: _get(x, "generation_condition", ""))
 
         if "fixture_id" not in df.columns or df["fixture_id"].isna().all():
             df["fixture_id"] = df["plan_a_id"].apply(lambda x: _get(x, "fixture_id"))
@@ -239,6 +269,46 @@ def load_judgments(
             else "",
             axis=1,
         )
+        df["llm_source_temperature"] = df.apply(
+            lambda r: r["source_temperature_a"]
+            if r["llm_side"] == "a"
+            else r["source_temperature_b"]
+            if r["llm_side"] == "b"
+            else None,
+            axis=1,
+        )
+        df["llm_explainer_temperature"] = df.apply(
+            lambda r: r["explainer_temperature_a"]
+            if r["llm_side"] == "a"
+            else r["explainer_temperature_b"]
+            if r["llm_side"] == "b"
+            else None,
+            axis=1,
+        )
+        df["programmatic_explainer_temperature"] = df.apply(
+            lambda r: r["explainer_temperature_b"]
+            if r["llm_side"] == "a"
+            else r["explainer_temperature_a"]
+            if r["llm_side"] == "b"
+            else None,
+            axis=1,
+        )
+        df["llm_generation_condition"] = df.apply(
+            lambda r: r["generation_condition_a"]
+            if r["llm_side"] == "a"
+            else r["generation_condition_b"]
+            if r["llm_side"] == "b"
+            else "",
+            axis=1,
+        )
+        df["programmatic_generation_condition"] = df.apply(
+            lambda r: r["generation_condition_b"]
+            if r["llm_side"] == "a"
+            else r["generation_condition_a"]
+            if r["llm_side"] == "b"
+            else "",
+            axis=1,
+        )
         df["llm_in_position_a"] = df.apply(_llm_in_position_a, axis=1)
 
         def _preferred_plan_id(row: Any) -> str:
@@ -264,6 +334,15 @@ def load_judgments(
             df["arm"] = df["plan_id"].apply(lambda x: _get_prov(prov_index, x, "arm"))
             df["fixture_id"] = df["plan_id"].apply(lambda x: _get_prov(prov_index, x, "fixture_id"))
             df["source_model"] = df["plan_id"].apply(lambda x: _get_prov(prov_index, x, "source_model", ""))
+            df["source_temperature"] = df["plan_id"].apply(
+                lambda x: _as_float(_get_prov_raw(prov_index, x, "source_temperature"))
+            )
+            df["explainer_temperature"] = df["plan_id"].apply(
+                lambda x: _as_float(_get_prov_raw(prov_index, x, "explainer_temperature"))
+            )
+            df["generation_condition"] = df["plan_id"].apply(
+                lambda x: _get_prov(prov_index, x, "generation_condition", "")
+            )
 
     exclusions: list[dict[str, Any]] = []
     if expected_explainer:

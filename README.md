@@ -1,10 +1,32 @@
+## `README.md`
+
+````md
 # judge-bias-study
 
-**LLM-judge self-preference on training plans** — a controlled experiment on whether LLM judges systematically prefer LLM-generated plans over programmatic plans when deterministic plan quality is controlled.
+**LLM-judge self-preference on training plans** — a controlled experiment for
+Bocconi Jupiter I HPC.
+
+---
 
 ## Research question
 
-Controlling for deterministic plan quality, do LLM judges systematically favor LLM-generated training plans over programmatically generated ones, and does this effect vary by judge family, judge scale, rubric, or whether the plan matches the judge’s own family?
+Controlling for deterministic plan quality, do LLM judges systematically favour
+LLM-generated training plans over programmatically generated ones, and does this
+effect vary by judge model family and scale?
+
+## Study modes
+
+This repository supports two distinct modes:
+
+- **Baseline frozen study** — the main causal estimate with fixed generation and
+  judging settings.
+- **Temperature sensitivity sweeps** — controlled variation of generation and
+  judge temperatures to test whether results depend on stochasticity.
+
+Temperature control is implemented **in this repository**, not by modifying
+`trailtraining`. `trailtraining` is treated as a pinned library dependency; the
+experiment logic, provenance, matching discipline, and sweep orchestration live
+here.
 
 ## Frozen study summary
 
@@ -17,163 +39,194 @@ Controlling for deterministic plan quality, do LLM judges systematically favor L
 - Pairwise calls: `250 × 4 × 5 × 2 = 10,000`
 - Soft-eval calls: `512 × 4 = 2,048`
 - Shared explainer: `Qwen/Qwen2.5-3B-Instruct`
+- Canonical baseline HPC path: `docs/HPC_RUNBOOK.md`
+- Temperature sensitivity runs: `docs/TEMPERATURE_SWEEPS.md`
 
-## What this repository does
+## Baseline temperatures
 
-This repository builds a frozen evaluation pipeline around paired training plans:
+The default baseline study uses:
 
-1. **Fixtures** define athlete contexts and supporting rollups.
-2. **Generation** creates two plan arms:
-   - **LLM arm**: source model creates a machine plan, then a shared explainer model fills explanation fields.
-   - **Programmatic arm**: structure is sampled programmatically, then the same shared explainer model fills explanation fields.
-3. **Matching** pairs LLM and programmatic plans with similar deterministic scores.
-4. **Judging** runs pairwise comparisons and soft-eval scoring.
-5. **Analysis** estimates preference effects, self-family effects, rubric-level contrasts, position bias, and style leakage.
+- LLM source generation temperature: `0.7`
+- Shared explainer temperature: `0.0`
+- Judge temperature: `0.0`
 
-## Repository structure
+These settings should be treated as part of the frozen baseline configuration and
+recorded in provenance and judgment outputs.
 
-- `fixtures/` — frozen fixture bundles and builder
-- `generate/` — LLM arm, programmatic arm, provenance, structural sampling
-- `match/` — deterministic-score pairing and matching audit outputs
-- `judge/` — pairwise and soft-eval harnesses
-- `analyze/` — data loading, model fitting, plots, summaries
-- `slurm/` — HPC orchestration scripts for generation and judging
-- `tools/` — local support utilities including the OpenAI-compatible mock server
-- `tests/` — Gate-0 regression tests, including the local HTTP mock smoke path
+## Architecture
 
-## Operating modes
-
-There are two supported ways to run the project.
-
-### 1. Local smoke testing
-
-Use the local mock server only to validate wiring, artifacts, resume behavior, and end-to-end plumbing.
-
-A local smoke run can verify that:
-- generation works for both arms
-- provenance files are written correctly
-- matching and judging produce outputs
-- analysis can load and process those outputs
-
-A local smoke run is **not** evidence for the research question.
-
-Why not:
-- mock responses are synthetic
-- tiny runs often trigger position-bias exclusions that remove all rows from H1/H2
-- small samples can trigger `PerfectSeparationWarning` and unsupported fits in H3/H4
-- coverage and style audits are not meaningful at smoke scale
-
-See [`docs/LOCAL_SMOKE_TEST.md`](docs/LOCAL_SMOKE_TEST.md).
-
-### 2. Canonical HPC execution
-
-Use the SLURM scripts and real vLLM OpenAI-compatible servers for any meaningful pilot or full study run.
-
-The HPC path uses **real local vLLM endpoints**, not the local mock server.
-
-Recommended order:
-
-1. `python tests/run_tests.py`
-2. `python -m fixtures.build`
-3. `bash bootstrap_hpc_env.sh`
-4. run the SLURM scripts in `slurm/`
-
-Start with a **small real-endpoint pilot** before scaling to the frozen study.
-
-See [`docs/HPC_PILOT_CHECKLIST.md`](docs/HPC_PILOT_CHECKLIST.md).
+```text
+8 frozen fixtures
+        │
+        ├── LLM arm          exact-count generation
+        │   └── 16 plans / fixture / source model × 8 fixtures × 2 models = 256
+        │
+        └── Programmatic arm  exact-count generation
+            └── 32 plans / fixture × 8 fixtures = 256
+        │
+        ▼
+deterministic scoring → greedy pair matching (|Δscore| ≤ 1)
+        │
+        ▼
+4 judges × (250 pairs × 5 runs × 2 positions + 512 plans × 1 soft-eval batch)
+        │
+        ▼
+mixed-effects models + rubric contrasts + forest plots
+````
 
 ## Pairwise views
 
 Two pairwise surfaces are supported:
 
-- `raw_normalized` — normalized comparison surface
-- `canonical_masked` — fixed-format rendering for stricter structure-focused comparison
+* `raw_normalized` — existing normalized comparison surface
+* `canonical_masked` — fixed-format rendering for stricter structure-focused comparison
 
-Use `--pairwise-view canonical_masked` in the CLI or `PAIRWISE_VIEW=canonical_masked` in the judge script to run the masked control condition.
+Use `--pairwise-view canonical_masked` in the judge CLI or `PAIRWISE_VIEW=canonical_masked`
+in `slurm/run_judge_hpc.sh` to run the masked control condition.
 
-## Local smoke quick start
+## Temperature controls
 
-Start the mock server from the repository root:
+Three temperature knobs are supported:
 
-```bash
-PYTHONPATH=. python tools/mock_llm_server.py --port 8765
+* `source_temperature` — affects only the **LLM arm source generator**
+* `explainer_temperature` — affects the **shared explainer stage** used to fill
+  explanation and narrative fields
+* `judge_temperature` — affects **pairwise** and **soft-eval** judging
+
+These should not be interpreted the same way:
+
+* Varying **source temperature** changes the LLM arm generation process itself
+  and may change both structure and surface form.
+* Varying **judge temperature** changes evaluator stochasticity on fixed plans.
+* Varying **explainer temperature** changes presentation style and should be
+  treated cautiously because it can reintroduce stylistic leakage.
+
+For the main study, keep `explainer_temperature = 0.0` and `judge_temperature = 0.0`.
+Treat temperature sweeps as sensitivity analyses unless the study is explicitly
+about stochastic generation or stochastic evaluation.
+
+## Artifact layout and condition discipline
+
+Different temperature conditions must be kept in distinct artifact directories.
+
+Do **not** mix multiple generation conditions in the same `plans/` directory and
+then run matching on that mixed directory. Matching should be performed on a
+single generation condition at a time.
+
+Recommended layout:
+
+```text
+artifacts/
+  gen_src_t070_exp_t000/
+    plans/
+    matched_pairs.json
+    matching_audit.json
+    judgments/
+      judge_t000/
+      judge_t020/
+      judge_t070/
+    results/
+      judge_t000/
+      judge_t020/
+      judge_t070/
 ```
 
-In another terminal:
+This keeps:
+
+* resume logic correct
+* matching condition-pure
+* provenance interpretable
+* sensitivity analyses separable from the main estimate
+
+## Baseline command examples
+
+### Generate baseline plans
 
 ```bash
-export TRAILTRAINING_SOURCE_LLM_BASE_URL=http://127.0.0.1:8765/v1
-export TRAILTRAINING_EXPLAINER_LLM_BASE_URL=http://127.0.0.1:8765/v1
-export TRAILTRAINING_JUDGE_LLM_BASE_URL=http://127.0.0.1:8765/v1
-export TRAILTRAINING_LLM_BASE_URL=http://127.0.0.1:8765/v1
-export OPENROUTER_API_KEY=dummy
+python cli.py generate \
+  --arm llm \
+  --source-model meta-llama/Llama-3.1-8B-Instruct \
+  --source-temperature 0.7 \
+  --explainer-temperature 0.0 \
+  --output artifacts/gen_src_t070_exp_t000/plans
+
+python cli.py generate \
+  --arm programmatic \
+  --explainer-temperature 0.0 \
+  --output artifacts/gen_src_t070_exp_t000/plans
 ```
 
-Minimal smoke run:
+### Match within one generation condition
 
 ```bash
-python cli.py generate --arm llm --source-model meta-llama/Llama-3.1-8B-Instruct --n 2 --fixture-id r_low__rc_low__ph_base --output smoke_plans
-python cli.py fit-priors --plans smoke_plans --output smoke_artifacts/smoke_sampler_config.json --min-plans 1
-python cli.py generate --arm programmatic --n 2 --fixture-id r_low__rc_low__ph_base --sampler-config smoke_artifacts/smoke_sampler_config.json --output smoke_plans
-python cli.py match --plans smoke_plans --output smoke_artifacts/smoke_pairs.json
-python cli.py judge --judge qwen_7b_judge --plans smoke_plans --pairs smoke_artifacts/smoke_pairs.json --output smoke_judgments --pair-limit 2 --plan-limit 4 --pairwise-view canonical_masked
-python cli.py analyze --judgments smoke_judgments --plans smoke_plans --pairs smoke_artifacts/smoke_pairs.json --output smoke_results --pairwise-view canonical_masked
+python cli.py match \
+  --plans artifacts/gen_src_t070_exp_t000/plans \
+  --output artifacts/gen_src_t070_exp_t000/matched_pairs.json
 ```
 
-## Important routing notes
-
-The code supports **stage-specific OpenAI-compatible endpoints**:
-
-- `TRAILTRAINING_SOURCE_LLM_BASE_URL`
-- `TRAILTRAINING_EXPLAINER_LLM_BASE_URL`
-- `TRAILTRAINING_JUDGE_LLM_BASE_URL`
-- `TRAILTRAINING_LLM_BASE_URL` (generic fallback)
-
-For local smoke runs, export all four so the pipeline behaves consistently.
-
-For HPC runs, generation already uses explicit source/explainer endpoints. Judge runs can rely on the generic endpoint, though setting `TRAILTRAINING_JUDGE_LLM_BASE_URL` explicitly is also fine for clarity.
-
-## Output paths and where files go
-
-The CLI writes exactly where you tell it to write.
-
-Examples:
-- `fit-priors --output smoke_sampler_config.json` writes `smoke_sampler_config.json` in the current working directory.
-- `match --output smoke_pairs.json` writes `smoke_pairs.json` in the current working directory.
-- `matching_audit.json` is written **next to** the pairs file.
-
-To keep smoke artifacts organized, prefer explicit subdirectories such as:
+### Judge baseline plans
 
 ```bash
-python cli.py fit-priors --plans smoke_plans --output smoke_artifacts/smoke_sampler_config.json --min-plans 2
-python cli.py match --plans smoke_plans --output smoke_artifacts/smoke_pairs.json
+python cli.py judge \
+  --judge qwen_7b_judge \
+  --judge-temperature 0.0 \
+  --plans artifacts/gen_src_t070_exp_t000/plans \
+  --pairs artifacts/gen_src_t070_exp_t000/matched_pairs.json \
+  --output artifacts/gen_src_t070_exp_t000/judgments/judge_t000
 ```
 
-## Interpretation notes for small runs
+## Temperature sweep examples
 
-If a tiny smoke run shows:
-- `Coverage OK: False`
-- `Position-bias audit: ... biased`
-- `H1: skipped`
-- `H2: no soft-eval data`
-- many `PerfectSeparationWarning` lines
+### Judge-temperature sweep on fixed plans
 
-that usually means the local plumbing worked, but the sample is too small or too synthetic for meaningful inference.
+```bash
+python cli.py judge \
+  --judge qwen_7b_judge \
+  --judge-temperature 0.2 \
+  --plans artifacts/gen_src_t070_exp_t000/plans \
+  --pairs artifacts/gen_src_t070_exp_t000/matched_pairs.json \
+  --output artifacts/gen_src_t070_exp_t000/judgments/judge_t020
 
-## Recommended workflow
+python cli.py judge \
+  --judge qwen_7b_judge \
+  --judge-temperature 0.7 \
+  --plans artifacts/gen_src_t070_exp_t000/plans \
+  --pairs artifacts/gen_src_t070_exp_t000/matched_pairs.json \
+  --output artifacts/gen_src_t070_exp_t000/judgments/judge_t070
+```
 
-1. Keep `tests/run_tests.py` green.
-2. Use local smoke runs to validate plumbing and resume behavior.
-3. Run a **small HPC pilot** with real vLLM endpoints.
-4. Only then scale to the frozen study.
+### Source-temperature sweep
 
-## Notes on the local mock path
+```bash
+python cli.py generate \
+  --arm llm \
+  --source-model meta-llama/Llama-3.1-8B-Instruct \
+  --source-temperature 0.3 \
+  --explainer-temperature 0.0 \
+  --output artifacts/gen_src_t030_exp_t000/plans
+```
 
-The local HTTP mock path matters because it validates the same client-routing layer used by the CLI.
+Then regenerate the programmatic arm explainer outputs at the same explainer
+setting, rerun matching inside that new generation-condition directory, and only
+then launch judging.
 
-The local mock server should:
-- be launched from repo root or with repo-root `PYTHONPATH`
-- echo the requested model in the response so provenance checks pass
-- return a clean OpenAI-compatible response shape without duplicating output text
+## Canonical run path
 
-These details matter for local smoke runs, but they do **not** change the canonical HPC execution path, which uses real vLLM servers.
+Use the code-first frozen study path:
+
+1. `python tests/run_tests.py`
+2. `python -m fixtures.build`
+3. `bash bootstrap_hpc_env.sh`
+4. follow `docs/HPC_RUNBOOK.md`
+
+Do not use the older mixed runbook as the source of truth for the frozen study.
+
+## Documentation map
+
+* `docs/HPC_RUNBOOK.md` — baseline frozen-study HPC path
+* `docs/TEMPERATURE_SWEEPS.md` — temperature sensitivity workflow and HPC usage
+* `docs/EXPERIMENT_CONTROLS.md` — research and implementation design rules for
+  provenance, condition isolation, and `trailtraining` compatibility
+* `docs/INCIDENTS.md` — running log of incidents, root causes, fixes, and impacts
+* `PREREGISTRATION.md` — frozen research design parameters and exclusion criteria
+* `LOCAL_SMOKE_TEST.md` — local mock-server smoke test instructions

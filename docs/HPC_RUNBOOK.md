@@ -1,9 +1,11 @@
-# HPC_SYNC_RUNBOOK.md
+# HPC_RUNBOOK.md
 
-Canonical HPC path for the frozen 512-plan study.
+Canonical HPC path for the frozen 512-plan baseline study.
 
-This runbook supersedes the older mixed documentation because it uses the code-first
-entrypoints for the frozen study.
+This runbook supersedes older mixed documentation because it uses the code-first
+entrypoints for the frozen study. It is intentionally **baseline-first**.
+
+For temperature sensitivity runs, see `docs/TEMPERATURE_SWEEPS.md`.
 
 ## 0. What this path guarantees
 
@@ -14,6 +16,10 @@ Using the commands below gives you:
 - automatic style-audit generation before judging when needed
 - judge submission with buffered walltime derived from `judge.panel`
 - optional `PAIRWISE_VIEW=canonical_masked` control runs
+- baseline temperature settings:
+  - source generation temperature `0.7`
+  - shared explainer temperature `0.0`
+  - judge temperature `0.0`
 
 This runbook describes the **real HPC path**. It does **not** use the local
 `tools/mock_llm_server.py` smoke path.
@@ -36,7 +42,7 @@ conda activate judge-bias
 pip install torch vllm
 bash bootstrap_hpc_env.sh
 export PYTHONPATH="${REPO_ROOT}:${PYTHONPATH:-}"
-```
+````
 
 ## 2. Gate 0 — local CPU tests
 
@@ -88,7 +94,7 @@ sbatch \
   --partition=stud \
   --qos=stud \
   --exclude=gnode04 \
-  --export=ALL,GENERATION_ARM=llm,GENERATION_PROFILE=exact,LLM_SOURCE_MODEL=meta-llama/Llama-3.1-8B-Instruct \
+  --export=ALL,GENERATION_ARM=llm,GENERATION_PROFILE=exact,LLM_SOURCE_MODEL=meta-llama/Llama-3.1-8B-Instruct,SOURCE_TEMPERATURE=0.7,EXPLAINER_TEMPERATURE=0.0 \
   --wrap="cd ${REPO_ROOT} && bash slurm/run_generation_hpc.sh"
 ```
 
@@ -102,7 +108,7 @@ sbatch \
   --partition=stud \
   --qos=stud \
   --exclude=gnode04 \
-  --export=ALL,GENERATION_ARM=llm,GENERATION_PROFILE=exact,LLM_SOURCE_MODEL=Qwen/Qwen2.5-7B-Instruct \
+  --export=ALL,GENERATION_ARM=llm,GENERATION_PROFILE=exact,LLM_SOURCE_MODEL=Qwen/Qwen2.5-7B-Instruct,SOURCE_TEMPERATURE=0.7,EXPLAINER_TEMPERATURE=0.0 \
   --wrap="cd ${REPO_ROOT} && bash slurm/run_generation_hpc.sh"
 ```
 
@@ -124,7 +130,7 @@ sbatch \
   --partition=stud \
   --qos=stud \
   --exclude=gnode04 \
-  --export=ALL,GENERATION_ARM=programmatic,GENERATION_PROFILE=exact,SAMPLER_CONFIG=sampler_config.json \
+  --export=ALL,GENERATION_ARM=programmatic,GENERATION_PROFILE=exact,SAMPLER_CONFIG=sampler_config.json,EXPLAINER_TEMPERATURE=0.0 \
   --wrap="cd ${REPO_ROOT} && bash slurm/run_generation_hpc.sh"
 ```
 
@@ -155,15 +161,15 @@ and output shape against a real vLLM server.
 ```bash
 cd "${REPO_ROOT}"
 bash slurm/pre_cache_models.sh qwen_7b_judge
-JUDGE_MODE=pilot bash slurm/submit_judge_hpc.sh qwen_7b_judge
+JUDGE_MODE=pilot JUDGE_TEMPERATURE=0.0 bash slurm/submit_judge_hpc.sh qwen_7b_judge
 ```
 
 Recommended pilot checks after the job completes:
 
-- nonempty `judgments/` outputs
-- no schema-failure growth
-- no provenance exclusions during `cli.py analyze`
-- successful pairwise and soft-eval record loading
+* nonempty `judgments/` outputs
+* no schema-failure growth
+* no provenance exclusions during `cli.py analyze`
+* successful pairwise and soft-eval record loading
 
 ## 10. Dedicated `qwen_32b_judge` validation before the full panel
 
@@ -173,7 +179,7 @@ actual `gpu:4g.40gb:1` slice with a small pilot shard.
 ```bash
 cd "${REPO_ROOT}"
 bash slurm/pre_cache_models.sh qwen_32b_judge
-PAIR_LIMIT=5 PLAN_LIMIT=10 RUN_SOFT_EVAL=1 RUN_PAIRWISE=1 JUDGE_MODE=pilot \
+PAIR_LIMIT=5 PLAN_LIMIT=10 RUN_SOFT_EVAL=1 RUN_PAIRWISE=1 JUDGE_MODE=pilot JUDGE_TEMPERATURE=0.0 \
   bash slurm/submit_judge_hpc.sh qwen_32b_judge
 ```
 
@@ -186,23 +192,23 @@ before starting the full four-judge panel.
 cd "${REPO_ROOT}"
 
 bash slurm/pre_cache_models.sh llama_8b_judge
-bash slurm/submit_judge_hpc.sh llama_8b_judge
+JUDGE_TEMPERATURE=0.0 bash slurm/submit_judge_hpc.sh llama_8b_judge
 
 bash slurm/pre_cache_models.sh qwen_7b_judge
-bash slurm/submit_judge_hpc.sh qwen_7b_judge
+JUDGE_TEMPERATURE=0.0 bash slurm/submit_judge_hpc.sh qwen_7b_judge
 
 bash slurm/pre_cache_models.sh qwen_14b_judge
-bash slurm/submit_judge_hpc.sh qwen_14b_judge
+JUDGE_TEMPERATURE=0.0 bash slurm/submit_judge_hpc.sh qwen_14b_judge
 
 bash slurm/pre_cache_models.sh qwen_32b_judge
-bash slurm/submit_judge_hpc.sh qwen_32b_judge
+JUDGE_TEMPERATURE=0.0 bash slurm/submit_judge_hpc.sh qwen_32b_judge
 ```
 
 To run the stricter masked control view:
 
 ```bash
 cd "${REPO_ROOT}"
-PAIRWISE_VIEW=canonical_masked bash slurm/submit_judge_hpc.sh qwen_7b_judge
+PAIRWISE_VIEW=canonical_masked JUDGE_TEMPERATURE=0.0 bash slurm/submit_judge_hpc.sh qwen_7b_judge
 ```
 
 ## 12. Analysis
@@ -214,12 +220,12 @@ python cli.py analyze --judgments judgments/ --plans plans/ --pairs matched_pair
 
 ## 13. Expected frozen study totals
 
-- LLM arm: 256 plans
-- Programmatic arm: 256 plans
-- Total plans: 512
-- Active judges: 4
-- Pairwise calls: `250 pairs × 4 judges × 5 runs × 2 positions = 10,000`
-- Soft-eval calls: `512 plans × 4 judges = 2,048`
+* LLM arm: 256 plans
+* Programmatic arm: 256 plans
+* Total plans: 512
+* Active judges: 4
+* Pairwise calls: `250 pairs × 4 judges × 5 runs × 2 positions = 10,000`
+* Soft-eval calls: `512 plans × 4 judges = 2,048`
 
 ## 14. Notes on local smoke vs HPC
 
@@ -228,7 +234,19 @@ wiring and end-to-end plumbing on a laptop, but it is not part of the HPC path.
 
 Key differences:
 
-- local smoke uses a synthetic HTTP mock server
-- HPC uses real vLLM servers launched by the SLURM scripts
-- local mock runs can show empty H1/H2 after position-bias exclusion
-- HPC pilots should be treated as the real compatibility gate before the full run
+* local smoke uses a synthetic HTTP mock server
+* HPC uses real vLLM servers launched by the SLURM scripts
+* local mock runs can show empty H1/H2 after position-bias exclusion
+* HPC pilots should be treated as the real compatibility gate before the full run
+
+## 15. Temperature sensitivity runs
+
+The baseline runbook above is the canonical frozen-study path.
+
+For temperature sensitivity analyses:
+
+* do **not** mix multiple generation conditions in one `plans/` directory
+* do **not** run matching on a mixed-temperature directory
+* do use a separate artifact root per generation condition
+* do sweep judge temperature on fixed matched plans
+* see `docs/TEMPERATURE_SWEEPS.md` for the recommended workflow

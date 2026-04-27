@@ -1,5 +1,5 @@
 {
-  "plan_id": "r_high__rc_high__ph_peak__prog__s001",
+  "plan_id": "r_high__rc_high__ph_peak__prog__exp_t000__s003",
   "fixture_id": "r_high__rc_high__ph_peak",
   "arm": "programmatic",
   "source_model": null,
@@ -18,10 +18,15 @@
     "explainer_model_verified": true,
     "fixture_block_label": "peak specificity block",
     "fixture_primary_goal": "to arrive race-ready for an upcoming trail event",
-    "fixture_weeks_to_race": 4
+    "fixture_weeks_to_race": 4,
+    "explainer_temperature": 0.0,
+    "generation_condition": "gen_prog__exp_t000"
   },
-  "seed": 1,
-  "generated_at": "2026-04-27T15:31:25.952387+00:00",
-  "plan_path": "smoke_plans/r_high__rc_high__ph_peak__prog__s001.json",
+  "source_temperature": null,
+  "explainer_temperature": 0.0,
+  "generation_condition": "gen_prog__exp_t000",
+  "seed": 3,
+  "generated_at": "2026-04-27T16:28:20.613642+00:00",
+  "plan_path": "smoke_plans/r_high__rc_high__ph_peak__prog__exp_t000__s003.json",
   "deterministic_score": 100.0
 }

@@ -48,6 +48,8 @@ def run_two_stage_generation_compat(
     explainer_model: str,
     primary_goal: str,
     seed: int,
+    source_temperature: float = 0.7,
+    explainer_temperature: float = 0.0,
 ) -> tuple[str, dict[str, Any]]:
     from trailtraining.llm.coach import (
         CoachConfig,
@@ -84,7 +86,7 @@ def run_two_stage_generation_compat(
     source_cfg = CoachConfig(
         model=source_model,
         reasoning_effort="none",
-        temperature=0.7,
+        temperature=source_temperature,
         plan_days=PLAN_DAYS,
         primary_goal=resolved_goal,
         style=style,
@@ -92,7 +94,7 @@ def run_two_stage_generation_compat(
     explainer_cfg = CoachConfig(
         model=explainer_model,
         reasoning_effort="none",
-        temperature=0.0,
+        temperature=explainer_temperature,
         plan_days=PLAN_DAYS,
         primary_goal=resolved_goal,
         style=style,
@@ -251,6 +253,8 @@ def run_two_stage_generation_compat(
         "actual_source_model": actual_source_model,
         "actual_explainer_model": actual_explainer_model,
         "explainer_model_verified": explainer_model_verified,
+        "source_temperature": source_temperature,
+        "explainer_temperature": explainer_temperature,
         "seed": seed,
     }
     return json.dumps(obj, indent=2, ensure_ascii=False, default=_json_default), runtime_metadata

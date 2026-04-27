@@ -89,6 +89,7 @@ def run_pairwise_harness(
     normalize_inputs: bool = True,
     pairwise_view: str = PAIRWISE_VIEW_DEFAULT,
     schema_failures_path: Optional[Path] = None,
+    judge_temperature: float = 0.0,
 ) -> None:
     install_trailtraining_client_compat(default_stage="judge")
     from judge.outputs import PairwiseWriter, SchemaFailWriter
@@ -104,6 +105,7 @@ def run_pairwise_harness(
         reasoning_effort="none",
         skip_synthesis=True,
         parallel_batches=False,
+        temperature=judge_temperature,
     )
     if not cfg.enabled:
         raise RuntimeError("SoftEvalConfig.enabled must be True to call compare_plans.")
@@ -133,6 +135,7 @@ def run_pairwise_harness(
                 stub = {
                     "pair_id": pair_id,
                     "judge": judge.name,
+                    "judge_temperature": judge_temperature,
                     "run": run,
                     "position": position,
                     "pairwise_view": pairwise_view,
@@ -156,6 +159,7 @@ def run_pairwise_harness(
                         {
                             "pair_id": pair_id,
                             "judge": judge.name,
+                            "judge_temperature": judge_temperature,
                             "call_type": "compare_plans",
                             "run": run,
                             "position": position,
@@ -173,6 +177,7 @@ def run_pairwise_harness(
                         {
                             "pair_id": pair_id,
                             "judge": judge.name,
+                            "judge_temperature": judge_temperature,
                             "call_type": "compare_plans",
                             "run": run,
                             "position": position,
@@ -225,6 +230,7 @@ def run_soft_eval_harness(
     fixtures_dir: Optional[Path] = None,
     provenance_dir: Optional[Path] = None,
     schema_failures_path: Optional[Path] = None,
+    judge_temperature: float = 0.0,
 ) -> None:
     install_trailtraining_client_compat(default_stage="judge")
     from judge.outputs import SchemaFailWriter, SoftEvalWriter
@@ -241,6 +247,7 @@ def run_soft_eval_harness(
         reasoning_effort="none",
         skip_synthesis=True,
         parallel_batches=False,
+        temperature=judge_temperature,
     )
     if not cfg.enabled:
         raise RuntimeError("SoftEvalConfig.enabled must be True to call evaluate_training_plan_soft.")
@@ -248,7 +255,7 @@ def run_soft_eval_harness(
     det_cfg = ConstraintConfig(min_signal_ids_per_day=0)
 
     for plan_id in plan_ids:
-        stub = {"plan_id": plan_id, "judge": judge.name}
+        stub = {"plan_id": plan_id, "judge": judge.name, "judge_temperature": judge_temperature}
         if writer.exists(stub):
             continue
         plan_path = plans_dir / f"{plan_id}.json"
@@ -284,6 +291,7 @@ def run_soft_eval_harness(
                 {
                     "plan_id": plan_id,
                     "judge": judge.name,
+                    "judge_temperature": judge_temperature,
                     "call_type": "soft_eval",
                     "error": str(exc),
                     "timestamp": datetime.now(tz=timezone.utc).isoformat(),
@@ -353,8 +361,6 @@ def check_pilot_bias_gate(
 
     bias_ok = bias < threshold
     tie_ok = tie_rate <= max_tie_rate
-    # If the pilot slice lacks mirrored AB/BA or repeated-within-pair structure,
-    # treat these diagnostics as unavailable rather than automatic failure.
     consistency_available = pair_consistency == pair_consistency
     swap_available = swap_agreement == swap_agreement
     consistency_ok = (not consistency_available) or pair_consistency >= min_pair_consistency

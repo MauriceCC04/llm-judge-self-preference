@@ -8,5 +8,11 @@
     "r_high__rc_high__ph_peak": 4,
     "r_low__rc_low__ph_base": 4
   },
+  "llm_generation_conditions": [
+    "gen_src_t070__exp_t000"
+  ],
+  "programmatic_generation_conditions": [
+    "gen_prog__exp_t000"
+  ],
   "match_rule": "same_fixture_same_score_bin_within_tolerance_min_weighted_distance"
 }

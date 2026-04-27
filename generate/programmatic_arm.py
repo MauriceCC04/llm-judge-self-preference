@@ -24,6 +24,7 @@ from compat.trailtraining_client import (
 from generate.constants import EXPLAINER_MODEL_ID, PLAN_DAYS
 from generate.provenance import PlanProvenance
 from generate.sampler import StructuralSamplerConfig, sample_machine_plan, sampler_config_from_fixture_meta
+from generate.temperature import build_programmatic_generation_condition
 
 
 def _make_client_from_env() -> Any:
@@ -92,6 +93,8 @@ def generate_programmatic_plan(
     plan_id: str,
     seed: int = 0,
     sampler_cfg: Optional[StructuralSamplerConfig] = None,
+    explainer_temperature: float = 0.0,
+    generation_condition: str | None = None,
 ) -> tuple[str, str, str]:
     install_trailtraining_client_compat(default_stage="judge")
     os.environ.setdefault("OPENROUTER_API_KEY", "dummy")
@@ -110,6 +113,11 @@ def generate_programmatic_plan(
     fixture_id = fixture_meta.get("fixture_id", fixture_dir.name)
     cfg = _sampler_cfg_from_fixture(data, seed=seed, base_cfg=sampler_cfg)
 
+    if generation_condition is None:
+        generation_condition = build_programmatic_generation_condition(
+            explainer_temperature=explainer_temperature,
+        )
+
     skeleton = sample_machine_plan(cfg, combined=data["combined"], rollups=data["rollups"])
     skeleton = ensure_machine_plan_shape(skeleton)
 
@@ -123,7 +131,7 @@ def generate_programmatic_plan(
     coach_cfg = CoachConfig(
         model=EXPLAINER_MODEL_ID,
         reasoning_effort="none",
-        temperature=0.0,
+        temperature=explainer_temperature,
         plan_days=PLAN_DAYS,
         style=cfg.style,
         primary_goal=cfg.primary_goal,
@@ -165,7 +173,12 @@ def generate_programmatic_plan(
             "fixture_block_label": fixture_meta.get("block_label"),
             "fixture_primary_goal": fixture_meta.get("primary_goal"),
             "fixture_weeks_to_race": fixture_meta.get("weeks_to_race"),
+            "explainer_temperature": explainer_temperature,
+            "generation_condition": generation_condition,
         },
+        source_temperature=None,
+        explainer_temperature=explainer_temperature,
+        generation_condition=generation_condition,
         seed=seed,
         generated_at=datetime.now(tz=timezone.utc).isoformat(),
         plan_path=str(output_path),

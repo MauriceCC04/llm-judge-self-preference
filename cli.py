@@ -64,17 +64,21 @@ def cmd_generate(args: argparse.Namespace) -> None:
     print(f"Plans per fixture: {plans_per_fixture}")
     print(f"Seed offset: {args.seed_offset}")
     print(f"Fixture subset: {fixture_ids or 'ALL'}")
+    print(f"Explainer temperature: {args.explainer_temperature}")
 
     if args.arm == "llm":
         if not args.source_model:
             raise SystemExit("--source-model is required for the llm arm")
         print(f"Source model: {args.source_model}")
+        print(f"Source temperature: {args.source_temperature}")
         n_gen, n_skip = run_llm_arm(
             output_dir=output_dir,
             plans_per_fixture=plans_per_fixture,
             source_model=args.source_model,
             seed_offset=args.seed_offset,
             fixture_ids=fixture_ids,
+            source_temperature=args.source_temperature,
+            explainer_temperature=args.explainer_temperature,
         )
     else:
         n_gen, n_skip = run_programmatic_arm(
@@ -83,6 +87,7 @@ def cmd_generate(args: argparse.Namespace) -> None:
             sampler_config_path=Path(args.sampler_config) if args.sampler_config else None,
             seed_offset=args.seed_offset,
             fixture_ids=fixture_ids,
+            explainer_temperature=args.explainer_temperature,
         )
     print(f"Generated {n_gen} plans, skipped {n_skip} (already existed) -> {output_dir}")
 
@@ -112,6 +117,7 @@ def cmd_match(args: argparse.Namespace) -> None:
         output_path=output_path,
         tolerance=MATCH_TOLERANCE,
         target_pairs=TARGET_PAIRS,
+        allow_mixed_generation_conditions=args.allow_mixed_generation_conditions,
     )
     print(f"{len(pairs)} pairs written to {output_path}")
 
@@ -123,6 +129,7 @@ def cmd_judge(args: argparse.Namespace) -> None:
         PAIRWISE_N_RUNS,
         PILOT_PAIR_LIMIT,
     )
+    from generate.temperature import format_temperature_tag
     from judge.harness import check_pilot_bias_gate, run_pairwise_harness, run_soft_eval_harness
     from judge.panel import assert_judge_fits_quota, get_judge
 
@@ -143,6 +150,7 @@ def cmd_judge(args: argparse.Namespace) -> None:
     output_dir = Path(args.output)
     output_dir.mkdir(parents=True, exist_ok=True)
     fixtures_dir = _ROOT / "fixtures" / "data"
+    judge_temp_tag = format_temperature_tag(args.judge_temperature)
 
     if not args.skip_pairwise:
         pairs = json.loads(pairs_file.read_text(encoding="utf-8")) if pairs_file.exists() else []
@@ -156,7 +164,7 @@ def cmd_judge(args: argparse.Namespace) -> None:
                 pairs = pairs[: args.pair_limit]
             print(f"Pairwise subset: {len(pairs)} pairs (offset={args.pair_offset}, limit={args.pair_limit})")
 
-        pairwise_out = output_dir / f"pairwise_{judge.name}_{args.pairwise_view}.jsonl"
+        pairwise_out = output_dir / f"pairwise_{judge.name}_{args.pairwise_view}_{judge_temp_tag}.jsonl"
         run_pairwise_harness(
             pairs=pairs,
             plans_dir=plans_dir,
@@ -167,6 +175,7 @@ def cmd_judge(args: argparse.Namespace) -> None:
             n_runs=PAIRWISE_N_RUNS,
             n_positions=PAIRWISE_N_POSITIONS,
             pairwise_view=args.pairwise_view,
+            judge_temperature=args.judge_temperature,
         )
 
         if args.pilot:
@@ -198,7 +207,8 @@ def cmd_judge(args: argparse.Namespace) -> None:
             rollups_path=None,
             fixtures_dir=fixtures_dir,
             provenance_dir=plans_dir,
-            output_path=output_dir / f"softeval_{judge.name}.jsonl",
+            output_path=output_dir / f"softeval_{judge.name}_{judge_temp_tag}.jsonl",
+            judge_temperature=args.judge_temperature,
         )
     print(f"Judge run complete: {judge.name}")
 
@@ -255,6 +265,8 @@ def build_parser() -> argparse.ArgumentParser:
     gen.add_argument("--sampler-config", default=None)
     gen.add_argument("--seed-offset", type=int, default=0)
     gen.add_argument("--source-model", choices=LLM_SOURCE_MODELS, default=None)
+    gen.add_argument("--source-temperature", type=float, default=0.7)
+    gen.add_argument("--explainer-temperature", type=float, default=0.0)
     gen.add_argument("--fixture-id", action="append", default=None, help="Optional fixture subset; repeat or pass comma-separated ids")
     gen.set_defaults(func=cmd_generate)
 
@@ -268,6 +280,7 @@ def build_parser() -> argparse.ArgumentParser:
     mat = sub.add_parser("match", help="Score plans and build matched_pairs.json")
     mat.add_argument("--plans", default="plans/")
     mat.add_argument("--output", default="matched_pairs.json")
+    mat.add_argument("--allow-mixed-generation-conditions", action="store_true")
     mat.set_defaults(func=cmd_match)
 
     jdg = sub.add_parser("judge", help="Run pairwise and or soft-eval for one judge")
@@ -286,6 +299,7 @@ def build_parser() -> argparse.ArgumentParser:
     jdg.add_argument("--style-gate-summary", default=None)
     jdg.add_argument("--provenance", default=None)
     jdg.add_argument("--pairwise-view", choices=PAIRWISE_VIEW_CHOICES, default=PAIRWISE_VIEW_DEFAULT)
+    jdg.add_argument("--judge-temperature", type=float, default=0.0)
     jdg.set_defaults(func=cmd_judge)
 
     sty = sub.add_parser("audit-style", help="Run paired surface-form leakage audit and gate")

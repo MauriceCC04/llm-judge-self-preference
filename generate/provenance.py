@@ -19,6 +19,9 @@ class PlanProvenance(BaseModel):
     generation_pipeline: str = "unknown"
     runtime_backend: Optional[str] = None
     runtime_metadata: dict[str, Any] = Field(default_factory=dict)
+    source_temperature: Optional[float] = None
+    explainer_temperature: Optional[float] = None
+    generation_condition: Optional[str] = None
     seed: int
     generated_at: str
     plan_path: str

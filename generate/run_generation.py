@@ -4,6 +4,7 @@ Key fixes in this version:
 - the LLM arm now targets exactly one source model per job
 - fixture subsets can be selected for HPC sharding and exact-count top-ups
 - seed offsets are wired through consistently
+- generation temperatures are now first-class experiment variables
 """
 from __future__ import annotations
 
@@ -13,6 +14,13 @@ import sys
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Iterable
+
+from generate.temperature import (
+    build_llm_generation_condition,
+    build_llm_plan_id,
+    build_programmatic_generation_condition,
+    build_programmatic_plan_id,
+)
 
 _ROOT = Path(__file__).parent.parent
 
@@ -54,6 +62,8 @@ def run_llm_arm(
     source_model: str,
     seed_offset: int = 0,
     fixture_ids: list[str] | None = None,
+    source_temperature: float = 0.7,
+    explainer_temperature: float = 0.0,
 ) -> tuple[int, int]:
     from generate.llm_arm import generate_llm_plan
 
@@ -63,7 +73,10 @@ def run_llm_arm(
     generated = 0
     skipped = 0
     total = len(specs) * plans_per_fixture
-    model_tag = source_model.split("/")[-1].replace("-", "_").lower()
+    generation_condition = build_llm_generation_condition(
+        source_temperature=source_temperature,
+        explainer_temperature=explainer_temperature,
+    )
 
     for idx, spec in enumerate(specs, start=1):
         fixture_dir = _ROOT / "fixtures" / "data" / spec.fixture_id
@@ -72,7 +85,13 @@ def run_llm_arm(
             continue
         for seed in range(plans_per_fixture):
             actual_seed = seed_offset + seed
-            plan_id = f"{spec.fixture_id}__{model_tag}__s{actual_seed:03d}"
+            plan_id = build_llm_plan_id(
+                fixture_id=spec.fixture_id,
+                source_model=source_model,
+                seed=actual_seed,
+                source_temperature=source_temperature,
+                explainer_temperature=explainer_temperature,
+            )
             progress = ((idx - 1) * plans_per_fixture) + seed + 1
             if _plan_exists(output_dir, plan_id):
                 skipped += 1
@@ -85,6 +104,9 @@ def run_llm_arm(
                     plan_id=plan_id,
                     source_model=source_model,
                     seed=actual_seed,
+                    source_temperature=source_temperature,
+                    explainer_temperature=explainer_temperature,
+                    generation_condition=generation_condition,
                 )
                 print(" OK")
                 generated += 1
@@ -101,6 +123,7 @@ def run_programmatic_arm(
     sampler_config_path: Path | None = None,
     seed_offset: int = 0,
     fixture_ids: list[str] | None = None,
+    explainer_temperature: float = 0.0,
 ) -> tuple[int, int]:
     from generate.fit_priors import load_sampler_config
     from generate.programmatic_arm import generate_programmatic_plan
@@ -112,6 +135,9 @@ def run_programmatic_arm(
     generated = 0
     skipped = 0
     total = len(specs) * plans_per_fixture
+    generation_condition = build_programmatic_generation_condition(
+        explainer_temperature=explainer_temperature,
+    )
 
     for idx, spec in enumerate(specs, start=1):
         fixture_dir = _ROOT / "fixtures" / "data" / spec.fixture_id
@@ -120,7 +146,11 @@ def run_programmatic_arm(
             continue
         for seed in range(plans_per_fixture):
             actual_seed = seed_offset + seed
-            plan_id = f"{spec.fixture_id}__prog__s{actual_seed:03d}"
+            plan_id = build_programmatic_plan_id(
+                fixture_id=spec.fixture_id,
+                seed=actual_seed,
+                explainer_temperature=explainer_temperature,
+            )
             progress = ((idx - 1) * plans_per_fixture) + seed + 1
             if _plan_exists(output_dir, plan_id):
                 skipped += 1
@@ -133,6 +163,8 @@ def run_programmatic_arm(
                     plan_id=plan_id,
                     seed=actual_seed,
                     sampler_cfg=base_cfg,
+                    explainer_temperature=explainer_temperature,
+                    generation_condition=generation_condition,
                 )
                 print(" OK")
                 generated += 1
@@ -165,6 +197,8 @@ def build_parser() -> argparse.ArgumentParser:
         default=None,
         help=f"Required for llm arm. One of: {', '.join(LLM_SOURCE_MODELS)}",
     )
+    parser.add_argument("--source-temperature", type=float, default=0.7)
+    parser.add_argument("--explainer-temperature", type=float, default=0.0)
     parser.add_argument(
         "--fixture-id",
         action="append",
@@ -184,14 +218,16 @@ def main(argv: list[str] | None = None) -> None:
     fixture_ids = _split_fixture_ids(args.fixture_id)
 
     print(f"=== Generation: {args.arm} arm ===")
-    print(f"  plans_per_fixture: {plans_per_fixture}")
-    print(f"  output_dir:        {output_dir}")
-    print(f"  seed_offset:       {args.seed_offset}")
-    print(f"  fixture_ids:       {fixture_ids or 'ALL'}")
+    print(f"  plans_per_fixture:     {plans_per_fixture}")
+    print(f"  output_dir:            {output_dir}")
+    print(f"  seed_offset:           {args.seed_offset}")
+    print(f"  fixture_ids:           {fixture_ids or 'ALL'}")
+    print(f"  explainer_temperature: {args.explainer_temperature}")
     if args.arm == "llm":
         if not args.source_model:
             parser.error("--source-model is required when --arm llm")
-        print(f"  source_model:      {args.source_model}")
+        print(f"  source_model:          {args.source_model}")
+        print(f"  source_temperature:    {args.source_temperature}")
 
     t0 = datetime.now(tz=timezone.utc)
     if args.arm == "llm":
@@ -201,6 +237,8 @@ def main(argv: list[str] | None = None) -> None:
             source_model=args.source_model,
             seed_offset=args.seed_offset,
             fixture_ids=fixture_ids,
+            source_temperature=args.source_temperature,
+            explainer_temperature=args.explainer_temperature,
         )
     else:
         n_gen, n_skip = run_programmatic_arm(
@@ -209,6 +247,7 @@ def main(argv: list[str] | None = None) -> None:
             sampler_config_path=Path(args.sampler_config) if args.sampler_config else None,
             seed_offset=args.seed_offset,
             fixture_ids=fixture_ids,
+            explainer_temperature=args.explainer_temperature,
         )
 
     elapsed = (datetime.now(tz=timezone.utc) - t0).total_seconds()

@@ -22,6 +22,39 @@ def _score_bin(score: float) -> int:
     return int(math.floor(float(score) + 0.5))
 
 
+def _normalize_temperature_value(value: Any) -> float | None:
+    if value is None:
+        return None
+    try:
+        return round(float(value), 6)
+    except Exception:
+        return None
+
+
+def _condition_key(plan_record: dict[str, Any]) -> tuple[str, float | None, float | None]:
+    return (
+        str(plan_record.get("generation_condition") or ""),
+        _normalize_temperature_value(plan_record.get("source_temperature")),
+        _normalize_temperature_value(plan_record.get("explainer_temperature")),
+    )
+
+
+def _assert_single_generation_condition(plan_records: list[dict[str, Any]]) -> None:
+    by_arm: dict[str, set[tuple[str, float | None, float | None]]] = {}
+    for record in plan_records:
+        arm = str(record.get("arm") or "")
+        by_arm.setdefault(arm, set()).add(_condition_key(record))
+
+    problematic = {arm: sorted(list(keys)) for arm, keys in by_arm.items() if len(keys) > 1}
+    if problematic:
+        raise ValueError(
+            "Mixed generation conditions detected in the same plans/provenance directory. "
+            "Keep each temperature condition in its own artifact directory, or set "
+            "allow_mixed_generation_conditions=True explicitly. "
+            f"Observed conditions: {problematic}"
+        )
+
+
 def greedy_pair(
     plans: list[dict[str, Any]],
     *,
@@ -87,6 +120,12 @@ def greedy_pair(
                     "actual_explainer_model_b": best_prog.get("actual_explainer_model"),
                     "explainer_verified_a": lp.get("explainer_model_verified"),
                     "explainer_verified_b": best_prog.get("explainer_model_verified"),
+                    "source_temperature_a": lp.get("source_temperature"),
+                    "source_temperature_b": best_prog.get("source_temperature"),
+                    "explainer_temperature_a": lp.get("explainer_temperature"),
+                    "explainer_temperature_b": best_prog.get("explainer_temperature"),
+                    "generation_condition_a": lp.get("generation_condition"),
+                    "generation_condition_b": best_prog.get("generation_condition"),
                     "score_bin": lp["score_bin"],
                     "score_bin_a": lp["score_bin"],
                     "score_bin_b": best_prog["score_bin"],
@@ -171,9 +210,15 @@ def _build_matching_audit(
     gaps = [float(p["score_gap"]) for p in pairs]
     mean_gap = sum(gaps) / n if n else float("nan")
     by_fixture: dict[str, int] = {}
+    llm_conditions: set[str] = set()
+    programmatic_conditions: set[str] = set()
+
     for p in pairs:
         fid = str(p["fixture_id"])
         by_fixture[fid] = by_fixture.get(fid, 0) + 1
+        llm_conditions.add(str(p.get("generation_condition_a") or ""))
+        programmatic_conditions.add(str(p.get("generation_condition_b") or ""))
+
     coverage_ratio = (n / target_pairs) if target_pairs else float("nan")
     coverage_ok = bool(target_pairs and n >= int(target_pairs * 0.8))
     return {
@@ -183,6 +228,8 @@ def _build_matching_audit(
         "coverage_ok": coverage_ok,
         "mean_score_gap": round(mean_gap, 4) if mean_gap == mean_gap else float("nan"),
         "pairs_by_fixture": dict(sorted(by_fixture.items())),
+        "llm_generation_conditions": sorted(x for x in llm_conditions if x),
+        "programmatic_generation_conditions": sorted(x for x in programmatic_conditions if x),
         "match_rule": "same_fixture_same_score_bin_within_tolerance_min_weighted_distance",
     }
 
@@ -199,6 +246,7 @@ def build_matched_pairs(
     scoring_failures_path: Path | None = None,
     feature_weights: dict[str, float] | None = None,
     fail_below_target_ratio: float | None = None,
+    allow_mixed_generation_conditions: bool = False,
 ) -> list[dict[str, Any]]:
     from generate.provenance import PlanProvenance
 
@@ -245,6 +293,9 @@ def build_matched_pairs(
                 "explainer_model": prov.explainer_model,
                 "actual_explainer_model": prov.actual_explainer_model,
                 "explainer_model_verified": prov.explainer_model_verified,
+                "source_temperature": prov.source_temperature,
+                "explainer_temperature": prov.explainer_temperature,
+                "generation_condition": prov.generation_condition,
                 **load_match_features(plan_path),
             }
         )
@@ -256,6 +307,9 @@ def build_matched_pairs(
             raise ScoringError(
                 f"{len(scoring_failures)} plans failed deterministic scoring; see {fail_path}"
             )
+
+    if not allow_mixed_generation_conditions:
+        _assert_single_generation_condition(plan_records)
 
     pairs = greedy_pair(plan_records, tolerance=tolerance, feature_weights=feature_weights)
     audit = _build_matching_audit(pairs=pairs, target_pairs=target_pairs)
@@ -286,6 +340,10 @@ def _print_audit(audit: dict[str, Any]) -> None:
     print(f"  Coverage OK:      {audit['coverage_ok']}")
     for fid, cnt in sorted((audit.get('pairs_by_fixture') or {}).items()):
         print(f"    {fid}: {cnt} pairs")
+    if audit.get("llm_generation_conditions"):
+        print(f"  LLM conditions:   {audit['llm_generation_conditions']}")
+    if audit.get("programmatic_generation_conditions"):
+        print(f"  Prog conditions:  {audit['programmatic_generation_conditions']}")
     if not audit["coverage_ok"]:
         print("\n  ⚠ Coverage below 80% — retune sampler priors or generate more programmatic plans.")
     print("────────────────────────────────────────────────\n")

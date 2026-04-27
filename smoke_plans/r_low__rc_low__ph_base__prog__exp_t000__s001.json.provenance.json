@@ -1,5 +1,5 @@
 {
-  "plan_id": "r_low__rc_low__ph_base__prog__s002",
+  "plan_id": "r_low__rc_low__ph_base__prog__exp_t000__s001",
   "fixture_id": "r_low__rc_low__ph_base",
   "arm": "programmatic",
   "source_model": null,
@@ -18,10 +18,15 @@
     "explainer_model_verified": true,
     "fixture_block_label": "base development block",
     "fixture_primary_goal": "to become a faster and more durable trail runner",
-    "fixture_weeks_to_race": 20
+    "fixture_weeks_to_race": 20,
+    "explainer_temperature": 0.0,
+    "generation_condition": "gen_prog__exp_t000"
   },
-  "seed": 2,
-  "generated_at": "2026-04-27T15:31:25.918244+00:00",
-  "plan_path": "smoke_plans/r_low__rc_low__ph_base__prog__s002.json",
+  "source_temperature": null,
+  "explainer_temperature": 0.0,
+  "generation_condition": "gen_prog__exp_t000",
+  "seed": 1,
+  "generated_at": "2026-04-27T16:28:20.548731+00:00",
+  "plan_path": "smoke_plans/r_low__rc_low__ph_base__prog__exp_t000__s001.json",
   "deterministic_score": 100.0
 }

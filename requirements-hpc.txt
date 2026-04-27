@@ -1,7 +1,6 @@
 # requirements-hpc.txt
 #
-# Canonical dependency set for reproducible HPC runs without relying on the
-# current pyproject dependency placeholder.
+# Canonical dependency set for reproducible HPC runs.
 #
 # Install torch and vllm using the cluster-compatible wheels first, then:
 #   pip install -r requirements-hpc.txt
@@ -19,3 +18,4 @@ scipy>=1.11
 matplotlib>=3.8
 pytest>=7.4
 pytest-cov>=4.1
+huggingface_hub>=0.23

@@ -1,7 +1,15 @@
 """tools/verify_dependency_surface.py — check frozen dependency contract.
 
-This revision validates both pyproject.toml and requirements-hpc.txt, because the
-HPC runbook depends on the latter as the canonical install surface.
+This helper validates both pyproject.toml and requirements-hpc.txt because the
+HPC path depends on the latter as the canonical install surface.
+
+Important policy choice in this revision:
+- `huggingface_hub` is treated as a required *runtime import*
+- but it is only a *recommended explicit requirement* in requirements-hpc.txt
+
+That means the check will pass if the package is available transitively (for
+example through the HF/vLLM stack), while still warning if it is not listed
+explicitly in requirements-hpc.txt.
 """
 from __future__ import annotations
 
@@ -13,6 +21,7 @@ from pathlib import Path
 from typing import Any
 
 TRAILTRAINING_PIN_SHA = "3e7f1793ca051ba1aae05f1714d594691202ad7e"
+
 REQUIRED_HPC_PACKAGES = {
     "trailtraining",
     "openai",
@@ -23,10 +32,24 @@ REQUIRED_HPC_PACKAGES = {
     "scipy",
     "matplotlib",
     "pytest",
-    "pytest-cov",
+    "pytest_cov",
+}
+
+RECOMMENDED_EXPLICIT_HPC_PACKAGES = {
     "huggingface_hub",
 }
 
+REQUIRED_RUNTIME_IMPORTS = (
+    "trailtraining",
+    "openai",
+    "pydantic",
+    "huggingface_hub",
+)
+
+OPTIONAL_RUNTIME_IMPORTS = (
+    "vllm",
+    "torch",
+)
 
 
 def _extract_trailtraining_pin(text: str) -> str | None:
@@ -39,36 +62,39 @@ def _extract_trailtraining_pin(text: str) -> str | None:
     return match.group(1) if match else None
 
 
+def _read_text(path: Path) -> str:
+    return path.read_text(encoding="utf-8")
+
 
 def _read_pyproject_pin(pyproject_path: Path) -> str | None:
-    return _extract_trailtraining_pin(pyproject_path.read_text(encoding="utf-8"))
-
-
-
-def _read_requirements_text(requirements_path: Path) -> str:
-    return requirements_path.read_text(encoding="utf-8")
-
+    return _extract_trailtraining_pin(_read_text(pyproject_path))
 
 
 def _read_requirements_pin(requirements_path: Path) -> str | None:
-    return _extract_trailtraining_pin(_read_requirements_text(requirements_path))
-
+    return _extract_trailtraining_pin(_read_text(requirements_path))
 
 
 def _parse_requirement_names(requirements_path: Path) -> set[str]:
     packages: set[str] = set()
-    for raw_line in _read_requirements_text(requirements_path).splitlines():
+    for raw_line in _read_text(requirements_path).splitlines():
         line = raw_line.strip()
         if not line or line.startswith("#"):
             continue
         if " @ git+" in line:
-            packages.add(line.split("@", 1)[0].strip())
+            packages.add(line.split("@", 1)[0].strip().replace("-", "_"))
             continue
         match = re.match(r"([A-Za-z0-9_.-]+)", line)
         if match:
             packages.add(match.group(1).replace("-", "_"))
     return packages
 
+
+def _try_import(module_name: str) -> tuple[bool, str | None]:
+    try:
+        module = importlib.import_module(module_name)
+        return True, str(getattr(module, "__file__", "")) or None
+    except Exception:
+        return False, None
 
 
 def build_report(
@@ -82,6 +108,9 @@ def build_report(
     requirements_pin = _read_requirements_pin(requirements)
     requirement_names = _parse_requirement_names(requirements)
 
+    missing_required = sorted(REQUIRED_HPC_PACKAGES - requirement_names)
+    missing_recommended = sorted(RECOMMENDED_EXPLICIT_HPC_PACKAGES - requirement_names)
+
     report: dict[str, Any] = {
         "pyproject_pin": pyproject_pin,
         "requirements_pin": requirements_pin,
@@ -90,38 +119,44 @@ def build_report(
         "requirements_pin_matches": requirements_pin == TRAILTRAINING_PIN_SHA,
         "pins_match_each_other": pyproject_pin == requirements_pin,
         "requirements_present": sorted(requirement_names),
-        "required_hpc_packages_present": sorted(REQUIRED_HPC_PACKAGES.issubset(requirement_names) and REQUIRED_HPC_PACKAGES or set()),
-        "missing_hpc_packages": sorted(REQUIRED_HPC_PACKAGES - requirement_names),
+        "required_hpc_packages_present": sorted(REQUIRED_HPC_PACKAGES & requirement_names),
+        "missing_hpc_packages": missing_required,
+        "recommended_explicit_packages_present": sorted(
+            RECOMMENDED_EXPLICIT_HPC_PACKAGES & requirement_names
+        ),
+        "missing_recommended_explicit_packages": missing_recommended,
     }
 
-    for module_name in (
-        "trailtraining",
-        "openai",
-        "pydantic",
-        "huggingface_hub",
-    ):
-        try:
-            module = importlib.import_module(module_name)
-            report[f"import_{module_name}"] = True
-            report[f"path_{module_name}"] = str(getattr(module, "__file__", ""))
-        except Exception:
-            report[f"import_{module_name}"] = False
+    for module_name in REQUIRED_RUNTIME_IMPORTS + OPTIONAL_RUNTIME_IMPORTS:
+        ok, path = _try_import(module_name)
+        report[f"import_{module_name}"] = ok
+        if path:
+            report[f"path_{module_name}"] = path
 
-    try:
-        importlib.import_module("vllm")
-        report["import_vllm"] = True
-    except Exception:
-        report["import_vllm"] = False
+    warnings: list[str] = []
+    if missing_recommended:
+        warnings.append(
+            "Recommended explicit requirements missing from requirements-hpc.txt: "
+            + ", ".join(missing_recommended)
+        )
+    if report.get("import_huggingface_hub", False) and "huggingface_hub" in missing_recommended:
+        warnings.append(
+            "huggingface_hub is importable at runtime but not listed explicitly in "
+            "requirements-hpc.txt. The environment is usable, but the frozen dependency "
+            "surface would be clearer if it were listed explicitly."
+        )
 
-    report["dependency_surface_ok"] = bool(
+    hard_checks_ok = bool(
         report["pyproject_pin_matches"]
         and report["requirements_pin_matches"]
         and report["pins_match_each_other"]
-        and not report["missing_hpc_packages"]
-        and all(report.get(key, False) for key in ("import_trailtraining", "import_openai", "import_pydantic", "import_huggingface_hub"))
+        and not missing_required
+        and all(report.get(f"import_{name}", False) for name in REQUIRED_RUNTIME_IMPORTS)
     )
-    return report
 
+    report["warnings"] = warnings
+    report["dependency_surface_ok"] = hard_checks_ok
+    return report
 
 
 def main(argv: list[str] | None = None) -> None:
@@ -134,7 +169,9 @@ def main(argv: list[str] | None = None) -> None:
     print(json.dumps(report, indent=2, sort_keys=True))
 
     if not report.get("dependency_surface_ok", False):
-        raise SystemExit("Dependency surface check failed: review pins, required packages, or imports.")
+        raise SystemExit(
+            "Dependency surface check failed: review pins, required packages, or runtime imports."
+        )
 
 
 if __name__ == "__main__":

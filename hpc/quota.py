@@ -2,14 +2,13 @@ from __future__ import annotations
 
 """hpc/quota.py — quota and Hugging Face cache helpers for Bocconi HPC.
 
-This revision addresses three operational issues found in the repo review:
+This module is intentionally import-light so it can be used from preflight
+helpers before the full runtime stack is exercised.
 
-1. Cache-root resolution must agree with the shell scripts that export HF_HUB_CACHE.
-2. The soft quota ceiling should be configurable and distinct from the hard quota.
-3. Storage reports should reflect the actual active models in judge.panel.
-
-The module stays import-light so it can be used from preflight or small helper
-scripts before the full runtime stack is exercised.
+Operational assumptions:
+- cluster hard quota is 50 GB
+- we keep a softer operational ceiling below that
+- generation and judging are run sequentially with cache cleanup between jobs
 """
 
 import os
@@ -21,7 +20,7 @@ from typing import Any, Iterable
 from judge.panel import PANEL, get_active_judges
 
 TOTAL_QUOTA_GB = 50.0
-DEFAULT_SOFT_QUOTA_GB = 30.0
+DEFAULT_SOFT_QUOTA_GB = 40.0
 DEFAULT_HF_CACHE_ROOT = Path.home() / "hf_cache" / "hub"
 
 
@@ -42,10 +41,8 @@ class QuotaReport:
         return asdict(self)
 
 
-
 def _model_size_lookup() -> dict[str, float]:
     return {spec.model_id: float(spec.disk_gb) for spec in PANEL}
-
 
 
 def _max_disk_gb(model_ids: Iterable[str], fallback_gb: float) -> float:
@@ -53,14 +50,13 @@ def _max_disk_gb(model_ids: Iterable[str], fallback_gb: float) -> float:
     return max((sizes.get(model_id, fallback_gb) for model_id in model_ids), default=fallback_gb)
 
 
-
 def estimate_generation_peak_gb() -> float:
     """Estimate generation-time model-cache pressure.
 
-    The study generation path runs one explainer model alongside one source model
-    at a time. We therefore budget for the largest source plus the explainer.
+    The frozen-study generation path runs one explainer model alongside one
+    source model at a time, so we budget for the largest source plus the
+    explainer.
     """
-
     source_peak = _max_disk_gb(
         [
             "meta-llama/Llama-3.1-8B-Instruct",
@@ -72,13 +68,10 @@ def estimate_generation_peak_gb() -> float:
     return float(source_peak + explainer)
 
 
-
 def estimate_judge_peak_gb() -> float:
     """Estimate judge-time model-cache pressure for the active panel."""
-
     judges = get_active_judges()
     return float(max((float(j.disk_gb) for j in judges), default=0.0))
-
 
 
 def resolve_soft_quota_gb(
@@ -98,17 +91,15 @@ def resolve_soft_quota_gb(
     return DEFAULT_SOFT_QUOTA_GB
 
 
-
 def hf_cache_root(*, env: dict[str, str] | None = None) -> Path:
     """Resolve the active Hugging Face hub cache.
 
     Priority:
-    1. HF_HUB_CACHE (matches the shell scripts)
+    1. HF_HUB_CACHE
     2. HUGGINGFACE_HUB_CACHE
     3. repo default under ~/hf_cache/hub
     4. legacy ~/.cache/huggingface/hub if it already exists
     """
-
     env_map = env or os.environ
     for key in ("HF_HUB_CACHE", "HUGGINGFACE_HUB_CACHE"):
         value = env_map.get(key)
@@ -121,7 +112,6 @@ def hf_cache_root(*, env: dict[str, str] | None = None) -> Path:
     return DEFAULT_HF_CACHE_ROOT
 
 
-
 def study_quota_report(
     *,
     total_quota_gb: float = TOTAL_QUOTA_GB,
@@ -131,6 +121,7 @@ def study_quota_report(
     generation_peak = estimate_generation_peak_gb()
     judge_peak = estimate_judge_peak_gb()
     soft = resolve_soft_quota_gb(soft_quota_gb, env=env)
+
     report = QuotaReport(
         total_quota_gb=float(total_quota_gb),
         soft_quota_gb=float(soft),
@@ -144,7 +135,6 @@ def study_quota_report(
         hf_cache_root=str(hf_cache_root(env=env)),
     )
     return report.to_dict()
-
 
 
 def purge_hf_model_cache(

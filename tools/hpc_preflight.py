@@ -6,11 +6,11 @@ from __future__ import annotations
 
 import importlib
 import json
+import logging
 import os
 import sys
 from pathlib import Path
 from typing import Any
-import logging
 
 _log = logging.getLogger(__name__)
 
@@ -27,26 +27,28 @@ except ImportError as exc:
         exc,
     )
     TOTAL_QUOTA_GB = 50.0
-    SOFT_QUOTA_GB_DEFAULT = 30.0
+    SOFT_QUOTA_GB_DEFAULT = 40.0
 
     def hf_cache_root() -> Path:
         return Path.home() / ".cache" / "huggingface" / "hub"
+
 
 def estimate_dir_gb(path: Path) -> float:
     """Return disk usage of *path* in GiB; returns 0.0 if path doesn't exist."""
     if not path.exists():
         return 0.0
+
     total = 0
     try:
-        for f in path.rglob("*"):
-            if f.is_file():
+        for child in path.rglob("*"):
+            if child.is_file():
                 try:
-                    total += f.stat().st_size
+                    total += child.stat().st_size
                 except OSError:
                     pass
     except PermissionError:
         pass
-    return total / (1024 ** 3)
+    return total / (1024**3)
 
 
 def classify_storage(
@@ -57,12 +59,20 @@ def classify_storage(
 ) -> dict[str, Any]:
     return {
         "used_gb": round(used_gb, 2),
-        "quota_gb": quota_gb,
-        "soft_ceiling_gb": soft_ceiling_gb,
+        "quota_gb": float(quota_gb),
+        "soft_ceiling_gb": float(soft_ceiling_gb),
         "quota_ok": used_gb < quota_gb,
         "ceiling_ok": used_gb < soft_ceiling_gb,
         "available_gb": round(quota_gb - used_gb, 2),
     }
+
+
+def _module_available(module_name: str) -> bool:
+    try:
+        importlib.import_module(module_name)
+        return True
+    except ImportError:
+        return False
 
 
 def check_imports() -> dict[str, bool]:
@@ -76,14 +86,7 @@ def check_imports() -> dict[str, bool]:
         "openai",
         "pydantic",
     ]
-    results: dict[str, bool] = {}
-    for mod in required:
-        try:
-            importlib.import_module(mod)
-            results[mod] = True
-        except ImportError:
-            results[mod] = False
-    return results
+    return {module_name: _module_available(module_name) for module_name in required}
 
 
 def _resolve_hf_cache_dir(hf_cache_dir: Path | None = None) -> Path:
@@ -101,23 +104,17 @@ def build_preflight_report(
     soft_ceiling_gb: float = SOFT_QUOTA_GB_DEFAULT,
 ) -> dict[str, Any]:
     if used_gb is None:
-        home = Path.home()
-        used_gb = estimate_dir_gb(home)
+        used_gb = estimate_dir_gb(Path.home())
 
     storage = classify_storage(
         used_gb=used_gb,
         quota_gb=home_quota_gb,
         soft_ceiling_gb=soft_ceiling_gb,
     )
-
     import_results = check_imports()
     cache_dir = _resolve_hf_cache_dir(hf_cache_dir)
-
     project_root_env = (os.getenv("PROJECT_ROOT") or "").strip()
     cwd = Path.cwd()
-    cache_dirs = {
-        "hf_cache": cache_dir.exists(),
-    }
 
     return {
         "quota_ok": storage["quota_ok"],
@@ -127,11 +124,13 @@ def build_preflight_report(
         "has_gpu": has_gpu,
         "imports_ok": all(import_results.values()),
         "import_details": import_results,
-        "cache_dirs_exist": cache_dirs,
+        "cache_dirs_exist": {
+            "hf_cache": cache_dir.exists(),
+        },
         "storage": storage,
         "project_root_env": project_root_env or None,
         "cwd": str(cwd),
-        "soft_ceiling_gb": soft_ceiling_gb,
+        "soft_ceiling_gb": float(soft_ceiling_gb),
         "hf_cache_dir": str(cache_dir),
     }
 

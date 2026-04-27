@@ -12,7 +12,7 @@
   },
   "duration_by_type": {
     "easy": [
-      36.5,
+      39.5,
       5.0
     ],
     "aerobic": [
@@ -51,7 +51,7 @@
   "lifestyle_notes": "",
   "readiness_status": "steady",
   "_meta": {
-    "fitted_from_n_plans": 2,
+    "fitted_from_n_plans": 8,
     "source": "smoke_plans"
   }
 }

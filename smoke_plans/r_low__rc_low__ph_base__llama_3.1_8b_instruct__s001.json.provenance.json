@@ -22,7 +22,7 @@
     "TRAILTRAINING_TWO_STAGE_PLAN": "1"
   },
   "seed": 1,
-  "generated_at": "2026-04-27T15:09:32.332981+00:00",
+  "generated_at": "2026-04-27T15:31:25.262605+00:00",
   "plan_path": "smoke_plans/r_low__rc_low__ph_base__llama_3.1_8b_instruct__s001.json",
   "deterministic_score": 100.0
 }

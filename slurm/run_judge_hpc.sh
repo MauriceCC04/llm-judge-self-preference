@@ -108,6 +108,7 @@ sys.exit(0 if server.health_poll(timeout_s=900, interval_s=15) else 1)
 "
 
 export TRAILTRAINING_LLM_BASE_URL="http://127.0.0.1:${VLLM_PORT}/v1"
+export TRAILTRAINING_JUDGE_LLM_BASE_URL="http://127.0.0.1:${VLLM_PORT}/v1"
 
 CLI_ARGS=(judge --judge "${JUDGE_NAME}" --plans plans/ --pairs matched_pairs.json --output judgments/ --pairwise-view "${PAIRWISE_VIEW}")
 

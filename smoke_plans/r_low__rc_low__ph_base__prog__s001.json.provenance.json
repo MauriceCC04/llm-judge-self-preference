@@ -21,7 +21,7 @@
     "fixture_weeks_to_race": 20
   },
   "seed": 1,
-  "generated_at": "2026-04-27T15:09:32.866842+00:00",
+  "generated_at": "2026-04-27T15:31:25.907739+00:00",
   "plan_path": "smoke_plans/r_low__rc_low__ph_base__prog__s001.json",
   "deterministic_score": 100.0
 }

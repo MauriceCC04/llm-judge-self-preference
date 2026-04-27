@@ -121,7 +121,7 @@
   "data_notes": [
     "Mock explanation.",
     "Readiness status was set from deterministic readiness_and_risk_forecast.json.",
-    "Guardrails: enforced ramp rate (max_ramp_pct=0.0%). last7_hours=4.720, allowed_hours=4.720, planned_hours=4.200."
+    "Guardrails: enforced ramp rate (max_ramp_pct=0.0%). last7_hours=4.720, allowed_hours=4.720, planned_hours=3.500."
   ],
   "effective_constraints": {
     "allowed_week1_hours": 4.72,
@@ -151,6 +151,40 @@
     "days": [
       {
         "date": "2026-03-18",
+        "duration_minutes": 34,
+        "estimated_distance_km": null,
+        "estimated_elevation_m": null,
+        "is_hard_day": false,
+        "is_rest_day": false,
+        "purpose": "Build aerobic fitness.",
+        "session_type": "aerobic",
+        "signal_ids": [
+          "forecast.readiness.status"
+        ],
+        "target_intensity": "easy",
+        "terrain": "trail",
+        "title": "Mock day",
+        "workout": "34 min aerobic session."
+      },
+      {
+        "date": "2026-03-19",
+        "duration_minutes": 55,
+        "estimated_distance_km": null,
+        "estimated_elevation_m": null,
+        "is_hard_day": false,
+        "is_rest_day": false,
+        "purpose": "Build aerobic fitness.",
+        "session_type": "cross",
+        "signal_ids": [
+          "forecast.readiness.status"
+        ],
+        "target_intensity": "easy",
+        "terrain": "road",
+        "title": "Mock day",
+        "workout": "55 min cross session."
+      },
+      {
+        "date": "2026-03-20",
         "duration_minutes": 0,
         "estimated_distance_km": null,
         "estimated_elevation_m": null,
@@ -167,8 +201,42 @@
         "workout": "Rest day. No structured training."
       },
       {
-        "date": "2026-03-19",
-        "duration_minutes": 32,
+        "date": "2026-03-21",
+        "duration_minutes": 0,
+        "estimated_distance_km": null,
+        "estimated_elevation_m": null,
+        "is_hard_day": false,
+        "is_rest_day": true,
+        "purpose": "Build aerobic fitness.",
+        "session_type": "rest",
+        "signal_ids": [
+          "forecast.readiness.status"
+        ],
+        "target_intensity": "rest",
+        "terrain": "n/a",
+        "title": "Rest day",
+        "workout": "Rest day. No structured training."
+      },
+      {
+        "date": "2026-03-22",
+        "duration_minutes": 35,
+        "estimated_distance_km": null,
+        "estimated_elevation_m": null,
+        "is_hard_day": false,
+        "is_rest_day": false,
+        "purpose": "Build aerobic fitness.",
+        "session_type": "cross",
+        "signal_ids": [
+          "forecast.readiness.status"
+        ],
+        "target_intensity": "easy",
+        "terrain": "road",
+        "title": "Mock day",
+        "workout": "35 min cross session."
+      },
+      {
+        "date": "2026-03-23",
+        "duration_minutes": 38,
         "estimated_distance_km": null,
         "estimated_elevation_m": null,
         "is_hard_day": false,
@@ -181,98 +249,30 @@
         "target_intensity": "easy",
         "terrain": "trail",
         "title": "Mock day",
-        "workout": "32 min easy session."
+        "workout": "38 min easy session."
       },
       {
-        "date": "2026-03-20",
-        "duration_minutes": 48,
+        "date": "2026-03-24",
+        "duration_minutes": 49,
         "estimated_distance_km": null,
         "estimated_elevation_m": null,
-        "is_hard_day": false,
+        "is_hard_day": true,
         "is_rest_day": false,
         "purpose": "Build aerobic fitness.",
-        "session_type": "aerobic",
+        "session_type": "tempo",
         "signal_ids": [
           "forecast.readiness.status"
         ],
         "target_intensity": "threshold",
         "terrain": "road",
         "title": "Mock day",
-        "workout": "48 min steady aerobic run on road."
-      },
-      {
-        "date": "2026-03-21",
-        "duration_minutes": 68,
-        "estimated_distance_km": null,
-        "estimated_elevation_m": null,
-        "is_hard_day": true,
-        "is_rest_day": false,
-        "purpose": "Build aerobic fitness.",
-        "session_type": "hills",
-        "signal_ids": [
-          "forecast.readiness.status"
-        ],
-        "target_intensity": "threshold",
-        "terrain": "trail",
-        "title": "Mock day",
-        "workout": "68 min hills session."
-      },
-      {
-        "date": "2026-03-22",
-        "duration_minutes": 36,
-        "estimated_distance_km": null,
-        "estimated_elevation_m": null,
-        "is_hard_day": false,
-        "is_rest_day": false,
-        "purpose": "Build aerobic fitness.",
-        "session_type": "easy",
-        "signal_ids": [
-          "forecast.readiness.status"
-        ],
-        "target_intensity": "easy",
-        "terrain": "trail",
-        "title": "Mock day",
-        "workout": "36 min easy session."
-      },
-      {
-        "date": "2026-03-23",
-        "duration_minutes": 28,
-        "estimated_distance_km": null,
-        "estimated_elevation_m": null,
-        "is_hard_day": false,
-        "is_rest_day": false,
-        "purpose": "Build aerobic fitness.",
-        "session_type": "easy",
-        "signal_ids": [
-          "forecast.readiness.status"
-        ],
-        "target_intensity": "easy",
-        "terrain": "trail",
-        "title": "Mock day",
-        "workout": "28 min easy session."
-      },
-      {
-        "date": "2026-03-24",
-        "duration_minutes": 37,
-        "estimated_distance_km": null,
-        "estimated_elevation_m": null,
-        "is_hard_day": false,
-        "is_rest_day": false,
-        "purpose": "Build aerobic fitness.",
-        "session_type": "aerobic",
-        "signal_ids": [
-          "forecast.readiness.status"
-        ],
-        "target_intensity": "easy",
-        "terrain": "trail",
-        "title": "Mock day",
-        "workout": "37 min aerobic session."
+        "workout": "49 min tempo session."
       }
     ],
     "weekly_totals": {
       "planned_distance_km": null,
       "planned_elevation_m": null,
-      "planned_moving_time_hours": 4.2
+      "planned_moving_time_hours": 3.5
     }
   },
   "readiness": {

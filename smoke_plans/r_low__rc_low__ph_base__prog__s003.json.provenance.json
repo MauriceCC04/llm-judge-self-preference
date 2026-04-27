@@ -1,5 +1,5 @@
 {
-  "plan_id": "r_low__rc_low__ph_base__prog__s000",
+  "plan_id": "r_low__rc_low__ph_base__prog__s003",
   "fixture_id": "r_low__rc_low__ph_base",
   "arm": "programmatic",
   "source_model": null,
@@ -20,8 +20,8 @@
     "fixture_primary_goal": "to become a faster and more durable trail runner",
     "fixture_weeks_to_race": 20
   },
-  "seed": 0,
-  "generated_at": "2026-04-27T15:31:25.896996+00:00",
-  "plan_path": "smoke_plans/r_low__rc_low__ph_base__prog__s000.json",
+  "seed": 3,
+  "generated_at": "2026-04-27T15:31:25.928729+00:00",
+  "plan_path": "smoke_plans/r_low__rc_low__ph_base__prog__s003.json",
   "deterministic_score": 100.0
 }

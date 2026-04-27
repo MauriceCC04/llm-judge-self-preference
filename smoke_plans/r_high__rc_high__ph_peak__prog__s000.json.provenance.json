@@ -1,6 +1,6 @@
 {
-  "plan_id": "r_low__rc_low__ph_base__prog__s000",
-  "fixture_id": "r_low__rc_low__ph_base",
+  "plan_id": "r_high__rc_high__ph_peak__prog__s000",
+  "fixture_id": "r_high__rc_high__ph_peak",
   "arm": "programmatic",
   "source_model": null,
   "explainer_model": "Qwen/Qwen2.5-3B-Instruct",
@@ -16,12 +16,12 @@
     "default_patch_stage": "judge",
     "actual_explainer_model": "Qwen/Qwen2.5-3B-Instruct",
     "explainer_model_verified": true,
-    "fixture_block_label": "base development block",
-    "fixture_primary_goal": "to become a faster and more durable trail runner",
-    "fixture_weeks_to_race": 20
+    "fixture_block_label": "peak specificity block",
+    "fixture_primary_goal": "to arrive race-ready for an upcoming trail event",
+    "fixture_weeks_to_race": 4
   },
   "seed": 0,
-  "generated_at": "2026-04-27T15:31:25.896996+00:00",
-  "plan_path": "smoke_plans/r_low__rc_low__ph_base__prog__s000.json",
+  "generated_at": "2026-04-27T15:31:25.939416+00:00",
+  "plan_path": "smoke_plans/r_high__rc_high__ph_peak__prog__s000.json",
   "deterministic_score": 100.0
 }

@@ -5,7 +5,7 @@
       "date_range": "2026-03-17..2026-03-17",
       "signal_id": "forecast.readiness.status",
       "source": "readiness_and_risk_forecast.json:result.readiness.status",
-      "value": "fatigued"
+      "value": "primed"
     }
   ],
   "claim_attributions": [
@@ -14,7 +14,7 @@
         "c1"
       ],
       "claim_id": "cl1",
-      "claim_text": "Deterministic readiness: fatigued (score 43.0). Readiness looks steady based on available signals.",
+      "claim_text": "Deterministic readiness: primed (score 81.0). Readiness looks steady based on available signals.",
       "field_path": "readiness.rationale",
       "signal_ids": [
         "forecast.readiness.status"
@@ -121,29 +121,25 @@
   "data_notes": [
     "Mock explanation.",
     "Readiness status was set from deterministic readiness_and_risk_forecast.json.",
-    "Guardrails: enforced ramp rate (max_ramp_pct=0.0%). last7_hours=4.720, allowed_hours=4.720, planned_hours=4.200."
+    "Guardrails: enforced ramp rate (max_ramp_pct=10.0%). last7_hours=4.780, allowed_hours=5.258, planned_hours=4.900."
   ],
   "effective_constraints": {
-    "allowed_week1_hours": 4.72,
-    "effective_max_consecutive_hard": 1,
-    "effective_max_hard_per_7d": 1,
-    "effective_max_ramp_pct": 0.0,
+    "allowed_week1_hours": 5.258000000000001,
+    "effective_max_consecutive_hard": 2,
+    "effective_max_hard_per_7d": 3,
+    "effective_max_ramp_pct": 10.0,
     "lifestyle_notes": "",
     "min_rest_per_7d": 1,
-    "overreach_risk_level": "high",
-    "readiness_status": "fatigued",
-    "reasons": [
-      "readiness is fatigued",
-      "overreach risk is high",
-      "recovery telemetry is sparse"
-    ],
-    "recovery_capability_key": "load_only"
+    "overreach_risk_level": "low",
+    "readiness_status": "primed",
+    "reasons": [],
+    "recovery_capability_key": "load_sleep_resting_hr_hrv"
   },
   "meta": {
-    "lifestyle_notes": "Prioritize consistent aerobic development, hill strength, and durable weekly routine.",
+    "lifestyle_notes": "Bias toward race specificity, freshness, and avoiding unnecessary fatigue accumulation.",
     "plan_days": 7,
     "plan_start": "2026-03-18",
-    "primary_goal": "to become a faster and more durable trail runner",
+    "primary_goal": "to arrive race-ready for an upcoming trail event",
     "style": "trailrunning",
     "today": "2026-03-17"
   },
@@ -151,6 +147,91 @@
     "days": [
       {
         "date": "2026-03-18",
+        "duration_minutes": 31,
+        "estimated_distance_km": null,
+        "estimated_elevation_m": null,
+        "is_hard_day": false,
+        "is_rest_day": false,
+        "purpose": "Build aerobic fitness.",
+        "session_type": "cross",
+        "signal_ids": [
+          "forecast.readiness.status"
+        ],
+        "target_intensity": "easy",
+        "terrain": "road",
+        "title": "Mock day",
+        "workout": "31 min cross session."
+      },
+      {
+        "date": "2026-03-19",
+        "duration_minutes": 41,
+        "estimated_distance_km": null,
+        "estimated_elevation_m": null,
+        "is_hard_day": false,
+        "is_rest_day": false,
+        "purpose": "Build aerobic fitness.",
+        "session_type": "easy",
+        "signal_ids": [
+          "forecast.readiness.status"
+        ],
+        "target_intensity": "easy",
+        "terrain": "trail",
+        "title": "Mock day",
+        "workout": "41 min easy session."
+      },
+      {
+        "date": "2026-03-20",
+        "duration_minutes": 92,
+        "estimated_distance_km": null,
+        "estimated_elevation_m": null,
+        "is_hard_day": false,
+        "is_rest_day": false,
+        "purpose": "Build aerobic fitness.",
+        "session_type": "long",
+        "signal_ids": [
+          "forecast.readiness.status"
+        ],
+        "target_intensity": "easy",
+        "terrain": "trail",
+        "title": "Mock day",
+        "workout": "92 min long session."
+      },
+      {
+        "date": "2026-03-21",
+        "duration_minutes": 26,
+        "estimated_distance_km": null,
+        "estimated_elevation_m": null,
+        "is_hard_day": false,
+        "is_rest_day": false,
+        "purpose": "Build aerobic fitness.",
+        "session_type": "strength",
+        "signal_ids": [
+          "forecast.readiness.status"
+        ],
+        "target_intensity": "easy",
+        "terrain": "road",
+        "title": "Mock day",
+        "workout": "26 min strength session."
+      },
+      {
+        "date": "2026-03-22",
+        "duration_minutes": 102,
+        "estimated_distance_km": null,
+        "estimated_elevation_m": null,
+        "is_hard_day": false,
+        "is_rest_day": false,
+        "purpose": "Build aerobic fitness.",
+        "session_type": "long",
+        "signal_ids": [
+          "forecast.readiness.status"
+        ],
+        "target_intensity": "easy",
+        "terrain": "trail",
+        "title": "Mock day",
+        "workout": "102 min long session."
+      },
+      {
+        "date": "2026-03-23",
         "duration_minutes": 0,
         "estimated_distance_km": null,
         "estimated_elevation_m": null,
@@ -167,120 +248,35 @@
         "workout": "Rest day. No structured training."
       },
       {
-        "date": "2026-03-19",
-        "duration_minutes": 32,
-        "estimated_distance_km": null,
-        "estimated_elevation_m": null,
-        "is_hard_day": false,
-        "is_rest_day": false,
-        "purpose": "Build aerobic fitness.",
-        "session_type": "easy",
-        "signal_ids": [
-          "forecast.readiness.status"
-        ],
-        "target_intensity": "easy",
-        "terrain": "trail",
-        "title": "Mock day",
-        "workout": "32 min easy session."
-      },
-      {
-        "date": "2026-03-20",
-        "duration_minutes": 48,
-        "estimated_distance_km": null,
-        "estimated_elevation_m": null,
-        "is_hard_day": false,
-        "is_rest_day": false,
-        "purpose": "Build aerobic fitness.",
-        "session_type": "aerobic",
-        "signal_ids": [
-          "forecast.readiness.status"
-        ],
-        "target_intensity": "threshold",
-        "terrain": "road",
-        "title": "Mock day",
-        "workout": "48 min steady aerobic run on road."
-      },
-      {
-        "date": "2026-03-21",
-        "duration_minutes": 68,
-        "estimated_distance_km": null,
-        "estimated_elevation_m": null,
-        "is_hard_day": true,
-        "is_rest_day": false,
-        "purpose": "Build aerobic fitness.",
-        "session_type": "hills",
-        "signal_ids": [
-          "forecast.readiness.status"
-        ],
-        "target_intensity": "threshold",
-        "terrain": "trail",
-        "title": "Mock day",
-        "workout": "68 min hills session."
-      },
-      {
-        "date": "2026-03-22",
-        "duration_minutes": 36,
-        "estimated_distance_km": null,
-        "estimated_elevation_m": null,
-        "is_hard_day": false,
-        "is_rest_day": false,
-        "purpose": "Build aerobic fitness.",
-        "session_type": "easy",
-        "signal_ids": [
-          "forecast.readiness.status"
-        ],
-        "target_intensity": "easy",
-        "terrain": "trail",
-        "title": "Mock day",
-        "workout": "36 min easy session."
-      },
-      {
-        "date": "2026-03-23",
-        "duration_minutes": 28,
-        "estimated_distance_km": null,
-        "estimated_elevation_m": null,
-        "is_hard_day": false,
-        "is_rest_day": false,
-        "purpose": "Build aerobic fitness.",
-        "session_type": "easy",
-        "signal_ids": [
-          "forecast.readiness.status"
-        ],
-        "target_intensity": "easy",
-        "terrain": "trail",
-        "title": "Mock day",
-        "workout": "28 min easy session."
-      },
-      {
         "date": "2026-03-24",
-        "duration_minutes": 37,
+        "duration_minutes": 0,
         "estimated_distance_km": null,
         "estimated_elevation_m": null,
         "is_hard_day": false,
-        "is_rest_day": false,
+        "is_rest_day": true,
         "purpose": "Build aerobic fitness.",
-        "session_type": "aerobic",
+        "session_type": "rest",
         "signal_ids": [
           "forecast.readiness.status"
         ],
-        "target_intensity": "easy",
-        "terrain": "trail",
-        "title": "Mock day",
-        "workout": "37 min aerobic session."
+        "target_intensity": "rest",
+        "terrain": "n/a",
+        "title": "Rest day",
+        "workout": "Rest day. No structured training."
       }
     ],
     "weekly_totals": {
       "planned_distance_km": null,
       "planned_elevation_m": null,
-      "planned_moving_time_hours": 4.2
+      "planned_moving_time_hours": 4.9
     }
   },
   "readiness": {
-    "rationale": "Deterministic readiness: fatigued (score 43.0). Readiness looks steady based on available signals.",
+    "rationale": "Deterministic readiness: primed (score 81.0). Readiness looks steady based on available signals.",
     "signal_ids": [
       "forecast.readiness.status"
     ],
-    "status": "fatigued"
+    "status": "primed"
   },
   "recovery": {
     "actions": [

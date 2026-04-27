@@ -44,11 +44,11 @@ Mechanism hypothesis not supported.
 |---|---|
 | coef (same_family) | — |
 | p-value | — |
-| N | 20 |
+| N | 80 |
 
 ### H3 by judge family
 
-- **qwen**: coef=—, p=—, n=20
+- **qwen**: coef=—, p=—, n=80
 
 ---
 

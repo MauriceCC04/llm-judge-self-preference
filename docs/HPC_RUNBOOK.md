@@ -15,6 +15,9 @@ Using the commands below gives you:
 - judge submission with buffered walltime derived from `judge.panel`
 - optional `PAIRWISE_VIEW=canonical_masked` control runs
 
+This runbook describes the **real HPC path**. It does **not** use the local
+`tools/mock_llm_server.py` smoke path.
+
 ## 1. First-time setup on the login node
 
 Choose a real repo path on the cluster and keep using it consistently.
@@ -145,11 +148,22 @@ python cli.py audit-style --plans plans/ --pairs matched_pairs.json --output res
 
 ## 9. Pilot judge
 
+Start with a real pilot before launching the full panel.
+This is where you validate endpoint compatibility, startup stability, provenance,
+and output shape against a real vLLM server.
+
 ```bash
 cd "${REPO_ROOT}"
 bash slurm/pre_cache_models.sh qwen_7b_judge
 JUDGE_MODE=pilot bash slurm/submit_judge_hpc.sh qwen_7b_judge
 ```
+
+Recommended pilot checks after the job completes:
+
+- nonempty `judgments/` outputs
+- no schema-failure growth
+- no provenance exclusions during `cli.py analyze`
+- successful pairwise and soft-eval record loading
 
 ## 10. Dedicated `qwen_32b_judge` validation before the full panel
 
@@ -206,3 +220,15 @@ python cli.py analyze --judgments judgments/ --plans plans/ --pairs matched_pair
 - Active judges: 4
 - Pairwise calls: `250 pairs × 4 judges × 5 runs × 2 positions = 10,000`
 - Soft-eval calls: `512 plans × 4 judges = 2,048`
+
+## 14. Notes on local smoke vs HPC
+
+A local smoke run with `tools/mock_llm_server.py` is useful for validating client
+wiring and end-to-end plumbing on a laptop, but it is not part of the HPC path.
+
+Key differences:
+
+- local smoke uses a synthetic HTTP mock server
+- HPC uses real vLLM servers launched by the SLURM scripts
+- local mock runs can show empty H1/H2 after position-bias exclusion
+- HPC pilots should be treated as the real compatibility gate before the full run

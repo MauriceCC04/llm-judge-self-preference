@@ -9,16 +9,16 @@
       "coef_same_family": NaN,
       "pvalue_same_family": NaN,
       "converged": false,
-      "n_obs": 20,
-      "formula": "prefers_llm ~ same_family + llm_position_bias"
+      "n_obs": 80,
+      "formula": "prefers_llm ~ same_family + llm_position_bias + C(fixture_id)"
     },
     "by_judge_family": {
       "qwen": {
         "coef_same_family": NaN,
         "pvalue_same_family": NaN,
         "converged": false,
-        "n_obs": 20,
-        "formula": "prefers_llm ~ same_family + llm_position_bias"
+        "n_obs": 80,
+        "formula": "prefers_llm ~ same_family + llm_position_bias + C(fixture_id)"
       }
     },
     "by_judge": {
@@ -26,8 +26,8 @@
         "coef_same_family": NaN,
         "pvalue_same_family": NaN,
         "converged": false,
-        "n_obs": 20,
-        "formula": "prefers_llm ~ same_family + llm_position_bias"
+        "n_obs": 80,
+        "formula": "prefers_llm ~ same_family + llm_position_bias + C(fixture_id)"
       }
     }
   },
@@ -45,13 +45,13 @@
         "biased": true,
         "p_prefers_a": 0.0,
         "judge": "qwen_7b_judge",
-        "n": 20,
+        "n": 80,
         "threshold": 0.2
       }
     ]
   },
   "style_audit": {
-    "n_pairs": 2,
+    "n_pairs": 8,
     "n_features": 13,
     "n_flagged_features": 4,
     "pairwise_csv": "smoke_results/style_audit_pairwise.csv",
@@ -73,8 +73,8 @@
   "expected_explainer": "Qwen/Qwen2.5-3B-Instruct",
   "require_verified_explainer": false,
   "pairwise_view": "canonical_masked",
-  "n_pairwise": 20,
-  "n_soft_eval": 4,
+  "n_pairwise": 80,
+  "n_soft_eval": 16,
   "biased_judges_excluded": [
     "qwen_7b_judge"
   ]

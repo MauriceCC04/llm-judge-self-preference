@@ -214,8 +214,10 @@ def run_two_stage_generation_compat(
     if explainer_cfg.temperature is not None:
         explain_kwargs["temperature"] = explainer_cfg.temperature
     explain_resp = call_with_schema(explainer_client, explain_kwargs, PLAN_EXPLANATION_SCHEMA)
-    actual_explainer_model = _extract_response_model_id(explain_resp, fallback=explainer_model)
-    explainer_model_verified = bool(actual_explainer_model and actual_explainer_model == explainer_model)
+    actual_explainer_model = _extract_response_model_id(explain_resp, fallback=None)
+    explainer_model_verified = bool(
+        actual_explainer_model is not None and actual_explainer_model == explainer_model
+    )
     explain_text = getattr(explain_resp, "output_text", None) or str(explain_resp)
     explanation_obj = _parse_plan_explanation(
         explain_text,

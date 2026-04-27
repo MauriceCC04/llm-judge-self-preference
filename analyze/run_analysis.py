@@ -129,7 +129,7 @@ def step_h2(
         )
 
     result = rubric_paired_contrasts(df_soft, pairs_path=pairs_path)
-    overall = result.get("overall", {})
+    overall = result
     (out / "h2_rubric_deltas.json").write_text(json.dumps(result, indent=2, default=str))
     save_rubric_heatmap_csv(overall, out / "h2_rubric_deltas.csv")
 
@@ -148,10 +148,10 @@ def step_h2(
     except Exception:
         status = "?"
 
-    n_obs = overall.get("explanation_quality", {}).get("n_obs")
+    n_pairs = overall.get("explanation_quality", {}).get("n_pairs")
     print(
         f"  H2: explanation_quality Δ={exp_delta}  plan_coherence Δ={coh_delta}  "
-        f"paired=True  n_obs={n_obs}  [{status}]"
+        f"paired=True  n_pairs={n_pairs}  [{status}]"
     )
     return result
 
@@ -321,11 +321,11 @@ def write_markdown_summary(
         and h1_pval < 0.05
     )
 
-    h2_overall = h2.get("overall", {})
+    h2_overall = h2 or {}
     exp_delta = h2_overall.get("explanation_quality", {}).get("delta", float("nan"))
     coh_delta = h2_overall.get("plan_coherence", {}).get("delta", float("nan"))
     exp_sig = h2_overall.get("explanation_quality", {}).get("significant", False)
-    h2_obs = h2_overall.get("explanation_quality", {}).get("n_obs", "—")
+    h2_pairs = h2_overall.get("explanation_quality", {}).get("n_pairs", "—")
     try:
         h2_supported = float(exp_delta) > float(coh_delta) and exp_sig
     except Exception:
@@ -381,7 +381,7 @@ Judges with |P(prefer_A) − 0.5| ≥ 0.2 (excluded from H1/H2): {biased if bias
 ## H2 — Per-rubric gap (mechanism)  {_supported(h2_supported)}
 
 Paired analysis: True  
-Matched judge-pair observations contributing (explanation_quality): {h2_obs}
+Matched judge-pair deltas contributing (explanation_quality): {h2_pairs}
 
 | Rubric | Δ (LLM − prog) | p (Holm) | Significant |
 |---|---|---|---|
@@ -397,18 +397,6 @@ Matched judge-pair observations contributing (explanation_quality): {h2_obs}
 **H2 verdict:** explanation_quality Δ={_fmt(exp_delta)}, plan_coherence Δ={_fmt(coh_delta)}.  
 {"Mechanism hypothesis supported: explanation gap > coherence gap." if h2_supported else "Mechanism hypothesis not supported."}
 
-### H2 by judge family
-"""
-    for family, family_stats in sorted(h2.get("by_judge_family", {}).items()):
-        md += f"\n#### {family}\n\n| Rubric | Δ | p (Holm) | Significant |\n|---|---|---|---|\n"
-        for rid, stats in sorted(family_stats.items()):
-            md += (
-                f"| {rid} | {_fmt(stats.get('delta'))} | "
-                f"{_fmt(stats.get('pvalue_holm'))} | "
-                f"{'✅' if stats.get('significant') else '—'} |\n"
-            )
-
-    md += f"""
 ---
 
 ## H3 — Self-preference  {_supported(h3_supported)}

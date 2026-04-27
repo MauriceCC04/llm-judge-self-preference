@@ -1,6 +1,6 @@
 ## `README.md`
 
-````md
+
 # judge-bias-study
 
 **LLM-judge self-preference on training plans** — a controlled experiment for

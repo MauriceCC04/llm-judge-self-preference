@@ -1,0 +1,11 @@
+{
+  "n_pairs": 2,
+  "target_pairs": 250,
+  "coverage_ratio": 0.008,
+  "coverage_ok": false,
+  "mean_score_gap": 0.0,
+  "pairs_by_fixture": {
+    "r_low__rc_low__ph_base": 2
+  },
+  "match_rule": "same_fixture_same_score_bin_within_tolerance_min_weighted_distance"
+}

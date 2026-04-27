@@ -1,0 +1,27 @@
+{
+  "plan_id": "r_low__rc_low__ph_base__prog__s001",
+  "fixture_id": "r_low__rc_low__ph_base",
+  "arm": "programmatic",
+  "source_model": null,
+  "explainer_model": "Qwen/Qwen2.5-3B-Instruct",
+  "actual_explainer_model": "Qwen/Qwen2.5-3B-Instruct",
+  "explainer_model_verified": true,
+  "generation_pipeline": "programmatic_guardrailed_explainer",
+  "runtime_backend": "generate.programmatic_arm._run_explainer_directly",
+  "runtime_metadata": {
+    "source_base_url": "http://127.0.0.1:8765/v1",
+    "explainer_base_url": "http://127.0.0.1:8765/v1",
+    "judge_base_url": "http://127.0.0.1:8765/v1",
+    "using_local_base_url": true,
+    "default_patch_stage": "judge",
+    "actual_explainer_model": "Qwen/Qwen2.5-3B-Instruct",
+    "explainer_model_verified": true,
+    "fixture_block_label": "base development block",
+    "fixture_primary_goal": "to become a faster and more durable trail runner",
+    "fixture_weeks_to_race": 20
+  },
+  "seed": 1,
+  "generated_at": "2026-04-27T15:09:32.866842+00:00",
+  "plan_path": "smoke_plans/r_low__rc_low__ph_base__prog__s001.json",
+  "deterministic_score": 100.0
+}

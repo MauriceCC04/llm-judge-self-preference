@@ -1,0 +1,14 @@
+feature,mean_delta,sd_delta,standardized_delta,pvalue,n_pairs,flagged
+mean_purpose_chars,0.0,0.0,0.0,,2,False
+mean_signal_ids_per_day,0.0,0.0,0.0,,2,False
+mean_workout_chars,-9.642857142857142,4.54568645048495,-2.121320343559642,,2,True
+n_citations,0.0,0.0,0.0,,2,False
+n_claim_attributions,0.0,0.0,0.0,,2,False
+n_data_notes,0.0,0.0,0.0,,2,False
+n_recovery_actions,0.0,0.0,0.0,,2,False
+n_risks,0.0,0.0,0.0,,2,False
+numeric_token_ratio,0.01817205660533075,0.011261196396004475,1.6136879214519586,,2,True
+readiness_rationale_chars,0.0,0.0,0.0,,2,False
+snapshot_notes_chars,0.0,0.0,0.0,,2,False
+total_chars_narrative,-67.5,31.81980515339464,-2.1213203435596424,,2,True
+type_token_ratio,0.06424685725925258,0.043298396838113394,1.4838160752108798,,2,True

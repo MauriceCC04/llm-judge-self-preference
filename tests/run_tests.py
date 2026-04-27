@@ -100,6 +100,34 @@ def _get_fixture() -> Path:
         _FIXTURE_DIR = create_test_fixture(_TMP_ROOT)
     return _FIXTURE_DIR
 
+def _pick_free_port() -> int:
+    import socket
+
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
+        sock.bind(("127.0.0.1", 0))
+        return int(sock.getsockname()[1])
+
+
+def _wait_for_mock_server(proc, *, port: int, timeout_s: float = 5.0) -> None:
+    import urllib.request
+
+    deadline = time.time() + timeout_s
+    url = f"http://127.0.0.1:{port}/health"
+    last_exc: Exception | None = None
+
+    while time.time() < deadline:
+        if proc.poll() is not None:
+            stderr = proc.stderr.read() if proc.stderr else ""
+            raise RuntimeError(f"mock_llm_server.py exited early:\n{stderr}")
+        try:
+            with urllib.request.urlopen(url, timeout=0.5) as resp:
+                if resp.status == 200:
+                    return
+        except Exception as exc:
+            last_exc = exc
+            time.sleep(0.1)
+
+    raise RuntimeError(f"mock_llm_server.py did not become healthy at {url}: {last_exc}")
 
 def _patch_llm(monkeypatch_dict: dict | None = None) -> None:
     """Monkey-patch all LLM client factories to return MockLLMClient."""
@@ -283,6 +311,85 @@ def test_05_guardrails() -> None:
     rest_count = sum(1 for d in days if d["is_rest_day"])
     assert rest_count >= 1, "no rest day after guardrails"
 
+@test("05b mock_http_server_smoke")
+def test_05b_mock_http_server_smoke() -> None:
+    import json
+
+    from generate.constants import EXPLAINER_MODEL_ID
+    from generate.llm_arm import generate_llm_plan
+    from generate.programmatic_arm import generate_programmatic_plan
+    from trailtraining.contracts import TrainingPlanArtifact
+
+    fixture = _get_fixture()
+    tmp = _make_tmp()
+    port = _pick_free_port()
+
+    server_env = os.environ.copy()
+    server_env["PYTHONPATH"] = str(_PROJECT_ROOT)
+    server = subprocess.Popen(
+        [sys.executable, str(_PROJECT_ROOT / "tools" / "mock_llm_server.py"), "--port", str(port)],
+        cwd=str(_PROJECT_ROOT),
+        env=server_env,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        text=True,
+    )
+
+    env_keys = [
+        "TRAILTRAINING_SOURCE_LLM_BASE_URL",
+        "TRAILTRAINING_EXPLAINER_LLM_BASE_URL",
+        "TRAILTRAINING_JUDGE_LLM_BASE_URL",
+        "TRAILTRAINING_LLM_BASE_URL",
+        "OPENROUTER_API_KEY",
+    ]
+    old_env = {k: os.environ.get(k) for k in env_keys}
+
+    try:
+        _wait_for_mock_server(server, port=port)
+        base_url = f"http://127.0.0.1:{port}/v1"
+        os.environ["TRAILTRAINING_SOURCE_LLM_BASE_URL"] = base_url
+        os.environ["TRAILTRAINING_EXPLAINER_LLM_BASE_URL"] = base_url
+        os.environ["TRAILTRAINING_JUDGE_LLM_BASE_URL"] = base_url
+        os.environ["TRAILTRAINING_LLM_BASE_URL"] = base_url
+        os.environ["OPENROUTER_API_KEY"] = "dummy"
+
+        llm_json, _, llm_prov_path = generate_llm_plan(
+            fixture_dir=fixture,
+            output_dir=tmp,
+            plan_id="llm_http_smoke_001",
+            source_model="meta-llama/Llama-3.1-8B-Instruct",
+            seed=0,
+        )
+        prog_json, _, prog_prov_path = generate_programmatic_plan(
+            fixture_dir=fixture,
+            output_dir=tmp,
+            plan_id="prog_http_smoke_001",
+            seed=0,
+        )
+
+        TrainingPlanArtifact.model_validate(json.loads(llm_json))
+        TrainingPlanArtifact.model_validate(json.loads(prog_json))
+
+        llm_prov = json.loads(Path(llm_prov_path).read_text(encoding="utf-8"))
+        prog_prov = json.loads(Path(prog_prov_path).read_text(encoding="utf-8"))
+
+        assert llm_prov["actual_explainer_model"] == EXPLAINER_MODEL_ID
+        assert prog_prov["actual_explainer_model"] == EXPLAINER_MODEL_ID
+        assert llm_prov["explainer_model_verified"] is True
+        assert prog_prov["explainer_model_verified"] is True
+    finally:
+        for key, value in old_env.items():
+            if value is None:
+                os.environ.pop(key, None)
+            else:
+                os.environ[key] = value
+
+        server.terminate()
+        try:
+            server.wait(timeout=3)
+        except subprocess.TimeoutExpired:
+            server.kill()
+            server.wait(timeout=3)
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # Test 6 — Programmatic arm end-to-end (mock LLM)

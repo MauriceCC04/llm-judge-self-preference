@@ -1,0 +1,27 @@
+{
+  "overall": {
+    "coef_same_family": NaN,
+    "pvalue_same_family": NaN,
+    "converged": false,
+    "n_obs": 20,
+    "formula": "prefers_llm ~ same_family + llm_position_bias"
+  },
+  "by_judge_family": {
+    "qwen": {
+      "coef_same_family": NaN,
+      "pvalue_same_family": NaN,
+      "converged": false,
+      "n_obs": 20,
+      "formula": "prefers_llm ~ same_family + llm_position_bias"
+    }
+  },
+  "by_judge": {
+    "qwen_7b_judge": {
+      "coef_same_family": NaN,
+      "pvalue_same_family": NaN,
+      "converged": false,
+      "n_obs": 20,
+      "formula": "prefers_llm ~ same_family + llm_position_bias"
+    }
+  }
+}

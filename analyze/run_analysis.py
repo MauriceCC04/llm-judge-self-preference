@@ -506,6 +506,10 @@ def main(argv: list[str] | None = None) -> None:
     df_soft_clean = df_soft[~df_soft["judge"].isin(biased)].copy() if not df_soft.empty else df_soft
     if biased:
         print(f"  Excluded {biased} from H1/H2 (position bias)")
+        if not df_pair.empty and df_pair_clean.empty:
+            print("  [info] All pairwise rows were removed by the position-bias exclusion.")
+        if not df_soft.empty and df_soft_clean.empty:
+            print("  [info] All soft-eval rows were removed by the position-bias exclusion.")
 
     bias_lookup = {
         r["judge"]: float(r["p_prefers_a"])

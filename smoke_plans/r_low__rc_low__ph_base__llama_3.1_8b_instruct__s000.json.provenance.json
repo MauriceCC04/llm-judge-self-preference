@@ -1,0 +1,28 @@
+{
+  "plan_id": "r_low__rc_low__ph_base__llama_3.1_8b_instruct__s000",
+  "fixture_id": "r_low__rc_low__ph_base",
+  "arm": "llm",
+  "source_model": "meta-llama/Llama-3.1-8B-Instruct",
+  "explainer_model": "Qwen/Qwen2.5-3B-Instruct",
+  "actual_explainer_model": "Qwen/Qwen2.5-3B-Instruct",
+  "explainer_model_verified": true,
+  "generation_pipeline": "llm_two_stage",
+  "runtime_backend": "trailtraining.llm.coach.run_coach_brief",
+  "runtime_metadata": {
+    "source_base_url": "http://127.0.0.1:8765/v1",
+    "explainer_base_url": "http://127.0.0.1:8765/v1",
+    "judge_base_url": "http://127.0.0.1:8765/v1",
+    "using_local_base_url": true,
+    "default_patch_stage": "judge",
+    "source_model": "meta-llama/Llama-3.1-8B-Instruct",
+    "actual_source_model": "meta-llama/Llama-3.1-8B-Instruct",
+    "actual_explainer_model": "Qwen/Qwen2.5-3B-Instruct",
+    "explainer_model_verified": true,
+    "seed": 0,
+    "TRAILTRAINING_TWO_STAGE_PLAN": "1"
+  },
+  "seed": 0,
+  "generated_at": "2026-04-27T15:09:32.311844+00:00",
+  "plan_path": "smoke_plans/r_low__rc_low__ph_base__llama_3.1_8b_instruct__s000.json",
+  "deterministic_score": 100.0
+}

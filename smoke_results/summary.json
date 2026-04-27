@@ -1,0 +1,81 @@
+{
+  "h1": {
+    "n_obs": 0,
+    "note": "no pairwise rows available after exclusions"
+  },
+  "h2": {},
+  "h3": {
+    "overall": {
+      "coef_same_family": NaN,
+      "pvalue_same_family": NaN,
+      "converged": false,
+      "n_obs": 20,
+      "formula": "prefers_llm ~ same_family + llm_position_bias"
+    },
+    "by_judge_family": {
+      "qwen": {
+        "coef_same_family": NaN,
+        "pvalue_same_family": NaN,
+        "converged": false,
+        "n_obs": 20,
+        "formula": "prefers_llm ~ same_family + llm_position_bias"
+      }
+    },
+    "by_judge": {
+      "qwen_7b_judge": {
+        "coef_same_family": NaN,
+        "pvalue_same_family": NaN,
+        "converged": false,
+        "n_obs": 20,
+        "formula": "prefers_llm ~ same_family + llm_position_bias"
+      }
+    }
+  },
+  "h4": {
+    "slope": NaN,
+    "pvalue": NaN,
+    "n_obs": 0
+  },
+  "bias_audit": {
+    "biased_judges": [
+      "qwen_7b_judge"
+    ],
+    "audit": [
+      {
+        "biased": true,
+        "p_prefers_a": 0.0,
+        "judge": "qwen_7b_judge",
+        "n": 20,
+        "threshold": 0.2
+      }
+    ]
+  },
+  "style_audit": {
+    "n_pairs": 2,
+    "n_features": 13,
+    "n_flagged_features": 4,
+    "pairwise_csv": "smoke_results/style_audit_pairwise.csv",
+    "summary_csv": "smoke_results/style_audit_summary.csv",
+    "summary_json": "smoke_results/style_audit_summary.json",
+    "gate": {
+      "passed": true,
+      "flagged_features": [
+        "mean_workout_chars",
+        "numeric_token_ratio",
+        "total_chars_narrative",
+        "type_token_ratio"
+      ],
+      "flagged_critical_features": [],
+      "z_threshold": 0.2
+    }
+  },
+  "provenance_exclusions": [],
+  "expected_explainer": "Qwen/Qwen2.5-3B-Instruct",
+  "require_verified_explainer": false,
+  "pairwise_view": "canonical_masked",
+  "n_pairwise": 20,
+  "n_soft_eval": 4,
+  "biased_judges_excluded": [
+    "qwen_7b_judge"
+  ]
+}

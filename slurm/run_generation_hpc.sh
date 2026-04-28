@@ -10,6 +10,8 @@
 #   SAMPLER_CONFIG        path to fitted priors JSON (default sampler_config.json)
 #   SEED_OFFSET           integer seed offset (default 0)
 #   FIXTURE_IDS           comma-separated fixture subset (default ALL 8)
+#   SOURCE_TEMPERATURE    default 0.7 for llm arm
+#   EXPLAINER_TEMPERATURE default 0.0 for both arms
 #   VLLM_SOURCE_PORT      default 8773
 #   VLLM_EXPLAINER_PORT   default 8774
 #   CLEANUP_SOURCE_CACHE  1 (default) deletes source weights after llm generation
@@ -36,6 +38,8 @@ GENERATION_PROFILE="${GENERATION_PROFILE:-exact}"
 SAMPLER_CONFIG="${SAMPLER_CONFIG:-sampler_config.json}"
 SEED_OFFSET="${SEED_OFFSET:-0}"
 FIXTURE_IDS="${FIXTURE_IDS:-}"
+SOURCE_TEMPERATURE="${SOURCE_TEMPERATURE:-0.7}"
+EXPLAINER_TEMPERATURE="${EXPLAINER_TEMPERATURE:-0.0}"
 VLLM_SOURCE_PORT="${VLLM_SOURCE_PORT:-8773}"
 VLLM_EXPLAINER_PORT="${VLLM_EXPLAINER_PORT:-8774}"
 CLEANUP_SOURCE_CACHE="${CLEANUP_SOURCE_CACHE:-1}"
@@ -64,11 +68,15 @@ else
 fi
 
 echo "=== Generation: ${GENERATION_ARM} arm (profile=${GENERATION_PROFILE}) ==="
-echo "  plans_per_fixture: ${PLANS_PER_FIXTURE}"
-echo "  seed_offset:       ${SEED_OFFSET}"
-echo "  fixture_ids:       ${FIXTURE_IDS:-ALL}"
-echo "  explainer_model:   ${EXPLAINER_MODEL}"
-[[ "${GENERATION_ARM}" == "llm" ]] && echo "  source_model:      ${LLM_SOURCE_MODEL}"
+echo "  plans_per_fixture:     ${PLANS_PER_FIXTURE}"
+echo "  seed_offset:           ${SEED_OFFSET}"
+echo "  fixture_ids:           ${FIXTURE_IDS:-ALL}"
+echo "  explainer_model:       ${EXPLAINER_MODEL}"
+echo "  explainer_temperature: ${EXPLAINER_TEMPERATURE}"
+if [[ "${GENERATION_ARM}" == "llm" ]]; then
+    echo "  source_model:          ${LLM_SOURCE_MODEL}"
+    echo "  source_temperature:    ${SOURCE_TEMPERATURE}"
+fi
 log_quota
 preflight_quota_gate
 
@@ -145,6 +153,8 @@ if [[ "${GENERATION_ARM}" == "llm" ]]; then
         --source-model "${LLM_SOURCE_MODEL}" \
         --plans-per-fixture "${PLANS_PER_FIXTURE}" \
         --seed-offset "${SEED_OFFSET}" \
+        --source-temperature "${SOURCE_TEMPERATURE}" \
+        --explainer-temperature "${EXPLAINER_TEMPERATURE}" \
         "${FIXTURE_ARGS[@]}" \
         --output plans/
 else
@@ -159,6 +169,7 @@ else
         --plans-per-fixture "${PLANS_PER_FIXTURE}" \
         --seed-offset "${SEED_OFFSET}" \
         --sampler-config "${SAMPLER_CONFIG}" \
+        --explainer-temperature "${EXPLAINER_TEMPERATURE}" \
         "${FIXTURE_ARGS[@]}" \
         --output plans/
 fi

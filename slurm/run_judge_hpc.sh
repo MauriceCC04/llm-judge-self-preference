@@ -11,6 +11,7 @@
 #   PAIRWISE_VIEW         raw_normalized | canonical_masked (default raw_normalized)
 #   REQUIRE_STYLE_GATE    1 | 0 (default 1)
 #   STYLE_GATE_SUMMARY    path (default results/style_audit_summary.json)
+#   JUDGE_TEMPERATURE     default 0.0
 #   VLLM_PORT             default 8772
 #   CLEANUP_MODEL_CACHE   1 | 0 (default 1)
 #
@@ -48,9 +49,11 @@ PAIRWISE_VIEW="${PAIRWISE_VIEW:-raw_normalized}"
 REQUIRE_STYLE_GATE="${REQUIRE_STYLE_GATE:-1}"
 STYLE_GATE_SUMMARY="${STYLE_GATE_SUMMARY:-results/style_audit_summary.json}"
 CLEANUP_MODEL_CACHE="${CLEANUP_MODEL_CACHE:-1}"
+JUDGE_TEMPERATURE="${JUDGE_TEMPERATURE:-0.0}"
 export VLLM_PORT="${VLLM_PORT:-8772}"
 
 echo "=== Judge run: ${JUDGE_NAME} (${JUDGE_MODE}, view=${PAIRWISE_VIEW}) ==="
+echo "  judge_temperature: ${JUDGE_TEMPERATURE}"
 log_quota
 preflight_quota_gate
 
@@ -110,7 +113,15 @@ sys.exit(0 if server.health_poll(timeout_s=900, interval_s=15) else 1)
 export TRAILTRAINING_LLM_BASE_URL="http://127.0.0.1:${VLLM_PORT}/v1"
 export TRAILTRAINING_JUDGE_LLM_BASE_URL="http://127.0.0.1:${VLLM_PORT}/v1"
 
-CLI_ARGS=(judge --judge "${JUDGE_NAME}" --plans plans/ --pairs matched_pairs.json --output judgments/ --pairwise-view "${PAIRWISE_VIEW}")
+CLI_ARGS=(
+    judge
+    --judge "${JUDGE_NAME}"
+    --plans plans/
+    --pairs matched_pairs.json
+    --output judgments/
+    --pairwise-view "${PAIRWISE_VIEW}"
+    --judge-temperature "${JUDGE_TEMPERATURE}"
+)
 
 if [[ "${JUDGE_MODE}" == "pilot" ]]; then
     CLI_ARGS+=(--pilot)

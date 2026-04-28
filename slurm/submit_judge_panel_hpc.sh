@@ -36,6 +36,10 @@ RUN_PAIRWISE="${RUN_PAIRWISE:-1}"
 RUN_SOFT_EVAL="${RUN_SOFT_EVAL:-1}"
 PAIR_LIMIT="${PAIR_LIMIT:-}"
 PLAN_LIMIT="${PLAN_LIMIT:-}"
+PLANS_DIR="${PLANS_DIR:-plans/}"
+PLANS_PARENT="$(dirname "${PLANS_DIR%/}")"
+PAIRS_FILE="${PAIRS_FILE:-${PLANS_PARENT}/matched_pairs.json}"
+JUDGMENTS_DIR="${JUDGMENTS_DIR:-${PLANS_PARENT}/judgments/}"
 PAIRWISE_VIEW="${PAIRWISE_VIEW:-raw_normalized}"
 REQUIRE_STYLE_GATE="${REQUIRE_STYLE_GATE:-1}"
 STYLE_GATE_SUMMARY="${STYLE_GATE_SUMMARY:-results/style_audit_summary.json}"
@@ -56,6 +60,9 @@ echo "=== Sequential judge panel launcher ==="
 echo "Judges: ${JUDGES[*]}"
 echo "Mode: ${JUDGE_MODE}"
 echo "View: ${PAIRWISE_VIEW}"
+echo "Plans dir: ${PLANS_DIR}"
+echo "Pairs file: ${PAIRS_FILE}"
+echo "Judgments dir: ${JUDGMENTS_DIR}"
 echo "Account: ${ACCOUNT}"
 echo
 
@@ -71,6 +78,9 @@ for JUDGE_NAME in "${JUDGES[@]}"; do
     RUN_SOFT_EVAL="${RUN_SOFT_EVAL}" \
     PAIR_LIMIT="${PAIR_LIMIT}" \
     PLAN_LIMIT="${PLAN_LIMIT}" \
+    PLANS_DIR="${PLANS_DIR}" \
+    PAIRS_FILE="${PAIRS_FILE}" \
+    JUDGMENTS_DIR="${JUDGMENTS_DIR}" \
     PAIRWISE_VIEW="${PAIRWISE_VIEW}" \
     REQUIRE_STYLE_GATE="${REQUIRE_STYLE_GATE}" \
     STYLE_GATE_SUMMARY="${STYLE_GATE_SUMMARY}" \

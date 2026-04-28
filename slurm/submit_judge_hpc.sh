@@ -10,7 +10,7 @@
 # This wrapper:
 # - must run on the login node
 # - computes buffered walltime from judge.panel
-# - forwards pairwise view and other judge controls
+# - forwards pairwise view, path controls, and other judge controls
 # - uses an absolute repo-path wrap rather than relying on ambient $PROJECT_ROOT
 
 set -euo pipefail
@@ -31,6 +31,10 @@ RUN_PAIRWISE="${RUN_PAIRWISE:-1}"
 RUN_SOFT_EVAL="${RUN_SOFT_EVAL:-1}"
 PAIR_LIMIT="${PAIR_LIMIT:-}"
 PLAN_LIMIT="${PLAN_LIMIT:-}"
+PLANS_DIR="${PLANS_DIR:-plans/}"
+PLANS_PARENT="$(dirname "${PLANS_DIR%/}")"
+PAIRS_FILE="${PAIRS_FILE:-${PLANS_PARENT}/matched_pairs.json}"
+JUDGMENTS_DIR="${JUDGMENTS_DIR:-${PLANS_PARENT}/judgments/}"
 PAIRWISE_VIEW="${PAIRWISE_VIEW:-raw_normalized}"
 REQUIRE_STYLE_GATE="${REQUIRE_STYLE_GATE:-1}"
 STYLE_GATE_SUMMARY="${STYLE_GATE_SUMMARY:-results/style_audit_summary.json}"
@@ -56,7 +60,7 @@ SBATCH_ARGS=(
     "--time=${WALLTIME}"
     "--output=out/%x_%j.out"
     "--error=err/%x_%j.err"
-    "--export=ALL,JUDGE_NAME=${JUDGE_NAME},JUDGE_MODE=${JUDGE_MODE},RUN_PAIRWISE=${RUN_PAIRWISE},RUN_SOFT_EVAL=${RUN_SOFT_EVAL},PAIR_LIMIT=${PAIR_LIMIT},PLAN_LIMIT=${PLAN_LIMIT},PAIRWISE_VIEW=${PAIRWISE_VIEW},REQUIRE_STYLE_GATE=${REQUIRE_STYLE_GATE},STYLE_GATE_SUMMARY=${STYLE_GATE_SUMMARY},CLEANUP_MODEL_CACHE=${CLEANUP_MODEL_CACHE}"
+    "--export=ALL,JUDGE_NAME=${JUDGE_NAME},JUDGE_MODE=${JUDGE_MODE},RUN_PAIRWISE=${RUN_PAIRWISE},RUN_SOFT_EVAL=${RUN_SOFT_EVAL},PAIR_LIMIT=${PAIR_LIMIT},PLAN_LIMIT=${PLAN_LIMIT},PLANS_DIR=${PLANS_DIR},PAIRS_FILE=${PAIRS_FILE},JUDGMENTS_DIR=${JUDGMENTS_DIR},PAIRWISE_VIEW=${PAIRWISE_VIEW},REQUIRE_STYLE_GATE=${REQUIRE_STYLE_GATE},STYLE_GATE_SUMMARY=${STYLE_GATE_SUMMARY},CLEANUP_MODEL_CACHE=${CLEANUP_MODEL_CACHE}"
     "--wrap=${WRAP_CMD}"
 )
 
@@ -65,4 +69,7 @@ if [[ "${WAIT_FOR_JOB}" == "1" ]]; then
 fi
 
 echo "Submitting ${JUDGE_NAME} with walltime ${WALLTIME} (view=${PAIRWISE_VIEW}, mode=${JUDGE_MODE})"
+echo "  plans_dir:     ${PLANS_DIR}"
+echo "  pairs_file:    ${PAIRS_FILE}"
+echo "  judgments_dir: ${JUDGMENTS_DIR}"
 sbatch "${SBATCH_ARGS[@]}"

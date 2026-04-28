@@ -8,7 +8,12 @@
 #   RUN_PAIRWISE          1 | 0 (default 1)
 #   RUN_SOFT_EVAL         1 | 0 (default 1)
 #   PAIR_LIMIT, PLAN_LIMIT integer caps for sharded runs
-#   PAIRWISE_VIEW         raw_normalized | canonical_masked (default raw_normalized)
+#   PLANS_DIR            plans directory (default plans/)
+#   PAIRS_FILE           matched pairs file
+#                        (default: <plans-parent>/matched_pairs.json)
+#   JUDGMENTS_DIR        output directory for judge JSONL
+#                        (default: <plans-parent>/judgments/)
+#   PAIRWISE_VIEW        raw_normalized | canonical_masked (default raw_normalized)
 #   REQUIRE_STYLE_GATE    1 | 0 (default 1)
 #   STYLE_GATE_SUMMARY    path (default results/style_audit_summary.json)
 #   JUDGE_TEMPERATURE     default 0.0
@@ -36,7 +41,7 @@ source "$(dirname "${BASH_SOURCE[0]}")/common.sh"
 activate_env
 
 cd "${PROJECT_ROOT}"
-mkdir -p out err judgments results
+mkdir -p out err results
 export PYTHONPATH="${PROJECT_ROOT}:${PYTHONPATH:-}"
 
 JUDGE_NAME="${JUDGE_NAME:-qwen_7b_judge}"
@@ -45,6 +50,10 @@ RUN_PAIRWISE="${RUN_PAIRWISE:-1}"
 RUN_SOFT_EVAL="${RUN_SOFT_EVAL:-1}"
 PAIR_LIMIT="${PAIR_LIMIT:-}"
 PLAN_LIMIT="${PLAN_LIMIT:-}"
+PLANS_DIR="${PLANS_DIR:-plans/}"
+PLANS_PARENT="$(dirname "${PLANS_DIR%/}")"
+PAIRS_FILE="${PAIRS_FILE:-${PLANS_PARENT}/matched_pairs.json}"
+JUDGMENTS_DIR="${JUDGMENTS_DIR:-${PLANS_PARENT}/judgments/}"
 PAIRWISE_VIEW="${PAIRWISE_VIEW:-raw_normalized}"
 REQUIRE_STYLE_GATE="${REQUIRE_STYLE_GATE:-1}"
 STYLE_GATE_SUMMARY="${STYLE_GATE_SUMMARY:-results/style_audit_summary.json}"
@@ -52,7 +61,12 @@ CLEANUP_MODEL_CACHE="${CLEANUP_MODEL_CACHE:-1}"
 JUDGE_TEMPERATURE="${JUDGE_TEMPERATURE:-0.0}"
 export VLLM_PORT="${VLLM_PORT:-8772}"
 
+mkdir -p "${JUDGMENTS_DIR}"
+
 echo "=== Judge run: ${JUDGE_NAME} (${JUDGE_MODE}, view=${PAIRWISE_VIEW}) ==="
+echo "  plans_dir:         ${PLANS_DIR}"
+echo "  pairs_file:        ${PAIRS_FILE}"
+echo "  judgments_dir:     ${JUDGMENTS_DIR}"
 echo "  judge_temperature: ${JUDGE_TEMPERATURE}"
 log_quota
 preflight_quota_gate
@@ -116,9 +130,9 @@ export TRAILTRAINING_JUDGE_LLM_BASE_URL="http://127.0.0.1:${VLLM_PORT}/v1"
 CLI_ARGS=(
     judge
     --judge "${JUDGE_NAME}"
-    --plans plans/
-    --pairs matched_pairs.json
-    --output judgments/
+    --plans "${PLANS_DIR}"
+    --pairs "${PAIRS_FILE}"
+    --output "${JUDGMENTS_DIR}"
     --pairwise-view "${PAIRWISE_VIEW}"
     --judge-temperature "${JUDGE_TEMPERATURE}"
 )

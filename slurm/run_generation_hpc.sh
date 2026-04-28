@@ -7,7 +7,10 @@
 # Optional env:
 #   GENERATION_PROFILE    exact (default) — uses generate.exact_counts shard sizes
 #   GENERATION_N          override plans-per-fixture (only when GENERATION_PROFILE != exact)
-#   SAMPLER_CONFIG        path to fitted priors JSON (default sampler_config.json)
+#   PLANS_DIR            condition-local plans directory (default plans/)
+#   OUTPUT_DIR           deprecated alias for PLANS_DIR
+#   SAMPLER_CONFIG       path to fitted priors JSON
+#                        (default: <plans-parent>/sampler_config.json)
 #   SEED_OFFSET           integer seed offset (default 0)
 #   FIXTURE_IDS           comma-separated fixture subset (default ALL 8)
 #   SOURCE_TEMPERATURE    default 0.7 for llm arm
@@ -30,12 +33,14 @@ source "$(dirname "${BASH_SOURCE[0]}")/common.sh"
 activate_env
 
 cd "${PROJECT_ROOT}"
-mkdir -p out err plans
+mkdir -p out err
 export PYTHONPATH="${PROJECT_ROOT}:${PYTHONPATH:-}"
 
 GENERATION_ARM="${GENERATION_ARM:?Set GENERATION_ARM=llm|programmatic}"
 GENERATION_PROFILE="${GENERATION_PROFILE:-exact}"
-SAMPLER_CONFIG="${SAMPLER_CONFIG:-sampler_config.json}"
+PLANS_DIR="${PLANS_DIR:-${OUTPUT_DIR:-plans/}}"
+PLANS_PARENT="$(dirname "${PLANS_DIR%/}")"
+SAMPLER_CONFIG="${SAMPLER_CONFIG:-${PLANS_PARENT}/sampler_config.json}"
 SEED_OFFSET="${SEED_OFFSET:-0}"
 FIXTURE_IDS="${FIXTURE_IDS:-}"
 SOURCE_TEMPERATURE="${SOURCE_TEMPERATURE:-0.7}"
@@ -45,6 +50,8 @@ VLLM_EXPLAINER_PORT="${VLLM_EXPLAINER_PORT:-8774}"
 CLEANUP_SOURCE_CACHE="${CLEANUP_SOURCE_CACHE:-1}"
 SOURCE_PID=""
 EXPLAINER_PID=""
+
+mkdir -p "${PLANS_DIR}"
 
 EXPLAINER_MODEL=$(python -c "from generate.constants import EXPLAINER_MODEL_ID; print(EXPLAINER_MODEL_ID)")
 python tools/check_model_cache.py "${EXPLAINER_MODEL}"
@@ -69,6 +76,8 @@ fi
 
 echo "=== Generation: ${GENERATION_ARM} arm (profile=${GENERATION_PROFILE}) ==="
 echo "  plans_per_fixture:     ${PLANS_PER_FIXTURE}"
+echo "  plans_dir:             ${PLANS_DIR}"
+echo "  sampler_config:        ${SAMPLER_CONFIG}"
 echo "  seed_offset:           ${SEED_OFFSET}"
 echo "  fixture_ids:           ${FIXTURE_IDS:-ALL}"
 echo "  explainer_model:       ${EXPLAINER_MODEL}"
@@ -156,11 +165,11 @@ if [[ "${GENERATION_ARM}" == "llm" ]]; then
         --source-temperature "${SOURCE_TEMPERATURE}" \
         --explainer-temperature "${EXPLAINER_TEMPERATURE}" \
         "${FIXTURE_ARGS[@]}" \
-        --output plans/
+        --output "${PLANS_DIR}"
 else
     if [[ ! -f "${SAMPLER_CONFIG}" ]]; then
         echo "--- Fitting sampler priors from existing LLM-arm plans ---"
-        python -m generate.fit_priors --plans-dir plans/ --output "${SAMPLER_CONFIG}"
+        python -m generate.fit_priors --plans-dir "${PLANS_DIR}" --output "${SAMPLER_CONFIG}"
     else
         echo "--- Using existing sampler config: ${SAMPLER_CONFIG} ---"
     fi
@@ -171,7 +180,7 @@ else
         --sampler-config "${SAMPLER_CONFIG}" \
         --explainer-temperature "${EXPLAINER_TEMPERATURE}" \
         "${FIXTURE_ARGS[@]}" \
-        --output plans/
+        --output "${PLANS_DIR}"
 fi
 
 if [[ "${GENERATION_ARM}" == "llm" && "${CLEANUP_SOURCE_CACHE}" == "1" ]]; then

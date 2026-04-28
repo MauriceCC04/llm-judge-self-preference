@@ -217,29 +217,55 @@ sbatch \
   --partition=stud \
   --qos=stud \
   --exclude=gnode04 \
-  --export=ALL,GENERATION_ARM=llm,GENERATION_PROFILE=exact,LLM_SOURCE_MODEL=meta-llama/Llama-3.1-8B-Instruct,SOURCE_TEMPERATURE=0.7,EXPLAINER_TEMPERATURE=0.0,OUTPUT_DIR=artifacts/gen_src_t070_exp_t000/plans \
+  --export=ALL,GENERATION_ARM=llm,GENERATION_PROFILE=exact,LLM_SOURCE_MODEL=meta-llama/Llama-3.1-8B-Instruct,SOURCE_TEMPERATURE=0.7,EXPLAINER_TEMPERATURE=0.0,PLANS_DIR=artifacts/gen_src_t070_exp_t000/plans \
+  --wrap="cd ${REPO_ROOT} && bash slurm/run_generation_hpc.sh"
+```
+
+When launching the programmatic arm for a nondefault generation condition, also
+set a condition-local sampler config so fitted priors cannot leak across
+conditions:
+
+```bash
+sbatch \
+  --account=3202029 \
+  --partition=stud \
+  --qos=stud \
+  --exclude=gnode04 \
+  --export=ALL,GENERATION_ARM=programmatic,GENERATION_PROFILE=exact,PLANS_DIR=artifacts/gen_src_t070_exp_t000/plans,SAMPLER_CONFIG=artifacts/gen_src_t070_exp_t000/sampler_config.json,EXPLAINER_TEMPERATURE=0.0 \
   --wrap="cd ${REPO_ROOT} && bash slurm/run_generation_hpc.sh"
 ```
 
 ### Example: judge-temperature sweep on fixed plans
 
 ```bash
-JUDGE_TEMPERATURE=0.0 JUDGMENTS_DIR=artifacts/gen_src_t070_exp_t000/judgments/judge_t000 \
+PLANS_DIR=artifacts/gen_src_t070_exp_t000/plans \
+PAIRS_FILE=artifacts/gen_src_t070_exp_t000/matched_pairs.json \
+JUDGMENTS_DIR=artifacts/gen_src_t070_exp_t000/judgments/judge_t000 \
+JUDGE_TEMPERATURE=0.0 \
   bash slurm/submit_judge_hpc.sh qwen_7b_judge
 
-JUDGE_TEMPERATURE=0.2 JUDGMENTS_DIR=artifacts/gen_src_t070_exp_t000/judgments/judge_t020 \
+PLANS_DIR=artifacts/gen_src_t070_exp_t000/plans \
+PAIRS_FILE=artifacts/gen_src_t070_exp_t000/matched_pairs.json \
+JUDGMENTS_DIR=artifacts/gen_src_t070_exp_t000/judgments/judge_t020 \
+JUDGE_TEMPERATURE=0.2 \
   bash slurm/submit_judge_hpc.sh qwen_7b_judge
 
-JUDGE_TEMPERATURE=0.7 JUDGMENTS_DIR=artifacts/gen_src_t070_exp_t000/judgments/judge_t070 \
+PLANS_DIR=artifacts/gen_src_t070_exp_t000/plans \
+PAIRS_FILE=artifacts/gen_src_t070_exp_t000/matched_pairs.json \
+JUDGMENTS_DIR=artifacts/gen_src_t070_exp_t000/judgments/judge_t070 \
+JUDGE_TEMPERATURE=0.7 \
   bash slurm/submit_judge_hpc.sh qwen_7b_judge
 ```
 
-Adjust your SLURM wrappers so they forward:
+The canonical SLURM wrappers now forward:
 
 * `SOURCE_TEMPERATURE`
 * `EXPLAINER_TEMPERATURE`
 * `JUDGE_TEMPERATURE`
-* condition-specific output directories
+* `PLANS_DIR`
+* `PAIRS_FILE`
+* `JUDGMENTS_DIR`
+* condition-specific `SAMPLER_CONFIG` when you want isolated fitted priors
 
 ## 8. Recommended analysis strategy
 

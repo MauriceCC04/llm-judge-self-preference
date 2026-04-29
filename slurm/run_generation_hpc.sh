@@ -18,6 +18,7 @@
 #   VLLM_SOURCE_PORT      default 8773
 #   VLLM_EXPLAINER_PORT   default 8774
 #   CLEANUP_SOURCE_CACHE  1 (default) deletes source weights after llm generation
+#   CLEANUP_EXPLAINER_CACHE 1 (default) deletes explainer weights after generation
 #
 #SBATCH --job-name=jbs_generate_hpc
 #SBATCH --partition=stud
@@ -48,6 +49,7 @@ EXPLAINER_TEMPERATURE="${EXPLAINER_TEMPERATURE:-0.0}"
 VLLM_SOURCE_PORT="${VLLM_SOURCE_PORT:-8773}"
 VLLM_EXPLAINER_PORT="${VLLM_EXPLAINER_PORT:-8774}"
 CLEANUP_SOURCE_CACHE="${CLEANUP_SOURCE_CACHE:-1}"
+CLEANUP_EXPLAINER_CACHE="${CLEANUP_EXPLAINER_CACHE:-1}"
 SOURCE_PID=""
 EXPLAINER_PID=""
 
@@ -63,6 +65,15 @@ elif [[ "${GENERATION_ARM}" != "programmatic" ]]; then
     echo "[ABORT] GENERATION_ARM must be 'llm' or 'programmatic'" >&2
     exit 1
 fi
+
+purge_model_cache() {
+    local model_id="$1"
+    python -c "
+from hpc.quota import purge_hf_model_cache
+removed = purge_hf_model_cache('${model_id}')
+print('Removed cached model: ${model_id}' if removed else 'No cached model to remove: ${model_id}')
+"
+}
 
 # Resolve plans-per-fixture from the exact-count profile or env override.
 if [[ "${GENERATION_PROFILE}" == "exact" ]]; then
@@ -185,8 +196,12 @@ fi
 
 if [[ "${GENERATION_ARM}" == "llm" && "${CLEANUP_SOURCE_CACHE}" == "1" ]]; then
     echo "--- Deleting source model weights ---"
-    MODEL_DIR_NAME="models--$(echo "${LLM_SOURCE_MODEL}" | tr '/' '--')"
-    rm -rf "${HF_HUB_CACHE}/${MODEL_DIR_NAME}" 2>/dev/null || true
+    purge_model_cache "${LLM_SOURCE_MODEL}"
+fi
+
+if [[ "${CLEANUP_EXPLAINER_CACHE}" == "1" ]]; then
+    echo "--- Deleting explainer model weights ---"
+    purge_model_cache "${EXPLAINER_MODEL}"
 fi
 
 log_quota

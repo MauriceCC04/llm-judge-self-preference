@@ -108,7 +108,7 @@ artifacts/
     matching_audit.json
     judgments/
       judge_t000/
-````
+```
 
 ## 5. Provenance and output expectations
 
@@ -208,12 +208,31 @@ The safest HPC pattern is:
 1. One job per **generation condition**
 2. One matching step per **generation condition**
 3. Multiple judge jobs per **fixed matched plan set**
+4. One **quota-safe model set** cached at a time
+
+Under the current cache policy:
+
+- **judge jobs** cache exactly **one judge model**
+- **programmatic generation jobs** cache exactly the **shared explainer**
+- **LLM generation jobs** cache exactly the **shared explainer + one source model**
+- `bash slurm/pre_cache_models.sh all` is **not** the normal workflow for sweeps
+
+Before using the HPC examples below, define the helper functions from
+`docs/HPC_RUNBOOK.md`:
+
+- `purge_cached_models`
+- `cache_model`
+- `cache_programmatic_generation_set`
+- `cache_llm_generation_set`
 
 ### Example: baseline generation condition
 
+An LLM-arm generation condition requires the **explainer + source** model set.
+
 ```bash
+cache_llm_generation_set "meta-llama/Llama-3.1-8B-Instruct"
 sbatch \
-  --account=3202029 \
+  --account=<USER_ID> \
   --partition=stud \
   --qos=stud \
   --exclude=gnode04 \
@@ -221,13 +240,14 @@ sbatch \
   --wrap="cd ${REPO_ROOT} && bash slurm/run_generation_hpc.sh"
 ```
 
-When launching the programmatic arm for a nondefault generation condition, also
-set a condition-local sampler config so fitted priors cannot leak across
-conditions:
+When launching the programmatic arm for a condition, cache the **explainer only**
+and also set a condition-local sampler config so fitted priors cannot leak
+across conditions:
 
 ```bash
+cache_programmatic_generation_set
 sbatch \
-  --account=3202029 \
+  --account=<USER_ID> \
   --partition=stud \
   --qos=stud \
   --exclude=gnode04 \
@@ -235,21 +255,51 @@ sbatch \
   --wrap="cd ${REPO_ROOT} && bash slurm/run_generation_hpc.sh"
 ```
 
-### Example: judge-temperature sweep on fixed plans
+### Example: alternate source-temperature condition
+
+Each new generation condition gets its own independent cache cycle.
 
 ```bash
+cache_llm_generation_set "meta-llama/Llama-3.1-8B-Instruct"
+sbatch \
+  --account=<USER_ID> \
+  --partition=stud \
+  --qos=stud \
+  --exclude=gnode04 \
+  --export=ALL,GENERATION_ARM=llm,GENERATION_PROFILE=exact,LLM_SOURCE_MODEL=meta-llama/Llama-3.1-8B-Instruct,SOURCE_TEMPERATURE=0.3,EXPLAINER_TEMPERATURE=0.0,PLANS_DIR=artifacts/gen_src_t030_exp_t000/plans \
+  --wrap="cd ${REPO_ROOT} && bash slurm/run_generation_hpc.sh"
+
+cache_programmatic_generation_set
+sbatch \
+  --account=<USER_ID> \
+  --partition=stud \
+  --qos=stud \
+  --exclude=gnode04 \
+  --export=ALL,GENERATION_ARM=programmatic,GENERATION_PROFILE=exact,PLANS_DIR=artifacts/gen_src_t030_exp_t000/plans,SAMPLER_CONFIG=artifacts/gen_src_t030_exp_t000/sampler_config.json,EXPLAINER_TEMPERATURE=0.0 \
+  --wrap="cd ${REPO_ROOT} && bash slurm/run_generation_hpc.sh"
+```
+
+### Example: judge-temperature sweep on fixed plans
+
+Judge sweeps are **single-model judge** cases, so `pre_cache_models.sh` is the
+correct helper.
+
+```bash
+bash slurm/pre_cache_models.sh qwen_7b_judge
 PLANS_DIR=artifacts/gen_src_t070_exp_t000/plans \
 PAIRS_FILE=artifacts/gen_src_t070_exp_t000/matched_pairs.json \
 JUDGMENTS_DIR=artifacts/gen_src_t070_exp_t000/judgments/judge_t000 \
 JUDGE_TEMPERATURE=0.0 \
   bash slurm/submit_judge_hpc.sh qwen_7b_judge
 
+bash slurm/pre_cache_models.sh qwen_7b_judge
 PLANS_DIR=artifacts/gen_src_t070_exp_t000/plans \
 PAIRS_FILE=artifacts/gen_src_t070_exp_t000/matched_pairs.json \
 JUDGMENTS_DIR=artifacts/gen_src_t070_exp_t000/judgments/judge_t020 \
 JUDGE_TEMPERATURE=0.2 \
   bash slurm/submit_judge_hpc.sh qwen_7b_judge
 
+bash slurm/pre_cache_models.sh qwen_7b_judge
 PLANS_DIR=artifacts/gen_src_t070_exp_t000/plans \
 PAIRS_FILE=artifacts/gen_src_t070_exp_t000/matched_pairs.json \
 JUDGMENTS_DIR=artifacts/gen_src_t070_exp_t000/judgments/judge_t070 \
@@ -329,6 +379,21 @@ A source-temperature effect is not the same as a pure judge-bias effect.
 Nonzero explainer temperature may change surface form enough to introduce
 detectable source cues.
 
+### Wrong cache helper for the job type
+
+If you use `bash slurm/pre_cache_models.sh <source_model_alias>` as though it
+were sufficient for LLM generation, you will cache only the **source** model and
+miss the **explainer** model that `run_generation_hpc.sh` requires.
+
+If you call `bash slurm/pre_cache_models.sh` twice in a row for generation, the
+second call will purge the first cached model before downloading the second one.
+
+### Using `pre_cache_models.sh all` as a generation shortcut
+
+`all` now downloads models sequentially under quota and leaves only the **last**
+model cached. It is not a replacement for `cache_llm_generation_set` or
+`cache_programmatic_generation_set`.
+
 ## 11. Minimal recommended sweep set
 
 If compute is limited, run only:
@@ -338,5 +403,3 @@ If compute is limited, run only:
 3. one additional source-temperature condition such as `0.3`
 
 That gives you meaningful robustness evidence without exploding the matrix.
-
-````

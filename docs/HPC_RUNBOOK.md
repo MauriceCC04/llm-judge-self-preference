@@ -132,8 +132,81 @@ Check quota before downloading large models:
 lquota
 ```
 
-If the quota is too tight for multiple models, plan for a **one-model-at-a-time
-workflow** or move caches to a larger project/scratch area if available.
+### 2e. Define quota-safe cache helpers
+
+Under a **50 GB hard quota**, the correct rule is not “one model at a time”
+literally. The correct rule is:
+
+- keep **one required model set per job**
+- remove unrelated model caches between jobs
+- never accumulate the full panel in cache
+
+In this study:
+
+- **judge jobs** need exactly **one judge model**
+- **programmatic generation jobs** need exactly the **shared explainer**
+- **LLM generation jobs** need exactly the **shared explainer + one source model**
+
+Planning budgets from `judge.panel` are:
+
+- `meta-llama/Llama-3.1-8B-Instruct`: **17 GB**
+- `Qwen/Qwen2.5-7B-Instruct`: **15 GB**
+- `Qwen/Qwen2.5-3B-Instruct`: **6 GB**
+- `Qwen/Qwen2.5-14B-Instruct-AWQ`: **8 GB**
+- `Qwen/Qwen2.5-32B-Instruct-AWQ`: **18 GB**
+
+That means:
+
+- largest **generation** model set = `17 + 6 = 23 GB`
+- largest **judge** model set = `18 GB`
+
+Define these helpers once in your shell:
+
+```bash
+purge_cached_models() {
+  python - <<'PY'
+from hpc.quota import purge_all_hf_model_caches
+count = purge_all_hf_model_caches()
+print(f"Removed {count} cached model directories")
+PY
+  lquota 2>/dev/null || du -sh "${HOME}" 2>/dev/null || true
+}
+
+cache_model() {
+  local model_id="$1"
+  python - "$model_id" <<'PY'
+from huggingface_hub import snapshot_download
+import sys
+model_id = sys.argv[1]
+snapshot_download(model_id, ignore_patterns=["*.msgpack", "*.h5"])
+print(f"Cached: {model_id}")
+PY
+  lquota 2>/dev/null || du -sh "${HOME}" 2>/dev/null || true
+}
+
+cache_programmatic_generation_set() {
+  purge_cached_models
+  cache_model "Qwen/Qwen2.5-3B-Instruct"
+}
+
+cache_llm_generation_set() {
+  local source_model="$1"
+  purge_cached_models
+  cache_model "Qwen/Qwen2.5-3B-Instruct"
+  cache_model "${source_model}"
+}
+```
+
+Notes:
+
+- `bash slurm/pre_cache_models.sh <judge_name>` is the normal helper for
+  **judge-model** caching and smoke tests.
+- `bash slurm/pre_cache_models.sh all` is **not** the normal quota-safe path for
+  the study. It now validates/downloads models sequentially under quota and
+  leaves only the **last** model cached.
+- For generation jobs, do **not** call `pre_cache_models.sh` twice, because it
+  purges before each download. Use the helper functions above to cache the
+  explainer-plus-source set in one cycle.
 
 ## 3. Gate 0 — local CPU tests
 
@@ -174,6 +247,9 @@ sbatch \
 
 ## 6. Gate 2 — vLLM smoke test
 
+A smoke test is a **judge-model** case, so a single-model pre-cache step is
+correct here.
+
 ```bash
 cd "${REPO_ROOT}"
 bash slurm/pre_cache_models.sh qwen_7b_judge
@@ -210,10 +286,12 @@ Use the wrapper path below instead.
 Before pre-caching gated Llama models, make sure the Hugging Face account used
 on the cluster has actually been approved for the model repo.
 
+This is an **LLM generation** job, so cache the **explainer + source** model set.
+
 ```bash
 cd "${REPO_ROOT}"
 hf auth login
-bash slurm/pre_cache_models.sh llama_8b_source
+cache_llm_generation_set "meta-llama/Llama-3.1-8B-Instruct"
 sbatch \
   --account=<USER_ID> \
   --partition=stud \
@@ -225,9 +303,12 @@ sbatch \
 
 ### 7b. LLM arm — Qwen source (exact 128 plans)
 
+This is also an **LLM generation** job, so again cache the **explainer + source**
+model set.
+
 ```bash
 cd "${REPO_ROOT}"
-bash slurm/pre_cache_models.sh qwen_7b_source
+cache_llm_generation_set "Qwen/Qwen2.5-7B-Instruct"
 sbatch \
   --account=<USER_ID> \
   --partition=stud \
@@ -248,8 +329,11 @@ python -m generate.fit_priors --plans-dir plans/ --output sampler_config.json
 
 ### 7d. Programmatic arm (exact 256 plans)
 
+This is a **programmatic generation** job, so cache the **explainer only**.
+
 ```bash
 cd "${REPO_ROOT}"
+cache_programmatic_generation_set
 sbatch \
   --account=<USER_ID> \
   --partition=stud \
@@ -283,6 +367,9 @@ Start with a real pilot before launching the full panel.
 This is where you validate endpoint compatibility, startup stability, provenance,
 and output shape against a real vLLM server.
 
+A judge pilot is a **single-model** case, so `pre_cache_models.sh` is the right
+helper.
+
 ```bash
 cd "${REPO_ROOT}"
 bash slurm/pre_cache_models.sh qwen_7b_judge
@@ -313,6 +400,8 @@ before starting the full four-judge panel.
 
 ## 12. Full judge runs
 
+Each of these is a **single-model judge** case.
+
 ```bash
 cd "${REPO_ROOT}"
 
@@ -333,6 +422,7 @@ To run the stricter masked control view:
 
 ```bash
 cd "${REPO_ROOT}"
+bash slurm/pre_cache_models.sh qwen_7b_judge
 PAIRWISE_VIEW=canonical_masked JUDGE_TEMPERATURE=0.0 bash slurm/submit_judge_hpc.sh qwen_7b_judge
 ```
 
@@ -368,12 +458,25 @@ Key differences:
 
 Model caching is the most likely storage bottleneck on Bocconi.
 
-Recommended order of operations:
+Use this rule:
 
-1. pre-cache exactly the model you need next
-2. run the jobs that depend on it
-3. delete that cache if quota becomes binding
-4. pre-cache the next model
+1. identify the exact model set required for the next job
+2. purge unrelated cached model weights
+3. cache only that required model set
+4. run the job
+5. let the job cleanup remove weights when configured
+6. repeat for the next job
+
+Normal mappings are:
+
+- **judge / smoke / pilot jobs** → `bash slurm/pre_cache_models.sh <judge_name>`
+- **programmatic generation** → `cache_programmatic_generation_set`
+- **LLM generation** → `cache_llm_generation_set "<source_model>"`
+
+Do **not** use `bash slurm/pre_cache_models.sh all` as the routine study path.
+It is now quota-aware in the sense that it purges between downloads, but that
+also means it leaves only the **last** model cached and does not create the
+explainer-plus-source cache set needed by LLM generation.
 
 If quota is exceeded, remove the partial model cache and its lock directory
 before retrying. Exact examples are recorded in `docs/HPC_TROUBLESHOOTING.md`.

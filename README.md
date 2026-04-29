@@ -72,7 +72,7 @@ deterministic scoring → greedy pair matching (|Δscore| ≤ 1)
         │
         ▼
 mixed-effects models + rubric contrasts + forest plots
-````
+```
 
 ## Pairwise views
 
@@ -137,6 +137,35 @@ This keeps:
 * matching condition-pure
 * provenance interpretable
 * sensitivity analyses separable from the main estimate
+
+## Quota-aware HPC model-cache discipline
+
+On Bocconi, model weights are the main storage bottleneck. The repository is now
+designed around a **one required model set per job** policy rather than “cache
+everything first”.
+
+Operationally this means:
+
+- **judge jobs** cache exactly **one judge model**
+- **programmatic generation jobs** cache exactly the **shared explainer**
+- **LLM generation jobs** cache exactly the **shared explainer + one source model**
+- unrelated model caches should not remain on disk between jobs
+- `bash slurm/pre_cache_models.sh all` is **not** the normal quota-safe workflow
+
+Planning budgets from `judge.panel` and `hpc.quota` are:
+
+- `meta-llama/Llama-3.1-8B-Instruct`: **17 GB**
+- `Qwen/Qwen2.5-7B-Instruct`: **15 GB**
+- `Qwen/Qwen2.5-3B-Instruct`: **6 GB**
+- `Qwen/Qwen2.5-14B-Instruct-AWQ`: **8 GB**
+- `Qwen/Qwen2.5-32B-Instruct-AWQ`: **18 GB**
+
+That yields:
+
+- largest **generation** model set: `17 + 6 = 23 GB`
+- largest **judge** model set: `18 GB`
+
+See `docs/HPC_RUNBOOK.md` for the exact quota-safe caching commands.
 
 ## Baseline command examples
 
@@ -224,6 +253,7 @@ Do not use the older mixed runbook as the source of truth for the frozen study.
 ## Documentation map
 
 * `docs/HPC_RUNBOOK.md` — baseline frozen-study HPC path
+* `docs/HPC_TROUBLESHOOTING.md` — concrete Bocconi failure signatures and fixes
 * `docs/TEMPERATURE_SWEEPS.md` — temperature sensitivity workflow and HPC usage
 * `docs/EXPERIMENT_CONTROLS.md` — research and implementation design rules for
   provenance, condition isolation, and `trailtraining` compatibility

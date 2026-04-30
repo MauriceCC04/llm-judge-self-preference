@@ -6,7 +6,7 @@
 # Sets:
 #   PROJECT_ROOT  — absolute path to the repo root (resolved from this file)
 #   HF_HOME, HF_HUB_CACHE, TRANSFORMERS_CACHE, PIP_CACHE_DIR,
-#   TORCH_HOME, VLLM_CACHE_ROOT — all pinned under $HOME so du can find them
+#   TORCH_HOME, VLLM_CACHE_ROOT — all pinned under $HOME unless already set by caller
 #
 # Also defines:
 #   activate_env()   — activates the conda/venv environment
@@ -19,13 +19,14 @@ _COMMON_SH_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="$(cd "${_COMMON_SH_DIR}/.." && pwd)"
 export PROJECT_ROOT
 
-# ── Pin all caches under $HOME ────────────────────────────────────────────────
-export HF_HOME="${HOME}/hf_cache"
-export HF_HUB_CACHE="${HF_HOME}/hub"
-export TRANSFORMERS_CACHE="${HF_HOME}/transformers"
-export PIP_CACHE_DIR="${HOME}/pip_cache"
-export TORCH_HOME="${HOME}/torch_cache"
-export VLLM_CACHE_ROOT="${HOME}/vllm_cache"
+# ── Respect caller-provided cache locations; otherwise default under $HOME ────
+export HF_HOME="${HF_HOME:-${HOME}/hf_cache}"
+export HF_HUB_CACHE="${HF_HUB_CACHE:-${HUGGINGFACE_HUB_CACHE:-${HF_HOME}/hub}}"
+export HUGGINGFACE_HUB_CACHE="${HUGGINGFACE_HUB_CACHE:-${HF_HUB_CACHE}}"
+export TRANSFORMERS_CACHE="${TRANSFORMERS_CACHE:-${HF_HOME}/transformers}"
+export PIP_CACHE_DIR="${PIP_CACHE_DIR:-${HOME}/pip_cache}"
+export TORCH_HOME="${TORCH_HOME:-${HOME}/torch_cache}"
+export VLLM_CACHE_ROOT="${VLLM_CACHE_ROOT:-${HOME}/vllm_cache}"
 export HF_HUB_DISABLE_TELEMETRY=1
 export TOKENIZERS_PARALLELISM=false
 

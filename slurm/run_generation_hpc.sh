@@ -122,7 +122,7 @@ python -m vllm.entrypoints.openai.api_server \
     --host 127.0.0.1 \
     --max-model-len 8192 \
     --gpu-memory-utilization 0.20 \
-    --disable-log-requests > out/vllm_explainer.log 2>&1 &
+    --no-enable-log-requests > out/vllm_explainer.log 2>&1 &
 EXPLAINER_PID=$!
 
 python -c "
@@ -143,7 +143,7 @@ if [[ "${GENERATION_ARM}" == "llm" ]]; then
         --host 127.0.0.1 \
         --max-model-len 8192 \
         --gpu-memory-utilization 0.55 \
-        --disable-log-requests > out/vllm_source.log 2>&1 &
+        --no-enable-log-requests > out/vllm_source.log 2>&1 &
     SOURCE_PID=$!
 
     python -c "

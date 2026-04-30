@@ -33,7 +33,7 @@ python -m vllm.entrypoints.openai.api_server \
     --port "${VLLM_PORT}" \
     --host 127.0.0.1 \
     --max-model-len 8192 \
-    --disable-log-requests &
+    --no-enable-log-requests &
 VLLM_PID=$!
 echo "vLLM PID: ${VLLM_PID}"
 
@@ -50,7 +50,11 @@ print('vLLM healthy')
 "
 
 echo "--- Set env and run 5 compare_plans calls ---"
-export TRAILTRAINING_LLM_BASE_URL="http://127.0.0.1:${VLLM_PORT}/v1"
+export TRAILTRAINING_JUDGE_LLM_BASE_URL="http://127.0.0.1:${VLLM_PORT}/v1"
+export TRAILTRAINING_LLM_BASE_URL="${TRAILTRAINING_JUDGE_LLM_BASE_URL}"
+export TRAILTRAINING_JUDGE_API_KEY=dummy
+export OPENAI_API_KEY=dummy
+export OPENAI_BASE_URL="${TRAILTRAINING_JUDGE_LLM_BASE_URL}"
 export OPENROUTER_API_KEY=dummy
 
 python -c "
@@ -62,6 +66,8 @@ import tempfile, shutil
 tmp = Path(tempfile.mkdtemp())
 fixture = create_test_fixture(tmp)
 
+from compat.trailtraining_client import install_trailtraining_client_compat
+install_trailtraining_client_compat(default_stage='judge')
 from trailtraining.llm.soft_eval import SoftEvalConfig, compare_plans
 from trailtraining.contracts import TrainingPlanArtifact
 
@@ -102,7 +108,7 @@ sleep 10
 kill -9 "${VLLM_PID}" 2>/dev/null || true
 
 echo "--- Deleting model weights ---"
-MODEL_DIR="${HF_HUB_CACHE}/models--$(echo '${SMOKE_MODEL}' | tr '/' '--')"
+MODEL_DIR="${HF_HUB_CACHE}/models--$(echo "${SMOKE_MODEL}" | tr '/' '--')"
 rm -rf "${MODEL_DIR}" 2>/dev/null && echo "Deleted ${MODEL_DIR}" || echo "(not found)"
 
 log_quota

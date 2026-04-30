@@ -105,9 +105,9 @@ echo "$CUDA_HOME"
 Then install the key runtime packages in the active env:
 
 ```bash
-python -m pip install torch
-python -m pip install vllm
-bash bootstrap_hpc_env.sh
+python -m pip install --no-cache-dir torch
+python -m pip install --no-cache-dir vllm
+PIP_NO_CACHE_DIR=1 bash bootstrap_hpc_env.sh
 export PYTHONPATH="${REPO_ROOT}:${PYTHONPATH:-}"
 ```
 
@@ -131,6 +131,10 @@ Check quota before downloading large models:
 ```bash
 lquota
 ```
+
+`bash bootstrap_hpc_env.sh` is an installer, not a persistent shell initializer.
+Its `export` statements do **not** modify your parent shell. Keep the cache-path
+exports in your current shell before any install, cache, or `sbatch` step.
 
 ### 2e. Define quota-safe cache helpers
 
@@ -159,11 +163,6 @@ That means:
 
 - largest **generation** model set = `15 + 6 = 21 GB`
 - largest **judge** model set = `28 GB`
-
-That means:
-
-- largest **generation** model set = `17 + 6 = 23 GB`
-- largest **judge** model set = `18 GB`
 
 Define these helpers once in your shell:
 
@@ -255,16 +254,28 @@ sbatch \
 A smoke test is a **judge-model** case, so a single-model pre-cache step is
 correct here.
 
+Do **not** use `sbatch slurm/run_vllm_smoke.sh` directly: SLURM executes a
+spooled copy and the script's relative `common.sh` source will resolve under
+`/var/spool/...` instead of your repo. Also do **not** use a wrapped submission
+without an outer `--gres`, because the inner `#SBATCH --gres=...` will be
+ignored.
+
 ```bash
 cd "${REPO_ROOT}"
+mkdir -p out err
 bash slurm/pre_cache_models.sh qwen_7b_judge
 sbatch \
   --account=<USER_ID> \
   --partition=stud \
   --qos=stud \
+  --gres=gpu:4g.40gb:1 \
+  --time=00:45:00 \
   --exclude=gnode04 \
+  --chdir="${REPO_ROOT}" \
+  --output=out/vllm_smoke_%j.out \
+  --error=err/vllm_smoke_%j.err \
   --export=ALL,HF_HOME=${HF_HOME},HF_HUB_CACHE=${HF_HUB_CACHE},HUGGINGFACE_HUB_CACHE=${HUGGINGFACE_HUB_CACHE},TRANSFORMERS_CACHE=${TRANSFORMERS_CACHE},HF_HUB_DISABLE_XET=${HF_HUB_DISABLE_XET} \
-  --wrap="cd ${REPO_ROOT} && bash slurm/run_vllm_smoke.sh"
+  --wrap="bash slurm/run_vllm_smoke.sh"
 ```
 
 ## 7. Exact-count generation
@@ -286,24 +297,27 @@ If those are missing or stale, you can hit failures such as:
 
 Use the wrapper path below instead.
 
-### 7a. LLM arm — Llama source (exact 128 plans)
-
-Before pre-caching gated Llama models, make sure the Hugging Face account used
-on the cluster has actually been approved for the model repo.
+### 7a. LLM arm — Qwen source (exact 128 plans)
 
 This is an **LLM generation** job, so cache the **explainer + source** model set.
 
 ```bash
 cd "${REPO_ROOT}"
 cache_llm_generation_set "Qwen/Qwen2.5-7B-Instruct"
+mkdir -p out err
 sbatch \
   --account=<USER_ID> \
   --partition=stud \
   --qos=stud \
+  --gres=gpu:4g.40gb:1 \
+  --time=16:00:00 \
   --exclude=gnode04 \
+  --chdir="${REPO_ROOT}" \
+  --output=out/generate_hpc_%x_%j.out \
+  --error=err/generate_hpc_%x_%j.err \
   --export=ALL,HF_HOME=${HF_HOME},HF_HUB_CACHE=${HF_HUB_CACHE},HUGGINGFACE_HUB_CACHE=${HUGGINGFACE_HUB_CACHE},TRANSFORMERS_CACHE=${TRANSFORMERS_CACHE},HF_HUB_DISABLE_XET=${HF_HUB_DISABLE_XET},GENERATION_ARM=llm,GENERATION_PROFILE=exact,LLM_SOURCE_MODEL=Qwen/Qwen2.5-7B-Instruct,SOURCE_TEMPERATURE=0.7,EXPLAINER_TEMPERATURE=0.0 \
-  --wrap="cd ${REPO_ROOT} && bash slurm/run_generation_hpc.sh"
-  ```
+  --wrap="bash slurm/run_generation_hpc.sh"
+```
 
 ### 7b. LLM arm — Gemma source (exact 128 plans)
 
@@ -316,13 +330,19 @@ model set.
 ```bash
 cd "${REPO_ROOT}"
 cache_llm_generation_set "google/gemma-3-4b-it"
+mkdir -p out err
 sbatch \
   --account=<USER_ID> \
   --partition=stud \
   --qos=stud \
+  --gres=gpu:4g.40gb:1 \
+  --time=16:00:00 \
   --exclude=gnode04 \
+  --chdir="${REPO_ROOT}" \
+  --output=out/generate_hpc_%x_%j.out \
+  --error=err/generate_hpc_%x_%j.err \
   --export=ALL,HF_HOME=${HF_HOME},HF_HUB_CACHE=${HF_HUB_CACHE},HUGGINGFACE_HUB_CACHE=${HUGGINGFACE_HUB_CACHE},TRANSFORMERS_CACHE=${TRANSFORMERS_CACHE},HF_HUB_DISABLE_XET=${HF_HUB_DISABLE_XET},GENERATION_ARM=llm,GENERATION_PROFILE=exact,LLM_SOURCE_MODEL=google/gemma-3-4b-it,SOURCE_TEMPERATURE=0.7,EXPLAINER_TEMPERATURE=0.0 \
-  --wrap="cd ${REPO_ROOT} && bash slurm/run_generation_hpc.sh"
+  --wrap="bash slurm/run_generation_hpc.sh"
 ```
 
 After both jobs complete, the LLM arm totals **256** plans exactly.
@@ -341,171 +361,19 @@ This is a **programmatic generation** job, so cache the **explainer only**.
 ```bash
 cd "${REPO_ROOT}"
 cache_programmatic_generation_set
+mkdir -p out err
 sbatch \
   --account=<USER_ID> \
   --partition=stud \
   --qos=stud \
+  --gres=gpu:4g.40gb:1 \
+  --time=16:00:00 \
   --exclude=gnode04 \
+  --chdir="${REPO_ROOT}" \
+  --output=out/generate_hpc_%x_%j.out \
+  --error=err/generate_hpc_%x_%j.err \
   --export=ALL,HF_HOME=${HF_HOME},HF_HUB_CACHE=${HF_HUB_CACHE},HUGGINGFACE_HUB_CACHE=${HUGGINGFACE_HUB_CACHE},TRANSFORMERS_CACHE=${TRANSFORMERS_CACHE},HF_HUB_DISABLE_XET=${HF_HUB_DISABLE_XET},GENERATION_ARM=programmatic,GENERATION_PROFILE=exact,SAMPLER_CONFIG=sampler_config.json,EXPLAINER_TEMPERATURE=0.0 \
-  --wrap="cd ${REPO_ROOT} && bash slurm/run_generation_hpc.sh"
+  --wrap="bash slurm/run_generation_hpc.sh"
 ```
 
 At this point you should have **512 total plans**.
-
-## 8. Matching
-
-```bash
-cd "${REPO_ROOT}"
-python cli.py match --plans plans/ --output matched_pairs.json
-```
-
-Inspect the audit output. The target remains 250 matched pairs.
-
-## 9. Style leakage audit
-
-```bash
-cd "${REPO_ROOT}"
-python cli.py audit-style --plans plans/ --pairs matched_pairs.json --output results/
-```
-
-## 10. Pilot judge
-
-Start with a real pilot before launching the full panel.
-This is where you validate endpoint compatibility, startup stability, provenance,
-and output shape against a real vLLM server.
-
-A judge pilot is a **single-model** case, so `pre_cache_models.sh` is the right
-helper.
-
-```bash
-cd "${REPO_ROOT}"
-bash slurm/pre_cache_models.sh qwen_7b_judge
-JUDGE_MODE=pilot JUDGE_TEMPERATURE=0.0 bash slurm/submit_judge_hpc.sh qwen_7b_judge
-```
-
-Recommended pilot checks after the job completes:
-
-- nonempty `judgments/` outputs
-- no schema-failure growth
-- no provenance exclusions during `cli.py analyze`
-- successful pairwise and soft-eval record loading
-
-## 11. Dedicated larger-judge validation before the full panel
-
-Before launching the full four-judge study, validate the larger judges with small
-pilot shards on your real GPU slice.
-
-### 11a. `qwen_14b_judge` pilot
-
-```bash
-cd "${REPO_ROOT}"
-bash slurm/pre_cache_models.sh qwen_14b_judge
-PAIR_LIMIT=5 PLAN_LIMIT=10 RUN_SOFT_EVAL=1 RUN_PAIRWISE=1 JUDGE_MODE=pilot JUDGE_TEMPERATURE=0.0 \
-  bash slurm/submit_judge_hpc.sh qwen_14b_judge
-  ```
-
-### 11b. `gemma_12b_judge` pilot
-```bash
-cd "${REPO_ROOT}"
-bash slurm/pre_cache_models.sh gemma_12b_judge
-PAIR_LIMIT=5 PLAN_LIMIT=10 RUN_SOFT_EVAL=1 RUN_PAIRWISE=1 JUDGE_MODE=pilot JUDGE_TEMPERATURE=0.0 \
-  bash slurm/submit_judge_hpc.sh gemma_12b_judge
-```
-
-If either fails for memory or startup reasons, adjust the judge launch settings
-before starting the full four-judge panel.
-
-## 12. Full judge runs
-
-Each of these is a **single-model judge** case.
-
-```bash
-cd "${REPO_ROOT}"
-
-bash slurm/pre_cache_models.sh qwen_7b_judge
-JUDGE_TEMPERATURE=0.0 bash slurm/submit_judge_hpc.sh qwen_7b_judge
-
-bash slurm/pre_cache_models.sh qwen_14b_judge
-JUDGE_TEMPERATURE=0.0 bash slurm/submit_judge_hpc.sh qwen_14b_judge
-
-bash slurm/pre_cache_models.sh gemma_4b_judge
-JUDGE_TEMPERATURE=0.0 bash slurm/submit_judge_hpc.sh gemma_4b_judge
-
-bash slurm/pre_cache_models.sh gemma_12b_judge
-JUDGE_TEMPERATURE=0.0 bash slurm/submit_judge_hpc.sh gemma_12b_judge
-```
-
-To run the stricter masked control view:
-
-```bash
-cd "${REPO_ROOT}"
-bash slurm/pre_cache_models.sh qwen_7b_judge
-PAIRWISE_VIEW=canonical_masked JUDGE_TEMPERATURE=0.0 bash slurm/submit_judge_hpc.sh qwen_7b_judge
-```
-
-## 13. Analysis
-
-```bash
-cd "${REPO_ROOT}"
-python cli.py analyze --judgments judgments/ --plans plans/ --pairs matched_pairs.json --output results/
-```
-
-## 14. Expected frozen study totals
-
-- LLM arm: 256 plans
-- Programmatic arm: 256 plans
-- Total plans: 512
-- Active judges: 4
-- Pairwise calls: `250 pairs × 4 judges × 5 runs × 2 positions = 10,000`
-- Soft-eval calls: `512 plans × 4 judges = 2,048`
-
-## 15. Notes on local smoke vs HPC
-
-A local smoke run with `tools/mock_llm_server.py` is useful for validating client
-wiring and end-to-end plumbing on a laptop, but it is not part of the HPC path.
-
-Key differences:
-
-- local smoke uses a synthetic HTTP mock server
-- HPC uses real vLLM servers launched by the SLURM scripts
-- local mock runs can show empty H1/H2 after position-bias exclusion
-- HPC pilots should be treated as the real compatibility gate before the full run
-
-## 16. Quota and model-cache strategy
-
-Model caching is the most likely storage bottleneck on Bocconi.
-
-Use this rule:
-
-1. identify the exact model set required for the next job
-2. purge unrelated cached model weights
-3. cache only that required model set
-4. run the job
-5. let the job cleanup remove weights when configured
-6. repeat for the next job
-
-Normal mappings are:
-
-- **judge / smoke / pilot jobs** → `bash slurm/pre_cache_models.sh <judge_name>`
-- **programmatic generation** → `cache_programmatic_generation_set`
-- **LLM generation** → `cache_llm_generation_set "<source_model>"`
-
-Do **not** use `bash slurm/pre_cache_models.sh all` as the routine study path.
-It is now quota-aware in the sense that it purges between downloads, but that
-also means it leaves only the **last** model cached and does not create the
-explainer-plus-source cache set needed by LLM generation.
-
-If quota is exceeded, remove the partial model cache and its lock directory
-before retrying. Exact examples are recorded in `docs/HPC_TROUBLESHOOTING.md`.
-
-## 17. Temperature sensitivity runs
-
-The baseline runbook above is the canonical frozen-study path.
-
-For temperature sensitivity analyses:
-
-- do **not** mix multiple generation conditions in one `plans/` directory
-- do **not** run matching on a mixed-temperature directory
-- do use a separate artifact root per generation condition
-- do sweep judge temperature on fixed matched plans
-- see `docs/TEMPERATURE_SWEEPS.md` for the recommended workflow

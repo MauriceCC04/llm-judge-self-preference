@@ -3,7 +3,7 @@
 Failure signatures and fixes collected during real Bocconi Jupiter I setup.
 
 Use this file when the runbook steps are followed but the cluster still behaves
-in unexpected ways.  Each section lists the exact error fragment that was seen,
+in unexpected ways. Each section lists the exact error fragment that was seen,
 what it actually meant, and the least-surprising fix.
 
 ## 1. Conda activation did not really activate the env
@@ -64,8 +64,8 @@ module load cuda/12.4
 export CUDA_HOME="$(dirname "$(dirname "$(which nvcc)")")"
 which nvcc
 echo "$CUDA_HOME"
-python -m pip install torch
-python -m pip install vllm
+python -m pip install --no-cache-dir torch
+python -m pip install --no-cache-dir vllm
 ```
 
 ## 3. Gate-0 failed because wrapper scripts did not source `common.sh`
@@ -123,59 +123,7 @@ and exported the appropriate stage URL variables:
 - `TRAILTRAINING_EXPLAINER_LLM_BASE_URL`
 - `TRAILTRAINING_JUDGE_LLM_BASE_URL`
 
-## 5. Hugging Face login worked, but gated Llama access still failed
-
-### Failure signatures
-
-```text
-401 Unauthorized
-not in the authorized list
-```
-
-### Meaning
-
-Your token is valid, but the HF account used on the cluster does not yet have
-approval for the gated model repository.
-
-### Fix
-
-Request access on the model page, wait for approval, then relogin:
-
-```bash
-hf auth login
-bash slurm/pre_cache_models.sh llama_8b_source
-```
-
-## 6. Xet-backed HF downloads failed mid-cache
-
-### Failure signature
-
-```text
-File reconstruction error: Internal Writer Error: Background writer channel closed
-```
-
-### Meaning
-
-The `hf-xet` path was unstable for this download on this cluster.
-
-### Fix
-
-Disable Xet before the cache step:
-
-```bash
-export HF_HUB_DISABLE_XET=1
-bash slurm/pre_cache_models.sh llama_8b_source
-```
-
-Optional fallback if needed:
-
-```bash
-export HF_HUB_DISABLE_XET=1
-export HF_XET_RECONSTRUCT_WRITE_SEQUENTIALLY=1
-bash slurm/pre_cache_models.sh llama_8b_source
-```
-
-## 7. HF cache wrote to `/home` and hit quota
+## 5. HF cache wrote to `/home` and hit quota
 
 ### Failure signatures
 
@@ -203,7 +151,7 @@ mkdir -p "$HF_HOME" "$HF_HUB_CACHE" "$TRANSFORMERS_CACHE"
 rm -rf /home/<USER_ID>/hf_cache
 ```
 
-## 8. Even BeegFS home quota was not enough
+## 6. Even BeegFS home quota was not enough
 
 ### Failure signatures
 
@@ -240,7 +188,7 @@ One of the following is required:
   3. delete that cache
   4. pre-cache the next model
 
-## 9. Minimal known-good shell preamble
+## 7. Minimal known-good shell preamble
 
 Use this before HPC cache or run steps:
 
@@ -254,7 +202,220 @@ export HF_HOME=/mnt/beegfsstudents/home/<USER_ID>/hf_cache
 export HF_HUB_CACHE=$HF_HOME/hub
 export HUGGINGFACE_HUB_CACHE=$HF_HUB_CACHE
 export TRANSFORMERS_CACHE=$HF_HOME/transformers
+export PIP_CACHE_DIR=/mnt/beegfsstudents/home/<USER_ID>/pip_cache
+export TORCH_HOME=/mnt/beegfsstudents/home/<USER_ID>/torch_cache
+export VLLM_CACHE_ROOT=/mnt/beegfsstudents/home/<USER_ID>/vllm_cache
 export HF_HUB_DISABLE_XET=1
 export CUDA_HOME="$(dirname "$(dirname "$(which nvcc)")")"
+mkdir -p "$HF_HOME" "$HF_HUB_CACHE" "$TRANSFORMERS_CACHE" "$PIP_CACHE_DIR" "$TORCH_HOME" "$VLLM_CACHE_ROOT"
 cd "$REPO_ROOT"
+```
+
+## 8. `bootstrap_hpc_env.sh` completed, but later installs/downloads still used the wrong cache paths
+
+### Failure signatures
+
+```text
+~/.cache/pip is huge
+HF downloads still go to /home/<USER_ID>/...
+```
+
+### Meaning
+
+`bash bootstrap_hpc_env.sh` ran in its own shell process. Its `export` statements
+did not persist back into your interactive shell.
+
+### Fix
+
+Export the cache variables in your current shell before installs, downloads, or
+jobs. Then clear the old pip cache:
+
+```bash
+export HF_HOME=/mnt/beegfsstudents/home/<USER_ID>/hf_cache
+export HF_HUB_CACHE=$HF_HOME/hub
+export HUGGINGFACE_HUB_CACHE=$HF_HUB_CACHE
+export TRANSFORMERS_CACHE=$HF_HOME/transformers
+export PIP_CACHE_DIR=/mnt/beegfsstudents/home/<USER_ID>/pip_cache
+export TORCH_HOME=/mnt/beegfsstudents/home/<USER_ID>/torch_cache
+export VLLM_CACHE_ROOT=/mnt/beegfsstudents/home/<USER_ID>/vllm_cache
+mkdir -p "$HF_HOME" "$HF_HUB_CACHE" "$TRANSFORMERS_CACHE" "$PIP_CACHE_DIR" "$TORCH_HOME" "$VLLM_CACHE_ROOT"
+python -m pip cache purge
+rm -rf ~/.cache/pip
+```
+
+## 9. The conda env did not exist yet
+
+### Failure signatures
+
+```text
+CondaToSNonInteractiveError
+Could not find conda environment: judge-bias
+```
+
+### Meaning
+
+The environment creation failed before the env existed, often because Conda
+Terms of Service had not yet been accepted.
+
+### Fix
+
+Accept ToS if prompted, then create the env before sourcing any shell preamble
+that assumes it already exists:
+
+```bash
+module load miniconda3
+eval "$(conda shell.bash hook)"
+conda create -n judge-bias python=3.11 -y
+conda activate judge-bias
+conda info --envs
+```
+
+## 10. Gate 1 preflight failed because the explainer model was not cached
+
+### Failure signature
+
+```text
+Model not found in cache: Qwen/Qwen2.5-3B-Instruct
+```
+
+### Meaning
+
+Your Python environment was fine; the required explainer weights were simply not
+present in the local Hugging Face cache yet.
+
+### Fix
+
+Cache only the explainer model on the login node, then rerun preflight:
+
+```bash
+python - <<'PY'
+from hpc.quota import purge_all_hf_model_caches
+count = purge_all_hf_model_caches()
+print(f"Removed {count} cached model directories")
+PY
+python - <<'PY'
+from huggingface_hub import snapshot_download
+snapshot_download("Qwen/Qwen2.5-3B-Instruct", ignore_patterns=["*.msgpack", "*.h5"])
+print("Done: Qwen/Qwen2.5-3B-Instruct")
+PY
+```
+
+## 11. vLLM rejected `--disable-log-requests`
+
+### Failure signature
+
+```text
+api_server.py: error: unrecognized arguments: --disable-log-requests
+```
+
+### Meaning
+
+Your installed vLLM expects the newer boolean flag form.
+
+### Fix
+
+Replace the old flag with:
+
+```text
+--no-enable-log-requests
+```
+
+in both:
+
+- `slurm/run_vllm_smoke.sh`
+- `slurm/run_generation_hpc.sh`
+
+## 12. Wrapped smoke submission had no GPU
+
+### Failure signature
+
+```text
+RuntimeError: No CUDA GPUs are available
+```
+
+### Meaning
+
+You submitted the smoke script with `--wrap` but without an outer `--gres`.
+The inner `#SBATCH --gres=...` inside the script was ignored.
+
+### Fix
+
+Submit GPU jobs with explicit outer GPU resources:
+
+```bash
+mkdir -p out err
+sbatch \
+  --account=<USER_ID> \
+  --partition=stud \
+  --qos=stud \
+  --gres=gpu:4g.40gb:1 \
+  --time=00:45:00 \
+  --exclude=gnode04 \
+  --chdir="${REPO_ROOT}" \
+  --output=out/vllm_smoke_%j.out \
+  --error=err/vllm_smoke_%j.err \
+  --export=ALL,HF_HOME=${HF_HOME},HF_HUB_CACHE=${HF_HUB_CACHE},HUGGINGFACE_HUB_CACHE=${HUGGINGFACE_HUB_CACHE},TRANSFORMERS_CACHE=${TRANSFORMERS_CACHE},HF_HUB_DISABLE_XET=${HF_HUB_DISABLE_XET} \
+  --wrap="bash slurm/run_vllm_smoke.sh"
+```
+
+## 13. Direct `sbatch slurm/run_vllm_smoke.sh` broke `common.sh`
+
+### Failure signature
+
+```text
+/var/spool/slurmd/job.../common.sh: No such file
+```
+
+### Meaning
+
+SLURM executed a spooled copy of the script, so `$(dirname "${BASH_SOURCE[0]}")`
+resolved under `/var/spool/...` instead of your repo.
+
+### Fix
+
+Use the wrapped submission pattern above with `--chdir="${REPO_ROOT}"`. Do not
+submit `slurm/run_vllm_smoke.sh` directly.
+
+## 14. Smoke reached vLLM, but every compare call returned 401
+
+### Failure signature
+
+```text
+Missing Authentication header
+401
+```
+
+### Meaning
+
+The local vLLM server was healthy, but the smoke-test client was not correctly
+routed through the repo's local compatibility layer.
+
+### Fix
+
+In `slurm/run_vllm_smoke.sh`:
+
+- set `TRAILTRAINING_JUDGE_LLM_BASE_URL`
+- mirror it into `TRAILTRAINING_LLM_BASE_URL` and `OPENAI_BASE_URL`
+- set dummy `TRAILTRAINING_JUDGE_API_KEY` and `OPENAI_API_KEY`
+- call `install_trailtraining_client_compat(default_stage='judge')`
+
+## 15. Smoke failed with `NameError: name 'judge' is not defined`
+
+### Failure signature
+
+```text
+NameError: name 'judge' is not defined
+```
+
+### Meaning
+
+The embedded `python -c "..."` block in the smoke script had a shell-quoting
+bug around `default_stage="judge"`.
+
+### Fix
+
+Use single quotes inside the embedded Python:
+
+```python
+install_trailtraining_client_compat(default_stage='judge')
 ```

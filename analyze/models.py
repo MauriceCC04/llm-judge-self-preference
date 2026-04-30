@@ -200,6 +200,20 @@ def fit_h3_model(df: "pd.DataFrame") -> dict[str, Any]:
         "formula": formula,
     }
 
+def _empty_h4_result(
+    *,
+    n_obs: int = 0,
+    judge_families: list[str] | None = None,
+    formula: str | None = None,
+) -> dict[str, Any]:
+    return {
+        "slope": float("nan"),
+        "pvalue": float("nan"),
+        "n_obs": n_obs,
+        "formula": formula,
+        "subset": "same_family_only",
+        "judge_families": judge_families or [],
+    }
 
 def fit_h4_model(df: "pd.DataFrame") -> dict[str, Any]:
     """H4: Within-family scale effect, restricted to self-family judge/source rows."""
@@ -209,7 +223,7 @@ def fit_h4_model(df: "pd.DataFrame") -> dict[str, Any]:
         raise ImportError("pandas + statsmodels required") from exc
 
     if "judge" not in df.columns:
-        return {"slope": float("nan"), "pvalue": float("nan"), "n_obs": 0}
+        return _empty_h4_result(n_obs=0)
 
     sub = df.copy()
     if (
@@ -221,14 +235,17 @@ def fit_h4_model(df: "pd.DataFrame") -> dict[str, Any]:
 
     sub = sub[sub["judge"].isin(H4_PARAMS_B)].copy()
     if sub.empty:
-        return {"slope": float("nan"), "pvalue": float("nan"), "n_obs": 0}
+        return _empty_h4_result(n_obs=0)
 
     if "judge_family" not in sub.columns:
         sub["judge_family"] = sub["judge"].map(H4_JUDGE_FAMILIES).fillna("unknown")
 
     sub = sub[sub["same_family"] == 1].copy()
     if sub.empty:
-        return {"slope": float("nan"), "pvalue": float("nan"), "n_obs": 0}
+        return _empty_h4_result(
+            n_obs=0,
+            judge_families=sorted(set(sub["judge_family"])) if "judge_family" in sub.columns else [],
+        )
 
     sub["log10_params"] = sub["judge"].map({k: math.log10(v) for k, v in H4_PARAMS_B.items()})
 
@@ -246,7 +263,10 @@ def fit_h4_model(df: "pd.DataFrame") -> dict[str, Any]:
 
     sub = sub.dropna(subset=["prefers_llm", "log10_params"])
     if len(sub) < 3:
-        return {"slope": float("nan"), "pvalue": float("nan"), "n_obs": len(sub)}
+        return _empty_h4_result(
+            n_obs=len(sub),
+            judge_families=sorted(set(sub["judge_family"])) if "judge_family" in sub.columns else [],
+        )
 
     formula = "prefers_llm ~ log10_params"
     if "judge_family" in sub.columns and sub["judge_family"].nunique() > 1:

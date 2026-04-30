@@ -72,6 +72,7 @@ PANEL: list[JudgeSpec] = [
         disk_gb=10.0,
         time_hours=6.0,
         role="llm_source",
+        max_model_len=16384,
     ),
     JudgeSpec(
         name="gemma_4b_judge",
@@ -80,6 +81,7 @@ PANEL: list[JudgeSpec] = [
         disk_gb=10.0,
         time_hours=6.0,
         role="judge",
+        max_model_len=16384,
     ),
     JudgeSpec(
         name="gemma_12b_judge",
@@ -88,7 +90,8 @@ PANEL: list[JudgeSpec] = [
         disk_gb=28.0,
         time_hours=12.0,
         role="judge",
-    )
+        max_model_len=16384,
+    ),
 ]
 
 PANEL_BY_NAME: dict[str, JudgeSpec] = {judge.name: judge for judge in PANEL}

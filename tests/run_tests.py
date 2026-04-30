@@ -726,7 +726,7 @@ def test_14_schema_failures() -> None:
                 self.chat = _BadChat()
 
         return _Bad()
-    
+
     shared_mod.make_openrouter_client = _bad_client
     soft_eval_mod.make_openrouter_client = _bad_client
     try:

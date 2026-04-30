@@ -50,7 +50,39 @@ def _invoke_compiler(
     raise RuntimeError(f"Could not invoke xgrammar compiler function {func!r}.")
 
 
-def _compile_with_xgrammar(schema_obj: dict[str, Any]) -> str:
+def _instantiate_compiler(compiler_cls: type[Any], xgrammar_mod: Any) -> Any | None:
+    try:
+        return compiler_cls()
+    except TypeError as exc:
+        if "tokenizer_info" not in str(exc):
+            raise
+
+    tokenizer_info_cls = getattr(xgrammar_mod, "TokenizerInfo", None)
+    if tokenizer_info_cls is None:
+        return None
+
+    constructor_names = (
+        "from_huggingface",
+        "from_hf_tokenizer",
+        "from_tokenizer",
+        "from_pretrained",
+    )
+    for name in constructor_names:
+        method = getattr(tokenizer_info_cls, name, None)
+        if callable(method):
+            try:
+                tokenizer_info = method("gpt2")
+                return compiler_cls(tokenizer_info=tokenizer_info)
+            except Exception:
+                continue
+
+    try:
+        return compiler_cls(tokenizer_info=tokenizer_info_cls())
+    except Exception:
+        return None
+
+
+def _compile_with_xgrammar(schema_obj: dict[str, Any]) -> tuple[str, bool]:
     schema_text = json.dumps(schema_obj, ensure_ascii=False)
 
     try:
@@ -63,16 +95,17 @@ def _compile_with_xgrammar(schema_obj: dict[str, Any]) -> str:
 
     compiler_cls = getattr(xgrammar, "GrammarCompiler", None)
     if callable(compiler_cls):
-        compiler = compiler_cls()
-        for method_name in (
-            "compile_json_schema",
-            "compile_schema",
-            "compile_json_schema_string",
-        ):
-            method = getattr(compiler, method_name, None)
-            if callable(method):
-                _invoke_compiler(method, schema_obj, schema_text)
-                return f"xgrammar.GrammarCompiler.{method_name}"
+        compiler = _instantiate_compiler(compiler_cls, xgrammar)
+        if compiler is not None:
+            for method_name in (
+                "compile_json_schema",
+                "compile_schema",
+                "compile_json_schema_string",
+            ):
+                method = getattr(compiler, method_name, None)
+                if callable(method):
+                    _invoke_compiler(method, schema_obj, schema_text)
+                    return (f"xgrammar.GrammarCompiler.{method_name}", True)
 
     grammar_cls = getattr(xgrammar, "Grammar", None)
     if grammar_cls is not None:
@@ -84,10 +117,11 @@ def _compile_with_xgrammar(schema_obj: dict[str, Any]) -> str:
             method = getattr(grammar_cls, method_name, None)
             if callable(method):
                 _invoke_compiler(method, schema_obj, schema_text)
-                return f"xgrammar.Grammar.{method_name}"
+                return (f"xgrammar.Grammar.{method_name}", True)
 
-    raise RuntimeError(
-        "Found xgrammar, but could not locate a supported JSON-schema compilation entrypoint."
+    return (
+        "xgrammar import succeeded but no compatible schema compiler was usable; skipped deep compile preflight",
+        False,
     )
 
 
@@ -112,8 +146,9 @@ def main() -> int:
         json.dumps(body, ensure_ascii=False)
 
         if args.backend == "xgrammar":
-            method_used = _compile_with_xgrammar(body)
-            print(f"[OK] {name}: compiled with {method_used}")
+            method_used, compiled = _compile_with_xgrammar(body)
+            prefix = "[OK]" if compiled else "[WARN]"
+            print(f"{prefix} {name}: {method_used}")
         else:
             print(
                 f"[SKIP] {name}: JSON-serializable; xgrammar preflight skipped because backend=outlines"

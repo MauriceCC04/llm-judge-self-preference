@@ -111,6 +111,8 @@ export TRAILTRAINING_TWO_STAGE_PLAN=1
 export TRAILTRAINING_FORCE_API="${TRAILTRAINING_FORCE_API:-chat}"
 export TRAILTRAINING_GUIDED_DECODING_BACKEND="${GUIDED_DECODING_BACKEND}"
 
+echo "--- Structured API mode: ${TRAILTRAINING_FORCE_API} ---"
+echo "--- vLLM structured-output request backend: extra_body.structured_outputs (server backend auto/${GUIDED_DECODING_BACKEND}) ---"
 echo "--- Preflighting structured-output schemas (${TRAILTRAINING_GUIDED_DECODING_BACKEND}) ---"
 python tools/preflight_schemas.py --backend "${TRAILTRAINING_GUIDED_DECODING_BACKEND}"
 
@@ -133,7 +135,6 @@ python -m vllm.entrypoints.openai.api_server \
     --port "${VLLM_EXPLAINER_PORT}" \
     --host 127.0.0.1 \
     --max-model-len 8192 \
-    --guided-decoding-backend "${GUIDED_DECODING_BACKEND}" \
     --gpu-memory-utilization 0.20 \
     --no-enable-log-requests > out/vllm_explainer.log 2>&1 &
 EXPLAINER_PID=$!
@@ -155,7 +156,6 @@ if [[ "${GENERATION_ARM}" == "llm" ]]; then
         --port "${VLLM_SOURCE_PORT}" \
         --host 127.0.0.1 \
         --max-model-len 8192 \
-        --guided-decoding-backend "${GUIDED_DECODING_BACKEND}" \
         --gpu-memory-utilization 0.55 \
         --no-enable-log-requests > out/vllm_source.log 2>&1 &
     SOURCE_PID=$!

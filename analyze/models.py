@@ -329,7 +329,9 @@ def add_same_family_column(
     df = df.copy()
 
     if "judge" in df.columns:
-        df["judge_family"] = df["judge"].map(judge_families).fillna("unknown")
+        df["judge_family"] = df["judge"].apply(
+            lambda j: judge_families.get(str(j), _infer_family(j))
+        )
     else:
         df["judge_family"] = "unknown"
 

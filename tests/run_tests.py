@@ -1784,7 +1784,9 @@ def test_24_h4_restricts_to_qwen_source() -> None:
         "llm_position_bias": [0.0, 0.0, 0.0, 0.0],
     })
     result = fit_h4_model(df)
-    assert result["n_obs"] == 3, f"Expected only Qwen-sourced rows to remain, got {result['n_obs']}"
+    assert result["subset"] == "same_family_only"
+    assert result["n_obs"] == 2, f"Expected only same-family rows to remain, got {result['n_obs']}"
+    assert set(result["judge_families"]) <= {"qwen", "gemma"}
 
 
 # ═══════════════════════════════════════════════════════════════════════════════

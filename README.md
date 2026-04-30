@@ -35,7 +35,8 @@ here.
 - Programmatic arm: 256 plans
 - Total plans: 512
 - Target matched pairs: 250
-- Active judges: 4 (`llama_8b_judge`, `qwen_7b_judge`, `qwen_14b_judge`, `qwen_32b_judge`)
+- LLM source models: `Qwen/Qwen2.5-7B-Instruct`, `google/gemma-3-4b-it`
+- Active judges: 4 (`qwen_7b_judge`, `qwen_14b_judge`, `gemma_4b_judge`, `gemma_12b_judge`)
 - Pairwise calls: `250 × 4 × 5 × 2 = 10,000`
 - Soft-eval calls: `512 × 4 = 2,048`
 - Shared explainer: `Qwen/Qwen2.5-3B-Instruct`
@@ -154,36 +155,22 @@ Operationally this means:
 
 Planning budgets from `judge.panel` and `hpc.quota` are:
 
-- `meta-llama/Llama-3.1-8B-Instruct`: **17 GB**
 - `Qwen/Qwen2.5-7B-Instruct`: **15 GB**
 - `Qwen/Qwen2.5-3B-Instruct`: **6 GB**
 - `Qwen/Qwen2.5-14B-Instruct-AWQ`: **8 GB**
-- `Qwen/Qwen2.5-32B-Instruct-AWQ`: **18 GB**
+- `google/gemma-3-4b-it`: **10 GB**
+- `google/gemma-3-12b-it`: **28 GB**
 
 That yields:
 
-- largest **generation** model set: `17 + 6 = 23 GB`
-- largest **judge** model set: `18 GB`
+- largest **generation** model set: `15 + 6 = 21 GB`
+- largest **judge** model set: `28 GB`
 
 See `docs/HPC_RUNBOOK.md` for the exact quota-safe caching commands.
 
 ## Baseline command examples
 
-### Generate baseline plans
-
-```bash
-python cli.py generate \
-  --arm llm \
-  --source-model meta-llama/Llama-3.1-8B-Instruct \
-  --source-temperature 0.7 \
-  --explainer-temperature 0.0 \
-  --output artifacts/gen_src_t070_exp_t000/plans
-
-python cli.py generate \
-  --arm programmatic \
-  --explainer-temperature 0.0 \
-  --output artifacts/gen_src_t070_exp_t000/plans
-```
+### Generate baseline plans```
 
 ### Match within one generation condition
 
@@ -229,7 +216,7 @@ python cli.py judge \
 ```bash
 python cli.py generate \
   --arm llm \
-  --source-model meta-llama/Llama-3.1-8B-Instruct \
+  --source-model Qwen/Qwen2.5-7B-Instruct \
   --source-temperature 0.3 \
   --explainer-temperature 0.0 \
   --output artifacts/gen_src_t030_exp_t000/plans

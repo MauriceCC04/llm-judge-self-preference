@@ -50,14 +50,14 @@ from typing import Any, Callable, Iterable
 EXPECTED_TRAILTRAINING_SHA = "3e7f1793ca051ba1aae05f1714d594691202ad7e"
 EXPECTED_EXPLAINER = "Qwen/Qwen2.5-3B-Instruct"
 EXPECTED_SOURCE_MODELS = {
-    "meta-llama/Llama-3.1-8B-Instruct",
     "Qwen/Qwen2.5-7B-Instruct",
+    "google/gemma-3-4b-it",
 }
 EXPECTED_JUDGES = {
-    "llama_8b_judge",
     "qwen_7b_judge",
     "qwen_14b_judge",
-    "qwen_32b_judge",
+    "gemma_4b_judge",
+    "gemma_12b_judge",
 }
 EXPECTED_PAIRWISE_VIEWS = {"raw_normalized", "canonical_masked"}
 EXPECTED_RUBRICS = {
@@ -621,13 +621,13 @@ def check_h1_uses_logit(root: Path) -> CheckResult:
 def check_h3_h4_implemented(root: Path) -> CheckResult:
     src = _read(root / "analyze" / "models.py")
     has_h3 = "fit_h3_model" in src and "same_family" in src
-    has_h4 = "fit_h4_model" in src and "QWEN_PARAMS_B" in src
+    has_h4 = "fit_h4_model" in src and "H4_PARAMS_B" in src
     has_family_helper = "add_same_family_column" in src
     has_position_cov = "add_position_bias_covariate" in src or "llm_position_bias" in src
     ok = has_h3 and has_h4 and has_family_helper and has_position_cov
     return CheckResult(
         "alignment.h3_h4", "alignment",
-        "Self-preference (H3) and Qwen-ladder (H4) models implemented with controls",
+        "Self-preference (H3) and within-family scale (H4) models implemented with controls",
         ok, "blocker", 3,
         {"has_h3": has_h3, "has_h4": has_h4,
          "has_family_helper": has_family_helper,

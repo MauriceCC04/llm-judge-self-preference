@@ -149,11 +149,16 @@ In this study:
 
 Planning budgets from `judge.panel` are:
 
-- `meta-llama/Llama-3.1-8B-Instruct`: **17 GB**
 - `Qwen/Qwen2.5-7B-Instruct`: **15 GB**
 - `Qwen/Qwen2.5-3B-Instruct`: **6 GB**
 - `Qwen/Qwen2.5-14B-Instruct-AWQ`: **8 GB**
-- `Qwen/Qwen2.5-32B-Instruct-AWQ`: **18 GB**
+- `google/gemma-3-4b-it`: **10 GB**
+- `google/gemma-3-12b-it`: **28 GB**
+
+That means:
+
+- largest **generation** model set = `15 + 6 = 21 GB`
+- largest **judge** model set = `28 GB`
 
 That means:
 
@@ -290,24 +295,6 @@ This is an **LLM generation** job, so cache the **explainer + source** model set
 
 ```bash
 cd "${REPO_ROOT}"
-hf auth login
-cache_llm_generation_set "meta-llama/Llama-3.1-8B-Instruct"
-sbatch \
-  --account=<USER_ID> \
-  --partition=stud \
-  --qos=stud \
-  --exclude=gnode04 \
-  --export=ALL,HF_HOME=${HF_HOME},HF_HUB_CACHE=${HF_HUB_CACHE},HUGGINGFACE_HUB_CACHE=${HUGGINGFACE_HUB_CACHE},TRANSFORMERS_CACHE=${TRANSFORMERS_CACHE},HF_HUB_DISABLE_XET=${HF_HUB_DISABLE_XET},GENERATION_ARM=llm,GENERATION_PROFILE=exact,LLM_SOURCE_MODEL=meta-llama/Llama-3.1-8B-Instruct,SOURCE_TEMPERATURE=0.7,EXPLAINER_TEMPERATURE=0.0 \
-  --wrap="cd ${REPO_ROOT} && bash slurm/run_generation_hpc.sh"
-```
-
-### 7b. LLM arm — Qwen source (exact 128 plans)
-
-This is also an **LLM generation** job, so again cache the **explainer + source**
-model set.
-
-```bash
-cd "${REPO_ROOT}"
 cache_llm_generation_set "Qwen/Qwen2.5-7B-Instruct"
 sbatch \
   --account=<USER_ID> \
@@ -315,6 +302,26 @@ sbatch \
   --qos=stud \
   --exclude=gnode04 \
   --export=ALL,HF_HOME=${HF_HOME},HF_HUB_CACHE=${HF_HUB_CACHE},HUGGINGFACE_HUB_CACHE=${HUGGINGFACE_HUB_CACHE},TRANSFORMERS_CACHE=${TRANSFORMERS_CACHE},HF_HUB_DISABLE_XET=${HF_HUB_DISABLE_XET},GENERATION_ARM=llm,GENERATION_PROFILE=exact,LLM_SOURCE_MODEL=Qwen/Qwen2.5-7B-Instruct,SOURCE_TEMPERATURE=0.7,EXPLAINER_TEMPERATURE=0.0 \
+  --wrap="cd ${REPO_ROOT} && bash slurm/run_generation_hpc.sh"
+  ```
+
+### 7b. LLM arm — Gemma source (exact 128 plans)
+
+Before pre-caching Gemma models, make sure the Hugging Face account used on the
+cluster has accepted the Gemma model terms.
+
+This is also an **LLM generation** job, so again cache the **explainer + source**
+model set.
+
+```bash
+cd "${REPO_ROOT}"
+cache_llm_generation_set "google/gemma-3-4b-it"
+sbatch \
+  --account=<USER_ID> \
+  --partition=stud \
+  --qos=stud \
+  --exclude=gnode04 \
+  --export=ALL,HF_HOME=${HF_HOME},HF_HUB_CACHE=${HF_HUB_CACHE},HUGGINGFACE_HUB_CACHE=${HUGGINGFACE_HUB_CACHE},TRANSFORMERS_CACHE=${TRANSFORMERS_CACHE},HF_HUB_DISABLE_XET=${HF_HUB_DISABLE_XET},GENERATION_ARM=llm,GENERATION_PROFILE=exact,LLM_SOURCE_MODEL=google/gemma-3-4b-it,SOURCE_TEMPERATURE=0.7,EXPLAINER_TEMPERATURE=0.0 \
   --wrap="cd ${REPO_ROOT} && bash slurm/run_generation_hpc.sh"
 ```
 
@@ -383,19 +390,29 @@ Recommended pilot checks after the job completes:
 - no provenance exclusions during `cli.py analyze`
 - successful pairwise and soft-eval record loading
 
-## 11. Dedicated `qwen_32b_judge` validation before the full panel
+## 11. Dedicated larger-judge validation before the full panel
 
-Before launching the full four-judge study, validate the 32B AWQ judge on your
-actual `gpu:4g.40gb:1` slice with a small pilot shard.
+Before launching the full four-judge study, validate the larger judges with small
+pilot shards on your real GPU slice.
+
+### 11a. `qwen_14b_judge` pilot
 
 ```bash
 cd "${REPO_ROOT}"
-bash slurm/pre_cache_models.sh qwen_32b_judge
+bash slurm/pre_cache_models.sh qwen_14b_judge
 PAIR_LIMIT=5 PLAN_LIMIT=10 RUN_SOFT_EVAL=1 RUN_PAIRWISE=1 JUDGE_MODE=pilot JUDGE_TEMPERATURE=0.0 \
-  bash slurm/submit_judge_hpc.sh qwen_32b_judge
+  bash slurm/submit_judge_hpc.sh qwen_14b_judge
+  ```
+
+### 11b. `gemma_12b_judge` pilot
+```bash
+cd "${REPO_ROOT}"
+bash slurm/pre_cache_models.sh gemma_12b_judge
+PAIR_LIMIT=5 PLAN_LIMIT=10 RUN_SOFT_EVAL=1 RUN_PAIRWISE=1 JUDGE_MODE=pilot JUDGE_TEMPERATURE=0.0 \
+  bash slurm/submit_judge_hpc.sh gemma_12b_judge
 ```
 
-If this fails for memory or startup reasons, adjust the judge launch settings
+If either fails for memory or startup reasons, adjust the judge launch settings
 before starting the full four-judge panel.
 
 ## 12. Full judge runs
@@ -405,17 +422,17 @@ Each of these is a **single-model judge** case.
 ```bash
 cd "${REPO_ROOT}"
 
-bash slurm/pre_cache_models.sh llama_8b_judge
-JUDGE_TEMPERATURE=0.0 bash slurm/submit_judge_hpc.sh llama_8b_judge
-
 bash slurm/pre_cache_models.sh qwen_7b_judge
 JUDGE_TEMPERATURE=0.0 bash slurm/submit_judge_hpc.sh qwen_7b_judge
 
 bash slurm/pre_cache_models.sh qwen_14b_judge
 JUDGE_TEMPERATURE=0.0 bash slurm/submit_judge_hpc.sh qwen_14b_judge
 
-bash slurm/pre_cache_models.sh qwen_32b_judge
-JUDGE_TEMPERATURE=0.0 bash slurm/submit_judge_hpc.sh qwen_32b_judge
+bash slurm/pre_cache_models.sh gemma_4b_judge
+JUDGE_TEMPERATURE=0.0 bash slurm/submit_judge_hpc.sh gemma_4b_judge
+
+bash slurm/pre_cache_models.sh gemma_12b_judge
+JUDGE_TEMPERATURE=0.0 bash slurm/submit_judge_hpc.sh gemma_12b_judge
 ```
 
 To run the stricter masked control view:

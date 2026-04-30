@@ -4,11 +4,23 @@ from __future__ import annotations
 import math
 from typing import Any
 
-QWEN_SOURCE_MODEL = "Qwen/Qwen2.5-7B-Instruct"
-QWEN_PARAMS_B = {
+H4_PARAMS_B = {
     "qwen_7b_judge": 7.0,
     "qwen_14b_judge": 14.0,
-    "qwen_32b_judge": 32.0,
+    "gemma_4b_judge": 4.0,
+    "gemma_12b_judge": 12.0,
+}
+
+H4_JUDGE_FAMILIES = {
+    "qwen_7b_judge": "qwen",
+    "qwen_14b_judge": "qwen",
+    "gemma_4b_judge": "gemma",
+    "gemma_12b_judge": "gemma",
+}
+
+H4_SOURCE_FAMILIES = {
+    "Qwen/Qwen2.5-7B-Instruct": "qwen",
+    "google/gemma-3-4b-it": "gemma",
 }
 
 
@@ -190,7 +202,7 @@ def fit_h3_model(df: "pd.DataFrame") -> dict[str, Any]:
 
 
 def fit_h4_model(df: "pd.DataFrame") -> dict[str, Any]:
-    """H4: Scale effect within Qwen family, restricted to Qwen-sourced plans."""
+    """H4: Within-family scale effect, restricted to self-family judge/source rows."""
     try:
         import statsmodels.formula.api as smf
     except ImportError as exc:
@@ -199,16 +211,36 @@ def fit_h4_model(df: "pd.DataFrame") -> dict[str, Any]:
     if "judge" not in df.columns:
         return {"slope": float("nan"), "pvalue": float("nan"), "n_obs": 0}
 
-    sub = df[df["judge"].isin(QWEN_PARAMS_B)].copy()
-    if "llm_source_model" in sub.columns:
-        sub = sub[sub["llm_source_model"] == QWEN_SOURCE_MODEL].copy()
+    sub = df.copy()
+    if (
+        "same_family" not in sub.columns
+        or "judge_family" not in sub.columns
+        or "llm_source_family" not in sub.columns
+    ):
+        sub = add_same_family_column(sub)
+
+    sub = sub[sub["judge"].isin(H4_PARAMS_B)].copy()
     if sub.empty:
         return {"slope": float("nan"), "pvalue": float("nan"), "n_obs": 0}
 
-    sub["log10_params"] = sub["judge"].map({k: math.log10(v) for k, v in QWEN_PARAMS_B.items()})
+    if "judge_family" not in sub.columns:
+        sub["judge_family"] = sub["judge"].map(H4_JUDGE_FAMILIES).fillna("unknown")
+
+    sub = sub[sub["same_family"] == 1].copy()
+    if sub.empty:
+        return {"slope": float("nan"), "pvalue": float("nan"), "n_obs": 0}
+
+    sub["log10_params"] = sub["judge"].map({k: math.log10(v) for k, v in H4_PARAMS_B.items()})
 
     if "prefers_llm" not in sub.columns:
-        sub["prefers_llm"] = 0
+        if "arm_a" not in sub.columns:
+            sub["prefers_llm"] = 0
+        else:
+            sub["prefers_llm"] = (
+                ((sub["preferred"] == "plan_a") & (sub["arm_a"] == "llm")) |
+                ((sub["preferred"] == "plan_b") & (sub["arm_b"] == "llm"))
+            ).astype(int)
+
     if "llm_position_bias" not in sub.columns:
         sub["llm_position_bias"] = 0.0
 
@@ -217,6 +249,8 @@ def fit_h4_model(df: "pd.DataFrame") -> dict[str, Any]:
         return {"slope": float("nan"), "pvalue": float("nan"), "n_obs": len(sub)}
 
     formula = "prefers_llm ~ log10_params"
+    if "judge_family" in sub.columns and sub["judge_family"].nunique() > 1:
+        formula += " + C(judge_family)"
     if "llm_position_bias" in sub.columns:
         formula += " + llm_position_bias"
     if "fixture_id" in sub.columns and sub["fixture_id"].nunique() > 1:
@@ -238,6 +272,8 @@ def fit_h4_model(df: "pd.DataFrame") -> dict[str, Any]:
         "pvalue": round(pval, 4) if not math.isnan(pval) else float("nan"),
         "n_obs": len(sub),
         "formula": formula,
+        "subset": "same_family_only",
+        "judge_families": sorted(set(sub["judge_family"])) if "judge_family" in sub.columns else [],
     }
 
 
@@ -248,17 +284,9 @@ def add_same_family_column(
     source_families: dict[str, str] | None = None,
 ) -> "pd.DataFrame":
     if judge_families is None:
-        judge_families = {
-            "qwen_7b_judge": "qwen",
-            "qwen_14b_judge": "qwen",
-            "gemma_4b_judge": "gemma",
-            "gemma_12b_judge": "gemma",
-        }
+        judge_families = dict(H4_JUDGE_FAMILIES)
     if source_families is None:
-        source_families = {
-            "Qwen/Qwen2.5-7B-Instruct": "qwen",
-            "google/gemma-3-4b-it": "gemma",
-        }
+        source_families = dict(H4_SOURCE_FAMILIES)
 
     def _infer_family(model_id: object) -> str:
         if not model_id:
@@ -269,6 +297,8 @@ def add_same_family_column(
         s_lower = s.lower()
         if "qwen" in s_lower:
             return "qwen"
+        if "gemma" in s_lower:
+            return "gemma"
         if "llama" in s_lower:
             return "llama"
         if "mistral" in s_lower:

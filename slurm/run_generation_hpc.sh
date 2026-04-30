@@ -17,6 +17,7 @@
 #   EXPLAINER_TEMPERATURE default 0.0 for both arms
 #   VLLM_SOURCE_PORT      default 8773
 #   VLLM_EXPLAINER_PORT   default 8774
+#   GUIDED_DECODING_BACKEND xgrammar (default) or outlines
 #   CLEANUP_SOURCE_CACHE  1 (default) deletes source weights after llm generation
 #   CLEANUP_EXPLAINER_CACHE 1 (default) deletes explainer weights after generation
 #
@@ -48,6 +49,7 @@ SOURCE_TEMPERATURE="${SOURCE_TEMPERATURE:-0.7}"
 EXPLAINER_TEMPERATURE="${EXPLAINER_TEMPERATURE:-0.0}"
 VLLM_SOURCE_PORT="${VLLM_SOURCE_PORT:-8773}"
 VLLM_EXPLAINER_PORT="${VLLM_EXPLAINER_PORT:-8774}"
+GUIDED_DECODING_BACKEND="${GUIDED_DECODING_BACKEND:-xgrammar}"
 CLEANUP_SOURCE_CACHE="${CLEANUP_SOURCE_CACHE:-1}"
 CLEANUP_EXPLAINER_CACHE="${CLEANUP_EXPLAINER_CACHE:-1}"
 SOURCE_PID=""
@@ -86,16 +88,17 @@ else
 fi
 
 echo "=== Generation: ${GENERATION_ARM} arm (profile=${GENERATION_PROFILE}) ==="
-echo "  plans_per_fixture:     ${PLANS_PER_FIXTURE}"
-echo "  plans_dir:             ${PLANS_DIR}"
-echo "  sampler_config:        ${SAMPLER_CONFIG}"
-echo "  seed_offset:           ${SEED_OFFSET}"
-echo "  fixture_ids:           ${FIXTURE_IDS:-ALL}"
-echo "  explainer_model:       ${EXPLAINER_MODEL}"
-echo "  explainer_temperature: ${EXPLAINER_TEMPERATURE}"
+echo "  plans_per_fixture:       ${PLANS_PER_FIXTURE}"
+echo "  plans_dir:               ${PLANS_DIR}"
+echo "  sampler_config:          ${SAMPLER_CONFIG}"
+echo "  seed_offset:             ${SEED_OFFSET}"
+echo "  fixture_ids:             ${FIXTURE_IDS:-ALL}"
+echo "  explainer_model:         ${EXPLAINER_MODEL}"
+echo "  guided_decoding_backend: ${GUIDED_DECODING_BACKEND}"
+echo "  explainer_temperature:   ${EXPLAINER_TEMPERATURE}"
 if [[ "${GENERATION_ARM}" == "llm" ]]; then
-    echo "  source_model:          ${LLM_SOURCE_MODEL}"
-    echo "  source_temperature:    ${SOURCE_TEMPERATURE}"
+    echo "  source_model:            ${LLM_SOURCE_MODEL}"
+    echo "  source_temperature:      ${SOURCE_TEMPERATURE}"
 fi
 log_quota
 preflight_quota_gate
@@ -103,6 +106,13 @@ preflight_quota_gate
 export HF_HUB_OFFLINE=1
 export OPENROUTER_API_KEY=dummy
 export TRAILTRAINING_TWO_STAGE_PLAN=1
+export TRAILTRAINING_FORCE_API="${TRAILTRAINING_FORCE_API:-chat}"
+export TRAILTRAINING_GUIDED_DECODING_BACKEND="${GUIDED_DECODING_BACKEND}"
+
+echo "--- Preflighting structured-output schemas (${TRAILTRAINING_GUIDED_DECODING_BACKEND}) ---"
+python tools/preflight_schemas.py --backend "${TRAILTRAINING_GUIDED_DECODING_BACKEND}"
+
+echo "--- Structured API mode: ${TRAILTRAINING_FORCE_API} ---"
 
 cleanup() {
     set +e
@@ -121,6 +131,7 @@ python -m vllm.entrypoints.openai.api_server \
     --port "${VLLM_EXPLAINER_PORT}" \
     --host 127.0.0.1 \
     --max-model-len 8192 \
+    --guided-decoding-backend "${GUIDED_DECODING_BACKEND}" \
     --gpu-memory-utilization 0.20 \
     --no-enable-log-requests > out/vllm_explainer.log 2>&1 &
 EXPLAINER_PID=$!
@@ -142,6 +153,7 @@ if [[ "${GENERATION_ARM}" == "llm" ]]; then
         --port "${VLLM_SOURCE_PORT}" \
         --host 127.0.0.1 \
         --max-model-len 8192 \
+        --guided-decoding-backend "${GUIDED_DECODING_BACKEND}" \
         --gpu-memory-utilization 0.55 \
         --no-enable-log-requests > out/vllm_source.log 2>&1 &
     SOURCE_PID=$!

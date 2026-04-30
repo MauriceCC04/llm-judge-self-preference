@@ -26,14 +26,6 @@ class JudgeSpec(BaseModel):
 
 PANEL: list[JudgeSpec] = [
     JudgeSpec(
-        name="llama_8b_source",
-        model_id="meta-llama/Llama-3.1-8B-Instruct",
-        quant="fp16",
-        disk_gb=17.0,
-        time_hours=6.0,
-        role="llm_source",
-    ),
-    JudgeSpec(
         name="qwen_7b_source",
         model_id="Qwen/Qwen2.5-7B-Instruct",
         quant="fp16",
@@ -48,14 +40,6 @@ PANEL: list[JudgeSpec] = [
         disk_gb=6.0,
         time_hours=4.0,
         role="explainer",
-    ),
-    JudgeSpec(
-        name="llama_8b_judge",
-        model_id="meta-llama/Llama-3.1-8B-Instruct",
-        quant="fp16",
-        disk_gb=17.0,
-        time_hours=6.0,
-        role="judge",
     ),
     JudgeSpec(
         name="qwen_7b_judge",
@@ -81,6 +65,30 @@ PANEL: list[JudgeSpec] = [
         time_hours=16.0,
         role="judge",
     ),
+    JudgeSpec(
+        name="gemma_4b_source",
+        model_id="google/gemma-3-4b-it",
+        quant="fp16",
+        disk_gb=10.0,
+        time_hours=6.0,
+        role="llm_source",
+    ),
+    JudgeSpec(
+        name="gemma_4b_judge",
+        model_id="google/gemma-3-4b-it",
+        quant="fp16",
+        disk_gb=10.0,
+        time_hours=6.0,
+        role="judge",
+    ),
+    JudgeSpec(
+        name="gemma_12b_judge",
+        model_id="google/gemma-3-12b-it",
+        quant="fp16",
+        disk_gb=28.0,
+        time_hours=12.0,
+        role="judge",
+    )
 ]
 
 PANEL_BY_NAME: dict[str, JudgeSpec] = {judge.name: judge for judge in PANEL}

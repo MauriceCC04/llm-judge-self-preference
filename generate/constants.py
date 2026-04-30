@@ -5,8 +5,8 @@ EXPLAINER_MODEL_ID = "Qwen/Qwen2.5-3B-Instruct"
 
 # Two local source families for the generation arm.
 LLM_SOURCE_MODELS: list[str] = [
-    "meta-llama/Llama-3.1-8B-Instruct",
     "Qwen/Qwen2.5-7B-Instruct",
+    "google/gemma-3-4b-it",
 ]
 
 PLAN_DAYS = 7
@@ -17,11 +17,12 @@ STUDY_STYLE = "trailrunning"
 DEFAULT_PRIMARY_GOAL = "to become a faster and more durable trail runner"
 
 # Exactly four active judges, aligned with the frozen study goal.
+
 ACTIVE_JUDGE_NAMES: list[str] = [
-    "llama_8b_judge",
     "qwen_7b_judge",
     "qwen_14b_judge",
-    "qwen_32b_judge",
+    "gemma_4b_judge",
+    "gemma_12b_judge",
 ]
 
 PAIRWISE_N_RUNS = 5

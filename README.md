@@ -170,7 +170,28 @@ See `docs/HPC_RUNBOOK.md` for the exact quota-safe caching commands.
 
 ## Baseline command examples
 
-### Generate baseline plans```
+### Generate baseline plans
+
+```bash
+python cli.py generate \
+  --arm llm \
+  --source-model Qwen/Qwen2.5-7B-Instruct \
+  --source-temperature 0.7 \
+  --explainer-temperature 0.0 \
+  --output artifacts/gen_src_t070_exp_t000/plans
+
+python cli.py generate \
+  --arm llm \
+  --source-model google/gemma-3-4b-it \
+  --source-temperature 0.7 \
+  --explainer-temperature 0.0 \
+  --output artifacts/gen_src_t070_exp_t000/plans
+
+python cli.py generate \
+  --arm programmatic \
+  --explainer-temperature 0.0 \
+  --output artifacts/gen_src_t070_exp_t000/plans
+```
 
 ### Match within one generation condition
 
@@ -178,7 +199,7 @@ See `docs/HPC_RUNBOOK.md` for the exact quota-safe caching commands.
 python cli.py match \
   --plans artifacts/gen_src_t070_exp_t000/plans \
   --output artifacts/gen_src_t070_exp_t000/matched_pairs.json
-```
+  ```
 
 ### Judge baseline plans
 
@@ -209,7 +230,7 @@ python cli.py judge \
   --plans artifacts/gen_src_t070_exp_t000/plans \
   --pairs artifacts/gen_src_t070_exp_t000/matched_pairs.json \
   --output artifacts/gen_src_t070_exp_t000/judgments/judge_t070
-```
+  ```
 
 ### Source-temperature sweep
 

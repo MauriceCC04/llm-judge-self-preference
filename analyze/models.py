@@ -249,20 +249,15 @@ def add_same_family_column(
 ) -> "pd.DataFrame":
     if judge_families is None:
         judge_families = {
-            "llama_8b_judge": "llama",
             "qwen_7b_judge": "qwen",
             "qwen_14b_judge": "qwen",
-            "qwen_32b_judge": "qwen",
-            "mistral_7b_judge": "mistral",
+            "gemma_4b_judge": "gemma",
+            "gemma_12b_judge": "gemma",
         }
-
     if source_families is None:
         source_families = {
-            "meta-llama/Llama-3.1-8B-Instruct": "llama",
             "Qwen/Qwen2.5-7B-Instruct": "qwen",
-            "Qwen/Qwen2.5-14B-Instruct": "qwen",
-            "Qwen/Qwen2.5-32B-Instruct": "qwen",
-            "mistralai/Mistral-7B-Instruct-v0.3": "mistral",
+            "google/gemma-3-4b-it": "gemma",
         }
 
     def _infer_family(model_id: object) -> str:

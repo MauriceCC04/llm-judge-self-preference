@@ -61,8 +61,8 @@ def estimate_generation_peak_gb() -> float:
     """
     source_peak = _max_disk_gb(
         [
-            "meta-llama/Llama-3.1-8B-Instruct",
             "Qwen/Qwen2.5-7B-Instruct",
+            "google/gemma-3-4b-it",
         ],
         fallback_gb=17.0,
     )

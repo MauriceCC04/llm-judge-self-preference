@@ -15,20 +15,43 @@ from typing import Any
 
 
 class _FakeResponse:
-    """Minimal stand-in for an OpenRouter / OpenAI response."""
+    """Minimal stand-in for a responses-style structured output."""
 
     def __init__(self, text: str) -> None:
+        self.output_text = text
+
+
+class _FakeChatMessage:
+    def __init__(self, text: str, parsed: Any) -> None:
+        self.content = text
+        self.parsed = parsed
+        self.refusal = None
+
+
+class _FakeChatChoice:
+    def __init__(self, text: str, parsed: Any) -> None:
+        self.message = _FakeChatMessage(text, parsed)
+
+
+class _FakeChatResponse:
+    """Minimal stand-in for an OpenAI chat-completions structured output."""
+
+    def __init__(self, text: str, parsed: Any) -> None:
+        self.choices = [_FakeChatChoice(text, parsed)]
         self.output_text = text
 
 
 class MockLLMClient:
     """Drop-in replacement for ``openai.OpenAI`` used by trailtraining.
 
-    Supports the ``client.responses.create(**kwargs)`` call pattern.
+    Supports both:
+      - client.responses.create(**kwargs)
+      - client.chat.completions.create(**kwargs)
     """
 
     def __init__(self) -> None:
         self.responses = _ResponsesNamespace()
+        self.chat = _ChatNamespace()
 
 
 class _ResponsesNamespace:
@@ -38,6 +61,17 @@ class _ResponsesNamespace:
         return _FakeResponse(json.dumps(payload, default=str))
 
 
+class _ChatNamespace:
+    def __init__(self) -> None:
+        self.completions = _ChatCompletionsNamespace()
+
+
+class _ChatCompletionsNamespace:
+    def create(self, **kwargs: Any) -> _FakeChatResponse:
+        schema_name = _extract_schema_name(kwargs)
+        payload = _build_payload(schema_name)
+        text = json.dumps(payload, default=str)
+        return _FakeChatResponse(text, payload)
 # ── Schema-name extraction ────────────────────────────────────────────────────
 
 def _extract_schema_name(kwargs: dict[str, Any]) -> str:

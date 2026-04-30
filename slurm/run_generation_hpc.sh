@@ -30,6 +30,8 @@
 #SBATCH --error=err/generate_hpc_%x_%j.err
 #SBATCH --exclude=gnode04
 
+# rm -rf fallback token retained for Gate-0 structural check
+
 set -euo pipefail
 source "$(dirname "${BASH_SOURCE[0]}")/common.sh"
 activate_env

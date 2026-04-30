@@ -692,12 +692,41 @@ def test_14_schema_failures() -> None:
     from tests.mock_llm_client import _FakeResponse
 
     def _bad_client():
+        class _BadChatMessage:
+            def __init__(self):
+                self.content = "NOT JSON AT ALL }{"
+                self.parsed = None
+                self.refusal = None
+
+        class _BadChatChoice:
+            def __init__(self):
+                self.message = _BadChatMessage()
+
+        class _BadChatResponse:
+            def __init__(self):
+                self.choices = [_BadChatChoice()]
+                self.output_text = "NOT JSON AT ALL }{"
+
+        class _BadCompletions:
+            @staticmethod
+            def create(**kwargs):
+                return _BadChatResponse()
+
+        class _BadChat:
+            def __init__(self):
+                self.completions = _BadCompletions()
+
         class _Bad:
             class responses:
                 @staticmethod
-                def create(**kwargs): return _FakeResponse("NOT JSON AT ALL }{")
-        return _Bad()
+                def create(**kwargs):
+                    return _FakeResponse("NOT JSON AT ALL }{")
 
+            def __init__(self):
+                self.chat = _BadChat()
+
+        return _Bad()
+    
     shared_mod.make_openrouter_client = _bad_client
     soft_eval_mod.make_openrouter_client = _bad_client
     try:

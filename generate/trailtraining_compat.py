@@ -5,6 +5,7 @@ import logging
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
+import os
 
 import trailtraining.llm.coach_prompting as _coach_prompting
 from compat.trailtraining_client import (
@@ -15,6 +16,9 @@ from compat.trailtraining_client import (
 from generate.constants import PLAN_DAYS
 
 log = logging.getLogger(__name__)
+
+SOURCE_MAX_TOKENS = int(os.getenv("TRAILTRAINING_SOURCE_MAX_TOKENS", "4096"))
+EXPLAINER_MAX_TOKENS = int(os.getenv("TRAILTRAINING_EXPLAINER_MAX_TOKENS", "6144"))
 
 class StructuredStageError(RuntimeError):
     def __init__(
@@ -231,6 +235,7 @@ def run_two_stage_generation_compat(
         "reasoning": {"effort": source_cfg.reasoning_effort},
         "text": {"verbosity": source_cfg.verbosity},
         "stage_name": "machine_plan",
+        "max_tokens": SOURCE_MAX_TOKENS,
     }
     if source_cfg.temperature is not None:
         machine_kwargs["temperature"] = source_cfg.temperature
@@ -332,6 +337,7 @@ def run_two_stage_generation_compat(
         "reasoning": {"effort": explainer_cfg.reasoning_effort},
         "text": {"verbosity": explainer_cfg.verbosity},
         "stage_name": "plan_explanation",
+        "max_tokens": EXPLAINER_MAX_TOKENS,
     }
     if explainer_cfg.temperature is not None:
         explain_kwargs["temperature"] = explainer_cfg.temperature

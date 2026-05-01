@@ -112,15 +112,20 @@ export TRAILTRAINING_COACH_MAX_CHARS="${TRAILTRAINING_COACH_MAX_CHARS:-20000}"
 export TRAILTRAINING_STRUCTURED_MAX_TOKENS="${TRAILTRAINING_STRUCTURED_MAX_TOKENS:-4096}"
 export TRAILTRAINING_FORCE_API="${TRAILTRAINING_FORCE_API:-chat}"
 export TRAILTRAINING_GUIDED_DECODING_BACKEND="${GUIDED_DECODING_BACKEND}"
+export TRAILTRAINING_SOURCE_MAX_TOKENS="${TRAILTRAINING_SOURCE_MAX_TOKENS:-4096}"
+export TRAILTRAINING_EXPLAINER_MAX_TOKENS="${TRAILTRAINING_EXPLAINER_MAX_TOKENS:-6144}"
 
 echo "--- Structured API mode: ${TRAILTRAINING_FORCE_API} ---"
 echo "--- vLLM structured-output request backend: extra_body.structured_outputs (server backend auto/${GUIDED_DECODING_BACKEND}) ---"
 echo "--- Preflighting structured-output schemas (${TRAILTRAINING_GUIDED_DECODING_BACKEND}) ---"
 echo "--- Prompt cap chars: ${TRAILTRAINING_COACH_MAX_CHARS} ---"
 echo "--- Structured max_tokens: ${TRAILTRAINING_STRUCTURED_MAX_TOKENS} ---"
+echo "--- Structured source max_tokens: ${TRAILTRAINING_SOURCE_MAX_TOKENS} ---"
+echo "--- Structured explainer max_tokens: ${TRAILTRAINING_EXPLAINER_MAX_TOKENS} ---"
 python tools/preflight_schemas.py --backend "${TRAILTRAINING_GUIDED_DECODING_BACKEND}"
 
 echo "--- Structured API mode: ${TRAILTRAINING_FORCE_API} ---"
+
 
 cleanup() {
     set +e

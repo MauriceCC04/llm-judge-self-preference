@@ -10,6 +10,8 @@ from __future__ import annotations
 
 import argparse
 import json
+import logging
+import os
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -23,6 +25,18 @@ from generate.temperature import (
 )
 
 _ROOT = Path(__file__).parent.parent
+log = logging.getLogger(__name__)
+
+
+def _configure_logging() -> None:
+    level_name = (os.getenv("TRAILTRAINING_LOG_LEVEL") or "WARNING").strip().upper()
+    level = getattr(logging, level_name, logging.WARNING)
+    logging.basicConfig(
+        level=level,
+        format="%(asctime)s %(levelname)s %(name)s: %(message)s",
+        force=True,
+    )
+    log.info("Configured logging at level=%s", level_name)
 
 
 def _plan_exists(output_dir: Path, plan_id: str) -> bool:
@@ -31,14 +45,30 @@ def _plan_exists(output_dir: Path, plan_id: str) -> bool:
 
 def _write_failure(failures_path: Path, plan_id: str, exc: Exception) -> None:
     failures_path.parent.mkdir(parents=True, exist_ok=True)
+
     entry = {
         "plan_id": plan_id,
         "error": str(exc),
         "timestamp": datetime.now(tz=timezone.utc).isoformat(),
     }
+
+    for attr_name in (
+        "stage",
+        "raw_text_path",
+        "request_json_path",
+        "prompt_text_path",
+        "failure_json_path",
+    ):
+        value = getattr(exc, attr_name, None)
+        if value:
+            entry[attr_name] = str(value)
+
+    cause = getattr(exc, "__cause__", None)
+    if cause is not None:
+        entry["cause"] = str(cause)
+
     with failures_path.open("a", encoding="utf-8") as handle:
         handle.write(json.dumps(entry, default=str) + "\n")
-
 
 def _resolve_fixture_specs(fixture_ids: Iterable[str] | None):
     from fixtures.spec import ALL_FIXTURE_SPECS, FIXTURE_BY_ID
@@ -210,6 +240,8 @@ def build_parser() -> argparse.ArgumentParser:
 
 def main(argv: list[str] | None = None) -> None:
     from generate.constants import default_plans_per_fixture
+
+    _configure_logging()
 
     parser = build_parser()
     args = parser.parse_args(argv)

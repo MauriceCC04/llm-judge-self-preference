@@ -49,11 +49,15 @@ SEED_OFFSET="${SEED_OFFSET:-0}"
 FIXTURE_IDS="${FIXTURE_IDS:-}"
 SOURCE_TEMPERATURE="${SOURCE_TEMPERATURE:-0.7}"
 EXPLAINER_TEMPERATURE="${EXPLAINER_TEMPERATURE:-0.0}"
+
 VLLM_SOURCE_PORT="${VLLM_SOURCE_PORT:-8773}"
 VLLM_EXPLAINER_PORT="${VLLM_EXPLAINER_PORT:-8774}"
 GUIDED_DECODING_BACKEND="${GUIDED_DECODING_BACKEND:-xgrammar}"
+VLLM_SOURCE_MAX_MODEL_LEN="${VLLM_SOURCE_MAX_MODEL_LEN:-16384}"
+VLLM_EXPLAINER_MAX_MODEL_LEN="${VLLM_EXPLAINER_MAX_MODEL_LEN:-24576}"
 CLEANUP_SOURCE_CACHE="${CLEANUP_SOURCE_CACHE:-1}"
 CLEANUP_EXPLAINER_CACHE="${CLEANUP_EXPLAINER_CACHE:-1}"
+
 SOURCE_PID=""
 EXPLAINER_PID=""
 
@@ -113,10 +117,10 @@ export TRAILTRAINING_STRUCTURED_MAX_TOKENS="${TRAILTRAINING_STRUCTURED_MAX_TOKEN
 export TRAILTRAINING_FORCE_API="${TRAILTRAINING_FORCE_API:-chat}"
 export TRAILTRAINING_GUIDED_DECODING_BACKEND="${GUIDED_DECODING_BACKEND}"
 export TRAILTRAINING_SOURCE_MAX_TOKENS="${TRAILTRAINING_SOURCE_MAX_TOKENS:-4096}"
-export TRAILTRAINING_EXPLAINER_MAX_TOKENS="${TRAILTRAINING_EXPLAINER_MAX_TOKENS:-8192}"
+export TRAILTRAINING_EXPLAINER_MAX_TOKENS="${TRAILTRAINING_EXPLAINER_MAX_TOKENS:-12288}"
 
 echo "--- Structured API mode: ${TRAILTRAINING_FORCE_API} ---"
-echo "--- vLLM structured-output request backend: extra_body.structured_outputs (server backend auto/${GUIDED_DECODING_BACKEND}) ---"
+echo "--- vLLM structured-output request backend: chat.response_format + guided decoding backend ${GUIDED_DECODING_BACKEND} ---"
 echo "--- Preflighting structured-output schemas (${TRAILTRAINING_GUIDED_DECODING_BACKEND}) ---"
 echo "--- Prompt cap chars: ${TRAILTRAINING_COACH_MAX_CHARS} ---"
 echo "--- Structured max_tokens: ${TRAILTRAINING_STRUCTURED_MAX_TOKENS} ---"
@@ -143,9 +147,9 @@ python -m vllm.entrypoints.openai.api_server \
     --model "${EXPLAINER_MODEL}" \
     --port "${VLLM_EXPLAINER_PORT}" \
     --host 127.0.0.1 \
-    --max-model-len 16384 \
+    --max-model-len "${VLLM_EXPLAINER_MAX_MODEL_LEN}" \
     --gpu-memory-utilization 0.20 \
-    --structured-outputs-config '{"backend":"xgrammar","disable_any_whitespace":true}' \
+    --structured-outputs-config "{\"backend\":\"${GUIDED_DECODING_BACKEND}\",\"disable_any_whitespace\":true}" \
     --no-enable-log-requests > out/vllm_explainer.log 2>&1 &
 EXPLAINER_PID=$!
 
@@ -153,7 +157,7 @@ python -c "
 from judge.vllm_server import VllmServer
 from pathlib import Path
 import sys
-server = VllmServer('${EXPLAINER_MODEL}', ${VLLM_EXPLAINER_PORT}, log_dir=Path('out'), max_model_len=16384)
+server = VllmServer('${EXPLAINER_MODEL}', ${VLLM_EXPLAINER_PORT}, log_dir=Path('out'), max_model_len=${VLLM_EXPLAINER_MAX_MODEL_LEN})
 sys.exit(0 if server.health_poll(timeout_s=600, interval_s=10) else 1)
 "
 
@@ -161,14 +165,21 @@ export TRAILTRAINING_EXPLAINER_LLM_BASE_URL="http://127.0.0.1:${VLLM_EXPLAINER_P
 
 if [[ "${GENERATION_ARM}" == "llm" ]]; then
     echo "--- Starting source vLLM (${LLM_SOURCE_MODEL}) on :${VLLM_SOURCE_PORT} ---"
-    python -m vllm.entrypoints.openai.api_server       --model "${LLM_SOURCE_MODEL}"       --port "${VLLM_SOURCE_PORT}"       --host 127.0.0.1       --max-model-len 16384       --gpu-memory-utilization 0.55       --structured-outputs-config '{"backend":"xgrammar","disable_any_whitespace":true}'       --no-enable-log-requests > out/vllm_source.log 2>&1 &
+    python -m vllm.entrypoints.openai.api_server \
+    --model "${LLM_SOURCE_MODEL}" \
+    --port "${VLLM_SOURCE_PORT}" \
+    --host 127.0.0.1 \
+    --max-model-len "${VLLM_SOURCE_MAX_MODEL_LEN}" \
+    --gpu-memory-utilization 0.55 \
+    --structured-outputs-config "{\"backend\":\"${GUIDED_DECODING_BACKEND}\",\"disable_any_whitespace\":true}" \
+    --no-enable-log-requests > out/vllm_source.log 2>&1 &
     SOURCE_PID=$!
 
     python -c "
 from judge.vllm_server import VllmServer
 from pathlib import Path
 import sys
-server = VllmServer('${LLM_SOURCE_MODEL}', ${VLLM_SOURCE_PORT}, log_dir=Path('out'), max_model_len=16384)
+server = VllmServer('${LLM_SOURCE_MODEL}', ${VLLM_SOURCE_PORT}, log_dir=Path('out'), max_model_len=${VLLM_SOURCE_MAX_MODEL_LEN})
 sys.exit(0 if server.health_poll(timeout_s=900, interval_s=15) else 1)
 "
 

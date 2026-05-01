@@ -72,17 +72,15 @@ class _ChatCompletionsNamespace:
         payload = _build_payload(schema_name)
         text = json.dumps(payload, default=str)
         return _FakeChatResponse(text, payload)
-# ── Schema-name extraction ────────────────────────────────────────────────────
+
 
 def _extract_schema_name(kwargs: dict[str, Any]) -> str:
-    """Pull the JSON schema name from any of the three call forms."""
-    # text.format (structured output via responses API)
+    """Pull the JSON schema name from any of the structured-output call forms."""
     text = kwargs.get("text") or {}
     fmt = text.get("format") or {}
     if fmt.get("name"):
         return str(fmt["name"])
 
-    # response_format (completions API)
     rf = kwargs.get("response_format") or {}
     js = rf.get("json_schema") or {}
     if js.get("name"):
@@ -90,8 +88,6 @@ def _extract_schema_name(kwargs: dict[str, Any]) -> str:
 
     return ""
 
-
-# ── Payload builders per schema ───────────────────────────────────────────────
 
 _TODAY = "2026-03-17"
 _PLAN_START = "2026-03-18"
@@ -203,21 +199,23 @@ def _make_plan_days(n: int) -> list[dict[str, Any]]:
     for i in range(n):
         st, is_rest, is_hard, dur = session_cycle[i % len(session_cycle)]
         day = base + dt.timedelta(days=i)
-        days.append({
-            "date": day.isoformat(),
-            "title": st.capitalize() + " session",
-            "session_type": st,
-            "is_rest_day": is_rest,
-            "is_hard_day": is_hard,
-            "duration_minutes": dur,
-            "target_intensity": "rest" if is_rest else ("threshold" if is_hard else "easy"),
-            "terrain": "n/a" if is_rest else "trail",
-            "workout": "Rest day. No structured training." if is_rest else f"{dur} min {st} session.",
-            "purpose": "Recovery." if is_rest else "Build aerobic base.",
-            "signal_ids": ["forecast.readiness.status"],
-            "estimated_distance_km": None,
-            "estimated_elevation_m": None,
-        })
+        days.append(
+            {
+                "date": day.isoformat(),
+                "title": st.capitalize() + " session",
+                "session_type": st,
+                "is_rest_day": is_rest,
+                "is_hard_day": is_hard,
+                "duration_minutes": dur,
+                "target_intensity": "rest" if is_rest else ("threshold" if is_hard else "easy"),
+                "terrain": "n/a" if is_rest else "trail",
+                "workout": "Rest day. No structured training." if is_rest else f"{dur} min {st} session.",
+                "purpose": "Recovery." if is_rest else "Build aerobic base.",
+                "signal_ids": ["forecast.readiness.status"],
+                "estimated_distance_km": None,
+                "estimated_elevation_m": None,
+            }
+        )
     return days
 
 
@@ -258,22 +256,24 @@ def _make_machine_days(n: int) -> list[dict[str, Any]]:
     for i in range(n):
         st, is_rest, is_hard, dur = session_cycle[i % len(session_cycle)]
         day = base + dt.timedelta(days=i)
-        days.append({
-            "date": day.isoformat(),
-            "session_type": st,
-            "is_rest_day": is_rest,
-            "is_hard_day": is_hard,
-            "duration_minutes": dur,
-            "target_intensity": "rest" if is_rest else ("threshold" if is_hard else "easy"),
-            "terrain": "n/a" if is_rest else "trail",
-            "workout": "Rest day. No structured training." if is_rest else f"{dur} min {st}.",
-            "estimated_distance_km": None,
-            "estimated_elevation_m": None,
-        })
+        days.append(
+            {
+                "date": day.isoformat(),
+                "session_type": st,
+                "is_rest_day": is_rest,
+                "is_hard_day": is_hard,
+                "duration_minutes": dur,
+                "target_intensity": "rest" if is_rest else ("threshold" if is_hard else "easy"),
+                "terrain": "n/a" if is_rest else "trail",
+                "workout": "Rest day. No structured training." if is_rest else f"{dur} min {st}.",
+                "estimated_distance_km": None,
+                "estimated_elevation_m": None,
+            }
+        )
     return days
 
 
-def _plan_explanation_payload() -> dict[str, Any]:
+def _plan_explanation_stage_payload() -> dict[str, Any]:
     return {
         "snapshot": {
             "last7": dict(_SNAPSHOT),
@@ -297,17 +297,22 @@ def _plan_explanation_payload() -> dict[str, Any]:
         },
         "risks": [],
         "data_notes": ["Mock explanation."],
-        "citations": [
-            {
-                "citation_id": "c1",
-                "signal_id": "forecast.readiness.status",
-                "source": "forecast",
-                "date_range": f"{_TODAY}..{_TODAY}",
-                "value": "steady",
-            }
-        ],
-        "claim_attributions": [],
     }
+
+
+def _plan_explanation_payload() -> dict[str, Any]:
+    payload = _plan_explanation_stage_payload()
+    payload["citations"] = [
+        {
+            "citation_id": "c1",
+            "signal_id": "forecast.readiness.status",
+            "source": "forecast",
+            "date_range": f"{_TODAY}..{_TODAY}",
+            "value": "steady",
+        }
+    ]
+    payload["claim_attributions"] = []
+    return payload
 
 
 def _compare_plans_payload() -> dict[str, Any]:
@@ -326,8 +331,11 @@ def _soft_eval_payload() -> dict[str, Any]:
         "rubric_scores": {
             rid: {"score": 80, "reasoning": "Mock."}
             for rid in [
-                "goal_alignment", "plan_coherence", "explanation_quality",
-                "caution_proportionality", "actionability",
+                "goal_alignment",
+                "plan_coherence",
+                "explanation_quality",
+                "caution_proportionality",
+                "actionability",
             ]
         },
         "marker_results": [],
@@ -338,34 +346,40 @@ def _soft_eval_payload() -> dict[str, Any]:
 
 
 def _batch_markers_payload() -> dict[str, Any]:
-    """Return minimal valid marker_results for all trailrunning rubric markers.
-
-    The soft_eval code rejects empty marker_results and tries fallback chains;
-    returning populated results prevents cascading failures in Gate-0 tests.
-    """
     try:
         from trailtraining.llm.rubrics import get_default_rubrics
+
         results = []
         for rubric in get_default_rubrics("trailrunning"):
             for marker in rubric.markers:
-                results.append({
-                    "rubric": rubric.rubric_id,
-                    "marker_id": marker.marker_id,
-                    "marker": marker.label,
-                    "observation": "Mock observation: plan looks reasonable.",
-                    "verdict": "partial",
-                    "score": 3.0,
-                    "evidence": "Mock evidence from plan structure.",
-                    "improvement_hint": "Mock hint: add more specificity.",
-                })
+                results.append(
+                    {
+                        "rubric": rubric.rubric_id,
+                        "marker_id": marker.marker_id,
+                        "marker": marker.label,
+                        "observation": "Mock observation: plan looks reasonable.",
+                        "verdict": "partial",
+                        "score": 3.0,
+                        "evidence": "Mock evidence from plan structure.",
+                        "improvement_hint": "Mock hint: add more specificity.",
+                    }
+                )
         return {"marker_results": results}
     except Exception:
-        return {"marker_results": [
-            {"rubric": "goal_alignment", "marker_id": "goal_specificity",
-             "marker": "Goal specificity", "observation": "Mock.",
-             "verdict": "partial", "score": 3.0,
-             "evidence": "Mock.", "improvement_hint": "Mock."}
-        ]}
+        return {
+            "marker_results": [
+                {
+                    "rubric": "goal_alignment",
+                    "marker_id": "goal_specificity",
+                    "marker": "Goal specificity",
+                    "observation": "Mock.",
+                    "verdict": "partial",
+                    "score": 3.0,
+                    "evidence": "Mock.",
+                    "improvement_hint": "Mock.",
+                }
+            ]
+        }
 
 
 def _synthesis_payload() -> dict[str, Any]:
@@ -381,6 +395,7 @@ def _synthesis_payload() -> dict[str, Any]:
 _SCHEMA_DISPATCH: dict[str, Any] = {
     "trailtraining_training_plan_v4": _training_plan_payload,
     "trailtraining_machine_plan_v2": _machine_plan_payload,
+    "trailtraining_plan_explanation_stage_v1": _plan_explanation_stage_payload,
     "trailtraining_plan_explanation_v1": _plan_explanation_payload,
     "trailtraining_compare_plans_v1": _compare_plans_payload,
     "trailtraining_soft_quality_assessment_v1": _soft_eval_payload,
@@ -394,5 +409,4 @@ def _build_payload(schema_name: str) -> dict[str, Any]:
     factory = _SCHEMA_DISPATCH.get(schema_name)
     if factory is not None:
         return factory()
-    # Unknown schema — return a compare_plans response as a safe default
     return _compare_plans_payload()

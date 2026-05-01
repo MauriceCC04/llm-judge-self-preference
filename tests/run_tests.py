@@ -311,6 +311,71 @@ def test_05_guardrails() -> None:
     rest_count = sum(1 for d in days if d["is_rest_day"])
     assert rest_count >= 1, "no rest day after guardrails"
 
+def _read_proc_stream(proc: subprocess.Popen, stream_name: str) -> str:
+    stream = getattr(proc, stream_name, None)
+    if stream is None:
+        return ""
+    try:
+        return stream.read() or ""
+    except Exception:
+        return ""
+
+
+def _terminate_proc(proc: subprocess.Popen, *, timeout_s: float = 3.0) -> None:
+    if proc.poll() is not None:
+        return
+    proc.terminate()
+    try:
+        proc.wait(timeout=timeout_s)
+    except subprocess.TimeoutExpired:
+        proc.kill()
+        proc.wait(timeout=timeout_s)
+
+
+def _wait_for_file(path: Path, *, timeout_s: float = 15.0) -> str:
+    deadline = time.time() + timeout_s
+    while time.time() < deadline:
+        if path.exists():
+            text = path.read_text(encoding="utf-8").strip()
+            if text:
+                return text
+        time.sleep(0.05)
+    raise RuntimeError(f"Timed out waiting for file: {path}")
+
+
+def _wait_for_mock_server(proc, *, port: int, timeout_s: float = 15.0) -> None:
+    import urllib.request
+
+    deadline = time.time() + timeout_s
+    url = f"http://127.0.0.1:{port}/health"
+    last_exc: Exception | None = None
+
+    while time.time() < deadline:
+        if proc.poll() is not None:
+            stdout = _read_proc_stream(proc, "stdout")
+            stderr = _read_proc_stream(proc, "stderr")
+            raise RuntimeError(
+                "mock_llm_server.py exited early.\n"
+                f"stdout:\n{stdout}\n"
+                f"stderr:\n{stderr}"
+            )
+        try:
+            with urllib.request.urlopen(url, timeout=0.5) as resp:
+                if resp.status == 200:
+                    return
+        except Exception as exc:
+            last_exc = exc
+            time.sleep(0.1)
+
+    stdout = _read_proc_stream(proc, "stdout")
+    stderr = _read_proc_stream(proc, "stderr")
+    raise RuntimeError(
+        f"mock_llm_server.py did not become healthy at {url}: {last_exc}\n"
+        f"stdout:\n{stdout}\n"
+        f"stderr:\n{stderr}"
+    )
+
+
 @test("05b mock_http_server_smoke")
 def test_05b_mock_http_server_smoke() -> None:
     import json
@@ -322,12 +387,20 @@ def test_05b_mock_http_server_smoke() -> None:
 
     fixture = _get_fixture()
     tmp = _make_tmp()
-    port = _pick_free_port()
+    port_file = tmp / "mock_llm_server.port"
 
     server_env = os.environ.copy()
     server_env["PYTHONPATH"] = str(_PROJECT_ROOT)
     server = subprocess.Popen(
-        [sys.executable, str(_PROJECT_ROOT / "tools" / "mock_llm_server.py"), "--port", str(port)],
+        [
+            sys.executable,
+            "-u",
+            str(_PROJECT_ROOT / "tools" / "mock_llm_server.py"),
+            "--port",
+            "0",
+            "--port-file",
+            str(port_file),
+        ],
         cwd=str(_PROJECT_ROOT),
         env=server_env,
         stdout=subprocess.PIPE,
@@ -345,7 +418,9 @@ def test_05b_mock_http_server_smoke() -> None:
     old_env = {k: os.environ.get(k) for k in env_keys}
 
     try:
-        _wait_for_mock_server(server, port=port)
+        port = int(_wait_for_file(port_file, timeout_s=15.0))
+        _wait_for_mock_server(server, port=port, timeout_s=15.0)
+
         base_url = f"http://127.0.0.1:{port}/v1"
         os.environ["TRAILTRAINING_SOURCE_LLM_BASE_URL"] = base_url
         os.environ["TRAILTRAINING_EXPLAINER_LLM_BASE_URL"] = base_url
@@ -383,14 +458,7 @@ def test_05b_mock_http_server_smoke() -> None:
                 os.environ.pop(key, None)
             else:
                 os.environ[key] = value
-
-        server.terminate()
-        try:
-            server.wait(timeout=3)
-        except subprocess.TimeoutExpired:
-            server.kill()
-            server.wait(timeout=3)
-
+        _terminate_proc(server)
 # ═══════════════════════════════════════════════════════════════════════════════
 # Test 6 — Programmatic arm end-to-end (mock LLM)
 # ═══════════════════════════════════════════════════════════════════════════════

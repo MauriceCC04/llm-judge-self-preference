@@ -23,6 +23,10 @@ if str(_PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(_PROJECT_ROOT))
 
 
+class _ReusableHTTPServer(HTTPServer):
+    allow_reuse_address = True
+
+
 class _Handler(BaseHTTPRequestHandler):
     def do_GET(self) -> None:
         self.send_response(200)
@@ -94,10 +98,16 @@ class _Handler(BaseHTTPRequestHandler):
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--port", type=int, default=8765)
+    parser.add_argument("--port-file", type=str, default="")
     args = parser.parse_args()
 
-    server = HTTPServer(("127.0.0.1", args.port), _Handler)
-    print(f"Mock LLM server running on http://127.0.0.1:{args.port}/v1")
+    server = _ReusableHTTPServer(("127.0.0.1", args.port), _Handler)
+    actual_port = int(server.server_address[1])
+
+    if args.port_file:
+        Path(args.port_file).write_text(str(actual_port), encoding="utf-8")
+
+    print(f"Mock LLM server running on http://127.0.0.1:{actual_port}/v1", flush=True)
     try:
         server.serve_forever()
     except KeyboardInterrupt:

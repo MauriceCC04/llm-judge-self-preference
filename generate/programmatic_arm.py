@@ -28,6 +28,42 @@ from generate.temperature import build_programmatic_generation_condition
 
 EXPLAINER_MAX_TOKENS = int(os.getenv("TRAILTRAINING_EXPLAINER_MAX_TOKENS", "12288"))
 
+_PLACEHOLDER_LEAK_MARKERS = (
+    ">{signal_id",
+    "{signal_id",
+)
+
+
+def _collect_placeholder_leaks(value: Any, path: str = "$") -> list[tuple[str, str]]:
+    hits: list[tuple[str, str]] = []
+
+    if isinstance(value, dict):
+        for key, child in value.items():
+            hits.extend(_collect_placeholder_leaks(child, f"{path}.{key}"))
+        return hits
+
+    if isinstance(value, list):
+        for idx, child in enumerate(value):
+            hits.extend(_collect_placeholder_leaks(child, f"{path}[{idx}]"))
+        return hits
+
+    if isinstance(value, str):
+        text = value.strip()
+        if any(marker in text for marker in _PLACEHOLDER_LEAK_MARKERS):
+            hits.append((path, text))
+    return hits
+
+
+def _assert_no_placeholder_leaks(*, plan_obj: dict[str, Any], out_path: Path) -> None:
+    hits = _collect_placeholder_leaks(plan_obj)
+    if not hits:
+        return
+
+    preview = "; ".join(f"{path}={value!r}" for path, value in hits[:10])
+    raise ValueError(
+        f"Placeholder leak detected in final artifact {out_path.name} "
+        f"({len(hits)} hit(s)): {preview}"
+    )
 
 def _make_client_from_env() -> Any:
     """Compatibility helper retained for tests and fallback patching."""
@@ -268,6 +304,10 @@ def _run_explainer_directly(
         rollups=source_data.rollups,
         deterministic_forecast=deterministic_forecast,
         effective=effective,
+    )
+    _assert_no_placeholder_leaks(
+        plan_obj=obj,
+        out_path=out_path,
     )
 
     save_json(out_path, obj, compact=False)

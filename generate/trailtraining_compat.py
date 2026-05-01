@@ -41,6 +41,70 @@ class StructuredStageError(RuntimeError):
         self.prompt_text_path = str(prompt_text_path) if prompt_text_path else None
         self.failure_json_path = str(failure_json_path) if failure_json_path else None
 
+_PLACEHOLDER_LEAK_MARKERS = (
+    ">{signal_id",
+    "{signal_id",
+)
+
+
+def _collect_placeholder_leaks(value: Any, path: str = "$") -> list[tuple[str, str]]:
+    hits: list[tuple[str, str]] = []
+
+    if isinstance(value, dict):
+        for key, child in value.items():
+            hits.extend(_collect_placeholder_leaks(child, f"{path}.{key}"))
+        return hits
+
+    if isinstance(value, list):
+        for idx, child in enumerate(value):
+            hits.extend(_collect_placeholder_leaks(child, f"{path}[{idx}]"))
+        return hits
+
+    if isinstance(value, str):
+        text = value.strip()
+        if any(marker in text for marker in _PLACEHOLDER_LEAK_MARKERS):
+            hits.append((path, text))
+    return hits
+
+
+def _assert_no_placeholder_leaks(
+    *,
+    plan_id: str,
+    output_path: Path,
+    plan_obj: dict[str, Any],
+) -> None:
+    hits = _collect_placeholder_leaks(plan_obj)
+    if not hits:
+        return
+
+    raw_text = json.dumps(plan_obj, indent=2, ensure_ascii=False, default=str)
+    preview = "; ".join(f"{path}={value!r}" for path, value in hits[:10])
+    exc = ValueError(
+        f"Placeholder leak detected in final artifact ({len(hits)} hit(s)): {preview}"
+    )
+
+    paths = _write_stage_failure_artifacts(
+        output_path=output_path,
+        stage="final_validation",
+        prompt_text="",
+        request_kwargs={
+            "validation": "placeholder_leak",
+            "markers": list(_PLACEHOLDER_LEAK_MARKERS),
+            "hits": [{"path": path, "value": value} for path, value in hits],
+        },
+        raw_text=raw_text,
+        exc=exc,
+    )
+
+    raise StructuredStageError(
+        plan_id=plan_id,
+        stage="final_validation",
+        cause=exc,
+        raw_text_path=paths["raw_text_path"],
+        request_json_path=paths["request_json_path"],
+        prompt_text_path=paths["prompt_text_path"],
+        failure_json_path=paths["failure_json_path"],
+    ) from exc
 
 def _write_stage_failure_artifacts(
     *,
@@ -383,7 +447,11 @@ def run_two_stage_generation_compat(
         deterministic_forecast=data["forecast"],
         effective=effective,
     )
-
+    _assert_no_placeholder_leaks(
+        plan_id=plan_id,
+        output_path=output_path,
+        plan_obj=obj,
+    )
     save_json(output_path, obj, compact=False)
     runtime_metadata = {
         **describe_client_routing(),

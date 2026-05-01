@@ -15,8 +15,8 @@ from __future__ import annotations
 import argparse
 import json
 import sys
-from pathlib import Path
 from http.server import BaseHTTPRequestHandler, HTTPServer
+from pathlib import Path
 
 _PROJECT_ROOT = Path(__file__).resolve().parent.parent
 if str(_PROJECT_ROOT) not in sys.path:
@@ -38,7 +38,7 @@ class _Handler(BaseHTTPRequestHandler):
         length = int(self.headers.get("Content-Length", 0))
         body = json.loads(self.rfile.read(length)) if length else {}
 
-        from tests.mock_llm_client import _extract_schema_name, _build_payload
+        from tests.mock_llm_client import _build_payload, _extract_schema_name
 
         schema_name = _extract_schema_name(body)
         payload = _build_payload(schema_name)

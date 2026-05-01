@@ -274,12 +274,12 @@ def _make_machine_days(n: int) -> list[dict[str, Any]]:
 
 
 def _plan_explanation_stage_payload() -> dict[str, Any]:
+    """Matches trailtraining_plan_explanation_stage_v1.
+
+    Snapshot is now deterministic downstream, so the stage payload must NOT
+    include a snapshot field.
+    """
     return {
-        "snapshot": {
-            "last7": dict(_SNAPSHOT),
-            "baseline28": dict(_SNAPSHOT),
-            "notes": "Mock explanation snapshot.",
-        },
         "readiness_rationale": "Readiness looks steady based on available signals.",
         "readiness_signal_ids": ["forecast.readiness.status"],
         "day_explanations": [
@@ -301,7 +301,14 @@ def _plan_explanation_stage_payload() -> dict[str, Any]:
 
 
 def _plan_explanation_payload() -> dict[str, Any]:
-    payload = _plan_explanation_stage_payload()
+    payload = {
+        "snapshot": {
+            "last7": dict(_SNAPSHOT),
+            "baseline28": dict(_SNAPSHOT),
+            "notes": "Mock explanation snapshot.",
+        },
+        **_plan_explanation_stage_payload(),
+    }
     payload["citations"] = [
         {
             "citation_id": "c1",

@@ -108,12 +108,16 @@ preflight_quota_gate
 export HF_HUB_OFFLINE=1
 export OPENROUTER_API_KEY=dummy
 export TRAILTRAINING_TWO_STAGE_PLAN=1
+export TRAILTRAINING_COACH_MAX_CHARS="${TRAILTRAINING_COACH_MAX_CHARS:-20000}"
+export TRAILTRAINING_STRUCTURED_MAX_TOKENS="${TRAILTRAINING_STRUCTURED_MAX_TOKENS:-4096}"
 export TRAILTRAINING_FORCE_API="${TRAILTRAINING_FORCE_API:-chat}"
 export TRAILTRAINING_GUIDED_DECODING_BACKEND="${GUIDED_DECODING_BACKEND}"
 
 echo "--- Structured API mode: ${TRAILTRAINING_FORCE_API} ---"
 echo "--- vLLM structured-output request backend: extra_body.structured_outputs (server backend auto/${GUIDED_DECODING_BACKEND}) ---"
 echo "--- Preflighting structured-output schemas (${TRAILTRAINING_GUIDED_DECODING_BACKEND}) ---"
+echo "--- Prompt cap chars: ${TRAILTRAINING_COACH_MAX_CHARS} ---"
+echo "--- Structured max_tokens: ${TRAILTRAINING_STRUCTURED_MAX_TOKENS} ---"
 python tools/preflight_schemas.py --backend "${TRAILTRAINING_GUIDED_DECODING_BACKEND}"
 
 echo "--- Structured API mode: ${TRAILTRAINING_FORCE_API} ---"
@@ -134,7 +138,7 @@ python -m vllm.entrypoints.openai.api_server \
     --model "${EXPLAINER_MODEL}" \
     --port "${VLLM_EXPLAINER_PORT}" \
     --host 127.0.0.1 \
-    --max-model-len 8192 \
+    --max-model-len 16384 \
     --gpu-memory-utilization 0.20 \
     --no-enable-log-requests > out/vllm_explainer.log 2>&1 &
 EXPLAINER_PID=$!
@@ -143,7 +147,7 @@ python -c "
 from judge.vllm_server import VllmServer
 from pathlib import Path
 import sys
-server = VllmServer('${EXPLAINER_MODEL}', ${VLLM_EXPLAINER_PORT}, log_dir=Path('out'), max_model_len=8192)
+server = VllmServer('${EXPLAINER_MODEL}', ${VLLM_EXPLAINER_PORT}, log_dir=Path('out'), max_model_len=16384)
 sys.exit(0 if server.health_poll(timeout_s=600, interval_s=10) else 1)
 "
 
@@ -155,7 +159,7 @@ if [[ "${GENERATION_ARM}" == "llm" ]]; then
         --model "${LLM_SOURCE_MODEL}" \
         --port "${VLLM_SOURCE_PORT}" \
         --host 127.0.0.1 \
-        --max-model-len 8192 \
+        --max-model-len 16384 \
         --gpu-memory-utilization 0.55 \
         --no-enable-log-requests > out/vllm_source.log 2>&1 &
     SOURCE_PID=$!
@@ -164,7 +168,7 @@ if [[ "${GENERATION_ARM}" == "llm" ]]; then
 from judge.vllm_server import VllmServer
 from pathlib import Path
 import sys
-server = VllmServer('${LLM_SOURCE_MODEL}', ${VLLM_SOURCE_PORT}, log_dir=Path('out'), max_model_len=8192)
+server = VllmServer('${LLM_SOURCE_MODEL}', ${VLLM_SOURCE_PORT}, log_dir=Path('out'), max_model_len=16384)
 sys.exit(0 if server.health_poll(timeout_s=900, interval_s=15) else 1)
 "
 

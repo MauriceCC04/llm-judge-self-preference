@@ -65,6 +65,7 @@ def _assert_no_placeholder_leaks(*, plan_obj: dict[str, Any], out_path: Path) ->
         f"({len(hits)} hit(s)): {preview}"
     )
 
+
 def _make_client_from_env() -> Any:
     """Compatibility helper retained for tests and fallback patching."""
     return make_client_from_env(stage="explainer", model_id=EXPLAINER_MODEL_ID)
@@ -240,6 +241,7 @@ def _run_explainer_directly(
     import trailtraining.llm.coach_prompting as coach_prompting
     from trailtraining.llm.coach import (
         _apply_eval_coach_guardrails_compat,
+        _build_deterministic_snapshot,
         _finalize_training_plan_artifact,
         _merge_machine_plan_and_explanations,
         _parse_plan_explanation,
@@ -287,6 +289,7 @@ def _run_explainer_directly(
         cfg,
         str(explain_kwargs.get("instructions") or ""),
     )
+    explanation_obj["snapshot"] = _build_deterministic_snapshot(source_data.combined)
 
     obj = _merge_machine_plan_and_explanations(
         skeleton,
@@ -305,6 +308,7 @@ def _run_explainer_directly(
         deterministic_forecast=deterministic_forecast,
         effective=effective,
     )
+
     _assert_no_placeholder_leaks(
         plan_obj=obj,
         out_path=out_path,

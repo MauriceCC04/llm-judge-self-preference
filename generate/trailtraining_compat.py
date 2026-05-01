@@ -217,6 +217,90 @@ def _extract_response_model_id(response: Any, fallback: str | None = None) -> st
             return candidate.strip()
     return fallback
 
+def _build_deterministic_snapshot(combined: list[dict[str, Any]]) -> dict[str, Any]:
+    days = [day for day in combined if isinstance(day, dict)]
+    last7 = days[-7:]
+    last28 = days[-28:]
+
+    def _activity_items(window: list[dict[str, Any]]) -> list[dict[str, Any]]:
+        out: list[dict[str, Any]] = []
+        for day in window:
+            activities = day.get("activities") or []
+            if isinstance(activities, list):
+                out.extend([a for a in activities if isinstance(a, dict)])
+        return out
+
+    def _sleep_items(window: list[dict[str, Any]]) -> list[dict[str, Any]]:
+        out: list[dict[str, Any]] = []
+        for day in window:
+            sleep = day.get("sleep")
+            if isinstance(sleep, dict):
+                out.append(sleep)
+        return out
+
+    def _fmt_num(value: float | int | None, digits: int = 1) -> str:
+        if value is None:
+            return ""
+        if isinstance(value, int):
+            return str(value)
+        text = f"{value:.{digits}f}"
+        return text.rstrip("0").rstrip(".") if "." in text else text
+
+    def _sum_field(items: list[dict[str, Any]], key: str, scale: float = 1.0) -> float | None:
+        vals = [item.get(key) for item in items if isinstance(item.get(key), (int, float))]
+        if not vals:
+            return None
+        return sum(float(v) for v in vals) / scale
+
+    def _mean_field(items: list[dict[str, Any]], keys: tuple[str, ...]) -> float | None:
+        vals: list[float] = []
+        for item in items:
+            for key in keys:
+                val = item.get(key)
+                if isinstance(val, (int, float)):
+                    vals.append(float(val))
+                    break
+        if not vals:
+            return None
+        return sum(vals) / len(vals)
+
+    def _snapshot_obj(window: list[dict[str, Any]]) -> dict[str, str]:
+        activities = _activity_items(window)
+        sleeps = _sleep_items(window)
+
+        sleep_seconds = _mean_field(sleeps, ("duration", "total_sleep"))
+        sleep_hours = sleep_seconds / 3600.0 if sleep_seconds is not None else None
+
+        return {
+            "distance_km": _fmt_num(_sum_field(activities, "distance", scale=1000.0)),
+            "moving_time_hours": _fmt_num(_sum_field(activities, "moving_time", scale=3600.0)),
+            "elevation_m": _fmt_num(_sum_field(activities, "total_elevation_gain")),
+            "activity_count": str(len(activities)) if activities else "",
+            "sleep_hours_mean": _fmt_num(sleep_hours),
+            "hrv_mean": _fmt_num(_mean_field(sleeps, ("hrv", "average_hrv", "hrv_mean"))),
+            "rhr_mean": _fmt_num(
+                _mean_field(sleeps, ("resting_hr", "rhr", "resting_heart_rate"))
+            ),
+        }
+
+    last7_obj = _snapshot_obj(last7)
+    baseline28_obj = _snapshot_obj(last28)
+
+    notes_parts: list[str] = []
+    if last7_obj["distance_km"]:
+        notes_parts.append(f"The athlete covered {last7_obj['distance_km']} km in the last 7 days.")
+    if last7_obj["moving_time_hours"]:
+        notes_parts.append(f"Moving time was {last7_obj['moving_time_hours']} hours.")
+    if last7_obj["elevation_m"]:
+        notes_parts.append(f"Elevation gain was {last7_obj['elevation_m']} meters.")
+    if last7_obj["sleep_hours_mean"]:
+        notes_parts.append(f"Average sleep was {last7_obj['sleep_hours_mean']} hours per night.")
+
+    return {
+        "last7": last7_obj,
+        "baseline28": baseline28_obj,
+        "notes": " ".join(notes_parts).strip(),
+    }
 
 def run_two_stage_generation_compat(
     *,
@@ -232,7 +316,6 @@ def run_two_stage_generation_compat(
     from trailtraining.llm.coach import (
         CoachConfig,
         _apply_eval_coach_guardrails_compat,
-        _build_deterministic_snapshot,
         _finalize_training_plan_artifact,
         _merge_machine_plan_and_explanations,
         _parse_machine_plan,

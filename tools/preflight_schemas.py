@@ -8,11 +8,13 @@ from typing import Any, Callable
 from trailtraining.llm.schemas import (
     MACHINE_PLAN_SCHEMA,
     PLAN_EXPLANATION_SCHEMA,
+    PLAN_EXPLANATION_STAGE_SCHEMA,
     TRAINING_PLAN_SCHEMA,
 )
 
 _SCHEMAS: tuple[dict[str, Any], ...] = (
     MACHINE_PLAN_SCHEMA,
+    PLAN_EXPLANATION_STAGE_SCHEMA,
     PLAN_EXPLANATION_SCHEMA,
     TRAINING_PLAN_SCHEMA,
 )

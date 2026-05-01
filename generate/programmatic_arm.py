@@ -26,6 +26,8 @@ from generate.provenance import PlanProvenance
 from generate.sampler import StructuralSamplerConfig, sample_machine_plan, sampler_config_from_fixture_meta
 from generate.temperature import build_programmatic_generation_condition
 
+EXPLAINER_MAX_TOKENS = int(os.getenv("TRAILTRAINING_EXPLAINER_MAX_TOKENS", "12288"))
+
 
 def _make_client_from_env() -> Any:
     """Compatibility helper retained for tests and fallback patching."""
@@ -208,7 +210,7 @@ def _run_explainer_directly(
     )
     from trailtraining.llm.presets import get_system_prompt
     from trailtraining.llm.rubrics import default_primary_goal_for_style
-    from trailtraining.llm.schemas import PLAN_EXPLANATION_SCHEMA
+    from trailtraining.llm.schemas import PLAN_EXPLANATION_STAGE_SCHEMA
     from trailtraining.llm.shared import call_with_schema, recompute_planned_hours
     from trailtraining.util.state import _json_default, save_json
 
@@ -234,12 +236,13 @@ def _run_explainer_directly(
         "input": explainer_prompt,
         "reasoning": {"effort": cfg.reasoning_effort},
         "text": {"verbosity": cfg.verbosity},
+        "max_tokens": EXPLAINER_MAX_TOKENS,
     }
     if cfg.reasoning_effort == "none" and cfg.temperature is not None:
         explain_kwargs["temperature"] = cfg.temperature
 
     client = _make_client_from_env()
-    response = call_with_schema(client, explain_kwargs, PLAN_EXPLANATION_SCHEMA)
+    response = call_with_schema(client, explain_kwargs, PLAN_EXPLANATION_STAGE_SCHEMA)
     actual_explainer_model = _extract_response_model_id(response, fallback=EXPLAINER_MODEL_ID)
     explain_text = getattr(response, "output_text", None) or str(response)
     explanation_obj = _parse_plan_explanation(

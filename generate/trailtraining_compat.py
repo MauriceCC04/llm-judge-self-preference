@@ -18,7 +18,8 @@ from generate.constants import PLAN_DAYS
 log = logging.getLogger(__name__)
 
 SOURCE_MAX_TOKENS = int(os.getenv("TRAILTRAINING_SOURCE_MAX_TOKENS", "4096"))
-EXPLAINER_MAX_TOKENS = int(os.getenv("TRAILTRAINING_EXPLAINER_MAX_TOKENS", "8192"))
+EXPLAINER_MAX_TOKENS = int(os.getenv("TRAILTRAINING_EXPLAINER_MAX_TOKENS", "12288"))
+
 
 class StructuredStageError(RuntimeError):
     def __init__(
@@ -123,6 +124,7 @@ def _parse_with_failure_dump(
             failure_json_path=paths["failure_json_path"],
         ) from exc
 
+
 def _load_fixture(fixture_dir: Path) -> dict[str, Any]:
     combined = json.loads((fixture_dir / "combined_summary.json").read_text(encoding="utf-8"))
     personal = json.loads((fixture_dir / "formatted_personal_data.json").read_text(encoding="utf-8"))
@@ -172,7 +174,7 @@ def run_two_stage_generation_compat(
     from trailtraining.llm.constraints import constraint_config_from_env, derive_effective_constraints
     from trailtraining.llm.presets import get_system_prompt
     from trailtraining.llm.rubrics import default_primary_goal_for_style
-    from trailtraining.llm.schemas import MACHINE_PLAN_SCHEMA, PLAN_EXPLANATION_SCHEMA
+    from trailtraining.llm.schemas import MACHINE_PLAN_SCHEMA, PLAN_EXPLANATION_STAGE_SCHEMA
     from trailtraining.llm.shared import call_with_schema, recompute_planned_hours
     from trailtraining.util.state import _json_default, save_json
 
@@ -342,7 +344,7 @@ def run_two_stage_generation_compat(
     if explainer_cfg.temperature is not None:
         explain_kwargs["temperature"] = explainer_cfg.temperature
 
-    explain_resp = call_with_schema(explainer_client, explain_kwargs, PLAN_EXPLANATION_SCHEMA)
+    explain_resp = call_with_schema(explainer_client, explain_kwargs, PLAN_EXPLANATION_STAGE_SCHEMA)
     actual_explainer_model = _extract_response_model_id(explain_resp, fallback=None)
     explainer_model_verified = bool(
         actual_explainer_model is not None and actual_explainer_model == explainer_model

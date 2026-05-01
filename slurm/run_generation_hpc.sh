@@ -140,13 +140,13 @@ trap cleanup EXIT
 
 echo "--- Starting explainer vLLM (${EXPLAINER_MODEL}) on :${VLLM_EXPLAINER_PORT} ---"
 python -m vllm.entrypoints.openai.api_server \
-    --model "${EXPLAINER_MODEL}" \
-    --port "${VLLM_EXPLAINER_PORT}" \
-    --host 127.0.0.1 \
-    --max-model-len 16384 \
-    --gpu-memory-utilization 0.20 \
-    --disable-any-whitespace \
-    --no-enable-log-requests > out/vllm_explainer.log 2>&1 &
+  --model "${EXPLAINER_MODEL}" \
+  --port "${VLLM_EXPLAINER_PORT}" \
+  --host 127.0.0.1 \
+  --max-model-len 16384 \
+  --gpu-memory-utilization 0.20 \
+  --structured-outputs-config '{"backend":"xgrammar","disable_any_whitespace":true}' \
+  --no-enable-log-requests > out/vllm_explainer.log 2>&1 &
 EXPLAINER_PID=$!
 
 python -c "
@@ -162,15 +162,25 @@ export TRAILTRAINING_EXPLAINER_LLM_BASE_URL="http://127.0.0.1:${VLLM_EXPLAINER_P
 if [[ "${GENERATION_ARM}" == "llm" ]]; then
     echo "--- Starting source vLLM (${LLM_SOURCE_MODEL}) on :${VLLM_SOURCE_PORT} ---"
     python -m vllm.entrypoints.openai.api_server \
-        --model "${LLM_SOURCE_MODEL}" \
-        --port "${VLLM_SOURCE_PORT}" \
-        --host 127.0.0.1 \
-        --max-model-len 16384 \
-        --gpu-memory-utilization 0.55 \
-        --disable-any-whitespace \
-        --no-enable-log-requests > out/vllm_source.log 2>&1 &
+      --model "${LLM_SOURCE_MODEL}" \
+      --port "${VLLM_SOURCE_PORT}" \
+      --host 127.0.0.1 \
+      --max-model-len 16384 \
+      --gpu-memory-utilization 0.55 \
+      --structured-outputs-config '{"backend":"xgrammar","disable_any_whitespace":true}' \
+      --no-enable-log-requests > out/vllm_source.log 2>&1 &
     SOURCE_PID=$!
 
+    python -c "
+from judge.vllm_server import VllmServer
+from pathlib import Path
+import sys
+server = VllmServer('${LLM_SOURCE_MODEL}', ${VLLM_SOURCE_PORT}, log_dir=Path('out'), max_model_len=16384)
+sys.exit(0 if server.health_poll(timeout_s=900, interval_s=15) else 1)
+"
+
+    export TRAILTRAINING_SOURCE_LLM_BASE_URL="http://127.0.0.1:${VLLM_SOURCE_PORT}/v1"
+fi
     python -c "
 from judge.vllm_server import VllmServer
 from pathlib import Path

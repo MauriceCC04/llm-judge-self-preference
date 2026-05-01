@@ -18,7 +18,7 @@ from generate.constants import PLAN_DAYS
 log = logging.getLogger(__name__)
 
 SOURCE_MAX_TOKENS = int(os.getenv("TRAILTRAINING_SOURCE_MAX_TOKENS", "4096"))
-EXPLAINER_MAX_TOKENS = int(os.getenv("TRAILTRAINING_EXPLAINER_MAX_TOKENS", "6144"))
+EXPLAINER_MAX_TOKENS = int(os.getenv("TRAILTRAINING_EXPLAINER_MAX_TOKENS", "8192"))
 
 class StructuredStageError(RuntimeError):
     def __init__(
@@ -335,7 +335,7 @@ def run_two_stage_generation_compat(
         "instructions": get_system_prompt(style),
         "input": explainer_prompt,
         "reasoning": {"effort": explainer_cfg.reasoning_effort},
-        "text": {"verbosity": explainer_cfg.verbosity},
+        "text": {"verbosity": "low"},
         "stage_name": "plan_explanation",
         "max_tokens": EXPLAINER_MAX_TOKENS,
     }

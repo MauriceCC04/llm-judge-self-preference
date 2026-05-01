@@ -113,7 +113,7 @@ export TRAILTRAINING_STRUCTURED_MAX_TOKENS="${TRAILTRAINING_STRUCTURED_MAX_TOKEN
 export TRAILTRAINING_FORCE_API="${TRAILTRAINING_FORCE_API:-chat}"
 export TRAILTRAINING_GUIDED_DECODING_BACKEND="${GUIDED_DECODING_BACKEND}"
 export TRAILTRAINING_SOURCE_MAX_TOKENS="${TRAILTRAINING_SOURCE_MAX_TOKENS:-4096}"
-export TRAILTRAINING_EXPLAINER_MAX_TOKENS="${TRAILTRAINING_EXPLAINER_MAX_TOKENS:-6144}"
+export TRAILTRAINING_EXPLAINER_MAX_TOKENS="${TRAILTRAINING_EXPLAINER_MAX_TOKENS:-8192}"
 
 echo "--- Structured API mode: ${TRAILTRAINING_FORCE_API} ---"
 echo "--- vLLM structured-output request backend: extra_body.structured_outputs (server backend auto/${GUIDED_DECODING_BACKEND}) ---"
@@ -145,6 +145,7 @@ python -m vllm.entrypoints.openai.api_server \
     --host 127.0.0.1 \
     --max-model-len 16384 \
     --gpu-memory-utilization 0.20 \
+    --disable-any-whitespace \
     --no-enable-log-requests > out/vllm_explainer.log 2>&1 &
 EXPLAINER_PID=$!
 
@@ -166,6 +167,7 @@ if [[ "${GENERATION_ARM}" == "llm" ]]; then
         --host 127.0.0.1 \
         --max-model-len 16384 \
         --gpu-memory-utilization 0.55 \
+        --disable-any-whitespace \
         --no-enable-log-requests > out/vllm_source.log 2>&1 &
     SOURCE_PID=$!
 

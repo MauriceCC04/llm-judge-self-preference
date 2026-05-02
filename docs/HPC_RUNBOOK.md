@@ -22,6 +22,7 @@ Using the commands below gives you:
   - source generation temperature `0.7`
   - shared explainer temperature `0.0`
   - judge temperature `0.0`
+- a post-generation acceptance gate before matching and judging
 
 This runbook describes the **real HPC path**. It does **not** use the local
 `tools/mock_llm_server.py` smoke path.
@@ -278,13 +279,37 @@ sbatch \
   --wrap="bash slurm/run_vllm_smoke.sh"
 ```
 
-## 7. Exact-count generation
+## 7. Validated structured-output settings for generation
+
+The following settings were validated during the 2026-05 debugging cycle for
+the Qwen source + shared-explainer path and should be treated as the known-good
+starting point for that path:
+
+```bash
+export TRAILTRAINING_STRUCTURED_MAX_TOKENS=12288
+export TRAILTRAINING_SOURCE_MAX_TOKENS=4096
+export TRAILTRAINING_EXPLAINER_MAX_TOKENS=12288
+export VLLM_SOURCE_MAX_MODEL_LEN=16384
+export VLLM_EXPLAINER_MAX_MODEL_LEN=24576
+```
+
+These settings are especially relevant for avoiding:
+
+- explainer-side context overflow (`400 Bad Request` with prompt + output > max context)
+- explainer truncation with `finish=length`
+- misleading downstream JSON parse errors caused by truncation
+
+If you are debugging a different source model or backend, start from the same
+shape of configuration and only then adjust conservatively.
+
+## 8. Exact-count generation
 
 ### Important: do not launch direct CLI generation on HPC without endpoint wiring
 
-For the real HPC path, prefer the SLURM wrappers. Calling `python cli.py generate`
-directly on the login node is only valid if you have already started the local
-vLLM endpoints yourself and exported the stage-specific environment variables:
+For the real HPC path, prefer the SLURM wrappers. Calling
+`python cli.py generate` directly on the login node is only valid if you have
+already started the local vLLM endpoints yourself and exported the stage-specific
+environment variables:
 
 - `TRAILTRAINING_SOURCE_LLM_BASE_URL`
 - `TRAILTRAINING_EXPLAINER_LLM_BASE_URL`
@@ -297,9 +322,10 @@ If those are missing or stale, you can hit failures such as:
 
 Use the wrapper path below instead.
 
-### 7a. LLM arm — Qwen source (exact 128 plans)
+### 8a. LLM arm — Qwen source (exact 128 plans)
 
-This is an **LLM generation** job, so cache the **explainer + source** model set.
+This is an **LLM generation** job, so cache the **explainer + source** model
+set.
 
 ```bash
 cd "${REPO_ROOT}"
@@ -315,11 +341,11 @@ sbatch \
   --chdir="${REPO_ROOT}" \
   --output=out/generate_hpc_%x_%j.out \
   --error=err/generate_hpc_%x_%j.err \
-  --export=ALL,HF_HOME=${HF_HOME},HF_HUB_CACHE=${HF_HUB_CACHE},HUGGINGFACE_HUB_CACHE=${HUGGINGFACE_HUB_CACHE},TRANSFORMERS_CACHE=${TRANSFORMERS_CACHE},HF_HUB_DISABLE_XET=${HF_HUB_DISABLE_XET},GENERATION_ARM=llm,GENERATION_PROFILE=exact,LLM_SOURCE_MODEL=Qwen/Qwen2.5-7B-Instruct,SOURCE_TEMPERATURE=0.7,EXPLAINER_TEMPERATURE=0.0 \
+  --export=ALL,HF_HOME=${HF_HOME},HF_HUB_CACHE=${HF_HUB_CACHE},HUGGINGFACE_HUB_CACHE=${HUGGINGFACE_HUB_CACHE},TRANSFORMERS_CACHE=${TRANSFORMERS_CACHE},HF_HUB_DISABLE_XET=${HF_HUB_DISABLE_XET},GENERATION_ARM=llm,GENERATION_PROFILE=exact,LLM_SOURCE_MODEL=Qwen/Qwen2.5-7B-Instruct,SOURCE_TEMPERATURE=0.7,EXPLAINER_TEMPERATURE=0.0,TRAILTRAINING_STRUCTURED_MAX_TOKENS=${TRAILTRAINING_STRUCTURED_MAX_TOKENS:-12288},TRAILTRAINING_SOURCE_MAX_TOKENS=${TRAILTRAINING_SOURCE_MAX_TOKENS:-4096},TRAILTRAINING_EXPLAINER_MAX_TOKENS=${TRAILTRAINING_EXPLAINER_MAX_TOKENS:-12288},VLLM_SOURCE_MAX_MODEL_LEN=${VLLM_SOURCE_MAX_MODEL_LEN:-16384},VLLM_EXPLAINER_MAX_MODEL_LEN=${VLLM_EXPLAINER_MAX_MODEL_LEN:-24576} \
   --wrap="bash slurm/run_generation_hpc.sh"
 ```
 
-### 7b. LLM arm — Gemma source (exact 128 plans)
+### 8b. LLM arm — Gemma source (exact 128 plans)
 
 Before pre-caching Gemma models, make sure the Hugging Face account used on the
 cluster has accepted the Gemma model terms.
@@ -341,20 +367,20 @@ sbatch \
   --chdir="${REPO_ROOT}" \
   --output=out/generate_hpc_%x_%j.out \
   --error=err/generate_hpc_%x_%j.err \
-  --export=ALL,HF_HOME=${HF_HOME},HF_HUB_CACHE=${HF_HUB_CACHE},HUGGINGFACE_HUB_CACHE=${HUGGINGFACE_HUB_CACHE},TRANSFORMERS_CACHE=${TRANSFORMERS_CACHE},HF_HUB_DISABLE_XET=${HF_HUB_DISABLE_XET},GENERATION_ARM=llm,GENERATION_PROFILE=exact,LLM_SOURCE_MODEL=google/gemma-3-4b-it,SOURCE_TEMPERATURE=0.7,EXPLAINER_TEMPERATURE=0.0 \
+  --export=ALL,HF_HOME=${HF_HOME},HF_HUB_CACHE=${HF_HUB_CACHE},HUGGINGFACE_HUB_CACHE=${HUGGINGFACE_HUB_CACHE},TRANSFORMERS_CACHE=${TRANSFORMERS_CACHE},HF_HUB_DISABLE_XET=${HF_HUB_DISABLE_XET},GENERATION_ARM=llm,GENERATION_PROFILE=exact,LLM_SOURCE_MODEL=google/gemma-3-4b-it,SOURCE_TEMPERATURE=0.7,EXPLAINER_TEMPERATURE=0.0,TRAILTRAINING_STRUCTURED_MAX_TOKENS=${TRAILTRAINING_STRUCTURED_MAX_TOKENS:-12288},TRAILTRAINING_SOURCE_MAX_TOKENS=${TRAILTRAINING_SOURCE_MAX_TOKENS:-4096},TRAILTRAINING_EXPLAINER_MAX_TOKENS=${TRAILTRAINING_EXPLAINER_MAX_TOKENS:-12288},VLLM_SOURCE_MAX_MODEL_LEN=${VLLM_SOURCE_MAX_MODEL_LEN:-16384},VLLM_EXPLAINER_MAX_MODEL_LEN=${VLLM_EXPLAINER_MAX_MODEL_LEN:-24576} \
   --wrap="bash slurm/run_generation_hpc.sh"
 ```
 
 After both jobs complete, the LLM arm totals **256** plans exactly.
 
-### 7c. Fit sampler priors
+### 8c. Fit sampler priors
 
 ```bash
 cd "${REPO_ROOT}"
 python -m generate.fit_priors --plans-dir plans/ --output sampler_config.json
 ```
 
-### 7d. Programmatic arm (exact 256 plans)
+### 8d. Programmatic arm (exact 256 plans)
 
 This is a **programmatic generation** job, so cache the **explainer only**.
 
@@ -372,8 +398,180 @@ sbatch \
   --chdir="${REPO_ROOT}" \
   --output=out/generate_hpc_%x_%j.out \
   --error=err/generate_hpc_%x_%j.err \
-  --export=ALL,HF_HOME=${HF_HOME},HF_HUB_CACHE=${HF_HUB_CACHE},HUGGINGFACE_HUB_CACHE=${HUGGINGFACE_HUB_CACHE},TRANSFORMERS_CACHE=${TRANSFORMERS_CACHE},HF_HUB_DISABLE_XET=${HF_HUB_DISABLE_XET},GENERATION_ARM=programmatic,GENERATION_PROFILE=exact,SAMPLER_CONFIG=sampler_config.json,EXPLAINER_TEMPERATURE=0.0 \
+  --export=ALL,HF_HOME=${HF_HOME},HF_HUB_CACHE=${HF_HUB_CACHE},HUGGINGFACE_HUB_CACHE=${HUGGINGFACE_HUB_CACHE},TRANSFORMERS_CACHE=${TRANSFORMERS_CACHE},HF_HUB_DISABLE_XET=${HF_HUB_DISABLE_XET},GENERATION_ARM=programmatic,GENERATION_PROFILE=exact,SAMPLER_CONFIG=sampler_config.json,EXPLAINER_TEMPERATURE=0.0,TRAILTRAINING_STRUCTURED_MAX_TOKENS=${TRAILTRAINING_STRUCTURED_MAX_TOKENS:-12288},TRAILTRAINING_EXPLAINER_MAX_TOKENS=${TRAILTRAINING_EXPLAINER_MAX_TOKENS:-12288},VLLM_EXPLAINER_MAX_MODEL_LEN=${VLLM_EXPLAINER_MAX_MODEL_LEN:-24576} \
   --wrap="bash slurm/run_generation_hpc.sh"
 ```
 
 At this point you should have **512 total plans**.
+
+## 9. Generation acceptance gate before matching
+
+Do **not** go directly from “generation completed” to matching.
+
+Before matching, run all of the following against the saved plan directory for
+the active generation condition.
+
+### 9a. Inspect failed plans and raw failures
+
+```bash
+cat <PLANS_DIR>/failed_plans.jsonl 2>/dev/null || true
+find <PLANS_DIR> -type f | grep raw_failures | sort || true
+```
+
+A small number of raw generation failures is acceptable. They should **not** be
+counted as study plans. Saved plans are what matter for downstream analyses.
+
+### 9b. Scan for placeholder leakage
+
+```bash
+grep -R ">{signal_id" <PLANS_DIR>/*.json || true
+```
+
+The expected output is empty.
+
+### 9c. Verify saved-plan day durations
+
+```bash
+python - <<'PY'
+import json, glob, os
+plans_dir = "<PLANS_DIR>"
+bad = []
+count = 0
+for path in sorted(glob.glob(f"{plans_dir}/*.json")):
+    if path.endswith(".provenance.json"):
+        continue
+    count += 1
+    with open(path, "r", encoding="utf-8") as f:
+        obj = json.load(f)
+    for day in obj["plan"]["days"]:
+        dur = day["duration_minutes"]
+        if dur < 0 or dur > 420:
+            bad.append((os.path.basename(path), day["date"], dur))
+print("VALID_JSON_PLANS:", count)
+print("BAD_DURATIONS:", bad)
+PY
+```
+
+The expected output is:
+
+- `VALID_JSON_PLANS: <retained count>`
+- `BAD_DURATIONS: []`
+
+### 9d. Filter and deduplicate before matching
+
+The matching step should operate on a **retained filtered corpus**, not the raw
+pre-filter generation pool.
+
+At minimum, filter out:
+
+- human-facing contradictions like `Rest day` titles on non-rest sessions
+- exact text duplicates beyond one representative
+- exact session-signature duplicates beyond one representative in the active
+  condition / cell
+
+Use `tools/plan_audit.py` and `tools/plan_similarity_report.py` to support this
+review and deduplication process.
+
+### 9e. Human audit before full judging
+
+Run a small human review over:
+
+- a stratified sample of saved plans
+- suspicious duplicate groups
+- any plans from failure-prone cells / conditions
+
+The human audit is a study-validity gate, not an optional cosmetic step.
+
+## 10. Artifact safety before repo cleanup
+
+Before any `git clean -fd`, `git reset --hard`, or other working-tree cleanup:
+
+- copy completed corpora to a durable non-repo artifact directory
+- or copy them off-cluster to the desktop
+- or both
+
+Do **not** rely on untracked plan directories inside the repo working tree as
+the only copy of a completed generation run.
+
+## 11. Matching
+
+Once the retained filtered corpus is ready:
+
+```bash
+python cli.py match \
+  --plans artifacts/gen_src_t070_exp_t000/plans \
+  --output artifacts/gen_src_t070_exp_t000/matched_pairs.json
+```
+
+## 12. Style gate
+
+Run the paired style audit before full judging. Matching on deterministic score
+alone is necessary but not sufficient.
+
+```bash
+python cli.py audit-style \
+  --plans artifacts/gen_src_t070_exp_t000/plans \
+  --pairs artifacts/gen_src_t070_exp_t000/matched_pairs.json \
+  --output artifacts/gen_src_t070_exp_t000/results
+```
+
+If the style gate fails, stop and fix the corpus before full judging.
+
+## 13. Judge pilot and full judging
+
+Use the sequential wrapper path for the real panel on HPC. The pilot should run
+before the full judging sweep so that position-biased or otherwise broken judges
+can be excluded from the primary estimate.
+
+Typical sequence:
+
+```bash
+JUDGE_MODE=pilot \
+PAIRWISE_VIEW=raw_normalized \
+PLANS_DIR=artifacts/gen_src_t070_exp_t000/plans \
+PAIRS_FILE=artifacts/gen_src_t070_exp_t000/matched_pairs.json \
+JUDGMENTS_DIR=artifacts/gen_src_t070_exp_t000/judgments/pilot_raw_normalized \
+STYLE_GATE_SUMMARY=artifacts/gen_src_t070_exp_t000/results/style_audit_summary.json \
+bash slurm/submit_judge_panel_hpc.sh
+```
+
+Then, if the pilot is acceptable:
+
+```bash
+JUDGE_MODE=full \
+PAIRWISE_VIEW=raw_normalized \
+PLANS_DIR=artifacts/gen_src_t070_exp_t000/plans \
+PAIRS_FILE=artifacts/gen_src_t070_exp_t000/matched_pairs.json \
+JUDGMENTS_DIR=artifacts/gen_src_t070_exp_t000/judgments/full_raw_normalized \
+STYLE_GATE_SUMMARY=artifacts/gen_src_t070_exp_t000/results/style_audit_summary.json \
+bash slurm/submit_judge_panel_hpc.sh
+```
+
+Run the `canonical_masked` control view as a separate condition if desired.
+
+## 14. Analysis
+
+```bash
+python cli.py analyze \
+  --judgments artifacts/gen_src_t070_exp_t000/judgments/full_raw_normalized \
+  --plans artifacts/gen_src_t070_exp_t000/plans \
+  --pairs artifacts/gen_src_t070_exp_t000/matched_pairs.json \
+  --output artifacts/gen_src_t070_exp_t000/results/full_raw_normalized \
+  --pairwise-view raw_normalized
+```
+
+## 15. Minimum launch gates for the baseline study
+
+Do not proceed to full judging unless all of the following are true:
+
+- Gate-0 passes
+- preflight passes
+- vLLM smoke passes
+- generation completed for the active condition
+- placeholder scan is clean on saved plans
+- saved-plan duration scan is clean
+- obvious human-facing contradictions have been filtered out
+- duplicate filtering has been applied
+- style gate passes
+- judge pilot does not identify a judge that should be excluded from the
+  primary analysis without that exclusion being applied

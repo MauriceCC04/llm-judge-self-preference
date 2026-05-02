@@ -28,7 +28,7 @@ def _signature(bundle_dir: Path) -> str:
 def test_fixture_payloads_are_all_unique(tmp_path: Path) -> None:
     build_all(tmp_path)
     signatures = [_signature(tmp_path / spec.fixture_id) for spec in ALL_FIXTURE_SPECS]
-    assert len(signatures) == len(set(signatures)) == 8
+    assert len(signatures) == len(set(signatures)) == 32
 
 
 def test_rollups_match_combined_summary(tmp_path: Path) -> None:

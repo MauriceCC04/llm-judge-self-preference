@@ -11,6 +11,13 @@ Arm = Literal["llm", "programmatic"]
 class PlanProvenance(BaseModel):
     plan_id: str
     fixture_id: str
+    athlete_band: Optional[str] = None
+    readiness: Optional[str] = None
+    recovery_capability: Optional[str] = None
+    race_phase: Optional[str] = None
+    plan_days: Optional[int] = None
+    style: Optional[str] = None
+
     arm: Arm
     source_model: Optional[str] = None
     explainer_model: str

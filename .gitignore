@@ -32,3 +32,9 @@ coverage.xml
 /.idea
 goal.txt
 fixtures/data
+/smoke_artifacts
+/smoke_judgments
+/smoke_judgments_qwen_pilot
+/smoke_plans
+/smoke_results
+/artifacts

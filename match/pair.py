@@ -7,7 +7,8 @@ from pathlib import Path
 from typing import Any
 
 from generate.constants import MATCH_FEATURE_WEIGHTS
-from match.features import load_match_features, weighted_feature_distance
+from match.features import extract_match_features, weighted_feature_distance
+from match.filtering import filter_plan_records
 
 
 class ScoringError(RuntimeError):
@@ -68,8 +69,14 @@ def greedy_pair(
     for p in llm_plans + prog_plans:
         p["score_bin"] = _score_bin(float(p["score"]))
 
-    llm_sorted = sorted(llm_plans, key=lambda p: (p["fixture_id"], p["score_bin"], p["score"]))
-    prog_sorted = sorted(prog_plans, key=lambda p: (p["fixture_id"], p["score_bin"], p["score"]))
+    llm_sorted = sorted(
+        llm_plans,
+        key=lambda p: (p["fixture_id"], p["score_bin"], p["score"]),
+    )
+    prog_sorted = sorted(
+        prog_plans,
+        key=lambda p: (p["fixture_id"], p["score_bin"], p["score"]),
+    )
 
     used_llm: set[str] = set()
     used_prog: set[str] = set()
@@ -89,6 +96,18 @@ def greedy_pair(
                 continue
             if pp["fixture_id"] != lp["fixture_id"]:
                 continue
+            if pp.get("athlete_band") != lp.get("athlete_band"):
+                continue
+            if pp.get("readiness") != lp.get("readiness"):
+                continue
+            if pp.get("recovery_capability") != lp.get("recovery_capability"):
+                continue
+            if pp.get("race_phase") != lp.get("race_phase"):
+                continue
+            if int(pp.get("plan_days") or 0) != int(lp.get("plan_days") or 0):
+                continue
+            if str(pp.get("style") or "") != str(lp.get("style") or ""):
+                continue
             if pp["score_bin"] != lp["score_bin"]:
                 continue
 
@@ -96,7 +115,7 @@ def greedy_pair(
             if gap > tolerance:
                 continue
             distance = weighted_feature_distance(lp, pp, weights=feature_weights)
-            if (distance, gap) < (best_distance, best_gap):
+            if (gap, distance) < (best_gap, best_distance):
                 best_gap = gap
                 best_distance = distance
                 best_prog = pp
@@ -108,6 +127,11 @@ def greedy_pair(
                     "plan_a_id": lp["plan_id"],
                     "plan_b_id": best_prog["plan_id"],
                     "fixture_id": lp["fixture_id"],
+                    "athlete_band": lp.get("athlete_band"),
+                    "readiness": lp.get("readiness"),
+                    "recovery_capability": lp.get("recovery_capability"),
+                    "race_phase": lp.get("race_phase"),
+                    "plan_days": lp.get("plan_days"),
                     "score_gap": round(best_gap, 3),
                     "match_distance": round(best_distance, 3),
                     "score_a": lp["score"],
@@ -129,7 +153,7 @@ def greedy_pair(
                     "score_bin": lp["score_bin"],
                     "score_bin_a": lp["score_bin"],
                     "score_bin_b": best_prog["score_bin"],
-                    "match_rule": "same_fixture_same_score_bin_within_tolerance_min_weighted_distance",
+                    "match_rule": "same_full_cell_same_plan_days_same_score_bin_within_tolerance_min_weighted_distance",
                     "arm_a": "llm",
                     "arm_b": "programmatic",
                 }
@@ -210,12 +234,16 @@ def _build_matching_audit(
     gaps = [float(p["score_gap"]) for p in pairs]
     mean_gap = sum(gaps) / n if n else float("nan")
     by_fixture: dict[str, int] = {}
+    by_athlete_band: dict[str, int] = {}
     llm_conditions: set[str] = set()
     programmatic_conditions: set[str] = set()
 
     for p in pairs:
         fid = str(p["fixture_id"])
         by_fixture[fid] = by_fixture.get(fid, 0) + 1
+        band = str(p.get("athlete_band") or "")
+        if band:
+            by_athlete_band[band] = by_athlete_band.get(band, 0) + 1
         llm_conditions.add(str(p.get("generation_condition_a") or ""))
         programmatic_conditions.add(str(p.get("generation_condition_b") or ""))
 
@@ -228,9 +256,10 @@ def _build_matching_audit(
         "coverage_ok": coverage_ok,
         "mean_score_gap": round(mean_gap, 4) if mean_gap == mean_gap else float("nan"),
         "pairs_by_fixture": dict(sorted(by_fixture.items())),
+        "pairs_by_athlete_band": dict(sorted(by_athlete_band.items())),
         "llm_generation_conditions": sorted(x for x in llm_conditions if x),
         "programmatic_generation_conditions": sorted(x for x in programmatic_conditions if x),
-        "match_rule": "same_fixture_same_score_bin_within_tolerance_min_weighted_distance",
+        "match_rule": "same_full_cell_same_plan_days_same_score_bin_within_tolerance_min_weighted_distance",
     }
 
 
@@ -241,7 +270,7 @@ def build_matched_pairs(
     output_path: Path,
     *,
     tolerance: float = 1.0,
-    target_pairs: int = 250,
+    target_pairs: int = 256,
     strict_scoring: bool = True,
     scoring_failures_path: Path | None = None,
     feature_weights: dict[str, float] | None = None,
@@ -281,10 +310,17 @@ def build_matched_pairs(
         prov.deterministic_score = score
         prov_path.write_text(prov.model_dump_json(indent=2), encoding="utf-8")
 
+        plan_obj = json.loads(plan_path.read_text(encoding="utf-8"))
         plan_records.append(
             {
                 "plan_id": prov.plan_id,
                 "fixture_id": prov.fixture_id,
+                "athlete_band": prov.athlete_band,
+                "readiness": prov.readiness,
+                "recovery_capability": prov.recovery_capability,
+                "race_phase": prov.race_phase,
+                "plan_days": prov.plan_days or len((plan_obj.get("plan") or {}).get("days") or []),
+                "style": prov.style or str((plan_obj.get("meta") or {}).get("style") or ""),
                 "arm": prov.arm,
                 "score": score,
                 "score_bin": _score_bin(score),
@@ -296,7 +332,8 @@ def build_matched_pairs(
                 "source_temperature": prov.source_temperature,
                 "explainer_temperature": prov.explainer_temperature,
                 "generation_condition": prov.generation_condition,
-                **load_match_features(plan_path),
+                "plan_obj": plan_obj,
+                **extract_match_features(plan_obj),
             }
         )
 
@@ -307,6 +344,13 @@ def build_matched_pairs(
             raise ScoringError(
                 f"{len(scoring_failures)} plans failed deterministic scoring; see {fail_path}"
             )
+
+    prefilter = filter_plan_records(plan_records)
+    _write_json(output_path.with_name("matching_prefilter_audit.json"), prefilter["audit"])
+    plan_records = [
+        {k: v for k, v in record.items() if k != "plan_obj"}
+        for record in prefilter["kept_records"]
+    ]
 
     if not allow_mixed_generation_conditions:
         _assert_single_generation_condition(plan_records)
@@ -324,16 +368,16 @@ def build_matched_pairs(
 
     if fail_below_target_ratio is not None and audit["coverage_ratio"] < fail_below_target_ratio:
         raise MatchingCoverageError(
-            f"Matching coverage {audit['coverage_ratio']:.3f} is below required ratio {fail_below_target_ratio:.3f}. "
-            f"See {output_path.with_name('matching_audit.json')}"
+            f"Matching coverage {audit['coverage_ratio']:.3f} is below required ratio "
+            f"{fail_below_target_ratio:.3f}. See {output_path.with_name('matching_audit.json')}"
         )
 
-    print(f"\n[Saved] {output_path}  ({len(pairs)} pairs)")
+    print(f"\\n[Saved] {output_path}  ({len(pairs)} pairs)")
     return pairs
 
 
 def _print_audit(audit: dict[str, Any]) -> None:
-    print("\n── Matching audit ──────────────────────────────")
+    print("\\n── Matching audit ──────────────────────────────")
     print(f"  Pairs yielded:    {audit['n_pairs']}  (target: {audit['target_pairs']})")
     print(f"  Mean score gap:   {audit['mean_score_gap']:.3f}")
     print(f"  Coverage ratio:   {audit['coverage_ratio']:.3f}")
@@ -345,5 +389,5 @@ def _print_audit(audit: dict[str, Any]) -> None:
     if audit.get("programmatic_generation_conditions"):
         print(f"  Prog conditions:  {audit['programmatic_generation_conditions']}")
     if not audit["coverage_ok"]:
-        print("\n  ⚠ Coverage below 80% — retune sampler priors or generate more programmatic plans.")
-    print("────────────────────────────────────────────────\n")
+        print("\\n  ⚠ Coverage below 80% — retune sampler priors or generate more plans.")
+    print("────────────────────────────────────────────────\\n")

@@ -419,3 +419,112 @@ Use single quotes inside the embedded Python:
 ```python
 install_trailtraining_client_compat(default_stage='judge')
 ```
+
+## 16. Explainer request exceeded model context length
+
+### Failure signature
+
+```text
+This model's maximum context length is 16384 tokens. However, you requested 12288 output tokens and your prompt contains at least 4097 input tokens, for a total of at least 16385 tokens.
+```
+
+### Meaning
+
+The explainer request budget exceeded the server's effective context limit.
+This is a request-construction / server-budget problem, not evidence that the
+model cannot perform the task.
+
+### Fix
+
+Increase the explainer server context budget and keep the validated structured
+caps in place:
+
+```bash
+export TRAILTRAINING_STRUCTURED_MAX_TOKENS=12288
+export TRAILTRAINING_SOURCE_MAX_TOKENS=4096
+export TRAILTRAINING_EXPLAINER_MAX_TOKENS=12288
+export VLLM_SOURCE_MAX_MODEL_LEN=16384
+export VLLM_EXPLAINER_MAX_MODEL_LEN=24576
+```
+
+## 17. Explainer returned malformed JSON after `finish=length`
+
+### Failure signatures
+
+```text
+finish=length
+Expecting ',' delimiter
+```
+
+### Meaning
+
+The explainer hit the output cap and was truncated. The downstream JSON parse
+error is a symptom, not the root cause.
+
+### Fix
+
+- use the validated structured-output settings above
+- prefer the working `chat.response_format + xgrammar` path
+- inspect the dumped raw failure artifact before concluding that the model is
+  fundamentally incapable
+
+## 18. Saved final artifact contained `>{signal_id` placeholder leakage
+
+### Failure signatures
+
+```text
+>{signal_id:
+Placeholder leak detected in final artifact
+```
+
+### Meaning
+
+A final saved plan artifact was contaminated by placeholder-like snapshot
+content. This is study-invalid even if the JSON parses successfully.
+
+### Fix
+
+- build the final `snapshot` deterministically from structured signal data
+- reject any saved final artifact that still contains placeholder leakage
+- audit the retained corpus with a placeholder scan before matching
+
+## 19. Manual file copying caused repo drift on HPC
+
+### Failure signature
+
+```text
+cannot import name '_build_deterministic_snapshot'
+```
+
+### Meaning
+
+The two repos on HPC (`llm-judge-self-preference` and `trailtraining`) were out
+of sync after hand-copying some files but not others.
+
+### Fix
+
+- sync both repos from the desktop / GitHub copy
+- clear `__pycache__`
+- rerun with a fully consistent checkout
+
+## 20. `git clean -fd` deleted generated plans and logs
+
+### Failure signatures
+
+```text
+Removing err/
+Removing out/...
+Removing plans_qwen_...
+```
+
+### Meaning
+
+Generated study artifacts were being stored as untracked files inside the repo
+working tree. `git clean -fd` therefore removed them.
+
+### Fix
+
+- copy generated corpora to a durable non-repo artifact directory before repo cleanup
+- or copy them off-cluster before any reset / clean step
+- do not rely on untracked `plans_*`, `out/`, or `err/` directories inside the
+  git repo as the only copy of a completed run

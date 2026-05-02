@@ -1,10 +1,11 @@
-"""fixtures/build.py — synthesise the 8 committed fixture bundles.
+"""fixtures/build.py — synthesise the 32 committed fixture bundles.
 
 Run once (idempotent):
     python -m fixtures.build
 
-This version fixes the earlier phase-leakage bug: ``race_phase`` now changes
-substantive prompt-visible payloads, not only ``fixture_meta.json``.
+This revision upgrades the study from 8 to 32 fixture bundles by introducing
+athlete_band as a first-class cell axis. Phase, readiness, recovery, and athlete
+band now all change prompt-visible payloads.
 """
 from __future__ import annotations
 
@@ -17,48 +18,6 @@ from typing import Any
 from fixtures.spec import ALL_FIXTURE_SPECS, FIXTURE_BY_ID, FixtureMeta, PHASE_PROFILES
 
 DATA_DIR = Path(__file__).parent / "data"
-
-_BASELINE_LOAD_HOURS = {
-    "developing_runner": 4.6,
-    "experienced_runner": 5.4,
-    "durable_high_volume_runner": 6.4,
-    "fatigue_prone_runner": 4.2,
-}
-
-_BASELINE_DISTANCE_KM = {
-    "developing_runner": 38.0,
-    "experienced_runner": 48.0,
-    "durable_high_volume_runner": 58.0,
-    "fatigue_prone_runner": 34.0,
-}
-
-_BASELINE_ELEVATION_M = {
-    "developing_runner": 1200.0,
-    "experienced_runner": 1600.0,
-    "durable_high_volume_runner": 2100.0,
-    "fatigue_prone_runner": 1050.0,
-}
-
-_WEIGHT_KG = {
-    "developing_runner": 70.0,
-    "experienced_runner": 67.0,
-    "durable_high_volume_runner": 65.0,
-    "fatigue_prone_runner": 69.0,
-}
-
-_HEIGHT_CM = {
-    "developing_runner": 176.0,
-    "experienced_runner": 174.0,
-    "durable_high_volume_runner": 173.0,
-    "fatigue_prone_runner": 175.0,
-}
-
-_YEARS_IN_SPORT = {
-    "developing_runner": 1.8,
-    "experienced_runner": 4.5,
-    "durable_high_volume_runner": 6.5,
-    "fatigue_prone_runner": 3.2,
-}
 
 
 def _json_write(path: Path, payload: Any) -> None:
@@ -90,11 +49,17 @@ def _readiness_training_multiplier(spec: FixtureMeta, day_idx: int) -> float:
     return 0.90 if day_idx < 28 else 0.82
 
 
-def _duration_minutes(spec: FixtureMeta, day_idx: int, weekday: int, *, is_rest: bool, is_long_run: bool) -> int:
+def _duration_minutes(
+    spec: FixtureMeta,
+    day_idx: int,
+    weekday: int,
+    *,
+    is_rest: bool,
+    is_long_run: bool,
+) -> int:
     if is_rest:
         return 0
-    archetype = spec.athlete_archetype
-    baseline_minutes = (_BASELINE_LOAD_HOURS[archetype] * 60.0) / 5.5
+    baseline_minutes = (spec.baseline_load_hours * 60.0) / 5.5
     structure_mult = 0.82 + (weekday * 0.06)
     if is_long_run:
         structure_mult *= 1.60 * PHASE_PROFILES[spec.race_phase].long_run_emphasis
@@ -105,19 +70,28 @@ def _duration_minutes(spec: FixtureMeta, day_idx: int, weekday: int, *, is_rest:
     duration = baseline_minutes * structure_mult
     duration *= _phase_training_multiplier(spec, day_idx)
     duration *= _readiness_training_multiplier(spec, day_idx)
-    return max(35, int(round(duration)))
+    rounded = max(35, int(round(duration)))
+    if is_long_run:
+        long_cap = int(
+            round(
+                spec.long_run_tolerance_minutes
+                * (1.05 if spec.race_phase == "base" else 0.95)
+            )
+        )
+        return min(rounded, max(60, long_cap))
+    return rounded
 
 
-def _distance_km(spec: FixtureMeta, duration_minutes: int, *, is_rest: bool, is_long_run: bool) -> float | None:
+def _distance_km(
+    spec: FixtureMeta,
+    duration_minutes: int,
+    *,
+    is_rest: bool,
+    is_long_run: bool,
+) -> float | None:
     if is_rest:
         return None
-    archetype = spec.athlete_archetype
-    base_speed_kmh = {
-        "developing_runner": 8.0,
-        "experienced_runner": 8.6,
-        "durable_high_volume_runner": 8.9,
-        "fatigue_prone_runner": 7.8,
-    }[archetype]
+    base_speed_kmh = spec.base_speed_kmh
     if spec.race_phase == "peak":
         base_speed_kmh *= 1.02
     if spec.readiness == "low":
@@ -129,7 +103,13 @@ def _distance_km(spec: FixtureMeta, duration_minutes: int, *, is_rest: bool, is_
     return round(distance, 1)
 
 
-def _elevation_m(spec: FixtureMeta, duration_minutes: int, *, is_rest: bool, is_long_run: bool) -> float | None:
+def _elevation_m(
+    spec: FixtureMeta,
+    duration_minutes: int,
+    *,
+    is_rest: bool,
+    is_long_run: bool,
+) -> float | None:
     if is_rest:
         return None
     climb_rate = 4.8 if spec.race_phase == "base" else 4.1
@@ -164,7 +144,13 @@ def _session_type(spec: FixtureMeta, weekday: int, *, is_rest: bool, is_long_run
     return "easy"
 
 
-def _sleep_record(spec: FixtureMeta, current_day: date, day_idx: int, *, is_rest: bool) -> dict[str, Any] | None:
+def _sleep_record(
+    spec: FixtureMeta,
+    current_day: date,
+    day_idx: int,
+    *,
+    is_rest: bool,
+) -> dict[str, Any] | None:
     if spec.recovery_capability == "low":
         return None
     if spec.readiness == "high":
@@ -214,13 +200,21 @@ def _build_combined_summary(spec: FixtureMeta, *, as_of: date) -> list[dict[str,
         is_rest = weekday == _rest_day_for_week(week_idx, spec)
         is_long_run = (weekday == _long_run_day_for_week(week_idx, spec)) and not is_rest
         session_type = _session_type(spec, weekday, is_rest=is_rest, is_long_run=is_long_run)
-        duration_minutes = _duration_minutes(spec, day_idx, weekday, is_rest=is_rest, is_long_run=is_long_run)
+        duration_minutes = _duration_minutes(
+            spec,
+            day_idx,
+            weekday,
+            is_rest=is_rest,
+            is_long_run=is_long_run,
+        )
         distance_km = _distance_km(spec, duration_minutes, is_rest=is_rest, is_long_run=is_long_run)
         elevation_m = _elevation_m(spec, duration_minutes, is_rest=is_rest, is_long_run=is_long_run)
         avg_hr = _average_hr(spec, is_rest=is_rest, is_long_run=is_long_run)
         activities = []
         if not is_rest:
-            activities.append(_activity_record(current_day, duration_minutes, distance_km, elevation_m, avg_hr))
+            activities.append(
+                _activity_record(current_day, duration_minutes, distance_km, elevation_m, avg_hr)
+            )
         combined.append(
             {
                 "date": current_day.isoformat(),
@@ -229,20 +223,31 @@ def _build_combined_summary(spec: FixtureMeta, *, as_of: date) -> list[dict[str,
                 "notes": {
                     "session_type": session_type,
                     "phase_block": spec.block_label,
+                    "athlete_band": spec.athlete_band,
+                    "athlete_band_label": spec.athlete_band_label,
                 },
             }
         )
     return combined
 
 
-def _window_summary(records: list[dict[str, Any]], *, start_day: date, end_day: date) -> dict[str, Any]:
+def _window_summary(
+    records: list[dict[str, Any]],
+    *,
+    start_day: date,
+    end_day: date,
+) -> dict[str, Any]:
     in_window = [r for r in records if start_day <= date.fromisoformat(r["date"]) <= end_day]
     sleep_days = sum(1 for r in in_window if r.get("sleep"))
     activities = [a for r in in_window for a in (r.get("activities") or [])]
     distances = [float(a.get("distance") or 0.0) / 1000.0 for a in activities]
     elevations = [float(a.get("total_elevation_gain") or 0.0) for a in activities]
     moving_hours = [float(a.get("moving_time") or 0.0) / 3600.0 for a in activities]
-    avg_hrs = [float(a.get("average_heartrate")) for a in activities if a.get("average_heartrate") is not None]
+    avg_hrs = [
+        float(a.get("average_heartrate"))
+        for a in activities
+        if a.get("average_heartrate") is not None
+    ]
     sport_counts: dict[str, int] = {}
     for activity in activities:
         sport = str(activity.get("sport_type") or "unknown")
@@ -264,7 +269,12 @@ def _window_summary(records: list[dict[str, Any]], *, start_day: date, end_day: 
     }
 
 
-def _build_rollups(spec: FixtureMeta, *, as_of: date, combined: list[dict[str, Any]]) -> dict[str, Any]:
+def _build_rollups(
+    spec: FixtureMeta,
+    *,
+    as_of: date,
+    combined: list[dict[str, Any]],
+) -> dict[str, Any]:
     return {
         "generated_at": f"{as_of.isoformat()}T00:00:00Z",
         "windows": {
@@ -281,19 +291,39 @@ def _mean_optional(values: list[float | None]) -> float | None:
     return round(mean(clean), 2)
 
 
-def _build_forecast(spec: FixtureMeta, *, as_of: date, combined: list[dict[str, Any]], rollups: dict[str, Any]) -> dict[str, Any]:
+def _build_forecast(
+    spec: FixtureMeta,
+    *,
+    as_of: date,
+    combined: list[dict[str, Any]],
+    rollups: dict[str, Any],
+) -> dict[str, Any]:
     recent = combined[-7:]
     historical = combined[-28:]
-    sleep_7d = _mean_optional([
-        None if r.get("sleep") is None else float(r["sleep"]["sleepTimeSeconds"]) / 3600.0 for r in recent
-    ])
-    sleep_28d = _mean_optional([
-        None if r.get("sleep") is None else float(r["sleep"]["sleepTimeSeconds"]) / 3600.0 for r in historical
-    ])
-    rhr_7d = _mean_optional([None if r.get("sleep") is None else r["sleep"].get("restingHeartRate") for r in recent])
-    rhr_28d = _mean_optional([None if r.get("sleep") is None else r["sleep"].get("restingHeartRate") for r in historical])
-    hrv_7d = _mean_optional([None if r.get("sleep") is None else r["sleep"].get("avgOvernightHrv") for r in recent])
-    hrv_28d = _mean_optional([None if r.get("sleep") is None else r["sleep"].get("avgOvernightHrv") for r in historical])
+    sleep_7d = _mean_optional(
+        [
+            None if r.get("sleep") is None else float(r["sleep"]["sleepTimeSeconds"]) / 3600.0
+            for r in recent
+        ]
+    )
+    sleep_28d = _mean_optional(
+        [
+            None if r.get("sleep") is None else float(r["sleep"]["sleepTimeSeconds"]) / 3600.0
+            for r in historical
+        ]
+    )
+    rhr_7d = _mean_optional(
+        [None if r.get("sleep") is None else r["sleep"].get("restingHeartRate") for r in recent]
+    )
+    rhr_28d = _mean_optional(
+        [None if r.get("sleep") is None else r["sleep"].get("restingHeartRate") for r in historical]
+    )
+    hrv_7d = _mean_optional(
+        [None if r.get("sleep") is None else r["sleep"].get("avgOvernightHrv") for r in recent]
+    )
+    hrv_28d = _mean_optional(
+        [None if r.get("sleep") is None else r["sleep"].get("avgOvernightHrv") for r in historical]
+    )
 
     load_7d = float(rollups["windows"]["7"]["activities"]["total_training_load_hours"])
     load_28d = float(rollups["windows"]["28"]["activities"]["total_training_load_hours"])
@@ -313,17 +343,27 @@ def _build_forecast(spec: FixtureMeta, *, as_of: date, combined: list[dict[str, 
         if spec.race_phase == "peak":
             readiness_drivers.append("Freshness indicators fit a race-specific sharpening phase.")
         else:
-            readiness_drivers.append("Load supports continued aerobic development without obvious strain.")
+            readiness_drivers.append(
+                "Load supports continued aerobic development without obvious strain."
+            )
         risk_drivers.append("Recent training remains within sustainable range for this athlete profile.")
     else:
-        readiness_drivers.append("Recent signals indicate meaningful fatigue relative to the athlete baseline.")
+        readiness_drivers.append(
+            "Recent signals indicate meaningful fatigue relative to the athlete baseline."
+        )
         risk_drivers.append("Readiness context suggests reduced tolerance for extra hard volume.")
         if spec.recovery_capability == "high":
-            risk_drivers.append("Recovery signals do not fully support aggressive progression right now.")
+            risk_drivers.append(
+                "Recovery signals do not fully support aggressive progression right now."
+            )
         else:
-            risk_drivers.append("Recovery instrumentation is limited, increasing uncertainty around strain.")
+            risk_drivers.append(
+                "Recovery instrumentation is limited, increasing uncertainty around strain."
+            )
 
+    readiness_drivers.append(f"Athlete band context: {spec.athlete_band_label}.")
     readiness_drivers.extend(PHASE_PROFILES[spec.race_phase].forecast_driver_notes)
+    risk_drivers.append(f"Athlete profile summary: {spec.athlete_profile_summary}")
     risk_drivers.extend(PHASE_PROFILES[spec.race_phase].forecast_driver_notes)
 
     return {
@@ -340,8 +380,12 @@ def _build_forecast(spec: FixtureMeta, *, as_of: date, combined: list[dict[str, 
                 "rhr_7d_mean_bpm": rhr_7d,
                 "rhr_28d_mean_bpm": rhr_28d,
                 "rhr_28d_std_bpm": 2.0 if rhr_28d is not None else None,
-                "rhr_delta_bpm": None if (rhr_7d is None or rhr_28d is None) else round(rhr_7d - rhr_28d, 2),
-                "rhr_z": None if (rhr_7d is None or rhr_28d is None) else round((rhr_7d - rhr_28d) / 2.0, 3),
+                "rhr_delta_bpm": None
+                if (rhr_7d is None or rhr_28d is None)
+                else round(rhr_7d - rhr_28d, 2),
+                "rhr_z": None
+                if (rhr_7d is None or rhr_28d is None)
+                else round((rhr_7d - rhr_28d) / 2.0, 3),
                 "training_load_7d_hours": round(load_7d, 2),
                 "training_load_rolling7_mean_hours": rolling_7_mean,
                 "training_load_rolling7_std_hours": 0.8,
@@ -353,11 +397,15 @@ def _build_forecast(spec: FixtureMeta, *, as_of: date, combined: list[dict[str, 
                 "sleep_7d_mean_hours": sleep_7d,
                 "sleep_28d_mean_hours": sleep_28d,
                 "sleep_28d_std_hours": 0.45 if sleep_28d is not None else None,
-                "sleep_delta_hours": None if (sleep_7d is None or sleep_28d is None) else round(sleep_7d - sleep_28d, 2),
+                "sleep_delta_hours": None
+                if (sleep_7d is None or sleep_28d is None)
+                else round(sleep_7d - sleep_28d, 2),
                 "hrv_7d_mean_ms": hrv_7d,
                 "hrv_28d_mean_ms": hrv_28d,
                 "hrv_28d_std_ms": 5.0 if hrv_28d is not None else None,
-                "hrv_delta_ms": None if (hrv_7d is None or hrv_28d is None) else round(hrv_7d - hrv_28d, 2),
+                "hrv_delta_ms": None
+                if (hrv_7d is None or hrv_28d is None)
+                else round(hrv_7d - hrv_28d, 2),
                 "recovery_capability_key": spec.recovery_key,
                 "recovery_capability_label": (
                     "I have load + sleep + resting HR + HRV"
@@ -371,7 +419,8 @@ def _build_forecast(spec: FixtureMeta, *, as_of: date, combined: list[dict[str, 
                 "block_label": spec.block_label,
                 "notes": [
                     "Synthetic fixture generated by fixtures/build.py.",
-                    f"Athlete archetype: {spec.athlete_archetype}.",
+                    f"Athlete band: {spec.athlete_band} ({spec.athlete_band_label}).",
+                    f"Athlete profile: {spec.athlete_profile_summary}",
                     f"Phase context: {spec.block_label}.",
                 ],
             },
@@ -384,14 +433,13 @@ def _build_forecast(spec: FixtureMeta, *, as_of: date, combined: list[dict[str, 
 
 
 def _build_personal_data(spec: FixtureMeta, *, as_of: date) -> dict[str, Any]:
-    archetype = spec.athlete_archetype
-    base_load = _BASELINE_LOAD_HOURS[archetype]
-    base_distance = _BASELINE_DISTANCE_KM[archetype]
+    base_load = spec.baseline_load_hours
+    base_distance = spec.baseline_distance_km
     return {
         "userInfo": {},
         "biometricProfile": {
-            "weight_kg": _WEIGHT_KG[archetype],
-            "height_cm": _HEIGHT_CM[archetype],
+            "weight_kg": spec.weight_kg,
+            "height_cm": spec.height_cm,
         },
         "derived_activity_profile": {
             "observed_window": {
@@ -403,11 +451,11 @@ def _build_personal_data(spec: FixtureMeta, *, as_of: date) -> dict[str, Any]:
             "sports": {
                 spec.style: {
                     "sport_family": "running",
-                    "claimed_years_sport": _YEARS_IN_SPORT[archetype],
-                    "activity_count": int(150 + (_YEARS_IN_SPORT[archetype] * 30)),
+                    "claimed_years_sport": spec.years_in_sport,
+                    "activity_count": int(150 + (spec.years_in_sport * 30)),
                     "total_distance_km": round(base_distance * 52.0, 1),
                     "total_moving_time_hours": round(base_load * 52.0, 1),
-                    "total_elevation_m": round(_BASELINE_ELEVATION_M[archetype] * 52.0, 1),
+                    "total_elevation_m": round(spec.baseline_elevation_m * 52.0, 1),
                     "total_training_load_hours": round(base_load * 56.0, 1),
                 }
             },
@@ -430,7 +478,10 @@ def _build_personal_data(spec: FixtureMeta, *, as_of: date) -> dict[str, Any]:
             "generated_at": f"{as_of.isoformat()}T00:00:00Z",
             "generated_from": ["synthetic_fixture"],
             "fixture_id": spec.fixture_id,
-            "athlete_archetype": archetype,
+            "athlete_band": spec.athlete_band,
+            "athlete_band_label": spec.athlete_band_label,
+            "athlete_archetype": spec.athlete_archetype,
+            "athlete_profile_summary": spec.athlete_profile_summary,
             "race_phase": spec.race_phase,
             "block_label": spec.block_label,
             "primary_goal": spec.primary_goal,

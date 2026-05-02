@@ -47,6 +47,33 @@ def _as_float(value: Any) -> float | None:
         return None
 
 
+def _parse_fixture_id_axes(fixture_id: str) -> dict[str, str]:
+    parsed = {
+        "athlete_band": "",
+        "readiness": "",
+        "recovery_capability": "",
+        "race_phase": "",
+    }
+    for part in str(fixture_id or "").split("__"):
+        if part.startswith("ab_"):
+            parsed["athlete_band"] = part[3:]
+        elif part.startswith("r_"):
+            parsed["readiness"] = part[2:]
+        elif part.startswith("rc_"):
+            parsed["recovery_capability"] = part[3:]
+        elif part.startswith("ph_"):
+            parsed["race_phase"] = part[3:]
+    return parsed
+
+
+def _get_axis(index: dict[str, dict[str, Any]], plan_id: str, axis: str) -> str:
+    raw = _get_prov_raw(index, plan_id, axis, None)
+    if raw not in (None, ""):
+        return str(raw)
+    fixture_id = str(_get_prov_raw(index, plan_id, "fixture_id", "") or "")
+    return _parse_fixture_id_axes(fixture_id).get(axis, "")
+
+
 def _pick_llm_side(row: Any) -> str:
     if row.get("arm_a") == "llm":
         return "a"
@@ -225,10 +252,27 @@ def load_judgments(
         df["source_model_a"] = df["plan_a_id"].apply(lambda x: _get(x, "source_model", ""))
         df["source_model_b"] = df["plan_b_id"].apply(lambda x: _get(x, "source_model", ""))
 
+        df["athlete_band_a"] = df["plan_a_id"].apply(lambda x: _get_axis(prov_index, x, "athlete_band"))
+        df["athlete_band_b"] = df["plan_b_id"].apply(lambda x: _get_axis(prov_index, x, "athlete_band"))
+        df["readiness_a"] = df["plan_a_id"].apply(lambda x: _get_axis(prov_index, x, "readiness"))
+        df["readiness_b"] = df["plan_b_id"].apply(lambda x: _get_axis(prov_index, x, "readiness"))
+        df["recovery_capability_a"] = df["plan_a_id"].apply(
+            lambda x: _get_axis(prov_index, x, "recovery_capability")
+        )
+        df["recovery_capability_b"] = df["plan_b_id"].apply(
+            lambda x: _get_axis(prov_index, x, "recovery_capability")
+        )
+        df["race_phase_a"] = df["plan_a_id"].apply(lambda x: _get_axis(prov_index, x, "race_phase"))
+        df["race_phase_b"] = df["plan_b_id"].apply(lambda x: _get_axis(prov_index, x, "race_phase"))
+
         df["source_temperature_a"] = df["plan_a_id"].apply(lambda x: _as_float(_get(x, "source_temperature")))
         df["source_temperature_b"] = df["plan_b_id"].apply(lambda x: _as_float(_get(x, "source_temperature")))
-        df["explainer_temperature_a"] = df["plan_a_id"].apply(lambda x: _as_float(_get(x, "explainer_temperature")))
-        df["explainer_temperature_b"] = df["plan_b_id"].apply(lambda x: _as_float(_get(x, "explainer_temperature")))
+        df["explainer_temperature_a"] = df["plan_a_id"].apply(
+            lambda x: _as_float(_get(x, "explainer_temperature"))
+        )
+        df["explainer_temperature_b"] = df["plan_b_id"].apply(
+            lambda x: _as_float(_get(x, "explainer_temperature"))
+        )
         df["generation_condition_a"] = df["plan_a_id"].apply(lambda x: _get(x, "generation_condition", ""))
         df["generation_condition_b"] = df["plan_b_id"].apply(lambda x: _get(x, "generation_condition", ""))
 
@@ -310,6 +354,12 @@ def load_judgments(
             axis=1,
         )
         df["llm_in_position_a"] = df.apply(_llm_in_position_a, axis=1)
+        df["athlete_band"] = df["plan_a_id"].apply(lambda x: _get_axis(prov_index, x, "athlete_band"))
+        df["readiness"] = df["plan_a_id"].apply(lambda x: _get_axis(prov_index, x, "readiness"))
+        df["recovery_capability"] = df["plan_a_id"].apply(
+            lambda x: _get_axis(prov_index, x, "recovery_capability")
+        )
+        df["race_phase"] = df["plan_a_id"].apply(lambda x: _get_axis(prov_index, x, "race_phase"))
 
         def _preferred_plan_id(row: Any) -> str:
             preferred_id = row.get("preferred_id")
@@ -333,6 +383,12 @@ def load_judgments(
         if "plan_id" in df.columns:
             df["arm"] = df["plan_id"].apply(lambda x: _get_prov(prov_index, x, "arm"))
             df["fixture_id"] = df["plan_id"].apply(lambda x: _get_prov(prov_index, x, "fixture_id"))
+            df["athlete_band"] = df["plan_id"].apply(lambda x: _get_axis(prov_index, x, "athlete_band"))
+            df["readiness"] = df["plan_id"].apply(lambda x: _get_axis(prov_index, x, "readiness"))
+            df["recovery_capability"] = df["plan_id"].apply(
+                lambda x: _get_axis(prov_index, x, "recovery_capability")
+            )
+            df["race_phase"] = df["plan_id"].apply(lambda x: _get_axis(prov_index, x, "race_phase"))
             df["source_model"] = df["plan_id"].apply(lambda x: _get_prov(prov_index, x, "source_model", ""))
             df["source_temperature"] = df["plan_id"].apply(
                 lambda x: _as_float(_get_prov_raw(prov_index, x, "source_temperature"))

@@ -23,7 +23,11 @@ from compat.trailtraining_client import (
 )
 from generate.constants import EXPLAINER_MODEL_ID, PLAN_DAYS
 from generate.provenance import PlanProvenance
-from generate.sampler import StructuralSamplerConfig, sample_machine_plan, sampler_config_from_fixture_meta
+from generate.sampler import (
+    StructuralSamplerConfig,
+    sample_machine_plan,
+    sampler_config_from_fixture_meta,
+)
 from generate.temperature import build_programmatic_generation_condition
 
 EXPLAINER_MAX_TOKENS = int(os.getenv("TRAILTRAINING_EXPLAINER_MAX_TOKENS", "12288"))
@@ -198,6 +202,12 @@ def generate_programmatic_plan(
     prov = PlanProvenance(
         plan_id=plan_id,
         fixture_id=fixture_id,
+        athlete_band=str(fixture_meta.get("athlete_band") or "") or None,
+        readiness=str(fixture_meta.get("readiness") or "") or None,
+        recovery_capability=str(fixture_meta.get("recovery_capability") or "") or None,
+        race_phase=str(fixture_meta.get("race_phase") or "") or None,
+        plan_days=PLAN_DAYS,
+        style=str(fixture_meta.get("style") or "") or None,
         arm="programmatic",
         source_model=None,
         explainer_model=EXPLAINER_MODEL_ID,
@@ -209,6 +219,10 @@ def generate_programmatic_plan(
             **describe_client_routing(),
             "actual_explainer_model": actual_explainer_model,
             "explainer_model_verified": explainer_verified,
+            "athlete_band": fixture_meta.get("athlete_band"),
+            "readiness": fixture_meta.get("readiness"),
+            "recovery_capability": fixture_meta.get("recovery_capability"),
+            "race_phase": fixture_meta.get("race_phase"),
             "fixture_block_label": fixture_meta.get("block_label"),
             "fixture_primary_goal": fixture_meta.get("primary_goal"),
             "fixture_weeks_to_race": fixture_meta.get("weeks_to_race"),

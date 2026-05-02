@@ -11,12 +11,10 @@ LLM_SOURCE_MODELS: list[str] = [
 
 PLAN_DAYS = 7
 MATCH_TOLERANCE = 1.0
-TARGET_PAIRS = 250
+TARGET_PAIRS = 256
 
 STUDY_STYLE = "trailrunning"
 DEFAULT_PRIMARY_GOAL = "to become a faster and more durable trail runner"
-
-# Exactly four active judges, aligned with the frozen study goal.
 
 ACTIVE_JUDGE_NAMES: list[str] = [
     "qwen_7b_judge",
@@ -34,11 +32,11 @@ PAIRWISE_VIEW_CHOICES: tuple[str, ...] = (
     "canonical_masked",
 )
 
-# The frozen 512-plan study uses exact-count generation:
-#   * LLM arm: 16 plans per fixture per model across 8 fixtures and 2 models = 256
-#   * Programmatic arm: 32 plans per fixture across 8 fixtures = 256
-DEFAULT_LLM_PLANS_PER_FIXTURE_PER_MODEL = 16
-DEFAULT_PROGRAMMATIC_PLANS_PER_FIXTURE = 32
+# Revised 32-cell study uses an oversampling profile:
+#   * LLM arm: 6 plans per fixture per source model -> 12 raw attempts per cell total
+#   * Programmatic arm: 10 raw attempts per fixture
+DEFAULT_LLM_PLANS_PER_FIXTURE_PER_MODEL = 6
+DEFAULT_PROGRAMMATIC_PLANS_PER_FIXTURE = 10
 
 TARGET_LLM_PLAN_COUNT = 256
 TARGET_PROGRAMMATIC_PLAN_COUNT = 256

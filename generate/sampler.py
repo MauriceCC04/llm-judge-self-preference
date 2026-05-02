@@ -2,7 +2,8 @@
 
 This version keeps the repo's existing structural-sampling approach but also
 lets fixture metadata shape prompt-visible plan metadata and mild structural
-priors so base vs peak contexts remain meaningfully different.
+priors so athlete band, base vs peak context, and readiness remain meaningfully
+different.
 """
 from __future__ import annotations
 
@@ -17,6 +18,77 @@ _HARD_TYPES = ("tempo", "intervals", "hills")
 _EASY_TYPES = ("easy", "aerobic", "long", "strength", "cross")
 _NON_REST_TYPES = _HARD_TYPES + _EASY_TYPES
 
+_ATHLETE_BAND_SAMPLER_OVERRIDES: dict[str, dict[str, Any]] = {
+    "A1": {
+        "p_hard_day": 0.17,
+        "p_rest_day": 0.22,
+        "easy_type_probs": {
+            "easy": 0.48,
+            "aerobic": 0.22,
+            "long": 0.12,
+            "strength": 0.08,
+            "cross": 0.10,
+        },
+        "duration_by_type": {
+            "long": (78.0, 12.0),
+            "tempo": (42.0, 6.0),
+            "intervals": (44.0, 6.0),
+            "hills": (44.0, 6.0),
+        },
+    },
+    "A2": {
+        "p_hard_day": 0.20,
+        "p_rest_day": 0.18,
+        "easy_type_probs": {
+            "easy": 0.42,
+            "aerobic": 0.24,
+            "long": 0.16,
+            "strength": 0.08,
+            "cross": 0.10,
+        },
+        "duration_by_type": {
+            "long": (92.0, 14.0),
+            "tempo": (47.0, 7.0),
+            "intervals": (50.0, 7.0),
+            "hills": (48.0, 7.0),
+        },
+    },
+    "A3": {
+        "p_hard_day": 0.24,
+        "p_rest_day": 0.14,
+        "easy_type_probs": {
+            "easy": 0.34,
+            "aerobic": 0.24,
+            "long": 0.22,
+            "strength": 0.10,
+            "cross": 0.10,
+        },
+        "duration_by_type": {
+            "long": (108.0, 16.0),
+            "tempo": (54.0, 8.0),
+            "intervals": (58.0, 8.0),
+            "hills": (52.0, 8.0),
+        },
+    },
+    "A4": {
+        "p_hard_day": 0.26,
+        "p_rest_day": 0.12,
+        "easy_type_probs": {
+            "easy": 0.28,
+            "aerobic": 0.24,
+            "long": 0.28,
+            "strength": 0.08,
+            "cross": 0.12,
+        },
+        "duration_by_type": {
+            "long": (124.0, 18.0),
+            "tempo": (58.0, 8.0),
+            "intervals": (62.0, 8.0),
+            "hills": (56.0, 8.0),
+        },
+    },
+}
+
 
 @dataclass
 class StructuralSamplerConfig:
@@ -28,24 +100,28 @@ class StructuralSamplerConfig:
     p_hard_day: float = 0.25
     p_rest_day: float = 0.14
 
-    duration_by_type: dict[str, tuple[float, float]] = field(default_factory=lambda: {
-        "easy": (45.0, 10.0),
-        "aerobic": (50.0, 10.0),
-        "long": (90.0, 20.0),
-        "tempo": (50.0, 8.0),
-        "intervals": (55.0, 8.0),
-        "hills": (50.0, 8.0),
-        "strength": (35.0, 8.0),
-        "cross": (45.0, 10.0),
-    })
+    duration_by_type: dict[str, tuple[float, float]] = field(
+        default_factory=lambda: {
+            "easy": (45.0, 10.0),
+            "aerobic": (50.0, 10.0),
+            "long": (90.0, 20.0),
+            "tempo": (50.0, 8.0),
+            "intervals": (55.0, 8.0),
+            "hills": (50.0, 8.0),
+            "strength": (35.0, 8.0),
+            "cross": (45.0, 10.0),
+        }
+    )
 
-    easy_type_probs: dict[str, float] = field(default_factory=lambda: {
-        "easy": 0.45,
-        "aerobic": 0.25,
-        "long": 0.15,
-        "strength": 0.08,
-        "cross": 0.07,
-    })
+    easy_type_probs: dict[str, float] = field(
+        default_factory=lambda: {
+            "easy": 0.45,
+            "aerobic": 0.25,
+            "long": 0.15,
+            "strength": 0.08,
+            "cross": 0.07,
+        }
+    )
 
     today: str = "2026-03-17"
     plan_start: str = "2026-03-18"
@@ -88,11 +164,7 @@ def sampler_config_from_fixture_meta(
     plan_start: str,
     base_cfg: StructuralSamplerConfig | None = None,
 ) -> StructuralSamplerConfig:
-    """Return a fixture-aware sampler config.
-
-    The config stays close to any fitted priors from the LLM arm but makes the
-    training phase and readiness status visible in the structural sampler.
-    """
+    """Return a fixture-aware sampler config."""
     cfg = replace(base_cfg) if base_cfg is not None else StructuralSamplerConfig()
     cfg.plan_days = plan_days
     cfg.seed = seed
@@ -100,34 +172,52 @@ def sampler_config_from_fixture_meta(
     cfg.plan_start = plan_start
     cfg.style = str(fixture_meta.get("style", cfg.style) or cfg.style)
     cfg.primary_goal = str(fixture_meta.get("primary_goal", cfg.primary_goal) or cfg.primary_goal)
-    cfg.lifestyle_notes = str(fixture_meta.get("lifestyle_notes", cfg.lifestyle_notes) or cfg.lifestyle_notes)
+    cfg.lifestyle_notes = str(
+        fixture_meta.get("lifestyle_notes", cfg.lifestyle_notes) or cfg.lifestyle_notes
+    )
     cfg.block_label = str(fixture_meta.get("block_label", cfg.block_label) or cfg.block_label)
-    cfg.readiness_status = str(fixture_meta.get("readiness_status", cfg.readiness_status) or cfg.readiness_status)
+    cfg.readiness_status = str(
+        fixture_meta.get("readiness_status", cfg.readiness_status) or cfg.readiness_status
+    )
     cfg.weeks_to_race = int(fixture_meta.get("weeks_to_race", cfg.weeks_to_race) or cfg.weeks_to_race)
+
+    athlete_band = str(fixture_meta.get("athlete_band", "A2") or "A2")
+    band_cfg = _ATHLETE_BAND_SAMPLER_OVERRIDES.get(
+        athlete_band,
+        _ATHLETE_BAND_SAMPLER_OVERRIDES["A2"],
+    )
+    cfg.p_hard_day = float(band_cfg["p_hard_day"])
+    cfg.p_rest_day = float(band_cfg["p_rest_day"])
+    cfg.easy_type_probs.update(dict(band_cfg["easy_type_probs"]))
+    cfg.duration_by_type.update(dict(band_cfg["duration_by_type"]))
 
     race_phase = str(fixture_meta.get("race_phase", "base") or "base")
     if race_phase == "peak":
         cfg.p_rest_day = min(0.28, max(cfg.p_rest_day, 0.18))
         cfg.p_hard_day = max(0.18, min(cfg.p_hard_day, 0.24))
-        cfg.easy_type_probs.update({
-            "easy": 0.40,
-            "aerobic": 0.18,
-            "long": 0.13,
-            "strength": 0.06,
-            "cross": 0.23,
-        })
+        cfg.easy_type_probs.update(
+            {
+                "easy": 0.40,
+                "aerobic": 0.18,
+                "long": 0.13,
+                "strength": 0.06,
+                "cross": 0.23,
+            }
+        )
         cfg.duration_by_type["long"] = (80.0, 14.0)
         cfg.duration_by_type["tempo"] = (46.0, 7.0)
     else:
         cfg.p_rest_day = min(0.22, max(cfg.p_rest_day, 0.14))
         cfg.p_hard_day = min(0.28, max(cfg.p_hard_day, 0.22))
-        cfg.easy_type_probs.update({
-            "easy": 0.34,
-            "aerobic": 0.24,
-            "long": 0.22,
-            "strength": 0.10,
-            "cross": 0.10,
-        })
+        cfg.easy_type_probs.update(
+            {
+                "easy": 0.34,
+                "aerobic": 0.24,
+                "long": 0.22,
+                "strength": 0.10,
+                "cross": 0.10,
+            }
+        )
         cfg.duration_by_type["long"] = (96.0, 18.0)
         cfg.duration_by_type["hills"] = (52.0, 8.0)
 
@@ -171,18 +261,20 @@ def sample_machine_plan(
     for i in range(n):
         current_date = base_date + dt.timedelta(days=i)
         if is_rest[i]:
-            days.append({
-                "date": current_date.isoformat(),
-                "session_type": "rest",
-                "is_rest_day": True,
-                "is_hard_day": False,
-                "duration_minutes": 0,
-                "target_intensity": "rest",
-                "terrain": "n/a",
-                "workout": "Rest day. No structured training.",
-                "estimated_distance_km": None,
-                "estimated_elevation_m": None,
-            })
+            days.append(
+                {
+                    "date": current_date.isoformat(),
+                    "session_type": "rest",
+                    "is_rest_day": True,
+                    "is_hard_day": False,
+                    "duration_minutes": 0,
+                    "target_intensity": "rest",
+                    "terrain": "n/a",
+                    "workout": "Rest day. No structured training.",
+                    "estimated_distance_km": None,
+                    "estimated_elevation_m": None,
+                }
+            )
             continue
 
         if is_hard[i]:
@@ -190,22 +282,26 @@ def sample_machine_plan(
             target_intensity = "threshold"
         else:
             session_type = _sample_session_type_non_hard(rng, cfg)
-            target_intensity = "easy" if session_type not in {"tempo", "intervals", "hills"} else "threshold"
+            target_intensity = (
+                "easy" if session_type not in {"tempo", "intervals", "hills"} else "threshold"
+            )
 
         duration = _sample_duration(rng, session_type, cfg)
         terrain = "trail" if session_type in {"easy", "aerobic", "long", "hills"} else "road"
-        days.append({
-            "date": current_date.isoformat(),
-            "session_type": session_type,
-            "is_rest_day": False,
-            "is_hard_day": session_type in _HARD_TYPES,
-            "duration_minutes": duration,
-            "target_intensity": target_intensity,
-            "terrain": terrain,
-            "workout": f"{duration} min {session_type} session.",
-            "estimated_distance_km": None,
-            "estimated_elevation_m": None,
-        })
+        days.append(
+            {
+                "date": current_date.isoformat(),
+                "session_type": session_type,
+                "is_rest_day": False,
+                "is_hard_day": session_type in _HARD_TYPES,
+                "duration_minutes": duration,
+                "target_intensity": target_intensity,
+                "terrain": terrain,
+                "workout": f"{duration} min {session_type} session.",
+                "estimated_distance_km": None,
+                "estimated_elevation_m": None,
+            }
+        )
 
     total_min = sum(day["duration_minutes"] for day in days)
     skeleton = {

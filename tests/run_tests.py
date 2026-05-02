@@ -1402,8 +1402,11 @@ def test_30_llm_arm_separation() -> None:
     # fixture_dir must be clean — no new JSON files written there
     fixture_json = list(fixture.glob("*.json"))
     expected_fixture_files = {
-        "combined_summary.json", "combined_rollups.json",
-        "readiness_and_risk_forecast.json", "formatted_personal_data.json",
+        "combined_summary.json",
+        "combined_rollups.json",
+        "readiness_and_risk_forecast.json",
+        "formatted_personal_data.json",
+        "fixture_meta.json",
     }
     written = {f.name for f in fixture_json} - expected_fixture_files
     assert not written, f"Unexpected files written to fixture_dir: {written}"
@@ -2304,9 +2307,9 @@ def test_44_fixture_payloads_unique() -> None:
         return
 
     n_unique = len(set(sigs.values()))
-    assert n_unique == 8, (
-        f"Expected 8 unique fixture payloads, found {n_unique}. "
-        f"Duplicates indicate an axis (likely race_phase) doesn't affect payloads."
+    assert n_unique == 32, (
+        f"Expected 32 unique fixture payloads, found {n_unique}. "
+        "Duplicates indicate one or more fixture axes do not affect payloads."
     )
 
 

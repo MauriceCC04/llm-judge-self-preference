@@ -19,27 +19,29 @@ def make_minimal_combined_summary(*, as_of: str = "2026-03-17") -> list[dict[str
     records = []
     for i in range(35):
         d = end - timedelta(days=34 - i)
-        records.append({
-            "date": d.isoformat(),
-            "sleep": {
-                "calendarDate": d.isoformat(),
-                "sleepTimeSeconds": 28800,
-                "restingHeartRate": 46,
-                "avgOvernightHrv": 68,
-            },
-            "activities": [
-                {
-                    "id": 1000 + i,
-                    "sport_type": "TrailRun",
-                    "start_date_local": f"{d.isoformat()}T08:00:00",
-                    "distance": 10000.0,
-                    "moving_time": 3600,
-                    "total_elevation_gain": 250.0,
-                    "average_heartrate": 148,
-                    "max_heartrate": 172,
-                }
-            ],
-        })
+        records.append(
+            {
+                "date": d.isoformat(),
+                "sleep": {
+                    "calendarDate": d.isoformat(),
+                    "sleepTimeSeconds": 28800,
+                    "restingHeartRate": 46,
+                    "avgOvernightHrv": 68,
+                },
+                "activities": [
+                    {
+                        "id": 1000 + i,
+                        "sport_type": "TrailRun",
+                        "start_date_local": f"{d.isoformat()}T08:00:00",
+                        "distance": 10000.0,
+                        "moving_time": 3600,
+                        "total_elevation_gain": 250.0,
+                        "average_heartrate": 148,
+                        "max_heartrate": 172,
+                    }
+                ],
+            }
+        )
     return records
 
 
@@ -146,6 +148,36 @@ def make_minimal_personal_data() -> dict[str, Any]:
     }
 
 
+def make_minimal_fixture_meta() -> dict[str, Any]:
+    return {
+        "fixture_id": "ab_A2__r_high__rc_high__ph_base",
+        "athlete_band": "A2",
+        "athlete_band_label": "Developing recreational",
+        "athlete_archetype": "developing_recreational_runner",
+        "athlete_profile_summary": "Modest recent consistency, moderate but not high load, some structure tolerated.",
+        "recent_volume_hint": "modest recent consistency",
+        "structure_hint": "moderately structured week with limited hard load",
+        "long_run_tolerance_minutes": 110,
+        "readiness": "high",
+        "recovery_capability": "high",
+        "race_phase": "base",
+        "readiness_status": "primed",
+        "recovery_key": "load_sleep_resting_hr_hrv",
+        "weeks_to_race": 20,
+        "block_label": "base development block",
+        "style": "trailrunning",
+        "primary_goal": "to build consistent trail-running fitness with manageable structure",
+        "lifestyle_notes": "Minimal test fixture.",
+        "baseline_load_hours": 5.0,
+        "baseline_distance_km": 40.0,
+        "baseline_elevation_m": 1300.0,
+        "base_speed_kmh": 8.1,
+        "weight_kg": 69.0,
+        "height_cm": 175.0,
+        "years_in_sport": 2.8,
+    }
+
+
 def create_test_fixture(tmp_dir: Path | None = None) -> Path:
     """Create a minimal fixture bundle in *tmp_dir* (or a fresh tempdir).
 
@@ -168,5 +200,6 @@ def create_test_fixture(tmp_dir: Path | None = None) -> Path:
     _write("combined_rollups.json", make_minimal_rollups())
     _write("readiness_and_risk_forecast.json", make_minimal_forecast())
     _write("formatted_personal_data.json", make_minimal_personal_data())
+    _write("fixture_meta.json", make_minimal_fixture_meta())
 
     return fixture_dir

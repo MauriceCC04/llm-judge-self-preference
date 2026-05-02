@@ -63,6 +63,10 @@ def generate_llm_plan(
     runtime_metadata.setdefault("source_temperature", source_temperature)
     runtime_metadata.setdefault("explainer_temperature", explainer_temperature)
     runtime_metadata.setdefault("generation_condition", generation_condition)
+    runtime_metadata.setdefault("athlete_band", fixture_meta.get("athlete_band"))
+    runtime_metadata.setdefault("readiness", fixture_meta.get("readiness"))
+    runtime_metadata.setdefault("recovery_capability", fixture_meta.get("recovery_capability"))
+    runtime_metadata.setdefault("race_phase", fixture_meta.get("race_phase"))
 
     actual_explainer_model_raw = runtime_metadata.get("actual_explainer_model")
     actual_explainer_model = (
@@ -80,6 +84,12 @@ def generate_llm_plan(
     prov = PlanProvenance(
         plan_id=plan_id,
         fixture_id=fixture_id,
+        athlete_band=str(fixture_meta.get("athlete_band") or "") or None,
+        readiness=str(fixture_meta.get("readiness") or "") or None,
+        recovery_capability=str(fixture_meta.get("recovery_capability") or "") or None,
+        race_phase=str(fixture_meta.get("race_phase") or "") or None,
+        plan_days=7,
+        style=str(fixture_meta.get("style") or "") or None,
         arm="llm",
         source_model=source_model,
         explainer_model=EXPLAINER_MODEL_ID,

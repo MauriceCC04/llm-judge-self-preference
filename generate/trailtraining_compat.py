@@ -14,6 +14,7 @@ from compat.trailtraining_client import (
     make_stage_client,
 )
 from generate.constants import PLAN_DAYS
+from match.filtering import detect_plan_issues
 
 log = logging.getLogger(__name__)
 
@@ -217,6 +218,7 @@ def _extract_response_model_id(response: Any, fallback: str | None = None) -> st
             return candidate.strip()
     return fallback
 
+
 def _build_deterministic_snapshot(combined: list[dict[str, Any]]) -> dict[str, Any]:
     days = [day for day in combined if isinstance(day, dict)]
     last7 = days[-7:]
@@ -301,6 +303,112 @@ def _build_deterministic_snapshot(combined: list[dict[str, Any]]) -> dict[str, A
         "baseline28": baseline28_obj,
         "notes": " ".join(notes_parts).strip(),
     }
+
+
+def _canonical_title_for_session(session_type: str) -> str:
+    mapping = {
+        "rest": "Rest day",
+        "easy": "Easy run",
+        "aerobic": "Aerobic run",
+        "long": "Long run",
+        "strength": "Strength session",
+        "tempo": "Tempo session",
+        "intervals": "Intervals",
+        "hills": "Hill session",
+        "cross": "Cross-training",
+    }
+    key = (session_type or "").strip().lower()
+    return mapping.get(key, key.replace("_", " ").title() or "Training session")
+
+
+def _generic_workout_for_session(session_type: str, duration_minutes: int) -> str:
+    st = (session_type or "").strip().lower()
+    if st == "rest":
+        return "Rest day. No structured training."
+    dur = max(0, int(duration_minutes or 0))
+    if st == "easy":
+        return f"{dur} min easy run on flat to rolling terrain."
+    if st == "aerobic":
+        return f"{dur} min steady aerobic run on mixed terrain."
+    if st == "long":
+        return f"{dur} min long run at controlled aerobic effort."
+    if st == "strength":
+        return f"{dur} min strength and mobility session."
+    if st == "tempo":
+        return f"{dur} min tempo-focused run at controlled hard effort."
+    if st == "intervals":
+        return f"{dur} min interval session with controlled recoveries."
+    if st == "hills":
+        return f"{dur} min hill-focused session with steady climbing efforts."
+    if st == "cross":
+        return f"{dur} min low-impact cross-training session."
+    return f"{dur} min {st or 'training'} session."
+
+
+def _normalize_rest_day_semantics(plan_obj: dict[str, Any]) -> dict[str, Any]:
+    plan = plan_obj.get("plan") or {}
+    days = plan.get("days") or []
+    for day in days:
+        if not isinstance(day, dict):
+            continue
+        session_type = str(day.get("session_type") or "").strip().lower()
+        is_rest = bool(day.get("is_rest_day")) or session_type == "rest"
+        duration = int(day.get("duration_minutes") or 0)
+        title = str(day.get("title") or "")
+        workout = str(day.get("workout") or "")
+        purpose = str(day.get("purpose") or "")
+        joined = " ".join([title, workout, purpose]).lower()
+
+        if is_rest:
+            day["session_type"] = "rest"
+            day["is_rest_day"] = True
+            day["is_hard_day"] = False
+            day["duration_minutes"] = 0
+            day["target_intensity"] = day.get("target_intensity") or "rest"
+            day["title"] = "Rest day"
+            day["workout"] = "Rest day. No structured training."
+            if "purpose" not in day or not str(day.get("purpose") or "").strip() or "rest day" in purpose.lower():
+                day["purpose"] = "Absorb training and maintain freshness."
+            continue
+
+        if "rest day" in joined:
+            day["title"] = _canonical_title_for_session(session_type)
+            if "rest day" in workout.lower() or not workout.strip():
+                day["workout"] = _generic_workout_for_session(session_type, duration)
+            if "rest day" in purpose.lower():
+                day["purpose"] = f"Complete the planned {_canonical_title_for_session(session_type).lower()} without adding extra fatigue."
+    return plan_obj
+
+
+def _assert_no_human_contradictions(*, plan_id: str, output_path: Path, plan_obj: dict[str, Any]) -> None:
+    issues = detect_plan_issues(plan_obj)
+    issues = [issue for issue in issues if issue.startswith("human_contradiction:")]
+    if not issues:
+        return
+
+    raw_text = json.dumps(plan_obj, indent=2, ensure_ascii=False, default=str)
+    exc = ValueError(f"Human-facing contradictions remain after normalization: {issues}")
+    paths = _write_stage_failure_artifacts(
+        output_path=output_path,
+        stage="final_validation",
+        prompt_text="",
+        request_kwargs={
+            "validation": "human_contradiction",
+            "issues": issues,
+        },
+        raw_text=raw_text,
+        exc=exc,
+    )
+    raise StructuredStageError(
+        plan_id=plan_id,
+        stage="final_validation",
+        cause=exc,
+        raw_text_path=paths["raw_text_path"],
+        request_json_path=paths["request_json_path"],
+        prompt_text_path=paths["prompt_text_path"],
+        failure_json_path=paths["failure_json_path"],
+    ) from exc
+
 
 def run_two_stage_generation_compat(
     *,
@@ -514,8 +622,14 @@ def run_two_stage_generation_compat(
         deterministic_forecast=data["forecast"],
         effective=effective,
     )
+    obj = _normalize_rest_day_semantics(obj)
 
     _assert_no_placeholder_leaks(
+        plan_id=plan_id,
+        output_path=output_path,
+        plan_obj=obj,
+    )
+    _assert_no_human_contradictions(
         plan_id=plan_id,
         output_path=output_path,
         plan_obj=obj,

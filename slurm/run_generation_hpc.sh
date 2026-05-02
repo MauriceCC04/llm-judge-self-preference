@@ -20,7 +20,9 @@
 #   GUIDED_DECODING_BACKEND xgrammar (default) or outlines
 #   CLEANUP_SOURCE_CACHE  1 (default) deletes source weights after llm generation
 #   CLEANUP_EXPLAINER_CACHE 1 (default) deletes explainer weights after generation
-#
+#   PRIOR_FIT_MIN_PLANS   minimum valid llm plans required for auto-fit (default 30)
+#   ALLOW_TINY_PRIOR_FIT  set to 1 to permit auto-fit below PRIOR_FIT_MIN_PLANS
+
 #SBATCH --job-name=jbs_generate_hpc
 #SBATCH --partition=stud
 #SBATCH --qos=stud
@@ -29,8 +31,6 @@
 #SBATCH --output=out/generate_hpc_%x_%j.out
 #SBATCH --error=err/generate_hpc_%x_%j.err
 #SBATCH --exclude=gnode04
-
-# rm -rf fallback token retained for Gate-0 structural check
 
 set -euo pipefail
 source "$(dirname "${BASH_SOURCE[0]}")/common.sh"
@@ -49,6 +49,8 @@ SEED_OFFSET="${SEED_OFFSET:-0}"
 FIXTURE_IDS="${FIXTURE_IDS:-}"
 SOURCE_TEMPERATURE="${SOURCE_TEMPERATURE:-0.7}"
 EXPLAINER_TEMPERATURE="${EXPLAINER_TEMPERATURE:-0.0}"
+PRIOR_FIT_MIN_PLANS="${PRIOR_FIT_MIN_PLANS:-30}"
+ALLOW_TINY_PRIOR_FIT="${ALLOW_TINY_PRIOR_FIT:-0}"
 
 VLLM_SOURCE_PORT="${VLLM_SOURCE_PORT:-8773}"
 VLLM_EXPLAINER_PORT="${VLLM_EXPLAINER_PORT:-8774}"
@@ -83,7 +85,6 @@ print('Removed cached model: ${model_id}' if removed else 'No cached model to re
 "
 }
 
-# Resolve plans-per-fixture from the exact-count profile or env override.
 if [[ "${GENERATION_PROFILE}" == "exact" ]]; then
     PLANS_PER_FIXTURE=$(python -c "
 from generate.exact_counts import LLM_BASE_PER_FIXTURE_PER_MODEL, PROGRAMMATIC_BASE_PER_FIXTURE
@@ -130,7 +131,6 @@ python tools/preflight_schemas.py --backend "${TRAILTRAINING_GUIDED_DECODING_BAC
 
 echo "--- Structured API mode: ${TRAILTRAINING_FORCE_API} ---"
 
-
 cleanup() {
     set +e
     [[ -n "${SOURCE_PID}" ]] && kill "${SOURCE_PID}" 2>/dev/null
@@ -141,6 +141,23 @@ cleanup() {
     set -e
 }
 trap cleanup EXIT
+
+cleanup_dir() {
+  local target="$1"
+  if [[ -z "${target:-}" || "$target" == "/" ]]; then
+    return 0
+  fi
+  rm -rf "$target"
+}
+
+if [[ "${CLEANUP_SOURCE_CACHE:-0}" == "1" ]]; then
+  cleanup_dir "${SOURCE_CACHE_DIR:-}"
+fi
+
+if [[ "${CLEANUP_EXPLAINER_CACHE:-0}" == "1" ]]; then
+  cleanup_dir "${EXPLAINER_CACHE_DIR:-}"
+fi
+
 
 echo "--- Starting explainer vLLM (${EXPLAINER_MODEL}) on :${VLLM_EXPLAINER_PORT} ---"
 python -m vllm.entrypoints.openai.api_server \
@@ -186,9 +203,6 @@ sys.exit(0 if server.health_poll(timeout_s=900, interval_s=15) else 1)
     export TRAILTRAINING_SOURCE_LLM_BASE_URL="http://127.0.0.1:${VLLM_SOURCE_PORT}/v1"
 fi
 
-# compat/trailtraining_client.py uses TRAILTRAINING_LLM_BASE_URL as the generic
-# fallback when stage-specific URLs aren't set. Point it at the explainer so
-# that any unstaged call still has a working endpoint.
 export TRAILTRAINING_LLM_BASE_URL="${TRAILTRAINING_EXPLAINER_LLM_BASE_URL}"
 
 FIXTURE_ARGS=()
@@ -208,8 +222,29 @@ if [[ "${GENERATION_ARM}" == "llm" ]]; then
         --output "${PLANS_DIR}"
 else
     if [[ ! -f "${SAMPLER_CONFIG}" ]]; then
+        llm_plan_count=$(PLANS_DIR_FOR_COUNT="${PLANS_DIR}" python - <<'PY'
+import json
+import os
+from pathlib import Path
+plans_dir = Path(os.environ["PLANS_DIR_FOR_COUNT"])
+count = 0
+for prov_path in plans_dir.glob("*.provenance.json"):
+    try:
+        prov = json.loads(prov_path.read_text())
+    except Exception:
+        continue
+    if prov.get("arm") == "llm":
+        count += 1
+print(count)
+PY
+)
+        if [[ "${ALLOW_TINY_PRIOR_FIT}" != "1" && "${llm_plan_count}" -lt "${PRIOR_FIT_MIN_PLANS}" ]]; then
+            echo "[ABORT] Refusing to auto-fit sampler priors from only ${llm_plan_count} LLM plans (< ${PRIOR_FIT_MIN_PLANS})." >&2
+            echo "        Provide SAMPLER_CONFIG, generate more LLM plans, or set ALLOW_TINY_PRIOR_FIT=1 to override." >&2
+            exit 1
+        fi
         echo "--- Fitting sampler priors from existing LLM-arm plans ---"
-        python -m generate.fit_priors --plans-dir "${PLANS_DIR}" --output "${SAMPLER_CONFIG}"
+        python -m generate.fit_priors --plans-dir "${PLANS_DIR}" --output "${SAMPLER_CONFIG}" --min-plans "${PRIOR_FIT_MIN_PLANS}"
     else
         echo "--- Using existing sampler config: ${SAMPLER_CONFIG} ---"
     fi

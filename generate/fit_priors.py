@@ -9,15 +9,6 @@ The study protocol requires:
 
 This eliminates "judges prefer LLM plans because they looked structurally
 different" as an alternative explanation for H1.
-
-Usage::
-
-    python -m generate.fit_priors \\
-        --plans-dir plans/ \\
-        --output sampler_config.json \\
-        [--min-plans 50]
-
-The output JSON can be loaded back via StructuralSamplerConfig.model_validate().
 """
 from __future__ import annotations
 
@@ -25,6 +16,8 @@ import argparse
 import json
 import sys
 from pathlib import Path
+
+from match.filtering import detect_plan_issues
 
 
 def _load_plan_dicts(plans_dir: Path, arm: str = "llm") -> list[dict]:
@@ -39,7 +32,6 @@ def _load_plan_dicts(plans_dir: Path, arm: str = "llm") -> list[dict]:
             continue
         plan_path = Path(prov.get("plan_path", ""))
         if not plan_path.exists():
-            # Try relative to plans_dir
             plan_path = plans_dir / f"{prov.get('plan_id', '')}.json"
         if not plan_path.exists():
             continue
@@ -57,25 +49,31 @@ def fit_and_save(
     min_plans: int = 30,
     seed: int = 0,
 ) -> None:
-    """Fit sampler priors and write sampler_config.json."""
     from generate.sampler import fit_sampler_config_from_plans
 
     plan_dicts = _load_plan_dicts(plans_dir, arm="llm")
+    valid_plan_dicts = [plan for plan in plan_dicts if not detect_plan_issues(plan)]
+    dropped_invalid = len(plan_dicts) - len(valid_plan_dicts)
 
-    if len(plan_dicts) < min_plans:
+    if dropped_invalid:
         print(
-            f"[warn] Only {len(plan_dicts)} LLM plans found in {plans_dir} "
-            f"(min_plans={min_plans}).  Priors may be noisy.",
+            f"[warn] Excluding {dropped_invalid} invalid/contradictory LLM plans from prior fitting.",
             file=sys.stderr,
         )
 
-    if not plan_dicts:
-        print("[abort] No LLM-arm plans found — cannot fit priors.", file=sys.stderr)
+    if len(valid_plan_dicts) < min_plans:
+        print(
+            f"[warn] Only {len(valid_plan_dicts)} valid LLM plans found in {plans_dir} "
+            f"(min_plans={min_plans}). Priors may be noisy.",
+            file=sys.stderr,
+        )
+
+    if not valid_plan_dicts:
+        print("[abort] No valid LLM-arm plans found — cannot fit priors.", file=sys.stderr)
         sys.exit(1)
 
-    cfg = fit_sampler_config_from_plans(plan_dicts, seed=seed)
+    cfg = fit_sampler_config_from_plans(valid_plan_dicts, seed=seed)
 
-    # Serialise to JSON (dataclass → dict manually for readability)
     cfg_dict = {
         "plan_days": cfg.plan_days,
         "seed": cfg.seed,
@@ -93,7 +91,9 @@ def fit_and_save(
         "lifestyle_notes": cfg.lifestyle_notes,
         "readiness_status": cfg.readiness_status,
         "_meta": {
-            "fitted_from_n_plans": len(plan_dicts),
+            "loaded_llm_plans": len(plan_dicts),
+            "fitted_from_valid_llm_plans": len(valid_plan_dicts),
+            "excluded_invalid_llm_plans": dropped_invalid,
             "source": str(plans_dir),
         },
     }
@@ -101,7 +101,7 @@ def fit_and_save(
     output_path.parent.mkdir(parents=True, exist_ok=True)
     output_path.write_text(json.dumps(cfg_dict, indent=2), encoding="utf-8")
 
-    print(f"Fitted priors from {len(plan_dicts)} LLM-arm plans.")
+    print(f"Fitted priors from {len(valid_plan_dicts)} valid LLM-arm plans.")
     print(f"  p_hard_day:  {cfg.p_hard_day:.4f}  (~{cfg.p_hard_day * 7:.1f} hard/week)")
     print(f"  p_rest_day:  {cfg.p_rest_day:.4f}  (~{cfg.p_rest_day * 7:.1f} rest/week)")
     print(f"  easy_type distribution: {cfg.easy_type_probs}")
@@ -109,16 +109,13 @@ def fit_and_save(
 
 
 def load_sampler_config(config_path: Path) -> "StructuralSamplerConfig":  # noqa: F821
-    """Load a fitted StructuralSamplerConfig from a JSON file."""
     from generate.sampler import StructuralSamplerConfig
 
     raw = json.loads(config_path.read_text())
-    # Convert duration_by_type from [[mean, std], ...] to {type: (mean, std)}
     if "duration_by_type" in raw:
         raw["duration_by_type"] = {
             k: tuple(v) for k, v in raw["duration_by_type"].items()
         }
-    # Drop metadata key
     raw.pop("_meta", None)
     return StructuralSamplerConfig(**{
         k: v for k, v in raw.items()
@@ -140,7 +137,7 @@ def main() -> None:
     )
     parser.add_argument(
         "--min-plans", type=int, default=30,
-        help="Warn (but don't abort) if fewer than this many plans are found."
+        help="Warn (but don't abort) if fewer than this many valid plans are found."
     )
     parser.add_argument(
         "--seed", type=int, default=0,

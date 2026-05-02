@@ -14,6 +14,10 @@ from compat.trailtraining_client import (
     make_stage_client,
 )
 from generate.constants import PLAN_DAYS
+from generate.structural_expectations import (
+    build_structural_lifestyle_notes,
+    detect_understructured_plan,
+)
 from match.filtering import detect_plan_issues
 
 log = logging.getLogger(__name__)
@@ -410,6 +414,42 @@ def _assert_no_human_contradictions(*, plan_id: str, output_path: Path, plan_obj
     ) from exc
 
 
+def _assert_not_understructured(
+    *,
+    plan_id: str,
+    output_path: Path,
+    plan_obj: dict[str, Any],
+    fixture_meta: dict[str, Any],
+) -> None:
+    issues = detect_understructured_plan(plan_obj, fixture_meta)
+    if not issues:
+        return
+
+    raw_text = json.dumps(plan_obj, indent=2, ensure_ascii=False, default=str)
+    exc = ValueError(f"Plan is understructured for fixture cell: {issues}")
+    paths = _write_stage_failure_artifacts(
+        output_path=output_path,
+        stage="final_validation",
+        prompt_text="",
+        request_kwargs={
+            "validation": "understructured_plan",
+            "issues": issues,
+            "fixture_meta": fixture_meta,
+        },
+        raw_text=raw_text,
+        exc=exc,
+    )
+    raise StructuredStageError(
+        plan_id=plan_id,
+        stage="final_validation",
+        cause=exc,
+        raw_text_path=paths["raw_text_path"],
+        request_json_path=paths["request_json_path"],
+        prompt_text_path=paths["prompt_text_path"],
+        failure_json_path=paths["failure_json_path"],
+    ) from exc
+
+
 def run_two_stage_generation_compat(
     *,
     fixture_dir: Path,
@@ -442,15 +482,21 @@ def run_two_stage_generation_compat(
 
     ensure_dual_endpoint_support(source_model=source_model, explainer_model=explainer_model)
 
-    style = "trailrunning"
-    resolved_goal = (primary_goal or "").strip() or default_primary_goal_for_style(style)
+    fixture_meta = data["fixture_meta"] if isinstance(data.get("fixture_meta"), dict) else {}
+    style = str(fixture_meta.get("style") or "trailrunning").strip() or "trailrunning"
+    resolved_goal = (
+        (primary_goal or "").strip()
+        or str(fixture_meta.get("primary_goal") or "").strip()
+        or default_primary_goal_for_style(style)
+    )
+    prompt_lifestyle_notes = build_structural_lifestyle_notes(fixture_meta)
     detail_days = max(1, min(14, len(data["combined"])))
 
     effective = derive_effective_constraints(
         det_forecast=data["forecast"],
         rollups=data["rollups"],
         cfg=constraint_config_from_env(),
-        lifestyle_notes="",
+        lifestyle_notes=prompt_lifestyle_notes,
     )
 
     source_cfg = CoachConfig(
@@ -633,6 +679,12 @@ def run_two_stage_generation_compat(
         plan_id=plan_id,
         output_path=output_path,
         plan_obj=obj,
+    )
+    _assert_not_understructured(
+        plan_id=plan_id,
+        output_path=output_path,
+        plan_obj=obj,
+        fixture_meta=fixture_meta,
     )
 
     save_json(output_path, obj, compact=False)

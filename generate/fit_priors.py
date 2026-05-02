@@ -18,11 +18,12 @@ import sys
 from pathlib import Path
 
 from match.filtering import detect_plan_issues
+from generate.structural_expectations import detect_understructured_plan
 
 
-def _load_plan_dicts(plans_dir: Path, arm: str = "llm") -> list[dict]:
-    """Load all LLM-arm plan dicts from *plans_dir* using provenance sidecars."""
-    plan_dicts = []
+def _load_plan_bundles(plans_dir: Path, arm: str = "llm") -> list[dict]:
+    """Load plan/provenance bundles for one arm from *plans_dir*."""
+    bundles = []
     for prov_path in sorted(plans_dir.glob("*.provenance.json")):
         try:
             prov = json.loads(prov_path.read_text())
@@ -36,10 +37,10 @@ def _load_plan_dicts(plans_dir: Path, arm: str = "llm") -> list[dict]:
         if not plan_path.exists():
             continue
         try:
-            plan_dicts.append(json.loads(plan_path.read_text()))
+            bundles.append({"plan": json.loads(plan_path.read_text()), "provenance": prov})
         except Exception:
             continue
-    return plan_dicts
+    return bundles
 
 
 def fit_and_save(
@@ -51,13 +52,42 @@ def fit_and_save(
 ) -> None:
     from generate.sampler import fit_sampler_config_from_plans
 
-    plan_dicts = _load_plan_dicts(plans_dir, arm="llm")
-    valid_plan_dicts = [plan for plan in plan_dicts if not detect_plan_issues(plan)]
-    dropped_invalid = len(plan_dicts) - len(valid_plan_dicts)
+    bundles = _load_plan_bundles(plans_dir, arm="llm")
+    valid_plan_dicts: list[dict] = []
+    dropped_invalid = 0
+    dropped_understructured = 0
+
+    for bundle in bundles:
+        plan = bundle.get("plan")
+        provenance = bundle.get("provenance") or {}
+        if not isinstance(plan, dict):
+            continue
+
+        if detect_plan_issues(plan):
+            dropped_invalid += 1
+            continue
+
+        fixture_meta = {
+            "athlete_band": provenance.get("athlete_band"),
+            "readiness": provenance.get("readiness"),
+            "recovery_capability": provenance.get("recovery_capability"),
+            "race_phase": provenance.get("race_phase"),
+        }
+        if detect_understructured_plan(plan, fixture_meta):
+            dropped_understructured += 1
+            continue
+
+        valid_plan_dicts.append(plan)
 
     if dropped_invalid:
         print(
             f"[warn] Excluding {dropped_invalid} invalid/contradictory LLM plans from prior fitting.",
+            file=sys.stderr,
+        )
+
+    if dropped_understructured:
+        print(
+            f"[warn] Excluding {dropped_understructured} structurally underexpressed LLM plans from prior fitting.",
             file=sys.stderr,
         )
 
@@ -91,9 +121,10 @@ def fit_and_save(
         "lifestyle_notes": cfg.lifestyle_notes,
         "readiness_status": cfg.readiness_status,
         "_meta": {
-            "loaded_llm_plans": len(plan_dicts),
+            "loaded_llm_plans": len(bundles),
             "fitted_from_valid_llm_plans": len(valid_plan_dicts),
             "excluded_invalid_llm_plans": dropped_invalid,
+            "excluded_understructured_llm_plans": dropped_understructured,
             "source": str(plans_dir),
         },
     }

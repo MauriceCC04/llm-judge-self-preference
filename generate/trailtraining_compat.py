@@ -522,15 +522,18 @@ def run_two_stage_generation_compat(
         or str(fixture_meta.get("primary_goal") or "").strip()
         or default_primary_goal_for_style(style)
     )
-    prompt_lifestyle_notes = build_structural_lifestyle_notes(fixture_meta)
     base_lifestyle_notes = str(fixture_meta.get("lifestyle_notes") or "").strip()
+    prompt_lifestyle_notes = build_structural_lifestyle_notes(
+        fixture_meta,
+        base_lifestyle_notes=base_lifestyle_notes,
+    )
     detail_days = max(1, min(14, len(data["combined"])))
 
     effective = derive_effective_constraints(
         det_forecast=data["forecast"],
         rollups=data["rollups"],
         cfg=constraint_config_from_env(),
-        lifestyle_notes=prompt_lifestyle_notes,
+        lifestyle_notes=base_lifestyle_notes,
     )
 
     source_cfg = CoachConfig(
@@ -704,6 +707,8 @@ def run_two_stage_generation_compat(
         deterministic_forecast=data["forecast"],
         effective=effective,
     )
+    if isinstance(obj.get("effective_constraints"), dict):
+        obj["effective_constraints"]["lifestyle_notes"] = base_lifestyle_notes
     obj = _normalize_rest_day_semantics(obj)
 
     _assert_no_placeholder_leaks(

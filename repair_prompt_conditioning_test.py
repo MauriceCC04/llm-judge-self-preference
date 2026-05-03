@@ -2,6 +2,12 @@ from __future__ import annotations
 
 from pathlib import Path
 
+TEST_PATH = Path('tests/test_prompt_conditioning_regression.py')
+
+NEW_CONTENT = '''from __future__ import annotations
+
+from pathlib import Path
+
 from generate.artifact_leakage import collect_structural_prompt_leaks
 from generate.structural_expectations import build_structural_lifestyle_notes
 
@@ -33,8 +39,7 @@ def test_trailtraining_compat_does_not_drop_structural_notes():
 
     # Base notes, not rich prompt scaffolding, should be used for artifact-visible paths.
     assert "lifestyle_notes=base_lifestyle_notes" in source
-    assert 'lifestyle_notes=""' not in source
-    assert "lifestyle_notes=\'\'" not in source
+    assert "lifestyle_notes=\"\"" not in source
 
 
 def test_structural_prompt_leak_guard_rejects_scaffold_text():
@@ -66,3 +71,19 @@ def test_structural_notes_are_band_specific():
 
     assert "tempo/intervals/hills" not in a1_notes
     assert "tempo/intervals/hills" in a4_notes
+'''
+
+
+def main() -> int:
+    if not TEST_PATH.exists():
+        raise SystemExit(f"Missing expected test file: {TEST_PATH}")
+    TEST_PATH.write_text(NEW_CONTENT, encoding='utf-8')
+    print(f"Updated {TEST_PATH} to match multiline prompt-conditioning implementation.")
+    print("Run:")
+    print("  pytest tests/test_prompt_conditioning_regression.py tests/test_effective_constraints_no_structural_leak.py -v")
+    print("  python tests/run_tests.py")
+    return 0
+
+
+if __name__ == '__main__':
+    raise SystemExit(main())

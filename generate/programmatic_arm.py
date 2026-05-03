@@ -176,7 +176,7 @@ def generate_programmatic_plan(
         det_forecast=data["forecast"],
         rollups=data["rollups"],
         cfg=constraint_config_from_env(),
-        lifestyle_notes=prompt_lifestyle_notes,
+        lifestyle_notes=base_lifestyle_notes,
     )
     apply_eval_coach_guardrails(skeleton, data["rollups"], effective=effective)
 
@@ -343,6 +343,8 @@ def _run_explainer_directly(
         deterministic_forecast=deterministic_forecast,
         effective=effective,
     )
+    if isinstance(obj.get("effective_constraints"), dict):
+        obj["effective_constraints"]["lifestyle_notes"] = artifact_lifestyle_notes
 
     _assert_no_placeholder_leaks(
         plan_obj=obj,

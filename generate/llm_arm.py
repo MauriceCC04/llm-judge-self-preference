@@ -8,6 +8,7 @@ from pathlib import Path
 
 from compat.trailtraining_client import install_trailtraining_client_compat
 from generate.constants import EXPLAINER_MODEL_ID
+from generate.persistence import verify_json_object_file, verify_plan_and_provenance
 from generate.provenance import PlanProvenance
 from generate.temperature import build_llm_generation_condition
 from generate.trailtraining_compat import run_two_stage_generation_compat
@@ -57,6 +58,7 @@ def generate_llm_plan(
         source_temperature=source_temperature,
         explainer_temperature=explainer_temperature,
     )
+    verify_json_object_file(plan_path, label="LLM-arm plan artifact")
 
     runtime_metadata = dict(runtime_metadata or {})
     runtime_metadata.setdefault("TRAILTRAINING_TWO_STAGE_PLAN", "1")
@@ -108,5 +110,6 @@ def generate_llm_plan(
 
     prov_path = output_dir / f"{plan_id}.json.provenance.json"
     prov_path.write_text(prov.model_dump_json(indent=2), encoding="utf-8")
+    verify_plan_and_provenance(plan_path, prov_path, expected_plan_id=plan_id)
 
     return plan_json, str(plan_path), str(prov_path)

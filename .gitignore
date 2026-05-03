@@ -38,3 +38,4 @@ fixtures/data
 /smoke_plans
 /smoke_results
 /artifacts
+*.zip

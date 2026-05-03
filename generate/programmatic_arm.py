@@ -22,6 +22,8 @@ from compat.trailtraining_client import (
     make_client_from_env,
 )
 from generate.constants import EXPLAINER_MODEL_ID, PLAN_DAYS
+from generate.artifact_leakage import assert_no_structural_prompt_leaks
+from generate.persistence import verify_json_object_file, verify_plan_and_provenance
 from generate.provenance import PlanProvenance
 from generate.sampler import (
     StructuralSamplerConfig,
@@ -29,6 +31,7 @@ from generate.sampler import (
     sampler_config_from_fixture_meta,
 )
 from generate.temperature import build_programmatic_generation_condition
+from generate.structural_expectations import build_structural_lifestyle_notes
 
 EXPLAINER_MAX_TOKENS = int(os.getenv("TRAILTRAINING_EXPLAINER_MAX_TOKENS", "12288"))
 
@@ -155,6 +158,11 @@ def generate_programmatic_plan(
     fixture_meta = data["fixture_meta"]
     fixture_id = fixture_meta.get("fixture_id", fixture_dir.name)
     cfg = _sampler_cfg_from_fixture(data, seed=seed, base_cfg=sampler_cfg)
+    base_lifestyle_notes = str(fixture_meta.get("lifestyle_notes") or cfg.lifestyle_notes or "").strip()
+    prompt_lifestyle_notes = build_structural_lifestyle_notes(
+        fixture_meta,
+        base_lifestyle_notes=base_lifestyle_notes,
+    )
 
     if generation_condition is None:
         generation_condition = build_programmatic_generation_condition(
@@ -168,6 +176,7 @@ def generate_programmatic_plan(
         det_forecast=data["forecast"],
         rollups=data["rollups"],
         cfg=constraint_config_from_env(),
+        lifestyle_notes=prompt_lifestyle_notes,
     )
     apply_eval_coach_guardrails(skeleton, data["rollups"], effective=effective)
 
@@ -178,7 +187,7 @@ def generate_programmatic_plan(
         plan_days=PLAN_DAYS,
         style=cfg.style,
         primary_goal=cfg.primary_goal,
-        lifestyle_notes=cfg.lifestyle_notes,
+        lifestyle_notes=base_lifestyle_notes,
     )
 
     source_data = types.SimpleNamespace(
@@ -195,7 +204,11 @@ def generate_programmatic_plan(
         deterministic_forecast=data["forecast"],
         effective=effective,
         out_path=output_path,
+        prompt_lifestyle_notes=prompt_lifestyle_notes,
+        artifact_lifestyle_notes=base_lifestyle_notes,
     )
+
+    verify_json_object_file(output_path, label="programmatic-arm plan artifact")
 
     explainer_verified = bool(actual_explainer_model and actual_explainer_model == EXPLAINER_MODEL_ID)
 
@@ -228,6 +241,9 @@ def generate_programmatic_plan(
             "fixture_weeks_to_race": fixture_meta.get("weeks_to_race"),
             "explainer_temperature": explainer_temperature,
             "generation_condition": generation_condition,
+            "structural_lifestyle_notes_present": bool(prompt_lifestyle_notes.strip()),
+            "structural_lifestyle_notes_chars": len(prompt_lifestyle_notes),
+            "artifact_lifestyle_notes_chars": len(base_lifestyle_notes),
         },
         source_temperature=None,
         explainer_temperature=explainer_temperature,
@@ -238,6 +254,7 @@ def generate_programmatic_plan(
     )
     provenance_path = output_dir / f"{plan_id}.json.provenance.json"
     provenance_path.write_text(prov.model_dump_json(indent=2), encoding="utf-8")
+    verify_plan_and_provenance(output_path, provenance_path, expected_plan_id=plan_id)
     return plan_json, str(output_path), str(provenance_path)
 
 
@@ -249,6 +266,8 @@ def _run_explainer_directly(
     deterministic_forecast: Any,
     effective: Any,
     out_path: Path,
+    prompt_lifestyle_notes: str | None = None,
+    artifact_lifestyle_notes: str | None = None,
 ) -> tuple[str, str | None]:
     import json
 
@@ -267,6 +286,8 @@ def _run_explainer_directly(
     from trailtraining.util.state import _json_default, save_json
 
     resolved_goal = (cfg.primary_goal or "").strip() or default_primary_goal_for_style(cfg.style)
+    prompt_notes = prompt_lifestyle_notes if prompt_lifestyle_notes is not None else cfg.lifestyle_notes
+    artifact_notes = artifact_lifestyle_notes if artifact_lifestyle_notes is not None else cfg.lifestyle_notes
     detail_days = max(1, min(14, len(source_data.combined)))
     explainer_prompt = coach_prompting.build_explainer_prompt_text(
         machine_plan=skeleton,
@@ -276,7 +297,7 @@ def _run_explainer_directly(
         deterministic_forecast=deterministic_forecast,
         style=cfg.style,
         primary_goal=resolved_goal,
-        lifestyle_notes=cfg.lifestyle_notes,
+        lifestyle_notes=prompt_notes,
         max_chars=cfg.max_chars,
         detail_days=detail_days,
         effective_constraints=effective,
@@ -309,7 +330,7 @@ def _run_explainer_directly(
         skeleton,
         explanation_obj,
         resolved_goal=resolved_goal,
-        lifestyle_notes=cfg.lifestyle_notes,
+        lifestyle_notes=artifact_notes,
         deterministic_forecast=deterministic_forecast,
         effective=effective,
     )
@@ -327,6 +348,12 @@ def _run_explainer_directly(
         plan_obj=obj,
         out_path=out_path,
     )
+    assert_no_structural_prompt_leaks(
+        plan_id=out_path.stem,
+        output_path=out_path,
+        plan_obj=obj,
+    )
 
     save_json(out_path, obj, compact=False)
+    verify_json_object_file(out_path, label="programmatic-arm plan artifact")
     return json.dumps(obj, indent=2, ensure_ascii=False, default=_json_default), actual_explainer_model

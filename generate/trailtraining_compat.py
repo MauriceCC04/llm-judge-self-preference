@@ -14,6 +14,8 @@ from compat.trailtraining_client import (
     make_stage_client,
 )
 from generate.constants import PLAN_DAYS
+from generate.artifact_leakage import collect_structural_prompt_leaks
+from generate.persistence import verify_json_object_file
 from generate.structural_expectations import (
     build_structural_lifestyle_notes,
     detect_understructured_plan,
@@ -414,6 +416,37 @@ def _assert_no_human_contradictions(*, plan_id: str, output_path: Path, plan_obj
     ) from exc
 
 
+
+def _assert_no_structural_prompt_leaks(
+    *,
+    plan_id: str,
+    output_path: Path,
+    plan_obj: dict[str, Any],
+) -> None:
+    hits = collect_structural_prompt_leaks(plan_obj)
+    if not hits:
+        return
+    raw_text = json.dumps(plan_obj, indent=2, ensure_ascii=False, default=str)
+    preview = "; ".join(f"{path} contains {marker!r}: {value!r}" for path, marker, value in hits[:10])
+    exc = ValueError(f"Structural prompt scaffold leaked into final artifact ({len(hits)} hit(s)): {preview}")
+    paths = _write_stage_failure_artifacts(
+        output_path=output_path,
+        stage="final_validation",
+        prompt_text="",
+        request_kwargs={"validation": "structural_prompt_leak", "hits": [{"path": path, "marker": marker, "value": value} for path, marker, value in hits]},
+        raw_text=raw_text,
+        exc=exc,
+    )
+    raise StructuredStageError(
+        plan_id=plan_id,
+        stage="final_validation",
+        cause=exc,
+        raw_text_path=paths["raw_text_path"],
+        request_json_path=paths["request_json_path"],
+        prompt_text_path=paths["prompt_text_path"],
+        failure_json_path=paths["failure_json_path"],
+    ) from exc
+
 def _assert_not_understructured(
     *,
     plan_id: str,
@@ -490,6 +523,7 @@ def run_two_stage_generation_compat(
         or default_primary_goal_for_style(style)
     )
     prompt_lifestyle_notes = build_structural_lifestyle_notes(fixture_meta)
+    base_lifestyle_notes = str(fixture_meta.get("lifestyle_notes") or "").strip()
     detail_days = max(1, min(14, len(data["combined"])))
 
     effective = derive_effective_constraints(
@@ -506,6 +540,7 @@ def run_two_stage_generation_compat(
         plan_days=PLAN_DAYS,
         primary_goal=resolved_goal,
         style=style,
+        lifestyle_notes=base_lifestyle_notes,
     )
     explainer_cfg = CoachConfig(
         model=explainer_model,
@@ -514,6 +549,7 @@ def run_two_stage_generation_compat(
         plan_days=PLAN_DAYS,
         primary_goal=resolved_goal,
         style=style,
+        lifestyle_notes=base_lifestyle_notes,
     )
 
     source_client = make_stage_client(stage="source", model_id=source_model)
@@ -526,7 +562,7 @@ def run_two_stage_generation_compat(
         deterministic_forecast=data["forecast"],
         style=style,
         primary_goal=resolved_goal,
-        lifestyle_notes="",
+        lifestyle_notes=prompt_lifestyle_notes,
         max_chars=source_cfg.max_chars,
         detail_days=detail_days,
         plan_days=source_cfg.plan_days,
@@ -611,7 +647,7 @@ def run_two_stage_generation_compat(
         deterministic_forecast=data["forecast"],
         style=style,
         primary_goal=resolved_goal,
-        lifestyle_notes="",
+        lifestyle_notes=prompt_lifestyle_notes,
         max_chars=explainer_cfg.max_chars,
         detail_days=detail_days,
         effective_constraints=effective,
@@ -655,7 +691,7 @@ def run_two_stage_generation_compat(
         machine_obj,
         explanation_obj,
         resolved_goal=resolved_goal,
-        lifestyle_notes="",
+        lifestyle_notes=base_lifestyle_notes,
         deterministic_forecast=data["forecast"],
         effective=effective,
     )
@@ -680,6 +716,11 @@ def run_two_stage_generation_compat(
         output_path=output_path,
         plan_obj=obj,
     )
+    _assert_no_structural_prompt_leaks(
+        plan_id=plan_id,
+        output_path=output_path,
+        plan_obj=obj,
+    )
     _assert_not_understructured(
         plan_id=plan_id,
         output_path=output_path,
@@ -688,6 +729,7 @@ def run_two_stage_generation_compat(
     )
 
     save_json(output_path, obj, compact=False)
+    verify_json_object_file(output_path, label="LLM-arm plan artifact")
     runtime_metadata = {
         **describe_client_routing(),
         "source_model": source_model,
@@ -697,5 +739,8 @@ def run_two_stage_generation_compat(
         "source_temperature": source_temperature,
         "explainer_temperature": explainer_temperature,
         "seed": seed,
+        "structural_lifestyle_notes_present": bool(prompt_lifestyle_notes.strip()),
+        "structural_lifestyle_notes_chars": len(prompt_lifestyle_notes),
+        "artifact_lifestyle_notes_chars": len(base_lifestyle_notes),
     }
     return json.dumps(obj, indent=2, ensure_ascii=False, default=_json_default), runtime_metadata

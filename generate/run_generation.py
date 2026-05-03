@@ -17,6 +17,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Iterable
 
+from generate.persistence import verify_plan_and_provenance
 from generate.temperature import (
     build_llm_generation_condition,
     build_llm_plan_id,
@@ -39,8 +40,21 @@ def _configure_logging() -> None:
     log.info("Configured logging at level=%s", level_name)
 
 
-def _plan_exists(output_dir: Path, plan_id: str) -> bool:
-    return (output_dir / f"{plan_id}.json").exists()
+def _plan_outputs_exist(output_dir: Path, plan_id: str) -> bool:
+    plan_path = output_dir / f"{plan_id}.json"
+    provenance_path = output_dir / f"{plan_id}.json.provenance.json"
+    if not (plan_path.exists() and provenance_path.exists()):
+        return False
+    try:
+        verify_plan_and_provenance(plan_path, provenance_path, expected_plan_id=plan_id)
+    except Exception:
+        return False
+    return True
+
+
+def _verify_generated_result(plan_id: str, result: tuple[str, str, str]) -> None:
+    _plan_json, plan_path, provenance_path = result
+    verify_plan_and_provenance(Path(plan_path), Path(provenance_path), expected_plan_id=plan_id)
 
 
 def _write_failure(failures_path: Path, plan_id: str, exc: Exception) -> None:
@@ -123,12 +137,12 @@ def run_llm_arm(
                 explainer_temperature=explainer_temperature,
             )
             progress = ((idx - 1) * plans_per_fixture) + seed + 1
-            if _plan_exists(output_dir, plan_id):
+            if _plan_outputs_exist(output_dir, plan_id):
                 skipped += 1
                 continue
             print(f"  [{progress}/{total}] {plan_id} ...", end="", flush=True)
             try:
-                generate_llm_plan(
+                result = generate_llm_plan(
                     fixture_dir=fixture_dir,
                     output_dir=output_dir,
                     plan_id=plan_id,
@@ -138,6 +152,7 @@ def run_llm_arm(
                     explainer_temperature=explainer_temperature,
                     generation_condition=generation_condition,
                 )
+                _verify_generated_result(plan_id, result)
                 print(" OK")
                 generated += 1
             except Exception as exc:  # pragma: no cover - failure logging path
@@ -182,12 +197,12 @@ def run_programmatic_arm(
                 explainer_temperature=explainer_temperature,
             )
             progress = ((idx - 1) * plans_per_fixture) + seed + 1
-            if _plan_exists(output_dir, plan_id):
+            if _plan_outputs_exist(output_dir, plan_id):
                 skipped += 1
                 continue
             print(f"  [{progress}/{total}] {plan_id} ...", end="", flush=True)
             try:
-                generate_programmatic_plan(
+                result = generate_programmatic_plan(
                     fixture_dir=fixture_dir,
                     output_dir=output_dir,
                     plan_id=plan_id,
@@ -196,6 +211,7 @@ def run_programmatic_arm(
                     explainer_temperature=explainer_temperature,
                     generation_condition=generation_condition,
                 )
+                _verify_generated_result(plan_id, result)
                 print(" OK")
                 generated += 1
             except Exception as exc:  # pragma: no cover - failure logging path

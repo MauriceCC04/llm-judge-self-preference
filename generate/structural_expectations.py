@@ -81,15 +81,18 @@ def build_structural_lifestyle_notes(
     lines.append(
         "Day titles and workout text must match the structured fields; do not use 'Rest day' text on active sessions."
     )
+    lines.append(
+        "Rest days must be semantically inert: session_type='rest', is_rest_day=true, duration_minutes=0, target_intensity='rest', terrain='n/a', title='Rest day', workout='Rest day. No structured training.', and purpose='Recover and maintain freshness.' Do not mention run, long, tempo, interval, hill, strength, cross-training, ride, or workout in rest-day title, workout, or purpose."
+    )
 
     if band in {"A3", "A4"}:
         lines.append(
-            "This cell expects a genuinely structured week, not an all-easy template. Include at least one day with session_type='long'."
+            "This cell expects a genuinely structured week, not an all-easy or all-rest template. Include at least one day with session_type='long'. Low readiness should reduce intensity or duration, not collapse the entire week to rest unless deterministic safety constraints explicitly require that."
         )
 
     if band == "A4":
         lines.append(
-            "This athlete band should usually include at least one clearly harder quality session using session_type tempo/intervals/hills with is_hard_day=true unless current readiness or recovery constraints make that unsafe."
+            "This athlete band should include at least one clearly harder quality session using session_type tempo/intervals/hills with is_hard_day=true when readiness is high, recovery capacity is high, or phase is peak. For low-readiness cells, make the quality session shorter and controlled rather than omitting quality entirely unless deterministic safety constraints explicitly prohibit it."
         )
     elif band == "A3" and phase == "peak" and readiness == "high":
         lines.append(
@@ -131,7 +134,16 @@ def detect_understructured_plan(plan_obj: dict[str, Any], fixture_meta: dict[str
         and _clean_key(day.get("session_type")) != "rest"
     ]
     if not non_rest_days:
-        return []
+        issues = ["understructured:no_active_sessions"]
+        if band in {"A3", "A4"}:
+            issues.append("understructured:missing_long_run")
+        if band == "A4" and (readiness == "high" or recovery == "high" or phase == "peak"):
+            issues.append("understructured:missing_quality_for_A4")
+        elif band == "A3" and phase == "peak" and readiness == "high":
+            issues.append("understructured:missing_quality_for_A3_peak_high")
+        elif band == "A2" and readiness == "high" and recovery == "high":
+            issues.append("understructured:missing_long_or_quality_for_A2_high_high")
+        return issues
 
     hard_count = sum(1 for day in non_rest_days if bool(day.get("is_hard_day")))
     long_count = sum(1 for day in non_rest_days if _clean_key(day.get("session_type")) == "long")

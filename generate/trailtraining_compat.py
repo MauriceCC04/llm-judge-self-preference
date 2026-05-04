@@ -370,11 +370,11 @@ def _normalize_rest_day_semantics(plan_obj: dict[str, Any]) -> dict[str, Any]:
             day["is_rest_day"] = True
             day["is_hard_day"] = False
             day["duration_minutes"] = 0
-            day["target_intensity"] = day.get("target_intensity") or "rest"
+            day["target_intensity"] = "rest"
+            day["terrain"] = "n/a"
             day["title"] = "Rest day"
             day["workout"] = "Rest day. No structured training."
-            if "purpose" not in day or not str(day.get("purpose") or "").strip() or "rest day" in purpose.lower():
-                day["purpose"] = "Absorb training and maintain freshness."
+            day["purpose"] = "Recover and maintain freshness."
             continue
 
         if "rest day" in joined:

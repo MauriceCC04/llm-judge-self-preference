@@ -48,3 +48,38 @@ def test_normalize_rest_day_semantics_repairs_reused_rest_titles() -> None:
     assert days[1]["duration_minutes"] == 0
 
     assert detect_plan_issues(repaired) == []
+
+def test_normalize_rest_day_semantics_sanitizes_active_rest_purpose() -> None:
+    plan_obj = {
+        "plan": {
+            "days": [
+                {
+                    "date": "2026-03-11",
+                    "title": "Recovery day",
+                    "session_type": "rest",
+                    "is_rest_day": True,
+                    "is_hard_day": False,
+                    "duration_minutes": 35,
+                    "target_intensity": "easy",
+                    "terrain": "trail",
+                    "workout": "Easy run if you feel good.",
+                    "purpose": "Absorb the long run and prepare for a tempo workout.",
+                }
+            ]
+        }
+    }
+
+    repaired = _normalize_rest_day_semantics(plan_obj)
+    day = repaired["plan"]["days"][0]
+
+    assert day["session_type"] == "rest"
+    assert day["is_rest_day"] is True
+    assert day["is_hard_day"] is False
+    assert day["duration_minutes"] == 0
+    assert day["target_intensity"] == "rest"
+    assert day["terrain"] == "n/a"
+    assert day["title"] == "Rest day"
+    assert day["workout"] == "Rest day. No structured training."
+    assert day["purpose"] == "Recover and maintain freshness."
+    assert detect_plan_issues(repaired) == []
+

@@ -93,3 +93,38 @@ def test_detect_understructured_plan_allows_a2_nonmaximal_week() -> None:
     }
 
     assert detect_understructured_plan(plan_obj, fixture_meta) == []
+
+def test_detect_understructured_plan_flags_all_rest_advanced_week() -> None:
+    plan_obj = _plan(
+        [
+            {"session_type": "rest", "is_rest_day": True, "is_hard_day": False, "duration_minutes": 0}
+            for _ in range(7)
+        ]
+    )
+    fixture_meta = {
+        "athlete_band": "A4",
+        "readiness": "low",
+        "recovery_capability": "high",
+        "race_phase": "base",
+    }
+
+    issues = detect_understructured_plan(plan_obj, fixture_meta)
+    assert "understructured:no_active_sessions" in issues
+    assert "understructured:missing_long_run" in issues
+    assert "understructured:missing_quality_for_A4" in issues
+
+
+def test_structural_lifestyle_notes_warn_against_all_rest_advanced_week() -> None:
+    notes = build_structural_lifestyle_notes(
+        {
+            "athlete_band": "A4",
+            "readiness": "low",
+            "recovery_capability": "high",
+            "race_phase": "base",
+        }
+    )
+    lowered = notes.lower()
+    assert "all-rest" in lowered
+    assert "session_type='long'" in notes
+    assert "tempo/intervals/hills" in notes
+

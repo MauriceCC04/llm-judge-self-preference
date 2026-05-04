@@ -87,7 +87,7 @@ def build_structural_lifestyle_notes(
 
     if band in {"A3", "A4"}:
         lines.append(
-            "This cell expects a genuinely structured week, not an all-easy or all-rest template. Include at least one day with session_type='long'. Low readiness should reduce intensity or duration, not collapse the entire week to rest unless deterministic safety constraints explicitly require that."
+            "This cell expects a genuinely structured week, not an all-easy or all-rest template. Include at least one day with session_type='long' and at least three active non-rest training days. Low readiness should reduce intensity or duration, not collapse the entire week to rest unless deterministic safety constraints explicitly require that."
         )
 
     if band == "A4":
@@ -151,6 +151,15 @@ def detect_understructured_plan(plan_obj: dict[str, Any], fixture_meta: dict[str
     collapsed_easy_template = bool(active_types) and active_types.issubset(_EASYISH_SESSION_TYPES)
 
     issues: list[str] = []
+
+    min_active_days: int | None = None
+    if band in {"A3", "A4"}:
+        min_active_days = 3 if readiness == "low" else 4
+    elif band == "A2" and readiness == "high" and recovery == "high":
+        min_active_days = 2
+
+    if min_active_days is not None and len(non_rest_days) < min_active_days:
+        issues.append(f"understructured:too_few_active_days:{len(non_rest_days)}<{min_active_days}")
 
     if band in {"A3", "A4"} and long_count == 0:
         issues.append("understructured:missing_long_run")

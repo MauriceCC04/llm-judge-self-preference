@@ -128,3 +128,37 @@ def test_structural_lifestyle_notes_warn_against_all_rest_advanced_week() -> Non
     assert "session_type='long'" in notes
     assert "tempo/intervals/hills" in notes
 
+def test_detect_understructured_plan_flags_too_few_active_days_for_advanced_week() -> None:
+    plan_obj = _plan(
+        [
+            {"session_type": "long", "is_rest_day": False, "is_hard_day": False, "duration_minutes": 90},
+            {"session_type": "tempo", "is_rest_day": False, "is_hard_day": True, "duration_minutes": 45},
+            {"session_type": "rest", "is_rest_day": True, "is_hard_day": False, "duration_minutes": 0},
+            {"session_type": "rest", "is_rest_day": True, "is_hard_day": False, "duration_minutes": 0},
+            {"session_type": "rest", "is_rest_day": True, "is_hard_day": False, "duration_minutes": 0},
+            {"session_type": "rest", "is_rest_day": True, "is_hard_day": False, "duration_minutes": 0},
+            {"session_type": "rest", "is_rest_day": True, "is_hard_day": False, "duration_minutes": 0},
+        ]
+    )
+    fixture_meta = {
+        "athlete_band": "A4",
+        "readiness": "low",
+        "recovery_capability": "high",
+        "race_phase": "base",
+    }
+
+    issues = detect_understructured_plan(plan_obj, fixture_meta)
+    assert "understructured:too_few_active_days:2<3" in issues
+
+
+def test_structural_lifestyle_notes_request_multiple_active_advanced_days() -> None:
+    notes = build_structural_lifestyle_notes(
+        {
+            "athlete_band": "A4",
+            "readiness": "low",
+            "recovery_capability": "high",
+            "race_phase": "base",
+        }
+    )
+    assert "at least three active non-rest training days" in notes
+

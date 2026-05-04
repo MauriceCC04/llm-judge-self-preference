@@ -49,6 +49,7 @@ SEED_OFFSET="${SEED_OFFSET:-0}"
 FIXTURE_IDS="${FIXTURE_IDS:-}"
 SOURCE_TEMPERATURE="${SOURCE_TEMPERATURE:-0.7}"
 EXPLAINER_TEMPERATURE="${EXPLAINER_TEMPERATURE:-0.0}"
+MAX_ATTEMPTS_PER_FIXTURE="${MAX_ATTEMPTS_PER_FIXTURE:-${GENERATION_MAX_ATTEMPTS_PER_FIXTURE:-}}"
 PRIOR_FIT_MIN_PLANS="${PRIOR_FIT_MIN_PLANS:-30}"
 ALLOW_TINY_PRIOR_FIT="${ALLOW_TINY_PRIOR_FIT:-0}"
 
@@ -103,6 +104,7 @@ echo "  fixture_ids:             ${FIXTURE_IDS:-ALL}"
 echo "  explainer_model:         ${EXPLAINER_MODEL}"
 echo "  guided_decoding_backend: ${GUIDED_DECODING_BACKEND}"
 echo "  explainer_temperature:   ${EXPLAINER_TEMPERATURE}"
+echo "  max_attempts_per_fixture:${MAX_ATTEMPTS_PER_FIXTURE:-default}"
 if [[ "${GENERATION_ARM}" == "llm" ]]; then
     echo "  source_model:            ${LLM_SOURCE_MODEL}"
     echo "  source_temperature:      ${SOURCE_TEMPERATURE}"
@@ -209,6 +211,10 @@ FIXTURE_ARGS=()
 if [[ -n "${FIXTURE_IDS}" ]]; then
     FIXTURE_ARGS+=(--fixture-id "${FIXTURE_IDS}")
 fi
+ATTEMPT_ARGS=()
+if [[ -n "${MAX_ATTEMPTS_PER_FIXTURE:-}" ]]; then
+    ATTEMPT_ARGS+=(--max-attempts-per-fixture "${MAX_ATTEMPTS_PER_FIXTURE}")
+fi
 
 if [[ "${GENERATION_ARM}" == "llm" ]]; then
     python -m generate.run_generation \
@@ -219,6 +225,7 @@ if [[ "${GENERATION_ARM}" == "llm" ]]; then
         --source-temperature "${SOURCE_TEMPERATURE}" \
         --explainer-temperature "${EXPLAINER_TEMPERATURE}" \
         "${FIXTURE_ARGS[@]}" \
+        "${ATTEMPT_ARGS[@]}" \
         --output "${PLANS_DIR}"
 else
     if [[ ! -f "${SAMPLER_CONFIG}" ]]; then
@@ -255,6 +262,7 @@ PY
         --sampler-config "${SAMPLER_CONFIG}" \
         --explainer-temperature "${EXPLAINER_TEMPERATURE}" \
         "${FIXTURE_ARGS[@]}" \
+        "${ATTEMPT_ARGS[@]}" \
         --output "${PLANS_DIR}"
 fi
 

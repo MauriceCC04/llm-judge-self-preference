@@ -108,6 +108,7 @@ def run_llm_arm(
     fixture_ids: list[str] | None = None,
     source_temperature: float = 0.7,
     explainer_temperature: float = 0.0,
+    max_attempts_per_fixture: int | None = None,
 ) -> tuple[int, int]:
     from generate.llm_arm import generate_llm_plan
 
@@ -116,7 +117,12 @@ def run_llm_arm(
     failures_path = output_dir / "failed_plans.jsonl"
     generated = 0
     skipped = 0
-    total = len(specs) * plans_per_fixture
+    attempts_per_fixture = max_attempts_per_fixture or plans_per_fixture
+    if attempts_per_fixture < plans_per_fixture:
+        raise ValueError(
+            "max_attempts_per_fixture must be >= plans_per_fixture "
+            f"({attempts_per_fixture} < {plans_per_fixture})"
+        )
     generation_condition = build_llm_generation_condition(
         source_temperature=source_temperature,
         explainer_temperature=explainer_temperature,
@@ -127,8 +133,13 @@ def run_llm_arm(
         if not fixture_dir.exists():
             print(f"  [warn] fixture dir not found: {fixture_dir}", file=sys.stderr)
             continue
-        for seed in range(plans_per_fixture):
-            actual_seed = seed_offset + seed
+
+        accepted_for_fixture = 0
+        for candidate_idx in range(attempts_per_fixture):
+            if accepted_for_fixture >= plans_per_fixture:
+                break
+
+            actual_seed = seed_offset + candidate_idx
             plan_id = build_llm_plan_id(
                 fixture_id=spec.fixture_id,
                 source_model=source_model,
@@ -136,11 +147,17 @@ def run_llm_arm(
                 source_temperature=source_temperature,
                 explainer_temperature=explainer_temperature,
             )
-            progress = ((idx - 1) * plans_per_fixture) + seed + 1
             if _plan_outputs_exist(output_dir, plan_id):
                 skipped += 1
+                accepted_for_fixture += 1
                 continue
-            print(f"  [{progress}/{total}] {plan_id} ...", end="", flush=True)
+
+            print(
+                f"  [fixture {idx}/{len(specs)} attempt {candidate_idx + 1}/{attempts_per_fixture} "
+                f"accepted {accepted_for_fixture}/{plans_per_fixture}] {plan_id} ...",
+                end="",
+                flush=True,
+            )
             try:
                 result = generate_llm_plan(
                     fixture_dir=fixture_dir,
@@ -155,11 +172,18 @@ def run_llm_arm(
                 _verify_generated_result(plan_id, result)
                 print(" OK")
                 generated += 1
+                accepted_for_fixture += 1
             except Exception as exc:  # pragma: no cover - failure logging path
                 print(f" FAILED: {exc}")
                 _write_failure(failures_path, plan_id, exc)
-    return generated, skipped
 
+        if accepted_for_fixture < plans_per_fixture:
+            print(
+                f"  [warn] fixture {spec.fixture_id} accepted {accepted_for_fixture}/"
+                f"{plans_per_fixture} valid plans after {attempts_per_fixture} attempts",
+                file=sys.stderr,
+            )
+    return generated, skipped
 
 def run_programmatic_arm(
     output_dir: Path,
@@ -169,6 +193,7 @@ def run_programmatic_arm(
     seed_offset: int = 0,
     fixture_ids: list[str] | None = None,
     explainer_temperature: float = 0.0,
+    max_attempts_per_fixture: int | None = None,
 ) -> tuple[int, int]:
     from generate.fit_priors import load_sampler_config
     from generate.programmatic_arm import generate_programmatic_plan
@@ -179,7 +204,12 @@ def run_programmatic_arm(
     base_cfg = load_sampler_config(sampler_config_path) if sampler_config_path and sampler_config_path.exists() else None
     generated = 0
     skipped = 0
-    total = len(specs) * plans_per_fixture
+    attempts_per_fixture = max_attempts_per_fixture or plans_per_fixture
+    if attempts_per_fixture < plans_per_fixture:
+        raise ValueError(
+            "max_attempts_per_fixture must be >= plans_per_fixture "
+            f"({attempts_per_fixture} < {plans_per_fixture})"
+        )
     generation_condition = build_programmatic_generation_condition(
         explainer_temperature=explainer_temperature,
     )
@@ -189,18 +219,29 @@ def run_programmatic_arm(
         if not fixture_dir.exists():
             print(f"  [warn] fixture dir not found: {fixture_dir}", file=sys.stderr)
             continue
-        for seed in range(plans_per_fixture):
-            actual_seed = seed_offset + seed
+
+        accepted_for_fixture = 0
+        for candidate_idx in range(attempts_per_fixture):
+            if accepted_for_fixture >= plans_per_fixture:
+                break
+
+            actual_seed = seed_offset + candidate_idx
             plan_id = build_programmatic_plan_id(
                 fixture_id=spec.fixture_id,
                 seed=actual_seed,
                 explainer_temperature=explainer_temperature,
             )
-            progress = ((idx - 1) * plans_per_fixture) + seed + 1
             if _plan_outputs_exist(output_dir, plan_id):
                 skipped += 1
+                accepted_for_fixture += 1
                 continue
-            print(f"  [{progress}/{total}] {plan_id} ...", end="", flush=True)
+
+            print(
+                f"  [fixture {idx}/{len(specs)} attempt {candidate_idx + 1}/{attempts_per_fixture} "
+                f"accepted {accepted_for_fixture}/{plans_per_fixture}] {plan_id} ...",
+                end="",
+                flush=True,
+            )
             try:
                 result = generate_programmatic_plan(
                     fixture_dir=fixture_dir,
@@ -214,11 +255,18 @@ def run_programmatic_arm(
                 _verify_generated_result(plan_id, result)
                 print(" OK")
                 generated += 1
+                accepted_for_fixture += 1
             except Exception as exc:  # pragma: no cover - failure logging path
                 print(f" FAILED: {exc}")
                 _write_failure(failures_path, plan_id, exc)
-    return generated, skipped
 
+        if accepted_for_fixture < plans_per_fixture:
+            print(
+                f"  [warn] fixture {spec.fixture_id} accepted {accepted_for_fixture}/"
+                f"{plans_per_fixture} valid plans after {attempts_per_fixture} attempts",
+                file=sys.stderr,
+            )
+    return generated, skipped
 
 def _split_fixture_ids(raw_values: list[str] | None) -> list[str] | None:
     if not raw_values:
@@ -246,6 +294,15 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--source-temperature", type=float, default=0.7)
     parser.add_argument("--explainer-temperature", type=float, default=0.0)
     parser.add_argument(
+        "--max-attempts-per-fixture",
+        type=int,
+        default=None,
+        help=(
+            "Maximum candidate seeds to try per fixture while filling --plans-per-fixture "
+            "valid saved artifacts. Defaults to --plans-per-fixture."
+        ),
+    )
+    parser.add_argument(
         "--fixture-id",
         action="append",
         default=None,
@@ -271,6 +328,7 @@ def main(argv: list[str] | None = None) -> None:
     print(f"  seed_offset:           {args.seed_offset}")
     print(f"  fixture_ids:           {fixture_ids or 'ALL'}")
     print(f"  explainer_temperature: {args.explainer_temperature}")
+    print(f"  max_attempts_per_fixture: {args.max_attempts_per_fixture or 'default'}")
     if args.arm == "llm":
         if not args.source_model:
             parser.error("--source-model is required when --arm llm")
@@ -287,6 +345,7 @@ def main(argv: list[str] | None = None) -> None:
             fixture_ids=fixture_ids,
             source_temperature=args.source_temperature,
             explainer_temperature=args.explainer_temperature,
+            max_attempts_per_fixture=args.max_attempts_per_fixture,
         )
     else:
         n_gen, n_skip = run_programmatic_arm(
@@ -296,6 +355,7 @@ def main(argv: list[str] | None = None) -> None:
             seed_offset=args.seed_offset,
             fixture_ids=fixture_ids,
             explainer_temperature=args.explainer_temperature,
+            max_attempts_per_fixture=args.max_attempts_per_fixture,
         )
 
     elapsed = (datetime.now(tz=timezone.utc) - t0).total_seconds()

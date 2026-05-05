@@ -100,7 +100,7 @@ def build_structural_lifestyle_notes(
         )
     elif band == "A2" and readiness == "high" and recovery == "high":
         lines.append(
-            "This developing-recreational high-readiness/high-recovery cell should include at least one differentiated structural feature: either one long run or one clearly harder quality session."
+            "This developing-recreational high-readiness/high-recovery cell must not be an all-easy/aerobic template. Include exactly one differentiated structural feature: either (a) one controlled long run with session_type='long' and is_hard_day=false, or (b) one short controlled quality session with session_type tempo/hills/intervals and is_hard_day=true. Keep the rest of the week easy, aerobic, strength, cross-training, or rest. Do not satisfy this cell with only easy/aerobic/strength/cross sessions."
         )
     elif band == "A1":
         lines.append("Simple conservative structure is acceptable here; do not force high-intensity work.")
@@ -124,7 +124,11 @@ def detect_understructured_plan(plan_obj: dict[str, Any], fixture_meta: dict[str
     plan = plan_obj.get("plan") if isinstance(plan_obj, dict) else {}
     days = plan.get("days") if isinstance(plan, dict) else []
     if not isinstance(days, list):
-        return []
+        return ["understructured:missing_plan_days"]
+
+    expected_days = int(fixture_meta.get("plan_days") or 7)
+    if len(days) != expected_days:
+        return [f"understructured:wrong_plan_day_count:{len(days)}!={expected_days}"]
 
     non_rest_days = [
         day

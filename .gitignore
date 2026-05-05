@@ -39,3 +39,6 @@ fixtures/data
 /smoke_results
 /artifacts
 *.zip
+/err
+/out
+/plans_qwen_llm_fix4_n32

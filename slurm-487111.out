@@ -1,0 +1,29 @@
+Model cached: Qwen/Qwen2.5-3B-Instruct
+Model cached: Qwen/Qwen2.5-7B-Instruct
+=== Generation: llm arm (profile=custom) ===
+  plans_per_fixture:       1
+  plans_dir:               plans/
+  sampler_config:          ./sampler_config.json
+  seed_offset:             0
+  fixture_ids:             ALL
+  explainer_model:         Qwen/Qwen2.5-3B-Instruct
+  guided_decoding_backend: xgrammar
+  explainer_temperature:   0.0
+  source_model:            Qwen/Qwen2.5-7B-Instruct
+  source_temperature:      0.7
+=== lquota ===
+33G	/home/3202029
+[OK] Disk usage: 99 GB (soft ceiling: 40.0 GB)
+--- Structured API mode: chat ---
+--- vLLM structured-output request backend: chat.response_format + guided decoding backend xgrammar ---
+--- Preflighting structured-output schemas (xgrammar) ---
+--- Prompt cap chars: 20000 ---
+--- Structured max_tokens: 4096 ---
+--- Structured source max_tokens: 4096 ---
+--- Structured explainer max_tokens: 12288 ---
+[OK] trailtraining_machine_plan_v2: xgrammar.Grammar.from_json_schema
+[OK] trailtraining_plan_explanation_stage_v1: xgrammar.Grammar.from_json_schema
+[OK] trailtraining_plan_explanation_v1: xgrammar.Grammar.from_json_schema
+[OK] trailtraining_training_plan_v4: xgrammar.Grammar.from_json_schema
+--- Structured API mode: chat ---
+--- Starting explainer vLLM (Qwen/Qwen2.5-3B-Instruct) on :8774 ---

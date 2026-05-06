@@ -155,6 +155,16 @@ def _sample_duration(rng: random.Random, session_type: str, cfg: StructuralSampl
     return _clamp_int(sampled, 20, 420)
 
 
+def _scale_duration_tuple(
+    current: tuple[float, float],
+    *,
+    mean_scale: float = 1.0,
+    sd_scale: float = 1.0,
+) -> tuple[float, float]:
+    mean, sd = current
+    return (round(float(mean) * mean_scale, 1), round(max(5.0, float(sd) * sd_scale), 1))
+
+
 def sampler_config_from_fixture_meta(
     fixture_meta: dict[str, Any],
     *,
@@ -193,33 +203,60 @@ def sampler_config_from_fixture_meta(
 
     race_phase = str(fixture_meta.get("race_phase", "base") or "base")
     if race_phase == "peak":
-        cfg.p_rest_day = min(0.28, max(cfg.p_rest_day, 0.18))
+        # Tune the already band-specific config; do not erase A3/A4 structure.
+        cfg.p_rest_day = min(0.28, max(cfg.p_rest_day, 0.16))
         cfg.p_hard_day = max(0.18, min(cfg.p_hard_day, 0.24))
         cfg.easy_type_probs.update(
             {
-                "easy": 0.40,
-                "aerobic": 0.18,
-                "long": 0.13,
-                "strength": 0.06,
-                "cross": 0.23,
+                "easy": max(cfg.easy_type_probs.get("easy", 0.0), 0.36),
+                "aerobic": max(cfg.easy_type_probs.get("aerobic", 0.0), 0.18),
+                "long": max(0.10, cfg.easy_type_probs.get("long", 0.0) * 0.75),
+                "strength": min(cfg.easy_type_probs.get("strength", 0.0), 0.08),
+                "cross": max(cfg.easy_type_probs.get("cross", 0.0), 0.16),
             }
         )
-        cfg.duration_by_type["long"] = (80.0, 14.0)
-        cfg.duration_by_type["tempo"] = (46.0, 7.0)
+        cfg.duration_by_type["long"] = _scale_duration_tuple(
+            cfg.duration_by_type.get("long", (90.0, 20.0)),
+            mean_scale=0.88,
+            sd_scale=0.90,
+        )
+        cfg.duration_by_type["tempo"] = _scale_duration_tuple(
+            cfg.duration_by_type.get("tempo", (50.0, 8.0)),
+            mean_scale=0.92,
+            sd_scale=0.90,
+        )
+        cfg.duration_by_type["intervals"] = _scale_duration_tuple(
+            cfg.duration_by_type.get("intervals", (55.0, 8.0)),
+            mean_scale=0.92,
+            sd_scale=0.90,
+        )
+        cfg.duration_by_type["hills"] = _scale_duration_tuple(
+            cfg.duration_by_type.get("hills", (50.0, 8.0)),
+            mean_scale=0.92,
+            sd_scale=0.90,
+        )
     else:
-        cfg.p_rest_day = min(0.22, max(cfg.p_rest_day, 0.14))
-        cfg.p_hard_day = min(0.28, max(cfg.p_hard_day, 0.22))
+        cfg.p_rest_day = min(0.22, max(cfg.p_rest_day, 0.12))
+        cfg.p_hard_day = min(0.30, max(cfg.p_hard_day, 0.18))
         cfg.easy_type_probs.update(
             {
-                "easy": 0.34,
-                "aerobic": 0.24,
-                "long": 0.22,
-                "strength": 0.10,
-                "cross": 0.10,
+                "easy": max(cfg.easy_type_probs.get("easy", 0.0), 0.28),
+                "aerobic": max(cfg.easy_type_probs.get("aerobic", 0.0), 0.22),
+                "long": max(cfg.easy_type_probs.get("long", 0.0), 0.18),
+                "strength": max(cfg.easy_type_probs.get("strength", 0.0), 0.08),
+                "cross": max(cfg.easy_type_probs.get("cross", 0.0), 0.08),
             }
         )
-        cfg.duration_by_type["long"] = (96.0, 18.0)
-        cfg.duration_by_type["hills"] = (52.0, 8.0)
+        cfg.duration_by_type["long"] = _scale_duration_tuple(
+            cfg.duration_by_type.get("long", (90.0, 20.0)),
+            mean_scale=1.05,
+            sd_scale=1.05,
+        )
+        cfg.duration_by_type["hills"] = _scale_duration_tuple(
+            cfg.duration_by_type.get("hills", (50.0, 8.0)),
+            mean_scale=1.03,
+            sd_scale=1.00,
+        )
 
     if cfg.readiness_status == "fatigued":
         cfg.p_rest_day = min(0.32, cfg.p_rest_day + 0.04)

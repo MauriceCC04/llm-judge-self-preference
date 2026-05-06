@@ -32,6 +32,7 @@ from generate.sampler import (
 )
 from generate.temperature import build_programmatic_generation_condition
 from generate.structural_expectations import build_structural_lifestyle_notes
+from generate.programmatic_text_normalization import normalize_programmatic_artifact_text
 
 EXPLAINER_MAX_TOKENS = int(os.getenv("TRAILTRAINING_EXPLAINER_MAX_TOKENS", "12288"))
 
@@ -345,6 +346,8 @@ def _run_explainer_directly(
     )
     if isinstance(obj.get("effective_constraints"), dict):
         obj["effective_constraints"]["lifestyle_notes"] = artifact_lifestyle_notes
+
+    obj = normalize_programmatic_artifact_text(obj)
 
     _assert_no_placeholder_leaks(
         plan_obj=obj,

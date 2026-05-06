@@ -1,341 +1,164 @@
-# judge-bias-study
+# LLM Judge Self-Preference Study
 
-**LLM-judge self-preference on training plans** — a controlled experiment for
-Bocconi Jupiter I HPC.
-
----
+This repository supports a controlled empirical study of whether LLM judges systematically prefer LLM-generated training plans over programmatically generated training plans when deterministic structural plan quality is controlled.
 
 ## Research question
 
-Controlling for deterministic plan quality, do LLM judges systematically favour
-LLM-generated training plans over programmatically generated ones, and does this
-effect vary by judge model family and scale?
+**Controlling for deterministic structural plan quality, do LLM judges systematically favor LLM-generated training plans over programmatically generated plans, and does this effect vary by judge model family, model size, rubric, or whether the plan matches the judge's own family?**
 
-## Study modes
+The estimand is a matched pairwise preference effect. Each judged item compares one LLM-source training plan against one programmatic-source training plan from the same fixture cell and with similar source-neutral structural quality.
 
-This repository supports two distinct modes:
+## Current canonical study state
 
-- **Baseline frozen study** — the main causal estimate with fixed generation and
-  judging settings.
-- **Temperature sensitivity sweeps** — controlled variation of generation and
-  judge temperatures to test whether results depend on stochasticity.
+The current retained generation pool is larger than the earlier 512-plan baseline. The operational candidate pool now contains 1024 retained plan artifacts.
 
-Temperature control is implemented **in this repository**, not by modifying
-`trailtraining`. `trailtraining` is treated as a pinned library dependency; the
-experiment logic, provenance, matching discipline, and sweep orchestration live
-here.
+| Corpus | Path | Retained plans | Cells | Plans per cell | Notes |
+|---|---:|---:|---:|---:|---|
+| Qwen LLM source | `artifacts/gen_src_t070_exp_t000/full_qwen/plans` | 192 | 32 | 6 | Qwen/Qwen2.5-7B-Instruct source model |
+| Gemma 3 LLM source | `artifacts/gen_src_t070_exp_t000/full_gemma3/plans` | 192 | 32 | 6 | google/gemma-3-4b-it source model |
+| Programmatic control | `artifacts/gen_src_t070_exp_t000/full_programmatic/plans` | 640 | 32 | 20 | Programmatic structures plus shared explainer |
+| Matching pool | `artifacts/gen_src_t070_exp_t000/matching_pool/plans` | 1024 | 32 | mixed | Combined pool for matching only |
 
-## Frozen study summary
+Band balance is complete:
 
-- Fixtures: 8
-- LLM arm: 256 plans
-- Programmatic arm: 256 plans
-- Total plans: 512
-- Target matched pairs: 250
-- LLM source models: `Qwen/Qwen2.5-7B-Instruct`, `google/gemma-3-4b-it`
-- Active judges: 4 (`qwen_7b_judge`, `qwen_14b_judge`, `gemma_4b_judge`, `gemma_12b_judge`)
-- Pairwise calls: `250 × 4 × 5 × 2 = 10,000`
-- Soft-eval calls: `512 × 4 = 2,048`
-- Shared explainer: `Qwen/Qwen2.5-3B-Instruct`
-- Canonical baseline HPC path: `docs/HPC_RUNBOOK.md`
-- Temperature sensitivity runs: `docs/TEMPERATURE_SWEEPS.md`
+- Qwen: A1=48, A2=48, A3=48, A4=48.
+- Gemma 3: A1=48, A2=48, A3=48, A4=48.
+- Programmatic: A1=160, A2=160, A3=160, A4=160.
 
-## Baseline temperatures
+The current programmatic corpus passed the artifact-integrity gate:
 
-The default baseline study uses:
+- 640 plans and 640 provenance sidecars.
+- 32 fixture cells, exactly 20 plans per cell.
+- No missing sidecars.
+- No bad JSON.
+- No wrong plan lengths.
+- No structural prompt leaks.
+- No generic titles.
+- No title/session mismatches.
+- No rest-active contradictions.
+- Plausible load gradient by athlete band.
 
-- LLM source generation temperature: `0.7`
-- Shared explainer temperature: `0.0`
-- Judge temperature: `0.0`
+## Important current blocker
 
-These settings should be treated as part of the frozen baseline configuration and
-recorded in provenance and judgment outputs.
+Generation is complete. The current blocker is matching.
 
-## Architecture
+The first matching attempt produced only 30 matched pairs against a target of at least 250. This is not adequate for the full judge evaluation.
+
+Diagnosis:
+
+- Prefiltering was not the main problem. The matcher kept 936 of 1024 records and dropped only 88 session-signature duplicates.
+- The old deterministic quality score produced severe source non-overlap.
+- LLM plans mostly scored near 97-100.
+- Programmatic plans mostly scored around 30.
+- Relaxing the same-score-bin constraint did not materially increase matches.
+
+Therefore the old TrailTraining quality score must not be used as the primary matching score unless tests prove that it is source-neutral and structural-only. It should be retained as a secondary diagnostic.
+
+## Required methodological correction
+
+Implement and validate a source-neutral structural matching score.
+
+The primary matching score may use only structure-relevant fields, such as:
+
+- `session_type`
+- `duration_minutes`
+- `is_rest_day`
+- `is_hard_day`
+- weekly duration/load
+- active-day count
+- rest-day count and spacing
+- hard-day count and spacing
+- long-run presence/count
+- quality-session presence/count
+- readiness/recovery/race-phase appropriateness
+- deterministic structural violations
+
+The primary matching score must exclude:
+
+- title wording
+- workout prose richness
+- purpose prose richness
+- explanation fields
+- readiness rationale prose
+- recovery/risk prose richness
+- citations
+- claim attributions
+- data-note verbosity
+- rationale length
+- source model name
+- generation arm
+- file naming artifacts
+
+A valid structural score must be invariant to prose-only edits. Tests must prove that changing title/workout/purpose/explanation text without changing structural fields does not change the structural score.
+
+## Matching target
+
+The target matched set is at least 250 pairs, preferably 256 pairs.
+
+Matching should preserve causal identification:
+
+- Match within the same fixture cell whenever possible and by default.
+- Preserve same athlete band, readiness, recovery capability, race phase, style, and plan length.
+- Match on source-neutral structural score and structural feature distance.
+- Preserve source family metadata for analysis, but never expose source identity to judges.
+- Do not blindly loosen score tolerance to inflate pair count.
+
+Do not proceed to full judge evaluation until matching yields at least 250 valid matched pairs and the structural/style audits pass.
+
+## 10,000 evaluation-document requirement
+
+The full study still targets at least 10,000 judge-facing evaluation documents.
+
+The formula is:
 
 ```text
-8 frozen fixtures
-        │
-        ├── LLM arm          exact-count generation
-        │   └── 16 plans / fixture / source model × 8 fixtures × 2 models = 256
-        │
-        └── Programmatic arm  exact-count generation
-            └── 32 plans / fixture × 8 fixtures = 256
-        │
-        ▼
-deterministic scoring → greedy pair matching (|Δscore| ≤ 1)
-        │
-        ▼
-4 judges × (250 pairs × 5 runs × 2 positions + 512 plans × 1 soft-eval batch)
-        │
-        ▼
-mixed-effects models + rubric contrasts + forest plots
+250 matched pairs x 2 left-right orders x 5 runs x 4 judge models = 10,000 evaluation documents
 ```
 
-## Pairwise views
-
-Two pairwise surfaces are supported:
-
-- `raw_normalized` — existing normalized comparison surface
-- `canonical_masked` — fixed-format rendering for stricter structure-focused comparison
-
-Use `--pairwise-view canonical_masked` in the judge CLI or
-`PAIRWISE_VIEW=canonical_masked` in `slurm/run_judge_hpc.sh` to run the masked
-control condition.
-
-## Temperature controls
-
-Three temperature knobs are supported:
-
-- `source_temperature` — affects only the **LLM arm source generator**
-- `explainer_temperature` — affects the **shared explainer stage** used to fill
-  explanation and narrative fields
-- `judge_temperature` — affects **pairwise** and **soft-eval** judging
-
-These should not be interpreted the same way:
-
-- Varying **source temperature** changes the LLM arm generation process itself
-  and may change both structure and surface form.
-- Varying **judge temperature** changes evaluator stochasticity on fixed plans.
-- Varying **explainer temperature** changes presentation style and should be
-  treated cautiously because it can reintroduce stylistic leakage.
-
-For the main study, keep `explainer_temperature = 0.0` and
-`judge_temperature = 0.0`. Treat temperature sweeps as sensitivity analyses
-unless the study is explicitly about stochastic generation or stochastic
-assessment.
-
-## Artifact layout and condition discipline
-
-Different temperature conditions must be kept in distinct artifact directories.
-
-Do **not** mix multiple generation conditions in the same `plans/` directory and
-then run matching on that mixed directory. Matching should be performed on a
-single generation condition at a time.
-
-Recommended layout:
+Preferred:
 
 ```text
-artifacts/
-  gen_src_t070_exp_t000/
-    plans/
-    matched_pairs.json
-    matching_audit.json
-    judgments/
-      judge_t000/
-      judge_t020/
-      judge_t070/
-    results/
-      judge_t000/
-      judge_t020/
-      judge_t070/
+256 matched pairs x 2 orders x 5 runs x 4 judge models = 10,240 evaluation documents
 ```
 
-This keeps:
+The current 30-pair old-score match would produce only:
 
-- resume logic correct
-- matching condition-pure
-- provenance interpretable
-- sensitivity analyses separable from the main estimate
-
-## Generation quality gates and retained-corpus rules
-
-Schema-valid generation is **necessary but not sufficient** for inclusion in the
-study corpus.
-
-Before matching, the retained corpus must additionally satisfy all of the
-following:
-
-- no placeholder leakage such as `>{signal_id` in saved plan JSON
-- no saved-plan day-level duration violations
-- no human-facing contradictions such as a day titled `Rest day` with
-  `session_type != rest` or `duration_minutes > 0`
-- no exact text duplicates beyond one retained representative per duplicate
-  group
-- no exact session-signature duplicates beyond one retained representative per
-  duplicate group within a cell / condition
-
-Matching must be run on the **filtered retained corpus**, not on the raw
-pre-filter generation pool.
-
-## Human review is required before judging
-
-The generated plans should be treated as study artifacts, not merely as valid
-JSON documents. A small human audit is required before the full judging panel is
-launched.
-
-Recommended minimum:
-
-- targeted manual review of suspicious duplicate groups
-- one light spot-check per fixture cell or equivalent stratified sample
-- explicit pass / questionable / fail labeling for the audited plans
-
-The repo includes lightweight helpers for this:
-
-- `tools/plan_audit.py`
-- `tools/plan_similarity_report.py`
-
-## Known-good structured-output settings on Bocconi
-
-The following generation settings were validated during the 2026-05 debugging
-cycle for the Qwen source + shared-explainer path:
-
-- `TRAILTRAINING_STRUCTURED_MAX_TOKENS=12288`
-- `TRAILTRAINING_SOURCE_MAX_TOKENS=4096`
-- `TRAILTRAINING_EXPLAINER_MAX_TOKENS=12288`
-- `VLLM_SOURCE_MAX_MODEL_LEN=16384`
-- `VLLM_EXPLAINER_MAX_MODEL_LEN=24576`
-
-See `docs/HPC_RUNBOOK.md` for the canonical wrapper-based HPC path using these
-settings, and `docs/HPC_TROUBLESHOOTING.md` for the exact failure signatures
-that motivated them.
-
-## Quota-aware HPC model-cache discipline
-
-On Bocconi, model weights are the main storage bottleneck. The repository is now
-designed around a **one required model set per job** policy rather than “cache
-everything first”.
-
-Operationally this means:
-
-- **judge jobs** cache exactly **one judge model**
-- **programmatic generation jobs** cache exactly the **shared explainer**
-- **LLM generation jobs** cache exactly the **shared explainer + one source model**
-- unrelated model caches should not remain on disk between jobs
-- `bash slurm/pre_cache_models.sh all` is **not** the normal quota-safe workflow
-
-Planning budgets from `judge.panel` and `hpc.quota` are:
-
-- `Qwen/Qwen2.5-7B-Instruct`: **15 GB**
-- `Qwen/Qwen2.5-3B-Instruct`: **6 GB**
-- `Qwen/Qwen2.5-14B-Instruct-AWQ`: **8 GB**
-- `google/gemma-3-4b-it`: **10 GB**
-- `google/gemma-3-12b-it`: **28 GB**
-
-That yields:
-
-- largest **generation** model set: `15 + 6 = 21 GB`
-- largest **judge** model set: `28 GB`
-
-See `docs/HPC_RUNBOOK.md` for the exact quota-safe caching commands.
-
-## Artifact safety on HPC
-
-Generated study artifacts should **not** be treated as disposable untracked
-files inside the git working tree.
-
-In particular:
-
-- `git clean -fd` will delete raw generation outputs, `out/`, `err/`, and any
-  untracked plan directories
-- generated corpora should be copied either to a persistent non-repo artifact
-  directory or off-cluster before repo cleanup operations
-
-Recommended practice:
-
-- keep working plans under `artifacts/...` for the active condition
-- copy completed corpora to a durable path such as a study-artifacts directory
-  outside the repo root
-- copy important runs back to the desktop before any hard reset / clean cycle
-
-## Baseline command examples
-
-### Generate baseline plans
-
-```bash
-python cli.py generate \
-  --arm llm \
-  --source-model Qwen/Qwen2.5-7B-Instruct \
-  --source-temperature 0.7 \
-  --explainer-temperature 0.0 \
-  --output artifacts/gen_src_t070_exp_t000/plans
-
-python cli.py generate \
-  --arm llm \
-  --source-model google/gemma-3-4b-it \
-  --source-temperature 0.7 \
-  --explainer-temperature 0.0 \
-  --output artifacts/gen_src_t070_exp_t000/plans
-
-python cli.py generate \
-  --arm programmatic \
-  --explainer-temperature 0.0 \
-  --output artifacts/gen_src_t070_exp_t000/plans
+```text
+30 x 2 x 5 x 4 = 1,200 evaluation documents
 ```
 
-### Match within one generation condition
+That is not sufficient and must not be described as satisfying the 10,000-document criterion.
 
-```bash
-python cli.py match \
-  --plans artifacts/gen_src_t070_exp_t000/plans \
-  --output artifacts/gen_src_t070_exp_t000/matched_pairs.json
-```
+## Current canonical next steps
 
-### Judge baseline plans
+1. Implement source-neutral structural scoring.
+2. Add regression tests proving prose-only edits do not change structural score.
+3. Rerun matching using the structural score.
+4. Produce matching diagnostics and balance audits.
+5. Confirm at least 250 valid matched pairs, preferably 256.
+6. Run source-leakage and style-balance audits on judge-facing artifacts.
+7. Generate judge-ready pair/order documents with randomized left-right order.
+8. Assert the 10,000-document launch gate before full judge evaluation.
+9. Run pilot judge evaluation before full 10,000-document sweep.
+10. Populate the final report from actual results only.
 
-```bash
-python cli.py judge \
-  --judge qwen_7b_judge \
-  --judge-temperature 0.0 \
-  --plans artifacts/gen_src_t070_exp_t000/plans \
-  --pairs artifacts/gen_src_t070_exp_t000/matched_pairs.json \
-  --output artifacts/gen_src_t070_exp_t000/judgments/judge_t000
-```
+## Repository workflow expectations
 
-## Temperature sweep examples
+- Treat repository code and artifacts as source of truth.
+- Do not fabricate results.
+- Do not report generated plans as matched pairs.
+- Do not report matched pairs as evaluation documents.
+- Do not run full judging until the matching and launch gates pass.
+- Keep all artifact-generating commands reproducible.
+- Preserve provenance sidecars.
+- Keep source model/family metadata for analysis, but mask it from judge-facing documents.
 
-### Judge-temperature sweep on fixed plans
+## Key documentation files
 
-```bash
-python cli.py judge \
-  --judge qwen_7b_judge \
-  --judge-temperature 0.2 \
-  --plans artifacts/gen_src_t070_exp_t000/plans \
-  --pairs artifacts/gen_src_t070_exp_t000/matched_pairs.json \
-  --output artifacts/gen_src_t070_exp_t000/judgments/judge_t020
-
-python cli.py judge \
-  --judge qwen_7b_judge \
-  --judge-temperature 0.7 \
-  --plans artifacts/gen_src_t070_exp_t000/plans \
-  --pairs artifacts/gen_src_t070_exp_t000/matched_pairs.json \
-  --output artifacts/gen_src_t070_exp_t000/judgments/judge_t070
-```
-
-### Source-temperature sweep
-
-```bash
-python cli.py generate \
-  --arm llm \
-  --source-model Qwen/Qwen2.5-7B-Instruct \
-  --source-temperature 0.3 \
-  --explainer-temperature 0.0 \
-  --output artifacts/gen_src_t030_exp_t000/plans
-```
-
-Then regenerate the programmatic arm explainer outputs at the same explainer
-setting, rerun matching inside that new generation-condition directory, and
-only then launch judging.
-
-## Canonical run path
-
-Use the code-first frozen study path:
-
-1. `python tests/run_tests.py`
-2. `python -m fixtures.build`
-3. `bash bootstrap_hpc_env.sh`
-4. follow `docs/HPC_RUNBOOK.md`
-
-Do not use the older mixed runbook as the source of truth for the frozen study.
-
-## Documentation map
-
-- `docs/HPC_RUNBOOK.md` — baseline frozen-study HPC path and acceptance gates
-- `docs/HPC_TROUBLESHOOTING.md` — concrete Bocconi failure signatures and fixes
-- `docs/TEMPERATURE_SWEEPS.md` — temperature sensitivity workflow and HPC usage
-- `docs/EXPERIMENT_CONTROLS.md` — research and implementation design rules for
-  provenance, condition isolation, and `trailtraining` compatibility
-- `docs/INCIDENTS.md` — running log of incidents, root causes, fixes, and impacts
-- `docs/PREREGISTRATION.md` — frozen design parameters and retained-corpus
-  eligibility clarifications
-- `LOCAL_SMOKE_TEST.md` — local mock-server smoke test instructions
+- `README.md`: current study state and methodological rules.
+- `HPC_RUNBOOK.md`: robust HPC commands, environment setup, artifact layout, and launch gates.
+- `PREREGISTRATION.md`: current preregistered estimand plus operational deviations and fixed gates.
+- `INCIDENTS.md`: incident log, including current matching-score blocker.
+- `TEMPERATURE_SWEEPS.md`: rules for baseline generation conditions and future temperature sweeps.
+- `MATCHING_STRUCTURAL_SCORE_RUNBOOK.md`: implementation and validation checklist for the structural score.
+- `EVAL_10000_LAUNCH_GATE.md`: exact 10,000-document assertion rules.

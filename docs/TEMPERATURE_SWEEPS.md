@@ -1,405 +1,94 @@
-# TEMPERATURE_SWEEPS.md
+# Temperature Sweeps and Generation-Condition Rules
 
-Temperature sensitivity workflow for `judge-bias-study`.
+This document defines what may and may not be mixed in generation and matching artifacts.
 
-This document describes how to run controlled temperature sweeps **without**
-changing `trailtraining`. `trailtraining` is treated as a pinned library
-dependency; all experiment control lives in this repository.
+## 1. Baseline condition
 
-These runs are **sensitivity analyses**, not the default baseline study path.
-For the canonical baseline HPC workflow, see `docs/HPC_RUNBOOK.md`.
-
-## 1. Purpose
-
-Temperature sweeps help answer two different robustness questions:
-
-1. **Generation sensitivity**  
-   Does the observed preference pattern change when the LLM arm is generated with
-   different source temperatures?
-
-2. **Judge sensitivity**  
-   Does the observed preference pattern change when the same fixed plans are
-   judged at different judge temperatures?
-
-These are not the same thing.
-
-- Changing **source temperature** changes the generated plans themselves.
-- Changing **judge temperature** changes stochasticity in the evaluator while
-  keeping the plans fixed.
-- Changing **explainer temperature** changes presentation and should be treated
-  cautiously because it can reintroduce stylistic leakage.
-
-## 2. Temperature knobs
-
-This repository supports three knobs:
-
-- `source_temperature`
-- `explainer_temperature`
-- `judge_temperature`
-
-### Recommended interpretation
-
-- `source_temperature`  
-  Applies only to the LLM arm source generator.
-- `explainer_temperature`  
-  Applies to the shared explainer stage for both arms.
-- `judge_temperature`  
-  Applies to both pairwise and soft-eval judging.
-
-## 3. Recommended baseline and sweep grids
-
-### Baseline study
-
-- `source_temperature = 0.7`
-- `explainer_temperature = 0.0`
-- `judge_temperature = 0.0`
-
-### Recommended judge-temperature sweep
-
-Keep the plans fixed and vary only:
-
-- `judge_temperature ∈ {0.0, 0.2, 0.7}`
-
-This is the cleanest robustness check because it isolates evaluator stochasticity.
-
-### Recommended source-temperature sweep
-
-Regenerate the LLM arm and rebuild matching for each source setting:
-
-- `source_temperature ∈ {0.0, 0.3, 0.7}`
-- `explainer_temperature = 0.0`
-
-This is a generation-condition analysis, not just a “noise” analysis.
-
-### Explainer-temperature guidance
-
-Use `explainer_temperature = 0.0` unless you are explicitly studying whether
-explanation-style stochasticity leaks source identity into the judged artifact.
-
-## 4. Non-negotiable condition discipline
-
-Do not mix multiple generation conditions in the same `plans/` directory.
-
-Do not run matching on a directory that contains multiple generation conditions.
-
-Do not pool generation conditions into the baseline estimate without
-stratification.
-
-Recommended layout:
+The current baseline generation condition is:
 
 ```text
-artifacts/
-  gen_src_t070_exp_t000/
-    plans/
-    matched_pairs.json
-    matching_audit.json
-    judgments/
-      judge_t000/
-      judge_t020/
-      judge_t070/
-    results/
-      judge_t000/
-      judge_t020/
-      judge_t070/
-
-  gen_src_t030_exp_t000/
-    plans/
-    matched_pairs.json
-    matching_audit.json
-    judgments/
-      judge_t000/
+gen_src_t070_exp_t000
 ```
 
-## 5. Provenance and output expectations
+Meaning:
 
-Temperature conditions should be visible in:
+- source temperature: 0.70
+- explainer temperature: 0.00
 
-* plan IDs
-* provenance sidecars
-* generation condition labels
-* judgment JSONL rows
-* judgment output filenames
-* artifact directory names
+Current retained baseline corpora:
 
-This is required for:
-
-* crash-safe resume
-* condition-pure matching
-* reliable downstream analysis
-* auditability
-
-## 6. Local command examples
-
-## 6a. Baseline generation condition
-
-```bash
-python cli.py generate \
-  --arm llm \
-  --source-model meta-llama/Llama-3.1-8B-Instruct \
-  --source-temperature 0.7 \
-  --explainer-temperature 0.0 \
-  --output artifacts/gen_src_t070_exp_t000/plans
-
-python cli.py generate \
-  --arm programmatic \
-  --explainer-temperature 0.0 \
-  --output artifacts/gen_src_t070_exp_t000/plans
+```text
+artifacts/gen_src_t070_exp_t000/full_qwen/plans
+artifacts/gen_src_t070_exp_t000/full_gemma3/plans
+artifacts/gen_src_t070_exp_t000/full_programmatic/plans
 ```
 
-## 6b. Match baseline condition
+## 2. Allowed mixing
 
-```bash
-python cli.py match \
-  --plans artifacts/gen_src_t070_exp_t000/plans \
-  --output artifacts/gen_src_t070_exp_t000/matched_pairs.json
+It is allowed to combine multiple source model families in one matching pool if all of the following are true:
+
+- same fixture set
+- same source temperature
+- same explainer temperature
+- same artifact validation gates
+- same post-processing regime
+- source family remains in provenance for analysis
+- source family is hidden from judges
+
+The current matching pool intentionally combines Qwen-source and Gemma-3-source LLM plans under the same baseline generation condition.
+
+## 3. Disallowed mixing
+
+Do not mix the following in one primary matching pool unless explicitly stratified and documented:
+
+- different source temperatures
+- different explainer temperatures
+- different fixture versions
+- different prompt versions
+- different post-processing regimes
+- pilot plans with full-run plans
+- repaired artifacts with unrepaired artifacts unless the repair is deterministic and documented
+
+## 4. Future temperature sweeps
+
+Future temperature sweeps should be stored under separate roots, for example:
+
+```text
+artifacts/gen_src_t050_exp_t000/
+artifacts/gen_src_t070_exp_t000/
+artifacts/gen_src_t090_exp_t000/
 ```
 
-## 6c. Judge-temperature sweep on fixed plans
-
-```bash
-python cli.py judge \
-  --judge qwen_7b_judge \
-  --judge-temperature 0.0 \
-  --plans artifacts/gen_src_t070_exp_t000/plans \
-  --pairs artifacts/gen_src_t070_exp_t000/matched_pairs.json \
-  --output artifacts/gen_src_t070_exp_t000/judgments/judge_t000
-
-python cli.py judge \
-  --judge qwen_7b_judge \
-  --judge-temperature 0.2 \
-  --plans artifacts/gen_src_t070_exp_t000/plans \
-  --pairs artifacts/gen_src_t070_exp_t000/matched_pairs.json \
-  --output artifacts/gen_src_t070_exp_t000/judgments/judge_t020
-
-python cli.py judge \
-  --judge qwen_7b_judge \
-  --judge-temperature 0.7 \
-  --plans artifacts/gen_src_t070_exp_t000/plans \
-  --pairs artifacts/gen_src_t070_exp_t000/matched_pairs.json \
-  --output artifacts/gen_src_t070_exp_t000/judgments/judge_t070
-```
-
-## 6d. Source-temperature sweep
-
-```bash
-python cli.py generate \
-  --arm llm \
-  --source-model meta-llama/Llama-3.1-8B-Instruct \
-  --source-temperature 0.3 \
-  --explainer-temperature 0.0 \
-  --output artifacts/gen_src_t030_exp_t000/plans
-
-python cli.py generate \
-  --arm programmatic \
-  --explainer-temperature 0.0 \
-  --output artifacts/gen_src_t030_exp_t000/plans
-
-python cli.py match \
-  --plans artifacts/gen_src_t030_exp_t000/plans \
-  --output artifacts/gen_src_t030_exp_t000/matched_pairs.json
-```
-
-Judge that new generation condition separately.
-
-## 7. HPC submission pattern
-
-The safest HPC pattern is:
-
-1. One job per **generation condition**
-2. One matching step per **generation condition**
-3. Multiple judge jobs per **fixed matched plan set**
-4. One **quota-safe model set** cached at a time
-
-Under the current cache policy:
-
-- **judge jobs** cache exactly **one judge model**
-- **programmatic generation jobs** cache exactly the **shared explainer**
-- **LLM generation jobs** cache exactly the **shared explainer + one source model**
-- `bash slurm/pre_cache_models.sh all` is **not** the normal workflow for sweeps
-
-Before using the HPC examples below, define the helper functions from
-`docs/HPC_RUNBOOK.md`:
-
-- `purge_cached_models`
-- `cache_model`
-- `cache_programmatic_generation_set`
-- `cache_llm_generation_set`
-
-### Example: baseline generation condition
-
-An LLM-arm generation condition requires the **explainer + source** model set.
-
-```bash
-cache_llm_generation_set "meta-llama/Llama-3.1-8B-Instruct"
-sbatch \
-  --account=<USER_ID> \
-  --partition=stud \
-  --qos=stud \
-  --exclude=gnode04 \
-  --export=ALL,GENERATION_ARM=llm,GENERATION_PROFILE=exact,LLM_SOURCE_MODEL=meta-llama/Llama-3.1-8B-Instruct,SOURCE_TEMPERATURE=0.7,EXPLAINER_TEMPERATURE=0.0,PLANS_DIR=artifacts/gen_src_t070_exp_t000/plans \
-  --wrap="cd ${REPO_ROOT} && bash slurm/run_generation_hpc.sh"
-```
-
-When launching the programmatic arm for a condition, cache the **explainer only**
-and also set a condition-local sampler config so fitted priors cannot leak
-across conditions:
-
-```bash
-cache_programmatic_generation_set
-sbatch \
-  --account=<USER_ID> \
-  --partition=stud \
-  --qos=stud \
-  --exclude=gnode04 \
-  --export=ALL,GENERATION_ARM=programmatic,GENERATION_PROFILE=exact,PLANS_DIR=artifacts/gen_src_t070_exp_t000/plans,SAMPLER_CONFIG=artifacts/gen_src_t070_exp_t000/sampler_config.json,EXPLAINER_TEMPERATURE=0.0 \
-  --wrap="cd ${REPO_ROOT} && bash slurm/run_generation_hpc.sh"
-```
-
-### Example: alternate source-temperature condition
-
-Each new generation condition gets its own independent cache cycle.
-
-```bash
-cache_llm_generation_set "meta-llama/Llama-3.1-8B-Instruct"
-sbatch \
-  --account=<USER_ID> \
-  --partition=stud \
-  --qos=stud \
-  --exclude=gnode04 \
-  --export=ALL,GENERATION_ARM=llm,GENERATION_PROFILE=exact,LLM_SOURCE_MODEL=meta-llama/Llama-3.1-8B-Instruct,SOURCE_TEMPERATURE=0.3,EXPLAINER_TEMPERATURE=0.0,PLANS_DIR=artifacts/gen_src_t030_exp_t000/plans \
-  --wrap="cd ${REPO_ROOT} && bash slurm/run_generation_hpc.sh"
-
-cache_programmatic_generation_set
-sbatch \
-  --account=<USER_ID> \
-  --partition=stud \
-  --qos=stud \
-  --exclude=gnode04 \
-  --export=ALL,GENERATION_ARM=programmatic,GENERATION_PROFILE=exact,PLANS_DIR=artifacts/gen_src_t030_exp_t000/plans,SAMPLER_CONFIG=artifacts/gen_src_t030_exp_t000/sampler_config.json,EXPLAINER_TEMPERATURE=0.0 \
-  --wrap="cd ${REPO_ROOT} && bash slurm/run_generation_hpc.sh"
-```
-
-### Example: judge-temperature sweep on fixed plans
-
-Judge sweeps are **single-model judge** cases, so `pre_cache_models.sh` is the
-correct helper.
-
-```bash
-bash slurm/pre_cache_models.sh qwen_7b_judge
-PLANS_DIR=artifacts/gen_src_t070_exp_t000/plans \
-PAIRS_FILE=artifacts/gen_src_t070_exp_t000/matched_pairs.json \
-JUDGMENTS_DIR=artifacts/gen_src_t070_exp_t000/judgments/judge_t000 \
-JUDGE_TEMPERATURE=0.0 \
-  bash slurm/submit_judge_hpc.sh qwen_7b_judge
-
-bash slurm/pre_cache_models.sh qwen_7b_judge
-PLANS_DIR=artifacts/gen_src_t070_exp_t000/plans \
-PAIRS_FILE=artifacts/gen_src_t070_exp_t000/matched_pairs.json \
-JUDGMENTS_DIR=artifacts/gen_src_t070_exp_t000/judgments/judge_t020 \
-JUDGE_TEMPERATURE=0.2 \
-  bash slurm/submit_judge_hpc.sh qwen_7b_judge
-
-bash slurm/pre_cache_models.sh qwen_7b_judge
-PLANS_DIR=artifacts/gen_src_t070_exp_t000/plans \
-PAIRS_FILE=artifacts/gen_src_t070_exp_t000/matched_pairs.json \
-JUDGMENTS_DIR=artifacts/gen_src_t070_exp_t000/judgments/judge_t070 \
-JUDGE_TEMPERATURE=0.7 \
-  bash slurm/submit_judge_hpc.sh qwen_7b_judge
-```
-
-The canonical SLURM wrappers now forward:
-
-* `SOURCE_TEMPERATURE`
-* `EXPLAINER_TEMPERATURE`
-* `JUDGE_TEMPERATURE`
-* `PLANS_DIR`
-* `PAIRS_FILE`
-* `JUDGMENTS_DIR`
-* condition-specific `SAMPLER_CONFIG` when you want isolated fitted priors
-
-## 8. Recommended analysis strategy
-
-## 8a. Judge-temperature sensitivity
-
-Keep plans and matching fixed. Vary only `judge_temperature`.
-
-Report separately:
-
-* pairwise LLM win rate by judge temperature
-* per-rubric soft-eval changes by judge temperature
-* run-to-run variability by judge temperature
-* self-family preference by judge temperature
-
-## 8b. Source-temperature sensitivity
-
-Regenerate LLM-arm plans, rerun matching, then rejudge.
-
-Report separately:
-
-* LLM win rate by generation condition
-* matching coverage by generation condition
-* score-gap distribution by generation condition
-* any change in style-leakage audit by generation condition
-
-Do not present this as just “evaluation randomness.” It changes the generated
-artifacts themselves.
-
-## 8c. Explainer-temperature sensitivity
-
-Only run this if you are explicitly studying whether explanation stochasticity
-changes judge preference or introduces source-identifying surface cues.
-
-## 9. Reporting rules
-
-For the paper or report:
-
-* baseline estimates should come from the frozen baseline condition
-* temperature sweeps should be reported as sensitivity analyses
-* judge-temperature results and source-temperature results should be separated
-* mixed-condition pooling should be avoided unless explicitly modeled
-
-## 10. Common failure modes
-
-### Mixed plans directory
-
-If you place multiple generation conditions in one `plans/` directory, matching
-can mix them and invalidate interpretation.
-
-### Resume collisions
-
-If temperature is not part of artifact identity, repeated runs can silently reuse
-or overwrite previous results.
-
-### Overclaiming from source-temperature sweeps
-
-A source-temperature effect is not the same as a pure judge-bias effect.
-
-### Explainer leakage
-
-Nonzero explainer temperature may change surface form enough to introduce
-detectable source cues.
-
-### Wrong cache helper for the job type
-
-If you use `bash slurm/pre_cache_models.sh <source_model_alias>` as though it
-were sufficient for LLM generation, you will cache only the **source** model and
-miss the **explainer** model that `run_generation_hpc.sh` requires.
-
-If you call `bash slurm/pre_cache_models.sh` twice in a row for generation, the
-second call will purge the first cached model before downloading the second one.
-
-### Using `pre_cache_models.sh all` as a generation shortcut
-
-`all` now downloads models sequentially under quota and leaves only the **last**
-model cached. It is not a replacement for `cache_llm_generation_set` or
-`cache_programmatic_generation_set`.
-
-## 11. Minimal recommended sweep set
-
-If compute is limited, run only:
-
-1. baseline frozen condition
-2. judge-temperature sweep on one or two key judges
-3. one additional source-temperature condition such as `0.3`
-
-That gives you meaningful robustness evidence without exploding the matrix.
+Each sweep must have its own:
+
+- plan directories
+- provenance files
+- validation audits
+- matching pool
+- matching audit
+- judge outputs
+- analysis outputs
+
+Do not overwrite the current baseline.
+
+## 5. Matching rule for sweeps
+
+For the primary study, match only within the baseline condition unless the analysis plan is explicitly expanded.
+
+For sweep analysis, compare conditions as sensitivity or exploratory analyses. Do not combine them into the primary effect estimate without modeling generation condition.
+
+## 6. Documentation rule
+
+Every generated plan must carry enough provenance to recover:
+
+- source model
+- explainer model
+- source temperature
+- explainer temperature
+- fixture id
+- athlete band
+- readiness
+- recovery capability
+- race phase
+- generation arm
+- prompt/schema version if available

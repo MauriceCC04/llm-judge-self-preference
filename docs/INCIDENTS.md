@@ -1,315 +1,170 @@
-# INCIDENTS.md — Decision log
+# Incidents and Operational Decisions
 
-Append a new entry whenever something breaks, whenever a design decision is
-revised, or whenever an unexpected result requires an explanation. Never edit
-existing entries.
+This file records failures, root causes, fixes, and methodological decisions that affect reproducibility or validity. Append new incidents rather than deleting history.
 
-Format:
-```
-## INC-NNN — <short title>
-Date: YYYY-MM-DD
-Phase: gate_N | generation | matching | judging | analysis
-Severity: blocking | degraded | informational
-```
+## INC-001 - General incident-log policy
 
----
-
-## INC-000 — Study initialised
-
-Date: 2026-04-23
-Phase: setup
+Date: ongoing
+Phase: all
 Severity: informational
 
-Initial repo created. `docs/PREREGISTRATION.md` committed before any generation
-run. Gate-0 passing on CPU without GPU or API keys.
+Whenever a pipeline failure, environment issue, artifact-integrity issue, methodological correction, or documentation-changing decision occurs, add an incident entry with:
 
-Three upstream PRs opened against `trailtraining`:
-- PR-1: `TRAILTRAINING_LLM_BASE_URL` env override in `make_openrouter_client`
-- PR-2: Public `run_training_plan_from_machine_plan()` helper
-- PR-3: `util/resume_jsonl.py` append-only JSONL with dedup
+- date
+- phase
+- severity
+- symptoms
+- root cause
+- fix or decision
+- impact on validity/reproducibility
 
-Until PRs are merged, `vendor_patches/resume_jsonl.py` is used directly and
-`generate/programmatic_arm.py` falls back to `_run_explainer_directly()`.
+## INC-017 - Retained corpora expanded beyond earlier 512-plan documentation
 
----
+Date: 2026-05-06
+Phase: generation/documentation
+Severity: informational
 
-## INC-001 — H1/H3 used linear mixed model on binary outcome
+**Symptoms:** Earlier documentation described a frozen 512-plan baseline. Actual retained corpora are now 192 Qwen plans, 192 Gemma 3 plans, and 640 programmatic plans, for 1024 matching-pool candidates.
 
-Date: 2026-04-24
-Phase: analysis
+**Root cause:** The operational pool was expanded to support valid same-cell matching and source-family analysis.
+
+**Fix/decision:** Documentation must refer to the current 1024-candidate pool. The estimand remains a matched LLM-vs-programmatic pairwise preference effect.
+
+**Impact:** Generated-plan count changed, but the judge-evaluation target remains at least 250 matched pairs and 10,000 judge-facing evaluation documents.
+
+## INC-018 - Programmatic arm initially had presentation contradictions and flattened band structure
+
+Date: 2026-05-05 to 2026-05-06
+Phase: programmatic generation
+Severity: blocking until fixed
+
+**Symptoms:** Early programmatic artifacts showed title/session mismatches, rest-active contradictions, many generic titles, and weak A3/A4 load differentiation.
+
+**Root cause:** The programmatic arm allowed the explainer to fill human-facing fields inconsistently with trusted structural fields. The sampler's phase adjustment also overwrote some band-specific duration settings.
+
+**Fix/decision:** Add deterministic programmatic artifact text normalization and patch the sampler so race phase tunes band-specific parameters rather than erasing them.
+
+**Validation:** Final programmatic audit showed:
+
+- 640 plans and 640 provenance.
+- 32 cells, 20 plans per cell.
+- no missing sidecars.
+- no bad JSON.
+- no wrong plan lengths.
+- no structural prompt leaks.
+- generic_titles=0.
+- title_session_mismatches=0.
+- rest_active_contradictions=0.
+- plausible duration/load gradient from A1 to A4.
+
+**Impact:** The fixed programmatic corpus is eligible as a candidate pool for structural matching.
+
+## INC-019 - Conda activation and Python path issues on HPC
+
+Date: 2026-05-06
+Phase: matching/environment
+Severity: blocking until fixed
+
+**Symptoms:** Matching failed with:
+
+```text
+ModuleNotFoundError: No module named 'pydantic'
+ModuleNotFoundError: No module named 'trailtraining'
+CondaError: Run 'conda init' before 'conda activate'
+```
+
+**Root cause:** Interactive shell environment did not reliably activate `judge-bias`; Python could not see the sibling `trailtraining/src` repo.
+
+**Fix/decision:** Use the env Python directly and export `PYTHONPATH`:
+
+```bash
+export REPO_ROOT=/mnt/beegfsstudents/home/<USER_ID>/llm-judge-self-preference
+export TRAILTRAINING_REPO=/mnt/beegfsstudents/home/<USER_ID>/trailtraining
+export PYTHONPATH="${REPO_ROOT}:${TRAILTRAINING_REPO}/src:${PYTHONPATH:-}"
+export PY=/home/<USER_ID>/.conda/envs/judge-bias/bin/python
+```
+
+**Impact:** Future HPC commands and SLURM jobs must use this robust pattern.
+
+## INC-020 - Gated Gemma model and Hugging Face token failure
+
+Date: 2026-05-05
+Phase: model caching
+Severity: blocking until fixed
+
+**Symptoms:** Caching Gemma failed with 401 Unauthorized and gated repository errors.
+
+**Root cause:** Hugging Face token was not configured and model terms were not accessible for the session.
+
+**Fix/decision:** Set `HF_TOKEN`, accept model terms, export Hugging Face cache variables, and re-run caching. Verify with `tools/check_model_cache.py`.
+
+**Impact:** The runbook now explicitly documents gated-model and cache requirements.
+
+## INC-021 - Model cache cleanup caused downstream model-not-found failures
+
+Date: 2026-05-04 to 2026-05-05
+Phase: generation/model cache
+Severity: operational
+
+**Symptoms:** Later jobs failed instantly with `Model not found in cache` after earlier jobs deleted cached Qwen explainer/source models.
+
+**Root cause:** Cleanup flags removed cached weights needed by subsequent jobs. Quota pressure made cache management delicate.
+
+**Fix/decision:** Set cleanup flags intentionally. Before jobs, verify exactly the needed source/explainer/judge models are cached. Use `lquota` and delete only models that are not needed for the next job.
+
+**Impact:** The runbook now requires cache verification and warns against accidental cleanup.
+
+## INC-022 - Old deterministic quality score failed as primary matching score
+
+Date: 2026-05-06
+Phase: matching
 Severity: blocking
 
-**Root cause:** `analyze/models.py` used `smf.mixedlm` for a binary outcome.
+**Symptoms:** The old matcher produced only 30 pairs from the 1024-candidate matching pool:
 
-**Fix:** Replaced with logistic regression and cluster-robust standard errors.
+```text
+Pairs yielded: 30
+Target: 256
+Coverage ratio: 0.117
+Coverage OK: False
+```
 
-**Impact:** H1/H3/H4 fitting logic and related tests were corrected.
+The prefilter kept 936/1024 records and dropped only 88 session-signature duplicates. Therefore prefiltering was not the main blocker.
 
----
+Score diagnostics showed severe non-overlap:
 
-## INC-002 — llm_arm.py wrote temp files into fixture_dir
+- Qwen median score about 100.
+- Gemma 3 median score about 100.
+- Programmatic median score about 30.
 
-Date: 2026-04-24
-Phase: generation
-Severity: blocking
+Relaxing same-score-bin matching did not materially improve pair count.
 
-**Root cause:** temp outputs were pointed at the fixture directory.
+**Root cause:** The existing TrailTraining quality score appears to reward or penalize presentation/explanation richness rather than measuring only source-neutral structural quality. This is incompatible with the study design because presentation richness is a possible source cue and confound.
 
-**Fix:** temp files now point at output directories instead.
+**Fix/decision:** Do not proceed to full judging with the 30-pair matched set. Implement a source-neutral structural matching score that excludes prose, explanations, citations, source labels, and file-name artifacts. Keep the old quality score only as a diagnostic unless tests prove it is structural-only.
 
-**Impact:** fixture directories are no longer contaminated by generation temp
-artifacts.
+**Impact:** Structural-score implementation and matching diagnostics are now mandatory before judge evaluation.
 
----
+## INC-023 - 10,000-document requirement clarified
 
-## INC-003 — analyze/load.py did not populate source_model_a/b
+Date: 2026-05-06
+Phase: evaluation planning
+Severity: validity-critical
 
-Date: 2026-04-24
-Phase: analysis
-Severity: degraded
+**Symptoms:** The phrase `500 plans x 5 runs x 4 models = 10,000 eval documents` was ambiguous.
 
-**Root cause:** pairwise provenance joins omitted `source_model_a/b`.
+**Clarification:** For pairwise judging, the correct formula is:
 
-**Fix:** load path now joins them from provenance sidecars.
+```text
+250 matched pairs x 2 left-right orders x 5 runs x 4 judge models = 10,000 evaluation documents
+```
 
-**Impact:** self-family preference columns became meaningful.
+Preferred:
 
----
+```text
+256 matched pairs x 2 orders x 5 runs x 4 judge models = 10,240 evaluation documents
+```
 
-## INC-004 — Bocconi login-shell activation leaked to the wrong Python
+**Fix/decision:** Full judge launchers must compute and assert `n_eval_documents >= 10000` and must refuse full launch if `matched_pairs < 250`.
 
-Date: 2026-04-29
-Phase: setup
-Severity: blocking
-
-**Root cause:** plain `conda activate` was used before loading the shell hook.
-
-**Fix:** runbook now requires `eval "$(conda shell.bash hook)"` before
-activation, plus interpreter verification and `PYTHONNOUSERSITE=1`.
-
-**Impact:** removed a major reproducibility hazard in HPC setup.
-
----
-
-## INC-005 — `vllm` install on Jupiter I required explicit CUDA setup
-
-Date: 2026-04-29
-Phase: setup
-Severity: blocking
-
-**Root cause:** `vllm` was installed before loading CUDA.
-
-**Fix:** documented install order: activate env, load CUDA, export
-`CUDA_HOME`, install `torch`, then install `vllm`.
-
-**Impact:** made the real local-vLLM HPC path installable.
-
----
-
-## INC-006 — stale SLURM wrapper scripts broke Gate-0 parse tests
-
-Date: 2026-04-29
-Phase: gate_0
-Severity: blocking
-
-**Root cause:** stale thin wrapper variants did not source `common.sh`.
-
-**Fix:** runbook now treats these parse failures as a stale-checkout signal.
-
-**Impact:** reduced false debugging of environment issues that were actually
-checkout-version issues.
-
----
-
-## INC-007 — direct `cli.py generate` on HPC failed without stage-specific endpoints
-
-Date: 2026-04-29
-Phase: generation
-Severity: blocking
-
-**Root cause:** generation was attempted through direct CLI calls on the login
-node without the local-vLLM wrapper-managed stage URLs.
-
-**Fix:** runbook now clearly separates the wrapper-driven canonical HPC path
-from the direct-CLI path.
-
-**Impact:** avoided misreading wrapper/endpoint mistakes as model or API bugs.
-
----
-
-## INC-008 — HF access, Xet download, and quota all blocked model caching
-
-Date: 2026-04-29
-Phase: generation
-Severity: blocking
-
-**Root cause:** gated-model access, Xet download behavior, and quota limits all
-caused pre-caching failures in sequence.
-
-**Fix:** documented HF login, `HF_HUB_DISABLE_XET=1`, cache relocation, and
-one-required-model-set discipline.
-
-**Impact:** made model-cache management the explicit operational bottleneck to
-plan around.
-
----
-
-## INC-009 — explainer request exceeded model context length
-
-Date: 2026-05-01
-Phase: generation
-Severity: blocking
-
-**Root cause:** after increasing structured output caps, the explainer request
-used `12288` output tokens on a server with only `16384` total context, while
-the prompt already contained about `4097` tokens.
-
-**Fix:** increased the explainer server context budget and froze the validated
-structured settings:
-
-- `TRAILTRAINING_STRUCTURED_MAX_TOKENS=12288`
-- `TRAILTRAINING_SOURCE_MAX_TOKENS=4096`
-- `TRAILTRAINING_EXPLAINER_MAX_TOKENS=12288`
-- `VLLM_SOURCE_MAX_MODEL_LEN=16384`
-- `VLLM_EXPLAINER_MAX_MODEL_LEN=24576`
-
-**Impact:** removed the immediate 400-context-overflow blocker from the Qwen
-source + shared-explainer path.
-
----
-
-## INC-010 — explainer truncation surfaced as malformed JSON, not as the true root cause
-
-Date: 2026-05-01
-Phase: generation
-Severity: blocking
-
-**Root cause:** a pathological explainer output hit the completion cap with
-`finish=length`, and the downstream parser raised JSON errors such as
-`Expecting ',' delimiter`.
-
-**Fix:** moved to the working structured-output request path with validated
-budgets and treated `finish=length` as a truncation signal rather than as
-primary evidence that the model was incapable.
-
-**Impact:** the previously failing fixture was recovered, and the 8-fixture
-pilot later completed cleanly.
-
----
-
-## INC-011 — placeholder leakage contaminated saved final artifacts
-
-Date: 2026-05-01
-Phase: generation
-Severity: blocking
-
-**Root cause:** one saved final plan contained `>{signal_id` placeholder-like
-content in `snapshot.last7.*` and `snapshot.baseline28.*`. Prompt and machine
-plan replay showed the contamination arose downstream of the initial prompt
-construction.
-
-**Fix:** final `snapshot` construction was changed to use deterministic
-structured signal data rather than trusting explainer text, and final-validation
-placeholder leak checks were added.
-
-**Impact:** the bad fixture stopped leaking placeholders, the repaired 8-fixture
-pilot had zero placeholder hits, and the later 254-plan Qwen run also had zero
-placeholder hits in saved plans.
-
----
-
-## INC-012 — mock/test path diverged from the new explainer-stage schema
-
-Date: 2026-05-01
-Phase: gate_0
-Severity: blocking
-
-**Root cause:** after the deterministic-snapshot change, the mock explainer
-stage still returned `snapshot` even though the stage schema no longer allowed
-that field.
-
-**Fix:** updated the mock client/server so
-`trailtraining_plan_explanation_stage_v1` returns only stage-valid fields.
-
-**Impact:** restored local Gate-0 after the real HPC path had already been fixed.
-
----
-
-## INC-013 — manual file copying caused repo drift across HPC checkouts
-
-Date: 2026-05-01
-Phase: setup
-Severity: degraded
-
-**Root cause:** hand-copying files into the HPC repos left
-`llm-judge-self-preference` and `trailtraining` temporarily out of sync, leading
-to import errors such as missing `_build_deterministic_snapshot`.
-
-**Fix:** resynchronised both repos from the desktop / GitHub versions, cleared
-`__pycache__`, and switched back to repo-sync discipline instead of ad hoc file
-copying.
-
-**Impact:** removed a confusing class of false code-path failures.
-
----
-
-## INC-014 — occasional machine-plan duration violations remained after the major fixes
-
-Date: 2026-05-01
-Phase: generation
-Severity: degraded
-
-**Root cause:** even after the main generation path was repaired, some source
-machine plans still produced invalid `duration_minutes` values such as `480` or
-`630`. Many such cases were repaired successfully, but a few attempts still
-failed and had to be excluded.
-
-**Fix:** relied on the existing structured repair path, excluded unrepaired
-failures from the retained corpus, and added saved-plan duration validation to
-the post-generation acceptance gate.
-
-**Impact:** the pipeline became runnable at scale, but with some residual yield
-loss rather than catastrophic artifact corruption.
-
----
-
-## INC-015 — large-scale Qwen generation succeeded operationally but exposed corpus duplication
-
-Date: 2026-05-01
-Phase: generation
-Severity: degraded
-
-**Root cause:** once the Qwen generation path was operational, the retained LLM
-pool showed substantial within-cell repetition:
-
-- exact text duplicates
-- repeated exact session-signature groups
-- generic repeated structures
-- some human-facing contradictions such as non-rest sessions titled `Rest day`
-
-**Fix:** introduced retained-corpus filtering rules:
-
-- drop human-facing contradictions
-- collapse exact text duplicates to one representative
-- collapse exact session-signature duplicates to one representative
-- require a light human audit before matching and judging
-
-**Impact:** shifted the main blocker from infrastructure failure to corpus
-quality / study-validity discipline.
-
----
-
-## INC-016 — `git clean -fd` deleted generated study artifacts
-
-Date: 2026-05-02
-Phase: setup
-Severity: degraded
-
-**Root cause:** generated plan directories and job logs were stored as untracked
-files inside the repo working tree. `git clean -fd` therefore removed them.
-
-**Fix:** documented artifact-safety discipline in the runbook and README:
-completed corpora must be copied to a durable non-repo artifact directory or
-back to the desktop before any reset / clean cycle.
-
-**Impact:** this became an operational reproducibility rule for all future runs.
+**Impact:** The current 30-pair old-score match yields only 1,200 documents and is not sufficient.

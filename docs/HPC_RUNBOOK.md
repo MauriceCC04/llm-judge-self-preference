@@ -1,577 +1,350 @@
-# HPC_RUNBOOK.md
+# HPC Runbook
 
-Canonical HPC path for the frozen 512-plan baseline study.
+This runbook is the canonical operational guide for the current 1024-candidate-pool study state. It supersedes earlier frozen-512 commands.
 
-This runbook supersedes older mixed documentation because it uses the code-first
-entrypoints for the frozen study. It is intentionally **baseline-first**.
+## 0. Current artifact layout
 
-For temperature sensitivity runs, see `docs/TEMPERATURE_SWEEPS.md`.
-For concrete failure signatures and fixes collected during real Bocconi setup,
-see `docs/HPC_TROUBLESHOOTING.md`.
-
-## 0. What this path guarantees
-
-Using the commands below gives you:
-
-- a concrete audited `trailtraining` dependency pin
-- exact generation totals of **256 LLM-arm + 256 programmatic-arm = 512 plans**
-- automatic style-audit generation before judging when needed
-- judge submission with buffered walltime derived from `judge.panel`
-- optional `PAIRWISE_VIEW=canonical_masked` control runs
-- baseline temperature settings:
-  - source generation temperature `0.7`
-  - shared explainer temperature `0.0`
-  - judge temperature `0.0`
-- a post-generation acceptance gate before matching and judging
-
-This runbook describes the **real HPC path**. It does **not** use the local
-`tools/mock_llm_server.py` smoke path.
-
-## 1. HPC assumptions that matter for reproducibility
-
-This repository is reproducible on Bocconi Jupiter I only if the following are
-kept stable across runs:
-
-- the repo checkout is current enough to pass Gate-0
-- the Python interpreter is the intended conda environment, not the system
-  Miniconda interpreter and not `~/.local` user-site packages
-- CUDA is loaded before installing `vllm`
-- Hugging Face caches are stored on a quota-appropriate filesystem rather than
-  the small `/home/<USER_ID>` default
-- generation and judging are launched through the SLURM wrappers, not by calling
-  `cli.py generate` or `cli.py judge` directly on the login node without
-  endpoint wiring
-
-If any of those assumptions are violated, you can end up with apparently subtle
-failures that are actually environment mistakes. See
-`docs/HPC_TROUBLESHOOTING.md` for exact error strings.
-
-## 2. First-time setup on the login node
-
-Choose a real repo path on the cluster and keep using it consistently.
-On Bocconi, wrapped `sbatch` commands should `cd` to the real repo path rather
-than relying on the job spool directory.
-
-### 2a. Clone and define the repo root
-
-```bash
-git clone <your-copy-of-this-repo> /mnt/beegfsstudents/home/<USER_ID>/llm-judge-self-preference
-export REPO_ROOT=/mnt/beegfsstudents/home/<USER_ID>/llm-judge-self-preference
-cd "${REPO_ROOT}"
-```
-
-### 2b. Create and activate the Python environment correctly
-
-Do **not** use plain `conda activate` on Bocconi login shells unless the conda
-shell hook has already been loaded. The reproducible pattern is:
-
-```bash
-module load miniconda3
-eval "$(conda shell.bash hook)"
-conda create -n judge-bias python=3.11 -y
-conda activate judge-bias
-export PYTHONNOUSERSITE=1
-```
-
-Verify immediately:
-
-```bash
-which python
-python --version
-python -c "import sys; print(sys.executable)"
-```
-
-Expected interpreter shape:
+Current retained corpora:
 
 ```text
-~/.conda/envs/judge-bias/bin/python
-Python 3.11.x
+artifacts/gen_src_t070_exp_t000/
+  full_qwen/plans/
+  full_gemma3/plans/
+  full_programmatic/plans/
+  matching_pool/plans/
+  matching_pool/matched_pairs.json
+  matching_pool/matching_audit.json
+  matching_pool/matching_prefilter_audit.json
 ```
 
-If you instead see `/software/miniconda3/...`, `cp313` wheels, or imports from
-`~/.local/lib/python3.13/...`, you are not in the intended environment.
+Expected counts before matching:
 
-### 2c. Load CUDA before installing `vllm`
+```text
+full_qwen:         192 plans, 192 provenance, 32 cells, 6 per cell
+full_gemma3:       192 plans, 192 provenance, 32 cells, 6 per cell
+full_programmatic: 640 plans, 640 provenance, 32 cells, 20 per cell
+matching_pool:     1024 plans total
+```
 
-`vllm` installation on Jupiter I should be done only after loading CUDA and
-exporting `CUDA_HOME`.
+The full judge evaluation must not launch until a valid structural-score match produces at least 250 matched pairs.
+
+## 1. Golden Python environment pattern
+
+Do not rely on plain `conda activate` in the Bocconi interactive shell. It may fail with:
+
+```text
+CondaError: Run 'conda init' before 'conda activate'
+```
+
+Use the environment Python directly and explicitly set `PYTHONPATH` so both repositories are importable.
 
 ```bash
-module load cuda/12.4
-export CUDA_HOME="$(dirname "$(dirname "$(which nvcc)")")"
-which nvcc
-echo "$CUDA_HOME"
+cd /mnt/beegfsstudents/home/<USER_ID>/llm-judge-self-preference
+
+export REPO_ROOT=/mnt/beegfsstudents/home/<USER_ID>/llm-judge-self-preference
+export TRAILTRAINING_REPO=/mnt/beegfsstudents/home/<USER_ID>/trailtraining
+export PYTHONPATH="${REPO_ROOT}:${TRAILTRAINING_REPO}/src:${PYTHONPATH:-}"
+export PY=/home/<USER_ID>/.conda/envs/judge-bias/bin/python
+
+$PY - <<'PY'
+import sys
+import pydantic
+import trailtraining
+print('python', sys.executable)
+print('pydantic', pydantic.__version__)
+print('trailtraining', trailtraining.__file__)
+PY
 ```
 
-Then install the key runtime packages in the active env:
+Expected shape:
 
-```bash
-python -m pip install --no-cache-dir torch
-python -m pip install --no-cache-dir vllm
-PIP_NO_CACHE_DIR=1 bash bootstrap_hpc_env.sh
-export PYTHONPATH="${REPO_ROOT}:${PYTHONPATH:-}"
+```text
+python /home/<USER_ID>/.conda/envs/judge-bias/bin/python
+trailtraining /mnt/beegfsstudents/home/<USER_ID>/trailtraining/src/trailtraining/__init__.py
 ```
 
-### 2d. Move Hugging Face caches off `/home`
+If `trailtraining` cannot be imported, deterministic scoring and matching will fail.
 
-On Bocconi, the default Hugging Face cache location under `/home/<USER_ID>` is
-not suitable for gated 8B and judge-model downloads. Set the cache location
-explicitly before pre-caching any model.
+## 2. Hugging Face cache and quota rules
+
+Known issues encountered:
+
+- Gemma models are gated. You must accept terms and set a valid `HF_TOKEN` before caching.
+- `HF_HUB_DISABLE_XET=1` should be exported.
+- Quota can be tight. Do not keep unrelated model families cached.
+- For LLM generation, cache exactly the source model and the shared explainer.
+- For programmatic generation, cache only the shared explainer.
+- For judge runs, cache only the active judge model.
+- Do not set cleanup flags that delete models needed by subsequent jobs unless that is intentional.
+
+Recommended cache environment:
 
 ```bash
 export HF_HOME=/mnt/beegfsstudents/home/<USER_ID>/hf_cache
-export HF_HUB_CACHE="$HF_HOME/hub"
-export HUGGINGFACE_HUB_CACHE="$HF_HUB_CACHE"
-export TRANSFORMERS_CACHE="$HF_HOME/transformers"
+export HF_HUB_CACHE="${HF_HOME}/hub"
+export HUGGINGFACE_HUB_CACHE="${HF_HUB_CACHE}"
+export TRANSFORMERS_CACHE="${HF_HOME}/transformers"
 export HF_HUB_DISABLE_XET=1
 mkdir -p "$HF_HOME" "$HF_HUB_CACHE" "$TRANSFORMERS_CACHE"
-```
-
-Check quota before downloading large models:
-
-```bash
 lquota
 ```
 
-`bash bootstrap_hpc_env.sh` is an installer, not a persistent shell initializer.
-Its `export` statements do **not** modify your parent shell. Keep the cache-path
-exports in your current shell before any install, cache, or `sbatch` step.
-
-### 2e. Define quota-safe cache helpers
-
-Under a **50 GB hard quota**, the correct rule is not “one model at a time”
-literally. The correct rule is:
-
-- keep **one required model set per job**
-- remove unrelated model caches between jobs
-- never accumulate the full panel in cache
-
-In this study:
-
-- **judge jobs** need exactly **one judge model**
-- **programmatic generation jobs** need exactly the **shared explainer**
-- **LLM generation jobs** need exactly the **shared explainer + one source model**
-
-Planning budgets from `judge.panel` are:
-
-- `Qwen/Qwen2.5-7B-Instruct`: **15 GB**
-- `Qwen/Qwen2.5-3B-Instruct`: **6 GB**
-- `Qwen/Qwen2.5-14B-Instruct-AWQ`: **8 GB**
-- `google/gemma-3-4b-it`: **10 GB**
-- `google/gemma-3-12b-it`: **28 GB**
-
-That means:
-
-- largest **generation** model set = `15 + 6 = 21 GB`
-- largest **judge** model set = `28 GB`
-
-Define these helpers once in your shell:
+Model-cache verification:
 
 ```bash
-purge_cached_models() {
-  python - <<'PY'
-from hpc.quota import purge_all_hf_model_caches
-count = purge_all_hf_model_caches()
-print(f"Removed {count} cached model directories")
+$PY tools/check_model_cache.py "Qwen/Qwen2.5-3B-Instruct"
+$PY tools/check_model_cache.py "Qwen/Qwen2.5-7B-Instruct"
+$PY tools/check_model_cache.py "google/gemma-3-4b-it"
+```
+
+## 3. Corpus integrity audit
+
+Run before constructing the matching pool.
+
+```bash
+cd /mnt/beegfsstudents/home/<USER_ID>/llm-judge-self-preference
+
+export REPO_ROOT=/mnt/beegfsstudents/home/<USER_ID>/llm-judge-self-preference
+export TRAILTRAINING_REPO=/mnt/beegfsstudents/home/<USER_ID>/trailtraining
+export PYTHONPATH="${REPO_ROOT}:${TRAILTRAINING_REPO}/src:${PYTHONPATH:-}"
+export PY=/home/<USER_ID>/.conda/envs/judge-bias/bin/python
+
+$PY - <<'PY'
+import json
+from pathlib import Path
+from collections import Counter
+
+corpora = {
+    'qwen': Path('artifacts/gen_src_t070_exp_t000/full_qwen/plans'),
+    'gemma3': Path('artifacts/gen_src_t070_exp_t000/full_gemma3/plans'),
+    'programmatic': Path('artifacts/gen_src_t070_exp_t000/full_programmatic/plans'),
+}
+
+for name, d in corpora.items():
+    plans = sorted(p for p in d.glob('*.json') if not p.name.endswith('.provenance.json'))
+    provs = sorted(d.glob('*.provenance.json'))
+    by_cell = Counter()
+    by_band = Counter()
+    bad = []
+    missing_sidecars = []
+
+    for p in plans:
+        sidecar = p.with_name(p.name + '.provenance.json')
+        if not sidecar.exists():
+            missing_sidecars.append(p.name)
+            continue
+        try:
+            obj = json.loads(p.read_text())
+            prov = json.loads(sidecar.read_text())
+            days = obj.get('plan', {}).get('days', [])
+            if len(days) != 7:
+                bad.append((p.name, f'{len(days)} days'))
+            by_cell[prov.get('fixture_id')] += 1
+            by_band[prov.get('athlete_band')] += 1
+        except Exception as e:
+            bad.append((p.name, str(e)))
+
+    expected_per_cell = 20 if name == 'programmatic' else 6
+    non_expected = {k: v for k, v in sorted(by_cell.items()) if v != expected_per_cell}
+
+    print(f'\n=== {name} ===')
+    print('plans', len(plans))
+    print('provenance', len(provs))
+    print('cells', len(by_cell))
+    print('by_band', dict(sorted(by_band.items())))
+    print('cell_count_min_max', (min(by_cell.values()), max(by_cell.values())) if by_cell else None)
+    print('non_expected_cells', non_expected)
+    print('missing_sidecars', missing_sidecars[:10])
+    print('bad', bad[:10])
 PY
-  lquota 2>/dev/null || du -sh "${HOME}" 2>/dev/null || true
-}
+```
 
-cache_model() {
-  local model_id="$1"
-  python - "$model_id" <<'PY'
-from huggingface_hub import snapshot_download
-import sys
-model_id = sys.argv[1]
-snapshot_download(model_id, ignore_patterns=["*.msgpack", "*.h5"])
-print(f"Cached: {model_id}")
+Expected:
+
+```text
+qwen:         192 plans, 32 cells, 6 per cell
+gemma3:       192 plans, 32 cells, 6 per cell
+programmatic: 640 plans, 32 cells, 20 per cell
+```
+
+## 4. Matching-pool construction
+
+The matcher expects one plans directory. Construct it from the three validated corpora.
+
+```bash
+cd /mnt/beegfsstudents/home/<USER_ID>/llm-judge-self-preference
+
+POOL=artifacts/gen_src_t070_exp_t000/matching_pool/plans
+rm -rf "$POOL"
+mkdir -p "$POOL"
+
+$PY - <<'PY'
+import json
+import shutil
+from pathlib import Path
+
+sources = [
+    Path('artifacts/gen_src_t070_exp_t000/full_qwen/plans'),
+    Path('artifacts/gen_src_t070_exp_t000/full_gemma3/plans'),
+    Path('artifacts/gen_src_t070_exp_t000/full_programmatic/plans'),
+]
+
+pool = Path('artifacts/gen_src_t070_exp_t000/matching_pool/plans')
+pool.mkdir(parents=True, exist_ok=True)
+
+copied = 0
+for src in sources:
+    for plan_path in sorted(src.glob('*.json')):
+        if plan_path.name.endswith('.provenance.json'):
+            continue
+        prov_path = plan_path.with_name(plan_path.name + '.provenance.json')
+        if not prov_path.exists():
+            raise SystemExit(f'Missing provenance for {plan_path}')
+        dst_plan = pool / plan_path.name
+        dst_prov = pool / prov_path.name
+        if dst_plan.exists() or dst_prov.exists():
+            raise SystemExit(f'Collision in matching pool: {plan_path.name}')
+        shutil.copy2(plan_path, dst_plan)
+        prov = json.loads(prov_path.read_text())
+        prov['plan_path'] = str(dst_plan)
+        dst_prov.write_text(json.dumps(prov, indent=2, ensure_ascii=False))
+        copied += 1
+
+print('copied_plans', copied)
+print('pool', pool)
 PY
-  lquota 2>/dev/null || du -sh "${HOME}" 2>/dev/null || true
-}
-
-cache_programmatic_generation_set() {
-  purge_cached_models
-  cache_model "Qwen/Qwen2.5-3B-Instruct"
-}
-
-cache_llm_generation_set() {
-  local source_model="$1"
-  purge_cached_models
-  cache_model "Qwen/Qwen2.5-3B-Instruct"
-  cache_model "${source_model}"
-}
 ```
 
-Notes:
+Expected:
 
-- `bash slurm/pre_cache_models.sh <judge_name>` is the normal helper for
-  **judge-model** caching and smoke tests.
-- `bash slurm/pre_cache_models.sh all` is **not** the normal quota-safe path for
-  the study. It now validates/downloads models sequentially under quota and
-  leaves only the **last** model cached.
-- For generation jobs, do **not** call `pre_cache_models.sh` twice, because it
-  purges before each download. Use the helper functions above to cache the
-  explainer-plus-source set in one cycle.
-
-## 3. Gate 0 — local CPU tests
-
-```bash
-cd "${REPO_ROOT}"
-python tests/run_tests.py
+```text
+copied_plans 1024
 ```
 
-This gate must be green before moving on.
+## 5. Known invalid matching result
 
-If Gate-0 reports wrapper-script parse failures such as:
+The old matching command completed but yielded only 30 pairs:
 
-- `run_generation.sh does not source common.sh`
-- `run_judge.sh does not source common.sh`
-- `submit_judge.sh does not source common.sh`
-
-then your checkout is stale or locally patched in a way that is inconsistent
-with the current runbook. Sync the repo to a passing revision before
-continuing.
-
-## 4. Build fixtures
-
-```bash
-cd "${REPO_ROOT}"
-python -m fixtures.build
+```text
+Pairs yielded: 30 (target: 256)
+Coverage ratio: 0.117
+Coverage OK: False
 ```
 
-## 5. Gate 1 — HPC preflight
+This matched set is invalid for full judging.
 
-```bash
-sbatch \
-  --account=<USER_ID> \
-  --partition=stud \
-  --qos=stud \
-  --exclude=gnode04 \
-  --wrap="cd ${REPO_ROOT} && bash slurm/run_preflight.sh"
+The issue was not invalid plans or duplicate filtering. The issue was severe score non-overlap under the old quality score:
+
+```text
+Qwen median score:       about 100
+Gemma 3 median score:    about 100
+Programmatic median:     about 30
 ```
 
-## 6. Gate 2 — vLLM smoke test
+Relaxing same-bin matching did not solve this. Do not use this old-score result for judging.
 
-A smoke test is a **judge-model** case, so a single-model pre-cache step is
-correct here.
+## 6. Required matching implementation
 
-Do **not** use `sbatch slurm/run_vllm_smoke.sh` directly: SLURM executes a
-spooled copy and the script's relative `common.sh` source will resolve under
-`/var/spool/...` instead of your repo. Also do **not** use a wrapped submission
-without an outer `--gres`, because the inner `#SBATCH --gres=...` will be
-ignored.
+Before rerunning final matching, implement source-neutral structural scoring. See `MATCHING_STRUCTURAL_SCORE_RUNBOOK.md`.
+
+Full matching may proceed only if:
+
+```text
+matched pairs >= 250
+preferably matched pairs >= 256
+coverage across all 32 fixture cells is documented
+structural score gap mean/max/p95 are acceptable
+Qwen and Gemma source families are represented
+style/leakage gate passes
+```
+
+## 7. Safe SLURM pattern for structural matching
 
 ```bash
-cd "${REPO_ROOT}"
+cd /mnt/beegfsstudents/home/<USER_ID>/llm-judge-self-preference
 mkdir -p out err
-bash slurm/pre_cache_models.sh qwen_7b_judge
+
 sbatch \
   --account=<USER_ID> \
   --partition=stud \
   --qos=stud \
-  --gres=gpu:4g.40gb:1 \
   --time=00:45:00 \
-  --exclude=gnode04 \
-  --chdir="${REPO_ROOT}" \
-  --output=out/vllm_smoke_%j.out \
-  --error=err/vllm_smoke_%j.err \
-  --export=ALL,HF_HOME=${HF_HOME},HF_HUB_CACHE=${HF_HUB_CACHE},HUGGINGFACE_HUB_CACHE=${HUGGINGFACE_HUB_CACHE},TRANSFORMERS_CACHE=${TRANSFORMERS_CACHE},HF_HUB_DISABLE_XET=${HF_HUB_DISABLE_XET} \
-  --wrap="bash slurm/run_vllm_smoke.sh"
-```
-
-## 7. Validated structured-output settings for generation
-
-The following settings were validated during the 2026-05 debugging cycle for
-the Qwen source + shared-explainer path and should be treated as the known-good
-starting point for that path:
-
-```bash
-export TRAILTRAINING_STRUCTURED_MAX_TOKENS=12288
-export TRAILTRAINING_SOURCE_MAX_TOKENS=4096
-export TRAILTRAINING_EXPLAINER_MAX_TOKENS=12288
-export VLLM_SOURCE_MAX_MODEL_LEN=16384
-export VLLM_EXPLAINER_MAX_MODEL_LEN=24576
-```
-
-These settings are especially relevant for avoiding:
-
-- explainer-side context overflow (`400 Bad Request` with prompt + output > max context)
-- explainer truncation with `finish=length`
-- misleading downstream JSON parse errors caused by truncation
-
-If you are debugging a different source model or backend, start from the same
-shape of configuration and only then adjust conservatively.
-
-## 8. Exact-count generation
-
-### Important: do not launch direct CLI generation on HPC without endpoint wiring
-
-For the real HPC path, prefer the SLURM wrappers. Calling
-`python cli.py generate` directly on the login node is only valid if you have
-already started the local vLLM endpoints yourself and exported the stage-specific
-environment variables:
-
-- `TRAILTRAINING_SOURCE_LLM_BASE_URL`
-- `TRAILTRAINING_EXPLAINER_LLM_BASE_URL`
-- `TRAILTRAINING_JUDGE_LLM_BASE_URL`
-
-If those are missing or stale, you can hit failures such as:
-
-- `Missing Authentication header`
-- `No explainer endpoint configured`
-
-Use the wrapper path below instead.
-
-### 8a. LLM arm — Qwen source (exact 128 plans)
-
-This is an **LLM generation** job, so cache the **explainer + source** model
-set.
-
-```bash
-cd "${REPO_ROOT}"
-cache_llm_generation_set "Qwen/Qwen2.5-7B-Instruct"
-mkdir -p out err
-sbatch \
-  --account=<USER_ID> \
-  --partition=stud \
-  --qos=stud \
-  --gres=gpu:4g.40gb:1 \
-  --time=16:00:00 \
-  --exclude=gnode04 \
-  --chdir="${REPO_ROOT}" \
-  --output=out/generate_hpc_%x_%j.out \
-  --error=err/generate_hpc_%x_%j.err \
-  --export=ALL,HF_HOME=${HF_HOME},HF_HUB_CACHE=${HF_HUB_CACHE},HUGGINGFACE_HUB_CACHE=${HUGGINGFACE_HUB_CACHE},TRANSFORMERS_CACHE=${TRANSFORMERS_CACHE},HF_HUB_DISABLE_XET=${HF_HUB_DISABLE_XET},GENERATION_ARM=llm,GENERATION_PROFILE=exact,LLM_SOURCE_MODEL=Qwen/Qwen2.5-7B-Instruct,SOURCE_TEMPERATURE=0.7,EXPLAINER_TEMPERATURE=0.0,TRAILTRAINING_STRUCTURED_MAX_TOKENS=${TRAILTRAINING_STRUCTURED_MAX_TOKENS:-12288},TRAILTRAINING_SOURCE_MAX_TOKENS=${TRAILTRAINING_SOURCE_MAX_TOKENS:-4096},TRAILTRAINING_EXPLAINER_MAX_TOKENS=${TRAILTRAINING_EXPLAINER_MAX_TOKENS:-12288},VLLM_SOURCE_MAX_MODEL_LEN=${VLLM_SOURCE_MAX_MODEL_LEN:-16384},VLLM_EXPLAINER_MAX_MODEL_LEN=${VLLM_EXPLAINER_MAX_MODEL_LEN:-24576} \
-  --wrap="bash slurm/run_generation_hpc.sh"
-```
-
-### 8b. LLM arm — Gemma source (exact 128 plans)
-
-Before pre-caching Gemma models, make sure the Hugging Face account used on the
-cluster has accepted the Gemma model terms.
-
-This is also an **LLM generation** job, so again cache the **explainer + source**
-model set.
-
-```bash
-cd "${REPO_ROOT}"
-cache_llm_generation_set "google/gemma-3-4b-it"
-mkdir -p out err
-sbatch \
-  --account=<USER_ID> \
-  --partition=stud \
-  --qos=stud \
-  --gres=gpu:4g.40gb:1 \
-  --time=16:00:00 \
-  --exclude=gnode04 \
-  --chdir="${REPO_ROOT}" \
-  --output=out/generate_hpc_%x_%j.out \
-  --error=err/generate_hpc_%x_%j.err \
-  --export=ALL,HF_HOME=${HF_HOME},HF_HUB_CACHE=${HF_HUB_CACHE},HUGGINGFACE_HUB_CACHE=${HUGGINGFACE_HUB_CACHE},TRANSFORMERS_CACHE=${TRANSFORMERS_CACHE},HF_HUB_DISABLE_XET=${HF_HUB_DISABLE_XET},GENERATION_ARM=llm,GENERATION_PROFILE=exact,LLM_SOURCE_MODEL=google/gemma-3-4b-it,SOURCE_TEMPERATURE=0.7,EXPLAINER_TEMPERATURE=0.0,TRAILTRAINING_STRUCTURED_MAX_TOKENS=${TRAILTRAINING_STRUCTURED_MAX_TOKENS:-12288},TRAILTRAINING_SOURCE_MAX_TOKENS=${TRAILTRAINING_SOURCE_MAX_TOKENS:-4096},TRAILTRAINING_EXPLAINER_MAX_TOKENS=${TRAILTRAINING_EXPLAINER_MAX_TOKENS:-12288},VLLM_SOURCE_MAX_MODEL_LEN=${VLLM_SOURCE_MAX_MODEL_LEN:-16384},VLLM_EXPLAINER_MAX_MODEL_LEN=${VLLM_EXPLAINER_MAX_MODEL_LEN:-24576} \
-  --wrap="bash slurm/run_generation_hpc.sh"
-```
-
-After both jobs complete, the LLM arm totals **256** plans exactly.
-
-### 8c. Fit sampler priors
-
-```bash
-cd "${REPO_ROOT}"
-python -m generate.fit_priors --plans-dir plans/ --output sampler_config.json
-```
-
-### 8d. Programmatic arm (exact 256 plans)
-
-This is a **programmatic generation** job, so cache the **explainer only**.
-
-```bash
-cd "${REPO_ROOT}"
-cache_programmatic_generation_set
-mkdir -p out err
-sbatch \
-  --account=<USER_ID> \
-  --partition=stud \
-  --qos=stud \
-  --gres=gpu:4g.40gb:1 \
-  --time=16:00:00 \
-  --exclude=gnode04 \
-  --chdir="${REPO_ROOT}" \
-  --output=out/generate_hpc_%x_%j.out \
-  --error=err/generate_hpc_%x_%j.err \
-  --export=ALL,HF_HOME=${HF_HOME},HF_HUB_CACHE=${HF_HUB_CACHE},HUGGINGFACE_HUB_CACHE=${HUGGINGFACE_HUB_CACHE},TRANSFORMERS_CACHE=${TRANSFORMERS_CACHE},HF_HUB_DISABLE_XET=${HF_HUB_DISABLE_XET},GENERATION_ARM=programmatic,GENERATION_PROFILE=exact,SAMPLER_CONFIG=sampler_config.json,EXPLAINER_TEMPERATURE=0.0,TRAILTRAINING_STRUCTURED_MAX_TOKENS=${TRAILTRAINING_STRUCTURED_MAX_TOKENS:-12288},TRAILTRAINING_EXPLAINER_MAX_TOKENS=${TRAILTRAINING_EXPLAINER_MAX_TOKENS:-12288},VLLM_EXPLAINER_MAX_MODEL_LEN=${VLLM_EXPLAINER_MAX_MODEL_LEN:-24576} \
-  --wrap="bash slurm/run_generation_hpc.sh"
-```
-
-At this point you should have **512 total plans**.
-
-## 9. Generation acceptance gate before matching
-
-Do **not** go directly from “generation completed” to matching.
-
-Before matching, run all of the following against the saved plan directory for
-the active generation condition.
-
-### 9a. Inspect failed plans and raw failures
-
-```bash
-cat <PLANS_DIR>/failed_plans.jsonl 2>/dev/null || true
-find <PLANS_DIR> -type f | grep raw_failures | sort || true
-```
-
-A small number of raw generation failures is acceptable. They should **not** be
-counted as study plans. Saved plans are what matter for downstream analyses.
-
-### 9b. Scan for placeholder leakage
-
-```bash
-grep -R ">{signal_id" <PLANS_DIR>/*.json || true
-```
-
-The expected output is empty.
-
-### 9c. Verify saved-plan day durations
-
-```bash
-python - <<'PY'
-import json, glob, os
-plans_dir = "<PLANS_DIR>"
-bad = []
-count = 0
-for path in sorted(glob.glob(f"{plans_dir}/*.json")):
-    if path.endswith(".provenance.json"):
-        continue
-    count += 1
-    with open(path, "r", encoding="utf-8") as f:
-        obj = json.load(f)
-    for day in obj["plan"]["days"]:
-        dur = day["duration_minutes"]
-        if dur < 0 or dur > 420:
-            bad.append((os.path.basename(path), day["date"], dur))
-print("VALID_JSON_PLANS:", count)
-print("BAD_DURATIONS:", bad)
+  --chdir=/mnt/beegfsstudents/home/<USER_ID>/llm-judge-self-preference \
+  --output=out/match_pool_structural_%j.out \
+  --error=err/match_pool_structural_%j.err \
+  --wrap='
+set -euo pipefail
+export REPO_ROOT=/mnt/beegfsstudents/home/<USER_ID>/llm-judge-self-preference
+export TRAILTRAINING_REPO=/mnt/beegfsstudents/home/<USER_ID>/trailtraining
+export PYTHONPATH="${REPO_ROOT}:${TRAILTRAINING_REPO}/src:${PYTHONPATH:-}"
+export PY=/home/<USER_ID>/.conda/envs/judge-bias/bin/python
+cd "$REPO_ROOT"
+$PY - <<PY
+import sys, pydantic, trailtraining
+print("python", sys.executable)
+print("pydantic", pydantic.__version__)
+print("trailtraining", trailtraining.__file__)
 PY
+$PY cli.py match \
+  --plans artifacts/gen_src_t070_exp_t000/matching_pool/plans \
+  --output artifacts/gen_src_t070_exp_t000/matching_pool/matched_pairs.json \
+  --allow-mixed-generation-conditions
+'
 ```
 
-The expected output is:
+## 8. 10,000 evaluation-document launch gate
 
-- `VALID_JSON_PLANS: <retained count>`
-- `BAD_DURATIONS: []`
+Full judge evaluation must assert:
 
-### 9d. Filter and deduplicate before matching
+```text
+n_pairs >= 250
+n_orders == 2
+n_runs == 5
+n_judge_models == 4
+n_eval_documents >= 10000
+```
 
-The matching step should operate on a **retained filtered corpus**, not the raw
-pre-filter generation pool.
+Formula:
 
-At minimum, filter out:
+```text
+250 matched pairs x 2 orders x 5 runs x 4 judge models = 10,000 evaluation documents
+```
 
-- human-facing contradictions like `Rest day` titles on non-rest sessions
-- exact text duplicates beyond one representative
-- exact session-signature duplicates beyond one representative in the active
-  condition / cell
+Preferred:
 
-Use `tools/plan_audit.py` and `tools/plan_similarity_report.py` to support this
-review and deduplication process.
+```text
+256 matched pairs x 2 orders x 5 runs x 4 judge models = 10,240 evaluation documents
+```
 
-### 9e. Human audit before full judging
+Pilot jobs may use fewer pairs but must write to pilot-specific directories and must not be reported as the full 10,000-document study.
 
-Run a small human review over:
+## 9. Common failure modes and fixes
 
-- a stratified sample of saved plans
-- suspicious duplicate groups
-- any plans from failure-prone cells / conditions
+### `ModuleNotFoundError: No module named 'pydantic'`
 
-The human audit is a study-validity gate, not an optional cosmetic step.
-
-## 10. Artifact safety before repo cleanup
-
-Before any `git clean -fd`, `git reset --hard`, or other working-tree cleanup:
-
-- copy completed corpora to a durable non-repo artifact directory
-- or copy them off-cluster to the desktop
-- or both
-
-Do **not** rely on untracked plan directories inside the repo working tree as
-the only copy of a completed generation run.
-
-## 11. Matching
-
-Once the retained filtered corpus is ready:
+Wrong Python environment. Use:
 
 ```bash
-python cli.py match \
-  --plans artifacts/gen_src_t070_exp_t000/plans \
-  --output artifacts/gen_src_t070_exp_t000/matched_pairs.json
+export PY=/home/<USER_ID>/.conda/envs/judge-bias/bin/python
 ```
 
-## 12. Style gate
+### `ModuleNotFoundError: No module named 'trailtraining'`
 
-Run the paired style audit before full judging. Matching on deterministic score
-alone is necessary but not sufficient.
+Missing sibling repo in `PYTHONPATH`. Use:
 
 ```bash
-python cli.py audit-style \
-  --plans artifacts/gen_src_t070_exp_t000/plans \
-  --pairs artifacts/gen_src_t070_exp_t000/matched_pairs.json \
-  --output artifacts/gen_src_t070_exp_t000/results
+export TRAILTRAINING_REPO=/mnt/beegfsstudents/home/<USER_ID>/trailtraining
+export PYTHONPATH="${REPO_ROOT}:${TRAILTRAINING_REPO}/src:${PYTHONPATH:-}"
 ```
 
-If the style gate fails, stop and fix the corpus before full judging.
+### `Model not found in cache`
 
-## 13. Judge pilot and full judging
+The model was deleted or not cached. Re-cache exactly the needed model(s). Check quota before caching.
 
-Use the sequential wrapper path for the real panel on HPC. The pilot should run
-before the full judging sweep so that position-biased or otherwise broken judges
-can be excluded from the primary estimate.
+### Gemma 401/gated repo
 
-Typical sequence:
+Set `HF_TOKEN` and make sure the Hugging Face account has accepted the model terms.
 
-```bash
-JUDGE_MODE=pilot \
-PAIRWISE_VIEW=raw_normalized \
-PLANS_DIR=artifacts/gen_src_t070_exp_t000/plans \
-PAIRS_FILE=artifacts/gen_src_t070_exp_t000/matched_pairs.json \
-JUDGMENTS_DIR=artifacts/gen_src_t070_exp_t000/judgments/pilot_raw_normalized \
-STYLE_GATE_SUMMARY=artifacts/gen_src_t070_exp_t000/results/style_audit_summary.json \
-bash slurm/submit_judge_panel_hpc.sh
-```
+### Full matching yields ~30 pairs
 
-Then, if the pilot is acceptable:
-
-```bash
-JUDGE_MODE=full \
-PAIRWISE_VIEW=raw_normalized \
-PLANS_DIR=artifacts/gen_src_t070_exp_t000/plans \
-PAIRS_FILE=artifacts/gen_src_t070_exp_t000/matched_pairs.json \
-JUDGMENTS_DIR=artifacts/gen_src_t070_exp_t000/judgments/full_raw_normalized \
-STYLE_GATE_SUMMARY=artifacts/gen_src_t070_exp_t000/results/style_audit_summary.json \
-bash slurm/submit_judge_panel_hpc.sh
-```
-
-Run the `canonical_masked` control view as a separate condition if desired.
-
-## 14. Analysis
-
-```bash
-python cli.py analyze \
-  --judgments artifacts/gen_src_t070_exp_t000/judgments/full_raw_normalized \
-  --plans artifacts/gen_src_t070_exp_t000/plans \
-  --pairs artifacts/gen_src_t070_exp_t000/matched_pairs.json \
-  --output artifacts/gen_src_t070_exp_t000/results/full_raw_normalized \
-  --pairwise-view raw_normalized
-```
-
-## 15. Minimum launch gates for the baseline study
-
-Do not proceed to full judging unless all of the following are true:
-
-- Gate-0 passes
-- preflight passes
-- vLLM smoke passes
-- generation completed for the active condition
-- placeholder scan is clean on saved plans
-- saved-plan duration scan is clean
-- obvious human-facing contradictions have been filtered out
-- duplicate filtering has been applied
-- style gate passes
-- judge pilot does not identify a judge that should be excluded from the
-  primary analysis without that exclusion being applied
+Do not generate more blindly and do not loosen tolerance. Implement structural scoring and rerun matching diagnostics.

@@ -1,0 +1,170 @@
+{
+  "plan_a": {
+    "judge_view": "canonical_masked_structural_v1",
+    "plan": {
+      "days": [
+        {
+          "day_index": 1,
+          "duration_minutes": 20,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "Support durability, stability, and injury resistance.",
+          "session_type": "strength",
+          "target_intensity": "easy",
+          "workout_summary": "20 min strength and mobility session."
+        },
+        {
+          "day_index": 2,
+          "duration_minutes": 30,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "Build aerobic consistency while keeping fatigue low.",
+          "session_type": "easy",
+          "target_intensity": "easy",
+          "workout_summary": "30 min easy run at conversational effort."
+        },
+        {
+          "day_index": 3,
+          "duration_minutes": 107,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "Extend endurance and trail-specific durability.",
+          "session_type": "long",
+          "target_intensity": "easy",
+          "workout_summary": "107 min long run at controlled aerobic effort."
+        },
+        {
+          "day_index": 4,
+          "duration_minutes": 82,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "Extend endurance and trail-specific durability.",
+          "session_type": "long",
+          "target_intensity": "easy",
+          "workout_summary": "82 min long run at controlled aerobic effort."
+        },
+        {
+          "day_index": 5,
+          "duration_minutes": 107,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "Extend endurance and trail-specific durability.",
+          "session_type": "long",
+          "target_intensity": "easy",
+          "workout_summary": "107 min long run at controlled aerobic effort."
+        },
+        {
+          "day_index": 6,
+          "duration_minutes": 0,
+          "is_hard_day": false,
+          "is_rest_day": true,
+          "purpose_summary": "Absorb training and maintain freshness.",
+          "session_type": "rest",
+          "target_intensity": "rest",
+          "workout_summary": "Rest day. No structured training."
+        },
+        {
+          "day_index": 7,
+          "duration_minutes": 0,
+          "is_hard_day": false,
+          "is_rest_day": true,
+          "purpose_summary": "Absorb training and maintain freshness.",
+          "session_type": "rest",
+          "target_intensity": "rest",
+          "workout_summary": "Rest day. No structured training."
+        }
+      ],
+      "summary": {
+        "hard_days": 0,
+        "long_runs": 3,
+        "plan_days": 7,
+        "rest_days": 2,
+        "total_minutes": 346
+      }
+    }
+  },
+  "plan_b": {
+    "judge_view": "canonical_masked_structural_v1",
+    "plan": {
+      "days": [
+        {
+          "day_index": 1,
+          "duration_minutes": 31,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "Support aerobic consistency without adding excessive fatigue.",
+          "session_type": "easy",
+          "target_intensity": "easy",
+          "workout_summary": "31 min easy run on trail."
+        },
+        {
+          "day_index": 2,
+          "duration_minutes": 120,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "Build endurance and trail-specific durability.",
+          "session_type": "long",
+          "target_intensity": "moderate",
+          "workout_summary": "Trail Run - 13km, 350m+, avgHR 152"
+        },
+        {
+          "day_index": 3,
+          "duration_minutes": 45,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "Support aerobic consistency without adding excessive fatigue.",
+          "session_type": "easy",
+          "target_intensity": "easy",
+          "workout_summary": "Trail Run - 6km, 170m+, avgHR 153"
+        },
+        {
+          "day_index": 4,
+          "duration_minutes": 45,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "Support aerobic consistency without adding excessive fatigue.",
+          "session_type": "easy",
+          "target_intensity": "easy",
+          "workout_summary": "Trail Run - 6km, 160m+, avgHR 153"
+        },
+        {
+          "day_index": 5,
+          "duration_minutes": 0,
+          "is_hard_day": false,
+          "is_rest_day": true,
+          "purpose_summary": "Recover and maintain freshness.",
+          "session_type": "rest",
+          "target_intensity": "rest",
+          "workout_summary": "Rest day. No structured training."
+        },
+        {
+          "day_index": 6,
+          "duration_minutes": 60,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "Support aerobic consistency without adding excessive fatigue.",
+          "session_type": "easy",
+          "target_intensity": "easy",
+          "workout_summary": "Trail Run - 7km, 200m+, avgHR 153"
+        },
+        {
+          "day_index": 7,
+          "duration_minutes": 45,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "Complete the planned easy run without adding extra fatigue.",
+          "session_type": "easy",
+          "target_intensity": "easy",
+          "workout_summary": "Trail Run - 5km, 150m+, avgHR 153"
+        }
+      ],
+      "summary": {
+        "hard_days": 0,
+        "long_runs": 1,
+        "plan_days": 7,
+        "rest_days": 1,
+        "total_minutes": 346
+      }
+    }
+  }
+}

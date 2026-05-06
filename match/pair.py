@@ -1,12 +1,31 @@
-"""match/pair.py — source-neutral structural-score-based greedy pairing."""
+"""match/pair.py — source-neutral structural-score-based pairing.
+
+Primary matching is same-cell LLM-vs-programmatic matching on a structural-only
+score. Presentation fields are excluded. v4 adds two safeguards after artifact
+inspection:
+
+* target-cardinality min-cost matching, so the selected 250 pairs minimize
+  structural feature gaps instead of accepting an arbitrary maximum matching;
+* optional hard calipers plus default soft calipers. Hard calipers are suitable
+  for pilot/sensitivity analysis, but the current 1024-plan pool does not reach
+  250 pairs under strict hard calipers, so they are not silently enabled by
+  default.
+"""
 from __future__ import annotations
 
+import heapq
 import json
 import math
 from pathlib import Path
+from statistics import mean
 from typing import Any
 
-from generate.constants import MATCH_FEATURE_WEIGHTS
+from generate.constants import (
+    MATCH_FEATURE_WEIGHTS,
+    MATCH_HARD_CALIPERS,
+    MATCH_SOFT_CALIPER_PENALTY,
+    MATCH_SOFT_CALIPERS,
+)
 from match.features import extract_match_features, weighted_feature_distance
 from match.filtering import filter_plan_records
 from match.structural_score import STRUCTURAL_SCORE_VERSION, score_structural_plan
@@ -120,12 +139,7 @@ def score_plan(
     strict: bool = True,
     provenance_path: Path | None = None,
 ) -> float:
-    """Primary matching score: source-neutral structural score.
-
-    This replaces the legacy TrailTraining quality score for matching. The legacy
-    score may still be computed separately as ``old_quality_score`` for audit and
-    sensitivity reporting, but must not control primary pair construction.
-    """
+    """Primary matching score: source-neutral structural score."""
     try:
         return float(score_structural_plan(plan_path, provenance_path=provenance_path, rollups_path=rollups_path).score)
     except Exception as exc:
@@ -182,18 +196,46 @@ def _same_required_cell(left: dict[str, Any], right: dict[str, Any]) -> bool:
     return True
 
 
-def _candidate_adjacency(
+def _feature_gap(left: dict[str, Any], right: dict[str, Any], key: str) -> float:
+    return abs(float(left.get(key, 0.0)) - float(right.get(key, 0.0)))
+
+
+def _caliper_violations(left: dict[str, Any], right: dict[str, Any], calipers: dict[str, float]) -> dict[str, float]:
+    out: dict[str, float] = {}
+    for key, limit in (calipers or {}).items():
+        gap = _feature_gap(left, right, key)
+        if gap > float(limit):
+            out[key] = round(gap, 3)
+    return out
+
+
+def _soft_caliper_penalty(
+    left: dict[str, Any],
+    right: dict[str, Any],
+    *,
+    soft_calipers: dict[str, float],
+    penalty_weight: float,
+) -> float:
+    penalty = 0.0
+    for key, limit in (soft_calipers or {}).items():
+        excess = max(0.0, _feature_gap(left, right, key) - float(limit))
+        penalty += excess * float(penalty_weight)
+    return penalty
+
+
+def _candidate_edges(
     llm_plans: list[dict[str, Any]],
     prog_plans: list[dict[str, Any]],
     *,
     tolerance: float,
     feature_weights: dict[str, float],
     require_same_score_bin: bool,
-) -> tuple[list[list[int]], dict[tuple[int, int], tuple[float, float]]]:
-    adjacency: list[list[int]] = [[] for _ in llm_plans]
-    edge_meta: dict[tuple[int, int], tuple[float, float]] = {}
+    hard_calipers: dict[str, float],
+    soft_calipers: dict[str, float],
+    soft_caliper_penalty: float,
+) -> dict[tuple[int, int], dict[str, Any]]:
+    edges: dict[tuple[int, int], dict[str, Any]] = {}
     for i, lp in enumerate(llm_plans):
-        ranked: list[tuple[float, float, str, int]] = []
         for j, pp in enumerate(prog_plans):
             if not _same_required_cell(lp, pp):
                 continue
@@ -202,22 +244,35 @@ def _candidate_adjacency(
             gap = abs(float(lp["score"]) - float(pp["score"]))
             if gap > tolerance:
                 continue
+            hard_violations = _caliper_violations(lp, pp, hard_calipers)
+            if hard_violations:
+                continue
             distance = weighted_feature_distance(lp, pp, weights=feature_weights)
-            edge_meta[(i, j)] = (gap, distance)
-            ranked.append((gap, distance, str(pp.get("plan_id") or ""), j))
-        adjacency[i] = [j for _, _, _, j in sorted(ranked)]
-    return adjacency, edge_meta
+            soft_penalty = _soft_caliper_penalty(
+                lp,
+                pp,
+                soft_calipers=soft_calipers,
+                penalty_weight=soft_caliper_penalty,
+            )
+            cost = gap * 1000.0 + distance + soft_penalty
+            edges[(i, j)] = {
+                "gap": gap,
+                "distance": distance,
+                "soft_penalty": soft_penalty,
+                "cost": cost,
+            }
+    return edges
+
+
+def _adjacency_from_edges(edges: dict[tuple[int, int], dict[str, Any]], n_left: int) -> list[list[int]]:
+    rows: list[list[tuple[float, int]]] = [[] for _ in range(n_left)]
+    for (i, j), meta in edges.items():
+        rows[i].append((float(meta["cost"]), j))
+    return [[j for _, j in sorted(row)] for row in rows]
 
 
 def _hopcroft_karp(adjacency: list[list[int]], n_right: int) -> dict[int, int]:
-    """Maximum-cardinality bipartite matching, left index -> right index.
-
-    The previous matcher was locally greedy. With dense same-cell candidate sets,
-    a locally best early pair can consume the only viable programmatic plan for a
-    later LLM plan, leaving study-valid matches unused. Hopcroft-Karp enforces
-    cardinality first; sorted adjacency gives deterministic low-gap/low-distance
-    preference among equal-cardinality solutions.
-    """
+    """Maximum-cardinality bipartite matching, left index -> right index."""
     from collections import deque
 
     n_left = len(adjacency)
@@ -262,22 +317,112 @@ def _hopcroft_karp(adjacency: list[list[int]], n_right: int) -> dict[int, int]:
     return {u: v for u, v in enumerate(pair_u) if v != -1}
 
 
+class _FlowEdge:
+    __slots__ = ("to", "rev", "cap", "cost", "tag")
+
+    def __init__(self, to: int, rev: int, cap: int, cost: int, tag: tuple[int, int] | None = None) -> None:
+        self.to = to
+        self.rev = rev
+        self.cap = cap
+        self.cost = cost
+        self.tag = tag
+
+
+def _add_flow_edge(graph: list[list[_FlowEdge]], fr: int, to: int, cap: int, cost: int, tag: tuple[int, int] | None = None) -> None:
+    fwd = _FlowEdge(to, len(graph[to]), cap, cost, tag)
+    rev = _FlowEdge(fr, len(graph[fr]), 0, -cost, None)
+    graph[fr].append(fwd)
+    graph[to].append(rev)
+
+
+def _min_cost_target_matching(
+    edges: dict[tuple[int, int], dict[str, Any]],
+    *,
+    n_left: int,
+    n_right: int,
+    target_pairs: int,
+) -> dict[int, int] | None:
+    """Return minimum-cost matching of target cardinality, or None if infeasible."""
+    if target_pairs <= 0:
+        return {}
+    source = 0
+    left0 = 1
+    right0 = left0 + n_left
+    sink = right0 + n_right
+    graph: list[list[_FlowEdge]] = [[] for _ in range(sink + 1)]
+    for i in range(n_left):
+        _add_flow_edge(graph, source, left0 + i, 1, 0)
+    for j in range(n_right):
+        _add_flow_edge(graph, right0 + j, sink, 1, 0)
+    for (i, j), meta in edges.items():
+        # Costs are scaled to preserve ordering while remaining integers.
+        cost = int(round(float(meta["cost"]) * 100.0))
+        _add_flow_edge(graph, left0 + i, right0 + j, 1, cost, (i, j))
+
+    n = len(graph)
+    potential = [0] * n
+    flow = 0
+    selected: dict[int, int] = {}
+
+    while flow < target_pairs:
+        dist = [10**30] * n
+        prev_v = [-1] * n
+        prev_e = [-1] * n
+        dist[source] = 0
+        heap: list[tuple[int, int]] = [(0, source)]
+        while heap:
+            d, v = heapq.heappop(heap)
+            if d != dist[v]:
+                continue
+            for ei, edge in enumerate(graph[v]):
+                if edge.cap <= 0:
+                    continue
+                nd = d + edge.cost + potential[v] - potential[edge.to]
+                if nd < dist[edge.to]:
+                    dist[edge.to] = nd
+                    prev_v[edge.to] = v
+                    prev_e[edge.to] = ei
+                    heapq.heappush(heap, (nd, edge.to))
+        if prev_v[sink] == -1:
+            return None
+        for v in range(n):
+            if dist[v] < 10**30:
+                potential[v] += dist[v]
+        v = sink
+        while v != source:
+            pv = prev_v[v]
+            pe = prev_e[v]
+            edge = graph[pv][pe]
+            edge.cap -= 1
+            graph[v][edge.rev].cap += 1
+            if edge.tag is not None:
+                i, j = edge.tag
+                selected[i] = j
+            v = pv
+        flow += 1
+    return selected
+
+
 def greedy_pair(
     plans: list[dict[str, Any]],
     *,
     tolerance: float = 2.0,
     feature_weights: dict[str, float] | None = None,
     require_same_score_bin: bool = False,
+    target_pairs: int | None = None,
+    hard_calipers: dict[str, float] | None = None,
+    soft_calipers: dict[str, float] | None = None,
+    soft_caliper_penalty: float = MATCH_SOFT_CALIPER_PENALTY,
 ) -> list[dict[str, Any]]:
     """Build same-cell LLM-vs-programmatic pairs using structural scores.
 
-    Historical name kept for API compatibility. The implementation now uses a
-    maximum-cardinality bipartite matcher, not local greedy search. This is the
-    correct objective for the full-study gate: maximize valid same-cell matches
-    under structural tolerance, then use structural feature distance only to
-    order candidate edges deterministically.
+    Historical name kept for API compatibility. When ``target_pairs`` is given
+    and feasible, the implementation selects a minimum-cost target-cardinality
+    matching. Otherwise it falls back to maximum-cardinality matching.
     """
     feature_weights = feature_weights or MATCH_FEATURE_WEIGHTS
+    hard_calipers = hard_calipers if hard_calipers is not None else MATCH_HARD_CALIPERS
+    soft_calipers = soft_calipers if soft_calipers is not None else MATCH_SOFT_CALIPERS
     llm_plans = [p.copy() for p in plans if p["arm"] == "llm"]
     prog_plans = [p.copy() for p in plans if p["arm"] == "programmatic"]
 
@@ -287,29 +432,56 @@ def greedy_pair(
     llm_sorted = _round_robin_by_source_family(llm_plans)
     prog_sorted = sorted(prog_plans, key=lambda p: (p["fixture_id"], p["score"], p["plan_id"]))
 
-    adjacency, edge_meta = _candidate_adjacency(
+    edge_meta = _candidate_edges(
         llm_sorted,
         prog_sorted,
         tolerance=tolerance,
         feature_weights=feature_weights,
         require_same_score_bin=require_same_score_bin,
+        hard_calipers=hard_calipers,
+        soft_calipers=soft_calipers,
+        soft_caliper_penalty=soft_caliper_penalty,
     )
-    matching = _hopcroft_karp(adjacency, len(prog_sorted))
+    adjacency = _adjacency_from_edges(edge_meta, len(llm_sorted))
+    max_matching = _hopcroft_karp(adjacency, len(prog_sorted))
+
+    if target_pairs is not None and target_pairs > 0 and len(max_matching) >= target_pairs:
+        matching = _min_cost_target_matching(
+            edge_meta,
+            n_left=len(llm_sorted),
+            n_right=len(prog_sorted),
+            target_pairs=target_pairs,
+        )
+        if matching is None:
+            matching = max_matching
+    else:
+        matching = max_matching
 
     ordered = sorted(
         matching.items(),
         key=lambda uv: (
             str(llm_sorted[uv[0]].get("fixture_id") or ""),
             _source_family(llm_sorted[uv[0]].get("source_model")),
-            float(edge_meta[(uv[0], uv[1])][0]),
-            float(edge_meta[(uv[0], uv[1])][1]),
+            float(edge_meta[(uv[0], uv[1])]["cost"]),
             str(llm_sorted[uv[0]].get("plan_id") or ""),
         ),
     )
     pairs: list[dict[str, Any]] = []
     for pair_idx, (llm_idx, prog_idx) in enumerate(ordered):
-        gap, distance = edge_meta[(llm_idx, prog_idx)]
-        pairs.append(_make_pair_record(pair_idx, llm_sorted[llm_idx], prog_sorted[prog_idx], gap, distance, feature_weights))
+        meta = edge_meta[(llm_idx, prog_idx)]
+        pairs.append(
+            _make_pair_record(
+                pair_idx,
+                llm_sorted[llm_idx],
+                prog_sorted[prog_idx],
+                float(meta["gap"]),
+                float(meta["distance"]),
+                float(meta["soft_penalty"]),
+                feature_weights,
+                hard_calipers,
+                soft_calipers,
+            )
+        )
     return pairs
 
 
@@ -319,7 +491,10 @@ def _make_pair_record(
     best_prog: dict[str, Any],
     best_gap: float,
     best_distance: float,
+    soft_penalty: float,
     feature_weights: dict[str, float],
+    hard_calipers: dict[str, float],
+    soft_calipers: dict[str, float],
 ) -> dict[str, Any]:
     return {
         "pair_id": f"pair_{pair_idx:04d}",
@@ -334,6 +509,7 @@ def _make_pair_record(
         "score_gap": round(best_gap, 3),
         "structural_score_gap": round(best_gap, 3),
         "match_distance": round(best_distance, 3),
+        "soft_caliper_penalty": round(soft_penalty, 3),
         "score_a": lp["score"],
         "score_b": best_prog["score"],
         "structural_score_a": lp["score"],
@@ -358,10 +534,13 @@ def _make_pair_record(
         "score_bin": lp["score_bin"],
         "score_bin_a": lp["score_bin"],
         "score_bin_b": best_prog["score_bin"],
-        "match_rule": "same_full_cell_same_plan_days_structural_score_tolerance_max_cardinality_weighted_structural_distance",
+        "match_rule": "same_full_cell_same_plan_days_structural_score_tolerance_min_cost_target_matching",
         "arm_a": "llm",
         "arm_b": "programmatic",
         "feature_gaps": _feature_gaps(lp, best_prog, feature_weights),
+        "hard_calipers": dict(sorted((hard_calipers or {}).items())),
+        "soft_calipers": dict(sorted((soft_calipers or {}).items())),
+        "soft_caliper_excess": _caliper_violations(lp, best_prog, soft_calipers),
     }
 
 
@@ -373,7 +552,7 @@ def _feature_gaps(left: dict[str, Any], right: dict[str, Any], weights: dict[str
 
 
 def _select_balanced_target_pairs(pairs: list[dict[str, Any]], target_pairs: int) -> list[dict[str, Any]]:
-    """Cap to target while preserving Qwen/Gemma balance where possible."""
+    """Legacy safety cap. Normal v4 target matching already returns target_pairs."""
     if target_pairs <= 0 or len(pairs) <= target_pairs:
         return pairs
     buckets: dict[str, list[dict[str, Any]]] = {}
@@ -382,7 +561,12 @@ def _select_balanced_target_pairs(pairs: list[dict[str, Any]], target_pairs: int
     for family in list(buckets):
         buckets[family] = sorted(
             buckets[family],
-            key=lambda p: (float(p.get("structural_score_gap", p.get("score_gap", 999))), float(p.get("match_distance", 999)), p.get("pair_id", "")),
+            key=lambda p: (
+                float(p.get("soft_caliper_penalty", 0.0)),
+                float(p.get("structural_score_gap", p.get("score_gap", 999))),
+                float(p.get("match_distance", 999)),
+                p.get("pair_id", ""),
+            ),
         )
     families = sorted(buckets)
     selected: list[dict[str, Any]] = []
@@ -406,17 +590,52 @@ def _write_json(path: Path, payload: Any) -> None:
     )
 
 
+def _quantile(values: list[float], q: float) -> float:
+    if not values:
+        return float("nan")
+    ordered = sorted(values)
+    return ordered[int(q * (len(ordered) - 1))]
+
+
+def _gap_summary(pairs: list[dict[str, Any]]) -> dict[str, dict[str, float | int]]:
+    keys = sorted({k for p in pairs for k in (p.get("feature_gaps") or {})})
+    out: dict[str, dict[str, float | int]] = {}
+    for key in keys:
+        vals = [float((p.get("feature_gaps") or {}).get(key, 0.0)) for p in pairs]
+        out[key] = {
+            "mean": round(mean(vals), 3) if vals else float("nan"),
+            "p95": round(_quantile(vals, 0.95), 3) if vals else float("nan"),
+            "max": round(max(vals), 3) if vals else float("nan"),
+        }
+    return out
+
+
+def _soft_caliper_summary(pairs: list[dict[str, Any]], soft_calipers: dict[str, float]) -> dict[str, Any]:
+    out: dict[str, Any] = {}
+    for key, limit in (soft_calipers or {}).items():
+        vals = [float((p.get("feature_gaps") or {}).get(key, 0.0)) for p in pairs]
+        out[key] = {
+            "limit": float(limit),
+            "n_exceeding": sum(1 for v in vals if v > float(limit)),
+            "p95_gap": round(_quantile(vals, 0.95), 3) if vals else float("nan"),
+            "max_gap": round(max(vals), 3) if vals else float("nan"),
+        }
+    return out
+
+
 def _build_matching_audit(
     *,
     pairs: list[dict[str, Any]],
     plan_records: list[dict[str, Any]],
     target_pairs: int,
+    hard_calipers: dict[str, float],
+    soft_calipers: dict[str, float],
 ) -> dict[str, Any]:
     n = len(pairs)
     gaps = [float(p["structural_score_gap"]) for p in pairs]
     mean_gap = sum(gaps) / n if n else float("nan")
     max_gap = max(gaps) if gaps else float("nan")
-    p95_gap = sorted(gaps)[int(0.95 * (n - 1))] if n else float("nan")
+    p95_gap = _quantile(gaps, 0.95) if n else float("nan")
 
     by_fixture: dict[str, int] = {}
     by_athlete_band: dict[str, int] = {}
@@ -458,7 +677,11 @@ def _build_matching_audit(
         "primary_matching_score": "source_neutral_structural_score",
         "legacy_quality_score_role": "diagnostic_only",
         "presentation_fields_excluded": True,
-        "match_rule": "same_full_cell_same_plan_days_structural_score_tolerance_min_weighted_structural_distance",
+        "match_rule": "same_full_cell_same_plan_days_structural_score_tolerance_min_cost_target_matching",
+        "hard_calipers": dict(sorted((hard_calipers or {}).items())),
+        "soft_calipers": dict(sorted((soft_calipers or {}).items())),
+        "feature_gap_summary": _gap_summary(pairs),
+        "soft_caliper_summary": _soft_caliper_summary(pairs, soft_calipers),
         "score_distribution_by_arm": {
             arm: _distribution(values) for arm, values in sorted(score_values_by_arm.items())
         },
@@ -497,7 +720,7 @@ def build_matched_pairs(
     output_path: Path,
     *,
     tolerance: float = 2.0,
-    target_pairs: int = 256,
+    target_pairs: int = 250,
     strict_scoring: bool = True,
     scoring_failures_path: Path | None = None,
     feature_weights: dict[str, float] | None = None,
@@ -505,9 +728,14 @@ def build_matched_pairs(
     allow_mixed_generation_conditions: bool = False,
     compute_old_quality_score: bool = False,
     require_same_score_bin: bool = False,
+    hard_calipers: dict[str, float] | None = None,
+    soft_calipers: dict[str, float] | None = None,
+    soft_caliper_penalty: float = MATCH_SOFT_CALIPER_PENALTY,
 ) -> list[dict[str, Any]]:
     from generate.provenance import PlanProvenance
 
+    hard_calipers = hard_calipers if hard_calipers is not None else MATCH_HARD_CALIPERS
+    soft_calipers = soft_calipers if soft_calipers is not None else MATCH_SOFT_CALIPERS
     plan_records: list[dict[str, Any]] = []
     scoring_failures: list[dict[str, Any]] = []
 
@@ -602,11 +830,22 @@ def build_matched_pairs(
         tolerance=tolerance,
         feature_weights=feature_weights,
         require_same_score_bin=require_same_score_bin,
+        target_pairs=target_pairs,
+        hard_calipers=hard_calipers,
+        soft_calipers=soft_calipers,
+        soft_caliper_penalty=soft_caliper_penalty,
     )
     pairs = _select_balanced_target_pairs(pairs_all, target_pairs)
-    audit = _build_matching_audit(pairs=pairs, plan_records=plan_records, target_pairs=target_pairs)
+    audit = _build_matching_audit(
+        pairs=pairs,
+        plan_records=plan_records,
+        target_pairs=target_pairs,
+        hard_calipers=hard_calipers,
+        soft_calipers=soft_calipers,
+    )
     audit["n_candidate_pairs_before_target_cap"] = len(pairs_all)
     audit["target_cap_applied"] = len(pairs_all) > len(pairs)
+    audit["soft_caliper_penalty_weight"] = soft_caliper_penalty
     _print_audit(audit)
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
@@ -635,6 +874,10 @@ def _print_audit(audit: dict[str, Any]) -> None:
     print(f"  Coverage ratio:   {audit['coverage_ratio']:.3f}")
     print(f"  Coverage OK:      {audit['coverage_ok']}")
     print(f"  Score version:    {audit['structural_score_version']}")
+    if audit.get("hard_calipers"):
+        print(f"  Hard calipers:    {audit['hard_calipers']}")
+    if audit.get("soft_calipers"):
+        print(f"  Soft calipers:    {audit['soft_calipers']}")
     for fid, cnt in sorted((audit.get('pairs_by_fixture') or {}).items()):
         print(f"    {fid}: {cnt} pairs")
     if audit.get("pairs_by_source_family"):

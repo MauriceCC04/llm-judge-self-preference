@@ -54,3 +54,4 @@ fixtures/data
 /artifacts/pilot_yield/
 /artifacts/postfix_llm_sanity/
 /artifacts/postfix_structural_sanity/
+*.out

@@ -1,0 +1,170 @@
+{
+  "plan_a": {
+    "judge_view": "canonical_masked_structural_v1",
+    "plan": {
+      "days": [
+        {
+          "day_index": 1,
+          "duration_minutes": 115,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "Extend endurance and trail-specific durability.",
+          "session_type": "long",
+          "target_intensity": "easy",
+          "workout_summary": "115 min long run at controlled aerobic effort."
+        },
+        {
+          "day_index": 2,
+          "duration_minutes": 49,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "Develop aerobic endurance with controlled load.",
+          "session_type": "aerobic",
+          "target_intensity": "easy",
+          "workout_summary": "49 min aerobic run at steady, controlled effort."
+        },
+        {
+          "day_index": 3,
+          "duration_minutes": 115,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "Extend endurance and trail-specific durability.",
+          "session_type": "long",
+          "target_intensity": "easy",
+          "workout_summary": "115 min long run at controlled aerobic effort."
+        },
+        {
+          "day_index": 4,
+          "duration_minutes": 49,
+          "is_hard_day": true,
+          "is_rest_day": false,
+          "purpose_summary": "Build climbing strength and trail-specific power.",
+          "session_type": "hills",
+          "target_intensity": "threshold",
+          "workout_summary": "49 min hill session with steady climbing efforts."
+        },
+        {
+          "day_index": 5,
+          "duration_minutes": 75,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "Build aerobic consistency while keeping fatigue low.",
+          "session_type": "easy",
+          "target_intensity": "easy",
+          "workout_summary": "75 min easy run at conversational effort."
+        },
+        {
+          "day_index": 6,
+          "duration_minutes": 0,
+          "is_hard_day": false,
+          "is_rest_day": true,
+          "purpose_summary": "Absorb training and maintain freshness.",
+          "session_type": "rest",
+          "target_intensity": "rest",
+          "workout_summary": "Rest day. No structured training."
+        },
+        {
+          "day_index": 7,
+          "duration_minutes": 139,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "Extend endurance and trail-specific durability.",
+          "session_type": "long",
+          "target_intensity": "easy",
+          "workout_summary": "139 min long run at controlled aerobic effort."
+        }
+      ],
+      "summary": {
+        "hard_days": 1,
+        "long_runs": 3,
+        "plan_days": 7,
+        "rest_days": 1,
+        "total_minutes": 542
+      }
+    }
+  },
+  "plan_b": {
+    "judge_view": "canonical_masked_structural_v1",
+    "plan": {
+      "days": [
+        {
+          "day_index": 1,
+          "duration_minutes": 180,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "Trail Run - 12.30 km | 415 m+ | 80 min | avgHR 146",
+          "session_type": "long",
+          "target_intensity": "easy",
+          "workout_summary": "Trail Run - 23km | 760m+ | Build aerobic base at moderate pace. Focus on consistent effort."
+        },
+        {
+          "day_index": 2,
+          "duration_minutes": 90,
+          "is_hard_day": true,
+          "is_rest_day": false,
+          "purpose_summary": "Improve sustainable effort and race-specific rhythm.",
+          "session_type": "tempo",
+          "target_intensity": "controlled",
+          "workout_summary": "Trail Run - 14km | 450m+ | Moderate intensity tempo run. Maintain consistent pace."
+        },
+        {
+          "day_index": 3,
+          "duration_minutes": 60,
+          "is_hard_day": true,
+          "is_rest_day": false,
+          "purpose_summary": "Build climbing strength, power, and durable mechanics.",
+          "session_type": "hills",
+          "target_intensity": "controlled",
+          "workout_summary": "Trail Run - 10km | 300m+ | Hill repeats. Focus on power and technique."
+        },
+        {
+          "day_index": 4,
+          "duration_minutes": 0,
+          "is_hard_day": false,
+          "is_rest_day": true,
+          "purpose_summary": "Recover and maintain freshness.",
+          "session_type": "rest",
+          "target_intensity": "rest",
+          "workout_summary": "Rest day. No structured training."
+        },
+        {
+          "day_index": 5,
+          "duration_minutes": 60,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "Trail Run - 16.00 km | 539 m+ | 104 min | avgHR 146",
+          "session_type": "easy",
+          "target_intensity": "easy",
+          "workout_summary": "Trail Run - 12km | 360m+ | Easy recovery run."
+        },
+        {
+          "day_index": 6,
+          "duration_minutes": 180,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "Trail Run - 31.50 km | 1097 m+ | 189 min | avgHR 144",
+          "session_type": "long",
+          "target_intensity": "easy",
+          "workout_summary": "Trail Run - 28km | 900m+ | Moderate effort long run. Maintain consistent pace."
+        },
+        {
+          "day_index": 7,
+          "duration_minutes": 45,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "Trail Run - 17.90 km | 601 m+ | 116 min | avgHR 146",
+          "session_type": "easy",
+          "target_intensity": "easy",
+          "workout_summary": "Trail Run - 7.5km | 225m+ | Easy shakeout run."
+        }
+      ],
+      "summary": {
+        "hard_days": 2,
+        "long_runs": 2,
+        "plan_days": 7,
+        "rest_days": 1,
+        "total_minutes": 615
+      }
+    }
+  }
+}

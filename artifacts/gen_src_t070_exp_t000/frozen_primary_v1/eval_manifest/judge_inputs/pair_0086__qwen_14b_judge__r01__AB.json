@@ -1,0 +1,170 @@
+{
+  "plan_a": {
+    "judge_view": "canonical_masked_structural_v1",
+    "plan": {
+      "days": [
+        {
+          "day_index": 1,
+          "duration_minutes": 30,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "Recovery from recent training load. The athlete has shown signs of fatigue in recent weeks, and tod…",
+          "session_type": "easy",
+          "target_intensity": "easy",
+          "workout_summary": "30 min easy run on trail."
+        },
+        {
+          "day_index": 2,
+          "duration_minutes": 36,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "Recovery from recent training load. The athlete has shown signs of fatigue in recent weeks, and tod…",
+          "session_type": "easy",
+          "target_intensity": "easy",
+          "workout_summary": "36 min easy run on trail."
+        },
+        {
+          "day_index": 3,
+          "duration_minutes": 60,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "Recovery from recent training load. The athlete has shown signs of fatigue in recent weeks, and tod…",
+          "session_type": "easy",
+          "target_intensity": "easy",
+          "workout_summary": "Trail Run - Recovery"
+        },
+        {
+          "day_index": 4,
+          "duration_minutes": 60,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "Recovery from recent training load. The athlete has shown signs of fatigue in recent weeks, and tod…",
+          "session_type": "easy",
+          "target_intensity": "easy",
+          "workout_summary": "Trail Run - Recovery"
+        },
+        {
+          "day_index": 5,
+          "duration_minutes": 0,
+          "is_hard_day": false,
+          "is_rest_day": true,
+          "purpose_summary": "Recover and maintain freshness.",
+          "session_type": "rest",
+          "target_intensity": "rest",
+          "workout_summary": "Rest day. No structured training."
+        },
+        {
+          "day_index": 6,
+          "duration_minutes": 60,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "Recovery from recent training load. The athlete has shown signs of fatigue in recent weeks, and tod…",
+          "session_type": "easy",
+          "target_intensity": "easy",
+          "workout_summary": "Trail Run - Recovery"
+        },
+        {
+          "day_index": 7,
+          "duration_minutes": 60,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "Recovery from recent training load. The athlete has shown signs of fatigue in recent weeks, and tod…",
+          "session_type": "easy",
+          "target_intensity": "easy",
+          "workout_summary": "Trail Run - Recovery"
+        }
+      ],
+      "summary": {
+        "hard_days": 0,
+        "long_runs": 0,
+        "plan_days": 7,
+        "rest_days": 1,
+        "total_minutes": 306
+      }
+    }
+  },
+  "plan_b": {
+    "judge_view": "canonical_masked_structural_v1",
+    "plan": {
+      "days": [
+        {
+          "day_index": 1,
+          "duration_minutes": 30,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "Develop aerobic endurance with controlled load.",
+          "session_type": "aerobic",
+          "target_intensity": "easy",
+          "workout_summary": "30 min aerobic run at steady, controlled effort."
+        },
+        {
+          "day_index": 2,
+          "duration_minutes": 58,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "Add aerobic stimulus with reduced impact.",
+          "session_type": "cross",
+          "target_intensity": "easy",
+          "workout_summary": "58 min low-impact cross-training session."
+        },
+        {
+          "day_index": 3,
+          "duration_minutes": 26,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "Build aerobic consistency while keeping fatigue low.",
+          "session_type": "easy",
+          "target_intensity": "easy",
+          "workout_summary": "26 min easy run at conversational effort."
+        },
+        {
+          "day_index": 4,
+          "duration_minutes": 106,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "Extend endurance and trail-specific durability.",
+          "session_type": "long",
+          "target_intensity": "easy",
+          "workout_summary": "106 min long run at controlled aerobic effort."
+        },
+        {
+          "day_index": 5,
+          "duration_minutes": 0,
+          "is_hard_day": false,
+          "is_rest_day": true,
+          "purpose_summary": "Absorb training and maintain freshness.",
+          "session_type": "rest",
+          "target_intensity": "rest",
+          "workout_summary": "Rest day. No structured training."
+        },
+        {
+          "day_index": 6,
+          "duration_minutes": 42,
+          "is_hard_day": true,
+          "is_rest_day": false,
+          "purpose_summary": "Develop controlled high-end aerobic power.",
+          "session_type": "intervals",
+          "target_intensity": "threshold",
+          "workout_summary": "42 min intervals session with controlled recoveries."
+        },
+        {
+          "day_index": 7,
+          "duration_minutes": 44,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "Build aerobic consistency while keeping fatigue low.",
+          "session_type": "easy",
+          "target_intensity": "easy",
+          "workout_summary": "44 min easy run at conversational effort."
+        }
+      ],
+      "summary": {
+        "hard_days": 1,
+        "long_runs": 1,
+        "plan_days": 7,
+        "rest_days": 1,
+        "total_minutes": 306
+      }
+    }
+  }
+}

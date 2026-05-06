@@ -1,0 +1,170 @@
+{
+  "plan_a": {
+    "judge_view": "canonical_masked_structural_v1",
+    "plan": {
+      "days": [
+        {
+          "day_index": 1,
+          "duration_minutes": 120,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "Complete the planned long run without adding extra fatigue.",
+          "session_type": "long",
+          "target_intensity": "easy",
+          "workout_summary": "Trail Run - 13.3km, 370m+ - Build aerobic base. Focus on consistent pace and efficient stride."
+        },
+        {
+          "day_index": 2,
+          "duration_minutes": 60,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "Complete the planned easy run without adding extra fatigue.",
+          "session_type": "easy",
+          "target_intensity": "easy",
+          "workout_summary": "Trail Run - 8.3km, 235m+ - Recovery and mobility."
+        },
+        {
+          "day_index": 3,
+          "duration_minutes": 0,
+          "is_hard_day": false,
+          "is_rest_day": true,
+          "purpose_summary": "Recover and maintain freshness.",
+          "session_type": "rest",
+          "target_intensity": "rest",
+          "workout_summary": "Rest day. No structured training."
+        },
+        {
+          "day_index": 4,
+          "duration_minutes": 60,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "Complete the planned easy run without adding extra fatigue.",
+          "session_type": "easy",
+          "target_intensity": "easy",
+          "workout_summary": "Trail Run - 7.7km, 210m+ - Focus on form and cadence."
+        },
+        {
+          "day_index": 5,
+          "duration_minutes": 60,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "Complete the planned easy run without adding extra fatigue.",
+          "session_type": "easy",
+          "target_intensity": "easy",
+          "workout_summary": "Trail Run - 6.5km, 180m+ - Active recovery and foam rolling."
+        },
+        {
+          "day_index": 6,
+          "duration_minutes": 0,
+          "is_hard_day": false,
+          "is_rest_day": true,
+          "purpose_summary": "Recover and maintain freshness.",
+          "session_type": "rest",
+          "target_intensity": "rest",
+          "workout_summary": "Rest day. No structured training."
+        },
+        {
+          "day_index": 7,
+          "duration_minutes": 45,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "Complete the planned easy run without adding extra fatigue.",
+          "session_type": "easy",
+          "target_intensity": "easy",
+          "workout_summary": "Trail Run - 5.0km, 140m+ - Shakeout run. Focus on feeling fresh."
+        }
+      ],
+      "summary": {
+        "hard_days": 0,
+        "long_runs": 1,
+        "plan_days": 7,
+        "rest_days": 2,
+        "total_minutes": 345
+      }
+    }
+  },
+  "plan_b": {
+    "judge_view": "canonical_masked_structural_v1",
+    "plan": {
+      "days": [
+        {
+          "day_index": 1,
+          "duration_minutes": 0,
+          "is_hard_day": false,
+          "is_rest_day": true,
+          "purpose_summary": "Absorb training and maintain freshness.",
+          "session_type": "rest",
+          "target_intensity": "rest",
+          "workout_summary": "Rest day. No structured training."
+        },
+        {
+          "day_index": 2,
+          "duration_minutes": 102,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "Extend endurance and trail-specific durability.",
+          "session_type": "long",
+          "target_intensity": "easy",
+          "workout_summary": "102 min long run at controlled aerobic effort."
+        },
+        {
+          "day_index": 3,
+          "duration_minutes": 20,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "Add aerobic stimulus with reduced impact.",
+          "session_type": "cross",
+          "target_intensity": "easy",
+          "workout_summary": "20 min low-impact cross-training session."
+        },
+        {
+          "day_index": 4,
+          "duration_minutes": 0,
+          "is_hard_day": false,
+          "is_rest_day": true,
+          "purpose_summary": "Absorb training and maintain freshness.",
+          "session_type": "rest",
+          "target_intensity": "rest",
+          "workout_summary": "Rest day. No structured training."
+        },
+        {
+          "day_index": 5,
+          "duration_minutes": 47,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "Build aerobic consistency while keeping fatigue low.",
+          "session_type": "easy",
+          "target_intensity": "easy",
+          "workout_summary": "47 min easy run at conversational effort."
+        },
+        {
+          "day_index": 6,
+          "duration_minutes": 92,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "Develop aerobic endurance with controlled load.",
+          "session_type": "aerobic",
+          "target_intensity": "easy",
+          "workout_summary": "92 min aerobic run at steady, controlled effort."
+        },
+        {
+          "day_index": 7,
+          "duration_minutes": 32,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "Build aerobic consistency while keeping fatigue low.",
+          "session_type": "easy",
+          "target_intensity": "easy",
+          "workout_summary": "32 min easy run at conversational effort."
+        }
+      ],
+      "summary": {
+        "hard_days": 0,
+        "long_runs": 1,
+        "plan_days": 7,
+        "rest_days": 2,
+        "total_minutes": 293
+      }
+    }
+  }
+}

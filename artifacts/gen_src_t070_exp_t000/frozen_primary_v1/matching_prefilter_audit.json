@@ -1,0 +1,141 @@
+{
+  "n_input": 1024,
+  "n_kept": 1023,
+  "n_dropped": 1,
+  "drop_reasons": {
+    "impossible_duration": 1
+  },
+  "session_signature_duplicate_policy": "audited_not_dropped_for_primary_matching",
+  "n_session_signature_duplicate_groups": 36,
+  "n_session_signature_duplicate_extra_records": 92,
+  "session_signature_duplicate_examples": {
+    "llm|google/gemma-3-4b-it|ab_A1__r_high__rc_high__ph_base|A1|high|high|base|7": [
+      "ab_A1__r_high__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s001",
+      "ab_A1__r_high__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s003",
+      "ab_A1__r_high__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s005"
+    ],
+    "llm|Qwen/Qwen2.5-7B-Instruct|ab_A1__r_high__rc_high__ph_base|A1|high|high|base|7": [
+      "ab_A1__r_high__rc_high__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s002",
+      "ab_A1__r_high__rc_high__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s004"
+    ],
+    "llm|google/gemma-3-4b-it|ab_A1__r_high__rc_high__ph_peak|A1|high|high|peak|7": [
+      "ab_A1__r_high__rc_high__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s000",
+      "ab_A1__r_high__rc_high__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s002",
+      "ab_A1__r_high__rc_high__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s003",
+      "ab_A1__r_high__rc_high__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s004",
+      "ab_A1__r_high__rc_high__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s005"
+    ],
+    "llm|Qwen/Qwen2.5-7B-Instruct|ab_A1__r_high__rc_high__ph_peak|A1|high|high|peak|7": [
+      "ab_A1__r_high__rc_high__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s000",
+      "ab_A1__r_high__rc_high__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s001",
+      "ab_A1__r_high__rc_high__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s002",
+      "ab_A1__r_high__rc_high__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s004"
+    ],
+    "llm|google/gemma-3-4b-it|ab_A1__r_high__rc_low__ph_base|A1|high|low|base|7": [
+      "ab_A1__r_high__rc_low__ph_base__gemma_3_4b_it__src_t070__exp_t000__s003",
+      "ab_A1__r_high__rc_low__ph_base__gemma_3_4b_it__src_t070__exp_t000__s004"
+    ],
+    "llm|Qwen/Qwen2.5-7B-Instruct|ab_A1__r_high__rc_low__ph_base|A1|high|low|base|7": [
+      "ab_A1__r_high__rc_low__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s002",
+      "ab_A1__r_high__rc_low__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s004"
+    ],
+    "llm|google/gemma-3-4b-it|ab_A1__r_high__rc_low__ph_peak|A1|high|low|peak|7": [
+      "ab_A1__r_high__rc_low__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s001",
+      "ab_A1__r_high__rc_low__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s005"
+    ],
+    "llm|Qwen/Qwen2.5-7B-Instruct|ab_A1__r_high__rc_low__ph_peak|A1|high|low|peak|7": [
+      "ab_A1__r_high__rc_low__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s002",
+      "ab_A1__r_high__rc_low__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s003",
+      "ab_A1__r_high__rc_low__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s005"
+    ],
+    "llm|google/gemma-3-4b-it|ab_A1__r_low__rc_high__ph_base|A1|low|high|base|7": [
+      "ab_A1__r_low__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s000",
+      "ab_A1__r_low__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s001",
+      "ab_A1__r_low__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s002",
+      "ab_A1__r_low__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s003",
+      "ab_A1__r_low__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s004",
+      "ab_A1__r_low__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s005"
+    ],
+    "llm|Qwen/Qwen2.5-7B-Instruct|ab_A1__r_low__rc_high__ph_base|A1|low|high|base|7": [
+      "ab_A1__r_low__rc_high__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s013",
+      "ab_A1__r_low__rc_high__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s015",
+      "ab_A1__r_low__rc_high__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s022"
+    ],
+    "llm|google/gemma-3-4b-it|ab_A1__r_low__rc_high__ph_peak|A1|low|high|peak|7": [
+      "ab_A1__r_low__rc_high__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s000",
+      "ab_A1__r_low__rc_high__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s002",
+      "ab_A1__r_low__rc_high__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s003",
+      "ab_A1__r_low__rc_high__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s005"
+    ],
+    "llm|Qwen/Qwen2.5-7B-Instruct|ab_A1__r_low__rc_high__ph_peak|A1|low|high|peak|7": [
+      "ab_A1__r_low__rc_high__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s016",
+      "ab_A1__r_low__rc_high__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s019"
+    ],
+    "llm|google/gemma-3-4b-it|ab_A1__r_low__rc_low__ph_base|A1|low|low|base|7": [
+      "ab_A1__r_low__rc_low__ph_base__gemma_3_4b_it__src_t070__exp_t000__s003",
+      "ab_A1__r_low__rc_low__ph_base__gemma_3_4b_it__src_t070__exp_t000__s005"
+    ],
+    "llm|Qwen/Qwen2.5-7B-Instruct|ab_A1__r_low__rc_low__ph_base|A1|low|low|base|7": [
+      "ab_A1__r_low__rc_low__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s003",
+      "ab_A1__r_low__rc_low__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s005",
+      "ab_A1__r_low__rc_low__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s007",
+      "ab_A1__r_low__rc_low__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s009"
+    ],
+    "llm|google/gemma-3-4b-it|ab_A1__r_low__rc_low__ph_peak|A1|low|low|peak|7": [
+      "ab_A1__r_low__rc_low__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s001",
+      "ab_A1__r_low__rc_low__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s002",
+      "ab_A1__r_low__rc_low__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s003",
+      "ab_A1__r_low__rc_low__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s004",
+      "ab_A1__r_low__rc_low__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s005"
+    ],
+    "llm|Qwen/Qwen2.5-7B-Instruct|ab_A1__r_low__rc_low__ph_peak|A1|low|low|peak|7": [
+      "ab_A1__r_low__rc_low__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s007",
+      "ab_A1__r_low__rc_low__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s008"
+    ],
+    "llm|google/gemma-3-4b-it|ab_A2__r_high__rc_high__ph_base|A2|high|high|base|7": [
+      "ab_A2__r_high__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s173",
+      "ab_A2__r_high__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s175"
+    ],
+    "llm|Qwen/Qwen2.5-7B-Instruct|ab_A2__r_high__rc_high__ph_base|A2|high|high|base|7": [
+      "ab_A2__r_high__rc_high__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s001",
+      "ab_A2__r_high__rc_high__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s010"
+    ],
+    "llm|google/gemma-3-4b-it|ab_A2__r_high__rc_high__ph_peak|A2|high|high|peak|7": [
+      "ab_A2__r_high__rc_high__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s249",
+      "ab_A2__r_high__rc_high__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s251"
+    ],
+    "llm|google/gemma-3-4b-it|ab_A2__r_high__rc_low__ph_base|A2|high|low|base|7": [
+      "ab_A2__r_high__rc_low__ph_base__gemma_3_4b_it__src_t070__exp_t000__s001",
+      "ab_A2__r_high__rc_low__ph_base__gemma_3_4b_it__src_t070__exp_t000__s003",
+      "ab_A2__r_high__rc_low__ph_base__gemma_3_4b_it__src_t070__exp_t000__s004",
+      "ab_A2__r_high__rc_low__ph_base__gemma_3_4b_it__src_t070__exp_t000__s005"
+    ],
+    "llm|Qwen/Qwen2.5-7B-Instruct|ab_A2__r_high__rc_low__ph_base|A2|high|low|base|7": [
+      "ab_A2__r_high__rc_low__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s000",
+      "ab_A2__r_high__rc_low__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s004",
+      "ab_A2__r_high__rc_low__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s006"
+    ],
+    "llm|google/gemma-3-4b-it|ab_A2__r_high__rc_low__ph_peak|A2|high|low|peak|7": [
+      "ab_A2__r_high__rc_low__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s000",
+      "ab_A2__r_high__rc_low__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s001",
+      "ab_A2__r_high__rc_low__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s002",
+      "ab_A2__r_high__rc_low__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s003",
+      "ab_A2__r_high__rc_low__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s004",
+      "ab_A2__r_high__rc_low__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s005"
+    ],
+    "llm|Qwen/Qwen2.5-7B-Instruct|ab_A2__r_high__rc_low__ph_peak|A2|high|low|peak|7": [
+      "ab_A2__r_high__rc_low__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s000",
+      "ab_A2__r_high__rc_low__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s006"
+    ],
+    "llm|google/gemma-3-4b-it|ab_A2__r_low__rc_high__ph_base|A2|low|high|base|7": [
+      "ab_A2__r_low__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s002",
+      "ab_A2__r_low__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s003"
+    ],
+    "llm|Qwen/Qwen2.5-7B-Instruct|ab_A2__r_low__rc_high__ph_base|A2|low|high|base|7": [
+      "ab_A2__r_low__rc_high__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s002",
+      "ab_A2__r_low__rc_high__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s004",
+      "ab_A2__r_low__rc_high__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s005"
+    ]
+  },
+  "presentation_fields_used": false
+}

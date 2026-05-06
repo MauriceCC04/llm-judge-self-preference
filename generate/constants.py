@@ -35,7 +35,7 @@ ACTIVE_JUDGE_NAMES: list[str] = [
 PAIRWISE_N_RUNS = 5
 PAIRWISE_N_POSITIONS = 2
 PILOT_PAIR_LIMIT = 30
-PAIRWISE_VIEW_DEFAULT = "raw_normalized"
+PAIRWISE_VIEW_DEFAULT = "canonical_masked"
 PAIRWISE_VIEW_CHOICES: tuple[str, ...] = (
     "raw_normalized",
     "canonical_masked",
@@ -60,6 +60,27 @@ MATCH_FEATURE_WEIGHTS: dict[str, float] = {
     "max_day_minutes": 0.02,
     "mean_day_minutes": 0.02,
 }
+
+
+# Soft calipers improve target-pair selection without silently reducing full-study
+# coverage. They are not hard exclusion rules. If the corresponding hard calipers
+# are required, the current 1024-plan pool does not support 250 pairs and needs
+# targeted programmatic top-up generation.
+MATCH_SOFT_CALIPERS: dict[str, float] = {
+    "total_minutes": 100.0,
+    "max_day_minutes": 60.0,
+    "n_rest_days": 1.0,
+    "n_hard_days": 1.0,
+    "n_long_runs": 1.0,
+    "n_quality_days": 1.0,
+}
+MATCH_SOFT_CALIPER_PENALTY = 50.0
+
+# Hard calipers are intentionally empty by default because current artifacts do
+# not contain enough same-cell overlap to reach 250 pairs under strict calipers.
+# Use CLI --caliper feature=value for pilot/sensitivity matching, and regenerate
+# targeted programmatic top-ups before treating hard-caliper matching as primary.
+MATCH_HARD_CALIPERS: dict[str, float] = {}
 
 PAIRWISE_TEXT_CHAR_LIMITS: dict[str, int] = {
     "purpose": 160,

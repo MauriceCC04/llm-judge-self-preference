@@ -1,0 +1,170 @@
+{
+  "plan_a": {
+    "judge_view": "canonical_masked_structural_v1",
+    "plan": {
+      "days": [
+        {
+          "day_index": 1,
+          "duration_minutes": 80,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "Extend endurance and trail-specific durability.",
+          "session_type": "long",
+          "target_intensity": "easy",
+          "workout_summary": "80 min long run at controlled aerobic effort."
+        },
+        {
+          "day_index": 2,
+          "duration_minutes": 112,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "Extend endurance and trail-specific durability.",
+          "session_type": "long",
+          "target_intensity": "easy",
+          "workout_summary": "112 min long run at controlled aerobic effort."
+        },
+        {
+          "day_index": 3,
+          "duration_minutes": 118,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "Extend endurance and trail-specific durability.",
+          "session_type": "long",
+          "target_intensity": "easy",
+          "workout_summary": "118 min long run at controlled aerobic effort."
+        },
+        {
+          "day_index": 4,
+          "duration_minutes": 30,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "Build aerobic consistency while keeping fatigue low.",
+          "session_type": "easy",
+          "target_intensity": "easy",
+          "workout_summary": "30 min easy run at conversational effort."
+        },
+        {
+          "day_index": 5,
+          "duration_minutes": 0,
+          "is_hard_day": false,
+          "is_rest_day": true,
+          "purpose_summary": "Absorb training and maintain freshness.",
+          "session_type": "rest",
+          "target_intensity": "rest",
+          "workout_summary": "Rest day. No structured training."
+        },
+        {
+          "day_index": 6,
+          "duration_minutes": 20,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "Support durability, stability, and injury resistance.",
+          "session_type": "strength",
+          "target_intensity": "easy",
+          "workout_summary": "20 min strength and mobility session."
+        },
+        {
+          "day_index": 7,
+          "duration_minutes": 30,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "Develop aerobic endurance with controlled load.",
+          "session_type": "aerobic",
+          "target_intensity": "easy",
+          "workout_summary": "30 min aerobic run at steady, controlled effort."
+        }
+      ],
+      "summary": {
+        "hard_days": 0,
+        "long_runs": 3,
+        "plan_days": 7,
+        "rest_days": 1,
+        "total_minutes": 390
+      }
+    }
+  },
+  "plan_b": {
+    "judge_view": "canonical_masked_structural_v1",
+    "plan": {
+      "days": [
+        {
+          "day_index": 1,
+          "duration_minutes": 250,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "To manage fatigue and build aerobic endurance through a longer run.",
+          "session_type": "long",
+          "target_intensity": "moderate",
+          "workout_summary": "250 min aerobic long run on mixed."
+        },
+        {
+          "day_index": 2,
+          "duration_minutes": 30,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "To continue building aerobic endurance while managing the current fatigue level.",
+          "session_type": "aerobic",
+          "target_intensity": "easy",
+          "workout_summary": "30 min steady aerobic run on flat."
+        },
+        {
+          "day_index": 3,
+          "duration_minutes": 20,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "To focus on strength and hill work, which complements aerobic development.",
+          "session_type": "strength",
+          "target_intensity": "controlled",
+          "workout_summary": "20 min strength session."
+        },
+        {
+          "day_index": 4,
+          "duration_minutes": 30,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "To continue building aerobic endurance while managing the current fatigue level.",
+          "session_type": "aerobic",
+          "target_intensity": "moderate",
+          "workout_summary": "30 min steady aerobic run on mixed."
+        },
+        {
+          "day_index": 5,
+          "duration_minutes": 0,
+          "is_hard_day": false,
+          "is_rest_day": true,
+          "purpose_summary": "Recover and maintain freshness.",
+          "session_type": "rest",
+          "target_intensity": "rest",
+          "workout_summary": "Rest day. No structured training."
+        },
+        {
+          "day_index": 6,
+          "duration_minutes": 30,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "To continue building aerobic endurance while managing the current fatigue level.",
+          "session_type": "aerobic",
+          "target_intensity": "easy",
+          "workout_summary": "30 min steady aerobic run on flat."
+        },
+        {
+          "day_index": 7,
+          "duration_minutes": 30,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "To continue building aerobic endurance while managing the current fatigue level.",
+          "session_type": "aerobic",
+          "target_intensity": "moderate",
+          "workout_summary": "30 min steady aerobic run on mixed."
+        }
+      ],
+      "summary": {
+        "hard_days": 0,
+        "long_runs": 1,
+        "plan_days": 7,
+        "rest_days": 1,
+        "total_minutes": 390
+      }
+    }
+  }
+}

@@ -1,0 +1,170 @@
+{
+  "plan_a": {
+    "judge_view": "canonical_masked_structural_v1",
+    "plan": {
+      "days": [
+        {
+          "day_index": 1,
+          "duration_minutes": 135,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "To continue building aerobic endurance and trail-running capacity. The athlete has shown stable rec…",
+          "session_type": "long",
+          "target_intensity": "easy",
+          "workout_summary": "TrailRun | 23.40 km | 850 m+ | 143 min"
+        },
+        {
+          "day_index": 2,
+          "duration_minutes": 75,
+          "is_hard_day": true,
+          "is_rest_day": false,
+          "purpose_summary": "To continue building aerobic endurance and trail-running capacity. The athlete has shown stable rec…",
+          "session_type": "hills",
+          "target_intensity": "moderate",
+          "workout_summary": "TrailRun | 10.40 km | 332 m+ | 70 min"
+        },
+        {
+          "day_index": 3,
+          "duration_minutes": 60,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "To continue building aerobic endurance and trail-running capacity. The athlete has shown stable rec…",
+          "session_type": "easy",
+          "target_intensity": "easy",
+          "workout_summary": "TrailRun | 9.50 km | 300 m+ | 64 min"
+        },
+        {
+          "day_index": 4,
+          "duration_minutes": 0,
+          "is_hard_day": false,
+          "is_rest_day": true,
+          "purpose_summary": "Recover and maintain freshness.",
+          "session_type": "rest",
+          "target_intensity": "rest",
+          "workout_summary": "Rest day. No structured training."
+        },
+        {
+          "day_index": 5,
+          "duration_minutes": 90,
+          "is_hard_day": true,
+          "is_rest_day": false,
+          "purpose_summary": "To continue building aerobic endurance and trail-running capacity. The athlete has shown stable rec…",
+          "session_type": "tempo",
+          "target_intensity": "controlled",
+          "workout_summary": "TrailRun | 14.20 km | 500 m+ | 98 min"
+        },
+        {
+          "day_index": 6,
+          "duration_minutes": 145,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "To further develop aerobic endurance and trail-running capacity. The athlete has shown stable recov…",
+          "session_type": "long",
+          "target_intensity": "easy",
+          "workout_summary": "TrailRun | 26.00 km | 1000 m+ | 158 min"
+        },
+        {
+          "day_index": 7,
+          "duration_minutes": 60,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "To continue building aerobic endurance and trail-running capacity while maintaining recovery. The a…",
+          "session_type": "easy",
+          "target_intensity": "easy",
+          "workout_summary": "TrailRun | 13.70 km | 477 m+ | 92 min"
+        }
+      ],
+      "summary": {
+        "hard_days": 2,
+        "long_runs": 2,
+        "plan_days": 7,
+        "rest_days": 1,
+        "total_minutes": 565
+      }
+    }
+  },
+  "plan_b": {
+    "judge_view": "canonical_masked_structural_v1",
+    "plan": {
+      "days": [
+        {
+          "day_index": 1,
+          "duration_minutes": 99,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "Extend endurance and trail-specific durability.",
+          "session_type": "long",
+          "target_intensity": "easy",
+          "workout_summary": "99 min long run at controlled aerobic effort."
+        },
+        {
+          "day_index": 2,
+          "duration_minutes": 49,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "Develop aerobic endurance with controlled load.",
+          "session_type": "aerobic",
+          "target_intensity": "easy",
+          "workout_summary": "49 min aerobic run at steady, controlled effort."
+        },
+        {
+          "day_index": 3,
+          "duration_minutes": 100,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "Extend endurance and trail-specific durability.",
+          "session_type": "long",
+          "target_intensity": "easy",
+          "workout_summary": "100 min long run at controlled aerobic effort."
+        },
+        {
+          "day_index": 4,
+          "duration_minutes": 45,
+          "is_hard_day": true,
+          "is_rest_day": false,
+          "purpose_summary": "Build climbing strength and trail-specific power.",
+          "session_type": "hills",
+          "target_intensity": "threshold",
+          "workout_summary": "45 min hill session with steady climbing efforts."
+        },
+        {
+          "day_index": 5,
+          "duration_minutes": 75,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "Build aerobic consistency while keeping fatigue low.",
+          "session_type": "easy",
+          "target_intensity": "easy",
+          "workout_summary": "75 min easy run at conversational effort."
+        },
+        {
+          "day_index": 6,
+          "duration_minutes": 0,
+          "is_hard_day": false,
+          "is_rest_day": true,
+          "purpose_summary": "Absorb training and maintain freshness.",
+          "session_type": "rest",
+          "target_intensity": "rest",
+          "workout_summary": "Rest day. No structured training."
+        },
+        {
+          "day_index": 7,
+          "duration_minutes": 121,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "Extend endurance and trail-specific durability.",
+          "session_type": "long",
+          "target_intensity": "easy",
+          "workout_summary": "121 min long run at controlled aerobic effort."
+        }
+      ],
+      "summary": {
+        "hard_days": 1,
+        "long_runs": 3,
+        "plan_days": 7,
+        "rest_days": 1,
+        "total_minutes": 489
+      }
+    }
+  }
+}

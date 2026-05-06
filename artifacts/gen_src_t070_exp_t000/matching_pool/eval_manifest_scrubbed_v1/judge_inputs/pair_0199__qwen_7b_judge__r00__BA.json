@@ -1,0 +1,170 @@
+{
+  "plan_a": {
+    "judge_view": "canonical_masked_structural_v1",
+    "plan": {
+      "days": [
+        {
+          "day_index": 1,
+          "duration_minutes": 49,
+          "is_hard_day": true,
+          "is_rest_day": false,
+          "purpose_summary": "Develop sustainable threshold strength without excessive fatigue.",
+          "session_type": "tempo",
+          "target_intensity": "threshold",
+          "workout_summary": "49 min tempo session at controlled hard effort."
+        },
+        {
+          "day_index": 2,
+          "duration_minutes": 41,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "Build aerobic consistency while keeping fatigue low.",
+          "session_type": "easy",
+          "target_intensity": "easy",
+          "workout_summary": "41 min easy run at conversational effort."
+        },
+        {
+          "day_index": 3,
+          "duration_minutes": 0,
+          "is_hard_day": false,
+          "is_rest_day": true,
+          "purpose_summary": "Absorb training and maintain freshness.",
+          "session_type": "rest",
+          "target_intensity": "rest",
+          "workout_summary": "Rest day. No structured training."
+        },
+        {
+          "day_index": 4,
+          "duration_minutes": 31,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "Build aerobic consistency while keeping fatigue low.",
+          "session_type": "easy",
+          "target_intensity": "easy",
+          "workout_summary": "31 min easy run at conversational effort."
+        },
+        {
+          "day_index": 5,
+          "duration_minutes": 105,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "Extend endurance and trail-specific durability.",
+          "session_type": "long",
+          "target_intensity": "easy",
+          "workout_summary": "105 min long run at controlled aerobic effort."
+        },
+        {
+          "day_index": 6,
+          "duration_minutes": 51,
+          "is_hard_day": true,
+          "is_rest_day": false,
+          "purpose_summary": "Develop sustainable threshold strength without excessive fatigue.",
+          "session_type": "tempo",
+          "target_intensity": "threshold",
+          "workout_summary": "51 min tempo session at controlled hard effort."
+        },
+        {
+          "day_index": 7,
+          "duration_minutes": 113,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "Extend endurance and trail-specific durability.",
+          "session_type": "long",
+          "target_intensity": "easy",
+          "workout_summary": "113 min long run at controlled aerobic effort."
+        }
+      ],
+      "summary": {
+        "hard_days": 2,
+        "long_runs": 2,
+        "plan_days": 7,
+        "rest_days": 1,
+        "total_minutes": 390
+      }
+    }
+  },
+  "plan_b": {
+    "judge_view": "canonical_masked_structural_v1",
+    "plan": {
+      "days": [
+        {
+          "day_index": 1,
+          "duration_minutes": 120,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "To maintain freshness and prepare for the upcoming race with a long run and a tempo session.",
+          "session_type": "long",
+          "target_intensity": "moderate",
+          "workout_summary": "Trail Run - Steady State"
+        },
+        {
+          "day_index": 2,
+          "duration_minutes": 60,
+          "is_hard_day": true,
+          "is_rest_day": false,
+          "purpose_summary": "To prepare for the upcoming race with a tempo session and a short easy run.",
+          "session_type": "tempo",
+          "target_intensity": "controlled",
+          "workout_summary": "Trail Run - Tempo"
+        },
+        {
+          "day_index": 3,
+          "duration_minutes": 45,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "To ensure adequate recovery and maintain freshness with a short easy run.",
+          "session_type": "easy",
+          "target_intensity": "easy",
+          "workout_summary": "Trail Run - Recovery"
+        },
+        {
+          "day_index": 4,
+          "duration_minutes": 150,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "To continue preparing for the upcoming race with a long run and a tempo session.",
+          "session_type": "long",
+          "target_intensity": "moderate",
+          "workout_summary": "Trail Run - Long Run"
+        },
+        {
+          "day_index": 5,
+          "duration_minutes": 60,
+          "is_hard_day": true,
+          "is_rest_day": false,
+          "purpose_summary": "Build climbing strength, power, and durable mechanics.",
+          "session_type": "hills",
+          "target_intensity": "controlled",
+          "workout_summary": "Trail Run - Hill Repeats"
+        },
+        {
+          "day_index": 6,
+          "duration_minutes": 30,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "Support aerobic consistency without adding excessive fatigue.",
+          "session_type": "easy",
+          "target_intensity": "easy",
+          "workout_summary": "Trail Run - Short Recovery"
+        },
+        {
+          "day_index": 7,
+          "duration_minutes": 0,
+          "is_hard_day": false,
+          "is_rest_day": true,
+          "purpose_summary": "Recover and maintain freshness.",
+          "session_type": "rest",
+          "target_intensity": "rest",
+          "workout_summary": "Rest day. No structured training."
+        }
+      ],
+      "summary": {
+        "hard_days": 2,
+        "long_runs": 2,
+        "plan_days": 7,
+        "rest_days": 1,
+        "total_minutes": 465
+      }
+    }
+  }
+}

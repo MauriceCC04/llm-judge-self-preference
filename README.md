@@ -113,3 +113,7 @@ $PY tools/analyze_pairwise_results.py \
 ```
 
 The analysis reports overall LLM win rate, bootstrap confidence intervals, per-judge and per-family summaries, self-family summaries where defined, order bias, and score-gap sensitivity. Do not fill report conclusions until real judge outputs exist.
+
+## v4 validity tightening
+
+After final artifact inspection, the primary risk shifted from pair count to residual structural and presentation confounding. The v4 patch therefore uses target-cardinality min-cost structural matching with soft caliper penalties and makes `canonical_masked` the default judge-facing view. Strict hard calipers are available through `cli.py match --caliper feature=value`, but the current candidate pool does not reach 250 pairs under the strict calipers recommended for a cleaner primary causal claim; use those calipers to size targeted programmatic top-up generation or to define a smaller pilot.

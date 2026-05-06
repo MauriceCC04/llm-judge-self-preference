@@ -6,6 +6,7 @@
     "AB",
     "BA"
   ],
+  "judge_view": "canonical_masked",
   "expected_pairwise_documents": 10000,
   "exact_10000_gate_passed": true,
   "masking_gate_passed": true,

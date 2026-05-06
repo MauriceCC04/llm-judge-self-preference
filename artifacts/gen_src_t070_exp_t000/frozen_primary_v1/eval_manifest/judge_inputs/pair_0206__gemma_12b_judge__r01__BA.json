@@ -1,0 +1,170 @@
+{
+  "plan_a": {
+    "judge_view": "canonical_masked_structural_v1",
+    "plan": {
+      "days": [
+        {
+          "day_index": 1,
+          "duration_minutes": 21,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "Support durability, stability, and injury resistance.",
+          "session_type": "strength",
+          "target_intensity": "easy",
+          "workout_summary": "21 min strength and mobility session."
+        },
+        {
+          "day_index": 2,
+          "duration_minutes": 60,
+          "is_hard_day": true,
+          "is_rest_day": false,
+          "purpose_summary": "Develop sustainable threshold strength without excessive fatigue.",
+          "session_type": "tempo",
+          "target_intensity": "threshold",
+          "workout_summary": "60 min tempo session at controlled hard effort."
+        },
+        {
+          "day_index": 3,
+          "duration_minutes": 47,
+          "is_hard_day": true,
+          "is_rest_day": false,
+          "purpose_summary": "Develop sustainable threshold strength without excessive fatigue.",
+          "session_type": "tempo",
+          "target_intensity": "threshold",
+          "workout_summary": "47 min tempo session at controlled hard effort."
+        },
+        {
+          "day_index": 4,
+          "duration_minutes": 102,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "Extend endurance and trail-specific durability.",
+          "session_type": "long",
+          "target_intensity": "easy",
+          "workout_summary": "102 min long run at controlled aerobic effort."
+        },
+        {
+          "day_index": 5,
+          "duration_minutes": 127,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "Extend endurance and trail-specific durability.",
+          "session_type": "long",
+          "target_intensity": "easy",
+          "workout_summary": "127 min long run at controlled aerobic effort."
+        },
+        {
+          "day_index": 6,
+          "duration_minutes": 0,
+          "is_hard_day": false,
+          "is_rest_day": true,
+          "purpose_summary": "Absorb training and maintain freshness.",
+          "session_type": "rest",
+          "target_intensity": "rest",
+          "workout_summary": "Rest day. No structured training."
+        },
+        {
+          "day_index": 7,
+          "duration_minutes": 0,
+          "is_hard_day": false,
+          "is_rest_day": true,
+          "purpose_summary": "Absorb training and maintain freshness.",
+          "session_type": "rest",
+          "target_intensity": "rest",
+          "workout_summary": "Rest day. No structured training."
+        }
+      ],
+      "summary": {
+        "hard_days": 2,
+        "long_runs": 2,
+        "plan_days": 7,
+        "rest_days": 2,
+        "total_minutes": 357
+      }
+    }
+  },
+  "plan_b": {
+    "judge_view": "canonical_masked_structural_v1",
+    "plan": {
+      "days": [
+        {
+          "day_index": 1,
+          "duration_minutes": 120,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "To maintain aerobic development and hill strength. The long run today is appropriate given the rece…",
+          "session_type": "long",
+          "target_intensity": "easy",
+          "workout_summary": "TrailRun | 22.70 km | 725 m+ | avgHR 144"
+        },
+        {
+          "day_index": 2,
+          "duration_minutes": 60,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "To continue aerobic development and hill strength. The long run today is appropriate given the rece…",
+          "session_type": "aerobic",
+          "target_intensity": "moderate",
+          "workout_summary": "60 min steady aerobic run on trail."
+        },
+        {
+          "day_index": 3,
+          "duration_minutes": 60,
+          "is_hard_day": true,
+          "is_rest_day": false,
+          "purpose_summary": "To maintain aerobic development and hill strength. The long run today is appropriate given the rece…",
+          "session_type": "hills",
+          "target_intensity": "controlled",
+          "workout_summary": "TrailRun | 15.90 km | 534 m+ | avgHR 146"
+        },
+        {
+          "day_index": 4,
+          "duration_minutes": 0,
+          "is_hard_day": false,
+          "is_rest_day": true,
+          "purpose_summary": "Recover and maintain freshness.",
+          "session_type": "rest",
+          "target_intensity": "rest",
+          "workout_summary": "Rest day. No structured training."
+        },
+        {
+          "day_index": 5,
+          "duration_minutes": 120,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "To maintain aerobic development and hill strength. The long run today is appropriate given the rece…",
+          "session_type": "long",
+          "target_intensity": "easy",
+          "workout_summary": "TrailRun | 25.00 km | 836 m+ | avgHR 144"
+        },
+        {
+          "day_index": 6,
+          "duration_minutes": 60,
+          "is_hard_day": true,
+          "is_rest_day": false,
+          "purpose_summary": "To continue aerobic development and hill strength. The long run today is appropriate given the rece…",
+          "session_type": "intervals",
+          "target_intensity": "controlled",
+          "workout_summary": "TrailRun | 17.90 km | 601 m+ | avgHR 146"
+        },
+        {
+          "day_index": 7,
+          "duration_minutes": 45,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "To maintain aerobic development and hill strength, while allowing for recovery. The long run today…",
+          "session_type": "easy",
+          "target_intensity": "easy",
+          "workout_summary": "TrailRun | 8.30 km | 266 m+ | avgHR 146"
+        }
+      ],
+      "summary": {
+        "hard_days": 2,
+        "long_runs": 2,
+        "plan_days": 7,
+        "rest_days": 1,
+        "total_minutes": 465
+      }
+    }
+  }
+}

@@ -1,0 +1,170 @@
+{
+  "plan_a": {
+    "plan": {
+      "days": [
+        {
+          "day_index": 1,
+          "session_type": "aerobic",
+          "duration_minutes": 35,
+          "is_rest_day": false,
+          "is_hard_day": false,
+          "target_intensity": "easy",
+          "workout_summary": "35 min aerobic run at steady, controlled effort.",
+          "purpose_summary": "Develop aerobic endurance with controlled load."
+        },
+        {
+          "day_index": 2,
+          "session_type": "cross",
+          "duration_minutes": 60,
+          "is_rest_day": false,
+          "is_hard_day": false,
+          "target_intensity": "easy",
+          "workout_summary": "60 min low-impact cross-training session.",
+          "purpose_summary": "Add aerobic stimulus with reduced impact."
+        },
+        {
+          "day_index": 3,
+          "session_type": "rest",
+          "duration_minutes": 0,
+          "is_rest_day": true,
+          "is_hard_day": false,
+          "target_intensity": "rest",
+          "workout_summary": "Rest day. No structured training.",
+          "purpose_summary": "Absorb training and maintain freshness."
+        },
+        {
+          "day_index": 4,
+          "session_type": "rest",
+          "duration_minutes": 0,
+          "is_rest_day": true,
+          "is_hard_day": false,
+          "target_intensity": "rest",
+          "workout_summary": "Rest day. No structured training.",
+          "purpose_summary": "Absorb training and maintain freshness."
+        },
+        {
+          "day_index": 5,
+          "session_type": "cross",
+          "duration_minutes": 29,
+          "is_rest_day": false,
+          "is_hard_day": false,
+          "target_intensity": "easy",
+          "workout_summary": "29 min low-impact cross-training session.",
+          "purpose_summary": "Add aerobic stimulus with reduced impact."
+        },
+        {
+          "day_index": 6,
+          "session_type": "easy",
+          "duration_minutes": 41,
+          "is_rest_day": false,
+          "is_hard_day": false,
+          "target_intensity": "easy",
+          "workout_summary": "41 min easy run at conversational effort.",
+          "purpose_summary": "Build aerobic consistency while keeping fatigue low."
+        },
+        {
+          "day_index": 7,
+          "session_type": "tempo",
+          "duration_minutes": 58,
+          "is_rest_day": false,
+          "is_hard_day": true,
+          "target_intensity": "threshold",
+          "workout_summary": "58 min tempo session at controlled hard effort.",
+          "purpose_summary": "Develop sustainable threshold strength without excessive fatigue."
+        }
+      ],
+      "summary": {
+        "plan_days": 7,
+        "total_minutes": 223,
+        "rest_days": 2,
+        "hard_days": 1,
+        "long_runs": 0
+      }
+    },
+    "judge_view": "canonical_masked_structural_v1"
+  },
+  "plan_b": {
+    "plan": {
+      "days": [
+        {
+          "day_index": 1,
+          "session_type": "long",
+          "duration_minutes": 74,
+          "is_rest_day": false,
+          "is_hard_day": false,
+          "target_intensity": "moderate",
+          "workout_summary": "Long trail run to build endurance and maintain freshness.",
+          "purpose_summary": "Long trail run to build endurance and maintain freshness."
+        },
+        {
+          "day_index": 2,
+          "session_type": "tempo",
+          "duration_minutes": 79,
+          "is_rest_day": false,
+          "is_hard_day": true,
+          "target_intensity": "controlled",
+          "workout_summary": "Tempo run with hills to improve speed and power.",
+          "purpose_summary": "Improve sustainable effort and race-specific rhythm."
+        },
+        {
+          "day_index": 3,
+          "session_type": "intervals",
+          "duration_minutes": 95,
+          "is_rest_day": false,
+          "is_hard_day": true,
+          "target_intensity": "hard",
+          "workout_summary": "Intervals on flats to enhance anaerobic capacity.",
+          "purpose_summary": "Strength training focusing on core and leg muscles."
+        },
+        {
+          "day_index": 4,
+          "session_type": "rest",
+          "duration_minutes": 0,
+          "is_rest_day": true,
+          "is_hard_day": false,
+          "target_intensity": "rest",
+          "workout_summary": "Rest day. No structured training.",
+          "purpose_summary": "Recover and maintain freshness."
+        },
+        {
+          "day_index": 5,
+          "session_type": "strength",
+          "duration_minutes": 30,
+          "is_rest_day": false,
+          "is_hard_day": false,
+          "target_intensity": "moderate",
+          "workout_summary": "Strength training focusing on core and leg muscles.",
+          "purpose_summary": "Intervals on flats to enhance anaerobic capacity."
+        },
+        {
+          "day_index": 6,
+          "session_type": "aerobic",
+          "duration_minutes": 101,
+          "is_rest_day": false,
+          "is_hard_day": false,
+          "target_intensity": "moderate",
+          "workout_summary": "101 min steady aerobic run on hilly.",
+          "purpose_summary": "Develop aerobic durability while keeping effort controlled."
+        },
+        {
+          "day_index": 7,
+          "session_type": "cross",
+          "duration_minutes": 60,
+          "is_rest_day": false,
+          "is_hard_day": false,
+          "target_intensity": "easy",
+          "workout_summary": "Cross-training session to maintain cardiovascular fitness.",
+          "purpose_summary": "Maintain aerobic stimulus while reducing impact load."
+        }
+      ],
+      "summary": {
+        "plan_days": 7,
+        "total_minutes": 439,
+        "rest_days": 1,
+        "hard_days": 2,
+        "long_runs": 1
+      }
+    },
+    "judge_view": "canonical_masked_structural_v1"
+  }
+}

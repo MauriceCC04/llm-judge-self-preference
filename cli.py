@@ -19,6 +19,25 @@ def _split_fixture_ids(raw_values: list[str] | None) -> list[str] | None:
     return fixture_ids or None
 
 
+def _parse_calipers(raw_values: list[str] | None) -> dict[str, float] | None:
+    if raw_values is None:
+        return None
+    out: dict[str, float] = {}
+    for raw in raw_values:
+        for part in raw.split(","):
+            part = part.strip()
+            if not part:
+                continue
+            if "=" not in part:
+                raise SystemExit(f"Bad caliper {part!r}; expected feature=value")
+            key, value = part.split("=", 1)
+            try:
+                out[key.strip()] = float(value)
+            except ValueError as exc:
+                raise SystemExit(f"Bad caliper value in {part!r}; expected numeric value") from exc
+    return out
+
+
 def _load_style_gate_summary(path: Path) -> dict:
     if not path.exists():
         raise FileNotFoundError(
@@ -120,6 +139,9 @@ def cmd_match(args: argparse.Namespace) -> None:
         allow_mixed_generation_conditions=args.allow_mixed_generation_conditions,
         compute_old_quality_score=args.compute_old_quality_score,
         require_same_score_bin=args.require_same_score_bin,
+        hard_calipers=_parse_calipers(args.caliper),
+        soft_calipers=None if not args.no_soft_calipers else {},
+        soft_caliper_penalty=args.soft_caliper_penalty,
     )
     print(f"{len(pairs)} pairs written to {output_path}")
 
@@ -149,6 +171,7 @@ def cmd_build_eval_manifest(args: argparse.Namespace) -> None:
         max_pairs=args.max_pairs,
         seed=args.seed,
         write_judge_inputs=args.write_judge_inputs,
+        judge_view=args.judge_view,
     )
     print(json.dumps(result, indent=2, ensure_ascii=False))
 
@@ -340,6 +363,9 @@ def build_parser() -> argparse.ArgumentParser:
     mat.add_argument("--allow-mixed-generation-conditions", action="store_true")
     mat.add_argument("--compute-old-quality-score", action="store_true", help="Compute legacy TrailTraining quality score as diagnostic only")
     mat.add_argument("--require-same-score-bin", action="store_true", help="Sensitivity only; not used for primary structural matching")
+    mat.add_argument("--caliper", action="append", default=None, help="Optional hard caliper feature=value; repeat or comma-separate. Example: total_minutes=100,n_hard_days=1")
+    mat.add_argument("--no-soft-calipers", action="store_true", help="Disable default soft caliper penalties in min-cost target matching")
+    mat.add_argument("--soft-caliper-penalty", type=float, default=50.0, help="Penalty multiplier for soft-caliper excess during min-cost target matching")
     mat.set_defaults(func=cmd_match)
 
     md = sub.add_parser("match-diagnostics", help="Write structural score/matching/style diagnostics")
@@ -359,6 +385,7 @@ def build_parser() -> argparse.ArgumentParser:
     manifest.add_argument("--max-pairs", type=int, default=None)
     manifest.add_argument("--seed", type=int, default=0)
     manifest.add_argument("--write-judge-inputs", action="store_true")
+    manifest.add_argument("--judge-view", choices=PAIRWISE_VIEW_CHOICES, default=PAIRWISE_VIEW_DEFAULT, help="Judge-facing representation; canonical_masked is the primary view")
     manifest.set_defaults(func=cmd_build_eval_manifest)
 
     gate = sub.add_parser("launch-gate", help="Refuse full judging unless the 10,000-record gate passes")

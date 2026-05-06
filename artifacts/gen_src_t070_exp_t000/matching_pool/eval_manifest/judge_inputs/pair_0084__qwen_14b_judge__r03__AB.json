@@ -1,0 +1,170 @@
+{
+  "plan_a": {
+    "plan": {
+      "days": [
+        {
+          "day_index": 1,
+          "session_type": "aerobic",
+          "duration_minutes": 30,
+          "is_rest_day": false,
+          "is_hard_day": false,
+          "target_intensity": "easy",
+          "workout_summary": "30 min steady aerobic run on trail.",
+          "purpose_summary": "To continue building aerobic endurance and hill strength while managing the current recovery state.…"
+        },
+        {
+          "day_index": 2,
+          "session_type": "aerobic",
+          "duration_minutes": 36,
+          "is_rest_day": false,
+          "is_hard_day": false,
+          "target_intensity": "easy",
+          "workout_summary": "36 min steady aerobic run on trail.",
+          "purpose_summary": "To continue building aerobic endurance and hill strength while managing the current recovery state.…"
+        },
+        {
+          "day_index": 3,
+          "session_type": "aerobic",
+          "duration_minutes": 60,
+          "is_rest_day": false,
+          "is_hard_day": false,
+          "target_intensity": "easy",
+          "workout_summary": "TrailRun, 6.50 km, 229 m+, 49 min",
+          "purpose_summary": "To continue building aerobic endurance and hill strength while managing the current recovery state.…"
+        },
+        {
+          "day_index": 4,
+          "session_type": "aerobic",
+          "duration_minutes": 60,
+          "is_rest_day": false,
+          "is_hard_day": false,
+          "target_intensity": "easy",
+          "workout_summary": "TrailRun, 5.70 km, 201 m+, 43 min",
+          "purpose_summary": "To continue building aerobic endurance and hill strength while managing the current recovery state.…"
+        },
+        {
+          "day_index": 5,
+          "session_type": "rest",
+          "duration_minutes": 0,
+          "is_rest_day": true,
+          "is_hard_day": false,
+          "target_intensity": "rest",
+          "workout_summary": "Rest day. No structured training.",
+          "purpose_summary": "Recover and maintain freshness."
+        },
+        {
+          "day_index": 6,
+          "session_type": "aerobic",
+          "duration_minutes": 60,
+          "is_rest_day": false,
+          "is_hard_day": false,
+          "target_intensity": "easy",
+          "workout_summary": "TrailRun, 12.80 km, 470 m+, 90 min",
+          "purpose_summary": "To continue building aerobic endurance and hill strength while managing the current recovery state.…"
+        },
+        {
+          "day_index": 7,
+          "session_type": "aerobic",
+          "duration_minutes": 60,
+          "is_rest_day": false,
+          "is_hard_day": false,
+          "target_intensity": "easy",
+          "workout_summary": "TrailRun, 7.10 km, 252 m+, 54 min",
+          "purpose_summary": "To continue building aerobic endurance and hill strength while managing the current recovery state.…"
+        }
+      ],
+      "summary": {
+        "plan_days": 7,
+        "total_minutes": 306,
+        "rest_days": 1,
+        "hard_days": 0,
+        "long_runs": 0
+      }
+    },
+    "judge_view": "canonical_masked_structural_v1"
+  },
+  "plan_b": {
+    "plan": {
+      "days": [
+        {
+          "day_index": 1,
+          "session_type": "long",
+          "duration_minutes": 95,
+          "is_rest_day": false,
+          "is_hard_day": false,
+          "target_intensity": "easy",
+          "workout_summary": "95 min long run at controlled aerobic effort.",
+          "purpose_summary": "Extend endurance and trail-specific durability."
+        },
+        {
+          "day_index": 2,
+          "session_type": "cross",
+          "duration_minutes": 41,
+          "is_rest_day": false,
+          "is_hard_day": false,
+          "target_intensity": "easy",
+          "workout_summary": "41 min low-impact cross-training session.",
+          "purpose_summary": "Add aerobic stimulus with reduced impact."
+        },
+        {
+          "day_index": 3,
+          "session_type": "cross",
+          "duration_minutes": 33,
+          "is_rest_day": false,
+          "is_hard_day": false,
+          "target_intensity": "easy",
+          "workout_summary": "33 min low-impact cross-training session.",
+          "purpose_summary": "Add aerobic stimulus with reduced impact."
+        },
+        {
+          "day_index": 4,
+          "session_type": "aerobic",
+          "duration_minutes": 36,
+          "is_rest_day": false,
+          "is_hard_day": false,
+          "target_intensity": "threshold",
+          "workout_summary": "36 min aerobic run at steady, controlled effort.",
+          "purpose_summary": "Develop aerobic endurance with controlled load."
+        },
+        {
+          "day_index": 5,
+          "session_type": "aerobic",
+          "duration_minutes": 59,
+          "is_rest_day": false,
+          "is_hard_day": false,
+          "target_intensity": "easy",
+          "workout_summary": "59 min aerobic run at steady, controlled effort.",
+          "purpose_summary": "Develop aerobic endurance with controlled load."
+        },
+        {
+          "day_index": 6,
+          "session_type": "tempo",
+          "duration_minutes": 42,
+          "is_rest_day": false,
+          "is_hard_day": true,
+          "target_intensity": "threshold",
+          "workout_summary": "42 min tempo session at controlled hard effort.",
+          "purpose_summary": "Develop sustainable threshold strength without excessive fatigue."
+        },
+        {
+          "day_index": 7,
+          "session_type": "rest",
+          "duration_minutes": 0,
+          "is_rest_day": true,
+          "is_hard_day": false,
+          "target_intensity": "rest",
+          "workout_summary": "Rest day. No structured training.",
+          "purpose_summary": "Absorb training and maintain freshness."
+        }
+      ],
+      "summary": {
+        "plan_days": 7,
+        "total_minutes": 306,
+        "rest_days": 1,
+        "hard_days": 1,
+        "long_runs": 1
+      }
+    },
+    "judge_view": "canonical_masked_structural_v1"
+  }
+}

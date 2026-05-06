@@ -1,0 +1,170 @@
+{
+  "plan_a": {
+    "judge_view": "canonical_masked_structural_v1",
+    "plan": {
+      "days": [
+        {
+          "day_index": 1,
+          "duration_minutes": 120,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "To provide a gradual taper leading into the upcoming race, focusing on easy recovery and maintenanc…",
+          "session_type": "long",
+          "target_intensity": "easy",
+          "workout_summary": "Trail Run - 16km, 450m+, 95 min"
+        },
+        {
+          "day_index": 2,
+          "duration_minutes": 60,
+          "is_hard_day": true,
+          "is_rest_day": false,
+          "purpose_summary": "To provide a gradual taper leading into the upcoming race, focusing on easy recovery and maintenanc…",
+          "session_type": "tempo",
+          "target_intensity": "moderate",
+          "workout_summary": "Tempo run. Sustain controlled hard effort with adequate warm-up and cool-down."
+        },
+        {
+          "day_index": 3,
+          "duration_minutes": 45,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "To provide a gradual taper leading into the upcoming race, focusing on easy recovery and maintenanc…",
+          "session_type": "easy",
+          "target_intensity": "easy",
+          "workout_summary": "Trail Run - 8km, 200m+, 60 min"
+        },
+        {
+          "day_index": 4,
+          "duration_minutes": 120,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "To provide a gradual taper leading into the upcoming race, focusing on easy recovery and maintenanc…",
+          "session_type": "long",
+          "target_intensity": "easy",
+          "workout_summary": "Trail Run - 18km, 500m+, 105 min"
+        },
+        {
+          "day_index": 5,
+          "duration_minutes": 0,
+          "is_hard_day": false,
+          "is_rest_day": true,
+          "purpose_summary": "Recover and maintain freshness.",
+          "session_type": "rest",
+          "target_intensity": "rest",
+          "workout_summary": "Rest day. No structured training."
+        },
+        {
+          "day_index": 6,
+          "duration_minutes": 45,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "To provide a gentle taper leading into the upcoming race, focusing on easy recovery and maintenance…",
+          "session_type": "easy",
+          "target_intensity": "easy",
+          "workout_summary": "Trail Run - 7km, 150m+, 50 min"
+        },
+        {
+          "day_index": 7,
+          "duration_minutes": 30,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "Support aerobic consistency without adding excessive fatigue.",
+          "session_type": "easy",
+          "target_intensity": "easy",
+          "workout_summary": "Trail Run - 5km, 100m+, 40 min"
+        }
+      ],
+      "summary": {
+        "hard_days": 1,
+        "long_runs": 2,
+        "plan_days": 7,
+        "rest_days": 1,
+        "total_minutes": 420
+      }
+    }
+  },
+  "plan_b": {
+    "judge_view": "canonical_masked_structural_v1",
+    "plan": {
+      "days": [
+        {
+          "day_index": 1,
+          "duration_minutes": 40,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "Develop aerobic endurance with controlled load.",
+          "session_type": "aerobic",
+          "target_intensity": "threshold",
+          "workout_summary": "40 min aerobic run at steady, controlled effort."
+        },
+        {
+          "day_index": 2,
+          "duration_minutes": 41,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "Build aerobic consistency while keeping fatigue low.",
+          "session_type": "easy",
+          "target_intensity": "easy",
+          "workout_summary": "41 min easy run at conversational effort."
+        },
+        {
+          "day_index": 3,
+          "duration_minutes": 0,
+          "is_hard_day": false,
+          "is_rest_day": true,
+          "purpose_summary": "Absorb training and maintain freshness.",
+          "session_type": "rest",
+          "target_intensity": "rest",
+          "workout_summary": "Rest day. No structured training."
+        },
+        {
+          "day_index": 4,
+          "duration_minutes": 31,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "Build aerobic consistency while keeping fatigue low.",
+          "session_type": "easy",
+          "target_intensity": "easy",
+          "workout_summary": "31 min easy run at conversational effort."
+        },
+        {
+          "day_index": 5,
+          "duration_minutes": 105,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "Extend endurance and trail-specific durability.",
+          "session_type": "long",
+          "target_intensity": "easy",
+          "workout_summary": "105 min long run at controlled aerobic effort."
+        },
+        {
+          "day_index": 6,
+          "duration_minutes": 41,
+          "is_hard_day": true,
+          "is_rest_day": false,
+          "purpose_summary": "Develop sustainable threshold strength without excessive fatigue.",
+          "session_type": "tempo",
+          "target_intensity": "threshold",
+          "workout_summary": "41 min tempo session at controlled hard effort."
+        },
+        {
+          "day_index": 7,
+          "duration_minutes": 113,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "Extend endurance and trail-specific durability.",
+          "session_type": "long",
+          "target_intensity": "easy",
+          "workout_summary": "113 min long run at controlled aerobic effort."
+        }
+      ],
+      "summary": {
+        "hard_days": 1,
+        "long_runs": 2,
+        "plan_days": 7,
+        "rest_days": 1,
+        "total_minutes": 371
+      }
+    }
+  }
+}

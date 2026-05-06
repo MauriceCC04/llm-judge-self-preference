@@ -1,0 +1,170 @@
+{
+  "plan_a": {
+    "plan": {
+      "days": [
+        {
+          "day_index": 1,
+          "session_type": "aerobic",
+          "duration_minutes": 58,
+          "is_rest_day": false,
+          "is_hard_day": false,
+          "target_intensity": "threshold",
+          "workout_summary": "58 min aerobic run at steady, controlled effort.",
+          "purpose_summary": "Develop aerobic endurance with controlled load."
+        },
+        {
+          "day_index": 2,
+          "session_type": "hills",
+          "duration_minutes": 49,
+          "is_rest_day": false,
+          "is_hard_day": true,
+          "target_intensity": "threshold",
+          "workout_summary": "49 min hill session with steady climbing efforts.",
+          "purpose_summary": "Build climbing strength and trail-specific power."
+        },
+        {
+          "day_index": 3,
+          "session_type": "easy",
+          "duration_minutes": 57,
+          "is_rest_day": false,
+          "is_hard_day": false,
+          "target_intensity": "easy",
+          "workout_summary": "57 min easy run at conversational effort.",
+          "purpose_summary": "Build aerobic consistency while keeping fatigue low."
+        },
+        {
+          "day_index": 4,
+          "session_type": "easy",
+          "duration_minutes": 20,
+          "is_rest_day": false,
+          "is_hard_day": false,
+          "target_intensity": "easy",
+          "workout_summary": "20 min easy run at conversational effort.",
+          "purpose_summary": "Build aerobic consistency while keeping fatigue low."
+        },
+        {
+          "day_index": 5,
+          "session_type": "hills",
+          "duration_minutes": 39,
+          "is_rest_day": false,
+          "is_hard_day": true,
+          "target_intensity": "threshold",
+          "workout_summary": "39 min hill session with steady climbing efforts.",
+          "purpose_summary": "Build climbing strength and trail-specific power."
+        },
+        {
+          "day_index": 6,
+          "session_type": "long",
+          "duration_minutes": 103,
+          "is_rest_day": false,
+          "is_hard_day": false,
+          "target_intensity": "easy",
+          "workout_summary": "103 min long run at controlled aerobic effort.",
+          "purpose_summary": "Extend endurance and trail-specific durability."
+        },
+        {
+          "day_index": 7,
+          "session_type": "rest",
+          "duration_minutes": 0,
+          "is_rest_day": true,
+          "is_hard_day": false,
+          "target_intensity": "rest",
+          "workout_summary": "Rest day. No structured training.",
+          "purpose_summary": "Absorb training and maintain freshness."
+        }
+      ],
+      "summary": {
+        "plan_days": 7,
+        "total_minutes": 326,
+        "rest_days": 1,
+        "hard_days": 2,
+        "long_runs": 1
+      }
+    },
+    "judge_view": "canonical_masked_structural_v1"
+  },
+  "plan_b": {
+    "plan": {
+      "days": [
+        {
+          "day_index": 1,
+          "session_type": "rest",
+          "duration_minutes": 0,
+          "is_rest_day": true,
+          "is_hard_day": false,
+          "target_intensity": "rest",
+          "workout_summary": "Rest day. No structured training.",
+          "purpose_summary": "Recover and maintain freshness."
+        },
+        {
+          "day_index": 2,
+          "session_type": "aerobic",
+          "duration_minutes": 60,
+          "is_rest_day": false,
+          "is_hard_day": false,
+          "target_intensity": "controlled",
+          "workout_summary": "60 min steady aerobic run on trail.",
+          "purpose_summary": "To introduce higher intensity work while maintaining freshness. The athlete had a long run the prev…"
+        },
+        {
+          "day_index": 3,
+          "session_type": "hills",
+          "duration_minutes": 45,
+          "is_rest_day": false,
+          "is_hard_day": true,
+          "target_intensity": "hard",
+          "workout_summary": "Hill intervals: 45 minutes of hard efforts on hills.",
+          "purpose_summary": "Complete the planned hill session without adding extra fatigue."
+        },
+        {
+          "day_index": 4,
+          "session_type": "long",
+          "duration_minutes": 120,
+          "is_rest_day": false,
+          "is_hard_day": false,
+          "target_intensity": "moderate",
+          "workout_summary": "Long run: 120 minutes at moderate effort.",
+          "purpose_summary": "To build endurance and maintain freshness. The athlete had a series of shorter runs the previous tw…"
+        },
+        {
+          "day_index": 5,
+          "session_type": "rest",
+          "duration_minutes": 0,
+          "is_rest_day": true,
+          "is_hard_day": false,
+          "target_intensity": "rest",
+          "workout_summary": "Rest day. No structured training.",
+          "purpose_summary": "Recover and maintain freshness."
+        },
+        {
+          "day_index": 6,
+          "session_type": "intervals",
+          "duration_minutes": 45,
+          "is_rest_day": false,
+          "is_hard_day": true,
+          "target_intensity": "hard",
+          "workout_summary": "Interval run: 45 minutes of hard efforts with short recoveries.",
+          "purpose_summary": "To continue building aerobic base while maintaining freshness. The athlete had a longer run the pre…"
+        },
+        {
+          "day_index": 7,
+          "session_type": "rest",
+          "duration_minutes": 0,
+          "is_rest_day": true,
+          "is_hard_day": false,
+          "target_intensity": "rest",
+          "workout_summary": "Rest day. No structured training.",
+          "purpose_summary": "Recover and maintain freshness."
+        }
+      ],
+      "summary": {
+        "plan_days": 7,
+        "total_minutes": 270,
+        "rest_days": 3,
+        "hard_days": 2,
+        "long_runs": 1
+      }
+    },
+    "judge_view": "canonical_masked_structural_v1"
+  }
+}

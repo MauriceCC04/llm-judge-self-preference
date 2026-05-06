@@ -1,0 +1,170 @@
+{
+  "plan_a": {
+    "judge_view": "canonical_masked_structural_v1",
+    "plan": {
+      "days": [
+        {
+          "day_index": 1,
+          "duration_minutes": 59,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "To focus on steady pace and rhythm through a long trail run. This session ensures the athlete maint…",
+          "session_type": "long",
+          "target_intensity": "moderate",
+          "workout_summary": "Long trail run focusing on steady pace and rhythm."
+        },
+        {
+          "day_index": 2,
+          "duration_minutes": 64,
+          "is_hard_day": true,
+          "is_rest_day": false,
+          "purpose_summary": "To continue building speed and endurance through tempo intervals on varied terrain. This session he…",
+          "session_type": "tempo",
+          "target_intensity": "hard",
+          "workout_summary": "Tempo intervals on varied terrain to build speed and endurance."
+        },
+        {
+          "day_index": 3,
+          "duration_minutes": 76,
+          "is_hard_day": true,
+          "is_rest_day": false,
+          "purpose_summary": "To build strength and power through hill repeats on varied terrain. This session helps the athlete…",
+          "session_type": "hills",
+          "target_intensity": "controlled",
+          "workout_summary": "Hill repeats to improve strength and power on varied terrain."
+        },
+        {
+          "day_index": 4,
+          "duration_minutes": 72,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "To focus on easy trail running to recover and maintain freshness. This session allows the athlete t…",
+          "session_type": "easy",
+          "target_intensity": "easy",
+          "workout_summary": "Easy trail run to recover and maintain freshness."
+        },
+        {
+          "day_index": 5,
+          "duration_minutes": 0,
+          "is_hard_day": false,
+          "is_rest_day": true,
+          "purpose_summary": "Recover and maintain freshness.",
+          "session_type": "rest",
+          "target_intensity": "rest",
+          "workout_summary": "Rest day. No structured training."
+        },
+        {
+          "day_index": 6,
+          "duration_minutes": 81,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "Build endurance and trail-specific durability.",
+          "session_type": "long",
+          "target_intensity": "moderate",
+          "workout_summary": "Long trail run focusing on steady pace and rhythm."
+        },
+        {
+          "day_index": 7,
+          "duration_minutes": 85,
+          "is_hard_day": true,
+          "is_rest_day": false,
+          "purpose_summary": "To maintain freshness and recovery while preparing for the upcoming race. The long trail run focuse…",
+          "session_type": "tempo",
+          "target_intensity": "hard",
+          "workout_summary": "Tempo intervals on varied terrain to build speed and endurance."
+        }
+      ],
+      "summary": {
+        "hard_days": 3,
+        "long_runs": 2,
+        "plan_days": 7,
+        "rest_days": 1,
+        "total_minutes": 437
+      }
+    }
+  },
+  "plan_b": {
+    "judge_view": "canonical_masked_structural_v1",
+    "plan": {
+      "days": [
+        {
+          "day_index": 1,
+          "duration_minutes": 61,
+          "is_hard_day": true,
+          "is_rest_day": false,
+          "purpose_summary": "Develop controlled high-end aerobic power.",
+          "session_type": "intervals",
+          "target_intensity": "threshold",
+          "workout_summary": "61 min intervals session with controlled recoveries."
+        },
+        {
+          "day_index": 2,
+          "duration_minutes": 61,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "Add aerobic stimulus with reduced impact.",
+          "session_type": "cross",
+          "target_intensity": "easy",
+          "workout_summary": "61 min low-impact cross-training session."
+        },
+        {
+          "day_index": 3,
+          "duration_minutes": 55,
+          "is_hard_day": true,
+          "is_rest_day": false,
+          "purpose_summary": "Develop controlled high-end aerobic power.",
+          "session_type": "intervals",
+          "target_intensity": "threshold",
+          "workout_summary": "55 min intervals session with controlled recoveries."
+        },
+        {
+          "day_index": 4,
+          "duration_minutes": 31,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "Support durability, stability, and injury resistance.",
+          "session_type": "strength",
+          "target_intensity": "easy",
+          "workout_summary": "31 min strength and mobility session."
+        },
+        {
+          "day_index": 5,
+          "duration_minutes": 59,
+          "is_hard_day": true,
+          "is_rest_day": false,
+          "purpose_summary": "Develop controlled high-end aerobic power.",
+          "session_type": "intervals",
+          "target_intensity": "threshold",
+          "workout_summary": "59 min intervals session with controlled recoveries."
+        },
+        {
+          "day_index": 6,
+          "duration_minutes": 23,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "Add aerobic stimulus with reduced impact.",
+          "session_type": "cross",
+          "target_intensity": "easy",
+          "workout_summary": "23 min low-impact cross-training session."
+        },
+        {
+          "day_index": 7,
+          "duration_minutes": 0,
+          "is_hard_day": false,
+          "is_rest_day": true,
+          "purpose_summary": "Absorb training and maintain freshness.",
+          "session_type": "rest",
+          "target_intensity": "rest",
+          "workout_summary": "Rest day. No structured training."
+        }
+      ],
+      "summary": {
+        "hard_days": 3,
+        "long_runs": 0,
+        "plan_days": 7,
+        "rest_days": 1,
+        "total_minutes": 290
+      }
+    }
+  }
+}

@@ -1,0 +1,170 @@
+{
+  "plan_a": {
+    "judge_view": "canonical_masked_structural_v1",
+    "plan": {
+      "days": [
+        {
+          "day_index": 1,
+          "duration_minutes": 35,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "Develop aerobic endurance with controlled load.",
+          "session_type": "aerobic",
+          "target_intensity": "easy",
+          "workout_summary": "35 min aerobic run at steady, controlled effort."
+        },
+        {
+          "day_index": 2,
+          "duration_minutes": 60,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "Add aerobic stimulus with reduced impact.",
+          "session_type": "cross",
+          "target_intensity": "easy",
+          "workout_summary": "60 min low-impact cross-training session."
+        },
+        {
+          "day_index": 3,
+          "duration_minutes": 0,
+          "is_hard_day": false,
+          "is_rest_day": true,
+          "purpose_summary": "Absorb training and maintain freshness.",
+          "session_type": "rest",
+          "target_intensity": "rest",
+          "workout_summary": "Rest day. No structured training."
+        },
+        {
+          "day_index": 4,
+          "duration_minutes": 0,
+          "is_hard_day": false,
+          "is_rest_day": true,
+          "purpose_summary": "Absorb training and maintain freshness.",
+          "session_type": "rest",
+          "target_intensity": "rest",
+          "workout_summary": "Rest day. No structured training."
+        },
+        {
+          "day_index": 5,
+          "duration_minutes": 29,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "Add aerobic stimulus with reduced impact.",
+          "session_type": "cross",
+          "target_intensity": "easy",
+          "workout_summary": "29 min low-impact cross-training session."
+        },
+        {
+          "day_index": 6,
+          "duration_minutes": 41,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "Build aerobic consistency while keeping fatigue low.",
+          "session_type": "easy",
+          "target_intensity": "easy",
+          "workout_summary": "41 min easy run at conversational effort."
+        },
+        {
+          "day_index": 7,
+          "duration_minutes": 63,
+          "is_hard_day": true,
+          "is_rest_day": false,
+          "purpose_summary": "Develop sustainable threshold strength without excessive fatigue.",
+          "session_type": "tempo",
+          "target_intensity": "threshold",
+          "workout_summary": "63 min tempo session at controlled hard effort."
+        }
+      ],
+      "summary": {
+        "hard_days": 1,
+        "long_runs": 0,
+        "plan_days": 7,
+        "rest_days": 2,
+        "total_minutes": 228
+      }
+    }
+  },
+  "plan_b": {
+    "judge_view": "canonical_masked_structural_v1",
+    "plan": {
+      "days": [
+        {
+          "day_index": 1,
+          "duration_minutes": 120,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "To sustain high training quality while building race-relevant durability. This is a long run design…",
+          "session_type": "long",
+          "target_intensity": "easy",
+          "workout_summary": "TrailRun | 25.00 km | 800 m+ | avgHR 142"
+        },
+        {
+          "day_index": 2,
+          "duration_minutes": 60,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "To sustain high training quality while building race-relevant durability. This is a long run design…",
+          "session_type": "aerobic",
+          "target_intensity": "moderate",
+          "workout_summary": "60 min steady aerobic run on trail."
+        },
+        {
+          "day_index": 3,
+          "duration_minutes": 45,
+          "is_hard_day": true,
+          "is_rest_day": false,
+          "purpose_summary": "To sustain high training quality while building race-relevant durability. This is a long run design…",
+          "session_type": "hills",
+          "target_intensity": "controlled",
+          "workout_summary": "TrailRun | 10.00 km | 300 m+ | avgHR 155"
+        },
+        {
+          "day_index": 4,
+          "duration_minutes": 0,
+          "is_hard_day": false,
+          "is_rest_day": true,
+          "purpose_summary": "Recover and maintain freshness.",
+          "session_type": "rest",
+          "target_intensity": "rest",
+          "workout_summary": "Rest day. No structured training."
+        },
+        {
+          "day_index": 5,
+          "duration_minutes": 120,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "To sustain high training quality while building race-relevant durability. This is a long run design…",
+          "session_type": "long",
+          "target_intensity": "easy",
+          "workout_summary": "TrailRun | 30.00 km | 1000 m+ | avgHR 140"
+        },
+        {
+          "day_index": 6,
+          "duration_minutes": 60,
+          "is_hard_day": true,
+          "is_rest_day": false,
+          "purpose_summary": "To sustain high training quality while building race-relevant durability. This is a long run design…",
+          "session_type": "intervals",
+          "target_intensity": "controlled",
+          "workout_summary": "TrailRun | 12.00 km | 400 m+ | avgHR 160"
+        },
+        {
+          "day_index": 7,
+          "duration_minutes": 45,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "To sustain high training quality while building race-relevant durability. This is a long run design…",
+          "session_type": "easy",
+          "target_intensity": "easy",
+          "workout_summary": "TrailRun | 8.00 km | 250 m+ | avgHR 145"
+        }
+      ],
+      "summary": {
+        "hard_days": 2,
+        "long_runs": 2,
+        "plan_days": 7,
+        "rest_days": 1,
+        "total_minutes": 450
+      }
+    }
+  }
+}

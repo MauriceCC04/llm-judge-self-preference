@@ -1,0 +1,170 @@
+{
+  "plan_a": {
+    "plan": {
+      "days": [
+        {
+          "day_index": 1,
+          "session_type": "easy",
+          "duration_minutes": 26,
+          "is_rest_day": false,
+          "is_hard_day": false,
+          "target_intensity": "easy",
+          "workout_summary": "26 min easy run at conversational effort.",
+          "purpose_summary": "Build aerobic consistency while keeping fatigue low."
+        },
+        {
+          "day_index": 2,
+          "session_type": "easy",
+          "duration_minutes": 40,
+          "is_rest_day": false,
+          "is_hard_day": false,
+          "target_intensity": "easy",
+          "workout_summary": "40 min easy run at conversational effort.",
+          "purpose_summary": "Build aerobic consistency while keeping fatigue low."
+        },
+        {
+          "day_index": 3,
+          "session_type": "easy",
+          "duration_minutes": 39,
+          "is_rest_day": false,
+          "is_hard_day": false,
+          "target_intensity": "easy",
+          "workout_summary": "39 min easy run at conversational effort.",
+          "purpose_summary": "Build aerobic consistency while keeping fatigue low."
+        },
+        {
+          "day_index": 4,
+          "session_type": "long",
+          "duration_minutes": 145,
+          "is_rest_day": false,
+          "is_hard_day": false,
+          "target_intensity": "easy",
+          "workout_summary": "145 min long run at controlled aerobic effort.",
+          "purpose_summary": "Extend endurance and trail-specific durability."
+        },
+        {
+          "day_index": 5,
+          "session_type": "tempo",
+          "duration_minutes": 54,
+          "is_rest_day": false,
+          "is_hard_day": true,
+          "target_intensity": "threshold",
+          "workout_summary": "54 min tempo session at controlled hard effort.",
+          "purpose_summary": "Develop sustainable threshold strength without excessive fatigue."
+        },
+        {
+          "day_index": 6,
+          "session_type": "long",
+          "duration_minutes": 103,
+          "is_rest_day": false,
+          "is_hard_day": false,
+          "target_intensity": "easy",
+          "workout_summary": "103 min long run at controlled aerobic effort.",
+          "purpose_summary": "Extend endurance and trail-specific durability."
+        },
+        {
+          "day_index": 7,
+          "session_type": "rest",
+          "duration_minutes": 0,
+          "is_rest_day": true,
+          "is_hard_day": false,
+          "target_intensity": "rest",
+          "workout_summary": "Rest day. No structured training.",
+          "purpose_summary": "Absorb training and maintain freshness."
+        }
+      ],
+      "summary": {
+        "plan_days": 7,
+        "total_minutes": 407,
+        "rest_days": 1,
+        "hard_days": 1,
+        "long_runs": 2
+      }
+    },
+    "judge_view": "canonical_masked_structural_v1"
+  },
+  "plan_b": {
+    "plan": {
+      "days": [
+        {
+          "day_index": 1,
+          "session_type": "long",
+          "duration_minutes": 120,
+          "is_rest_day": false,
+          "is_hard_day": false,
+          "target_intensity": "easy",
+          "workout_summary": "Trail Run - 16km, 480m+ - Focus on consistent pace and rhythm.",
+          "purpose_summary": "Active recovery and maintenance of freshness. The athlete ran a moderate distance and elevation gai…"
+        },
+        {
+          "day_index": 2,
+          "session_type": "easy",
+          "duration_minutes": 60,
+          "is_rest_day": false,
+          "is_hard_day": false,
+          "target_intensity": "easy",
+          "workout_summary": "Trail Run - 12km, 320m+ - Recovery run.",
+          "purpose_summary": "Active recovery and maintenance of freshness. The athlete ran a moderate distance and elevation gai…"
+        },
+        {
+          "day_index": 3,
+          "session_type": "tempo",
+          "duration_minutes": 90,
+          "is_rest_day": false,
+          "is_hard_day": true,
+          "target_intensity": "moderate",
+          "workout_summary": "Trail Run - 10km, 280m+ - Controlled tempo run.",
+          "purpose_summary": "Maintaining freshness and preparing for upcoming races. The athlete ran a moderate distance and ele…"
+        },
+        {
+          "day_index": 4,
+          "session_type": "long",
+          "duration_minutes": 150,
+          "is_rest_day": false,
+          "is_hard_day": false,
+          "target_intensity": "easy",
+          "workout_summary": "Trail Run - 22km, 640m+ - Building endurance.",
+          "purpose_summary": "Building endurance and maintaining freshness. The athlete ran a longer distance and elevation gain…"
+        },
+        {
+          "day_index": 5,
+          "session_type": "easy",
+          "duration_minutes": 45,
+          "is_rest_day": false,
+          "is_hard_day": false,
+          "target_intensity": "easy",
+          "workout_summary": "Trail Run - 8km, 240m+ - Short, easy recovery.",
+          "purpose_summary": "Active recovery and maintenance of freshness. The athlete ran a moderate distance and elevation gai…"
+        },
+        {
+          "day_index": 6,
+          "session_type": "rest",
+          "duration_minutes": 0,
+          "is_rest_day": true,
+          "is_hard_day": false,
+          "target_intensity": "rest",
+          "workout_summary": "Rest day. No structured training.",
+          "purpose_summary": "Recover and maintain freshness."
+        },
+        {
+          "day_index": 7,
+          "session_type": "easy",
+          "duration_minutes": 30,
+          "is_rest_day": false,
+          "is_hard_day": false,
+          "target_intensity": "easy",
+          "workout_summary": "Trail Run - 5km, 150m+ - Active recovery.",
+          "purpose_summary": "Active recovery and maintenance of freshness. The athlete ran a moderate distance and elevation gai…"
+        }
+      ],
+      "summary": {
+        "plan_days": 7,
+        "total_minutes": 495,
+        "rest_days": 1,
+        "hard_days": 1,
+        "long_runs": 2
+      }
+    },
+    "judge_view": "canonical_masked_structural_v1"
+  }
+}

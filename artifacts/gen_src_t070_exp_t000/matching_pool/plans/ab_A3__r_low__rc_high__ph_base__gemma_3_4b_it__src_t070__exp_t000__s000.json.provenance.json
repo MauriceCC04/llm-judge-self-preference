@@ -1,0 +1,118 @@
+{
+  "plan_id": "ab_A3__r_low__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s000",
+  "fixture_id": "ab_A3__r_low__rc_high__ph_base",
+  "athlete_band": "A3",
+  "readiness": "low",
+  "recovery_capability": "high",
+  "race_phase": "base",
+  "plan_days": 7,
+  "style": "trailrunning",
+  "arm": "llm",
+  "source_model": "google/gemma-3-4b-it",
+  "explainer_model": "Qwen/Qwen2.5-3B-Instruct",
+  "actual_explainer_model": "Qwen/Qwen2.5-3B-Instruct",
+  "explainer_model_verified": true,
+  "generation_pipeline": "llm_two_stage",
+  "runtime_backend": "trailtraining.llm.coach.run_coach_brief",
+  "runtime_metadata": {
+    "source_base_url": "http://127.0.0.1:8773/v1",
+    "explainer_base_url": "http://127.0.0.1:8774/v1",
+    "judge_base_url": "http://127.0.0.1:8774/v1",
+    "using_local_base_url": true,
+    "default_patch_stage": "judge",
+    "source_model": "google/gemma-3-4b-it",
+    "actual_source_model": "google/gemma-3-4b-it",
+    "actual_explainer_model": "Qwen/Qwen2.5-3B-Instruct",
+    "explainer_model_verified": true,
+    "source_temperature": 0.7,
+    "explainer_temperature": 0.0,
+    "seed": 0,
+    "structural_lifestyle_notes_present": true,
+    "structural_lifestyle_notes_chars": 1633,
+    "artifact_lifestyle_notes_chars": 215,
+    "TRAILTRAINING_TWO_STAGE_PLAN": "1",
+    "generation_condition": "gen_src_t070__exp_t000",
+    "athlete_band": "A3",
+    "readiness": "low",
+    "recovery_capability": "high",
+    "race_phase": "base",
+    "artifact_normalization": {
+      "normalizer_version": "artifact-presentation-normalizer-v1",
+      "normalized_at": "2026-05-05T15:17:21.849720+00:00",
+      "original_artifact_sha256": "a572e2e3d2dabaa61f21d46d903f3371dfcf16700ac140ded1e792b146df9d30",
+      "normalized_artifact_sha256": "8d6c9b62eb0ff5f139e29b8195495f6b917700beaf198412c41a4a4c3e187125",
+      "changed_fields": [
+        {
+          "path": "$.plan.days[0].title",
+          "old": "Day 1",
+          "new": "Easy run",
+          "reason": "generic_day_title"
+        },
+        {
+          "path": "$.plan.days[0].purpose",
+          "old": "",
+          "new": "Support aerobic consistency without adding excessive fatigue.",
+          "reason": "blank_human_facing_field"
+        },
+        {
+          "path": "$.plan.days[1].title",
+          "old": "Day 2",
+          "new": "Hill session",
+          "reason": "generic_day_title"
+        },
+        {
+          "path": "$.plan.days[1].purpose",
+          "old": "",
+          "new": "Build climbing strength, power, and durable mechanics.",
+          "reason": "blank_human_facing_field"
+        },
+        {
+          "path": "$.plan.days[2].title",
+          "old": "Trail Run - Easy Recovery",
+          "new": "Easy run",
+          "reason": "title_session_mismatch"
+        },
+        {
+          "path": "$.plan.days[2].purpose",
+          "old": "To facilitate recovery and prepare for the upcoming long run on March 14.",
+          "new": "Support aerobic consistency without adding excessive fatigue.",
+          "reason": "field_primary_label_long_mismatches_session_type_easy"
+        },
+        {
+          "path": "$.plan.days[3].title",
+          "old": "Long Trail Run",
+          "new": "Long run",
+          "reason": "title_session_mismatch"
+        },
+        {
+          "path": "$.plan.days[4].title",
+          "old": "Trail Run - Short Easy",
+          "new": "Easy run",
+          "reason": "title_session_mismatch"
+        },
+        {
+          "path": "$.plan.days[6].title",
+          "old": "Trail Run - Easy Recovery",
+          "new": "Easy run",
+          "reason": "title_session_mismatch"
+        },
+        {
+          "path": "$.plan.days[6].purpose",
+          "old": "To facilitate recovery and prepare for the upcoming long run on March 14.",
+          "new": "Support aerobic consistency without adding excessive fatigue.",
+          "reason": "field_primary_label_long_mismatches_session_type_easy"
+        }
+      ],
+      "warnings": [],
+      "errors": [],
+      "score_relevant_projection_unchanged": true
+    }
+  },
+  "source_temperature": 0.7,
+  "explainer_temperature": 0.0,
+  "generation_condition": "gen_src_t070__exp_t000",
+  "seed": 0,
+  "generated_at": "2026-05-05T08:31:43.267797+00:00",
+  "plan_path": "artifacts/gen_src_t070_exp_t000/matching_pool/plans/ab_A3__r_low__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s000.json",
+  "deterministic_score": 95.0
+}

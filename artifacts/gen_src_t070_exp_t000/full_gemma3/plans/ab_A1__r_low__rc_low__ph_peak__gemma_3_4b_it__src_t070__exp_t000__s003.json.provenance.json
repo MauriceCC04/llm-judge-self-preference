@@ -1,0 +1,130 @@
+{
+  "plan_id": "ab_A1__r_low__rc_low__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s003",
+  "fixture_id": "ab_A1__r_low__rc_low__ph_peak",
+  "athlete_band": "A1",
+  "readiness": "low",
+  "recovery_capability": "low",
+  "race_phase": "peak",
+  "plan_days": 7,
+  "style": "trailrunning",
+  "arm": "llm",
+  "source_model": "google/gemma-3-4b-it",
+  "explainer_model": "Qwen/Qwen2.5-3B-Instruct",
+  "actual_explainer_model": "Qwen/Qwen2.5-3B-Instruct",
+  "explainer_model_verified": true,
+  "generation_pipeline": "llm_two_stage",
+  "runtime_backend": "trailtraining.llm.coach.run_coach_brief",
+  "runtime_metadata": {
+    "source_base_url": "http://127.0.0.1:8773/v1",
+    "explainer_base_url": "http://127.0.0.1:8774/v1",
+    "judge_base_url": "http://127.0.0.1:8774/v1",
+    "using_local_base_url": true,
+    "default_patch_stage": "judge",
+    "source_model": "google/gemma-3-4b-it",
+    "actual_source_model": "google/gemma-3-4b-it",
+    "actual_explainer_model": "Qwen/Qwen2.5-3B-Instruct",
+    "explainer_model_verified": true,
+    "source_temperature": 0.7,
+    "explainer_temperature": 0.0,
+    "seed": 3,
+    "structural_lifestyle_notes_present": true,
+    "structural_lifestyle_notes_chars": 1414,
+    "artifact_lifestyle_notes_chars": 246,
+    "TRAILTRAINING_TWO_STAGE_PLAN": "1",
+    "generation_condition": "gen_src_t070__exp_t000",
+    "athlete_band": "A1",
+    "readiness": "low",
+    "recovery_capability": "low",
+    "race_phase": "peak",
+    "artifact_normalization": {
+      "normalizer_version": "artifact-presentation-normalizer-v1",
+      "normalized_at": "2026-05-05T15:17:21.758529+00:00",
+      "original_artifact_sha256": "eac4286b63ea6935f8bea7982b9035193b816ac0dc8b07de9c679be07b17440b",
+      "normalized_artifact_sha256": "948f6bf89d465565a8c6064b6447a5dc62fe2f3c00a900549cd02ad7b812884c",
+      "changed_fields": [
+        {
+          "path": "$.plan.days[0].title",
+          "old": "Day 1",
+          "new": "Easy run",
+          "reason": "generic_day_title"
+        },
+        {
+          "path": "$.plan.days[0].purpose",
+          "old": "",
+          "new": "Support aerobic consistency without adding excessive fatigue.",
+          "reason": "blank_human_facing_field"
+        },
+        {
+          "path": "$.plan.days[1].title",
+          "old": "Day 2",
+          "new": "Easy run",
+          "reason": "generic_day_title"
+        },
+        {
+          "path": "$.plan.days[1].purpose",
+          "old": "",
+          "new": "Support aerobic consistency without adding excessive fatigue.",
+          "reason": "blank_human_facing_field"
+        },
+        {
+          "path": "$.plan.days[2].title",
+          "old": "Day 3",
+          "new": "Easy run",
+          "reason": "generic_day_title"
+        },
+        {
+          "path": "$.plan.days[2].purpose",
+          "old": "",
+          "new": "Support aerobic consistency without adding excessive fatigue.",
+          "reason": "blank_human_facing_field"
+        },
+        {
+          "path": "$.plan.days[3].title",
+          "old": "Day 4",
+          "new": "Easy run",
+          "reason": "generic_day_title"
+        },
+        {
+          "path": "$.plan.days[3].purpose",
+          "old": "",
+          "new": "Support aerobic consistency without adding excessive fatigue.",
+          "reason": "blank_human_facing_field"
+        },
+        {
+          "path": "$.plan.days[4].title",
+          "old": "Day 5",
+          "new": "Easy run",
+          "reason": "generic_day_title"
+        },
+        {
+          "path": "$.plan.days[4].purpose",
+          "old": "",
+          "new": "Support aerobic consistency without adding excessive fatigue.",
+          "reason": "blank_human_facing_field"
+        },
+        {
+          "path": "$.plan.days[5].title",
+          "old": "Day 6",
+          "new": "Easy run",
+          "reason": "generic_day_title"
+        },
+        {
+          "path": "$.plan.days[5].purpose",
+          "old": "",
+          "new": "Support aerobic consistency without adding excessive fatigue.",
+          "reason": "blank_human_facing_field"
+        }
+      ],
+      "warnings": [],
+      "errors": [],
+      "score_relevant_projection_unchanged": true
+    }
+  },
+  "source_temperature": 0.7,
+  "explainer_temperature": 0.0,
+  "generation_condition": "gen_src_t070__exp_t000",
+  "seed": 3,
+  "generated_at": "2026-05-05T06:39:07.358696+00:00",
+  "plan_path": "artifacts/gen_src_t070_exp_t000/full_gemma3/plans/ab_A1__r_low__rc_low__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s003.json",
+  "deterministic_score": null
+}

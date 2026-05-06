@@ -1,0 +1,33 @@
+{
+  "validation": "understructured_plan",
+  "issues": [
+    "understructured:missing_quality_for_A4"
+  ],
+  "fixture_meta": {
+    "fixture_id": "ab_A4__r_low__rc_low__ph_peak",
+    "athlete_band": "A4",
+    "readiness": "low",
+    "recovery_capability": "low",
+    "race_phase": "peak",
+    "readiness_status": "fatigued",
+    "recovery_key": "load_only",
+    "weeks_to_race": 4,
+    "athlete_band_label": "High-volume competitive",
+    "athlete_archetype": "high_volume_competitive_runner",
+    "athlete_profile_summary": "Strongest training history, highest recent load, highest long-run capacity, most race-specific structure allowed.",
+    "recent_volume_hint": "high recent volume with strong historical load tolerance",
+    "structure_hint": "highly structured week with the most race-specific options",
+    "long_run_tolerance_minutes": 180,
+    "block_label": "peak specificity block",
+    "style": "trailrunning",
+    "primary_goal": "to convert strong training history into race-specific trail-running performance",
+    "lifestyle_notes": "Bias toward race specificity, freshness, and avoiding unnecessary fatigue accumulation. Athlete profile: High-volume competitive. Training history context: Strongest training history, highest recent load, highest long-run capacity, most race-specific structure allowed.",
+    "baseline_load_hours": 8.0,
+    "baseline_distance_km": 72.0,
+    "baseline_elevation_m": 2600.0,
+    "base_speed_kmh": 8.9,
+    "weight_kg": 65.0,
+    "height_cm": 173.0,
+    "years_in_sport": 7.5
+  }
+}

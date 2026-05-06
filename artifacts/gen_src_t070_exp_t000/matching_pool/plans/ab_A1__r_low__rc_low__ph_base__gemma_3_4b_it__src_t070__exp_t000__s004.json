@@ -1,0 +1,847 @@
+{
+  "citations": [
+    {
+      "citation_id": "c1",
+      "date_range": "2026-03-17..2026-03-17",
+      "signal_id": "forecast.readiness.status",
+      "source": "readiness_and_risk_forecast.json:result.readiness.status",
+      "value": "fatigued"
+    },
+    {
+      "citation_id": "c2",
+      "date_range": "2026-03-17..2026-03-17",
+      "signal_id": "forecast.readiness.score",
+      "source": "readiness_and_risk_forecast.json:result.readiness.score",
+      "value": "43.0"
+    },
+    {
+      "citation_id": "c3",
+      "date_range": "2026-03-17..2026-03-17",
+      "signal_id": "forecast.overreach_risk.level",
+      "source": "readiness_and_risk_forecast.json:result.overreach_risk.level",
+      "value": "high"
+    },
+    {
+      "citation_id": "c4",
+      "date_range": "2026-03-17..2026-03-17",
+      "signal_id": "forecast.overreach_risk.score",
+      "source": "readiness_and_risk_forecast.json:result.overreach_risk.score",
+      "value": "69.0"
+    },
+    {
+      "citation_id": "c5",
+      "date_range": "2026-03-17..2026-03-17",
+      "signal_id": "forecast.recovery_capability.label",
+      "source": "readiness_and_risk_forecast.json:result.inputs.recovery_capability_label",
+      "value": "I only have training data"
+    },
+    {
+      "citation_id": "c6",
+      "date_range": "2026-03-17..2026-03-17",
+      "signal_id": "forecast.recovery_capability.key",
+      "source": "readiness_and_risk_forecast.json:result.inputs.recovery_capability_key",
+      "value": "load_only"
+    },
+    {
+      "citation_id": "c7",
+      "date_range": "2026-03-11..2026-03-17",
+      "signal_id": "recovery.last7.sleep_hours_mean",
+      "source": "combined_summary.json:sleep.sleepTimeSeconds",
+      "value": "null"
+    },
+    {
+      "citation_id": "c8",
+      "date_range": "2026-03-11..2026-03-17",
+      "signal_id": "recovery.last7.hrv_mean",
+      "source": "combined_summary.json:sleep.avgOvernightHrv",
+      "value": "null"
+    },
+    {
+      "citation_id": "c9",
+      "date_range": "2026-03-11..2026-03-17",
+      "signal_id": "recovery.last7.rhr_mean",
+      "source": "combined_summary.json:sleep.restingHeartRate",
+      "value": "null"
+    },
+    {
+      "citation_id": "c10",
+      "date_range": "2026-03-17..2026-03-17",
+      "signal_id": "forecast.recovery_capability.sleep_days_7d",
+      "source": "readiness_and_risk_forecast.json:result.inputs.sleep_days_7d",
+      "value": "0"
+    },
+    {
+      "citation_id": "c11",
+      "date_range": "2026-03-17..2026-03-17",
+      "signal_id": "forecast.recovery_capability.resting_hr_days_7d",
+      "source": "readiness_and_risk_forecast.json:result.inputs.resting_hr_days_7d",
+      "value": "0"
+    },
+    {
+      "citation_id": "c12",
+      "date_range": "2026-03-17..2026-03-17",
+      "signal_id": "forecast.recovery_capability.hrv_days_7d",
+      "source": "readiness_and_risk_forecast.json:result.inputs.hrv_days_7d",
+      "value": "0"
+    },
+    {
+      "citation_id": "c13",
+      "date_range": "2026-03-11..2026-03-17",
+      "signal_id": "load.last7.distance_km",
+      "source": "combined_rollups.json:windows.7.activities.total_distance_km",
+      "value": "31.4"
+    },
+    {
+      "citation_id": "c14",
+      "date_range": "2026-03-11..2026-03-17",
+      "signal_id": "load.last7.moving_time_hours",
+      "source": "combined_rollups.json:windows.7.activities.total_moving_time_hours",
+      "value": "4.15"
+    },
+    {
+      "citation_id": "c15",
+      "date_range": "2026-03-11..2026-03-17",
+      "signal_id": "load.last7.elevation_m",
+      "source": "combined_rollups.json:windows.7.activities.total_elevation_m",
+      "value": "1199.8"
+    },
+    {
+      "citation_id": "c16",
+      "date_range": "2026-03-11..2026-03-17",
+      "signal_id": "load.last7.training_load_hours",
+      "source": "combined_rollups.json:windows.7.activities.total_training_load_hours",
+      "value": "4.15"
+    },
+    {
+      "citation_id": "c17",
+      "date_range": "2026-03-11..2026-03-17",
+      "signal_id": "load.last7.activity_count",
+      "source": "combined_rollups.json:windows.7.activities.count",
+      "value": "6"
+    },
+    {
+      "citation_id": "c18",
+      "date_range": "2026-03-11..2026-03-17",
+      "signal_id": "load.last7.sleep_days_with_data",
+      "source": "combined_rollups.json:windows.7.sleep_days_with_data",
+      "value": "0"
+    },
+    {
+      "citation_id": "c19",
+      "date_range": "2026-02-18..2026-03-17",
+      "signal_id": "load.baseline28.distance_km",
+      "source": "combined_rollups.json:windows.28.activities.total_distance_km",
+      "value": "131.6"
+    },
+    {
+      "citation_id": "c20",
+      "date_range": "2026-02-18..2026-03-17",
+      "signal_id": "load.baseline28.moving_time_hours",
+      "source": "combined_rollups.json:windows.28.activities.total_moving_time_hours",
+      "value": "17.37"
+    },
+    {
+      "citation_id": "c21",
+      "date_range": "2026-02-18..2026-03-17",
+      "signal_id": "load.baseline28.elevation_m",
+      "source": "combined_rollups.json:windows.28.activities.total_elevation_m",
+      "value": "5023.9"
+    },
+    {
+      "citation_id": "c22",
+      "date_range": "2026-02-18..2026-03-17",
+      "signal_id": "load.baseline28.training_load_hours",
+      "source": "combined_rollups.json:windows.28.activities.total_training_load_hours",
+      "value": "17.37"
+    }
+  ],
+  "claim_attributions": [
+    {
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c5",
+        "c6",
+        "c7",
+        "c8",
+        "c9"
+      ],
+      "claim_id": "cl1",
+      "claim_text": "Deterministic readiness: fatigued (score 43.0). The athlete is currently in a fatigued state, indicated by the readiness score of 43.0 and the overreach risk score of 69.0. This reflects a recent accumulation of training load without sufficient recovery, which is typical for a beginner who is building endurance and strength. The lack of sleep and HRV data further supports the fatigue status, as these metrics are crucial for assessing recovery and readiness. Given the current state, the athlete should focus on maintaining a simple and conservative training approach to allow for proper recovery and prevent further fatigue buildup.",
+      "field_path": "readiness.rationale",
+      "signal_ids": [
+        "forecast.readiness.status",
+        "forecast.readiness.score",
+        "forecast.overreach_risk.level",
+        "forecast.overreach_risk.score",
+        "forecast.recovery_capability.label",
+        "forecast.recovery_capability.key",
+        "recovery.last7.sleep_hours_mean",
+        "recovery.last7.hrv_mean",
+        "recovery.last7.rhr_mean"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c10",
+        "c11",
+        "c12"
+      ],
+      "claim_id": "cl2",
+      "claim_text": "Ensure the athlete gets a full night's sleep tonight. Aim for at least 7 hours of sleep to help recover from the recent training load.",
+      "field_path": "recovery.actions[0]",
+      "signal_ids": [
+        "forecast.recovery_capability.sleep_days_7d",
+        "forecast.recovery_capability.resting_hr_days_7d",
+        "forecast.recovery_capability.hrv_days_7d"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c10",
+        "c11",
+        "c12"
+      ],
+      "claim_id": "cl3",
+      "claim_text": "Monitor heart rate variability (HRV) and resting heart rate (RHR) tomorrow to assess how well the body is recovering. If HRV and RHR remain low, consider taking an additional rest day tomorrow.",
+      "field_path": "recovery.actions[1]",
+      "signal_ids": [
+        "forecast.recovery_capability.sleep_days_7d",
+        "forecast.recovery_capability.resting_hr_days_7d",
+        "forecast.recovery_capability.hrv_days_7d"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c10",
+        "c11",
+        "c12"
+      ],
+      "claim_id": "cl4",
+      "claim_text": "Continue with the simple and conservative training approach outlined in the plan. Avoid adding new stressors to the system until the athlete feels fully recovered.",
+      "field_path": "recovery.actions[2]",
+      "signal_ids": [
+        "forecast.recovery_capability.sleep_days_7d",
+        "forecast.recovery_capability.resting_hr_days_7d",
+        "forecast.recovery_capability.hrv_days_7d"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c5",
+        "c6"
+      ],
+      "claim_id": "cl5",
+      "claim_text": "The athlete is currently in a fatigued state, which could lead to suboptimal performance if not managed properly. It is important to follow the prescribed rest and recovery measures to prevent further fatigue and ensure a smooth transition back to higher intensity training.",
+      "field_path": "risks[0].message",
+      "signal_ids": [
+        "forecast.readiness.status",
+        "forecast.readiness.score",
+        "forecast.overreach_risk.level",
+        "forecast.overreach_risk.score",
+        "forecast.recovery_capability.label",
+        "forecast.recovery_capability.key"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c13",
+        "c14",
+        "c15",
+        "c16",
+        "c17",
+        "c18",
+        "c19",
+        "c20",
+        "c21",
+        "c22",
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c5",
+        "c6"
+      ],
+      "claim_id": "cl6",
+      "claim_text": "To provide consistent aerobic development and maintain routine, while allowing for adequate recovery. The 35-minute easy run on trail helps build endurance and hill strength without adding significant stress to the system.",
+      "field_path": "plan.days[0].purpose",
+      "signal_ids": [
+        "load.last7.distance_km",
+        "load.last7.moving_time_hours",
+        "load.last7.elevation_m",
+        "load.last7.training_load_hours",
+        "load.last7.activity_count",
+        "load.last7.sleep_days_with_data",
+        "load.baseline28.distance_km",
+        "load.baseline28.moving_time_hours",
+        "load.baseline28.elevation_m",
+        "load.baseline28.training_load_hours",
+        "forecast.readiness.status",
+        "forecast.readiness.score",
+        "forecast.overreach_risk.level",
+        "forecast.overreach_risk.score",
+        "forecast.recovery_capability.label",
+        "forecast.recovery_capability.key"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c13",
+        "c14",
+        "c15",
+        "c16",
+        "c17",
+        "c18",
+        "c19",
+        "c20",
+        "c21",
+        "c22",
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c5",
+        "c6"
+      ],
+      "claim_id": "cl7",
+      "claim_text": "To provide consistent aerobic development and maintain routine, while allowing for adequate recovery. The 35-minute easy run on trail helps build endurance and hill strength without adding significant stress to the system.",
+      "field_path": "plan.days[1].purpose",
+      "signal_ids": [
+        "load.last7.distance_km",
+        "load.last7.moving_time_hours",
+        "load.last7.elevation_m",
+        "load.last7.training_load_hours",
+        "load.last7.activity_count",
+        "load.last7.sleep_days_with_data",
+        "load.baseline28.distance_km",
+        "load.baseline28.moving_time_hours",
+        "load.baseline28.elevation_m",
+        "load.baseline28.training_load_hours",
+        "forecast.readiness.status",
+        "forecast.readiness.score",
+        "forecast.overreach_risk.level",
+        "forecast.overreach_risk.score",
+        "forecast.recovery_capability.label",
+        "forecast.recovery_capability.key"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c13",
+        "c14",
+        "c15",
+        "c16",
+        "c17",
+        "c18",
+        "c19",
+        "c20",
+        "c21",
+        "c22",
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c5",
+        "c6"
+      ],
+      "claim_id": "cl8",
+      "claim_text": "To provide consistent aerobic development and maintain routine, while allowing for adequate recovery. The 35-minute easy run on trail helps build endurance and hill strength without adding significant stress to the system.",
+      "field_path": "plan.days[2].purpose",
+      "signal_ids": [
+        "load.last7.distance_km",
+        "load.last7.moving_time_hours",
+        "load.last7.elevation_m",
+        "load.last7.training_load_hours",
+        "load.last7.activity_count",
+        "load.last7.sleep_days_with_data",
+        "load.baseline28.distance_km",
+        "load.baseline28.moving_time_hours",
+        "load.baseline28.elevation_m",
+        "load.baseline28.training_load_hours",
+        "forecast.readiness.status",
+        "forecast.readiness.score",
+        "forecast.overreach_risk.level",
+        "forecast.overreach_risk.score",
+        "forecast.recovery_capability.label",
+        "forecast.recovery_capability.key"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c13",
+        "c14",
+        "c15",
+        "c16",
+        "c17",
+        "c18",
+        "c19",
+        "c20",
+        "c21",
+        "c22",
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c5",
+        "c6"
+      ],
+      "claim_id": "cl9",
+      "claim_text": "To provide consistent aerobic development and maintain routine, while allowing for adequate recovery. The 35-minute easy run on trail helps build endurance and hill strength without adding significant stress to the system.",
+      "field_path": "plan.days[3].purpose",
+      "signal_ids": [
+        "load.last7.distance_km",
+        "load.last7.moving_time_hours",
+        "load.last7.elevation_m",
+        "load.last7.training_load_hours",
+        "load.last7.activity_count",
+        "load.last7.sleep_days_with_data",
+        "load.baseline28.distance_km",
+        "load.baseline28.moving_time_hours",
+        "load.baseline28.elevation_m",
+        "load.baseline28.training_load_hours",
+        "forecast.readiness.status",
+        "forecast.readiness.score",
+        "forecast.overreach_risk.level",
+        "forecast.overreach_risk.score",
+        "forecast.recovery_capability.label",
+        "forecast.recovery_capability.key"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c5",
+        "c6"
+      ],
+      "claim_id": "cl10",
+      "claim_text": "No structured training today due to the athlete's current readiness status. The day is intended to be a rest day to allow for full recovery.",
+      "field_path": "plan.days[4].purpose",
+      "signal_ids": [
+        "forecast.readiness.status",
+        "forecast.readiness.score",
+        "forecast.overreach_risk.level",
+        "forecast.overreach_risk.score",
+        "forecast.recovery_capability.label",
+        "forecast.recovery_capability.key"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c13",
+        "c14",
+        "c15",
+        "c16",
+        "c17",
+        "c18",
+        "c19",
+        "c20",
+        "c21",
+        "c22",
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c5",
+        "c6"
+      ],
+      "claim_id": "cl11",
+      "claim_text": "To provide consistent aerobic development and maintain routine, while allowing for adequate recovery. The 68-minute easy run on trail helps build endurance and hill strength without adding significant stress to the system.",
+      "field_path": "plan.days[5].purpose",
+      "signal_ids": [
+        "load.last7.distance_km",
+        "load.last7.moving_time_hours",
+        "load.last7.elevation_m",
+        "load.last7.training_load_hours",
+        "load.last7.activity_count",
+        "load.last7.sleep_days_with_data",
+        "load.baseline28.distance_km",
+        "load.baseline28.moving_time_hours",
+        "load.baseline28.elevation_m",
+        "load.baseline28.training_load_hours",
+        "forecast.readiness.status",
+        "forecast.readiness.score",
+        "forecast.overreach_risk.level",
+        "forecast.overreach_risk.score",
+        "forecast.recovery_capability.label",
+        "forecast.recovery_capability.key"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c13",
+        "c14",
+        "c15",
+        "c16",
+        "c17",
+        "c18",
+        "c19",
+        "c20",
+        "c21",
+        "c22",
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c5",
+        "c6"
+      ],
+      "claim_id": "cl12",
+      "claim_text": "To provide consistent aerobic development and maintain routine, while allowing for adequate recovery. The 41-minute easy run on trail helps build endurance and hill strength without adding significant stress to the system.",
+      "field_path": "plan.days[6].purpose",
+      "signal_ids": [
+        "load.last7.distance_km",
+        "load.last7.moving_time_hours",
+        "load.last7.elevation_m",
+        "load.last7.training_load_hours",
+        "load.last7.activity_count",
+        "load.last7.sleep_days_with_data",
+        "load.baseline28.distance_km",
+        "load.baseline28.moving_time_hours",
+        "load.baseline28.elevation_m",
+        "load.baseline28.training_load_hours",
+        "forecast.readiness.status",
+        "forecast.readiness.score",
+        "forecast.overreach_risk.level",
+        "forecast.overreach_risk.score",
+        "forecast.recovery_capability.label",
+        "forecast.recovery_capability.key"
+      ],
+      "support_level": "supported"
+    }
+  ],
+  "data_notes": [
+    "The athlete's recent training load was relatively light, with a total of 31.4 km covered over 4.15 hours of moving time. However, the lack of sleep and HRV data makes it challenging to fully assess recovery status. The athlete should prioritize rest and recovery to allow for proper adaptation and prevent overtraining.",
+    "Readiness status was set from deterministic readiness_and_risk_forecast.json.",
+    "Guardrails: enforced ramp rate (max_ramp_pct=0.0%). last7_hours=4.150, allowed_hours=4.150, planned_hours=4.200."
+  ],
+  "effective_constraints": {
+    "allowed_week1_hours": 4.15,
+    "effective_max_consecutive_hard": 1,
+    "effective_max_hard_per_7d": 1,
+    "effective_max_ramp_pct": 0.0,
+    "lifestyle_notes": "Prioritize consistent aerobic development, hill strength, and durable weekly routine. Athlete profile: Beginner / low-volume. Training history context: Low recent volume, lower long-run tolerance, simpler weekly structure, conservative loading.",
+    "min_rest_per_7d": 1,
+    "overreach_risk_level": "high",
+    "readiness_status": "fatigued",
+    "reasons": [
+      "readiness is fatigued",
+      "overreach risk is high",
+      "recovery telemetry is sparse",
+      "lifestyle constraints apply"
+    ],
+    "recovery_capability_key": "load_only"
+  },
+  "meta": {
+    "lifestyle_notes": "Prioritize consistent aerobic development, hill strength, and durable weekly routine. Athlete profile: Beginner / low-volume. Training history context: Low recent volume, lower long-run tolerance, simpler weekly structure, conservative loading.",
+    "plan_days": 7,
+    "plan_start": "2026-03-11",
+    "primary_goal": "to build confidence, routine, and durable trail-running basics",
+    "style": "trailrunning",
+    "today": "2026-03-17"
+  },
+  "plan": {
+    "days": [
+      {
+        "date": "2026-03-11",
+        "duration_minutes": 30,
+        "estimated_distance_km": null,
+        "estimated_elevation_m": null,
+        "is_hard_day": false,
+        "is_rest_day": false,
+        "purpose": "To provide consistent aerobic development and maintain routine, while allowing for adequate recovery. The 35-minute easy run on trail helps build endurance and hill strength without adding significant stress to the system.",
+        "session_type": "easy",
+        "signal_ids": [
+          "load.last7.distance_km",
+          "load.last7.moving_time_hours",
+          "load.last7.elevation_m",
+          "load.last7.training_load_hours",
+          "load.last7.activity_count",
+          "load.last7.sleep_days_with_data",
+          "load.baseline28.distance_km",
+          "load.baseline28.moving_time_hours",
+          "load.baseline28.elevation_m",
+          "load.baseline28.training_load_hours",
+          "forecast.readiness.status",
+          "forecast.readiness.score",
+          "forecast.overreach_risk.level",
+          "forecast.overreach_risk.score",
+          "forecast.recovery_capability.label",
+          "forecast.recovery_capability.key"
+        ],
+        "target_intensity": "easy",
+        "terrain": "trail",
+        "title": "Easy run",
+        "workout": "30 min easy run on trail."
+      },
+      {
+        "date": "2026-03-12",
+        "duration_minutes": 30,
+        "estimated_distance_km": null,
+        "estimated_elevation_m": null,
+        "is_hard_day": false,
+        "is_rest_day": false,
+        "purpose": "To provide consistent aerobic development and maintain routine, while allowing for adequate recovery. The 35-minute easy run on trail helps build endurance and hill strength without adding significant stress to the system.",
+        "session_type": "easy",
+        "signal_ids": [
+          "load.last7.distance_km",
+          "load.last7.moving_time_hours",
+          "load.last7.elevation_m",
+          "load.last7.training_load_hours",
+          "load.last7.activity_count",
+          "load.last7.sleep_days_with_data",
+          "load.baseline28.distance_km",
+          "load.baseline28.moving_time_hours",
+          "load.baseline28.elevation_m",
+          "load.baseline28.training_load_hours",
+          "forecast.readiness.status",
+          "forecast.readiness.score",
+          "forecast.overreach_risk.level",
+          "forecast.overreach_risk.score",
+          "forecast.recovery_capability.label",
+          "forecast.recovery_capability.key"
+        ],
+        "target_intensity": "easy",
+        "terrain": "trail",
+        "title": "Easy run",
+        "workout": "30 min easy run on trail."
+      },
+      {
+        "date": "2026-03-13",
+        "duration_minutes": 30,
+        "estimated_distance_km": null,
+        "estimated_elevation_m": null,
+        "is_hard_day": false,
+        "is_rest_day": false,
+        "purpose": "To provide consistent aerobic development and maintain routine, while allowing for adequate recovery. The 35-minute easy run on trail helps build endurance and hill strength without adding significant stress to the system.",
+        "session_type": "easy",
+        "signal_ids": [
+          "load.last7.distance_km",
+          "load.last7.moving_time_hours",
+          "load.last7.elevation_m",
+          "load.last7.training_load_hours",
+          "load.last7.activity_count",
+          "load.last7.sleep_days_with_data",
+          "load.baseline28.distance_km",
+          "load.baseline28.moving_time_hours",
+          "load.baseline28.elevation_m",
+          "load.baseline28.training_load_hours",
+          "forecast.readiness.status",
+          "forecast.readiness.score",
+          "forecast.overreach_risk.level",
+          "forecast.overreach_risk.score",
+          "forecast.recovery_capability.label",
+          "forecast.recovery_capability.key"
+        ],
+        "target_intensity": "easy",
+        "terrain": "trail",
+        "title": "Easy run",
+        "workout": "30 min easy run on trail."
+      },
+      {
+        "date": "2026-03-14",
+        "duration_minutes": 39,
+        "estimated_distance_km": null,
+        "estimated_elevation_m": null,
+        "is_hard_day": false,
+        "is_rest_day": false,
+        "purpose": "To provide consistent aerobic development and maintain routine, while allowing for adequate recovery. The 35-minute easy run on trail helps build endurance and hill strength without adding significant stress to the system.",
+        "session_type": "easy",
+        "signal_ids": [
+          "load.last7.distance_km",
+          "load.last7.moving_time_hours",
+          "load.last7.elevation_m",
+          "load.last7.training_load_hours",
+          "load.last7.activity_count",
+          "load.last7.sleep_days_with_data",
+          "load.baseline28.distance_km",
+          "load.baseline28.moving_time_hours",
+          "load.baseline28.elevation_m",
+          "load.baseline28.training_load_hours",
+          "forecast.readiness.status",
+          "forecast.readiness.score",
+          "forecast.overreach_risk.level",
+          "forecast.overreach_risk.score",
+          "forecast.recovery_capability.label",
+          "forecast.recovery_capability.key"
+        ],
+        "target_intensity": "easy",
+        "terrain": "trail",
+        "title": "Easy run",
+        "workout": "39 min easy run on trail."
+      },
+      {
+        "date": "2026-03-15",
+        "duration_minutes": 60,
+        "estimated_distance_km": null,
+        "estimated_elevation_m": null,
+        "is_hard_day": false,
+        "is_rest_day": false,
+        "purpose": "Complete the planned easy run without adding extra fatigue.",
+        "session_type": "easy",
+        "signal_ids": [
+          "forecast.readiness.status",
+          "forecast.readiness.score",
+          "forecast.overreach_risk.level",
+          "forecast.overreach_risk.score",
+          "forecast.recovery_capability.label",
+          "forecast.recovery_capability.key"
+        ],
+        "target_intensity": "easy",
+        "terrain": "trail",
+        "title": "Easy run",
+        "workout": "TrailRun | 5.10 km | 191 m+ | 41 min | avgHR 153"
+      },
+      {
+        "date": "2026-03-16",
+        "duration_minutes": 60,
+        "estimated_distance_km": null,
+        "estimated_elevation_m": null,
+        "is_hard_day": false,
+        "is_rest_day": false,
+        "purpose": "To provide consistent aerobic development and maintain routine, while allowing for adequate recovery. The 68-minute easy run on trail helps build endurance and hill strength without adding significant stress to the system.",
+        "session_type": "easy",
+        "signal_ids": [
+          "load.last7.distance_km",
+          "load.last7.moving_time_hours",
+          "load.last7.elevation_m",
+          "load.last7.training_load_hours",
+          "load.last7.activity_count",
+          "load.last7.sleep_days_with_data",
+          "load.baseline28.distance_km",
+          "load.baseline28.moving_time_hours",
+          "load.baseline28.elevation_m",
+          "load.baseline28.training_load_hours",
+          "forecast.readiness.status",
+          "forecast.readiness.score",
+          "forecast.overreach_risk.level",
+          "forecast.overreach_risk.score",
+          "forecast.recovery_capability.label",
+          "forecast.recovery_capability.key"
+        ],
+        "target_intensity": "easy",
+        "terrain": "trail",
+        "title": "Easy run",
+        "workout": "TrailRun | 9.10 km | 355 m+ | 68 min | avgHR 151"
+      },
+      {
+        "date": "2026-03-17",
+        "duration_minutes": 0,
+        "estimated_distance_km": null,
+        "estimated_elevation_m": null,
+        "is_hard_day": false,
+        "is_rest_day": true,
+        "purpose": "Recover and maintain freshness.",
+        "session_type": "rest",
+        "signal_ids": [
+          "load.last7.distance_km",
+          "load.last7.moving_time_hours",
+          "load.last7.elevation_m",
+          "load.last7.training_load_hours",
+          "load.last7.activity_count",
+          "load.last7.sleep_days_with_data",
+          "load.baseline28.distance_km",
+          "load.baseline28.moving_time_hours",
+          "load.baseline28.elevation_m",
+          "load.baseline28.training_load_hours",
+          "forecast.readiness.status",
+          "forecast.readiness.score",
+          "forecast.overreach_risk.level",
+          "forecast.overreach_risk.score",
+          "forecast.recovery_capability.label",
+          "forecast.recovery_capability.key"
+        ],
+        "target_intensity": "rest",
+        "terrain": "n/a",
+        "title": "Rest day",
+        "workout": "Rest day. No structured training."
+      }
+    ],
+    "weekly_totals": {
+      "planned_distance_km": null,
+      "planned_elevation_m": null,
+      "planned_moving_time_hours": 4.2
+    }
+  },
+  "readiness": {
+    "rationale": "Deterministic readiness: fatigued (score 43.0). The athlete is currently in a fatigued state, indicated by the readiness score of 43.0 and the overreach risk score of 69.0. This reflects a recent accumulation of training load without sufficient recovery, which is typical for a beginner who is building endurance and strength. The lack of sleep and HRV data further supports the fatigue status, as these metrics are crucial for assessing recovery and readiness. Given the current state, the athlete should focus on maintaining a simple and conservative training approach to allow for proper recovery and prevent further fatigue buildup.",
+    "signal_ids": [
+      "forecast.readiness.status",
+      "forecast.readiness.score",
+      "forecast.overreach_risk.level",
+      "forecast.overreach_risk.score",
+      "forecast.recovery_capability.label",
+      "forecast.recovery_capability.key",
+      "recovery.last7.sleep_hours_mean",
+      "recovery.last7.hrv_mean",
+      "recovery.last7.rhr_mean"
+    ],
+    "status": "fatigued"
+  },
+  "recovery": {
+    "actions": [
+      "Ensure the athlete gets a full night's sleep tonight. Aim for at least 7 hours of sleep to help recover from the recent training load.",
+      "Monitor heart rate variability (HRV) and resting heart rate (RHR) tomorrow to assess how well the body is recovering. If HRV and RHR remain low, consider taking an additional rest day tomorrow.",
+      "Continue with the simple and conservative training approach outlined in the plan. Avoid adding new stressors to the system until the athlete feels fully recovered."
+    ],
+    "signal_ids": [
+      "forecast.recovery_capability.sleep_days_7d",
+      "forecast.recovery_capability.resting_hr_days_7d",
+      "forecast.recovery_capability.hrv_days_7d"
+    ]
+  },
+  "risks": [
+    {
+      "message": "The athlete is currently in a fatigued state, which could lead to suboptimal performance if not managed properly. It is important to follow the prescribed rest and recovery measures to prevent further fatigue and ensure a smooth transition back to higher intensity training.",
+      "severity": "low",
+      "signal_ids": [
+        "forecast.readiness.status",
+        "forecast.readiness.score",
+        "forecast.overreach_risk.level",
+        "forecast.overreach_risk.score",
+        "forecast.recovery_capability.label",
+        "forecast.recovery_capability.key"
+      ]
+    }
+  ],
+  "snapshot": {
+    "baseline28": {
+      "activity_count": "24",
+      "distance_km": "131.6",
+      "elevation_m": "5023.9",
+      "hrv_mean": "",
+      "moving_time_hours": "17.4",
+      "rhr_mean": "",
+      "sleep_hours_mean": ""
+    },
+    "last7": {
+      "activity_count": "6",
+      "distance_km": "31.4",
+      "elevation_m": "1199.8",
+      "hrv_mean": "",
+      "moving_time_hours": "4.2",
+      "rhr_mean": "",
+      "sleep_hours_mean": ""
+    },
+    "notes": "The athlete covered 31.4 km in the last 7 days. Moving time was 4.2 hours. Elevation gain was 1199.8 meters."
+  }
+}

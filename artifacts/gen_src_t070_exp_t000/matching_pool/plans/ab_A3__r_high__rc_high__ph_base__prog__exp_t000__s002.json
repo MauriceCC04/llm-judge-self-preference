@@ -1,0 +1,359 @@
+{
+  "citations": [
+    {
+      "citation_id": "c1",
+      "date_range": "2026-03-11..2026-03-17",
+      "signal_id": "load.last7.training_load_hours",
+      "source": "combined_rollups.json:windows.7.activities.total_training_load_hours",
+      "value": "9.03"
+    },
+    {
+      "citation_id": "c2",
+      "date_range": "2026-03-11..2026-03-17",
+      "signal_id": "load.last7.sleep_days_with_data",
+      "source": "combined_rollups.json:windows.7.sleep_days_with_data",
+      "value": "7"
+    },
+    {
+      "citation_id": "c3",
+      "date_range": "",
+      "signal_id": "load.last7.hrv_mean",
+      "source": "",
+      "value": "null"
+    },
+    {
+      "citation_id": "c4",
+      "date_range": "",
+      "signal_id": "load.last7.rhr_mean",
+      "source": "",
+      "value": "null"
+    },
+    {
+      "citation_id": "c5",
+      "date_range": "2026-03-17..2026-03-17",
+      "signal_id": "forecast.readiness.score",
+      "source": "readiness_and_risk_forecast.json:result.readiness.score",
+      "value": "77.0"
+    },
+    {
+      "citation_id": "c6",
+      "date_range": "2026-03-17..2026-03-17",
+      "signal_id": "forecast.recovery_capability.label",
+      "source": "readiness_and_risk_forecast.json:result.inputs.recovery_capability_label",
+      "value": "I have load + sleep + resting HR + HRV"
+    },
+    {
+      "citation_id": "c7",
+      "date_range": "2026-03-17..2026-03-17",
+      "signal_id": "forecast.recovery_capability.key",
+      "source": "readiness_and_risk_forecast.json:result.inputs.recovery_capability_key",
+      "value": "load_sleep_resting_hr_hrv"
+    },
+    {
+      "citation_id": "c8",
+      "date_range": "2026-03-17..2026-03-17",
+      "signal_id": "forecast.overreach_risk.score",
+      "source": "readiness_and_risk_forecast.json:result.overreach_risk.score",
+      "value": "29.0"
+    },
+    {
+      "citation_id": "c9",
+      "date_range": "2026-03-17..2026-03-17",
+      "signal_id": "forecast.overreach_risk.level",
+      "source": "readiness_and_risk_forecast.json:result.overreach_risk.level",
+      "value": "low"
+    }
+  ],
+  "claim_attributions": [
+    {
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c5",
+        "c6",
+        "c7"
+      ],
+      "claim_id": "cl1",
+      "claim_text": "Deterministic readiness: primed (score 77.0). The athlete is primed based on the recent 7-day load and recovery metrics. The total training load over the past week was 9.03 hours, which is well within the 7-day rolling average of 8.39 hours and the 28-day baseline of 10.88 hours. The athlete's recovery signals, including sleep duration and heart rate variability (HRV), remain stable or improving, indicating that the recent load is manageable and not leading to overreaching. The athlete's recent training volume is consistent with their profile, and there are no signs of fatigue stacking. Therefore, the athlete is ready to continue building aerobic durability and trail-running capacity without risking overtraining.",
+      "field_path": "readiness.rationale",
+      "signal_ids": [
+        "load.last7.training_load_hours",
+        "load.last7.sleep_days_with_data",
+        "load.last7.hrv_mean",
+        "load.last7.rhr_mean",
+        "forecast.readiness.score",
+        "forecast.recovery_capability.label",
+        "forecast.recovery_capability.key"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c3",
+        "c4",
+        "c6",
+        "c7"
+      ],
+      "claim_id": "cl2",
+      "claim_text": "Continue prioritizing recovery through adequate sleep and moderate-intensity cross-training sessions on rest days.",
+      "field_path": "recovery.actions[0]",
+      "signal_ids": [
+        "load.last7.hrv_mean",
+        "load.last7.rhr_mean",
+        "forecast.recovery_capability.label",
+        "forecast.recovery_capability.key"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c3",
+        "c4",
+        "c6",
+        "c7"
+      ],
+      "claim_id": "cl3",
+      "claim_text": "Monitor heart rate variability (HRV) and resting heart rate (RHR) closely to ensure they remain stable or improve.",
+      "field_path": "recovery.actions[1]",
+      "signal_ids": [
+        "load.last7.hrv_mean",
+        "load.last7.rhr_mean",
+        "forecast.recovery_capability.label",
+        "forecast.recovery_capability.key"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c3",
+        "c4",
+        "c6",
+        "c7"
+      ],
+      "claim_id": "cl4",
+      "claim_text": "Consider incorporating short, easy sessions on rest days to maintain cardiovascular fitness without additional stress.",
+      "field_path": "recovery.actions[2]",
+      "signal_ids": [
+        "load.last7.hrv_mean",
+        "load.last7.rhr_mean",
+        "forecast.recovery_capability.label",
+        "forecast.recovery_capability.key"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c8",
+        "c9"
+      ],
+      "claim_id": "cl5",
+      "claim_text": "The athlete is primed and the recent training load is manageable, but there is a risk of overtraining if the athlete continues to push the envelope beyond what is recommended for their current fitness level and recovery capacity.",
+      "field_path": "risks[0].message",
+      "signal_ids": [
+        "forecast.overreach_risk.score",
+        "forecast.overreach_risk.level"
+      ],
+      "support_level": "supported"
+    }
+  ],
+  "data_notes": [
+    "The athlete's recent training load (9.03 hours) is within the recommended range for their profile and recovery capacity. There is no evidence of fatigue stacking or overreaching based on the available data.",
+    "Readiness status was set from deterministic readiness_and_risk_forecast.json.",
+    "Guardrails: enforced ramp rate (max_ramp_pct=10.0%). last7_hours=9.030, allowed_hours=9.933, planned_hours=3.700."
+  ],
+  "effective_constraints": {
+    "allowed_week1_hours": 9.933,
+    "effective_max_consecutive_hard": 2,
+    "effective_max_hard_per_7d": 3,
+    "effective_max_ramp_pct": 10.0,
+    "lifestyle_notes": "Prioritize consistent aerobic development, hill strength, and durable weekly routine. Athlete profile: Advanced amateur. Training history context: Consistent runner, higher recent load, more robust weekly structure.",
+    "min_rest_per_7d": 1,
+    "overreach_risk_level": "low",
+    "readiness_status": "primed",
+    "reasons": [
+      "lifestyle constraints apply"
+    ],
+    "recovery_capability_key": "load_sleep_resting_hr_hrv"
+  },
+  "meta": {
+    "lifestyle_notes": "Prioritize consistent aerobic development, hill strength, and durable weekly routine. Athlete profile: Advanced amateur. Training history context: Consistent runner, higher recent load, more robust weekly structure.",
+    "plan_days": 7,
+    "plan_start": "2026-03-18",
+    "primary_goal": "to build aerobic durability and resilient trail-running capacity",
+    "style": "trailrunning",
+    "today": "2026-03-17"
+  },
+  "plan": {
+    "days": [
+      {
+        "date": "2026-03-18",
+        "duration_minutes": 35,
+        "estimated_distance_km": null,
+        "estimated_elevation_m": null,
+        "is_hard_day": false,
+        "is_rest_day": false,
+        "purpose": "Develop aerobic endurance with controlled load.",
+        "session_type": "aerobic",
+        "signal_ids": [],
+        "target_intensity": "easy",
+        "terrain": "trail",
+        "title": "Aerobic run",
+        "workout": "35 min aerobic run at steady, controlled effort."
+      },
+      {
+        "date": "2026-03-19",
+        "duration_minutes": 60,
+        "estimated_distance_km": null,
+        "estimated_elevation_m": null,
+        "is_hard_day": false,
+        "is_rest_day": false,
+        "purpose": "Add aerobic stimulus with reduced impact.",
+        "session_type": "cross",
+        "signal_ids": [],
+        "target_intensity": "easy",
+        "terrain": "road",
+        "title": "Cross-training",
+        "workout": "60 min low-impact cross-training session."
+      },
+      {
+        "date": "2026-03-20",
+        "duration_minutes": 0,
+        "estimated_distance_km": null,
+        "estimated_elevation_m": null,
+        "is_hard_day": false,
+        "is_rest_day": true,
+        "purpose": "Absorb training and maintain freshness.",
+        "session_type": "rest",
+        "signal_ids": [],
+        "target_intensity": "rest",
+        "terrain": "n/a",
+        "title": "Rest day",
+        "workout": "Rest day. No structured training."
+      },
+      {
+        "date": "2026-03-21",
+        "duration_minutes": 0,
+        "estimated_distance_km": null,
+        "estimated_elevation_m": null,
+        "is_hard_day": false,
+        "is_rest_day": true,
+        "purpose": "Absorb training and maintain freshness.",
+        "session_type": "rest",
+        "signal_ids": [],
+        "target_intensity": "rest",
+        "terrain": "n/a",
+        "title": "Rest day",
+        "workout": "Rest day. No structured training."
+      },
+      {
+        "date": "2026-03-22",
+        "duration_minutes": 29,
+        "estimated_distance_km": null,
+        "estimated_elevation_m": null,
+        "is_hard_day": false,
+        "is_rest_day": false,
+        "purpose": "Add aerobic stimulus with reduced impact.",
+        "session_type": "cross",
+        "signal_ids": [],
+        "target_intensity": "easy",
+        "terrain": "road",
+        "title": "Cross-training",
+        "workout": "29 min low-impact cross-training session."
+      },
+      {
+        "date": "2026-03-23",
+        "duration_minutes": 41,
+        "estimated_distance_km": null,
+        "estimated_elevation_m": null,
+        "is_hard_day": false,
+        "is_rest_day": false,
+        "purpose": "Build aerobic consistency while keeping fatigue low.",
+        "session_type": "easy",
+        "signal_ids": [],
+        "target_intensity": "easy",
+        "terrain": "trail",
+        "title": "Easy run",
+        "workout": "41 min easy run at conversational effort."
+      },
+      {
+        "date": "2026-03-24",
+        "duration_minutes": 59,
+        "estimated_distance_km": null,
+        "estimated_elevation_m": null,
+        "is_hard_day": true,
+        "is_rest_day": false,
+        "purpose": "Develop sustainable threshold strength without excessive fatigue.",
+        "session_type": "tempo",
+        "signal_ids": [],
+        "target_intensity": "threshold",
+        "terrain": "road",
+        "title": "Tempo session",
+        "workout": "59 min tempo session at controlled hard effort."
+      }
+    ],
+    "weekly_totals": {
+      "planned_distance_km": null,
+      "planned_elevation_m": null,
+      "planned_moving_time_hours": 3.73
+    }
+  },
+  "readiness": {
+    "rationale": "Deterministic readiness: primed (score 77.0). The athlete is primed based on the recent 7-day load and recovery metrics. The total training load over the past week was 9.03 hours, which is well within the 7-day rolling average of 8.39 hours and the 28-day baseline of 10.88 hours. The athlete's recovery signals, including sleep duration and heart rate variability (HRV), remain stable or improving, indicating that the recent load is manageable and not leading to overreaching. The athlete's recent training volume is consistent with their profile, and there are no signs of fatigue stacking. Therefore, the athlete is ready to continue building aerobic durability and trail-running capacity without risking overtraining.",
+    "signal_ids": [
+      "load.last7.training_load_hours",
+      "load.last7.sleep_days_with_data",
+      "load.last7.hrv_mean",
+      "load.last7.rhr_mean",
+      "forecast.readiness.score",
+      "forecast.recovery_capability.label",
+      "forecast.recovery_capability.key"
+    ],
+    "status": "primed"
+  },
+  "recovery": {
+    "actions": [
+      "Continue prioritizing recovery through adequate sleep and moderate-intensity cross-training sessions on rest days.",
+      "Monitor heart rate variability (HRV) and resting heart rate (RHR) closely to ensure they remain stable or improve.",
+      "Consider incorporating short, easy sessions on rest days to maintain cardiovascular fitness without additional stress."
+    ],
+    "signal_ids": [
+      "load.last7.hrv_mean",
+      "load.last7.rhr_mean",
+      "forecast.recovery_capability.label",
+      "forecast.recovery_capability.key"
+    ]
+  },
+  "risks": [
+    {
+      "message": "The athlete is primed and the recent training load is manageable, but there is a risk of overtraining if the athlete continues to push the envelope beyond what is recommended for their current fitness level and recovery capacity.",
+      "severity": "low",
+      "signal_ids": [
+        "forecast.overreach_risk.score",
+        "forecast.overreach_risk.level"
+      ]
+    }
+  ],
+  "snapshot": {
+    "baseline28": {
+      "activity_count": "24",
+      "distance_km": "306.6",
+      "elevation_m": "10792.6",
+      "hrv_mean": "",
+      "moving_time_hours": "33.57",
+      "rhr_mean": "",
+      "sleep_hours_mean": ""
+    },
+    "last7": {
+      "activity_count": "6",
+      "distance_km": "82.6",
+      "elevation_m": "2904.3",
+      "hrv_mean": "",
+      "moving_time_hours": "9.03",
+      "rhr_mean": "",
+      "sleep_hours_mean": ""
+    },
+    "notes": "Last 7 days: 6 activities, 82.6 km, 9.03 h moving time, 2904.3 m gain. Baseline last 28 available days: 24 activities, 306.6 km, 33.57 h moving time, 10792.6 m gain."
+  }
+}

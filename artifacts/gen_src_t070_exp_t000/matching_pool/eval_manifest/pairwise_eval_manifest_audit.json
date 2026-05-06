@@ -1,0 +1,14 @@
+{
+  "n_pairs": 250,
+  "n_judges": 4,
+  "n_runs": 5,
+  "orders": [
+    "AB",
+    "BA"
+  ],
+  "expected_pairwise_documents": 10000,
+  "exact_10000_gate_passed": true,
+  "masking_gate_passed": true,
+  "masking_failures": [],
+  "manifest_path": "artifacts/gen_src_t070_exp_t000/matching_pool/eval_manifest/pairwise_eval_manifest.jsonl"
+}

@@ -1,0 +1,106 @@
+{
+  "plan_id": "ab_A3__r_high__rc_low__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s001",
+  "fixture_id": "ab_A3__r_high__rc_low__ph_peak",
+  "athlete_band": "A3",
+  "readiness": "high",
+  "recovery_capability": "low",
+  "race_phase": "peak",
+  "plan_days": 7,
+  "style": "trailrunning",
+  "arm": "llm",
+  "source_model": "google/gemma-3-4b-it",
+  "explainer_model": "Qwen/Qwen2.5-3B-Instruct",
+  "actual_explainer_model": "Qwen/Qwen2.5-3B-Instruct",
+  "explainer_model_verified": true,
+  "generation_pipeline": "llm_two_stage",
+  "runtime_backend": "trailtraining.llm.coach.run_coach_brief",
+  "runtime_metadata": {
+    "source_base_url": "http://127.0.0.1:8773/v1",
+    "explainer_base_url": "http://127.0.0.1:8774/v1",
+    "judge_base_url": "http://127.0.0.1:8774/v1",
+    "using_local_base_url": true,
+    "default_patch_stage": "judge",
+    "source_model": "google/gemma-3-4b-it",
+    "actual_source_model": "google/gemma-3-4b-it",
+    "actual_explainer_model": "Qwen/Qwen2.5-3B-Instruct",
+    "explainer_model_verified": true,
+    "source_temperature": 0.7,
+    "explainer_temperature": 0.0,
+    "seed": 1,
+    "structural_lifestyle_notes_present": true,
+    "structural_lifestyle_notes_chars": 1854,
+    "artifact_lifestyle_notes_chars": 217,
+    "TRAILTRAINING_TWO_STAGE_PLAN": "1",
+    "generation_condition": "gen_src_t070__exp_t000",
+    "athlete_band": "A3",
+    "readiness": "high",
+    "recovery_capability": "low",
+    "race_phase": "peak",
+    "artifact_normalization": {
+      "normalizer_version": "artifact-presentation-normalizer-v1",
+      "normalized_at": "2026-05-05T15:17:21.843270+00:00",
+      "original_artifact_sha256": "5e9f694c4338faf0670ca74b2f84fb43fafbf3f35ce0114af2bb49a594c9a094",
+      "normalized_artifact_sha256": "a91e89cc640e2053093c7c0ad9322e44ef2d5390dc1549fdbdb713dfb67c7c24",
+      "changed_fields": [
+        {
+          "path": "$.plan.days[0].title",
+          "old": "Day 1",
+          "new": "Long run",
+          "reason": "generic_day_title"
+        },
+        {
+          "path": "$.plan.days[1].title",
+          "old": "Day 2",
+          "new": "Tempo run",
+          "reason": "generic_day_title"
+        },
+        {
+          "path": "$.plan.days[3].title",
+          "old": "Day 4",
+          "new": "Interval session",
+          "reason": "generic_day_title"
+        },
+        {
+          "path": "$.plan.days[3].workout",
+          "old": "TrailRun - Hill Repeats",
+          "new": "Interval session. Use repeated faster efforts with easy recoveries.",
+          "reason": "field_primary_label_hills_mismatches_session_type_intervals"
+        },
+        {
+          "path": "$.plan.days[3].purpose",
+          "old": "To repeat the tempo run and continue sharpening race-specific fitness. The athlete ran another controlled effort trail run today, targeting a tempo pace to further enhance race-specific fitness.",
+          "new": "Develop speed, economy, and pacing control.",
+          "reason": "field_primary_label_tempo_mismatches_session_type_intervals"
+        },
+        {
+          "path": "$.plan.days[5].title",
+          "old": "Day 6",
+          "new": "Long run",
+          "reason": "generic_day_title"
+        },
+        {
+          "path": "$.plan.days[5].purpose",
+          "old": "To perform a tempo run and further sharpen race-specific fitness. The athlete ran a controlled effort trail run today, targeting a tempo pace to enhance race-specific fitness.",
+          "new": "Build endurance and trail-specific durability.",
+          "reason": "field_primary_label_tempo_mismatches_session_type_long"
+        },
+        {
+          "path": "$.plan.days[6].title",
+          "old": "Day 7",
+          "new": "Easy run",
+          "reason": "generic_day_title"
+        }
+      ],
+      "warnings": [],
+      "errors": [],
+      "score_relevant_projection_unchanged": true
+    }
+  },
+  "source_temperature": 0.7,
+  "explainer_temperature": 0.0,
+  "generation_condition": "gen_src_t070__exp_t000",
+  "seed": 1,
+  "generated_at": "2026-05-05T08:52:08.688815+00:00",
+  "plan_path": "artifacts/gen_src_t070_exp_t000/matching_pool/plans/ab_A3__r_high__rc_low__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s001.json",
+  "deterministic_score": 84.0
+}

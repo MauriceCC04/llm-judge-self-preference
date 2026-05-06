@@ -1,0 +1,560 @@
+{
+  "citations": [
+    {
+      "citation_id": "c1",
+      "date_range": "2026-03-17..2026-03-17",
+      "signal_id": "forecast.readiness.score",
+      "source": "readiness_and_risk_forecast.json:result.readiness.score",
+      "value": "81.0"
+    },
+    {
+      "citation_id": "c2",
+      "date_range": "2026-03-17..2026-03-17",
+      "signal_id": "forecast.recovery_capability.label",
+      "source": "readiness_and_risk_forecast.json:result.inputs.recovery_capability_label",
+      "value": "I have load + sleep + resting HR + HRV"
+    },
+    {
+      "citation_id": "c3",
+      "date_range": "2026-03-17..2026-03-17",
+      "signal_id": "forecast.recovery_capability.key",
+      "source": "readiness_and_risk_forecast.json:result.inputs.recovery_capability_key",
+      "value": "load_sleep_resting_hr_hrv"
+    },
+    {
+      "citation_id": "c4",
+      "date_range": "2026-03-17..2026-03-17",
+      "signal_id": "forecast.readiness.status",
+      "source": "readiness_and_risk_forecast.json:result.readiness.status",
+      "value": "primed"
+    },
+    {
+      "citation_id": "c5",
+      "date_range": "2026-03-17..2026-03-17",
+      "signal_id": "forecast.recovery_capability.sleep_days_7d",
+      "source": "readiness_and_risk_forecast.json:result.inputs.sleep_days_7d",
+      "value": "7"
+    },
+    {
+      "citation_id": "c6",
+      "date_range": "2026-03-17..2026-03-17",
+      "signal_id": "forecast.recovery_capability.resting_hr_days_7d",
+      "source": "readiness_and_risk_forecast.json:result.inputs.resting_hr_days_7d",
+      "value": "7"
+    },
+    {
+      "citation_id": "c7",
+      "date_range": "2026-03-17..2026-03-17",
+      "signal_id": "forecast.recovery_capability.hrv_days_7d",
+      "source": "readiness_and_risk_forecast.json:result.inputs.hrv_days_7d",
+      "value": "7"
+    }
+  ],
+  "claim_attributions": [
+    {
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3",
+        "c4"
+      ],
+      "claim_id": "cl1",
+      "claim_text": "Deterministic readiness: primed (score 81.0). The athlete is primed based on recent readiness scores and recovery metrics. The 7-day load is within sustainable levels, and the athlete shows signs of freshness and readiness for a specific race. The historical capacity and recent training load suggest the athlete is capable of maintaining a high level of performance without risking overreaching.",
+      "field_path": "readiness.rationale",
+      "signal_ids": [
+        "forecast.readiness.score",
+        "forecast.recovery_capability.label",
+        "forecast.recovery_capability.key",
+        "forecast.readiness.status"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c2",
+        "c5",
+        "c6",
+        "c7"
+      ],
+      "claim_id": "cl2",
+      "claim_text": "Ensure adequate hydration and nutrition post-run.",
+      "field_path": "recovery.actions[0]",
+      "signal_ids": [
+        "forecast.recovery_capability.label",
+        "forecast.recovery_capability.sleep_days_7d",
+        "forecast.recovery_capability.resting_hr_days_7d",
+        "forecast.recovery_capability.hrv_days_7d"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c2",
+        "c5",
+        "c6",
+        "c7"
+      ],
+      "claim_id": "cl3",
+      "claim_text": "Focus on gentle stretching and mobility work to aid recovery.",
+      "field_path": "recovery.actions[1]",
+      "signal_ids": [
+        "forecast.recovery_capability.label",
+        "forecast.recovery_capability.sleep_days_7d",
+        "forecast.recovery_capability.resting_hr_days_7d",
+        "forecast.recovery_capability.hrv_days_7d"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c2",
+        "c5",
+        "c6",
+        "c7"
+      ],
+      "claim_id": "cl4",
+      "claim_text": "Consider a light foam rolling session to address any tight spots.",
+      "field_path": "recovery.actions[2]",
+      "signal_ids": [
+        "forecast.recovery_capability.label",
+        "forecast.recovery_capability.sleep_days_7d",
+        "forecast.recovery_capability.resting_hr_days_7d",
+        "forecast.recovery_capability.hrv_days_7d"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c2",
+        "c5",
+        "c6",
+        "c7"
+      ],
+      "claim_id": "cl5",
+      "claim_text": "Monitor heart rate variability (HRV) and adjust training accordingly to promote recovery.",
+      "field_path": "recovery.actions[3]",
+      "signal_ids": [
+        "forecast.recovery_capability.label",
+        "forecast.recovery_capability.sleep_days_7d",
+        "forecast.recovery_capability.resting_hr_days_7d",
+        "forecast.recovery_capability.hrv_days_7d"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c2",
+        "c5",
+        "c6",
+        "c7"
+      ],
+      "claim_id": "cl6",
+      "claim_text": "Prioritize sleep quality and duration to support overall recovery.",
+      "field_path": "recovery.actions[4]",
+      "signal_ids": [
+        "forecast.recovery_capability.label",
+        "forecast.recovery_capability.sleep_days_7d",
+        "forecast.recovery_capability.resting_hr_days_7d",
+        "forecast.recovery_capability.hrv_days_7d"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c2",
+        "c5",
+        "c6",
+        "c7"
+      ],
+      "claim_id": "cl7",
+      "claim_text": "Incorporate active recovery sessions like short, easy runs or yoga to enhance recovery and mental well-being.",
+      "field_path": "recovery.actions[5]",
+      "signal_ids": [
+        "forecast.recovery_capability.label",
+        "forecast.recovery_capability.sleep_days_7d",
+        "forecast.recovery_capability.resting_hr_days_7d",
+        "forecast.recovery_capability.hrv_days_7d"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3",
+        "c4"
+      ],
+      "claim_id": "cl8",
+      "claim_text": "The athlete is primed and shows signs of freshness, but the 7-day load is still significant. Overtraining is possible if the athlete continues to push too hard or too frequently.",
+      "field_path": "risks[0].message",
+      "signal_ids": [
+        "forecast.readiness.score",
+        "forecast.recovery_capability.label",
+        "forecast.recovery_capability.key",
+        "forecast.readiness.status"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3",
+        "c4"
+      ],
+      "claim_id": "cl9",
+      "claim_text": "Active recovery and maintenance of freshness. The athlete ran a moderate distance and elevation gain today, focusing on pacing and rhythm. This helps to maintain freshness and prepare for upcoming races.",
+      "field_path": "plan.days[0].purpose",
+      "signal_ids": [
+        "forecast.readiness.score",
+        "forecast.recovery_capability.label",
+        "forecast.recovery_capability.key",
+        "forecast.readiness.status"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3",
+        "c4"
+      ],
+      "claim_id": "cl10",
+      "claim_text": "Active recovery and maintenance of freshness. The athlete ran a moderate distance and elevation gain today, focusing on pacing and rhythm. This helps to maintain freshness and prepare for upcoming races.",
+      "field_path": "plan.days[1].purpose",
+      "signal_ids": [
+        "forecast.readiness.score",
+        "forecast.recovery_capability.label",
+        "forecast.recovery_capability.key",
+        "forecast.readiness.status"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3",
+        "c4"
+      ],
+      "claim_id": "cl11",
+      "claim_text": "Maintaining freshness and preparing for upcoming races. The athlete ran a moderate distance and elevation gain today, focusing on pacing and rhythm to ensure freshness.",
+      "field_path": "plan.days[2].purpose",
+      "signal_ids": [
+        "forecast.readiness.score",
+        "forecast.recovery_capability.label",
+        "forecast.recovery_capability.key",
+        "forecast.readiness.status"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3",
+        "c4"
+      ],
+      "claim_id": "cl12",
+      "claim_text": "Building endurance and maintaining freshness. The athlete ran a longer distance and elevation gain today, focusing on building endurance while also ensuring freshness for upcoming races.",
+      "field_path": "plan.days[3].purpose",
+      "signal_ids": [
+        "forecast.readiness.score",
+        "forecast.recovery_capability.label",
+        "forecast.recovery_capability.key",
+        "forecast.readiness.status"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3",
+        "c4"
+      ],
+      "claim_id": "cl13",
+      "claim_text": "Active recovery and maintenance of freshness. The athlete ran a moderate distance and elevation gain today, focusing on pacing and rhythm. This helps to maintain freshness and prepare for upcoming races.",
+      "field_path": "plan.days[4].purpose",
+      "signal_ids": [
+        "forecast.readiness.score",
+        "forecast.recovery_capability.label",
+        "forecast.recovery_capability.key",
+        "forecast.readiness.status"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3",
+        "c4"
+      ],
+      "claim_id": "cl14",
+      "claim_text": "Active recovery and maintenance of freshness. The athlete ran a moderate distance and elevation gain today, focusing on pacing and rhythm. This helps to maintain freshness and prepare for upcoming races.",
+      "field_path": "plan.days[5].purpose",
+      "signal_ids": [
+        "forecast.readiness.score",
+        "forecast.recovery_capability.label",
+        "forecast.recovery_capability.key",
+        "forecast.readiness.status"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3",
+        "c4"
+      ],
+      "claim_id": "cl15",
+      "claim_text": "Active recovery and maintenance of freshness. The athlete ran a moderate distance and elevation gain today, focusing on pacing and rhythm. This helps to maintain freshness and prepare for upcoming races.",
+      "field_path": "plan.days[6].purpose",
+      "signal_ids": [
+        "forecast.readiness.score",
+        "forecast.recovery_capability.label",
+        "forecast.recovery_capability.key",
+        "forecast.readiness.status"
+      ],
+      "support_level": "supported"
+    }
+  ],
+  "data_notes": [
+    "The athlete's recent training load is within sustainable levels, indicated by the primed readiness status and the lack of overreach risk score above 20. However, the athlete should continue to monitor their recovery and adjust intensity as needed to prevent overtraining.",
+    "Readiness status was set from deterministic readiness_and_risk_forecast.json.",
+    "Guardrails: enforced ramp rate (max_ramp_pct=10.0%). last7_hours=9.080, allowed_hours=9.988, planned_hours=8.200."
+  ],
+  "effective_constraints": {
+    "allowed_week1_hours": 9.988000000000001,
+    "effective_max_consecutive_hard": 2,
+    "effective_max_hard_per_7d": 3,
+    "effective_max_ramp_pct": 10.0,
+    "lifestyle_notes": "Bias toward race specificity, freshness, and avoiding unnecessary fatigue accumulation. Athlete profile: High-volume competitive. Training history context: Strongest training history, highest recent load, highest long-run capacity, most race-specific structure allowed.",
+    "min_rest_per_7d": 1,
+    "overreach_risk_level": "low",
+    "readiness_status": "primed",
+    "reasons": [
+      "lifestyle constraints apply"
+    ],
+    "recovery_capability_key": "load_sleep_resting_hr_hrv"
+  },
+  "meta": {
+    "lifestyle_notes": "Bias toward race specificity, freshness, and avoiding unnecessary fatigue accumulation. Athlete profile: High-volume competitive. Training history context: Strongest training history, highest recent load, highest long-run capacity, most race-specific structure allowed.",
+    "plan_days": 7,
+    "plan_start": "2026-03-11",
+    "primary_goal": "to convert strong training history into race-specific trail-running performance",
+    "style": "trailrunning",
+    "today": "2026-03-17"
+  },
+  "plan": {
+    "days": [
+      {
+        "date": "2026-03-11",
+        "duration_minutes": 120,
+        "estimated_distance_km": null,
+        "estimated_elevation_m": null,
+        "is_hard_day": false,
+        "is_rest_day": false,
+        "purpose": "Active recovery and maintenance of freshness. The athlete ran a moderate distance and elevation gain today, focusing on pacing and rhythm. This helps to maintain freshness and prepare for upcoming races.",
+        "session_type": "long",
+        "signal_ids": [
+          "forecast.readiness.score",
+          "forecast.recovery_capability.label",
+          "forecast.recovery_capability.key",
+          "forecast.readiness.status"
+        ],
+        "target_intensity": "easy",
+        "terrain": "trail",
+        "title": "Long run",
+        "workout": "Trail Run - 16km, 480m+ - Focus on consistent pace and rhythm."
+      },
+      {
+        "date": "2026-03-12",
+        "duration_minutes": 60,
+        "estimated_distance_km": null,
+        "estimated_elevation_m": null,
+        "is_hard_day": false,
+        "is_rest_day": false,
+        "purpose": "Active recovery and maintenance of freshness. The athlete ran a moderate distance and elevation gain today, focusing on pacing and rhythm. This helps to maintain freshness and prepare for upcoming races.",
+        "session_type": "easy",
+        "signal_ids": [
+          "forecast.readiness.score",
+          "forecast.recovery_capability.label",
+          "forecast.recovery_capability.key",
+          "forecast.readiness.status"
+        ],
+        "target_intensity": "easy",
+        "terrain": "trail",
+        "title": "Easy run",
+        "workout": "Trail Run - 12km, 320m+ - Recovery run."
+      },
+      {
+        "date": "2026-03-13",
+        "duration_minutes": 90,
+        "estimated_distance_km": null,
+        "estimated_elevation_m": null,
+        "is_hard_day": true,
+        "is_rest_day": false,
+        "purpose": "Maintaining freshness and preparing for upcoming races. The athlete ran a moderate distance and elevation gain today, focusing on pacing and rhythm to ensure freshness.",
+        "session_type": "tempo",
+        "signal_ids": [
+          "forecast.readiness.score",
+          "forecast.recovery_capability.label",
+          "forecast.recovery_capability.key",
+          "forecast.readiness.status"
+        ],
+        "target_intensity": "moderate",
+        "terrain": "trail",
+        "title": "Tempo run",
+        "workout": "Trail Run - 10km, 280m+ - Controlled tempo run."
+      },
+      {
+        "date": "2026-03-14",
+        "duration_minutes": 150,
+        "estimated_distance_km": null,
+        "estimated_elevation_m": null,
+        "is_hard_day": false,
+        "is_rest_day": false,
+        "purpose": "Building endurance and maintaining freshness. The athlete ran a longer distance and elevation gain today, focusing on building endurance while also ensuring freshness for upcoming races.",
+        "session_type": "long",
+        "signal_ids": [
+          "forecast.readiness.score",
+          "forecast.recovery_capability.label",
+          "forecast.recovery_capability.key",
+          "forecast.readiness.status"
+        ],
+        "target_intensity": "easy",
+        "terrain": "trail",
+        "title": "Long run",
+        "workout": "Trail Run - 22km, 640m+ - Building endurance."
+      },
+      {
+        "date": "2026-03-15",
+        "duration_minutes": 45,
+        "estimated_distance_km": null,
+        "estimated_elevation_m": null,
+        "is_hard_day": false,
+        "is_rest_day": false,
+        "purpose": "Active recovery and maintenance of freshness. The athlete ran a moderate distance and elevation gain today, focusing on pacing and rhythm. This helps to maintain freshness and prepare for upcoming races.",
+        "session_type": "easy",
+        "signal_ids": [
+          "forecast.readiness.score",
+          "forecast.recovery_capability.label",
+          "forecast.recovery_capability.key",
+          "forecast.readiness.status"
+        ],
+        "target_intensity": "easy",
+        "terrain": "trail",
+        "title": "Easy run",
+        "workout": "Trail Run - 8km, 240m+ - Short, easy recovery."
+      },
+      {
+        "date": "2026-03-16",
+        "duration_minutes": 0,
+        "estimated_distance_km": null,
+        "estimated_elevation_m": null,
+        "is_hard_day": false,
+        "is_rest_day": true,
+        "purpose": "Recover and maintain freshness.",
+        "session_type": "rest",
+        "signal_ids": [
+          "forecast.readiness.score",
+          "forecast.recovery_capability.label",
+          "forecast.recovery_capability.key",
+          "forecast.readiness.status"
+        ],
+        "target_intensity": "rest",
+        "terrain": "n/a",
+        "title": "Rest day",
+        "workout": "Rest day. No structured training."
+      },
+      {
+        "date": "2026-03-17",
+        "duration_minutes": 30,
+        "estimated_distance_km": null,
+        "estimated_elevation_m": null,
+        "is_hard_day": false,
+        "is_rest_day": false,
+        "purpose": "Active recovery and maintenance of freshness. The athlete ran a moderate distance and elevation gain today, focusing on pacing and rhythm. This helps to maintain freshness and prepare for upcoming races.",
+        "session_type": "easy",
+        "signal_ids": [
+          "forecast.readiness.score",
+          "forecast.recovery_capability.label",
+          "forecast.recovery_capability.key",
+          "forecast.readiness.status"
+        ],
+        "target_intensity": "easy",
+        "terrain": "trail",
+        "title": "Easy run",
+        "workout": "Trail Run - 5km, 150m+ - Active recovery."
+      }
+    ],
+    "weekly_totals": {
+      "planned_distance_km": null,
+      "planned_elevation_m": null,
+      "planned_moving_time_hours": 8.2
+    }
+  },
+  "readiness": {
+    "rationale": "Deterministic readiness: primed (score 81.0). The athlete is primed based on recent readiness scores and recovery metrics. The 7-day load is within sustainable levels, and the athlete shows signs of freshness and readiness for a specific race. The historical capacity and recent training load suggest the athlete is capable of maintaining a high level of performance without risking overreaching.",
+    "signal_ids": [
+      "forecast.readiness.score",
+      "forecast.recovery_capability.label",
+      "forecast.recovery_capability.key",
+      "forecast.readiness.status"
+    ],
+    "status": "primed"
+  },
+  "recovery": {
+    "actions": [
+      "Ensure adequate hydration and nutrition post-run.",
+      "Focus on gentle stretching and mobility work to aid recovery.",
+      "Consider a light foam rolling session to address any tight spots.",
+      "Monitor heart rate variability (HRV) and adjust training accordingly to promote recovery.",
+      "Prioritize sleep quality and duration to support overall recovery.",
+      "Incorporate active recovery sessions like short, easy runs or yoga to enhance recovery and mental well-being."
+    ],
+    "signal_ids": [
+      "forecast.recovery_capability.label",
+      "forecast.recovery_capability.sleep_days_7d",
+      "forecast.recovery_capability.resting_hr_days_7d",
+      "forecast.recovery_capability.hrv_days_7d"
+    ]
+  },
+  "risks": [
+    {
+      "message": "The athlete is primed and shows signs of freshness, but the 7-day load is still significant. Overtraining is possible if the athlete continues to push too hard or too frequently.",
+      "severity": "low",
+      "signal_ids": [
+        "forecast.readiness.score",
+        "forecast.recovery_capability.label",
+        "forecast.recovery_capability.key",
+        "forecast.readiness.status"
+      ]
+    }
+  ],
+  "snapshot": {
+    "baseline28": {
+      "activity_count": "24",
+      "distance_km": "348.7",
+      "elevation_m": "10005",
+      "hrv_mean": "",
+      "moving_time_hours": "39",
+      "rhr_mean": "",
+      "sleep_hours_mean": ""
+    },
+    "last7": {
+      "activity_count": "6",
+      "distance_km": "80",
+      "elevation_m": "2279.3",
+      "hrv_mean": "",
+      "moving_time_hours": "9.1",
+      "rhr_mean": "",
+      "sleep_hours_mean": ""
+    },
+    "notes": "The athlete covered 80 km in the last 7 days. Moving time was 9.1 hours. Elevation gain was 2279.3 meters."
+  }
+}

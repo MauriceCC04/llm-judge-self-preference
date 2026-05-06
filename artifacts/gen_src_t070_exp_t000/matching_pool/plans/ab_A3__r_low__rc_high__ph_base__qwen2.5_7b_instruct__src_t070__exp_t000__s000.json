@@ -1,0 +1,601 @@
+{
+  "citations": [
+    {
+      "citation_id": "c1",
+      "date_range": "2026-03-11..2026-03-17",
+      "signal_id": "load.last7.moving_time_hours",
+      "source": "combined_rollups.json:windows.7.activities.total_moving_time_hours",
+      "value": "6.5"
+    },
+    {
+      "citation_id": "c2",
+      "date_range": "2026-03-11..2026-03-17",
+      "signal_id": "load.last7.training_load_hours",
+      "source": "combined_rollups.json:windows.7.activities.total_training_load_hours",
+      "value": "6.5"
+    },
+    {
+      "citation_id": "c3",
+      "date_range": "2026-03-11..2026-03-17",
+      "signal_id": "load.last7.sleep_days_with_data",
+      "source": "combined_rollups.json:windows.7.sleep_days_with_data",
+      "value": "7"
+    },
+    {
+      "citation_id": "c4",
+      "date_range": "",
+      "signal_id": "load.last7.hrv_mean",
+      "source": "",
+      "value": "null"
+    },
+    {
+      "citation_id": "c5",
+      "date_range": "",
+      "signal_id": "load.last7.rhr_mean",
+      "source": "",
+      "value": "null"
+    },
+    {
+      "citation_id": "c6",
+      "date_range": "2026-03-17..2026-03-17",
+      "signal_id": "forecast.readiness.score",
+      "source": "readiness_and_risk_forecast.json:result.readiness.score",
+      "value": "43.0"
+    },
+    {
+      "citation_id": "c7",
+      "date_range": "2026-03-17..2026-03-17",
+      "signal_id": "forecast.overreach_risk.score",
+      "source": "readiness_and_risk_forecast.json:result.overreach_risk.score",
+      "value": "69.0"
+    }
+  ],
+  "claim_attributions": [
+    {
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c5"
+      ],
+      "claim_id": "cl1",
+      "claim_text": "Deterministic readiness: fatigued (score 43.0). The athlete is currently classified as fatigued based on the readiness score of 43.0 and the high overreach risk score of 69.0. This indicates that the athlete is experiencing meaningful fatigue relative to their baseline, which is typical for a development block phase. The recent training load has been substantial, with a total of 6.5 hours of moving time and 6.5 hours of training load, which aligns with the 7-day window. The athlete’s recovery signals, including sleep duration and heart rate variability (HRV), are within acceptable ranges, but the recent load exceeds the recommended maximum ramp percentage of 6.50 hours, indicating a need to adjust the training approach to prevent overtraining and promote recovery.",
+      "field_path": "readiness.rationale",
+      "signal_ids": [
+        "load.last7.moving_time_hours",
+        "load.last7.training_load_hours",
+        "load.last7.sleep_days_with_data",
+        "load.last7.hrv_mean",
+        "load.last7.rhr_mean"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c3",
+        "c4",
+        "c5"
+      ],
+      "claim_id": "cl2",
+      "claim_text": "Ensure adequate hydration and nutrition post-run to aid recovery.",
+      "field_path": "recovery.actions[0]",
+      "signal_ids": [
+        "load.last7.sleep_days_with_data",
+        "load.last7.hrv_mean",
+        "load.last7.rhr_mean"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c3",
+        "c4",
+        "c5"
+      ],
+      "claim_id": "cl3",
+      "claim_text": "Consider incorporating active recovery methods such as light stretching or foam rolling to enhance recovery.",
+      "field_path": "recovery.actions[1]",
+      "signal_ids": [
+        "load.last7.sleep_days_with_data",
+        "load.last7.hrv_mean",
+        "load.last7.rhr_mean"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c3",
+        "c4",
+        "c5"
+      ],
+      "claim_id": "cl4",
+      "claim_text": "Monitor heart rate and ensure it returns to normal levels post-run.",
+      "field_path": "recovery.actions[2]",
+      "signal_ids": [
+        "load.last7.sleep_days_with_data",
+        "load.last7.hrv_mean",
+        "load.last7.rhr_mean"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c3",
+        "c4",
+        "c5"
+      ],
+      "claim_id": "cl5",
+      "claim_text": "Continue prioritizing sufficient sleep to support recovery and adaptability.",
+      "field_path": "recovery.actions[3]",
+      "signal_ids": [
+        "load.last7.sleep_days_with_data",
+        "load.last7.hrv_mean",
+        "load.last7.rhr_mean"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c3",
+        "c4",
+        "c5"
+      ],
+      "claim_id": "cl6",
+      "claim_text": "Maintain a balanced diet rich in carbohydrates, proteins, and healthy fats to support muscle repair and energy production.",
+      "field_path": "recovery.actions[4]",
+      "signal_ids": [
+        "load.last7.sleep_days_with_data",
+        "load.last7.hrv_mean",
+        "load.last7.rhr_mean"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c3",
+        "c4",
+        "c5"
+      ],
+      "claim_id": "cl7",
+      "claim_text": "Engage in low-intensity activities such as walking or gentle yoga to promote recovery and flexibility.",
+      "field_path": "recovery.actions[5]",
+      "signal_ids": [
+        "load.last7.sleep_days_with_data",
+        "load.last7.hrv_mean",
+        "load.last7.rhr_mean"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c3",
+        "c4",
+        "c5"
+      ],
+      "claim_id": "cl8",
+      "claim_text": "Avoid strenuous activities until full recovery is confirmed.",
+      "field_path": "recovery.actions[6]",
+      "signal_ids": [
+        "load.last7.sleep_days_with_data",
+        "load.last7.hrv_mean",
+        "load.last7.rhr_mean"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c3",
+        "c4",
+        "c5"
+      ],
+      "claim_id": "cl9",
+      "claim_text": "Monitor for signs of overtraining syndrome such as persistent fatigue, decreased performance, or mood changes, and seek medical advice if necessary.",
+      "field_path": "recovery.actions[7]",
+      "signal_ids": [
+        "load.last7.sleep_days_with_data",
+        "load.last7.hrv_mean",
+        "load.last7.rhr_mean"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c6",
+        "c7"
+      ],
+      "claim_id": "cl10",
+      "claim_text": "The athlete is currently fatigued and has a high overreach risk, which increases the likelihood of injury or burnout. It is crucial to manage the training load carefully and ensure adequate recovery to prevent further fatigue and overtraining.",
+      "field_path": "risks[0].message",
+      "signal_ids": [
+        "forecast.readiness.score",
+        "forecast.overreach_risk.score"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c5"
+      ],
+      "claim_id": "cl11",
+      "claim_text": "Moderate run on flat terrain to build endurance and recovery, managing the recent training load and ensuring adequate recovery.",
+      "field_path": "plan.days[0].purpose",
+      "signal_ids": [
+        "load.last7.moving_time_hours",
+        "load.last7.training_load_hours",
+        "load.last7.sleep_days_with_data",
+        "load.last7.hrv_mean",
+        "load.last7.rhr_mean"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c5"
+      ],
+      "claim_id": "cl12",
+      "claim_text": "Easy run on flat terrain to recover and build endurance, without adding significant new stress.",
+      "field_path": "plan.days[1].purpose",
+      "signal_ids": [
+        "load.last7.moving_time_hours",
+        "load.last7.training_load_hours",
+        "load.last7.sleep_days_with_data",
+        "load.last7.hrv_mean",
+        "load.last7.rhr_mean"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c5"
+      ],
+      "claim_id": "cl13",
+      "claim_text": "Rest day to allow full recovery from the previous week's training load and to prepare for upcoming sessions.",
+      "field_path": "plan.days[2].purpose",
+      "signal_ids": [
+        "load.last7.moving_time_hours",
+        "load.last7.training_load_hours",
+        "load.last7.sleep_days_with_data",
+        "load.last7.hrv_mean",
+        "load.last7.rhr_mean"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c5"
+      ],
+      "claim_id": "cl14",
+      "claim_text": "Tempo run on flat terrain to improve endurance and manage recent training load, focusing on recovery and adaptation.",
+      "field_path": "plan.days[3].purpose",
+      "signal_ids": [
+        "load.last7.moving_time_hours",
+        "load.last7.training_load_hours",
+        "load.last7.sleep_days_with_data",
+        "load.last7.hrv_mean",
+        "load.last7.rhr_mean"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c5"
+      ],
+      "claim_id": "cl15",
+      "claim_text": "Aerobic run to continue building aerobic endurance and recovery, without adding significant new stress.",
+      "field_path": "plan.days[4].purpose",
+      "signal_ids": [
+        "load.last7.moving_time_hours",
+        "load.last7.training_load_hours",
+        "load.last7.sleep_days_with_data",
+        "load.last7.hrv_mean",
+        "load.last7.rhr_mean"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c5"
+      ],
+      "claim_id": "cl16",
+      "claim_text": "Long run on hills to build aerobic durability and hill strength, while managing the recent training load and ensuring adequate recovery.",
+      "field_path": "plan.days[5].purpose",
+      "signal_ids": [
+        "load.last7.moving_time_hours",
+        "load.last7.training_load_hours",
+        "load.last7.sleep_days_with_data",
+        "load.last7.hrv_mean",
+        "load.last7.rhr_mean"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c5"
+      ],
+      "claim_id": "cl17",
+      "claim_text": "Rest day to allow full recovery from the previous week's training load and to prepare for upcoming sessions.",
+      "field_path": "plan.days[6].purpose",
+      "signal_ids": [
+        "load.last7.moving_time_hours",
+        "load.last7.training_load_hours",
+        "load.last7.sleep_days_with_data",
+        "load.last7.hrv_mean",
+        "load.last7.rhr_mean"
+      ],
+      "support_level": "supported"
+    }
+  ],
+  "data_notes": [
+    "The athlete's recent training load has been substantial, with a total of 6.5 hours of moving time and 6.5 hours of training load in the last 7 days. The recovery signals, including sleep duration and HRV, are within acceptable ranges, but the recent load exceeds the recommended maximum ramp percentage of 6.50 hours, indicating a need to adjust the training approach to prevent overtraining and promote recovery.",
+    "Readiness status was set from deterministic readiness_and_risk_forecast.json.",
+    "Guardrails: enforced ramp rate (max_ramp_pct=0.0%). last7_hours=6.500, allowed_hours=6.500, planned_hours=6.500."
+  ],
+  "effective_constraints": {
+    "allowed_week1_hours": 6.5,
+    "effective_max_consecutive_hard": 1,
+    "effective_max_hard_per_7d": 1,
+    "effective_max_ramp_pct": 0.0,
+    "lifestyle_notes": "Prioritize consistent aerobic development, hill strength, and durable weekly routine. Athlete profile: Advanced amateur. Training history context: Consistent runner, higher recent load, more robust weekly structure.",
+    "min_rest_per_7d": 1,
+    "overreach_risk_level": "high",
+    "readiness_status": "fatigued",
+    "reasons": [
+      "readiness is fatigued",
+      "overreach risk is high",
+      "lifestyle constraints apply"
+    ],
+    "recovery_capability_key": "load_sleep_resting_hr_hrv"
+  },
+  "meta": {
+    "lifestyle_notes": "Prioritize consistent aerobic development, hill strength, and durable weekly routine. Athlete profile: Advanced amateur. Training history context: Consistent runner, higher recent load, more robust weekly structure.",
+    "plan_days": 7,
+    "plan_start": "2026-03-11",
+    "primary_goal": "to build aerobic durability and resilient trail-running capacity",
+    "style": "trailrunning",
+    "today": "2026-03-17"
+  },
+  "plan": {
+    "days": [
+      {
+        "date": "2026-03-11",
+        "duration_minutes": 0,
+        "estimated_distance_km": null,
+        "estimated_elevation_m": null,
+        "is_hard_day": false,
+        "is_rest_day": true,
+        "purpose": "Recover and maintain freshness.",
+        "session_type": "rest",
+        "signal_ids": [
+          "load.last7.moving_time_hours",
+          "load.last7.training_load_hours",
+          "load.last7.sleep_days_with_data",
+          "load.last7.hrv_mean",
+          "load.last7.rhr_mean"
+        ],
+        "target_intensity": "rest",
+        "terrain": "n/a",
+        "title": "Rest day",
+        "workout": "Rest day. No structured training."
+      },
+      {
+        "date": "2026-03-12",
+        "duration_minutes": 105,
+        "estimated_distance_km": null,
+        "estimated_elevation_m": null,
+        "is_hard_day": false,
+        "is_rest_day": false,
+        "purpose": "Easy run on flat terrain to recover and build endurance, without adding significant new stress.",
+        "session_type": "long",
+        "signal_ids": [
+          "load.last7.moving_time_hours",
+          "load.last7.training_load_hours",
+          "load.last7.sleep_days_with_data",
+          "load.last7.hrv_mean",
+          "load.last7.rhr_mean"
+        ],
+        "target_intensity": "moderate",
+        "terrain": "hill",
+        "title": "Long run",
+        "workout": "Long run on hills to build aerobic durability."
+      },
+      {
+        "date": "2026-03-13",
+        "duration_minutes": 60,
+        "estimated_distance_km": null,
+        "estimated_elevation_m": null,
+        "is_hard_day": false,
+        "is_rest_day": false,
+        "purpose": "Complete the planned aerobic run without adding extra fatigue.",
+        "session_type": "aerobic",
+        "signal_ids": [
+          "load.last7.moving_time_hours",
+          "load.last7.training_load_hours",
+          "load.last7.sleep_days_with_data",
+          "load.last7.hrv_mean",
+          "load.last7.rhr_mean"
+        ],
+        "target_intensity": "controlled",
+        "terrain": "hill",
+        "title": "Aerobic run",
+        "workout": "60 min steady aerobic run on hill."
+      },
+      {
+        "date": "2026-03-14",
+        "duration_minutes": 60,
+        "estimated_distance_km": null,
+        "estimated_elevation_m": null,
+        "is_hard_day": true,
+        "is_rest_day": false,
+        "purpose": "Tempo run on flat terrain to improve endurance and manage recent training load, focusing on recovery and adaptation.",
+        "session_type": "tempo",
+        "signal_ids": [
+          "load.last7.moving_time_hours",
+          "load.last7.training_load_hours",
+          "load.last7.sleep_days_with_data",
+          "load.last7.hrv_mean",
+          "load.last7.rhr_mean"
+        ],
+        "target_intensity": "moderate",
+        "terrain": "flat",
+        "title": "Tempo run",
+        "workout": "Tempo run on flat terrain to build endurance."
+      },
+      {
+        "date": "2026-03-15",
+        "duration_minutes": 0,
+        "estimated_distance_km": null,
+        "estimated_elevation_m": null,
+        "is_hard_day": false,
+        "is_rest_day": true,
+        "purpose": "Recover and maintain freshness.",
+        "session_type": "rest",
+        "signal_ids": [
+          "load.last7.moving_time_hours",
+          "load.last7.training_load_hours",
+          "load.last7.sleep_days_with_data",
+          "load.last7.hrv_mean",
+          "load.last7.rhr_mean"
+        ],
+        "target_intensity": "rest",
+        "terrain": "n/a",
+        "title": "Rest day",
+        "workout": "Rest day. No structured training."
+      },
+      {
+        "date": "2026-03-16",
+        "duration_minutes": 90,
+        "estimated_distance_km": null,
+        "estimated_elevation_m": null,
+        "is_hard_day": false,
+        "is_rest_day": false,
+        "purpose": "Develop aerobic durability while keeping effort controlled.",
+        "session_type": "aerobic",
+        "signal_ids": [
+          "load.last7.moving_time_hours",
+          "load.last7.training_load_hours",
+          "load.last7.sleep_days_with_data",
+          "load.last7.hrv_mean",
+          "load.last7.rhr_mean"
+        ],
+        "target_intensity": "easy",
+        "terrain": "flat",
+        "title": "Aerobic run",
+        "workout": "Easy run on flat terrain to recover."
+      },
+      {
+        "date": "2026-03-17",
+        "duration_minutes": 75,
+        "estimated_distance_km": null,
+        "estimated_elevation_m": null,
+        "is_hard_day": false,
+        "is_rest_day": false,
+        "purpose": "Complete the planned aerobic run without adding extra fatigue.",
+        "session_type": "aerobic",
+        "signal_ids": [
+          "load.last7.moving_time_hours",
+          "load.last7.training_load_hours",
+          "load.last7.sleep_days_with_data",
+          "load.last7.hrv_mean",
+          "load.last7.rhr_mean"
+        ],
+        "target_intensity": "moderate",
+        "terrain": "flat",
+        "title": "Aerobic run",
+        "workout": "Moderate run on flat terrain to build endurance."
+      }
+    ],
+    "weekly_totals": {
+      "planned_distance_km": null,
+      "planned_elevation_m": null,
+      "planned_moving_time_hours": 6.5
+    }
+  },
+  "readiness": {
+    "rationale": "Deterministic readiness: fatigued (score 43.0). The athlete is currently classified as fatigued based on the readiness score of 43.0 and the high overreach risk score of 69.0. This indicates that the athlete is experiencing meaningful fatigue relative to their baseline, which is typical for a development block phase. The recent training load has been substantial, with a total of 6.5 hours of moving time and 6.5 hours of training load, which aligns with the 7-day window. The athlete’s recovery signals, including sleep duration and heart rate variability (HRV), are within acceptable ranges, but the recent load exceeds the recommended maximum ramp percentage of 6.50 hours, indicating a need to adjust the training approach to prevent overtraining and promote recovery.",
+    "signal_ids": [
+      "load.last7.moving_time_hours",
+      "load.last7.training_load_hours",
+      "load.last7.sleep_days_with_data",
+      "load.last7.hrv_mean",
+      "load.last7.rhr_mean"
+    ],
+    "status": "fatigued"
+  },
+  "recovery": {
+    "actions": [
+      "Ensure adequate hydration and nutrition post-run to aid recovery.",
+      "Consider incorporating active recovery methods such as light stretching or foam rolling to enhance recovery.",
+      "Monitor heart rate and ensure it returns to normal levels post-run.",
+      "Continue prioritizing sufficient sleep to support recovery and adaptability.",
+      "Maintain a balanced diet rich in carbohydrates, proteins, and healthy fats to support muscle repair and energy production.",
+      "Engage in low-intensity activities such as walking or gentle yoga to promote recovery and flexibility.",
+      "Avoid strenuous activities until full recovery is confirmed.",
+      "Monitor for signs of overtraining syndrome such as persistent fatigue, decreased performance, or mood changes, and seek medical advice if necessary."
+    ],
+    "signal_ids": [
+      "load.last7.sleep_days_with_data",
+      "load.last7.hrv_mean",
+      "load.last7.rhr_mean"
+    ]
+  },
+  "risks": [
+    {
+      "message": "The athlete is currently fatigued and has a high overreach risk, which increases the likelihood of injury or burnout. It is crucial to manage the training load carefully and ensure adequate recovery to prevent further fatigue and overtraining.",
+      "severity": "high",
+      "signal_ids": [
+        "forecast.readiness.score",
+        "forecast.overreach_risk.score"
+      ]
+    }
+  ],
+  "snapshot": {
+    "baseline28": {
+      "activity_count": "24",
+      "distance_km": "241.4",
+      "elevation_m": "8124.9",
+      "hrv_mean": "",
+      "moving_time_hours": "28.1",
+      "rhr_mean": "",
+      "sleep_hours_mean": ""
+    },
+    "last7": {
+      "activity_count": "6",
+      "distance_km": "55.9",
+      "elevation_m": "1883.8",
+      "hrv_mean": "",
+      "moving_time_hours": "6.5",
+      "rhr_mean": "",
+      "sleep_hours_mean": ""
+    },
+    "notes": "The athlete covered 55.9 km in the last 7 days. Moving time was 6.5 hours. Elevation gain was 1883.8 meters."
+  }
+}

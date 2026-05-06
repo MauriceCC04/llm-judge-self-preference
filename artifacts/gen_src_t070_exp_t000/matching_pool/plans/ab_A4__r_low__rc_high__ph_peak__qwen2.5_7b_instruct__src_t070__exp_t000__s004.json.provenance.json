@@ -1,0 +1,124 @@
+{
+  "plan_id": "ab_A4__r_low__rc_high__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s004",
+  "fixture_id": "ab_A4__r_low__rc_high__ph_peak",
+  "athlete_band": "A4",
+  "readiness": "low",
+  "recovery_capability": "high",
+  "race_phase": "peak",
+  "plan_days": 7,
+  "style": "trailrunning",
+  "arm": "llm",
+  "source_model": "Qwen/Qwen2.5-7B-Instruct",
+  "explainer_model": "Qwen/Qwen2.5-3B-Instruct",
+  "actual_explainer_model": "Qwen/Qwen2.5-3B-Instruct",
+  "explainer_model_verified": true,
+  "generation_pipeline": "llm_two_stage",
+  "runtime_backend": "trailtraining.llm.coach.run_coach_brief",
+  "runtime_metadata": {
+    "source_base_url": "http://127.0.0.1:8773/v1",
+    "explainer_base_url": "http://127.0.0.1:8774/v1",
+    "judge_base_url": "http://127.0.0.1:8774/v1",
+    "using_local_base_url": true,
+    "default_patch_stage": "judge",
+    "source_model": "Qwen/Qwen2.5-7B-Instruct",
+    "actual_source_model": "Qwen/Qwen2.5-7B-Instruct",
+    "actual_explainer_model": "Qwen/Qwen2.5-3B-Instruct",
+    "explainer_model_verified": true,
+    "source_temperature": 0.7,
+    "explainer_temperature": 0.0,
+    "seed": 4,
+    "structural_lifestyle_notes_present": true,
+    "structural_lifestyle_notes_chars": 2148,
+    "artifact_lifestyle_notes_chars": 269,
+    "TRAILTRAINING_TWO_STAGE_PLAN": "1",
+    "generation_condition": "gen_src_t070__exp_t000",
+    "athlete_band": "A4",
+    "readiness": "low",
+    "recovery_capability": "high",
+    "race_phase": "peak",
+    "artifact_normalization": {
+      "normalizer_version": "artifact-presentation-normalizer-v1",
+      "normalized_at": "2026-05-05T15:17:21.603765+00:00",
+      "original_artifact_sha256": "c1f78d0155dbfed5f5495185bce0a8b49ada6a15e888c2112ae542dacc9c38ca",
+      "normalized_artifact_sha256": "c4bf8fdb9db44bb7678023d61f8cb63687a978392bfe90429adc4085131bb8ef",
+      "changed_fields": [
+        {
+          "path": "$.plan.days[0].title",
+          "old": "Day 1",
+          "new": "Long run",
+          "reason": "generic_day_title"
+        },
+        {
+          "path": "$.plan.days[0].purpose",
+          "old": "No structured training.",
+          "new": "Build endurance and trail-specific durability.",
+          "reason": "field_primary_label_rest_mismatches_session_type_long"
+        },
+        {
+          "path": "$.plan.days[1].title",
+          "old": "Day 2",
+          "new": "Aerobic run",
+          "reason": "generic_day_title"
+        },
+        {
+          "path": "$.plan.days[2].title",
+          "old": "Day 3",
+          "new": "Aerobic run",
+          "reason": "generic_day_title"
+        },
+        {
+          "path": "$.plan.days[2].purpose",
+          "old": "Hill repeats to build strength and power on steep terrain.",
+          "new": "Develop aerobic durability while keeping effort controlled.",
+          "reason": "field_primary_label_hills_mismatches_session_type_aerobic"
+        },
+        {
+          "path": "$.plan.days[4].title",
+          "old": "Aerobic run",
+          "new": "Hill session",
+          "reason": "title_session_mismatch"
+        },
+        {
+          "path": "$.plan.days[4].purpose",
+          "old": "45 min steady aerobic run on flat trails.",
+          "new": "Build climbing strength, power, and durable mechanics.",
+          "reason": "field_primary_label_aerobic_mismatches_session_type_hills"
+        },
+        {
+          "path": "$.plan.days[5].title",
+          "old": "Aerobic run",
+          "new": "Strength session",
+          "reason": "title_session_mismatch"
+        },
+        {
+          "path": "$.plan.days[5].purpose",
+          "old": "60 min steady aerobic run on mixed terrain.",
+          "new": "Support resilience, mechanics, and injury resistance.",
+          "reason": "field_primary_label_aerobic_mismatches_session_type_strength"
+        },
+        {
+          "path": "$.plan.days[6].title",
+          "old": "Day 7",
+          "new": "Cross-training",
+          "reason": "generic_day_title"
+        },
+        {
+          "path": "$.plan.days[6].purpose",
+          "old": "Long run at a controlled pace to build endurance and manage fatigue.",
+          "new": "Maintain aerobic stimulus while reducing impact load.",
+          "reason": "field_primary_label_long_mismatches_session_type_cross"
+        }
+      ],
+      "warnings": [],
+      "errors": [],
+      "score_relevant_projection_unchanged": true
+    }
+  },
+  "source_temperature": 0.7,
+  "explainer_temperature": 0.0,
+  "generation_condition": "gen_src_t070__exp_t000",
+  "seed": 4,
+  "generated_at": "2026-05-04T14:13:33.061843+00:00",
+  "plan_path": "artifacts/gen_src_t070_exp_t000/matching_pool/plans/ab_A4__r_low__rc_high__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s004.json",
+  "deterministic_score": 95.0
+}

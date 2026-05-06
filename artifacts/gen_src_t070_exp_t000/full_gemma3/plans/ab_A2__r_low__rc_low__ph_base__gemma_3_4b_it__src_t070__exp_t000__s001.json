@@ -1,0 +1,625 @@
+{
+  "citations": [
+    {
+      "citation_id": "c1",
+      "date_range": "2026-03-17..2026-03-17",
+      "signal_id": "forecast.readiness.status",
+      "source": "readiness_and_risk_forecast.json:result.readiness.status",
+      "value": "fatigued"
+    },
+    {
+      "citation_id": "c2",
+      "date_range": "2026-03-17..2026-03-17",
+      "signal_id": "forecast.readiness.score",
+      "source": "readiness_and_risk_forecast.json:result.readiness.score",
+      "value": "43.0"
+    },
+    {
+      "citation_id": "c3",
+      "date_range": "2026-03-17..2026-03-17",
+      "signal_id": "forecast.overreach_risk.level",
+      "source": "readiness_and_risk_forecast.json:result.overreach_risk.level",
+      "value": "high"
+    },
+    {
+      "citation_id": "c4",
+      "date_range": "2026-03-17..2026-03-17",
+      "signal_id": "forecast.overreach_risk.score",
+      "source": "readiness_and_risk_forecast.json:result.overreach_risk.score",
+      "value": "69.0"
+    },
+    {
+      "citation_id": "c5",
+      "date_range": "2026-03-17..2026-03-17",
+      "signal_id": "forecast.recovery_capability.label",
+      "source": "readiness_and_risk_forecast.json:result.inputs.recovery_capability_label",
+      "value": "I only have training data"
+    },
+    {
+      "citation_id": "c6",
+      "date_range": "2026-03-17..2026-03-17",
+      "signal_id": "forecast.recovery_capability.key",
+      "source": "readiness_and_risk_forecast.json:result.inputs.recovery_capability_key",
+      "value": "load_only"
+    }
+  ],
+  "claim_attributions": [
+    {
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c5",
+        "c6"
+      ],
+      "claim_id": "cl1",
+      "claim_text": "Deterministic readiness: fatigued (score 43.0). The athlete is currently in a fatigued state, indicated by the readiness score of 43.0 and the high overreach risk score of 69.0. This suggests that the athlete needs to prioritize recovery and avoid additional stress. The recent training load has been manageable but not excessive, which aligns with the current recovery status. The lack of sleep, HRV, and resting heart rate data further supports the need for rest and recovery. The structured plan includes a mix of easy and moderate intensity runs, which are appropriate given the current readiness level. However, the plan also includes a short, easy run on the final day, which is a good way to conclude the week without adding undue stress.",
+      "field_path": "readiness.rationale",
+      "signal_ids": [
+        "forecast.readiness.status",
+        "forecast.readiness.score",
+        "forecast.overreach_risk.level",
+        "forecast.overreach_risk.score",
+        "forecast.recovery_capability.label",
+        "forecast.recovery_capability.key"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c5",
+        "c6"
+      ],
+      "claim_id": "cl2",
+      "claim_text": "Ensure adequate sleep and recovery between runs. Aim for at least 7 hours of sleep per night to support recovery.",
+      "field_path": "recovery.actions[0]",
+      "signal_ids": [
+        "forecast.readiness.status",
+        "forecast.readiness.score",
+        "forecast.overreach_risk.level",
+        "forecast.overreach_risk.score",
+        "forecast.recovery_capability.label",
+        "forecast.recovery_capability.key"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c5",
+        "c6"
+      ],
+      "claim_id": "cl3",
+      "claim_text": "Monitor heart rate variability (HRV) and resting heart rate (RHR) to assess recovery status. If possible, track these metrics to better understand the athlete's recovery patterns.",
+      "field_path": "recovery.actions[1]",
+      "signal_ids": [
+        "forecast.readiness.status",
+        "forecast.readiness.score",
+        "forecast.overreach_risk.level",
+        "forecast.overreach_risk.score",
+        "forecast.recovery_capability.label",
+        "forecast.recovery_capability.key"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c5",
+        "c6"
+      ],
+      "claim_id": "cl4",
+      "claim_text": "Continue with the structured plan, focusing on easy and moderate intensity runs to support aerobic development and recovery.",
+      "field_path": "recovery.actions[2]",
+      "signal_ids": [
+        "forecast.readiness.status",
+        "forecast.readiness.score",
+        "forecast.overreach_risk.level",
+        "forecast.overreach_risk.score",
+        "forecast.recovery_capability.label",
+        "forecast.recovery_capability.key"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c5",
+        "c6"
+      ],
+      "claim_id": "cl5",
+      "claim_text": "Consider incorporating active recovery methods such as light walking or yoga to aid in recovery and reduce muscle soreness.",
+      "field_path": "recovery.actions[3]",
+      "signal_ids": [
+        "forecast.readiness.status",
+        "forecast.readiness.score",
+        "forecast.overreach_risk.level",
+        "forecast.overreach_risk.score",
+        "forecast.recovery_capability.label",
+        "forecast.recovery_capability.key"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c5",
+        "c6"
+      ],
+      "claim_id": "cl6",
+      "claim_text": "Avoid any additional hard training sessions until the athlete feels fully recovered and ready to progress.",
+      "field_path": "recovery.actions[4]",
+      "signal_ids": [
+        "forecast.readiness.status",
+        "forecast.readiness.score",
+        "forecast.overreach_risk.level",
+        "forecast.overreach_risk.score",
+        "forecast.recovery_capability.label",
+        "forecast.recovery_capability.key"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c5",
+        "c6"
+      ],
+      "claim_id": "cl7",
+      "claim_text": "Stay hydrated and maintain proper nutrition to support recovery and overall health.",
+      "field_path": "recovery.actions[5]",
+      "signal_ids": [
+        "forecast.readiness.status",
+        "forecast.readiness.score",
+        "forecast.overreach_risk.level",
+        "forecast.overreach_risk.score",
+        "forecast.recovery_capability.label",
+        "forecast.recovery_capability.key"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c3",
+        "c4"
+      ],
+      "claim_id": "cl8",
+      "claim_text": "High overreach risk due to the athlete's current readiness status. The structured plan includes a mix of easy and moderate intensity runs, but the athlete should avoid any additional hard training sessions until fully recovered.",
+      "field_path": "risks[0].message",
+      "signal_ids": [
+        "forecast.overreach_risk.level",
+        "forecast.overreach_risk.score"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c5",
+        "c6"
+      ],
+      "claim_id": "cl9",
+      "claim_text": "To continue building aerobic base and support recovery. The easy run on this day is appropriate given the recent training load and the need to maintain aerobic fitness.",
+      "field_path": "plan.days[0].purpose",
+      "signal_ids": [
+        "forecast.readiness.status",
+        "forecast.readiness.score",
+        "forecast.overreach_risk.level",
+        "forecast.overreach_risk.score",
+        "forecast.recovery_capability.label",
+        "forecast.recovery_capability.key"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c5",
+        "c6"
+      ],
+      "claim_id": "cl10",
+      "claim_text": "To continue building aerobic base and support recovery. The easy run on this day is appropriate given the recent training load and the need to maintain aerobic fitness.",
+      "field_path": "plan.days[1].purpose",
+      "signal_ids": [
+        "forecast.readiness.status",
+        "forecast.readiness.score",
+        "forecast.overreach_risk.level",
+        "forecast.overreach_risk.score",
+        "forecast.recovery_capability.label",
+        "forecast.recovery_capability.key"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c5",
+        "c6"
+      ],
+      "claim_id": "cl11",
+      "claim_text": "To continue building aerobic base and support recovery. The easy run on this day is appropriate given the recent training load and the need to maintain aerobic fitness.",
+      "field_path": "plan.days[2].purpose",
+      "signal_ids": [
+        "forecast.readiness.status",
+        "forecast.readiness.score",
+        "forecast.overreach_risk.level",
+        "forecast.overreach_risk.score",
+        "forecast.recovery_capability.label",
+        "forecast.recovery_capability.key"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c5",
+        "c6"
+      ],
+      "claim_id": "cl12",
+      "claim_text": "To continue building aerobic base and support recovery. The moderate effort run on this day is appropriate given the recent training load and the need to maintain aerobic fitness.",
+      "field_path": "plan.days[3].purpose",
+      "signal_ids": [
+        "forecast.readiness.status",
+        "forecast.readiness.score",
+        "forecast.overreach_risk.level",
+        "forecast.overreach_risk.score",
+        "forecast.recovery_capability.label",
+        "forecast.recovery_capability.key"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c5",
+        "c6"
+      ],
+      "claim_id": "cl13",
+      "claim_text": "To allow full recovery and reduce overtraining risk. Given the current readiness status, a rest day is essential to support overall recovery and prevent overtraining.",
+      "field_path": "plan.days[4].purpose",
+      "signal_ids": [
+        "forecast.readiness.status",
+        "forecast.readiness.score",
+        "forecast.overreach_risk.level",
+        "forecast.overreach_risk.score",
+        "forecast.recovery_capability.label",
+        "forecast.recovery_capability.key"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c5",
+        "c6"
+      ],
+      "claim_id": "cl14",
+      "claim_text": "To continue building aerobic base and support recovery. The longer run on this day is appropriate given the recent training load and the need to maintain aerobic fitness.",
+      "field_path": "plan.days[5].purpose",
+      "signal_ids": [
+        "forecast.readiness.status",
+        "forecast.readiness.score",
+        "forecast.overreach_risk.level",
+        "forecast.overreach_risk.score",
+        "forecast.recovery_capability.label",
+        "forecast.recovery_capability.key"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c5",
+        "c6"
+      ],
+      "claim_id": "cl15",
+      "claim_text": "To continue building aerobic base and support recovery. The short, easy run on the final day is appropriate given the current readiness level.",
+      "field_path": "plan.days[6].purpose",
+      "signal_ids": [
+        "forecast.readiness.status",
+        "forecast.readiness.score",
+        "forecast.overreach_risk.level",
+        "forecast.overreach_risk.score",
+        "forecast.recovery_capability.label",
+        "forecast.recovery_capability.key"
+      ],
+      "support_level": "supported"
+    }
+  ],
+  "data_notes": [
+    "Insufficient sleep data for accurate assessment of recovery status. The athlete should aim for at least 7 hours of sleep per night to support recovery.",
+    "Limited HRV and resting heart rate data for detailed recovery assessment. Consider tracking these metrics to better understand the athlete's recovery patterns.",
+    "Readiness status was set from deterministic readiness_and_risk_forecast.json.",
+    "Guardrails: enforced ramp rate (max_ramp_pct=0.0%). last7_hours=5.100, allowed_hours=5.100, planned_hours=5.100."
+  ],
+  "effective_constraints": {
+    "allowed_week1_hours": 5.1,
+    "effective_max_consecutive_hard": 1,
+    "effective_max_hard_per_7d": 1,
+    "effective_max_ramp_pct": 0.0,
+    "lifestyle_notes": "Prioritize consistent aerobic development, hill strength, and durable weekly routine. Athlete profile: Developing recreational. Training history context: Modest recent consistency, moderate but not high load, some structure tolerated.",
+    "min_rest_per_7d": 1,
+    "overreach_risk_level": "high",
+    "readiness_status": "fatigued",
+    "reasons": [
+      "readiness is fatigued",
+      "overreach risk is high",
+      "recovery telemetry is sparse",
+      "lifestyle constraints apply"
+    ],
+    "recovery_capability_key": "load_only"
+  },
+  "meta": {
+    "lifestyle_notes": "Prioritize consistent aerobic development, hill strength, and durable weekly routine. Athlete profile: Developing recreational. Training history context: Modest recent consistency, moderate but not high load, some structure tolerated.",
+    "plan_days": 7,
+    "plan_start": "2026-03-11",
+    "primary_goal": "to build consistent trail-running fitness with manageable structure",
+    "style": "trailrunning",
+    "today": "2026-03-17"
+  },
+  "plan": {
+    "days": [
+      {
+        "date": "2026-03-11",
+        "duration_minutes": 30,
+        "estimated_distance_km": null,
+        "estimated_elevation_m": null,
+        "is_hard_day": false,
+        "is_rest_day": false,
+        "purpose": "To continue building aerobic base and support recovery. The easy run on this day is appropriate given the recent training load and the need to maintain aerobic fitness.",
+        "session_type": "aerobic",
+        "signal_ids": [
+          "forecast.readiness.status",
+          "forecast.readiness.score",
+          "forecast.overreach_risk.level",
+          "forecast.overreach_risk.score",
+          "forecast.recovery_capability.label",
+          "forecast.recovery_capability.key"
+        ],
+        "target_intensity": "easy",
+        "terrain": "trail",
+        "title": "Aerobic run",
+        "workout": "30 min steady aerobic run on trail."
+      },
+      {
+        "date": "2026-03-12",
+        "duration_minutes": 51,
+        "estimated_distance_km": null,
+        "estimated_elevation_m": null,
+        "is_hard_day": false,
+        "is_rest_day": false,
+        "purpose": "To continue building aerobic base and support recovery. The easy run on this day is appropriate given the recent training load and the need to maintain aerobic fitness.",
+        "session_type": "aerobic",
+        "signal_ids": [
+          "forecast.readiness.status",
+          "forecast.readiness.score",
+          "forecast.overreach_risk.level",
+          "forecast.overreach_risk.score",
+          "forecast.recovery_capability.label",
+          "forecast.recovery_capability.key"
+        ],
+        "target_intensity": "easy",
+        "terrain": "trail",
+        "title": "Aerobic run",
+        "workout": "51 min steady aerobic run on trail."
+      },
+      {
+        "date": "2026-03-13",
+        "duration_minutes": 60,
+        "estimated_distance_km": null,
+        "estimated_elevation_m": null,
+        "is_hard_day": false,
+        "is_rest_day": false,
+        "purpose": "To continue building aerobic base and support recovery. The easy run on this day is appropriate given the recent training load and the need to maintain aerobic fitness.",
+        "session_type": "aerobic",
+        "signal_ids": [
+          "forecast.readiness.status",
+          "forecast.readiness.score",
+          "forecast.overreach_risk.level",
+          "forecast.overreach_risk.score",
+          "forecast.recovery_capability.label",
+          "forecast.recovery_capability.key"
+        ],
+        "target_intensity": "easy",
+        "terrain": "trail",
+        "title": "Aerobic run",
+        "workout": "TrailRun | 7.0 km | 240 m+ | avgHR 147 |  Easy run to build aerobic base."
+      },
+      {
+        "date": "2026-03-14",
+        "duration_minutes": 60,
+        "estimated_distance_km": null,
+        "estimated_elevation_m": null,
+        "is_hard_day": false,
+        "is_rest_day": false,
+        "purpose": "To continue building aerobic base and support recovery. The moderate effort run on this day is appropriate given the recent training load and the need to maintain aerobic fitness.",
+        "session_type": "aerobic",
+        "signal_ids": [
+          "forecast.readiness.status",
+          "forecast.readiness.score",
+          "forecast.overreach_risk.level",
+          "forecast.overreach_risk.score",
+          "forecast.recovery_capability.label",
+          "forecast.recovery_capability.key"
+        ],
+        "target_intensity": "moderate",
+        "terrain": "trail",
+        "title": "Aerobic run",
+        "workout": "TrailRun | 10.0 km | 400 m+ | avgHR 152 |  Moderate effort with some rolling hills."
+      },
+      {
+        "date": "2026-03-15",
+        "duration_minutes": 0,
+        "estimated_distance_km": null,
+        "estimated_elevation_m": null,
+        "is_hard_day": false,
+        "is_rest_day": true,
+        "purpose": "Recover and maintain freshness.",
+        "session_type": "rest",
+        "signal_ids": [
+          "forecast.readiness.status",
+          "forecast.readiness.score",
+          "forecast.overreach_risk.level",
+          "forecast.overreach_risk.score",
+          "forecast.recovery_capability.label",
+          "forecast.recovery_capability.key"
+        ],
+        "target_intensity": "rest",
+        "terrain": "n/a",
+        "title": "Rest day",
+        "workout": "Rest day. No structured training."
+      },
+      {
+        "date": "2026-03-16",
+        "duration_minutes": 60,
+        "estimated_distance_km": null,
+        "estimated_elevation_m": null,
+        "is_hard_day": false,
+        "is_rest_day": false,
+        "purpose": "To continue building aerobic base and support recovery. The longer run on this day is appropriate given the recent training load and the need to maintain aerobic fitness.",
+        "session_type": "aerobic",
+        "signal_ids": [
+          "forecast.readiness.status",
+          "forecast.readiness.score",
+          "forecast.overreach_risk.level",
+          "forecast.overreach_risk.score",
+          "forecast.recovery_capability.label",
+          "forecast.recovery_capability.key"
+        ],
+        "target_intensity": "easy",
+        "terrain": "trail",
+        "title": "Aerobic run",
+        "workout": "TrailRun | 9.0 km | 320 m+ | avgHR 149 |  Recovery run, focus on form."
+      },
+      {
+        "date": "2026-03-17",
+        "duration_minutes": 45,
+        "estimated_distance_km": null,
+        "estimated_elevation_m": null,
+        "is_hard_day": false,
+        "is_rest_day": false,
+        "purpose": "To continue building aerobic base and support recovery. The short, easy run on the final day is appropriate given the current readiness level.",
+        "session_type": "aerobic",
+        "signal_ids": [
+          "forecast.readiness.status",
+          "forecast.readiness.score",
+          "forecast.overreach_risk.level",
+          "forecast.overreach_risk.score",
+          "forecast.recovery_capability.label",
+          "forecast.recovery_capability.key"
+        ],
+        "target_intensity": "easy",
+        "terrain": "trail",
+        "title": "Aerobic run",
+        "workout": "TrailRun | 6.0 km | 200 m+ | avgHR 151 | Short, easy run to finish the week."
+      }
+    ],
+    "weekly_totals": {
+      "planned_distance_km": null,
+      "planned_elevation_m": null,
+      "planned_moving_time_hours": 5.1
+    }
+  },
+  "readiness": {
+    "rationale": "Deterministic readiness: fatigued (score 43.0). The athlete is currently in a fatigued state, indicated by the readiness score of 43.0 and the high overreach risk score of 69.0. This suggests that the athlete needs to prioritize recovery and avoid additional stress. The recent training load has been manageable but not excessive, which aligns with the current recovery status. The lack of sleep, HRV, and resting heart rate data further supports the need for rest and recovery. The structured plan includes a mix of easy and moderate intensity runs, which are appropriate given the current readiness level. However, the plan also includes a short, easy run on the final day, which is a good way to conclude the week without adding undue stress.",
+    "signal_ids": [
+      "forecast.readiness.status",
+      "forecast.readiness.score",
+      "forecast.overreach_risk.level",
+      "forecast.overreach_risk.score",
+      "forecast.recovery_capability.label",
+      "forecast.recovery_capability.key"
+    ],
+    "status": "fatigued"
+  },
+  "recovery": {
+    "actions": [
+      "Ensure adequate sleep and recovery between runs. Aim for at least 7 hours of sleep per night to support recovery.",
+      "Monitor heart rate variability (HRV) and resting heart rate (RHR) to assess recovery status. If possible, track these metrics to better understand the athlete's recovery patterns.",
+      "Continue with the structured plan, focusing on easy and moderate intensity runs to support aerobic development and recovery.",
+      "Consider incorporating active recovery methods such as light walking or yoga to aid in recovery and reduce muscle soreness.",
+      "Avoid any additional hard training sessions until the athlete feels fully recovered and ready to progress.",
+      "Stay hydrated and maintain proper nutrition to support recovery and overall health."
+    ],
+    "signal_ids": [
+      "forecast.readiness.status",
+      "forecast.readiness.score",
+      "forecast.overreach_risk.level",
+      "forecast.overreach_risk.score",
+      "forecast.recovery_capability.label",
+      "forecast.recovery_capability.key"
+    ]
+  },
+  "risks": [
+    {
+      "message": "High overreach risk due to the athlete's current readiness status. The structured plan includes a mix of easy and moderate intensity runs, but the athlete should avoid any additional hard training sessions until fully recovered.",
+      "severity": "high",
+      "signal_ids": [
+        "forecast.overreach_risk.level",
+        "forecast.overreach_risk.score"
+      ]
+    }
+  ],
+  "snapshot": {
+    "baseline28": {
+      "activity_count": "24",
+      "distance_km": "177.8",
+      "elevation_m": "6348.5",
+      "hrv_mean": "",
+      "moving_time_hours": "21.9",
+      "rhr_mean": "",
+      "sleep_hours_mean": ""
+    },
+    "last7": {
+      "activity_count": "6",
+      "distance_km": "41.3",
+      "elevation_m": "1478",
+      "hrv_mean": "",
+      "moving_time_hours": "5.1",
+      "rhr_mean": "",
+      "sleep_hours_mean": ""
+    },
+    "notes": "The athlete covered 41.3 km in the last 7 days. Moving time was 5.1 hours. Elevation gain was 1478 meters."
+  }
+}

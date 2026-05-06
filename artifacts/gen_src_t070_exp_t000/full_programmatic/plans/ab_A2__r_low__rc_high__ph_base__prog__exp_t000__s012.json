@@ -1,0 +1,465 @@
+{
+  "citations": [
+    {
+      "citation_id": "c1",
+      "date_range": "2026-03-17..2026-03-17",
+      "signal_id": "forecast.readiness.status",
+      "source": "readiness_and_risk_forecast.json:result.readiness.status",
+      "value": "fatigued"
+    },
+    {
+      "citation_id": "c2",
+      "date_range": "2026-03-17..2026-03-17",
+      "signal_id": "forecast.readiness.score",
+      "source": "readiness_and_risk_forecast.json:result.readiness.score",
+      "value": "43.0"
+    },
+    {
+      "citation_id": "c3",
+      "date_range": "2026-03-17..2026-03-17",
+      "signal_id": "forecast.overreach_risk.level",
+      "source": "readiness_and_risk_forecast.json:result.overreach_risk.level",
+      "value": "high"
+    },
+    {
+      "citation_id": "c4",
+      "date_range": "2026-03-17..2026-03-17",
+      "signal_id": "forecast.overreach_risk.score",
+      "source": "readiness_and_risk_forecast.json:result.overreach_risk.score",
+      "value": "69.0"
+    },
+    {
+      "citation_id": "c5",
+      "date_range": "2026-03-11..2026-03-17",
+      "signal_id": "recovery.last7.sleep_hours_mean",
+      "source": "combined_summary.json:sleep.sleepTimeSeconds",
+      "value": "6.36"
+    },
+    {
+      "citation_id": "c6",
+      "date_range": "2026-03-11..2026-03-17",
+      "signal_id": "recovery.last7.hrv_mean",
+      "source": "combined_summary.json:sleep.avgOvernightHrv",
+      "value": "53.0"
+    },
+    {
+      "citation_id": "c7",
+      "date_range": "2026-03-11..2026-03-17",
+      "signal_id": "recovery.last7.rhr_mean",
+      "source": "combined_summary.json:sleep.restingHeartRate",
+      "value": "52.0"
+    }
+  ],
+  "claim_attributions": [
+    {
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3",
+        "c4"
+      ],
+      "claim_id": "cl1",
+      "claim_text": "Deterministic readiness: fatigued (score 43.0). The athlete is currently in a fatigued readiness status, indicated by a readiness score of 43 out of 100 and an overreach risk score of 69, which is considered high. This reflects meaningful fatigue relative to the athlete’s baseline, despite some recent recovery signals indicating stability or improvement. The recent 7-day load (5.1 hours) is manageable compared to the 28-day baseline (21.92 hours), but the overall recovery signals suggest room for further improvement. The athlete’s recent training has been characterized by a mix of easy and cross-training sessions, with one long run of 91 minutes, which aligns with the structured plan but does not provide enough evidence to warrant a higher intensity or longer session without risking overtraining.",
+      "field_path": "readiness.rationale",
+      "signal_ids": [
+        "forecast.readiness.status",
+        "forecast.readiness.score",
+        "forecast.overreach_risk.level",
+        "forecast.overreach_risk.score"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c5",
+        "c6",
+        "c7"
+      ],
+      "claim_id": "cl2",
+      "claim_text": "Continue prioritizing easy sessions and cross-training to support aerobic development and recovery.",
+      "field_path": "recovery.actions[0]",
+      "signal_ids": [
+        "forecast.readiness.status",
+        "forecast.readiness.score",
+        "forecast.overreach_risk.level",
+        "forecast.overreach_risk.score",
+        "recovery.last7.sleep_hours_mean",
+        "recovery.last7.hrv_mean",
+        "recovery.last7.rhr_mean"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c5",
+        "c6",
+        "c7"
+      ],
+      "claim_id": "cl3",
+      "claim_text": "Monitor sleep duration and quality closely, aiming for at least 7 hours per night.",
+      "field_path": "recovery.actions[1]",
+      "signal_ids": [
+        "forecast.readiness.status",
+        "forecast.readiness.score",
+        "forecast.overreach_risk.level",
+        "forecast.overreach_risk.score",
+        "recovery.last7.sleep_hours_mean",
+        "recovery.last7.hrv_mean",
+        "recovery.last7.rhr_mean"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c5",
+        "c6",
+        "c7"
+      ],
+      "claim_id": "cl4",
+      "claim_text": "Maintain a consistent bedtime routine to support circadian rhythms and recovery.",
+      "field_path": "recovery.actions[2]",
+      "signal_ids": [
+        "forecast.readiness.status",
+        "forecast.readiness.score",
+        "forecast.overreach_risk.level",
+        "forecast.overreach_risk.score",
+        "recovery.last7.sleep_hours_mean",
+        "recovery.last7.hrv_mean",
+        "recovery.last7.rhr_mean"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c5",
+        "c6",
+        "c7"
+      ],
+      "claim_id": "cl5",
+      "claim_text": "Consider incorporating short, active recovery sessions (e.g., walking, light stretching) between workouts to enhance recovery.",
+      "field_path": "recovery.actions[3]",
+      "signal_ids": [
+        "forecast.readiness.status",
+        "forecast.readiness.score",
+        "forecast.overreach_risk.level",
+        "forecast.overreach_risk.score",
+        "recovery.last7.sleep_hours_mean",
+        "recovery.last7.hrv_mean",
+        "recovery.last7.rhr_mean"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c5",
+        "c6",
+        "c7"
+      ],
+      "claim_id": "cl6",
+      "claim_text": "Focus on active recovery techniques such as foam rolling, massage, and gentle yoga to aid muscle recovery and flexibility.",
+      "field_path": "recovery.actions[4]",
+      "signal_ids": [
+        "forecast.readiness.status",
+        "forecast.readiness.score",
+        "forecast.overreach_risk.level",
+        "forecast.overreach_risk.score",
+        "recovery.last7.sleep_hours_mean",
+        "recovery.last7.hrv_mean",
+        "recovery.last7.rhr_mean"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c5",
+        "c6",
+        "c7"
+      ],
+      "claim_id": "cl7",
+      "claim_text": "Ensure adequate hydration and nutrition to support recovery processes.",
+      "field_path": "recovery.actions[5]",
+      "signal_ids": [
+        "forecast.readiness.status",
+        "forecast.readiness.score",
+        "forecast.overreach_risk.level",
+        "forecast.overreach_risk.score",
+        "recovery.last7.sleep_hours_mean",
+        "recovery.last7.hrv_mean",
+        "recovery.last7.rhr_mean"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c5",
+        "c6",
+        "c7"
+      ],
+      "claim_id": "cl8",
+      "claim_text": "Avoid excessive stress and ensure sufficient downtime outside of training to promote overall well-being.",
+      "field_path": "recovery.actions[6]",
+      "signal_ids": [
+        "forecast.readiness.status",
+        "forecast.readiness.score",
+        "forecast.overreach_risk.level",
+        "forecast.overreach_risk.score",
+        "recovery.last7.sleep_hours_mean",
+        "recovery.last7.hrv_mean",
+        "recovery.last7.rhr_mean"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3",
+        "c4"
+      ],
+      "claim_id": "cl9",
+      "claim_text": "The athlete is currently in a fatigued readiness status, which increases the risk of overtraining and injury. It is important to adhere to the prescribed training load and recovery protocols to mitigate these risks.",
+      "field_path": "risks[0].message",
+      "signal_ids": [
+        "forecast.readiness.status",
+        "forecast.readiness.score",
+        "forecast.overreach_risk.level",
+        "forecast.overreach_risk.score"
+      ],
+      "support_level": "supported"
+    }
+  ],
+  "data_notes": [
+    "The athlete's recent training has been characterized by a mix of easy and cross-training sessions, with one long run of 91 minutes. The structured plan provides a balanced approach to aerobic development and recovery, but the recent recovery signals suggest room for further improvement.",
+    "Readiness status was set from deterministic readiness_and_risk_forecast.json.",
+    "Guardrails: enforced ramp rate (max_ramp_pct=0.0%). last7_hours=5.100, allowed_hours=5.100, planned_hours=4.100."
+  ],
+  "effective_constraints": {
+    "allowed_week1_hours": 5.1,
+    "effective_max_consecutive_hard": 1,
+    "effective_max_hard_per_7d": 1,
+    "effective_max_ramp_pct": 0.0,
+    "lifestyle_notes": "Prioritize consistent aerobic development, hill strength, and durable weekly routine. Athlete profile: Developing recreational. Training history context: Modest recent consistency, moderate but not high load, some structure tolerated.",
+    "min_rest_per_7d": 1,
+    "overreach_risk_level": "high",
+    "readiness_status": "fatigued",
+    "reasons": [
+      "readiness is fatigued",
+      "overreach risk is high",
+      "lifestyle constraints apply"
+    ],
+    "recovery_capability_key": "load_sleep_resting_hr_hrv"
+  },
+  "meta": {
+    "lifestyle_notes": "Prioritize consistent aerobic development, hill strength, and durable weekly routine. Athlete profile: Developing recreational. Training history context: Modest recent consistency, moderate but not high load, some structure tolerated.",
+    "plan_days": 7,
+    "plan_start": "2026-03-18",
+    "primary_goal": "to build consistent trail-running fitness with manageable structure",
+    "style": "trailrunning",
+    "today": "2026-03-17"
+  },
+  "plan": {
+    "days": [
+      {
+        "date": "2026-03-18",
+        "duration_minutes": 37,
+        "estimated_distance_km": null,
+        "estimated_elevation_m": null,
+        "is_hard_day": false,
+        "is_rest_day": false,
+        "purpose": "Build aerobic consistency while keeping fatigue low.",
+        "session_type": "easy",
+        "signal_ids": [],
+        "target_intensity": "easy",
+        "terrain": "trail",
+        "title": "Easy run",
+        "workout": "37 min easy run at conversational effort."
+      },
+      {
+        "date": "2026-03-19",
+        "duration_minutes": 48,
+        "estimated_distance_km": null,
+        "estimated_elevation_m": null,
+        "is_hard_day": false,
+        "is_rest_day": false,
+        "purpose": "Add aerobic stimulus with reduced impact.",
+        "session_type": "cross",
+        "signal_ids": [],
+        "target_intensity": "easy",
+        "terrain": "road",
+        "title": "Cross-training",
+        "workout": "48 min low-impact cross-training session."
+      },
+      {
+        "date": "2026-03-20",
+        "duration_minutes": 47,
+        "estimated_distance_km": null,
+        "estimated_elevation_m": null,
+        "is_hard_day": false,
+        "is_rest_day": false,
+        "purpose": "Build aerobic consistency while keeping fatigue low.",
+        "session_type": "easy",
+        "signal_ids": [],
+        "target_intensity": "easy",
+        "terrain": "trail",
+        "title": "Easy run",
+        "workout": "47 min easy run at conversational effort."
+      },
+      {
+        "date": "2026-03-21",
+        "duration_minutes": 0,
+        "estimated_distance_km": null,
+        "estimated_elevation_m": null,
+        "is_hard_day": false,
+        "is_rest_day": true,
+        "purpose": "Absorb training and maintain freshness.",
+        "session_type": "rest",
+        "signal_ids": [],
+        "target_intensity": "rest",
+        "terrain": "n/a",
+        "title": "Rest day",
+        "workout": "Rest day. No structured training."
+      },
+      {
+        "date": "2026-03-22",
+        "duration_minutes": 0,
+        "estimated_distance_km": null,
+        "estimated_elevation_m": null,
+        "is_hard_day": false,
+        "is_rest_day": true,
+        "purpose": "Absorb training and maintain freshness.",
+        "session_type": "rest",
+        "signal_ids": [],
+        "target_intensity": "rest",
+        "terrain": "n/a",
+        "title": "Rest day",
+        "workout": "Rest day. No structured training."
+      },
+      {
+        "date": "2026-03-23",
+        "duration_minutes": 91,
+        "estimated_distance_km": null,
+        "estimated_elevation_m": null,
+        "is_hard_day": false,
+        "is_rest_day": false,
+        "purpose": "Extend endurance and trail-specific durability.",
+        "session_type": "long",
+        "signal_ids": [],
+        "target_intensity": "easy",
+        "terrain": "trail",
+        "title": "Long run",
+        "workout": "91 min long run at controlled aerobic effort."
+      },
+      {
+        "date": "2026-03-24",
+        "duration_minutes": 21,
+        "estimated_distance_km": null,
+        "estimated_elevation_m": null,
+        "is_hard_day": false,
+        "is_rest_day": false,
+        "purpose": "Build aerobic consistency while keeping fatigue low.",
+        "session_type": "easy",
+        "signal_ids": [],
+        "target_intensity": "easy",
+        "terrain": "trail",
+        "title": "Easy run",
+        "workout": "21 min easy run at conversational effort."
+      }
+    ],
+    "weekly_totals": {
+      "planned_distance_km": null,
+      "planned_elevation_m": null,
+      "planned_moving_time_hours": 4.07
+    }
+  },
+  "readiness": {
+    "rationale": "Deterministic readiness: fatigued (score 43.0). The athlete is currently in a fatigued readiness status, indicated by a readiness score of 43 out of 100 and an overreach risk score of 69, which is considered high. This reflects meaningful fatigue relative to the athlete’s baseline, despite some recent recovery signals indicating stability or improvement. The recent 7-day load (5.1 hours) is manageable compared to the 28-day baseline (21.92 hours), but the overall recovery signals suggest room for further improvement. The athlete’s recent training has been characterized by a mix of easy and cross-training sessions, with one long run of 91 minutes, which aligns with the structured plan but does not provide enough evidence to warrant a higher intensity or longer session without risking overtraining.",
+    "signal_ids": [
+      "forecast.readiness.status",
+      "forecast.readiness.score",
+      "forecast.overreach_risk.level",
+      "forecast.overreach_risk.score"
+    ],
+    "status": "fatigued"
+  },
+  "recovery": {
+    "actions": [
+      "Continue prioritizing easy sessions and cross-training to support aerobic development and recovery.",
+      "Monitor sleep duration and quality closely, aiming for at least 7 hours per night.",
+      "Maintain a consistent bedtime routine to support circadian rhythms and recovery.",
+      "Consider incorporating short, active recovery sessions (e.g., walking, light stretching) between workouts to enhance recovery.",
+      "Focus on active recovery techniques such as foam rolling, massage, and gentle yoga to aid muscle recovery and flexibility.",
+      "Ensure adequate hydration and nutrition to support recovery processes.",
+      "Avoid excessive stress and ensure sufficient downtime outside of training to promote overall well-being."
+    ],
+    "signal_ids": [
+      "forecast.readiness.status",
+      "forecast.readiness.score",
+      "forecast.overreach_risk.level",
+      "forecast.overreach_risk.score",
+      "recovery.last7.sleep_hours_mean",
+      "recovery.last7.hrv_mean",
+      "recovery.last7.rhr_mean"
+    ]
+  },
+  "risks": [
+    {
+      "message": "The athlete is currently in a fatigued readiness status, which increases the risk of overtraining and injury. It is important to adhere to the prescribed training load and recovery protocols to mitigate these risks.",
+      "severity": "low",
+      "signal_ids": [
+        "forecast.readiness.status",
+        "forecast.readiness.score",
+        "forecast.overreach_risk.level",
+        "forecast.overreach_risk.score"
+      ]
+    }
+  ],
+  "snapshot": {
+    "baseline28": {
+      "activity_count": "24",
+      "distance_km": "177.8",
+      "elevation_m": "6348.5",
+      "hrv_mean": "",
+      "moving_time_hours": "21.92",
+      "rhr_mean": "",
+      "sleep_hours_mean": ""
+    },
+    "last7": {
+      "activity_count": "6",
+      "distance_km": "41.3",
+      "elevation_m": "1478",
+      "hrv_mean": "",
+      "moving_time_hours": "5.1",
+      "rhr_mean": "",
+      "sleep_hours_mean": ""
+    },
+    "notes": "Last 7 days: 6 activities, 41.3 km, 5.1 h moving time, 1478 m gain. Baseline last 28 available days: 24 activities, 177.8 km, 21.92 h moving time, 6348.5 m gain."
+  }
+}

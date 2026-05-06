@@ -1,0 +1,88 @@
+{
+  "plan_id": "ab_A4__r_low__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s004",
+  "fixture_id": "ab_A4__r_low__rc_high__ph_base",
+  "athlete_band": "A4",
+  "readiness": "low",
+  "recovery_capability": "high",
+  "race_phase": "base",
+  "plan_days": 7,
+  "style": "trailrunning",
+  "arm": "llm",
+  "source_model": "google/gemma-3-4b-it",
+  "explainer_model": "Qwen/Qwen2.5-3B-Instruct",
+  "actual_explainer_model": "Qwen/Qwen2.5-3B-Instruct",
+  "explainer_model_verified": true,
+  "generation_pipeline": "llm_two_stage",
+  "runtime_backend": "trailtraining.llm.coach.run_coach_brief",
+  "runtime_metadata": {
+    "source_base_url": "http://127.0.0.1:8773/v1",
+    "explainer_base_url": "http://127.0.0.1:8774/v1",
+    "judge_base_url": "http://127.0.0.1:8774/v1",
+    "using_local_base_url": true,
+    "default_patch_stage": "judge",
+    "source_model": "google/gemma-3-4b-it",
+    "actual_source_model": "google/gemma-3-4b-it",
+    "actual_explainer_model": "Qwen/Qwen2.5-3B-Instruct",
+    "explainer_model_verified": true,
+    "source_temperature": 0.7,
+    "explainer_temperature": 0.0,
+    "seed": 4,
+    "structural_lifestyle_notes_present": true,
+    "structural_lifestyle_notes_chars": 2146,
+    "artifact_lifestyle_notes_chars": 267,
+    "TRAILTRAINING_TWO_STAGE_PLAN": "1",
+    "generation_condition": "gen_src_t070__exp_t000",
+    "athlete_band": "A4",
+    "readiness": "low",
+    "recovery_capability": "high",
+    "race_phase": "base",
+    "artifact_normalization": {
+      "normalizer_version": "artifact-presentation-normalizer-v1",
+      "normalized_at": "2026-05-05T15:17:21.911362+00:00",
+      "original_artifact_sha256": "6ddee50477311ce61cf31ceed12f2e004d6075b57d68ac4ae528d80fb867101b",
+      "normalized_artifact_sha256": "53a42fafb57351ffce71993a018195d48a7a4918cd6acc4a62d5b818f0327e54",
+      "changed_fields": [
+        {
+          "path": "$.plan.days[1].title",
+          "old": "Day 2",
+          "new": "Aerobic run",
+          "reason": "generic_day_title"
+        },
+        {
+          "path": "$.plan.days[1].purpose",
+          "old": "No structured training planned today due to the athlete's current readiness status. The planned duration of 0 minutes ensures the athlete gets rest and allows for full recovery. The signal_ids [load.last7.sleep_days_with_data] and [forecast.recovery_capability.sleep_days_7d] provide context for the planned rest relative to recent and recovery capability.",
+          "new": "Develop aerobic durability while keeping effort controlled.",
+          "reason": "field_primary_label_rest_mismatches_session_type_aerobic"
+        },
+        {
+          "path": "$.plan.days[5].title",
+          "old": "Aerobic run",
+          "new": "Long run",
+          "reason": "title_session_mismatch"
+        },
+        {
+          "path": "$.plan.days[6].title",
+          "old": "Long run",
+          "new": "Easy run",
+          "reason": "title_session_mismatch"
+        },
+        {
+          "path": "$.plan.days[6].purpose",
+          "old": "To maintain high aerobic development and build race-relevant durability, the long run today is essential. The planned distance of 174 km aligns with the athlete's recent load and the need to sustain high training quality. The signal_ids [load.last7.distance_km] and [load.baseline28.distance_km] provide context for the planned distance relative to recent and baseline levels.",
+          "new": "Support aerobic consistency without adding excessive fatigue.",
+          "reason": "field_primary_label_long_mismatches_session_type_easy"
+        }
+      ],
+      "warnings": [],
+      "errors": [],
+      "score_relevant_projection_unchanged": true
+    }
+  },
+  "source_temperature": 0.7,
+  "explainer_temperature": 0.0,
+  "generation_condition": "gen_src_t070__exp_t000",
+  "seed": 4,
+  "generated_at": "2026-05-05T09:16:41.095817+00:00",
+  "plan_path": "artifacts/gen_src_t070_exp_t000/full_gemma3/plans/ab_A4__r_low__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s004.json",
+  "deterministic_score": null
+}

@@ -1,0 +1,491 @@
+{
+  "citations": [
+    {
+      "citation_id": "c1",
+      "date_range": "2026-03-17..2026-03-17",
+      "signal_id": "forecast.recovery_capability.label",
+      "source": "readiness_and_risk_forecast.json:result.inputs.recovery_capability_label",
+      "value": "I have load + sleep + resting HR + HRV"
+    },
+    {
+      "citation_id": "c2",
+      "date_range": "2026-03-17..2026-03-17",
+      "signal_id": "forecast.recovery_capability.key",
+      "source": "readiness_and_risk_forecast.json:result.inputs.recovery_capability_key",
+      "value": "load_sleep_resting_hr_hrv"
+    },
+    {
+      "citation_id": "c3",
+      "date_range": "2026-03-17..2026-03-17",
+      "signal_id": "forecast.readiness.status",
+      "source": "readiness_and_risk_forecast.json:result.readiness.status",
+      "value": "primed"
+    },
+    {
+      "citation_id": "c4",
+      "date_range": "2026-03-17..2026-03-17",
+      "signal_id": "forecast.readiness.score",
+      "source": "readiness_and_risk_forecast.json:result.readiness.score",
+      "value": "81.0"
+    },
+    {
+      "citation_id": "c5",
+      "date_range": "2026-03-17..2026-03-17",
+      "signal_id": "forecast.recovery_capability.sleep_days_7d",
+      "source": "readiness_and_risk_forecast.json:result.inputs.sleep_days_7d",
+      "value": "7"
+    },
+    {
+      "citation_id": "c6",
+      "date_range": "2026-03-17..2026-03-17",
+      "signal_id": "forecast.recovery_capability.resting_hr_days_7d",
+      "source": "readiness_and_risk_forecast.json:result.inputs.resting_hr_days_7d",
+      "value": "7"
+    },
+    {
+      "citation_id": "c7",
+      "date_range": "2026-03-17..2026-03-17",
+      "signal_id": "forecast.recovery_capability.hrv_days_7d",
+      "source": "readiness_and_risk_forecast.json:result.inputs.hrv_days_7d",
+      "value": "7"
+    }
+  ],
+  "claim_attributions": [
+    {
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c5",
+        "c6",
+        "c7"
+      ],
+      "claim_id": "cl1",
+      "claim_text": "Deterministic readiness: primed (score 81.0). The athlete is primed based on recent recovery and readiness scores, indicating they are ready for structured training without risking overtraining. The recent 7-day load is manageable compared to the 28-day baseline, and there are no signs of fatigue stacking. The athlete’s profile suggests they are developing recreational, which allows for some flexibility in training structure while maintaining freshness and specificity.",
+      "field_path": "readiness.rationale",
+      "signal_ids": [
+        "forecast.recovery_capability.label",
+        "forecast.recovery_capability.key",
+        "forecast.readiness.status",
+        "forecast.readiness.score",
+        "forecast.recovery_capability.sleep_days_7d",
+        "forecast.recovery_capability.resting_hr_days_7d",
+        "forecast.recovery_capability.hrv_days_7d"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c5",
+        "c6",
+        "c7"
+      ],
+      "claim_id": "cl2",
+      "claim_text": "Rest day. No structured training.",
+      "field_path": "plan.days[0].purpose",
+      "signal_ids": [
+        "forecast.recovery_capability.label",
+        "forecast.recovery_capability.key",
+        "forecast.readiness.status",
+        "forecast.readiness.score",
+        "forecast.recovery_capability.sleep_days_7d",
+        "forecast.recovery_capability.resting_hr_days_7d",
+        "forecast.recovery_capability.hrv_days_7d"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c5",
+        "c6",
+        "c7"
+      ],
+      "claim_id": "cl3",
+      "claim_text": "Rest day. No structured training.",
+      "field_path": "plan.days[1].purpose",
+      "signal_ids": [
+        "forecast.recovery_capability.label",
+        "forecast.recovery_capability.key",
+        "forecast.readiness.status",
+        "forecast.readiness.score",
+        "forecast.recovery_capability.sleep_days_7d",
+        "forecast.recovery_capability.resting_hr_days_7d",
+        "forecast.recovery_capability.hrv_days_7d"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c5",
+        "c6",
+        "c7"
+      ],
+      "claim_id": "cl4",
+      "claim_text": "Rest day. No structured training.",
+      "field_path": "plan.days[2].purpose",
+      "signal_ids": [
+        "forecast.recovery_capability.label",
+        "forecast.recovery_capability.key",
+        "forecast.readiness.status",
+        "forecast.readiness.score",
+        "forecast.recovery_capability.sleep_days_7d",
+        "forecast.recovery_capability.resting_hr_days_7d",
+        "forecast.recovery_capability.hrv_days_7d"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c5",
+        "c6",
+        "c7"
+      ],
+      "claim_id": "cl5",
+      "claim_text": "Rest day. No structured training.",
+      "field_path": "plan.days[3].purpose",
+      "signal_ids": [
+        "forecast.recovery_capability.label",
+        "forecast.recovery_capability.key",
+        "forecast.readiness.status",
+        "forecast.readiness.score",
+        "forecast.recovery_capability.sleep_days_7d",
+        "forecast.recovery_capability.resting_hr_days_7d",
+        "forecast.recovery_capability.hrv_days_7d"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c5",
+        "c6",
+        "c7"
+      ],
+      "claim_id": "cl6",
+      "claim_text": "Rest day. No structured training.",
+      "field_path": "plan.days[4].purpose",
+      "signal_ids": [
+        "forecast.recovery_capability.label",
+        "forecast.recovery_capability.key",
+        "forecast.readiness.status",
+        "forecast.readiness.score",
+        "forecast.recovery_capability.sleep_days_7d",
+        "forecast.recovery_capability.resting_hr_days_7d",
+        "forecast.recovery_capability.hrv_days_7d"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c5",
+        "c6",
+        "c7"
+      ],
+      "claim_id": "cl7",
+      "claim_text": "Rest day. No structured training.",
+      "field_path": "plan.days[5].purpose",
+      "signal_ids": [
+        "forecast.recovery_capability.label",
+        "forecast.recovery_capability.key",
+        "forecast.readiness.status",
+        "forecast.readiness.score",
+        "forecast.recovery_capability.sleep_days_7d",
+        "forecast.recovery_capability.resting_hr_days_7d",
+        "forecast.recovery_capability.hrv_days_7d"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c5",
+        "c6",
+        "c7"
+      ],
+      "claim_id": "cl8",
+      "claim_text": "Rest day. No structured training.",
+      "field_path": "plan.days[6].purpose",
+      "signal_ids": [
+        "forecast.recovery_capability.label",
+        "forecast.recovery_capability.key",
+        "forecast.readiness.status",
+        "forecast.readiness.score",
+        "forecast.recovery_capability.sleep_days_7d",
+        "forecast.recovery_capability.resting_hr_days_7d",
+        "forecast.recovery_capability.hrv_days_7d"
+      ],
+      "support_level": "supported"
+    }
+  ],
+  "data_notes": [
+    "The athlete has a synthetic profile with a developing recreational band, indicating they are building their trail-running fitness. Recent training shows a mix of easy and moderate efforts, with no signs of fatigue or overtraining.",
+    "Readiness status was set from deterministic readiness_and_risk_forecast.json.",
+    "Guardrails: enforced ramp rate (max_ramp_pct=10.0%). last7_hours=5.680, allowed_hours=6.248, planned_hours=4.800."
+  ],
+  "effective_constraints": {
+    "allowed_week1_hours": 6.248,
+    "effective_max_consecutive_hard": 2,
+    "effective_max_hard_per_7d": 3,
+    "effective_max_ramp_pct": 10.0,
+    "lifestyle_notes": "Bias toward race specificity, freshness, and avoiding unnecessary fatigue accumulation. Athlete profile: Developing recreational. Training history context: Modest recent consistency, moderate but not high load, some structure tolerated.",
+    "min_rest_per_7d": 1,
+    "overreach_risk_level": "low",
+    "readiness_status": "primed",
+    "reasons": [
+      "lifestyle constraints apply"
+    ],
+    "recovery_capability_key": "load_sleep_resting_hr_hrv"
+  },
+  "meta": {
+    "lifestyle_notes": "Bias toward race specificity, freshness, and avoiding unnecessary fatigue accumulation. Athlete profile: Developing recreational. Training history context: Modest recent consistency, moderate but not high load, some structure tolerated.",
+    "plan_days": 7,
+    "plan_start": "2026-03-11",
+    "primary_goal": "to build consistent trail-running fitness with manageable structure",
+    "style": "trailrunning",
+    "today": "2026-03-17"
+  },
+  "plan": {
+    "days": [
+      {
+        "date": "2026-03-11",
+        "duration_minutes": 0,
+        "estimated_distance_km": null,
+        "estimated_elevation_m": null,
+        "is_hard_day": false,
+        "is_rest_day": true,
+        "purpose": "Recover and maintain freshness.",
+        "session_type": "rest",
+        "signal_ids": [
+          "forecast.recovery_capability.label",
+          "forecast.recovery_capability.key",
+          "forecast.readiness.status",
+          "forecast.readiness.score",
+          "forecast.recovery_capability.sleep_days_7d",
+          "forecast.recovery_capability.resting_hr_days_7d",
+          "forecast.recovery_capability.hrv_days_7d"
+        ],
+        "target_intensity": "rest",
+        "terrain": "n/a",
+        "title": "Rest day",
+        "workout": "Rest day. No structured training."
+      },
+      {
+        "date": "2026-03-12",
+        "duration_minutes": 46,
+        "estimated_distance_km": null,
+        "estimated_elevation_m": null,
+        "is_hard_day": false,
+        "is_rest_day": false,
+        "purpose": "Complete the planned easy run without adding extra fatigue.",
+        "session_type": "easy",
+        "signal_ids": [
+          "forecast.recovery_capability.label",
+          "forecast.recovery_capability.key",
+          "forecast.readiness.status",
+          "forecast.readiness.score",
+          "forecast.recovery_capability.sleep_days_7d",
+          "forecast.recovery_capability.resting_hr_days_7d",
+          "forecast.recovery_capability.hrv_days_7d"
+        ],
+        "target_intensity": "easy",
+        "terrain": "trail",
+        "title": "Easy run",
+        "workout": "Easy trail run. Focus on smooth, relaxed movement."
+      },
+      {
+        "date": "2026-03-13",
+        "duration_minutes": 59,
+        "estimated_distance_km": null,
+        "estimated_elevation_m": null,
+        "is_hard_day": false,
+        "is_rest_day": false,
+        "purpose": "Complete the planned easy run without adding extra fatigue.",
+        "session_type": "easy",
+        "signal_ids": [
+          "forecast.recovery_capability.label",
+          "forecast.recovery_capability.key",
+          "forecast.readiness.status",
+          "forecast.readiness.score",
+          "forecast.recovery_capability.sleep_days_7d",
+          "forecast.recovery_capability.resting_hr_days_7d",
+          "forecast.recovery_capability.hrv_days_7d"
+        ],
+        "target_intensity": "easy",
+        "terrain": "trail",
+        "title": "Easy run",
+        "workout": "Easy trail run. Focus on smooth, relaxed movement."
+      },
+      {
+        "date": "2026-03-14",
+        "duration_minutes": 56,
+        "estimated_distance_km": null,
+        "estimated_elevation_m": null,
+        "is_hard_day": false,
+        "is_rest_day": false,
+        "purpose": "Complete the planned easy run without adding extra fatigue.",
+        "session_type": "easy",
+        "signal_ids": [
+          "forecast.recovery_capability.label",
+          "forecast.recovery_capability.key",
+          "forecast.readiness.status",
+          "forecast.readiness.score",
+          "forecast.recovery_capability.sleep_days_7d",
+          "forecast.recovery_capability.resting_hr_days_7d",
+          "forecast.recovery_capability.hrv_days_7d"
+        ],
+        "target_intensity": "easy",
+        "terrain": "trail",
+        "title": "Easy run",
+        "workout": "Easy trail run. Focus on smooth, relaxed movement."
+      },
+      {
+        "date": "2026-03-15",
+        "duration_minutes": 0,
+        "estimated_distance_km": null,
+        "estimated_elevation_m": null,
+        "is_hard_day": false,
+        "is_rest_day": true,
+        "purpose": "Recover and maintain freshness.",
+        "session_type": "rest",
+        "signal_ids": [
+          "forecast.recovery_capability.label",
+          "forecast.recovery_capability.key",
+          "forecast.readiness.status",
+          "forecast.readiness.score",
+          "forecast.recovery_capability.sleep_days_7d",
+          "forecast.recovery_capability.resting_hr_days_7d",
+          "forecast.recovery_capability.hrv_days_7d"
+        ],
+        "target_intensity": "rest",
+        "terrain": "n/a",
+        "title": "Rest day",
+        "workout": "Rest day. No structured training."
+      },
+      {
+        "date": "2026-03-16",
+        "duration_minutes": 63,
+        "estimated_distance_km": null,
+        "estimated_elevation_m": null,
+        "is_hard_day": false,
+        "is_rest_day": false,
+        "purpose": "Complete the planned easy run without adding extra fatigue.",
+        "session_type": "easy",
+        "signal_ids": [
+          "forecast.recovery_capability.label",
+          "forecast.recovery_capability.key",
+          "forecast.readiness.status",
+          "forecast.readiness.score",
+          "forecast.recovery_capability.sleep_days_7d",
+          "forecast.recovery_capability.resting_hr_days_7d",
+          "forecast.recovery_capability.hrv_days_7d"
+        ],
+        "target_intensity": "easy",
+        "terrain": "trail",
+        "title": "Easy run",
+        "workout": "Easy trail run. Focus on smooth, relaxed movement."
+      },
+      {
+        "date": "2026-03-17",
+        "duration_minutes": 67,
+        "estimated_distance_km": null,
+        "estimated_elevation_m": null,
+        "is_hard_day": true,
+        "is_rest_day": false,
+        "purpose": "Complete the planned tempo session without adding extra fatigue.",
+        "session_type": "tempo",
+        "signal_ids": [
+          "forecast.recovery_capability.label",
+          "forecast.recovery_capability.key",
+          "forecast.readiness.status",
+          "forecast.readiness.score",
+          "forecast.recovery_capability.sleep_days_7d",
+          "forecast.recovery_capability.resting_hr_days_7d",
+          "forecast.recovery_capability.hrv_days_7d"
+        ],
+        "target_intensity": "moderate",
+        "terrain": "trail",
+        "title": "Tempo run",
+        "workout": "Tempo run. Maintain steady pace with slight effort."
+      }
+    ],
+    "weekly_totals": {
+      "planned_distance_km": null,
+      "planned_elevation_m": null,
+      "planned_moving_time_hours": 4.8
+    }
+  },
+  "readiness": {
+    "rationale": "Deterministic readiness: primed (score 81.0). The athlete is primed based on recent recovery and readiness scores, indicating they are ready for structured training without risking overtraining. The recent 7-day load is manageable compared to the 28-day baseline, and there are no signs of fatigue stacking. The athlete’s profile suggests they are developing recreational, which allows for some flexibility in training structure while maintaining freshness and specificity.",
+    "signal_ids": [
+      "forecast.recovery_capability.label",
+      "forecast.recovery_capability.key",
+      "forecast.readiness.status",
+      "forecast.readiness.score",
+      "forecast.recovery_capability.sleep_days_7d",
+      "forecast.recovery_capability.resting_hr_days_7d",
+      "forecast.recovery_capability.hrv_days_7d"
+    ],
+    "status": "primed"
+  },
+  "recovery": {
+    "actions": [],
+    "signal_ids": [
+      "forecast.recovery_capability.label",
+      "forecast.recovery_capability.key",
+      "forecast.readiness.status",
+      "forecast.readiness.score",
+      "forecast.recovery_capability.sleep_days_7d",
+      "forecast.recovery_capability.resting_hr_days_7d",
+      "forecast.recovery_capability.hrv_days_7d"
+    ]
+  },
+  "risks": [],
+  "snapshot": {
+    "baseline28": {
+      "activity_count": "24",
+      "distance_km": "197.9",
+      "elevation_m": "6251.6",
+      "hrv_mean": "",
+      "moving_time_hours": "24.4",
+      "rhr_mean": "",
+      "sleep_hours_mean": ""
+    },
+    "last7": {
+      "activity_count": "6",
+      "distance_km": "45.5",
+      "elevation_m": "1426.1",
+      "hrv_mean": "",
+      "moving_time_hours": "5.7",
+      "rhr_mean": "",
+      "sleep_hours_mean": ""
+    },
+    "notes": "The athlete covered 45.5 km in the last 7 days. Moving time was 5.7 hours. Elevation gain was 1426.1 meters."
+  }
+}

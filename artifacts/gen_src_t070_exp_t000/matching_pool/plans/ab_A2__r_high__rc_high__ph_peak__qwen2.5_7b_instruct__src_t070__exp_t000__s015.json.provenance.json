@@ -1,0 +1,82 @@
+{
+  "plan_id": "ab_A2__r_high__rc_high__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s015",
+  "fixture_id": "ab_A2__r_high__rc_high__ph_peak",
+  "athlete_band": "A2",
+  "readiness": "high",
+  "recovery_capability": "high",
+  "race_phase": "peak",
+  "plan_days": 7,
+  "style": "trailrunning",
+  "arm": "llm",
+  "source_model": "Qwen/Qwen2.5-7B-Instruct",
+  "explainer_model": "Qwen/Qwen2.5-3B-Instruct",
+  "actual_explainer_model": "Qwen/Qwen2.5-3B-Instruct",
+  "explainer_model_verified": true,
+  "generation_pipeline": "llm_two_stage",
+  "runtime_backend": "trailtraining.llm.coach.run_coach_brief",
+  "runtime_metadata": {
+    "source_base_url": "http://127.0.0.1:8773/v1",
+    "explainer_base_url": "http://127.0.0.1:8774/v1",
+    "judge_base_url": "http://127.0.0.1:8774/v1",
+    "using_local_base_url": true,
+    "default_patch_stage": "judge",
+    "source_model": "Qwen/Qwen2.5-7B-Instruct",
+    "actual_source_model": "Qwen/Qwen2.5-7B-Instruct",
+    "actual_explainer_model": "Qwen/Qwen2.5-3B-Instruct",
+    "explainer_model_verified": true,
+    "source_temperature": 0.7,
+    "explainer_temperature": 0.0,
+    "seed": 15,
+    "structural_lifestyle_notes_present": true,
+    "structural_lifestyle_notes_chars": 1506,
+    "artifact_lifestyle_notes_chars": 236,
+    "TRAILTRAINING_TWO_STAGE_PLAN": "1",
+    "generation_condition": "gen_src_t070__exp_t000",
+    "athlete_band": "A2",
+    "readiness": "high",
+    "recovery_capability": "high",
+    "race_phase": "peak",
+    "artifact_normalization": {
+      "normalizer_version": "artifact-presentation-normalizer-v1",
+      "normalized_at": "2026-05-05T15:17:21.463581+00:00",
+      "original_artifact_sha256": "8329fc12a6785d3d62cf6a8e30c28340b31e57c24243bd84915b04bf997209f1",
+      "normalized_artifact_sha256": "540653f35eae690a0463bc4f487ec2b6d39ce15021ee54f094ddc634da71d060",
+      "changed_fields": [
+        {
+          "path": "$.plan.days[1].title",
+          "old": "Strength session",
+          "new": "Long run",
+          "reason": "title_session_mismatch"
+        },
+        {
+          "path": "$.plan.days[2].title",
+          "old": "Tempo session",
+          "new": "Tempo run",
+          "reason": "title_session_mismatch"
+        },
+        {
+          "path": "$.plan.days[3].title",
+          "old": "Intervals",
+          "new": "Interval session",
+          "reason": "title_session_mismatch"
+        },
+        {
+          "path": "$.plan.days[5].title",
+          "old": "Long run",
+          "new": "Strength session",
+          "reason": "title_session_mismatch"
+        }
+      ],
+      "warnings": [],
+      "errors": [],
+      "score_relevant_projection_unchanged": true
+    }
+  },
+  "source_temperature": 0.7,
+  "explainer_temperature": 0.0,
+  "generation_condition": "gen_src_t070__exp_t000",
+  "seed": 15,
+  "generated_at": "2026-05-04T13:24:40.300450+00:00",
+  "plan_path": "artifacts/gen_src_t070_exp_t000/matching_pool/plans/ab_A2__r_high__rc_high__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s015.json",
+  "deterministic_score": 82.0
+}

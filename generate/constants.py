@@ -3,15 +3,24 @@ from __future__ import annotations
 
 EXPLAINER_MODEL_ID = "Qwen/Qwen2.5-3B-Instruct"
 
-# Two local source families for the generation arm.
 LLM_SOURCE_MODELS: list[str] = [
     "Qwen/Qwen2.5-7B-Instruct",
     "google/gemma-3-4b-it",
 ]
 
 PLAN_DAYS = 7
-MATCH_TOLERANCE = 1.0
-TARGET_PAIRS = 256
+
+# Structural-score tolerance. This is not the old TrailTraining score tolerance.
+# A two-point tolerance yielded at least 250 same-cell matches on the current
+# 1024-plan Qwen/Gemma/programmatic candidate pool while keeping small structural
+# score gaps. Re-audit if the structural score version changes.
+STRUCTURAL_MATCH_TOLERANCE = 2.0
+MATCH_TOLERANCE = STRUCTURAL_MATCH_TOLERANCE
+TARGET_PAIRS = 250
+FULL_STUDY_MIN_PAIRS = 250
+FULL_STUDY_EXACT_PAIRS = 250
+FULL_STUDY_REQUIRED_JUDGES = 4
+FULL_STUDY_REQUIRED_PAIRWISE_DOCUMENTS = 10000
 
 STUDY_STYLE = "trailrunning"
 DEFAULT_PRIMARY_GOAL = "to become a faster and more durable trail runner"
@@ -32,27 +41,24 @@ PAIRWISE_VIEW_CHOICES: tuple[str, ...] = (
     "canonical_masked",
 )
 
-# Revised 32-cell study uses an oversampling profile:
-#   * LLM arm: 6 plans per fixture per source model -> 12 raw attempts per cell total
-#   * Programmatic arm: 10 raw attempts per fixture
 DEFAULT_LLM_PLANS_PER_FIXTURE_PER_MODEL = 6
-DEFAULT_PROGRAMMATIC_PLANS_PER_FIXTURE = 10
+DEFAULT_PROGRAMMATIC_PLANS_PER_FIXTURE = 20
 
-TARGET_LLM_PLAN_COUNT = 256
-TARGET_PROGRAMMATIC_PLAN_COUNT = 256
+# Current retained candidate pool for the Qwen/Gemma study.
+TARGET_LLM_PLAN_COUNT = 384
+TARGET_PROGRAMMATIC_PLAN_COUNT = 640
 TARGET_TOTAL_PLAN_COUNT = TARGET_LLM_PLAN_COUNT + TARGET_PROGRAMMATIC_PLAN_COUNT
 
+# Structural-only feature distance weights. Do not include prose/narrative fields.
 MATCH_FEATURE_WEIGHTS: dict[str, float] = {
-    "total_minutes": 2.0,
-    "n_rest_days": 1.5,
-    "n_hard_days": 1.5,
-    "has_long_run": 1.0,
-    "max_day_minutes": 1.0,
-    "mean_day_minutes": 1.0,
-    "narrative_chars": 0.5,
-    "mean_workout_chars": 0.5,
-    "mean_purpose_chars": 0.5,
-    "n_data_notes": 0.5,
+    "total_minutes": 0.02,
+    "n_rest_days": 2.0,
+    "n_hard_days": 2.0,
+    "n_active_days": 1.0,
+    "n_long_runs": 2.0,
+    "n_quality_days": 2.0,
+    "max_day_minutes": 0.02,
+    "mean_day_minutes": 0.02,
 }
 
 PAIRWISE_TEXT_CHAR_LIMITS: dict[str, int] = {

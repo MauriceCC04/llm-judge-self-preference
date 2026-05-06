@@ -1,0 +1,376 @@
+{
+  "citations": [
+    {
+      "citation_id": "c1",
+      "date_range": "2026-03-17..2026-03-17",
+      "signal_id": "forecast.readiness.status",
+      "source": "readiness_and_risk_forecast.json:result.readiness.status",
+      "value": "primed"
+    },
+    {
+      "citation_id": "c2",
+      "date_range": "2026-03-17..2026-03-17",
+      "signal_id": "forecast.readiness.score",
+      "source": "readiness_and_risk_forecast.json:result.readiness.score",
+      "value": "81.0"
+    },
+    {
+      "citation_id": "c3",
+      "date_range": "2026-03-17..2026-03-17",
+      "signal_id": "forecast.recovery_capability.label",
+      "source": "readiness_and_risk_forecast.json:result.inputs.recovery_capability_label",
+      "value": "I only have training data"
+    },
+    {
+      "citation_id": "c4",
+      "date_range": "2026-03-17..2026-03-17",
+      "signal_id": "forecast.recovery_capability.sleep_days_7d",
+      "source": "readiness_and_risk_forecast.json:result.inputs.sleep_days_7d",
+      "value": "0"
+    },
+    {
+      "citation_id": "c5",
+      "date_range": "2026-03-17..2026-03-17",
+      "signal_id": "forecast.recovery_capability.resting_hr_days_7d",
+      "source": "readiness_and_risk_forecast.json:result.inputs.resting_hr_days_7d",
+      "value": "0"
+    },
+    {
+      "citation_id": "c6",
+      "date_range": "2026-03-17..2026-03-17",
+      "signal_id": "forecast.recovery_capability.hrv_days_7d",
+      "source": "readiness_and_risk_forecast.json:result.inputs.hrv_days_7d",
+      "value": "0"
+    },
+    {
+      "citation_id": "c7",
+      "date_range": "2026-03-17..2026-03-17",
+      "signal_id": "forecast.overreach_risk.level",
+      "source": "readiness_and_risk_forecast.json:result.overreach_risk.level",
+      "value": "low"
+    },
+    {
+      "citation_id": "c8",
+      "date_range": "2026-03-17..2026-03-17",
+      "signal_id": "forecast.overreach_risk.score",
+      "source": "readiness_and_risk_forecast.json:result.overreach_risk.score",
+      "value": "24.0"
+    }
+  ],
+  "claim_attributions": [
+    {
+      "citation_ids": [
+        "c1",
+        "c2"
+      ],
+      "claim_id": "cl1",
+      "claim_text": "Deterministic readiness: primed (score 81.0). The athlete is primed for training based on recent recovery and readiness scores. The recent 7-day period shows consistent training with manageable load, indicating a solid foundation for continued progress. The athlete’s profile suggests a developing recreational status, which aligns well with the current training approach. The recent training load is within sustainable limits for this athlete, and the freshness indicators suggest a race-specific sharpening phase, making today a good day to continue building trail-running fitness without risking overtraining.",
+      "field_path": "readiness.rationale",
+      "signal_ids": [
+        "forecast.readiness.status",
+        "forecast.readiness.score"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c3",
+        "c4",
+        "c5",
+        "c6"
+      ],
+      "claim_id": "cl2",
+      "claim_text": "Continue with the current training load and structure. Maintain a focus on freshness and specificity. Ensure adequate hydration and nutrition to support recovery. Keep a close eye on sleep and heart rate variability to monitor any signs of fatigue or overtraining. Rest days should be used strategically to allow full recovery between sessions.",
+      "field_path": "recovery.actions[0]",
+      "signal_ids": [
+        "forecast.recovery_capability.label",
+        "forecast.recovery_capability.sleep_days_7d",
+        "forecast.recovery_capability.resting_hr_days_7d",
+        "forecast.recovery_capability.hrv_days_7d"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c3",
+        "c4",
+        "c5",
+        "c6"
+      ],
+      "claim_id": "cl3",
+      "claim_text": "Monitor sleep duration and quality closely. Aim for at least 7 hours of sleep per night. Focus on improving sleep hygiene and addressing any disruptions that may affect recovery.",
+      "field_path": "recovery.actions[1]",
+      "signal_ids": [
+        "forecast.recovery_capability.label",
+        "forecast.recovery_capability.sleep_days_7d",
+        "forecast.recovery_capability.resting_hr_days_7d",
+        "forecast.recovery_capability.hrv_days_7d"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c3",
+        "c4",
+        "c5",
+        "c6"
+      ],
+      "claim_id": "cl4",
+      "claim_text": "Maintain a balanced diet rich in carbohydrates, proteins, and healthy fats. Hydration is crucial, especially during training sessions. Avoid excessive caffeine and alcohol, which can disrupt sleep and recovery.",
+      "field_path": "recovery.actions[2]",
+      "signal_ids": [
+        "forecast.recovery_capability.label",
+        "forecast.recovery_capability.sleep_days_7d",
+        "forecast.recovery_capability.resting_hr_days_7d",
+        "forecast.recovery_capability.hrv_days_7d"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c3",
+        "c4",
+        "c5",
+        "c6"
+      ],
+      "claim_id": "cl5",
+      "claim_text": "Consider incorporating active recovery methods such as light stretching, foam rolling, or short walks to aid in recovery. These can help reduce muscle soreness and improve flexibility.",
+      "field_path": "recovery.actions[3]",
+      "signal_ids": [
+        "forecast.recovery_capability.label",
+        "forecast.recovery_capability.sleep_days_7d",
+        "forecast.recovery_capability.resting_hr_days_7d",
+        "forecast.recovery_capability.hrv_days_7d"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c3",
+        "c4",
+        "c5",
+        "c6"
+      ],
+      "claim_id": "cl6",
+      "claim_text": "Keep a log of your training sessions and recovery practices. This will help you identify patterns and areas for improvement. Regularly review your progress and adjust your training plan as needed to ensure optimal recovery and performance.",
+      "field_path": "recovery.actions[4]",
+      "signal_ids": [
+        "forecast.recovery_capability.label",
+        "forecast.recovery_capability.sleep_days_7d",
+        "forecast.recovery_capability.resting_hr_days_7d",
+        "forecast.recovery_capability.hrv_days_7d"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c7",
+        "c8"
+      ],
+      "claim_id": "cl7",
+      "claim_text": "The athlete is primed for training, but there is a risk of overtraining if the current training load is maintained for extended periods without proper rest and recovery. It is important to balance intensity and volume to prevent fatigue and injury. Monitor sleep, heart rate variability, and resting heart rate closely to detect any signs of overtraining. If necessary, consider reducing the training load or adding rest days to ensure sustained performance and recovery.",
+      "field_path": "risks[0].message",
+      "signal_ids": [
+        "forecast.overreach_risk.level",
+        "forecast.overreach_risk.score"
+      ],
+      "support_level": "supported"
+    }
+  ],
+  "data_notes": [
+    "The athlete's recent training load is within sustainable limits for their profile. However, due to the lack of reliable recovery telemetry, specific sleep and heart rate data are not available for detailed analysis. The athlete's recent training load is manageable given their current fitness level and recovery capacity.",
+    "Readiness status was set from deterministic readiness_and_risk_forecast.json.",
+    "Guardrails: enforced ramp rate (max_ramp_pct=5.0%). last7_hours=5.680, allowed_hours=5.964, planned_hours=3.800."
+  ],
+  "effective_constraints": {
+    "allowed_week1_hours": 5.9639999999999995,
+    "effective_max_consecutive_hard": 2,
+    "effective_max_hard_per_7d": 2,
+    "effective_max_ramp_pct": 5.0,
+    "lifestyle_notes": "Bias toward race specificity, freshness, and avoiding unnecessary fatigue accumulation. Athlete profile: Developing recreational. Training history context: Modest recent consistency, moderate but not high load, some structure tolerated.",
+    "min_rest_per_7d": 1,
+    "overreach_risk_level": "low",
+    "readiness_status": "primed",
+    "reasons": [
+      "recovery telemetry is sparse",
+      "lifestyle constraints apply"
+    ],
+    "recovery_capability_key": "load_only"
+  },
+  "meta": {
+    "lifestyle_notes": "Bias toward race specificity, freshness, and avoiding unnecessary fatigue accumulation. Athlete profile: Developing recreational. Training history context: Modest recent consistency, moderate but not high load, some structure tolerated.",
+    "plan_days": 7,
+    "plan_start": "2026-03-18",
+    "primary_goal": "to build consistent trail-running fitness with manageable structure",
+    "style": "trailrunning",
+    "today": "2026-03-17"
+  },
+  "plan": {
+    "days": [
+      {
+        "date": "2026-03-18",
+        "duration_minutes": 37,
+        "estimated_distance_km": null,
+        "estimated_elevation_m": null,
+        "is_hard_day": false,
+        "is_rest_day": false,
+        "purpose": "",
+        "session_type": "easy",
+        "signal_ids": [],
+        "target_intensity": "easy",
+        "terrain": "trail",
+        "title": "Day 1",
+        "workout": "37 min easy session."
+      },
+      {
+        "date": "2026-03-19",
+        "duration_minutes": 48,
+        "estimated_distance_km": null,
+        "estimated_elevation_m": null,
+        "is_hard_day": false,
+        "is_rest_day": false,
+        "purpose": "",
+        "session_type": "cross",
+        "signal_ids": [],
+        "target_intensity": "easy",
+        "terrain": "road",
+        "title": "Day 2",
+        "workout": "48 min cross session."
+      },
+      {
+        "date": "2026-03-20",
+        "duration_minutes": 47,
+        "estimated_distance_km": null,
+        "estimated_elevation_m": null,
+        "is_hard_day": false,
+        "is_rest_day": false,
+        "purpose": "",
+        "session_type": "easy",
+        "signal_ids": [],
+        "target_intensity": "easy",
+        "terrain": "trail",
+        "title": "Day 3",
+        "workout": "47 min easy session."
+      },
+      {
+        "date": "2026-03-21",
+        "duration_minutes": 0,
+        "estimated_distance_km": null,
+        "estimated_elevation_m": null,
+        "is_hard_day": false,
+        "is_rest_day": true,
+        "purpose": "",
+        "session_type": "rest",
+        "signal_ids": [],
+        "target_intensity": "rest",
+        "terrain": "n/a",
+        "title": "Rest day",
+        "workout": "Rest day. No structured training."
+      },
+      {
+        "date": "2026-03-22",
+        "duration_minutes": 0,
+        "estimated_distance_km": null,
+        "estimated_elevation_m": null,
+        "is_hard_day": false,
+        "is_rest_day": true,
+        "purpose": "",
+        "session_type": "rest",
+        "signal_ids": [],
+        "target_intensity": "rest",
+        "terrain": "n/a",
+        "title": "Rest day",
+        "workout": "Rest day. No structured training."
+      },
+      {
+        "date": "2026-03-23",
+        "duration_minutes": 75,
+        "estimated_distance_km": null,
+        "estimated_elevation_m": null,
+        "is_hard_day": false,
+        "is_rest_day": false,
+        "purpose": "",
+        "session_type": "long",
+        "signal_ids": [],
+        "target_intensity": "easy",
+        "terrain": "trail",
+        "title": "Day 6",
+        "workout": "75 min long session."
+      },
+      {
+        "date": "2026-03-24",
+        "duration_minutes": 21,
+        "estimated_distance_km": null,
+        "estimated_elevation_m": null,
+        "is_hard_day": false,
+        "is_rest_day": false,
+        "purpose": "",
+        "session_type": "easy",
+        "signal_ids": [],
+        "target_intensity": "easy",
+        "terrain": "trail",
+        "title": "Day 7",
+        "workout": "21 min easy session."
+      }
+    ],
+    "weekly_totals": {
+      "planned_distance_km": null,
+      "planned_elevation_m": null,
+      "planned_moving_time_hours": 3.8
+    }
+  },
+  "readiness": {
+    "rationale": "Deterministic readiness: primed (score 81.0). The athlete is primed for training based on recent recovery and readiness scores. The recent 7-day period shows consistent training with manageable load, indicating a solid foundation for continued progress. The athlete’s profile suggests a developing recreational status, which aligns well with the current training approach. The recent training load is within sustainable limits for this athlete, and the freshness indicators suggest a race-specific sharpening phase, making today a good day to continue building trail-running fitness without risking overtraining.",
+    "signal_ids": [
+      "forecast.readiness.status",
+      "forecast.readiness.score"
+    ],
+    "status": "primed"
+  },
+  "recovery": {
+    "actions": [
+      "Continue with the current training load and structure. Maintain a focus on freshness and specificity. Ensure adequate hydration and nutrition to support recovery. Keep a close eye on sleep and heart rate variability to monitor any signs of fatigue or overtraining. Rest days should be used strategically to allow full recovery between sessions.",
+      "Monitor sleep duration and quality closely. Aim for at least 7 hours of sleep per night. Focus on improving sleep hygiene and addressing any disruptions that may affect recovery.",
+      "Maintain a balanced diet rich in carbohydrates, proteins, and healthy fats. Hydration is crucial, especially during training sessions. Avoid excessive caffeine and alcohol, which can disrupt sleep and recovery.",
+      "Consider incorporating active recovery methods such as light stretching, foam rolling, or short walks to aid in recovery. These can help reduce muscle soreness and improve flexibility.",
+      "Keep a log of your training sessions and recovery practices. This will help you identify patterns and areas for improvement. Regularly review your progress and adjust your training plan as needed to ensure optimal recovery and performance."
+    ],
+    "signal_ids": [
+      "forecast.recovery_capability.label",
+      "forecast.recovery_capability.sleep_days_7d",
+      "forecast.recovery_capability.resting_hr_days_7d",
+      "forecast.recovery_capability.hrv_days_7d"
+    ]
+  },
+  "risks": [
+    {
+      "message": "The athlete is primed for training, but there is a risk of overtraining if the current training load is maintained for extended periods without proper rest and recovery. It is important to balance intensity and volume to prevent fatigue and injury. Monitor sleep, heart rate variability, and resting heart rate closely to detect any signs of overtraining. If necessary, consider reducing the training load or adding rest days to ensure sustained performance and recovery.",
+      "severity": "low",
+      "signal_ids": [
+        "forecast.overreach_risk.level",
+        "forecast.overreach_risk.score"
+      ]
+    }
+  ],
+  "snapshot": {
+    "baseline28": {
+      "activity_count": "24",
+      "distance_km": "197.9",
+      "elevation_m": "6251.6",
+      "hrv_mean": "",
+      "moving_time_hours": "24.37",
+      "rhr_mean": "",
+      "sleep_hours_mean": ""
+    },
+    "last7": {
+      "activity_count": "6",
+      "distance_km": "45.5",
+      "elevation_m": "1426.1",
+      "hrv_mean": "",
+      "moving_time_hours": "5.68",
+      "rhr_mean": "",
+      "sleep_hours_mean": ""
+    },
+    "notes": "Last 7 days: 6 activities, 45.5 km, 5.68 h moving time, 1426.1 m gain. Baseline last 28 available days: 24 activities, 197.9 km, 24.37 h moving time, 6251.6 m gain."
+  }
+}

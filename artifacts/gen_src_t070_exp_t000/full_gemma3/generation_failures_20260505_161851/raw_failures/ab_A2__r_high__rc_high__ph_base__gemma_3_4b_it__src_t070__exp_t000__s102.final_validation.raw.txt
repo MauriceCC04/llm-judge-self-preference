@@ -1,0 +1,536 @@
+{
+  "meta": {
+    "today": "2026-03-17",
+    "plan_start": "2026-03-11",
+    "plan_days": 7,
+    "style": "trailrunning",
+    "primary_goal": "to build consistent trail-running fitness with manageable structure",
+    "lifestyle_notes": "Prioritize consistent aerobic development, hill strength, and durable weekly routine. Athlete profile: Developing recreational. Training history context: Modest recent consistency, moderate but not high load, some structure tolerated."
+  },
+  "snapshot": {
+    "last7": {
+      "distance_km": "60.4",
+      "moving_time_hours": "7",
+      "elevation_m": "2254.6",
+      "activity_count": "6",
+      "sleep_hours_mean": "",
+      "hrv_mean": "",
+      "rhr_mean": ""
+    },
+    "baseline28": {
+      "distance_km": "225.6",
+      "moving_time_hours": "26.2",
+      "elevation_m": "8428.4",
+      "activity_count": "24",
+      "sleep_hours_mean": "",
+      "hrv_mean": "",
+      "rhr_mean": ""
+    },
+    "notes": "The athlete covered 60.4 km in the last 7 days. Moving time was 7 hours. Elevation gain was 2254.6 meters."
+  },
+  "readiness": {
+    "status": "primed",
+    "rationale": "Deterministic readiness: primed (score 77.0). The athlete is primed based on recent recovery and load metrics, indicating they are ready for another structured training session. The recent 7-day load is manageable and within the athlete's preparedness level, with no signs of overreaching. The athlete's recent aerobic and hill strength development aligns well with the primary goal of building consistent trail-running fitness with manageable structure.",
+    "signal_ids": [
+      "forecast.readiness.status",
+      "forecast.readiness.score",
+      "forecast.recovery_capability.label",
+      "forecast.recovery_capability.key"
+    ]
+  },
+  "plan": {
+    "weekly_totals": {
+      "planned_distance_km": null,
+      "planned_moving_time_hours": 7.5,
+      "planned_elevation_m": null
+    },
+    "days": [
+      {
+        "date": "2026-03-11",
+        "title": "Day 1",
+        "session_type": "aerobic",
+        "is_rest_day": false,
+        "is_hard_day": false,
+        "duration_minutes": 90,
+        "target_intensity": "easy",
+        "terrain": "trail",
+        "workout": "TrailRun | 17.60 km | 674 m+ | 116 min | avgHR 144",
+        "purpose": "To continue building aerobic and hill strength, supporting the athlete's goal of consistent trail-running fitness.",
+        "signal_ids": [
+          "forecast.readiness.status",
+          "forecast.readiness.score",
+          "forecast.recovery_capability.label",
+          "forecast.recovery_capability.key"
+        ],
+        "estimated_distance_km": null,
+        "estimated_elevation_m": null
+      },
+      {
+        "date": "2026-03-12",
+        "title": "Day 2",
+        "session_type": "aerobic",
+        "is_rest_day": false,
+        "is_hard_day": false,
+        "duration_minutes": 60,
+        "target_intensity": "moderate",
+        "terrain": "trail",
+        "workout": "TrailRun | 9.10 km | 332 m+ | 64 min | avgHR 146",
+        "purpose": "To further develop aerobic and hill strength, contributing to the athlete's overall fitness goals.",
+        "signal_ids": [
+          "forecast.readiness.status",
+          "forecast.readiness.score",
+          "forecast.recovery_capability.label",
+          "forecast.recovery_capability.key"
+        ],
+        "estimated_distance_km": null,
+        "estimated_elevation_m": null
+      },
+      {
+        "date": "2026-03-13",
+        "title": "Day 3",
+        "session_type": "aerobic",
+        "is_rest_day": false,
+        "is_hard_day": false,
+        "duration_minutes": 60,
+        "target_intensity": "easy",
+        "terrain": "trail",
+        "workout": "TrailRun | 7.00 km | 259 m+ | 50 min | avgHR 146",
+        "purpose": "To reinforce aerobic and hill strength development, supporting the athlete's goal of consistent trail-running fitness.",
+        "signal_ids": [
+          "forecast.readiness.status",
+          "forecast.readiness.score",
+          "forecast.recovery_capability.label",
+          "forecast.recovery_capability.key"
+        ],
+        "estimated_distance_km": null,
+        "estimated_elevation_m": null
+      },
+      {
+        "date": "2026-03-14",
+        "title": "Rest day",
+        "session_type": "rest",
+        "is_rest_day": true,
+        "is_hard_day": false,
+        "duration_minutes": 0,
+        "target_intensity": "rest",
+        "terrain": "n/a",
+        "workout": "Rest day. No structured training.",
+        "purpose": "Recover and maintain freshness.",
+        "signal_ids": [
+          "forecast.readiness.status",
+          "forecast.readiness.score",
+          "forecast.recovery_capability.label",
+          "forecast.recovery_capability.key"
+        ],
+        "estimated_distance_km": null,
+        "estimated_elevation_m": null
+      },
+      {
+        "date": "2026-03-15",
+        "title": "Day 5",
+        "session_type": "aerobic",
+        "is_rest_day": false,
+        "is_hard_day": false,
+        "duration_minutes": 120,
+        "target_intensity": "moderate",
+        "terrain": "trail",
+        "workout": "TrailRun | 16.40 km | 627 m+ | 108 min | avgHR 144",
+        "purpose": "To continue building aerobic and hill strength, reinforcing the athlete's recent progress.",
+        "signal_ids": [
+          "forecast.readiness.status",
+          "forecast.readiness.score",
+          "forecast.recovery_capability.label",
+          "forecast.recovery_capability.key"
+        ],
+        "estimated_distance_km": null,
+        "estimated_elevation_m": null
+      },
+      {
+        "date": "2026-03-16",
+        "title": "Day 6",
+        "session_type": "aerobic",
+        "is_rest_day": false,
+        "is_hard_day": false,
+        "duration_minutes": 60,
+        "target_intensity": "moderate",
+        "terrain": "trail",
+        "workout": "TrailRun | 8.10 km | 296 m+ | 57 min | avgHR 146",
+        "purpose": "To further develop aerobic and hill strength, supporting the athlete's goal of consistent trail-running fitness.",
+        "signal_ids": [
+          "forecast.readiness.status",
+          "forecast.readiness.score",
+          "forecast.recovery_capability.label",
+          "forecast.recovery_capability.key"
+        ],
+        "estimated_distance_km": null,
+        "estimated_elevation_m": null
+      },
+      {
+        "date": "2026-03-17",
+        "title": "Day 7",
+        "session_type": "aerobic",
+        "is_rest_day": false,
+        "is_hard_day": false,
+        "duration_minutes": 60,
+        "target_intensity": "easy",
+        "terrain": "trail",
+        "workout": "TrailRun | 10.10 km | 373 m+ | 72 min | avgHR 146",
+        "purpose": "To continue building aerobic and hill strength while maintaining durability and fresh recovery.",
+        "signal_ids": [
+          "forecast.readiness.status",
+          "forecast.readiness.score",
+          "forecast.recovery_capability.label",
+          "forecast.recovery_capability.key"
+        ],
+        "estimated_distance_km": null,
+        "estimated_elevation_m": null
+      }
+    ]
+  },
+  "recovery": {
+    "actions": [
+      "Ensure adequate hydration and nutrition post-run.",
+      "Consider a light foam rolling session to aid recovery.",
+      "Maintain a consistent sleep schedule to support recovery.",
+      "Monitor heart rate variability (HRV) and adjust training intensity accordingly."
+    ],
+    "signal_ids": [
+      "forecast.recovery_capability.label",
+      "forecast.recovery_capability.sleep_days_7d",
+      "forecast.recovery_capability.resting_hr_days_7d",
+      "forecast.recovery_capability.hrv_days_7d"
+    ]
+  },
+  "risks": [
+    {
+      "severity": "low",
+      "message": "The athlete is primed and recent load is manageable, but long runs should be avoided to prevent fatigue accumulation.",
+      "signal_ids": [
+        "forecast.readiness.status",
+        "forecast.readiness.score",
+        "forecast.overreach_risk.level",
+        "forecast.overreach_risk.score"
+      ]
+    }
+  ],
+  "data_notes": [
+    "The athlete's recent aerobic and hill strength development is consistent with their primary goal of building consistent trail-running fitness with manageable structure. Long runs should be avoided to prevent fatigue accumulation.",
+    "Readiness status was set from deterministic readiness_and_risk_forecast.json.",
+    "Guardrails: enforced ramp rate (max_ramp_pct=10.0%). last7_hours=7.020, allowed_hours=7.722, planned_hours=7.500."
+  ],
+  "citations": [
+    {
+      "citation_id": "c1",
+      "signal_id": "forecast.readiness.status",
+      "source": "readiness_and_risk_forecast.json:result.readiness.status",
+      "date_range": "2026-03-17..2026-03-17",
+      "value": "primed"
+    },
+    {
+      "citation_id": "c2",
+      "signal_id": "forecast.readiness.score",
+      "source": "readiness_and_risk_forecast.json:result.readiness.score",
+      "date_range": "2026-03-17..2026-03-17",
+      "value": "77.0"
+    },
+    {
+      "citation_id": "c3",
+      "signal_id": "forecast.recovery_capability.label",
+      "source": "readiness_and_risk_forecast.json:result.inputs.recovery_capability_label",
+      "date_range": "2026-03-17..2026-03-17",
+      "value": "I have load + sleep + resting HR + HRV"
+    },
+    {
+      "citation_id": "c4",
+      "signal_id": "forecast.recovery_capability.key",
+      "source": "readiness_and_risk_forecast.json:result.inputs.recovery_capability_key",
+      "date_range": "2026-03-17..2026-03-17",
+      "value": "load_sleep_resting_hr_hrv"
+    },
+    {
+      "citation_id": "c5",
+      "signal_id": "forecast.recovery_capability.sleep_days_7d",
+      "source": "readiness_and_risk_forecast.json:result.inputs.sleep_days_7d",
+      "date_range": "2026-03-17..2026-03-17",
+      "value": "7"
+    },
+    {
+      "citation_id": "c6",
+      "signal_id": "forecast.recovery_capability.resting_hr_days_7d",
+      "source": "readiness_and_risk_forecast.json:result.inputs.resting_hr_days_7d",
+      "date_range": "2026-03-17..2026-03-17",
+      "value": "7"
+    },
+    {
+      "citation_id": "c7",
+      "signal_id": "forecast.recovery_capability.hrv_days_7d",
+      "source": "readiness_and_risk_forecast.json:result.inputs.hrv_days_7d",
+      "date_range": "2026-03-17..2026-03-17",
+      "value": "7"
+    },
+    {
+      "citation_id": "c8",
+      "signal_id": "forecast.overreach_risk.level",
+      "source": "readiness_and_risk_forecast.json:result.overreach_risk.level",
+      "date_range": "2026-03-17..2026-03-17",
+      "value": "low"
+    },
+    {
+      "citation_id": "c9",
+      "signal_id": "forecast.overreach_risk.score",
+      "source": "readiness_and_risk_forecast.json:result.overreach_risk.score",
+      "date_range": "2026-03-17..2026-03-17",
+      "value": "29.0"
+    }
+  ],
+  "claim_attributions": [
+    {
+      "claim_id": "cl1",
+      "field_path": "readiness.rationale",
+      "claim_text": "Deterministic readiness: primed (score 77.0). The athlete is primed based on recent recovery and load metrics, indicating they are ready for another structured training session. The recent 7-day load is manageable and within the athlete's preparedness level, with no signs of overreaching. The athlete's recent aerobic and hill strength development aligns well with the primary goal of building consistent trail-running fitness with manageable structure.",
+      "signal_ids": [
+        "forecast.readiness.status",
+        "forecast.readiness.score",
+        "forecast.recovery_capability.label",
+        "forecast.recovery_capability.key"
+      ],
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3",
+        "c4"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "claim_id": "cl2",
+      "field_path": "recovery.actions[0]",
+      "claim_text": "Ensure adequate hydration and nutrition post-run.",
+      "signal_ids": [
+        "forecast.recovery_capability.label",
+        "forecast.recovery_capability.sleep_days_7d",
+        "forecast.recovery_capability.resting_hr_days_7d",
+        "forecast.recovery_capability.hrv_days_7d"
+      ],
+      "citation_ids": [
+        "c3",
+        "c5",
+        "c6",
+        "c7"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "claim_id": "cl3",
+      "field_path": "recovery.actions[1]",
+      "claim_text": "Consider a light foam rolling session to aid recovery.",
+      "signal_ids": [
+        "forecast.recovery_capability.label",
+        "forecast.recovery_capability.sleep_days_7d",
+        "forecast.recovery_capability.resting_hr_days_7d",
+        "forecast.recovery_capability.hrv_days_7d"
+      ],
+      "citation_ids": [
+        "c3",
+        "c5",
+        "c6",
+        "c7"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "claim_id": "cl4",
+      "field_path": "recovery.actions[2]",
+      "claim_text": "Maintain a consistent sleep schedule to support recovery.",
+      "signal_ids": [
+        "forecast.recovery_capability.label",
+        "forecast.recovery_capability.sleep_days_7d",
+        "forecast.recovery_capability.resting_hr_days_7d",
+        "forecast.recovery_capability.hrv_days_7d"
+      ],
+      "citation_ids": [
+        "c3",
+        "c5",
+        "c6",
+        "c7"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "claim_id": "cl5",
+      "field_path": "recovery.actions[3]",
+      "claim_text": "Monitor heart rate variability (HRV) and adjust training intensity accordingly.",
+      "signal_ids": [
+        "forecast.recovery_capability.label",
+        "forecast.recovery_capability.sleep_days_7d",
+        "forecast.recovery_capability.resting_hr_days_7d",
+        "forecast.recovery_capability.hrv_days_7d"
+      ],
+      "citation_ids": [
+        "c3",
+        "c5",
+        "c6",
+        "c7"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "claim_id": "cl6",
+      "field_path": "risks[0].message",
+      "claim_text": "The athlete is primed and recent load is manageable, but long runs should be avoided to prevent fatigue accumulation.",
+      "signal_ids": [
+        "forecast.readiness.status",
+        "forecast.readiness.score",
+        "forecast.overreach_risk.level",
+        "forecast.overreach_risk.score"
+      ],
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c8",
+        "c9"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "claim_id": "cl7",
+      "field_path": "plan.days[0].purpose",
+      "claim_text": "To continue building aerobic and hill strength, supporting the athlete's goal of consistent trail-running fitness.",
+      "signal_ids": [
+        "forecast.readiness.status",
+        "forecast.readiness.score",
+        "forecast.recovery_capability.label",
+        "forecast.recovery_capability.key"
+      ],
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3",
+        "c4"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "claim_id": "cl8",
+      "field_path": "plan.days[1].purpose",
+      "claim_text": "To further develop aerobic and hill strength, contributing to the athlete's overall fitness goals.",
+      "signal_ids": [
+        "forecast.readiness.status",
+        "forecast.readiness.score",
+        "forecast.recovery_capability.label",
+        "forecast.recovery_capability.key"
+      ],
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3",
+        "c4"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "claim_id": "cl9",
+      "field_path": "plan.days[2].purpose",
+      "claim_text": "To reinforce aerobic and hill strength development, supporting the athlete's goal of consistent trail-running fitness.",
+      "signal_ids": [
+        "forecast.readiness.status",
+        "forecast.readiness.score",
+        "forecast.recovery_capability.label",
+        "forecast.recovery_capability.key"
+      ],
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3",
+        "c4"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "claim_id": "cl10",
+      "field_path": "plan.days[3].purpose",
+      "claim_text": "To allow full recovery and maintain freshness for upcoming structured training sessions.",
+      "signal_ids": [
+        "forecast.readiness.status",
+        "forecast.readiness.score",
+        "forecast.recovery_capability.label",
+        "forecast.recovery_capability.key"
+      ],
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3",
+        "c4"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "claim_id": "cl11",
+      "field_path": "plan.days[4].purpose",
+      "claim_text": "To continue building aerobic and hill strength, reinforcing the athlete's recent progress.",
+      "signal_ids": [
+        "forecast.readiness.status",
+        "forecast.readiness.score",
+        "forecast.recovery_capability.label",
+        "forecast.recovery_capability.key"
+      ],
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3",
+        "c4"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "claim_id": "cl12",
+      "field_path": "plan.days[5].purpose",
+      "claim_text": "To further develop aerobic and hill strength, supporting the athlete's goal of consistent trail-running fitness.",
+      "signal_ids": [
+        "forecast.readiness.status",
+        "forecast.readiness.score",
+        "forecast.recovery_capability.label",
+        "forecast.recovery_capability.key"
+      ],
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3",
+        "c4"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "claim_id": "cl13",
+      "field_path": "plan.days[6].purpose",
+      "claim_text": "To continue building aerobic and hill strength while maintaining durability and fresh recovery.",
+      "signal_ids": [
+        "forecast.readiness.status",
+        "forecast.readiness.score",
+        "forecast.recovery_capability.label",
+        "forecast.recovery_capability.key"
+      ],
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3",
+        "c4"
+      ],
+      "support_level": "supported"
+    }
+  ],
+  "effective_constraints": {
+    "allowed_week1_hours": 7.722,
+    "effective_max_ramp_pct": 10.0,
+    "effective_max_hard_per_7d": 3,
+    "effective_max_consecutive_hard": 2,
+    "min_rest_per_7d": 1,
+    "readiness_status": "primed",
+    "overreach_risk_level": "low",
+    "recovery_capability_key": "load_sleep_resting_hr_hrv",
+    "lifestyle_notes": "Prioritize consistent aerobic development, hill strength, and durable weekly routine. Athlete profile: Developing recreational. Training history context: Modest recent consistency, moderate but not high load, some structure tolerated.",
+    "reasons": [
+      "lifestyle constraints apply"
+    ]
+  }
+}

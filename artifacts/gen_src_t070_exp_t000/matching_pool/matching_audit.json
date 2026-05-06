@@ -1,0 +1,84 @@
+{
+  "n_pairs": 250,
+  "target_pairs": 250,
+  "coverage_ratio": 1.0,
+  "coverage_ok": true,
+  "mean_structural_score_gap": 0.2545,
+  "max_structural_score_gap": 2.0,
+  "p95_structural_score_gap": 1.571,
+  "pairs_by_fixture": {
+    "ab_A1__r_high__rc_high__ph_base": 5,
+    "ab_A1__r_high__rc_high__ph_peak": 4,
+    "ab_A1__r_high__rc_low__ph_base": 8,
+    "ab_A1__r_high__rc_low__ph_peak": 5,
+    "ab_A1__r_low__rc_high__ph_base": 10,
+    "ab_A1__r_low__rc_high__ph_peak": 7,
+    "ab_A1__r_low__rc_low__ph_base": 10,
+    "ab_A1__r_low__rc_low__ph_peak": 9,
+    "ab_A2__r_high__rc_high__ph_base": 8,
+    "ab_A2__r_high__rc_high__ph_peak": 5,
+    "ab_A2__r_high__rc_low__ph_base": 5,
+    "ab_A2__r_high__rc_low__ph_peak": 5,
+    "ab_A2__r_low__rc_high__ph_base": 9,
+    "ab_A2__r_low__rc_high__ph_peak": 7,
+    "ab_A2__r_low__rc_low__ph_base": 8,
+    "ab_A2__r_low__rc_low__ph_peak": 7,
+    "ab_A3__r_high__rc_high__ph_base": 12,
+    "ab_A3__r_high__rc_high__ph_peak": 9,
+    "ab_A3__r_high__rc_low__ph_base": 7,
+    "ab_A3__r_high__rc_low__ph_peak": 9,
+    "ab_A3__r_low__rc_high__ph_base": 10,
+    "ab_A3__r_low__rc_high__ph_peak": 10,
+    "ab_A3__r_low__rc_low__ph_base": 10,
+    "ab_A3__r_low__rc_low__ph_peak": 7,
+    "ab_A4__r_high__rc_high__ph_base": 9,
+    "ab_A4__r_high__rc_high__ph_peak": 9,
+    "ab_A4__r_high__rc_low__ph_base": 8,
+    "ab_A4__r_high__rc_low__ph_peak": 8,
+    "ab_A4__r_low__rc_high__ph_base": 10,
+    "ab_A4__r_low__rc_high__ph_peak": 7,
+    "ab_A4__r_low__rc_low__ph_base": 8,
+    "ab_A4__r_low__rc_low__ph_peak": 5
+  },
+  "pairs_by_athlete_band": {
+    "A1": 58,
+    "A2": 54,
+    "A3": 74,
+    "A4": 64
+  },
+  "pairs_by_source_family": {
+    "gemma": 120,
+    "qwen": 130
+  },
+  "llm_generation_conditions": [
+    "gen_src_t070__exp_t000"
+  ],
+  "programmatic_generation_conditions": [
+    "gen_prog__exp_t000"
+  ],
+  "structural_score_version": "structural_score_v1.0.0",
+  "primary_matching_score": "source_neutral_structural_score",
+  "legacy_quality_score_role": "diagnostic_only",
+  "presentation_fields_excluded": true,
+  "match_rule": "same_full_cell_same_plan_days_structural_score_tolerance_min_weighted_structural_distance",
+  "score_distribution_by_arm": {
+    "llm": {
+      "n": 383,
+      "min": 64.286,
+      "p25": 84.0,
+      "median": 87.0,
+      "p75": 92.0,
+      "max": 100.0
+    },
+    "programmatic": {
+      "n": 640,
+      "min": 64.0,
+      "p25": 82.0,
+      "median": 87.0,
+      "p75": 92.0,
+      "max": 100.0
+    }
+  },
+  "n_candidate_pairs_before_target_cap": 258,
+  "target_cap_applied": true
+}

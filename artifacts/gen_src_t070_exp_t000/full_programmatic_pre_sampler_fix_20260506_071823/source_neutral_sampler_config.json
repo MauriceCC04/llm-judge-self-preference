@@ -1,0 +1,34 @@
+{
+  "plan_days": 7,
+  "seed": 0,
+  "p_hard_day": 0.18,
+  "p_rest_day": 0.22,
+  "easy_type_probs": {
+    "easy": 0.52,
+    "aerobic": 0.22,
+    "long": 0.08,
+    "strength": 0.10,
+    "cross": 0.08
+  },
+  "duration_by_type": {
+    "easy": [45.0, 15.0],
+    "aerobic": [60.0, 20.0],
+    "long": [95.0, 25.0],
+    "tempo": [55.0, 12.0],
+    "intervals": [55.0, 12.0],
+    "hills": [60.0, 15.0],
+    "strength": [35.0, 10.0],
+    "cross": [45.0, 15.0]
+  },
+  "today": "2026-03-17",
+  "plan_start": "2026-03-18",
+  "style": "trailrunning",
+  "primary_goal": "to become a faster trail runner",
+  "lifestyle_notes": "",
+  "readiness_status": "steady",
+  "_meta": {
+    "source": "manual_source_neutral_baseline",
+    "fitted_from_n_plans": 0,
+    "rationale": "Not fitted from LLM plans. Used to avoid prior contamination while providing enough structural variety for fixture-conditioned programmatic generation and downstream matching."
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "plan_id": "ab_A1__r_high__rc_low__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s004",
+  "fixture_id": "ab_A1__r_high__rc_low__ph_peak",
+  "athlete_band": "A1",
+  "readiness": "high",
+  "recovery_capability": "low",
+  "race_phase": "peak",
+  "plan_days": 7,
+  "style": "trailrunning",
+  "arm": "llm",
+  "source_model": "google/gemma-3-4b-it",
+  "explainer_model": "Qwen/Qwen2.5-3B-Instruct",
+  "actual_explainer_model": "Qwen/Qwen2.5-3B-Instruct",
+  "explainer_model_verified": true,
+  "generation_pipeline": "llm_two_stage",
+  "runtime_backend": "trailtraining.llm.coach.run_coach_brief",
+  "runtime_metadata": {
+    "source_base_url": "http://127.0.0.1:8773/v1",
+    "explainer_base_url": "http://127.0.0.1:8774/v1",
+    "judge_base_url": "http://127.0.0.1:8774/v1",
+    "using_local_base_url": true,
+    "default_patch_stage": "judge",
+    "source_model": "google/gemma-3-4b-it",
+    "actual_source_model": "google/gemma-3-4b-it",
+    "actual_explainer_model": "Qwen/Qwen2.5-3B-Instruct",
+    "explainer_model_verified": true,
+    "source_temperature": 0.7,
+    "explainer_temperature": 0.0,
+    "seed": 4,
+    "structural_lifestyle_notes_present": true,
+    "structural_lifestyle_notes_chars": 1415,
+    "artifact_lifestyle_notes_chars": 246,
+    "TRAILTRAINING_TWO_STAGE_PLAN": "1",
+    "generation_condition": "gen_src_t070__exp_t000",
+    "athlete_band": "A1",
+    "readiness": "high",
+    "recovery_capability": "low",
+    "race_phase": "peak",
+    "artifact_normalization": {
+      "normalizer_version": "artifact-presentation-normalizer-v1",
+      "normalized_at": "2026-05-05T15:17:21.730881+00:00",
+      "original_artifact_sha256": "3aef8ca112fdd0268aff7bc621dac57c0df8053caa8a6d595647fc515ec1cb7a",
+      "normalized_artifact_sha256": "a9ffb3586c1205851da72755257edd248437f5c73528d412dc60dc8679dd1f35",
+      "changed_fields": [
+        {
+          "path": "$.plan.days[3].title",
+          "old": "Trail Run - Exploration",
+          "new": "Easy run",
+          "reason": "title_session_mismatch"
+        },
+        {
+          "path": "$.plan.days[4].title",
+          "old": "Trail Run - Short & Sweet",
+          "new": "Easy run",
+          "reason": "title_session_mismatch"
+        },
+        {
+          "path": "$.plan.days[5].title",
+          "old": "Trail Run - Easy Exploration",
+          "new": "Easy run",
+          "reason": "title_session_mismatch"
+        }
+      ],
+      "warnings": [],
+      "errors": [],
+      "score_relevant_projection_unchanged": true
+    }
+  },
+  "source_temperature": 0.7,
+  "explainer_temperature": 0.0,
+  "generation_condition": "gen_src_t070__exp_t000",
+  "seed": 4,
+  "generated_at": "2026-05-05T06:51:29.065306+00:00",
+  "plan_path": "artifacts/gen_src_t070_exp_t000/matching_pool/plans/ab_A1__r_high__rc_low__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s004.json",
+  "deterministic_score": 87.0
+}

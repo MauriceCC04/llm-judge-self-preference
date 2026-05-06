@@ -1,0 +1,444 @@
+{
+  "citations": [
+    {
+      "citation_id": "c1",
+      "date_range": "2026-03-17..2026-03-17",
+      "signal_id": "forecast.recovery_capability.label",
+      "source": "readiness_and_risk_forecast.json:result.inputs.recovery_capability_label",
+      "value": "I only have training data"
+    },
+    {
+      "citation_id": "c2",
+      "date_range": "2026-03-17..2026-03-17",
+      "signal_id": "forecast.readiness.score",
+      "source": "readiness_and_risk_forecast.json:result.readiness.score",
+      "value": "43.0"
+    },
+    {
+      "citation_id": "c3",
+      "date_range": "2026-03-17..2026-03-17",
+      "signal_id": "forecast.overreach_risk.score",
+      "source": "readiness_and_risk_forecast.json:result.overreach_risk.score",
+      "value": "69.0"
+    }
+  ],
+  "claim_attributions": [
+    {
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3"
+      ],
+      "claim_id": "cl1",
+      "claim_text": "Deterministic readiness: fatigued (score 43.0). The athlete is currently in a fatigued state, indicated by the readiness score of 43.0 and the overreach risk score of 69.0. This reflects a recent accumulation of training load without sufficient recovery, which is typical for a beginner who is building endurance and strength. The lack of sleep and HRV data further supports the fatigue status, as these metrics are crucial for assessing recovery and readiness. Given the current state, the athlete should focus on maintaining a simple and conservative training approach to allow for proper recovery and prevent further fatigue buildup.",
+      "field_path": "readiness.rationale",
+      "signal_ids": [
+        "forecast.recovery_capability.label",
+        "forecast.readiness.score",
+        "forecast.overreach_risk.score"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3"
+      ],
+      "claim_id": "cl2",
+      "claim_text": "Ensure adequate rest and recovery between runs. The athlete should aim for at least 7 hours of sleep per night and incorporate recovery techniques such as foam rolling, stretching, and light cross-training to aid muscle recovery.",
+      "field_path": "recovery.actions[0]",
+      "signal_ids": [
+        "forecast.recovery_capability.label",
+        "forecast.readiness.score",
+        "forecast.overreach_risk.score"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3"
+      ],
+      "claim_id": "cl3",
+      "claim_text": "Monitor heart rate variability (HRV) and resting heart rate (RHR) to assess overall recovery. If these metrics show signs of stress or fatigue, consider reducing the intensity or duration of future workouts.",
+      "field_path": "recovery.actions[1]",
+      "signal_ids": [
+        "forecast.recovery_capability.label",
+        "forecast.readiness.score",
+        "forecast.overreach_risk.score"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3"
+      ],
+      "claim_id": "cl4",
+      "claim_text": "Continue with the current conservative training approach, avoiding any additional hard days or high-intensity sessions until the athlete feels fully recovered and ready to progress.",
+      "field_path": "recovery.actions[2]",
+      "signal_ids": [
+        "forecast.recovery_capability.label",
+        "forecast.readiness.score",
+        "forecast.overreach_risk.score"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3"
+      ],
+      "claim_id": "cl5",
+      "claim_text": "The athlete is currently fatigued, which increases the risk of injury and burnout. It is important to follow the prescribed rest days and avoid overtraining.",
+      "field_path": "risks[0].message",
+      "signal_ids": [
+        "forecast.recovery_capability.label",
+        "forecast.readiness.score",
+        "forecast.overreach_risk.score"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3"
+      ],
+      "claim_id": "cl6",
+      "claim_text": "To allow for full recovery and maintain freshness. The athlete has had a series of shorter trail runs and needs a break to ensure proper recovery before resuming structured training.",
+      "field_path": "plan.days[0].purpose",
+      "signal_ids": [
+        "forecast.recovery_capability.label",
+        "forecast.readiness.score",
+        "forecast.overreach_risk.score"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3"
+      ],
+      "claim_id": "cl7",
+      "claim_text": "To continue building aerobic endurance and hill strength. The athlete has shown a pattern of shorter trail runs, and today’s run focuses on form and cadence, while also including some hill repeats to build strength.",
+      "field_path": "plan.days[1].purpose",
+      "signal_ids": [
+        "forecast.recovery_capability.label",
+        "forecast.readiness.score",
+        "forecast.overreach_risk.score"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3"
+      ],
+      "claim_id": "cl8",
+      "claim_text": "To continue building aerobic endurance and hill strength. The athlete has shown a pattern of shorter trail runs, and today’s run focuses on form and cadence, while also including some hill repeats to build strength.",
+      "field_path": "plan.days[2].purpose",
+      "signal_ids": [
+        "forecast.recovery_capability.label",
+        "forecast.readiness.score",
+        "forecast.overreach_risk.score"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3"
+      ],
+      "claim_id": "cl9",
+      "claim_text": "To continue building aerobic endurance and hill strength. The athlete has shown a pattern of shorter trail runs, and today’s run focuses on form and cadence, while also including some hill repeats to build strength.",
+      "field_path": "plan.days[3].purpose",
+      "signal_ids": [
+        "forecast.recovery_capability.label",
+        "forecast.readiness.score",
+        "forecast.overreach_risk.score"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3"
+      ],
+      "claim_id": "cl10",
+      "claim_text": "To allow for full recovery and maintain freshness. The athlete has had a series of shorter trail runs and needs a break to ensure proper recovery before resuming structured training.",
+      "field_path": "plan.days[4].purpose",
+      "signal_ids": [
+        "forecast.recovery_capability.label",
+        "forecast.readiness.score",
+        "forecast.overreach_risk.score"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3"
+      ],
+      "claim_id": "cl11",
+      "claim_text": "To continue building aerobic endurance and hill strength. The athlete has shown a pattern of shorter trail runs, and today’s run focuses on form and cadence, while also including some hill repeats to build strength.",
+      "field_path": "plan.days[5].purpose",
+      "signal_ids": [
+        "forecast.recovery_capability.label",
+        "forecast.readiness.score",
+        "forecast.overreach_risk.score"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3"
+      ],
+      "claim_id": "cl12",
+      "claim_text": "To allow for full recovery and maintain freshness. The athlete has had a series of shorter trail runs and needs a break to ensure proper recovery before resuming structured training.",
+      "field_path": "plan.days[6].purpose",
+      "signal_ids": [
+        "forecast.recovery_capability.label",
+        "forecast.readiness.score",
+        "forecast.overreach_risk.score"
+      ],
+      "support_level": "supported"
+    }
+  ],
+  "data_notes": [
+    "The athlete has shown a pattern of shorter trail runs, indicating a need for gradual progression and proper recovery. The lack of sleep and HRV data further supports the fatigued state. The current training load is within safe limits given the athlete's recent volume and recovery capacity.",
+    "Readiness status was set from deterministic readiness_and_risk_forecast.json.",
+    "Guardrails: enforced ramp rate (max_ramp_pct=0.0%). last7_hours=4.150, allowed_hours=4.150, planned_hours=3.500."
+  ],
+  "effective_constraints": {
+    "allowed_week1_hours": 4.15,
+    "effective_max_consecutive_hard": 1,
+    "effective_max_hard_per_7d": 1,
+    "effective_max_ramp_pct": 0.0,
+    "lifestyle_notes": "Prioritize consistent aerobic development, hill strength, and durable weekly routine. Athlete profile: Beginner / low-volume. Training history context: Low recent volume, lower long-run tolerance, simpler weekly structure, conservative loading.",
+    "min_rest_per_7d": 1,
+    "overreach_risk_level": "high",
+    "readiness_status": "fatigued",
+    "reasons": [
+      "readiness is fatigued",
+      "overreach risk is high",
+      "recovery telemetry is sparse",
+      "lifestyle constraints apply"
+    ],
+    "recovery_capability_key": "load_only"
+  },
+  "meta": {
+    "lifestyle_notes": "Prioritize consistent aerobic development, hill strength, and durable weekly routine. Athlete profile: Beginner / low-volume. Training history context: Low recent volume, lower long-run tolerance, simpler weekly structure, conservative loading.",
+    "plan_days": 7,
+    "plan_start": "2026-03-11",
+    "primary_goal": "to build confidence, routine, and durable trail-running basics",
+    "style": "trailrunning",
+    "today": "2026-03-17"
+  },
+  "plan": {
+    "days": [
+      {
+        "date": "2026-03-11",
+        "duration_minutes": 0,
+        "estimated_distance_km": null,
+        "estimated_elevation_m": null,
+        "is_hard_day": false,
+        "is_rest_day": true,
+        "purpose": "Recover and maintain freshness.",
+        "session_type": "rest",
+        "signal_ids": [
+          "forecast.recovery_capability.label",
+          "forecast.readiness.score",
+          "forecast.overreach_risk.score"
+        ],
+        "target_intensity": "rest",
+        "terrain": "n/a",
+        "title": "Rest day",
+        "workout": "Rest day. No structured training."
+      },
+      {
+        "date": "2026-03-12",
+        "duration_minutes": 35,
+        "estimated_distance_km": null,
+        "estimated_elevation_m": null,
+        "is_hard_day": false,
+        "is_rest_day": false,
+        "purpose": "To continue building aerobic endurance and hill strength. The athlete has shown a pattern of shorter trail runs, and today’s run focuses on form and cadence, while also including some hill repeats to build strength.",
+        "session_type": "easy",
+        "signal_ids": [
+          "forecast.recovery_capability.label",
+          "forecast.readiness.score",
+          "forecast.overreach_risk.score"
+        ],
+        "target_intensity": "easy",
+        "terrain": "trail",
+        "title": "Easy run",
+        "workout": "Easy trail run focusing on form and cadence."
+      },
+      {
+        "date": "2026-03-13",
+        "duration_minutes": 35,
+        "estimated_distance_km": null,
+        "estimated_elevation_m": null,
+        "is_hard_day": false,
+        "is_rest_day": false,
+        "purpose": "To continue building aerobic endurance and hill strength. The athlete has shown a pattern of shorter trail runs, and today’s run focuses on form and cadence, while also including some hill repeats to build strength.",
+        "session_type": "easy",
+        "signal_ids": [
+          "forecast.recovery_capability.label",
+          "forecast.readiness.score",
+          "forecast.overreach_risk.score"
+        ],
+        "target_intensity": "easy",
+        "terrain": "trail",
+        "title": "Easy run",
+        "workout": "Easy trail run focusing on form and cadence."
+      },
+      {
+        "date": "2026-03-14",
+        "duration_minutes": 35,
+        "estimated_distance_km": null,
+        "estimated_elevation_m": null,
+        "is_hard_day": false,
+        "is_rest_day": false,
+        "purpose": "To continue building aerobic endurance and hill strength. The athlete has shown a pattern of shorter trail runs, and today’s run focuses on form and cadence, while also including some hill repeats to build strength.",
+        "session_type": "easy",
+        "signal_ids": [
+          "forecast.recovery_capability.label",
+          "forecast.readiness.score",
+          "forecast.overreach_risk.score"
+        ],
+        "target_intensity": "easy",
+        "terrain": "trail",
+        "title": "Easy run",
+        "workout": "Easy trail run focusing on form and cadence."
+      },
+      {
+        "date": "2026-03-15",
+        "duration_minutes": 35,
+        "estimated_distance_km": null,
+        "estimated_elevation_m": null,
+        "is_hard_day": false,
+        "is_rest_day": false,
+        "purpose": "To allow for full recovery and maintain freshness. The athlete has had a series of shorter trail runs and needs a break to ensure proper recovery before resuming structured training.",
+        "session_type": "easy",
+        "signal_ids": [
+          "forecast.recovery_capability.label",
+          "forecast.readiness.score",
+          "forecast.overreach_risk.score"
+        ],
+        "target_intensity": "easy",
+        "terrain": "trail",
+        "title": "Easy run",
+        "workout": "Easy trail run focusing on form and cadence."
+      },
+      {
+        "date": "2026-03-16",
+        "duration_minutes": 68,
+        "estimated_distance_km": null,
+        "estimated_elevation_m": null,
+        "is_hard_day": false,
+        "is_rest_day": false,
+        "purpose": "To continue building aerobic endurance and hill strength. The athlete has shown a pattern of shorter trail runs, and today’s run focuses on form and cadence, while also including some hill repeats to build strength.",
+        "session_type": "easy",
+        "signal_ids": [
+          "forecast.recovery_capability.label",
+          "forecast.readiness.score",
+          "forecast.overreach_risk.score"
+        ],
+        "target_intensity": "easy",
+        "terrain": "trail",
+        "title": "Easy run",
+        "workout": "Easy run at comfortable conversational effort."
+      },
+      {
+        "date": "2026-03-17",
+        "duration_minutes": 0,
+        "estimated_distance_km": null,
+        "estimated_elevation_m": null,
+        "is_hard_day": false,
+        "is_rest_day": true,
+        "purpose": "Recover and maintain freshness.",
+        "session_type": "rest",
+        "signal_ids": [
+          "forecast.recovery_capability.label",
+          "forecast.readiness.score",
+          "forecast.overreach_risk.score"
+        ],
+        "target_intensity": "rest",
+        "terrain": "n/a",
+        "title": "Rest day",
+        "workout": "Rest day. No structured training."
+      }
+    ],
+    "weekly_totals": {
+      "planned_distance_km": null,
+      "planned_elevation_m": null,
+      "planned_moving_time_hours": 3.5
+    }
+  },
+  "readiness": {
+    "rationale": "Deterministic readiness: fatigued (score 43.0). The athlete is currently in a fatigued state, indicated by the readiness score of 43.0 and the overreach risk score of 69.0. This reflects a recent accumulation of training load without sufficient recovery, which is typical for a beginner who is building endurance and strength. The lack of sleep and HRV data further supports the fatigue status, as these metrics are crucial for assessing recovery and readiness. Given the current state, the athlete should focus on maintaining a simple and conservative training approach to allow for proper recovery and prevent further fatigue buildup.",
+    "signal_ids": [
+      "forecast.recovery_capability.label",
+      "forecast.readiness.score",
+      "forecast.overreach_risk.score"
+    ],
+    "status": "fatigued"
+  },
+  "recovery": {
+    "actions": [
+      "Ensure adequate rest and recovery between runs. The athlete should aim for at least 7 hours of sleep per night and incorporate recovery techniques such as foam rolling, stretching, and light cross-training to aid muscle recovery.",
+      "Monitor heart rate variability (HRV) and resting heart rate (RHR) to assess overall recovery. If these metrics show signs of stress or fatigue, consider reducing the intensity or duration of future workouts.",
+      "Continue with the current conservative training approach, avoiding any additional hard days or high-intensity sessions until the athlete feels fully recovered and ready to progress."
+    ],
+    "signal_ids": [
+      "forecast.recovery_capability.label",
+      "forecast.readiness.score",
+      "forecast.overreach_risk.score"
+    ]
+  },
+  "risks": [
+    {
+      "message": "The athlete is currently fatigued, which increases the risk of injury and burnout. It is important to follow the prescribed rest days and avoid overtraining.",
+      "severity": "low",
+      "signal_ids": [
+        "forecast.recovery_capability.label",
+        "forecast.readiness.score",
+        "forecast.overreach_risk.score"
+      ]
+    }
+  ],
+  "snapshot": {
+    "baseline28": {
+      "activity_count": "24",
+      "distance_km": "131.6",
+      "elevation_m": "5023.9",
+      "hrv_mean": "",
+      "moving_time_hours": "17.4",
+      "rhr_mean": "",
+      "sleep_hours_mean": ""
+    },
+    "last7": {
+      "activity_count": "6",
+      "distance_km": "31.4",
+      "elevation_m": "1199.8",
+      "hrv_mean": "",
+      "moving_time_hours": "4.2",
+      "rhr_mean": "",
+      "sleep_hours_mean": ""
+    },
+    "notes": "The athlete covered 31.4 km in the last 7 days. Moving time was 4.2 hours. Elevation gain was 1199.8 meters."
+  }
+}

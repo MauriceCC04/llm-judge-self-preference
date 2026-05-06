@@ -1,0 +1,569 @@
+{
+  "citations": [
+    {
+      "citation_id": "c1",
+      "date_range": "2026-03-11..2026-03-17",
+      "signal_id": "load.last7.distance_km",
+      "source": "combined_rollups.json:windows.7.activities.total_distance_km",
+      "value": "80.0"
+    },
+    {
+      "citation_id": "c2",
+      "date_range": "2026-03-11..2026-03-17",
+      "signal_id": "load.last7.moving_time_hours",
+      "source": "combined_rollups.json:windows.7.activities.total_moving_time_hours",
+      "value": "9.08"
+    },
+    {
+      "citation_id": "c3",
+      "date_range": "2026-03-11..2026-03-17",
+      "signal_id": "load.last7.elevation_m",
+      "source": "combined_rollups.json:windows.7.activities.total_elevation_m",
+      "value": "2279.3"
+    },
+    {
+      "citation_id": "c4",
+      "date_range": "2026-03-11..2026-03-17",
+      "signal_id": "load.last7.training_load_hours",
+      "source": "combined_rollups.json:windows.7.activities.total_training_load_hours",
+      "value": "9.08"
+    },
+    {
+      "citation_id": "c5",
+      "date_range": "2026-03-11..2026-03-17",
+      "signal_id": "load.last7.activity_count",
+      "source": "combined_rollups.json:windows.7.activities.count",
+      "value": "6"
+    },
+    {
+      "citation_id": "c6",
+      "date_range": "2026-03-11..2026-03-17",
+      "signal_id": "load.last7.sleep_days_with_data",
+      "source": "combined_rollups.json:windows.7.sleep_days_with_data",
+      "value": "0"
+    },
+    {
+      "citation_id": "c7",
+      "date_range": "2026-02-18..2026-03-17",
+      "signal_id": "load.baseline28.distance_km",
+      "source": "combined_rollups.json:windows.28.activities.total_distance_km",
+      "value": "348.7"
+    },
+    {
+      "citation_id": "c8",
+      "date_range": "2026-02-18..2026-03-17",
+      "signal_id": "load.baseline28.moving_time_hours",
+      "source": "combined_rollups.json:windows.28.activities.total_moving_time_hours",
+      "value": "39.0"
+    },
+    {
+      "citation_id": "c9",
+      "date_range": "2026-02-18..2026-03-17",
+      "signal_id": "load.baseline28.elevation_m",
+      "source": "combined_rollups.json:windows.28.activities.total_elevation_m",
+      "value": "10005.0"
+    },
+    {
+      "citation_id": "c10",
+      "date_range": "2026-02-18..2026-03-17",
+      "signal_id": "load.baseline28.training_load_hours",
+      "source": "combined_rollups.json:windows.28.activities.total_training_load_hours",
+      "value": "39.0"
+    },
+    {
+      "citation_id": "c11",
+      "date_range": "",
+      "signal_id": "load.last7.hrv_mean",
+      "source": "",
+      "value": "null"
+    },
+    {
+      "citation_id": "c12",
+      "date_range": "",
+      "signal_id": "load.last7.rhr_mean",
+      "source": "",
+      "value": "null"
+    },
+    {
+      "citation_id": "c13",
+      "date_range": "",
+      "signal_id": "load.baseline28.sleep_days_7d",
+      "source": "",
+      "value": "null"
+    }
+  ],
+  "claim_attributions": [
+    {
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c5",
+        "c6",
+        "c7",
+        "c8",
+        "c9",
+        "c10"
+      ],
+      "claim_id": "cl1",
+      "claim_text": "Deterministic readiness: primed (score 81.0). The athlete is primed based on recent readiness scores and recovery telemetry. The last 7 days show a consistent training load and no signs of fatigue, indicating a solid foundation for race-specific training. The athlete’s historical capacity suggests they are capable of handling a high volume of training, which aligns well with the structured plan designed for peak specificity. However, the recent load is still within the sustainable range, and the athlete needs to maintain freshness and specificity to perform optimally at the upcoming race.",
+      "field_path": "readiness.rationale",
+      "signal_ids": [
+        "load.last7.distance_km",
+        "load.last7.moving_time_hours",
+        "load.last7.elevation_m",
+        "load.last7.training_load_hours",
+        "load.last7.activity_count",
+        "load.last7.sleep_days_with_data",
+        "load.baseline28.distance_km",
+        "load.baseline28.moving_time_hours",
+        "load.baseline28.elevation_m",
+        "load.baseline28.training_load_hours"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c6",
+        "c11",
+        "c12"
+      ],
+      "claim_id": "cl2",
+      "claim_text": "The athlete is primed and the recent load is within the sustainable range, but the lack of sleep and HRV data indicates a need for attention to recovery. The athlete should aim to improve their sleep quality and monitor their HRV levels to ensure optimal recovery.",
+      "field_path": "risks[0].message",
+      "signal_ids": [
+        "load.last7.sleep_days_with_data",
+        "load.last7.hrv_mean",
+        "load.last7.rhr_mean"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c7",
+        "c8",
+        "c9",
+        "c10"
+      ],
+      "claim_id": "cl3",
+      "claim_text": "Long trail run to build endurance and maintain freshness.",
+      "field_path": "plan.days[0].purpose",
+      "signal_ids": [
+        "load.last7.distance_km",
+        "load.last7.moving_time_hours",
+        "load.last7.elevation_m",
+        "load.last7.training_load_hours",
+        "load.baseline28.distance_km",
+        "load.baseline28.moving_time_hours",
+        "load.baseline28.elevation_m",
+        "load.baseline28.training_load_hours"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c7",
+        "c8",
+        "c9",
+        "c10"
+      ],
+      "claim_id": "cl4",
+      "claim_text": "101 min steady aerobic run on hilly.",
+      "field_path": "plan.days[1].purpose",
+      "signal_ids": [
+        "load.last7.distance_km",
+        "load.last7.moving_time_hours",
+        "load.last7.elevation_m",
+        "load.last7.training_load_hours",
+        "load.baseline28.distance_km",
+        "load.baseline28.moving_time_hours",
+        "load.baseline28.elevation_m",
+        "load.baseline28.training_load_hours"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c7",
+        "c8",
+        "c9",
+        "c10"
+      ],
+      "claim_id": "cl5",
+      "claim_text": "Strength training focusing on core and leg muscles.",
+      "field_path": "plan.days[2].purpose",
+      "signal_ids": [
+        "load.last7.distance_km",
+        "load.last7.moving_time_hours",
+        "load.last7.elevation_m",
+        "load.last7.training_load_hours",
+        "load.baseline28.distance_km",
+        "load.baseline28.moving_time_hours",
+        "load.baseline28.elevation_m",
+        "load.baseline28.training_load_hours"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c6",
+        "c13"
+      ],
+      "claim_id": "cl6",
+      "claim_text": "Rest day. No structured training.",
+      "field_path": "plan.days[3].purpose",
+      "signal_ids": [
+        "load.last7.sleep_days_with_data",
+        "load.baseline28.sleep_days_7d"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c7",
+        "c8",
+        "c9",
+        "c10"
+      ],
+      "claim_id": "cl7",
+      "claim_text": "Intervals on flats to enhance anaerobic capacity.",
+      "field_path": "plan.days[4].purpose",
+      "signal_ids": [
+        "load.last7.distance_km",
+        "load.last7.moving_time_hours",
+        "load.last7.elevation_m",
+        "load.last7.training_load_hours",
+        "load.baseline28.distance_km",
+        "load.baseline28.moving_time_hours",
+        "load.baseline28.elevation_m",
+        "load.baseline28.training_load_hours"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c7",
+        "c8",
+        "c9",
+        "c10"
+      ],
+      "claim_id": "cl8",
+      "claim_text": "Tempo run with hills to improve speed and power.",
+      "field_path": "plan.days[5].purpose",
+      "signal_ids": [
+        "load.last7.distance_km",
+        "load.last7.moving_time_hours",
+        "load.last7.elevation_m",
+        "load.last7.training_load_hours",
+        "load.baseline28.distance_km",
+        "load.baseline28.moving_time_hours",
+        "load.baseline28.elevation_m",
+        "load.baseline28.training_load_hours"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c7",
+        "c8",
+        "c9",
+        "c10"
+      ],
+      "claim_id": "cl9",
+      "claim_text": "Long trail run to build endurance and maintain freshness.",
+      "field_path": "plan.days[6].purpose",
+      "signal_ids": [
+        "load.last7.distance_km",
+        "load.last7.moving_time_hours",
+        "load.last7.elevation_m",
+        "load.last7.training_load_hours",
+        "load.baseline28.distance_km",
+        "load.baseline28.moving_time_hours",
+        "load.baseline28.elevation_m",
+        "load.baseline28.training_load_hours"
+      ],
+      "support_level": "supported"
+    }
+  ],
+  "data_notes": [
+    "Insufficient sleep data for reliable analysis.",
+    "No HRV data available for analysis.",
+    "Readiness status was set from deterministic readiness_and_risk_forecast.json.",
+    "Guardrails: enforced ramp rate (max_ramp_pct=5.0%). last7_hours=9.080, allowed_hours=9.534, planned_hours=7.300."
+  ],
+  "effective_constraints": {
+    "allowed_week1_hours": 9.534,
+    "effective_max_consecutive_hard": 2,
+    "effective_max_hard_per_7d": 2,
+    "effective_max_ramp_pct": 5.0,
+    "lifestyle_notes": "Bias toward race specificity, freshness, and avoiding unnecessary fatigue accumulation. Athlete profile: High-volume competitive. Training history context: Strongest training history, highest recent load, highest long-run capacity, most race-specific structure allowed.",
+    "min_rest_per_7d": 1,
+    "overreach_risk_level": "low",
+    "readiness_status": "primed",
+    "reasons": [
+      "recovery telemetry is sparse",
+      "lifestyle constraints apply"
+    ],
+    "recovery_capability_key": "load_only"
+  },
+  "meta": {
+    "lifestyle_notes": "Bias toward race specificity, freshness, and avoiding unnecessary fatigue accumulation. Athlete profile: High-volume competitive. Training history context: Strongest training history, highest recent load, highest long-run capacity, most race-specific structure allowed.",
+    "plan_days": 7,
+    "plan_start": "2026-03-11",
+    "primary_goal": "to convert strong training history into race-specific trail-running performance",
+    "style": "trailrunning",
+    "today": "2026-03-17"
+  },
+  "plan": {
+    "days": [
+      {
+        "date": "2026-03-11",
+        "duration_minutes": 74,
+        "estimated_distance_km": null,
+        "estimated_elevation_m": null,
+        "is_hard_day": false,
+        "is_rest_day": false,
+        "purpose": "Long trail run to build endurance and maintain freshness.",
+        "session_type": "long",
+        "signal_ids": [
+          "load.last7.distance_km",
+          "load.last7.moving_time_hours",
+          "load.last7.elevation_m",
+          "load.last7.training_load_hours",
+          "load.baseline28.distance_km",
+          "load.baseline28.moving_time_hours",
+          "load.baseline28.elevation_m",
+          "load.baseline28.training_load_hours"
+        ],
+        "target_intensity": "moderate",
+        "terrain": "mixed",
+        "title": "Long run",
+        "workout": "Long trail run to build endurance and maintain freshness."
+      },
+      {
+        "date": "2026-03-12",
+        "duration_minutes": 79,
+        "estimated_distance_km": null,
+        "estimated_elevation_m": null,
+        "is_hard_day": true,
+        "is_rest_day": false,
+        "purpose": "Improve sustainable effort and race-specific rhythm.",
+        "session_type": "tempo",
+        "signal_ids": [
+          "load.last7.distance_km",
+          "load.last7.moving_time_hours",
+          "load.last7.elevation_m",
+          "load.last7.training_load_hours",
+          "load.baseline28.distance_km",
+          "load.baseline28.moving_time_hours",
+          "load.baseline28.elevation_m",
+          "load.baseline28.training_load_hours"
+        ],
+        "target_intensity": "controlled",
+        "terrain": "mixed",
+        "title": "Tempo run",
+        "workout": "Tempo run with hills to improve speed and power."
+      },
+      {
+        "date": "2026-03-13",
+        "duration_minutes": 95,
+        "estimated_distance_km": null,
+        "estimated_elevation_m": null,
+        "is_hard_day": true,
+        "is_rest_day": false,
+        "purpose": "Strength training focusing on core and leg muscles.",
+        "session_type": "intervals",
+        "signal_ids": [
+          "load.last7.distance_km",
+          "load.last7.moving_time_hours",
+          "load.last7.elevation_m",
+          "load.last7.training_load_hours",
+          "load.baseline28.distance_km",
+          "load.baseline28.moving_time_hours",
+          "load.baseline28.elevation_m",
+          "load.baseline28.training_load_hours"
+        ],
+        "target_intensity": "hard",
+        "terrain": "mixed",
+        "title": "Interval session",
+        "workout": "Intervals on flats to enhance anaerobic capacity."
+      },
+      {
+        "date": "2026-03-14",
+        "duration_minutes": 0,
+        "estimated_distance_km": null,
+        "estimated_elevation_m": null,
+        "is_hard_day": false,
+        "is_rest_day": true,
+        "purpose": "Recover and maintain freshness.",
+        "session_type": "rest",
+        "signal_ids": [
+          "load.last7.sleep_days_with_data",
+          "load.baseline28.sleep_days_7d"
+        ],
+        "target_intensity": "rest",
+        "terrain": "n/a",
+        "title": "Rest day",
+        "workout": "Rest day. No structured training."
+      },
+      {
+        "date": "2026-03-15",
+        "duration_minutes": 30,
+        "estimated_distance_km": null,
+        "estimated_elevation_m": null,
+        "is_hard_day": false,
+        "is_rest_day": false,
+        "purpose": "Intervals on flats to enhance anaerobic capacity.",
+        "session_type": "strength",
+        "signal_ids": [
+          "load.last7.distance_km",
+          "load.last7.moving_time_hours",
+          "load.last7.elevation_m",
+          "load.last7.training_load_hours",
+          "load.baseline28.distance_km",
+          "load.baseline28.moving_time_hours",
+          "load.baseline28.elevation_m",
+          "load.baseline28.training_load_hours"
+        ],
+        "target_intensity": "moderate",
+        "terrain": "flat",
+        "title": "Strength session",
+        "workout": "Strength training focusing on core and leg muscles."
+      },
+      {
+        "date": "2026-03-16",
+        "duration_minutes": 101,
+        "estimated_distance_km": null,
+        "estimated_elevation_m": null,
+        "is_hard_day": false,
+        "is_rest_day": false,
+        "purpose": "Develop aerobic durability while keeping effort controlled.",
+        "session_type": "aerobic",
+        "signal_ids": [
+          "load.last7.distance_km",
+          "load.last7.moving_time_hours",
+          "load.last7.elevation_m",
+          "load.last7.training_load_hours",
+          "load.baseline28.distance_km",
+          "load.baseline28.moving_time_hours",
+          "load.baseline28.elevation_m",
+          "load.baseline28.training_load_hours"
+        ],
+        "target_intensity": "moderate",
+        "terrain": "hilly",
+        "title": "Aerobic run",
+        "workout": "101 min steady aerobic run on hilly."
+      },
+      {
+        "date": "2026-03-17",
+        "duration_minutes": 60,
+        "estimated_distance_km": null,
+        "estimated_elevation_m": null,
+        "is_hard_day": false,
+        "is_rest_day": false,
+        "purpose": "Maintain aerobic stimulus while reducing impact load.",
+        "session_type": "cross",
+        "signal_ids": [
+          "load.last7.distance_km",
+          "load.last7.moving_time_hours",
+          "load.last7.elevation_m",
+          "load.last7.training_load_hours",
+          "load.baseline28.distance_km",
+          "load.baseline28.moving_time_hours",
+          "load.baseline28.elevation_m",
+          "load.baseline28.training_load_hours"
+        ],
+        "target_intensity": "easy",
+        "terrain": "road",
+        "title": "Cross-training",
+        "workout": "Cross-training session to maintain cardiovascular fitness."
+      }
+    ],
+    "weekly_totals": {
+      "planned_distance_km": null,
+      "planned_elevation_m": null,
+      "planned_moving_time_hours": 7.3
+    }
+  },
+  "readiness": {
+    "rationale": "Deterministic readiness: primed (score 81.0). The athlete is primed based on recent readiness scores and recovery telemetry. The last 7 days show a consistent training load and no signs of fatigue, indicating a solid foundation for race-specific training. The athlete’s historical capacity suggests they are capable of handling a high volume of training, which aligns well with the structured plan designed for peak specificity. However, the recent load is still within the sustainable range, and the athlete needs to maintain freshness and specificity to perform optimally at the upcoming race.",
+    "signal_ids": [
+      "load.last7.distance_km",
+      "load.last7.moving_time_hours",
+      "load.last7.elevation_m",
+      "load.last7.training_load_hours",
+      "load.last7.activity_count",
+      "load.last7.sleep_days_with_data",
+      "load.baseline28.distance_km",
+      "load.baseline28.moving_time_hours",
+      "load.baseline28.elevation_m",
+      "load.baseline28.training_load_hours"
+    ],
+    "status": "primed"
+  },
+  "recovery": {
+    "actions": [],
+    "signal_ids": [
+      "load.last7.sleep_days_with_data",
+      "load.last7.hrv_mean",
+      "load.last7.rhr_mean"
+    ]
+  },
+  "risks": [
+    {
+      "message": "The athlete is primed and the recent load is within the sustainable range, but the lack of sleep and HRV data indicates a need for attention to recovery. The athlete should aim to improve their sleep quality and monitor their HRV levels to ensure optimal recovery.",
+      "severity": "low",
+      "signal_ids": [
+        "load.last7.sleep_days_with_data",
+        "load.last7.hrv_mean",
+        "load.last7.rhr_mean"
+      ]
+    }
+  ],
+  "snapshot": {
+    "baseline28": {
+      "activity_count": "24",
+      "distance_km": "348.7",
+      "elevation_m": "10005",
+      "hrv_mean": "",
+      "moving_time_hours": "39",
+      "rhr_mean": "",
+      "sleep_hours_mean": ""
+    },
+    "last7": {
+      "activity_count": "6",
+      "distance_km": "80",
+      "elevation_m": "2279.3",
+      "hrv_mean": "",
+      "moving_time_hours": "9.1",
+      "rhr_mean": "",
+      "sleep_hours_mean": ""
+    },
+    "notes": "The athlete covered 80 km in the last 7 days. Moving time was 9.1 hours. Elevation gain was 2279.3 meters."
+  }
+}

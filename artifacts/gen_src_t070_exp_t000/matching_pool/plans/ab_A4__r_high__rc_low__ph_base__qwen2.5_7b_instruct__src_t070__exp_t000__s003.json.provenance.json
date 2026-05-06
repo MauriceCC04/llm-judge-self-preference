@@ -1,0 +1,94 @@
+{
+  "plan_id": "ab_A4__r_high__rc_low__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s003",
+  "fixture_id": "ab_A4__r_high__rc_low__ph_base",
+  "athlete_band": "A4",
+  "readiness": "high",
+  "recovery_capability": "low",
+  "race_phase": "base",
+  "plan_days": 7,
+  "style": "trailrunning",
+  "arm": "llm",
+  "source_model": "Qwen/Qwen2.5-7B-Instruct",
+  "explainer_model": "Qwen/Qwen2.5-3B-Instruct",
+  "actual_explainer_model": "Qwen/Qwen2.5-3B-Instruct",
+  "explainer_model_verified": true,
+  "generation_pipeline": "llm_two_stage",
+  "runtime_backend": "trailtraining.llm.coach.run_coach_brief",
+  "runtime_metadata": {
+    "source_base_url": "http://127.0.0.1:8773/v1",
+    "explainer_base_url": "http://127.0.0.1:8774/v1",
+    "judge_base_url": "http://127.0.0.1:8774/v1",
+    "using_local_base_url": true,
+    "default_patch_stage": "judge",
+    "source_model": "Qwen/Qwen2.5-7B-Instruct",
+    "actual_source_model": "Qwen/Qwen2.5-7B-Instruct",
+    "actual_explainer_model": "Qwen/Qwen2.5-3B-Instruct",
+    "explainer_model_verified": true,
+    "source_temperature": 0.7,
+    "explainer_temperature": 0.0,
+    "seed": 3,
+    "structural_lifestyle_notes_present": true,
+    "structural_lifestyle_notes_chars": 2146,
+    "artifact_lifestyle_notes_chars": 267,
+    "TRAILTRAINING_TWO_STAGE_PLAN": "1",
+    "generation_condition": "gen_src_t070__exp_t000",
+    "athlete_band": "A4",
+    "readiness": "high",
+    "recovery_capability": "low",
+    "race_phase": "base",
+    "artifact_normalization": {
+      "normalizer_version": "artifact-presentation-normalizer-v1",
+      "normalized_at": "2026-05-05T15:17:21.580889+00:00",
+      "original_artifact_sha256": "b0bb23007d69d9fa8b6c5506fdaa0884716f0f0bc864c4eee5bb1c53af93a906",
+      "normalized_artifact_sha256": "56bddce0b223a35ce0498b20e55f8755d5a289a25dcb14ae3fda99996ea77ed5",
+      "changed_fields": [
+        {
+          "path": "$.plan.days[1].title",
+          "old": "Long run",
+          "new": "Aerobic run",
+          "reason": "title_session_mismatch"
+        },
+        {
+          "path": "$.plan.days[1].purpose",
+          "old": "Long run focusing on aerobic development and hill strength.",
+          "new": "Develop aerobic durability while keeping effort controlled.",
+          "reason": "field_primary_label_long_mismatches_session_type_aerobic"
+        },
+        {
+          "path": "$.plan.days[2].title",
+          "old": "Intervals",
+          "new": "Tempo run",
+          "reason": "title_session_mismatch"
+        },
+        {
+          "path": "$.plan.days[4].title",
+          "old": "Tempo run",
+          "new": "Interval session",
+          "reason": "title_session_mismatch"
+        },
+        {
+          "path": "$.plan.days[4].purpose",
+          "old": "Tempo run to improve lactate threshold and speed endurance.",
+          "new": "Develop speed, economy, and pacing control.",
+          "reason": "field_primary_label_tempo_mismatches_session_type_intervals"
+        },
+        {
+          "path": "$.plan.days[5].title",
+          "old": "Aerobic run",
+          "new": "Long run",
+          "reason": "title_session_mismatch"
+        }
+      ],
+      "warnings": [],
+      "errors": [],
+      "score_relevant_projection_unchanged": true
+    }
+  },
+  "source_temperature": 0.7,
+  "explainer_temperature": 0.0,
+  "generation_condition": "gen_src_t070__exp_t000",
+  "seed": 3,
+  "generated_at": "2026-05-04T14:19:08.138953+00:00",
+  "plan_path": "artifacts/gen_src_t070_exp_t000/matching_pool/plans/ab_A4__r_high__rc_low__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s003.json",
+  "deterministic_score": 89.0
+}

@@ -1,0 +1,34 @@
+{
+  "validation": "understructured_plan",
+  "issues": [
+    "understructured:missing_long_run",
+    "understructured:collapsed_easy_template"
+  ],
+  "fixture_meta": {
+    "fixture_id": "ab_A3__r_low__rc_low__ph_base",
+    "athlete_band": "A3",
+    "readiness": "low",
+    "recovery_capability": "low",
+    "race_phase": "base",
+    "readiness_status": "fatigued",
+    "recovery_key": "load_only",
+    "weeks_to_race": 20,
+    "athlete_band_label": "Advanced amateur",
+    "athlete_archetype": "advanced_amateur_runner",
+    "athlete_profile_summary": "Consistent runner, higher recent load, more robust weekly structure.",
+    "recent_volume_hint": "consistent higher recent load",
+    "structure_hint": "robust weekly structure with clearly differentiated sessions",
+    "long_run_tolerance_minutes": 145,
+    "block_label": "base development block",
+    "style": "trailrunning",
+    "primary_goal": "to build aerobic durability and resilient trail-running capacity",
+    "lifestyle_notes": "Prioritize consistent aerobic development, hill strength, and durable weekly routine. Athlete profile: Advanced amateur. Training history context: Consistent runner, higher recent load, more robust weekly structure.",
+    "baseline_load_hours": 6.4,
+    "baseline_distance_km": 54.0,
+    "baseline_elevation_m": 1900.0,
+    "base_speed_kmh": 8.6,
+    "weight_kg": 67.0,
+    "height_cm": 174.0,
+    "years_in_sport": 5.5
+  }
+}

@@ -28,6 +28,19 @@ def _load_rollups(rollups_path: Path | None) -> Optional[dict[str, Any]]:
     return None
 
 
+def _model_family(model_or_name: Any) -> str:
+    s = str(model_or_name or "").lower()
+    if "qwen" in s:
+        return "qwen"
+    if "gemma" in s:
+        return "gemma"
+    if "llama" in s:
+        return "llama"
+    if not s or s == "none":
+        return "programmatic"
+    return "other"
+
+
 def _resolve_rollups_for_fixture(
     fixture_id: str | None,
     *,
@@ -74,6 +87,23 @@ def _prepare_pairwise_view(
     elif pairwise_view != "raw_normalized":
         raise ValueError(f"Unknown pairwise_view: {pairwise_view!r}")
     return out_a, out_b
+
+
+def _pair_metadata(pair: dict[str, Any], judge: Any) -> dict[str, Any]:
+    source_model = pair.get("source_model_a")
+    source_family = _model_family(source_model)
+    judge_family = _model_family(getattr(judge, "model_id", None) or getattr(judge, "name", None))
+    return {
+        "source_model_family": source_family,
+        "judge_model_family": judge_family,
+        "self_family_match": source_family in {"qwen", "gemma"} and source_family == judge_family,
+        "structural_score_gap": pair.get("structural_score_gap", pair.get("score_gap")),
+        "structural_score_a": pair.get("structural_score_a", pair.get("score_a")),
+        "structural_score_b": pair.get("structural_score_b", pair.get("score_b")),
+        "structural_score_version": pair.get("structural_score_version"),
+        "arm_a": pair.get("arm_a"),
+        "arm_b": pair.get("arm_b"),
+    }
 
 
 def run_pairwise_harness(
@@ -129,6 +159,7 @@ def run_pairwise_harness(
             fixtures_dir=fixtures_dir,
             cache=rollups_cache,
         )
+        metadata = _pair_metadata(pair, judge)
 
         for run in range(n_runs):
             for position in positions:
@@ -208,6 +239,7 @@ def run_pairwise_harness(
                 writer.append(
                     {
                         **stub,
+                        **metadata,
                         "preferred": preferred_raw,
                         "preferred_id": preferred_id,
                         "plan_a_id": pair["plan_a_id"],

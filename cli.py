@@ -40,7 +40,7 @@ def _ensure_style_gate(args: argparse.Namespace, summary_path: Path) -> dict:
 
     output_dir = summary_path.parent
     output_dir.mkdir(parents=True, exist_ok=True)
-    result = run_style_audit(
+    return run_style_audit(
         plans_dir=Path(args.plans),
         provenance_dir=Path(args.provenance or args.plans),
         pairs_path=Path(args.pairs),
@@ -48,7 +48,6 @@ def _ensure_style_gate(args: argparse.Namespace, summary_path: Path) -> dict:
         critical_features=STYLE_AUDIT_CRITICAL_FEATURES,
         z_threshold=STYLE_AUDIT_Z_THRESHOLD,
     )
-    return result
 
 
 def cmd_generate(args: argparse.Namespace) -> None:
@@ -115,11 +114,59 @@ def cmd_match(args: argparse.Namespace) -> None:
         provenance_dir=plans_dir,
         fixtures_dir=fixtures_dir,
         output_path=output_path,
-        tolerance=MATCH_TOLERANCE,
-        target_pairs=TARGET_PAIRS,
+        tolerance=args.tolerance if args.tolerance is not None else MATCH_TOLERANCE,
+        target_pairs=args.target_pairs if args.target_pairs is not None else TARGET_PAIRS,
+        fail_below_target_ratio=args.fail_below_target_ratio,
         allow_mixed_generation_conditions=args.allow_mixed_generation_conditions,
+        compute_old_quality_score=args.compute_old_quality_score,
+        require_same_score_bin=args.require_same_score_bin,
     )
     print(f"{len(pairs)} pairs written to {output_path}")
+
+
+def cmd_match_diagnostics(args: argparse.Namespace) -> None:
+    from tools.matching_diagnostics import run_matching_diagnostics
+
+    result = run_matching_diagnostics(
+        plans_dir=Path(args.plans),
+        output_dir=Path(args.output),
+        tolerances=args.tolerance,
+        target_pairs=args.target_pairs,
+    )
+    print(json.dumps(result.get("summary", {}), indent=2, ensure_ascii=False))
+
+
+def cmd_build_eval_manifest(args: argparse.Namespace) -> None:
+    from tools.build_pairwise_eval_manifest import build_manifest
+
+    result = build_manifest(
+        plans_dir=Path(args.plans),
+        pairs_path=Path(args.pairs),
+        output_dir=Path(args.output),
+        judge_names=args.judge,
+        n_runs=args.runs,
+        orders=args.order,
+        max_pairs=args.max_pairs,
+        seed=args.seed,
+        write_judge_inputs=args.write_judge_inputs,
+    )
+    print(json.dumps(result, indent=2, ensure_ascii=False))
+
+
+def cmd_launch_gate(args: argparse.Namespace) -> None:
+    from tools.launch_gate import run_launch_gate
+
+    result = run_launch_gate(
+        plans_dir=Path(args.plans),
+        pairs_path=Path(args.pairs),
+        style_audit_path=Path(args.style_audit) if args.style_audit else None,
+        n_runs=args.runs,
+        orders=args.order,
+        require_style_audit=not args.skip_style_audit,
+    )
+    print(json.dumps(result, indent=2, ensure_ascii=False))
+    if not result.get("passed", False):
+        raise SystemExit(2)
 
 
 def cmd_judge(args: argparse.Namespace) -> None:
@@ -253,7 +300,14 @@ def cmd_analyze(args: argparse.Namespace) -> None:
 
 
 def build_parser() -> argparse.ArgumentParser:
-    from generate.constants import ACTIVE_JUDGE_NAMES, LLM_SOURCE_MODELS, PAIRWISE_VIEW_CHOICES, PAIRWISE_VIEW_DEFAULT
+    from generate.constants import (
+        ACTIVE_JUDGE_NAMES,
+        LLM_SOURCE_MODELS,
+        PAIRWISE_N_RUNS,
+        PAIRWISE_VIEW_CHOICES,
+        PAIRWISE_VIEW_DEFAULT,
+        TARGET_PAIRS,
+    )
 
     parser = argparse.ArgumentParser(prog="judge-bias-study", description="LLM-judge self-preference study pipeline")
     sub = parser.add_subparsers(dest="command", required=True)
@@ -277,11 +331,44 @@ def build_parser() -> argparse.ArgumentParser:
     fp.add_argument("--seed", type=int, default=0)
     fp.set_defaults(func=cmd_fit_priors)
 
-    mat = sub.add_parser("match", help="Score plans and build matched_pairs.json")
+    mat = sub.add_parser("match", help="Score plans structurally and build matched_pairs.json")
     mat.add_argument("--plans", default="plans/")
     mat.add_argument("--output", default="matched_pairs.json")
+    mat.add_argument("--tolerance", type=float, default=None, help="Structural score tolerance; default from generate.constants")
+    mat.add_argument("--target-pairs", type=int, default=None, help="Target matched pairs; default from generate.constants")
+    mat.add_argument("--fail-below-target-ratio", type=float, default=None)
     mat.add_argument("--allow-mixed-generation-conditions", action="store_true")
+    mat.add_argument("--compute-old-quality-score", action="store_true", help="Compute legacy TrailTraining quality score as diagnostic only")
+    mat.add_argument("--require-same-score-bin", action="store_true", help="Sensitivity only; not used for primary structural matching")
     mat.set_defaults(func=cmd_match)
+
+    md = sub.add_parser("match-diagnostics", help="Write structural score/matching/style diagnostics")
+    md.add_argument("--plans", default="plans/")
+    md.add_argument("--output", default="results/matching_diagnostics")
+    md.add_argument("--tolerance", type=float, action="append", default=None)
+    md.add_argument("--target-pairs", type=int, default=TARGET_PAIRS)
+    md.set_defaults(func=cmd_match_diagnostics)
+
+    manifest = sub.add_parser("build-eval-manifest", help="Build source-masked pairwise evaluation manifest")
+    manifest.add_argument("--plans", default="plans/")
+    manifest.add_argument("--pairs", default="matched_pairs.json")
+    manifest.add_argument("--output", default="pairwise_manifest/")
+    manifest.add_argument("--judge", action="append", default=None, help="Judge name; repeat for four judges. Default: active constants")
+    manifest.add_argument("--runs", type=int, default=PAIRWISE_N_RUNS)
+    manifest.add_argument("--order", action="append", choices=["AB", "BA"], default=None)
+    manifest.add_argument("--max-pairs", type=int, default=None)
+    manifest.add_argument("--seed", type=int, default=0)
+    manifest.add_argument("--write-judge-inputs", action="store_true")
+    manifest.set_defaults(func=cmd_build_eval_manifest)
+
+    gate = sub.add_parser("launch-gate", help="Refuse full judging unless the 10,000-record gate passes")
+    gate.add_argument("--plans", default="plans/")
+    gate.add_argument("--pairs", default="matched_pairs.json")
+    gate.add_argument("--style-audit", default=None)
+    gate.add_argument("--runs", type=int, default=PAIRWISE_N_RUNS)
+    gate.add_argument("--order", action="append", choices=["AB", "BA"], default=None)
+    gate.add_argument("--skip-style-audit", action="store_true")
+    gate.set_defaults(func=cmd_launch_gate)
 
     jdg = sub.add_parser("judge", help="Run pairwise and or soft-eval for one judge")
     jdg.add_argument("--judge", required=True, choices=ACTIVE_JUDGE_NAMES)

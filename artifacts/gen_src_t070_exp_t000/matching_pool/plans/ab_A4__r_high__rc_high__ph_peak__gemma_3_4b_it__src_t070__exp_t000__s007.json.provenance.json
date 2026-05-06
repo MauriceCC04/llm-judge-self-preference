@@ -1,0 +1,106 @@
+{
+  "plan_id": "ab_A4__r_high__rc_high__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s007",
+  "fixture_id": "ab_A4__r_high__rc_high__ph_peak",
+  "athlete_band": "A4",
+  "readiness": "high",
+  "recovery_capability": "high",
+  "race_phase": "peak",
+  "plan_days": 7,
+  "style": "trailrunning",
+  "arm": "llm",
+  "source_model": "google/gemma-3-4b-it",
+  "explainer_model": "Qwen/Qwen2.5-3B-Instruct",
+  "actual_explainer_model": "Qwen/Qwen2.5-3B-Instruct",
+  "explainer_model_verified": true,
+  "generation_pipeline": "llm_two_stage",
+  "runtime_backend": "trailtraining.llm.coach.run_coach_brief",
+  "runtime_metadata": {
+    "source_base_url": "http://127.0.0.1:8773/v1",
+    "explainer_base_url": "http://127.0.0.1:8774/v1",
+    "judge_base_url": "http://127.0.0.1:8774/v1",
+    "using_local_base_url": true,
+    "default_patch_stage": "judge",
+    "source_model": "google/gemma-3-4b-it",
+    "actual_source_model": "google/gemma-3-4b-it",
+    "actual_explainer_model": "Qwen/Qwen2.5-3B-Instruct",
+    "explainer_model_verified": true,
+    "source_temperature": 0.7,
+    "explainer_temperature": 0.0,
+    "seed": 7,
+    "structural_lifestyle_notes_present": true,
+    "structural_lifestyle_notes_chars": 2149,
+    "artifact_lifestyle_notes_chars": 269,
+    "TRAILTRAINING_TWO_STAGE_PLAN": "1",
+    "generation_condition": "gen_src_t070__exp_t000",
+    "athlete_band": "A4",
+    "readiness": "high",
+    "recovery_capability": "high",
+    "race_phase": "peak",
+    "artifact_normalization": {
+      "normalizer_version": "artifact-presentation-normalizer-v1",
+      "normalized_at": "2026-05-05T15:17:21.891481+00:00",
+      "original_artifact_sha256": "326c866b4cf21f1c5dffa4ccd2b70560e0833600d3defa0cb425052b64576f40",
+      "normalized_artifact_sha256": "7118798ee10492d050e51c8da95517bf2201301c24d22ed9eb94afbfb05eb332",
+      "changed_fields": [
+        {
+          "path": "$.plan.days[0].title",
+          "old": "Day 1",
+          "new": "Long run",
+          "reason": "generic_day_title"
+        },
+        {
+          "path": "$.plan.days[1].title",
+          "old": "Day 2",
+          "new": "Tempo run",
+          "reason": "generic_day_title"
+        },
+        {
+          "path": "$.plan.days[2].title",
+          "old": "Day 3",
+          "new": "Easy run",
+          "reason": "generic_day_title"
+        },
+        {
+          "path": "$.plan.days[3].title",
+          "old": "Day 4",
+          "new": "Long run",
+          "reason": "generic_day_title"
+        },
+        {
+          "path": "$.plan.days[4].title",
+          "old": "Day 5",
+          "new": "Hill session",
+          "reason": "generic_day_title"
+        },
+        {
+          "path": "$.plan.days[4].purpose",
+          "old": "To allow for recovery and maintenance of freshness with a short easy run.",
+          "new": "Build climbing strength, power, and durable mechanics.",
+          "reason": "field_primary_label_easy_mismatches_session_type_hills"
+        },
+        {
+          "path": "$.plan.days[5].title",
+          "old": "Day 6",
+          "new": "Easy run",
+          "reason": "generic_day_title"
+        },
+        {
+          "path": "$.plan.days[5].purpose",
+          "old": "To further prepare for the upcoming race with a tempo session and a long run.",
+          "new": "Support aerobic consistency without adding excessive fatigue.",
+          "reason": "field_primary_label_long_mismatches_session_type_easy"
+        }
+      ],
+      "warnings": [],
+      "errors": [],
+      "score_relevant_projection_unchanged": true
+    }
+  },
+  "source_temperature": 0.7,
+  "explainer_temperature": 0.0,
+  "generation_condition": "gen_src_t070__exp_t000",
+  "seed": 7,
+  "generated_at": "2026-05-05T09:44:20.030266+00:00",
+  "plan_path": "artifacts/gen_src_t070_exp_t000/matching_pool/plans/ab_A4__r_high__rc_high__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s007.json",
+  "deterministic_score": 97.0
+}

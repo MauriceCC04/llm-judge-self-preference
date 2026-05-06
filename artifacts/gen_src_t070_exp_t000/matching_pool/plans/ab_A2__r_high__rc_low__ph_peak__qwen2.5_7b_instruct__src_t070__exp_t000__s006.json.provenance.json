@@ -1,0 +1,76 @@
+{
+  "plan_id": "ab_A2__r_high__rc_low__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s006",
+  "fixture_id": "ab_A2__r_high__rc_low__ph_peak",
+  "athlete_band": "A2",
+  "readiness": "high",
+  "recovery_capability": "low",
+  "race_phase": "peak",
+  "plan_days": 7,
+  "style": "trailrunning",
+  "arm": "llm",
+  "source_model": "Qwen/Qwen2.5-7B-Instruct",
+  "explainer_model": "Qwen/Qwen2.5-3B-Instruct",
+  "actual_explainer_model": "Qwen/Qwen2.5-3B-Instruct",
+  "explainer_model_verified": true,
+  "generation_pipeline": "llm_two_stage",
+  "runtime_backend": "trailtraining.llm.coach.run_coach_brief",
+  "runtime_metadata": {
+    "source_base_url": "http://127.0.0.1:8773/v1",
+    "explainer_base_url": "http://127.0.0.1:8774/v1",
+    "judge_base_url": "http://127.0.0.1:8774/v1",
+    "using_local_base_url": true,
+    "default_patch_stage": "judge",
+    "source_model": "Qwen/Qwen2.5-7B-Instruct",
+    "actual_source_model": "Qwen/Qwen2.5-7B-Instruct",
+    "actual_explainer_model": "Qwen/Qwen2.5-3B-Instruct",
+    "explainer_model_verified": true,
+    "source_temperature": 0.7,
+    "explainer_temperature": 0.0,
+    "seed": 6,
+    "structural_lifestyle_notes_present": true,
+    "structural_lifestyle_notes_chars": 1320,
+    "artifact_lifestyle_notes_chars": 236,
+    "TRAILTRAINING_TWO_STAGE_PLAN": "1",
+    "generation_condition": "gen_src_t070__exp_t000",
+    "athlete_band": "A2",
+    "readiness": "high",
+    "recovery_capability": "low",
+    "race_phase": "peak",
+    "artifact_normalization": {
+      "normalizer_version": "artifact-presentation-normalizer-v1",
+      "normalized_at": "2026-05-05T15:17:21.475687+00:00",
+      "original_artifact_sha256": "777f58d48624511f75c7a41efb0163e9fbcd83cf1d587a8f7f44ff66134815d3",
+      "normalized_artifact_sha256": "fb769ec845e6c6cecc9d45d54579843d2fae8b6a322ee02a05c7ec36b1113448",
+      "changed_fields": [
+        {
+          "path": "$.plan.days[1].title",
+          "old": "Day 2",
+          "new": "Easy run",
+          "reason": "generic_day_title"
+        },
+        {
+          "path": "$.plan.days[3].title",
+          "old": "Day 4",
+          "new": "Easy run",
+          "reason": "generic_day_title"
+        },
+        {
+          "path": "$.plan.days[5].title",
+          "old": "Day 6",
+          "new": "Easy run",
+          "reason": "generic_day_title"
+        }
+      ],
+      "warnings": [],
+      "errors": [],
+      "score_relevant_projection_unchanged": true
+    }
+  },
+  "source_temperature": 0.7,
+  "explainer_temperature": 0.0,
+  "generation_condition": "gen_src_t070__exp_t000",
+  "seed": 6,
+  "generated_at": "2026-05-04T13:10:03.073764+00:00",
+  "plan_path": "artifacts/gen_src_t070_exp_t000/matching_pool/plans/ab_A2__r_high__rc_low__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s006.json",
+  "deterministic_score": 92.0
+}

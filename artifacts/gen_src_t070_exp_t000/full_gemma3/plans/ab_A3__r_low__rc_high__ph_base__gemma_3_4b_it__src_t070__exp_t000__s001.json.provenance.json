@@ -1,0 +1,124 @@
+{
+  "plan_id": "ab_A3__r_low__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s001",
+  "fixture_id": "ab_A3__r_low__rc_high__ph_base",
+  "athlete_band": "A3",
+  "readiness": "low",
+  "recovery_capability": "high",
+  "race_phase": "base",
+  "plan_days": 7,
+  "style": "trailrunning",
+  "arm": "llm",
+  "source_model": "google/gemma-3-4b-it",
+  "explainer_model": "Qwen/Qwen2.5-3B-Instruct",
+  "actual_explainer_model": "Qwen/Qwen2.5-3B-Instruct",
+  "explainer_model_verified": true,
+  "generation_pipeline": "llm_two_stage",
+  "runtime_backend": "trailtraining.llm.coach.run_coach_brief",
+  "runtime_metadata": {
+    "source_base_url": "http://127.0.0.1:8773/v1",
+    "explainer_base_url": "http://127.0.0.1:8774/v1",
+    "judge_base_url": "http://127.0.0.1:8774/v1",
+    "using_local_base_url": true,
+    "default_patch_stage": "judge",
+    "source_model": "google/gemma-3-4b-it",
+    "actual_source_model": "google/gemma-3-4b-it",
+    "actual_explainer_model": "Qwen/Qwen2.5-3B-Instruct",
+    "explainer_model_verified": true,
+    "source_temperature": 0.7,
+    "explainer_temperature": 0.0,
+    "seed": 1,
+    "structural_lifestyle_notes_present": true,
+    "structural_lifestyle_notes_chars": 1633,
+    "artifact_lifestyle_notes_chars": 215,
+    "TRAILTRAINING_TWO_STAGE_PLAN": "1",
+    "generation_condition": "gen_src_t070__exp_t000",
+    "athlete_band": "A3",
+    "readiness": "low",
+    "recovery_capability": "high",
+    "race_phase": "base",
+    "artifact_normalization": {
+      "normalizer_version": "artifact-presentation-normalizer-v1",
+      "normalized_at": "2026-05-05T15:17:21.850843+00:00",
+      "original_artifact_sha256": "48dfc4d29c7ddbf316642cc2a9ddc12fa8917a3fce0c50ca7e1692f0a8cea064",
+      "normalized_artifact_sha256": "daa3015d02efcd0d9a672e4eff81ffe886e59ee4cb5b51a0cedf72d7d66ced03",
+      "changed_fields": [
+        {
+          "path": "$.plan.days[0].title",
+          "old": "Day 1",
+          "new": "Easy run",
+          "reason": "generic_day_title"
+        },
+        {
+          "path": "$.plan.days[0].purpose",
+          "old": "To continue building aerobic endurance and hill strength through a moderate-intensity long run, which is appropriate given the recent training load and the athlete's current readiness status.",
+          "new": "Support aerobic consistency without adding excessive fatigue.",
+          "reason": "field_primary_label_long_mismatches_session_type_easy"
+        },
+        {
+          "path": "$.plan.days[1].title",
+          "old": "Day 2",
+          "new": "Easy run",
+          "reason": "generic_day_title"
+        },
+        {
+          "path": "$.plan.days[1].purpose",
+          "old": "To continue building aerobic endurance and hill strength through a moderate-intensity long run, which is appropriate given the recent training load and the athlete's current readiness status.",
+          "new": "Support aerobic consistency without adding excessive fatigue.",
+          "reason": "field_primary_label_long_mismatches_session_type_easy"
+        },
+        {
+          "path": "$.plan.days[2].title",
+          "old": "Day 3",
+          "new": "Easy run",
+          "reason": "generic_day_title"
+        },
+        {
+          "path": "$.plan.days[2].purpose",
+          "old": "To continue building aerobic endurance and hill strength through a moderate-intensity long run, which is appropriate given the recent training load and the athlete's current readiness status.",
+          "new": "Support aerobic consistency without adding excessive fatigue.",
+          "reason": "field_primary_label_long_mismatches_session_type_easy"
+        },
+        {
+          "path": "$.plan.days[3].title",
+          "old": "Day 4",
+          "new": "Long run",
+          "reason": "generic_day_title"
+        },
+        {
+          "path": "$.plan.days[5].title",
+          "old": "Day 6",
+          "new": "Easy run",
+          "reason": "generic_day_title"
+        },
+        {
+          "path": "$.plan.days[5].purpose",
+          "old": "To continue building aerobic endurance and hill strength, while also providing a moderate recovery day following the long run on March 14th.",
+          "new": "Support aerobic consistency without adding excessive fatigue.",
+          "reason": "field_primary_label_long_mismatches_session_type_easy"
+        },
+        {
+          "path": "$.plan.days[6].title",
+          "old": "Day 7",
+          "new": "Easy run",
+          "reason": "generic_day_title"
+        },
+        {
+          "path": "$.plan.days[6].purpose",
+          "old": "To provide a moderate recovery day following the long run on March 14th, allowing for proper recovery and maintenance of freshness.",
+          "new": "Support aerobic consistency without adding excessive fatigue.",
+          "reason": "field_primary_label_long_mismatches_session_type_easy"
+        }
+      ],
+      "warnings": [],
+      "errors": [],
+      "score_relevant_projection_unchanged": true
+    }
+  },
+  "source_temperature": 0.7,
+  "explainer_temperature": 0.0,
+  "generation_condition": "gen_src_t070__exp_t000",
+  "seed": 1,
+  "generated_at": "2026-05-05T08:32:13.443000+00:00",
+  "plan_path": "artifacts/gen_src_t070_exp_t000/full_gemma3/plans/ab_A3__r_low__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s001.json",
+  "deterministic_score": null
+}

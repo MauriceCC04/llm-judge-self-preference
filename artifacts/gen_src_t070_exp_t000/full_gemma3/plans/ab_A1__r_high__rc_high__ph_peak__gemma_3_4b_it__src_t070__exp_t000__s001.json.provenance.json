@@ -1,0 +1,70 @@
+{
+  "plan_id": "ab_A1__r_high__rc_high__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s001",
+  "fixture_id": "ab_A1__r_high__rc_high__ph_peak",
+  "athlete_band": "A1",
+  "readiness": "high",
+  "recovery_capability": "high",
+  "race_phase": "peak",
+  "plan_days": 7,
+  "style": "trailrunning",
+  "arm": "llm",
+  "source_model": "google/gemma-3-4b-it",
+  "explainer_model": "Qwen/Qwen2.5-3B-Instruct",
+  "actual_explainer_model": "Qwen/Qwen2.5-3B-Instruct",
+  "explainer_model_verified": true,
+  "generation_pipeline": "llm_two_stage",
+  "runtime_backend": "trailtraining.llm.coach.run_coach_brief",
+  "runtime_metadata": {
+    "source_base_url": "http://127.0.0.1:8773/v1",
+    "explainer_base_url": "http://127.0.0.1:8774/v1",
+    "judge_base_url": "http://127.0.0.1:8774/v1",
+    "using_local_base_url": true,
+    "default_patch_stage": "judge",
+    "source_model": "google/gemma-3-4b-it",
+    "actual_source_model": "google/gemma-3-4b-it",
+    "actual_explainer_model": "Qwen/Qwen2.5-3B-Instruct",
+    "explainer_model_verified": true,
+    "source_temperature": 0.7,
+    "explainer_temperature": 0.0,
+    "seed": 1,
+    "structural_lifestyle_notes_present": true,
+    "structural_lifestyle_notes_chars": 1416,
+    "artifact_lifestyle_notes_chars": 246,
+    "TRAILTRAINING_TWO_STAGE_PLAN": "1",
+    "generation_condition": "gen_src_t070__exp_t000",
+    "athlete_band": "A1",
+    "readiness": "high",
+    "recovery_capability": "high",
+    "race_phase": "peak",
+    "artifact_normalization": {
+      "normalizer_version": "artifact-presentation-normalizer-v1",
+      "normalized_at": "2026-05-05T15:17:21.711924+00:00",
+      "original_artifact_sha256": "a4ccb19fe098164a00192a4f064690a64f23dab9ad3b283b3c85d4fdd28545e9",
+      "normalized_artifact_sha256": "195c087d26aa6a5bcd71e893b4c5ee53778e0fbf580387169deba161417bbde0",
+      "changed_fields": [
+        {
+          "path": "$.plan.days[4].title",
+          "old": "Day 5",
+          "new": "Easy run",
+          "reason": "generic_day_title"
+        },
+        {
+          "path": "$.plan.days[4].purpose",
+          "old": "No structured training today due to insufficient data. The athlete is primed and the lack of structured training is consistent with the goal of maintaining freshness and routine.",
+          "new": "Support aerobic consistency without adding excessive fatigue.",
+          "reason": "field_primary_label_rest_mismatches_session_type_easy"
+        }
+      ],
+      "warnings": [],
+      "errors": [],
+      "score_relevant_projection_unchanged": true
+    }
+  },
+  "source_temperature": 0.7,
+  "explainer_temperature": 0.0,
+  "generation_condition": "gen_src_t070__exp_t000",
+  "seed": 1,
+  "generated_at": "2026-05-05T06:55:57.732160+00:00",
+  "plan_path": "artifacts/gen_src_t070_exp_t000/full_gemma3/plans/ab_A1__r_high__rc_high__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s001.json",
+  "deterministic_score": null
+}

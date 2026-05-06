@@ -1,0 +1,3583 @@
+{
+  "summary": {
+    "n_records": 1024,
+    "n_pairs_at_primary_tolerance": 257,
+    "target_pairs": 256,
+    "full_study_gate_pairs_ok": true,
+    "structural_score_version": "structural_score_v1.0.0"
+  },
+  "structural_score_distribution_by_arm": {
+    "llm": {
+      "n": 384,
+      "min": 64.286,
+      "p25": 84.0,
+      "median": 87.0,
+      "p75": 92.0,
+      "max": 100.0
+    },
+    "programmatic": {
+      "n": 640,
+      "min": 64.0,
+      "p25": 82.0,
+      "median": 87.0,
+      "p75": 92.0,
+      "max": 100.0
+    }
+  },
+  "structural_score_distribution_by_source_family": {
+    "gemma": {
+      "n": 192,
+      "min": 75.5,
+      "p25": 84.0,
+      "median": 87.0,
+      "p75": 92.0,
+      "max": 100.0
+    },
+    "programmatic": {
+      "n": 640,
+      "min": 64.0,
+      "p25": 82.0,
+      "median": 87.0,
+      "p75": 92.0,
+      "max": 100.0
+    },
+    "qwen": {
+      "n": 192,
+      "min": 64.286,
+      "p25": 85.9,
+      "median": 90.0,
+      "p75": 92.0,
+      "max": 100.0
+    }
+  },
+  "per_fixture_score_overlap": {
+    "ab_A1__r_high__rc_high__ph_base": {
+      "has_overlap": true,
+      "overlap_low": 82.0,
+      "overlap_high": 92.0,
+      "n_llm": 12,
+      "n_programmatic": 20
+    },
+    "ab_A1__r_high__rc_high__ph_peak": {
+      "has_overlap": true,
+      "overlap_low": 84.0,
+      "overlap_high": 84.0,
+      "n_llm": 12,
+      "n_programmatic": 20
+    },
+    "ab_A1__r_high__rc_low__ph_base": {
+      "has_overlap": true,
+      "overlap_low": 84.3,
+      "overlap_high": 92.0,
+      "n_llm": 12,
+      "n_programmatic": 20
+    },
+    "ab_A1__r_high__rc_low__ph_peak": {
+      "has_overlap": true,
+      "overlap_low": 87.0,
+      "overlap_high": 92.0,
+      "n_llm": 12,
+      "n_programmatic": 20
+    },
+    "ab_A1__r_low__rc_high__ph_base": {
+      "has_overlap": true,
+      "overlap_low": 87.0,
+      "overlap_high": 92.0,
+      "n_llm": 12,
+      "n_programmatic": 20
+    },
+    "ab_A1__r_low__rc_high__ph_peak": {
+      "has_overlap": true,
+      "overlap_low": 87.0,
+      "overlap_high": 92.0,
+      "n_llm": 12,
+      "n_programmatic": 20
+    },
+    "ab_A1__r_low__rc_low__ph_base": {
+      "has_overlap": true,
+      "overlap_low": 81.714,
+      "overlap_high": 87.0,
+      "n_llm": 12,
+      "n_programmatic": 20
+    },
+    "ab_A1__r_low__rc_low__ph_peak": {
+      "has_overlap": true,
+      "overlap_low": 82.0,
+      "overlap_high": 87.0,
+      "n_llm": 12,
+      "n_programmatic": 20
+    },
+    "ab_A2__r_high__rc_high__ph_base": {
+      "has_overlap": true,
+      "overlap_low": 68.143,
+      "overlap_high": 100.0,
+      "n_llm": 12,
+      "n_programmatic": 20
+    },
+    "ab_A2__r_high__rc_high__ph_peak": {
+      "has_overlap": true,
+      "overlap_low": 79.0,
+      "overlap_high": 92.0,
+      "n_llm": 12,
+      "n_programmatic": 20
+    },
+    "ab_A2__r_high__rc_low__ph_base": {
+      "has_overlap": true,
+      "overlap_low": 87.0,
+      "overlap_high": 92.0,
+      "n_llm": 12,
+      "n_programmatic": 20
+    },
+    "ab_A2__r_high__rc_low__ph_peak": {
+      "has_overlap": true,
+      "overlap_low": 87.0,
+      "overlap_high": 95.0,
+      "n_llm": 12,
+      "n_programmatic": 20
+    },
+    "ab_A2__r_low__rc_high__ph_base": {
+      "has_overlap": true,
+      "overlap_low": 84.143,
+      "overlap_high": 92.0,
+      "n_llm": 12,
+      "n_programmatic": 20
+    },
+    "ab_A2__r_low__rc_high__ph_peak": {
+      "has_overlap": true,
+      "overlap_low": 85.857,
+      "overlap_high": 92.0,
+      "n_llm": 12,
+      "n_programmatic": 20
+    },
+    "ab_A2__r_low__rc_low__ph_base": {
+      "has_overlap": true,
+      "overlap_low": 82.0,
+      "overlap_high": 87.0,
+      "n_llm": 12,
+      "n_programmatic": 20
+    },
+    "ab_A2__r_low__rc_low__ph_peak": {
+      "has_overlap": true,
+      "overlap_low": 82.0,
+      "overlap_high": 87.0,
+      "n_llm": 12,
+      "n_programmatic": 20
+    },
+    "ab_A3__r_high__rc_high__ph_base": {
+      "has_overlap": true,
+      "overlap_low": 80.0,
+      "overlap_high": 100.0,
+      "n_llm": 12,
+      "n_programmatic": 20
+    },
+    "ab_A3__r_high__rc_high__ph_peak": {
+      "has_overlap": true,
+      "overlap_low": 80.0,
+      "overlap_high": 100.0,
+      "n_llm": 12,
+      "n_programmatic": 20
+    },
+    "ab_A3__r_high__rc_low__ph_base": {
+      "has_overlap": true,
+      "overlap_low": 75.5,
+      "overlap_high": 92.0,
+      "n_llm": 12,
+      "n_programmatic": 20
+    },
+    "ab_A3__r_high__rc_low__ph_peak": {
+      "has_overlap": true,
+      "overlap_low": 81.0,
+      "overlap_high": 95.0,
+      "n_llm": 12,
+      "n_programmatic": 20
+    },
+    "ab_A3__r_low__rc_high__ph_base": {
+      "has_overlap": true,
+      "overlap_low": 84.0,
+      "overlap_high": 95.0,
+      "n_llm": 12,
+      "n_programmatic": 20
+    },
+    "ab_A3__r_low__rc_high__ph_peak": {
+      "has_overlap": true,
+      "overlap_low": 87.0,
+      "overlap_high": 100.0,
+      "n_llm": 12,
+      "n_programmatic": 20
+    },
+    "ab_A3__r_low__rc_low__ph_base": {
+      "has_overlap": true,
+      "overlap_low": 76.0,
+      "overlap_high": 90.0,
+      "n_llm": 12,
+      "n_programmatic": 20
+    },
+    "ab_A3__r_low__rc_low__ph_peak": {
+      "has_overlap": true,
+      "overlap_low": 82.0,
+      "overlap_high": 95.0,
+      "n_llm": 12,
+      "n_programmatic": 20
+    },
+    "ab_A4__r_high__rc_high__ph_base": {
+      "has_overlap": true,
+      "overlap_low": 78.0,
+      "overlap_high": 97.0,
+      "n_llm": 12,
+      "n_programmatic": 20
+    },
+    "ab_A4__r_high__rc_high__ph_peak": {
+      "has_overlap": true,
+      "overlap_low": 78.0,
+      "overlap_high": 97.0,
+      "n_llm": 12,
+      "n_programmatic": 20
+    },
+    "ab_A4__r_high__rc_low__ph_base": {
+      "has_overlap": true,
+      "overlap_low": 74.0,
+      "overlap_high": 89.0,
+      "n_llm": 12,
+      "n_programmatic": 20
+    },
+    "ab_A4__r_high__rc_low__ph_peak": {
+      "has_overlap": true,
+      "overlap_low": 82.0,
+      "overlap_high": 92.0,
+      "n_llm": 12,
+      "n_programmatic": 20
+    },
+    "ab_A4__r_low__rc_high__ph_base": {
+      "has_overlap": true,
+      "overlap_low": 92.0,
+      "overlap_high": 100.0,
+      "n_llm": 12,
+      "n_programmatic": 20
+    },
+    "ab_A4__r_low__rc_high__ph_peak": {
+      "has_overlap": true,
+      "overlap_low": 92.0,
+      "overlap_high": 99.143,
+      "n_llm": 12,
+      "n_programmatic": 20
+    },
+    "ab_A4__r_low__rc_low__ph_base": {
+      "has_overlap": true,
+      "overlap_low": 87.0,
+      "overlap_high": 95.0,
+      "n_llm": 12,
+      "n_programmatic": 20
+    },
+    "ab_A4__r_low__rc_low__ph_peak": {
+      "has_overlap": true,
+      "overlap_low": 87.0,
+      "overlap_high": 95.0,
+      "n_llm": 12,
+      "n_programmatic": 20
+    }
+  },
+  "possible_match_counts_by_tolerance": {
+    "0.5": {
+      "n_pairs": 207,
+      "by_source_family": {
+        "gemma": 102,
+        "qwen": 105
+      },
+      "by_fixture": {
+        "ab_A1__r_high__rc_high__ph_base": 5,
+        "ab_A1__r_high__rc_high__ph_peak": 4,
+        "ab_A1__r_high__rc_low__ph_base": 4,
+        "ab_A1__r_high__rc_low__ph_peak": 5,
+        "ab_A1__r_low__rc_high__ph_base": 10,
+        "ab_A1__r_low__rc_high__ph_peak": 7,
+        "ab_A1__r_low__rc_low__ph_base": 8,
+        "ab_A1__r_low__rc_low__ph_peak": 8,
+        "ab_A2__r_high__rc_high__ph_base": 7,
+        "ab_A2__r_high__rc_high__ph_peak": 5,
+        "ab_A2__r_high__rc_low__ph_base": 5,
+        "ab_A2__r_high__rc_low__ph_peak": 3,
+        "ab_A2__r_low__rc_high__ph_base": 8,
+        "ab_A2__r_low__rc_high__ph_peak": 6,
+        "ab_A2__r_low__rc_low__ph_base": 8,
+        "ab_A2__r_low__rc_low__ph_peak": 5,
+        "ab_A3__r_high__rc_high__ph_base": 10,
+        "ab_A3__r_high__rc_high__ph_peak": 8,
+        "ab_A3__r_high__rc_low__ph_base": 5,
+        "ab_A3__r_high__rc_low__ph_peak": 7,
+        "ab_A3__r_low__rc_high__ph_base": 10,
+        "ab_A3__r_low__rc_high__ph_peak": 8,
+        "ab_A3__r_low__rc_low__ph_base": 9,
+        "ab_A3__r_low__rc_low__ph_peak": 4,
+        "ab_A4__r_high__rc_high__ph_base": 8,
+        "ab_A4__r_high__rc_high__ph_peak": 6,
+        "ab_A4__r_high__rc_low__ph_base": 3,
+        "ab_A4__r_high__rc_low__ph_peak": 4,
+        "ab_A4__r_low__rc_high__ph_base": 9,
+        "ab_A4__r_low__rc_high__ph_peak": 5,
+        "ab_A4__r_low__rc_low__ph_base": 8,
+        "ab_A4__r_low__rc_low__ph_peak": 5
+      },
+      "mean_gap": 0.022,
+      "max_gap": 0.5
+    },
+    "1.0": {
+      "n_pairs": 224,
+      "by_source_family": {
+        "gemma": 109,
+        "qwen": 115
+      },
+      "by_fixture": {
+        "ab_A1__r_high__rc_high__ph_base": 5,
+        "ab_A1__r_high__rc_high__ph_peak": 4,
+        "ab_A1__r_high__rc_low__ph_base": 5,
+        "ab_A1__r_high__rc_low__ph_peak": 5,
+        "ab_A1__r_low__rc_high__ph_base": 10,
+        "ab_A1__r_low__rc_high__ph_peak": 7,
+        "ab_A1__r_low__rc_low__ph_base": 8,
+        "ab_A1__r_low__rc_low__ph_peak": 8,
+        "ab_A2__r_high__rc_high__ph_base": 7,
+        "ab_A2__r_high__rc_high__ph_peak": 5,
+        "ab_A2__r_high__rc_low__ph_base": 5,
+        "ab_A2__r_high__rc_low__ph_peak": 3,
+        "ab_A2__r_low__rc_high__ph_base": 9,
+        "ab_A2__r_low__rc_high__ph_peak": 6,
+        "ab_A2__r_low__rc_low__ph_base": 8,
+        "ab_A2__r_low__rc_low__ph_peak": 6,
+        "ab_A3__r_high__rc_high__ph_base": 11,
+        "ab_A3__r_high__rc_high__ph_peak": 9,
+        "ab_A3__r_high__rc_low__ph_base": 5,
+        "ab_A3__r_high__rc_low__ph_peak": 9,
+        "ab_A3__r_low__rc_high__ph_base": 10,
+        "ab_A3__r_low__rc_high__ph_peak": 9,
+        "ab_A3__r_low__rc_low__ph_base": 9,
+        "ab_A3__r_low__rc_low__ph_peak": 6,
+        "ab_A4__r_high__rc_high__ph_base": 9,
+        "ab_A4__r_high__rc_high__ph_peak": 7,
+        "ab_A4__r_high__rc_low__ph_base": 5,
+        "ab_A4__r_high__rc_low__ph_peak": 6,
+        "ab_A4__r_low__rc_high__ph_base": 9,
+        "ab_A4__r_low__rc_high__ph_peak": 6,
+        "ab_A4__r_low__rc_low__ph_base": 8,
+        "ab_A4__r_low__rc_low__ph_peak": 5
+      },
+      "mean_gap": 0.0851,
+      "max_gap": 1.0
+    },
+    "2.0": {
+      "n_pairs": 257,
+      "by_source_family": {
+        "gemma": 121,
+        "qwen": 136
+      },
+      "by_fixture": {
+        "ab_A1__r_high__rc_high__ph_base": 7,
+        "ab_A1__r_high__rc_high__ph_peak": 4,
+        "ab_A1__r_high__rc_low__ph_base": 8,
+        "ab_A1__r_high__rc_low__ph_peak": 5,
+        "ab_A1__r_low__rc_high__ph_base": 10,
+        "ab_A1__r_low__rc_high__ph_peak": 7,
+        "ab_A1__r_low__rc_low__ph_base": 10,
+        "ab_A1__r_low__rc_low__ph_peak": 9,
+        "ab_A2__r_high__rc_high__ph_base": 8,
+        "ab_A2__r_high__rc_high__ph_peak": 7,
+        "ab_A2__r_high__rc_low__ph_base": 5,
+        "ab_A2__r_high__rc_low__ph_peak": 5,
+        "ab_A2__r_low__rc_high__ph_base": 9,
+        "ab_A2__r_low__rc_high__ph_peak": 7,
+        "ab_A2__r_low__rc_low__ph_base": 8,
+        "ab_A2__r_low__rc_low__ph_peak": 7,
+        "ab_A3__r_high__rc_high__ph_base": 12,
+        "ab_A3__r_high__rc_high__ph_peak": 9,
+        "ab_A3__r_high__rc_low__ph_base": 7,
+        "ab_A3__r_high__rc_low__ph_peak": 10,
+        "ab_A3__r_low__rc_high__ph_base": 10,
+        "ab_A3__r_low__rc_high__ph_peak": 10,
+        "ab_A3__r_low__rc_low__ph_base": 11,
+        "ab_A3__r_low__rc_low__ph_peak": 7,
+        "ab_A4__r_high__rc_high__ph_base": 10,
+        "ab_A4__r_high__rc_high__ph_peak": 9,
+        "ab_A4__r_high__rc_low__ph_base": 8,
+        "ab_A4__r_high__rc_low__ph_peak": 8,
+        "ab_A4__r_low__rc_high__ph_base": 10,
+        "ab_A4__r_low__rc_high__ph_peak": 6,
+        "ab_A4__r_low__rc_low__ph_base": 9,
+        "ab_A4__r_low__rc_low__ph_peak": 5
+      },
+      "mean_gap": 0.2998,
+      "max_gap": 2.0
+    },
+    "3.0": {
+      "n_pairs": 326,
+      "by_source_family": {
+        "gemma": 162,
+        "qwen": 164
+      },
+      "by_fixture": {
+        "ab_A1__r_high__rc_high__ph_base": 9,
+        "ab_A1__r_high__rc_high__ph_peak": 5,
+        "ab_A1__r_high__rc_low__ph_base": 10,
+        "ab_A1__r_high__rc_low__ph_peak": 7,
+        "ab_A1__r_low__rc_high__ph_base": 11,
+        "ab_A1__r_low__rc_high__ph_peak": 8,
+        "ab_A1__r_low__rc_low__ph_base": 11,
+        "ab_A1__r_low__rc_low__ph_peak": 10,
+        "ab_A2__r_high__rc_high__ph_base": 11,
+        "ab_A2__r_high__rc_high__ph_peak": 10,
+        "ab_A2__r_high__rc_low__ph_base": 9,
+        "ab_A2__r_high__rc_low__ph_peak": 10,
+        "ab_A2__r_low__rc_high__ph_base": 12,
+        "ab_A2__r_low__rc_high__ph_peak": 12,
+        "ab_A2__r_low__rc_low__ph_base": 12,
+        "ab_A2__r_low__rc_low__ph_peak": 11,
+        "ab_A3__r_high__rc_high__ph_base": 12,
+        "ab_A3__r_high__rc_high__ph_peak": 11,
+        "ab_A3__r_high__rc_low__ph_base": 11,
+        "ab_A3__r_high__rc_low__ph_peak": 12,
+        "ab_A3__r_low__rc_high__ph_base": 11,
+        "ab_A3__r_low__rc_high__ph_peak": 11,
+        "ab_A3__r_low__rc_low__ph_base": 12,
+        "ab_A3__r_low__rc_low__ph_peak": 8,
+        "ab_A4__r_high__rc_high__ph_base": 12,
+        "ab_A4__r_high__rc_high__ph_peak": 12,
+        "ab_A4__r_high__rc_low__ph_base": 9,
+        "ab_A4__r_high__rc_low__ph_peak": 12,
+        "ab_A4__r_low__rc_high__ph_base": 11,
+        "ab_A4__r_low__rc_high__ph_peak": 7,
+        "ab_A4__r_low__rc_low__ph_base": 10,
+        "ab_A4__r_low__rc_low__ph_peak": 7
+      },
+      "mean_gap": 0.9043,
+      "max_gap": 3.0
+    }
+  },
+  "final_pair_balance": {
+    "summary": {
+      "total_minutes": {
+        "n": 257,
+        "min": 0.0,
+        "p25": 25.0,
+        "median": 57.0,
+        "p75": 119.0,
+        "max": 382.0
+      },
+      "n_hard_days": {
+        "n": 257,
+        "min": 0.0,
+        "p25": 0.0,
+        "median": 0.0,
+        "p75": 1.0,
+        "max": 2.0
+      },
+      "n_long_runs": {
+        "n": 257,
+        "min": 0.0,
+        "p25": 0.0,
+        "median": 0.0,
+        "p75": 1.0,
+        "max": 3.0
+      },
+      "n_rest_days": {
+        "n": 257,
+        "min": 0.0,
+        "p25": 0.0,
+        "median": 0.0,
+        "p75": 1.0,
+        "max": 4.0
+      },
+      "n_quality_days": {
+        "n": 257,
+        "min": 0.0,
+        "p25": 0.0,
+        "median": 0.0,
+        "p75": 1.0,
+        "max": 2.0
+      },
+      "n_active_days": {
+        "n": 257,
+        "min": 0.0,
+        "p25": 0.0,
+        "median": 0.0,
+        "p75": 1.0,
+        "max": 4.0
+      },
+      "max_day_minutes": {
+        "n": 257,
+        "min": 0.0,
+        "p25": 7.0,
+        "median": 18.0,
+        "p75": 39.0,
+        "max": 274.0
+      }
+    },
+    "rows": [
+      {
+        "pair_id": "pair_0000",
+        "fixture_id": "ab_A1__r_high__rc_high__ph_base",
+        "gap_total_minutes": 124.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 1.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 1.0,
+        "gap_max_day_minutes": 6.0
+      },
+      {
+        "pair_id": "pair_0001",
+        "fixture_id": "ab_A1__r_high__rc_high__ph_base",
+        "gap_total_minutes": 91.0,
+        "gap_n_hard_days": 2.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 1.0,
+        "gap_n_quality_days": 2.0,
+        "gap_n_active_days": 1.0,
+        "gap_max_day_minutes": 14.0
+      },
+      {
+        "pair_id": "pair_0002",
+        "fixture_id": "ab_A1__r_high__rc_high__ph_base",
+        "gap_total_minutes": 103.0,
+        "gap_n_hard_days": 1.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 1.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 10.0
+      },
+      {
+        "pair_id": "pair_0003",
+        "fixture_id": "ab_A1__r_high__rc_high__ph_base",
+        "gap_total_minutes": 27.0,
+        "gap_n_hard_days": 2.0,
+        "gap_n_long_runs": 1.0,
+        "gap_n_rest_days": 2.0,
+        "gap_n_quality_days": 2.0,
+        "gap_n_active_days": 2.0,
+        "gap_max_day_minutes": 32.0
+      },
+      {
+        "pair_id": "pair_0004",
+        "fixture_id": "ab_A1__r_high__rc_high__ph_base",
+        "gap_total_minutes": 151.0,
+        "gap_n_hard_days": 1.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 1.0,
+        "gap_n_quality_days": 1.0,
+        "gap_n_active_days": 1.0,
+        "gap_max_day_minutes": 0.0
+      },
+      {
+        "pair_id": "pair_0005",
+        "fixture_id": "ab_A1__r_high__rc_high__ph_base",
+        "gap_total_minutes": 127.0,
+        "gap_n_hard_days": 2.0,
+        "gap_n_long_runs": 2.0,
+        "gap_n_rest_days": 2.0,
+        "gap_n_quality_days": 2.0,
+        "gap_n_active_days": 2.0,
+        "gap_max_day_minutes": 35.0
+      },
+      {
+        "pair_id": "pair_0006",
+        "fixture_id": "ab_A1__r_high__rc_high__ph_base",
+        "gap_total_minutes": 59.0,
+        "gap_n_hard_days": 2.0,
+        "gap_n_long_runs": 1.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 2.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 21.0
+      },
+      {
+        "pair_id": "pair_0007",
+        "fixture_id": "ab_A1__r_high__rc_high__ph_peak",
+        "gap_total_minutes": 42.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 1.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 1.0,
+        "gap_max_day_minutes": 0.0
+      },
+      {
+        "pair_id": "pair_0008",
+        "fixture_id": "ab_A1__r_high__rc_high__ph_peak",
+        "gap_total_minutes": 19.0,
+        "gap_n_hard_days": 2.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 2.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 13.0
+      },
+      {
+        "pair_id": "pair_0009",
+        "fixture_id": "ab_A1__r_high__rc_high__ph_peak",
+        "gap_total_minutes": 73.0,
+        "gap_n_hard_days": 2.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 2.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 17.0
+      },
+      {
+        "pair_id": "pair_0010",
+        "fixture_id": "ab_A1__r_high__rc_high__ph_peak",
+        "gap_total_minutes": 45.0,
+        "gap_n_hard_days": 2.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 1.0,
+        "gap_n_quality_days": 2.0,
+        "gap_n_active_days": 1.0,
+        "gap_max_day_minutes": 2.0
+      },
+      {
+        "pair_id": "pair_0011",
+        "fixture_id": "ab_A1__r_high__rc_low__ph_base",
+        "gap_total_minutes": 30.0,
+        "gap_n_hard_days": 2.0,
+        "gap_n_long_runs": 2.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 2.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 13.0
+      },
+      {
+        "pair_id": "pair_0012",
+        "fixture_id": "ab_A1__r_high__rc_low__ph_base",
+        "gap_total_minutes": 71.0,
+        "gap_n_hard_days": 1.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 1.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 39.0
+      },
+      {
+        "pair_id": "pair_0013",
+        "fixture_id": "ab_A1__r_high__rc_low__ph_base",
+        "gap_total_minutes": 111.0,
+        "gap_n_hard_days": 2.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 1.0,
+        "gap_n_quality_days": 2.0,
+        "gap_n_active_days": 1.0,
+        "gap_max_day_minutes": 1.0
+      },
+      {
+        "pair_id": "pair_0014",
+        "fixture_id": "ab_A1__r_high__rc_low__ph_base",
+        "gap_total_minutes": 27.0,
+        "gap_n_hard_days": 2.0,
+        "gap_n_long_runs": 1.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 2.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 8.0
+      },
+      {
+        "pair_id": "pair_0015",
+        "fixture_id": "ab_A1__r_high__rc_low__ph_base",
+        "gap_total_minutes": 23.0,
+        "gap_n_hard_days": 2.0,
+        "gap_n_long_runs": 2.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 2.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 25.0
+      },
+      {
+        "pair_id": "pair_0016",
+        "fixture_id": "ab_A1__r_high__rc_low__ph_base",
+        "gap_total_minutes": 7.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 1.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 1.0,
+        "gap_max_day_minutes": 35.0
+      },
+      {
+        "pair_id": "pair_0017",
+        "fixture_id": "ab_A1__r_high__rc_low__ph_base",
+        "gap_total_minutes": 26.0,
+        "gap_n_hard_days": 1.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 1.0,
+        "gap_n_quality_days": 1.0,
+        "gap_n_active_days": 1.0,
+        "gap_max_day_minutes": 29.0
+      },
+      {
+        "pair_id": "pair_0018",
+        "fixture_id": "ab_A1__r_high__rc_low__ph_base",
+        "gap_total_minutes": 95.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 2.0,
+        "gap_n_rest_days": 2.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 2.0,
+        "gap_max_day_minutes": 1.0
+      },
+      {
+        "pair_id": "pair_0019",
+        "fixture_id": "ab_A1__r_high__rc_low__ph_peak",
+        "gap_total_minutes": 0.0,
+        "gap_n_hard_days": 1.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 1.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 3.0
+      },
+      {
+        "pair_id": "pair_0020",
+        "fixture_id": "ab_A1__r_high__rc_low__ph_peak",
+        "gap_total_minutes": 2.0,
+        "gap_n_hard_days": 1.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 1.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 7.0
+      },
+      {
+        "pair_id": "pair_0021",
+        "fixture_id": "ab_A1__r_high__rc_low__ph_peak",
+        "gap_total_minutes": 35.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 12.0
+      },
+      {
+        "pair_id": "pair_0022",
+        "fixture_id": "ab_A1__r_high__rc_low__ph_peak",
+        "gap_total_minutes": 48.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 1.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 1.0,
+        "gap_max_day_minutes": 7.0
+      },
+      {
+        "pair_id": "pair_0023",
+        "fixture_id": "ab_A1__r_high__rc_low__ph_peak",
+        "gap_total_minutes": 2.0,
+        "gap_n_hard_days": 1.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 1.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 25.0
+      },
+      {
+        "pair_id": "pair_0024",
+        "fixture_id": "ab_A1__r_low__rc_high__ph_base",
+        "gap_total_minutes": 0.0,
+        "gap_n_hard_days": 1.0,
+        "gap_n_long_runs": 1.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 1.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 7.0
+      },
+      {
+        "pair_id": "pair_0025",
+        "fixture_id": "ab_A1__r_low__rc_high__ph_base",
+        "gap_total_minutes": 6.0,
+        "gap_n_hard_days": 1.0,
+        "gap_n_long_runs": 1.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 1.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 5.0
+      },
+      {
+        "pair_id": "pair_0026",
+        "fixture_id": "ab_A1__r_low__rc_high__ph_base",
+        "gap_total_minutes": 0.0,
+        "gap_n_hard_days": 1.0,
+        "gap_n_long_runs": 1.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 1.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 29.0
+      },
+      {
+        "pair_id": "pair_0027",
+        "fixture_id": "ab_A1__r_low__rc_high__ph_base",
+        "gap_total_minutes": 4.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 6.0
+      },
+      {
+        "pair_id": "pair_0028",
+        "fixture_id": "ab_A1__r_low__rc_high__ph_base",
+        "gap_total_minutes": 4.0,
+        "gap_n_hard_days": 1.0,
+        "gap_n_long_runs": 1.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 1.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 25.0
+      },
+      {
+        "pair_id": "pair_0029",
+        "fixture_id": "ab_A1__r_low__rc_high__ph_base",
+        "gap_total_minutes": 35.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 0.0
+      },
+      {
+        "pair_id": "pair_0030",
+        "fixture_id": "ab_A1__r_low__rc_high__ph_base",
+        "gap_total_minutes": 67.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 3.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 3.0,
+        "gap_max_day_minutes": 10.0
+      },
+      {
+        "pair_id": "pair_0031",
+        "fixture_id": "ab_A1__r_low__rc_high__ph_base",
+        "gap_total_minutes": 35.0,
+        "gap_n_hard_days": 1.0,
+        "gap_n_long_runs": 1.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 1.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 3.0
+      },
+      {
+        "pair_id": "pair_0032",
+        "fixture_id": "ab_A1__r_low__rc_high__ph_base",
+        "gap_total_minutes": 9.0,
+        "gap_n_hard_days": 1.0,
+        "gap_n_long_runs": 1.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 1.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 36.0
+      },
+      {
+        "pair_id": "pair_0033",
+        "fixture_id": "ab_A1__r_low__rc_high__ph_base",
+        "gap_total_minutes": 0.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 2.0,
+        "gap_n_rest_days": 1.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 1.0,
+        "gap_max_day_minutes": 56.0
+      },
+      {
+        "pair_id": "pair_0034",
+        "fixture_id": "ab_A1__r_low__rc_high__ph_peak",
+        "gap_total_minutes": 0.0,
+        "gap_n_hard_days": 1.0,
+        "gap_n_long_runs": 1.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 1.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 4.0
+      },
+      {
+        "pair_id": "pair_0035",
+        "fixture_id": "ab_A1__r_low__rc_high__ph_peak",
+        "gap_total_minutes": 0.0,
+        "gap_n_hard_days": 1.0,
+        "gap_n_long_runs": 1.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 1.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 31.0
+      },
+      {
+        "pair_id": "pair_0036",
+        "fixture_id": "ab_A1__r_low__rc_high__ph_peak",
+        "gap_total_minutes": 5.0,
+        "gap_n_hard_days": 1.0,
+        "gap_n_long_runs": 1.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 1.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 11.0
+      },
+      {
+        "pair_id": "pair_0037",
+        "fixture_id": "ab_A1__r_low__rc_high__ph_peak",
+        "gap_total_minutes": 32.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 3.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 3.0,
+        "gap_max_day_minutes": 32.0
+      },
+      {
+        "pair_id": "pair_0038",
+        "fixture_id": "ab_A1__r_low__rc_high__ph_peak",
+        "gap_total_minutes": 42.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 26.0
+      },
+      {
+        "pair_id": "pair_0039",
+        "fixture_id": "ab_A1__r_low__rc_high__ph_peak",
+        "gap_total_minutes": 32.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 1.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 1.0,
+        "gap_max_day_minutes": 12.0
+      },
+      {
+        "pair_id": "pair_0040",
+        "fixture_id": "ab_A1__r_low__rc_high__ph_peak",
+        "gap_total_minutes": 57.0,
+        "gap_n_hard_days": 1.0,
+        "gap_n_long_runs": 1.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 1.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 42.0
+      },
+      {
+        "pair_id": "pair_0041",
+        "fixture_id": "ab_A1__r_low__rc_low__ph_base",
+        "gap_total_minutes": 0.0,
+        "gap_n_hard_days": 1.0,
+        "gap_n_long_runs": 1.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 1.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 7.0
+      },
+      {
+        "pair_id": "pair_0042",
+        "fixture_id": "ab_A1__r_low__rc_low__ph_base",
+        "gap_total_minutes": 146.0,
+        "gap_n_hard_days": 1.0,
+        "gap_n_long_runs": 1.0,
+        "gap_n_rest_days": 4.0,
+        "gap_n_quality_days": 1.0,
+        "gap_n_active_days": 4.0,
+        "gap_max_day_minutes": 5.0
+      },
+      {
+        "pair_id": "pair_0043",
+        "fixture_id": "ab_A1__r_low__rc_low__ph_base",
+        "gap_total_minutes": 0.0,
+        "gap_n_hard_days": 1.0,
+        "gap_n_long_runs": 1.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 1.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 29.0
+      },
+      {
+        "pair_id": "pair_0044",
+        "fixture_id": "ab_A1__r_low__rc_low__ph_base",
+        "gap_total_minutes": 4.0,
+        "gap_n_hard_days": 1.0,
+        "gap_n_long_runs": 1.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 1.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 17.0
+      },
+      {
+        "pair_id": "pair_0045",
+        "fixture_id": "ab_A1__r_low__rc_low__ph_base",
+        "gap_total_minutes": 111.0,
+        "gap_n_hard_days": 1.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 2.0,
+        "gap_n_quality_days": 1.0,
+        "gap_n_active_days": 2.0,
+        "gap_max_day_minutes": 10.0
+      },
+      {
+        "pair_id": "pair_0046",
+        "fixture_id": "ab_A1__r_low__rc_low__ph_base",
+        "gap_total_minutes": 10.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 6.0
+      },
+      {
+        "pair_id": "pair_0047",
+        "fixture_id": "ab_A1__r_low__rc_low__ph_base",
+        "gap_total_minutes": 83.0,
+        "gap_n_hard_days": 1.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 3.0,
+        "gap_n_quality_days": 1.0,
+        "gap_n_active_days": 3.0,
+        "gap_max_day_minutes": 4.0
+      },
+      {
+        "pair_id": "pair_0048",
+        "fixture_id": "ab_A1__r_low__rc_low__ph_base",
+        "gap_total_minutes": 41.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 0.0
+      },
+      {
+        "pair_id": "pair_0049",
+        "fixture_id": "ab_A1__r_low__rc_low__ph_base",
+        "gap_total_minutes": 41.0,
+        "gap_n_hard_days": 1.0,
+        "gap_n_long_runs": 1.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 1.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 28.0
+      },
+      {
+        "pair_id": "pair_0050",
+        "fixture_id": "ab_A1__r_low__rc_low__ph_base",
+        "gap_total_minutes": 41.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 2.0,
+        "gap_n_rest_days": 1.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 1.0,
+        "gap_max_day_minutes": 5.0
+      },
+      {
+        "pair_id": "pair_0051",
+        "fixture_id": "ab_A1__r_low__rc_low__ph_peak",
+        "gap_total_minutes": 0.0,
+        "gap_n_hard_days": 1.0,
+        "gap_n_long_runs": 1.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 1.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 5.0
+      },
+      {
+        "pair_id": "pair_0052",
+        "fixture_id": "ab_A1__r_low__rc_low__ph_peak",
+        "gap_total_minutes": 11.0,
+        "gap_n_hard_days": 1.0,
+        "gap_n_long_runs": 1.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 1.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 8.0
+      },
+      {
+        "pair_id": "pair_0053",
+        "fixture_id": "ab_A1__r_low__rc_low__ph_peak",
+        "gap_total_minutes": 0.0,
+        "gap_n_hard_days": 1.0,
+        "gap_n_long_runs": 1.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 1.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 11.0
+      },
+      {
+        "pair_id": "pair_0054",
+        "fixture_id": "ab_A1__r_low__rc_low__ph_peak",
+        "gap_total_minutes": 73.0,
+        "gap_n_hard_days": 1.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 2.0,
+        "gap_n_quality_days": 1.0,
+        "gap_n_active_days": 2.0,
+        "gap_max_day_minutes": 14.0
+      },
+      {
+        "pair_id": "pair_0055",
+        "fixture_id": "ab_A1__r_low__rc_low__ph_peak",
+        "gap_total_minutes": 64.0,
+        "gap_n_hard_days": 1.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 3.0,
+        "gap_n_quality_days": 1.0,
+        "gap_n_active_days": 3.0,
+        "gap_max_day_minutes": 4.0
+      },
+      {
+        "pair_id": "pair_0056",
+        "fixture_id": "ab_A1__r_low__rc_low__ph_peak",
+        "gap_total_minutes": 39.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 24.0
+      },
+      {
+        "pair_id": "pair_0057",
+        "fixture_id": "ab_A1__r_low__rc_low__ph_peak",
+        "gap_total_minutes": 46.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 16.0
+      },
+      {
+        "pair_id": "pair_0058",
+        "fixture_id": "ab_A1__r_low__rc_low__ph_peak",
+        "gap_total_minutes": 61.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 2.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 2.0,
+        "gap_max_day_minutes": 9.0
+      },
+      {
+        "pair_id": "pair_0059",
+        "fixture_id": "ab_A1__r_low__rc_low__ph_peak",
+        "gap_total_minutes": 49.0,
+        "gap_n_hard_days": 1.0,
+        "gap_n_long_runs": 1.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 1.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 44.0
+      },
+      {
+        "pair_id": "pair_0060",
+        "fixture_id": "ab_A2__r_high__rc_high__ph_base",
+        "gap_total_minutes": 39.0,
+        "gap_n_hard_days": 1.0,
+        "gap_n_long_runs": 1.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 1.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 31.0
+      },
+      {
+        "pair_id": "pair_0061",
+        "fixture_id": "ab_A2__r_high__rc_high__ph_base",
+        "gap_total_minutes": 143.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 1.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 1.0,
+        "gap_max_day_minutes": 0.0
+      },
+      {
+        "pair_id": "pair_0062",
+        "fixture_id": "ab_A2__r_high__rc_high__ph_base",
+        "gap_total_minutes": 159.0,
+        "gap_n_hard_days": 1.0,
+        "gap_n_long_runs": 1.0,
+        "gap_n_rest_days": 1.0,
+        "gap_n_quality_days": 1.0,
+        "gap_n_active_days": 1.0,
+        "gap_max_day_minutes": 43.0
+      },
+      {
+        "pair_id": "pair_0063",
+        "fixture_id": "ab_A2__r_high__rc_high__ph_base",
+        "gap_total_minutes": 192.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 47.0
+      },
+      {
+        "pair_id": "pair_0064",
+        "fixture_id": "ab_A2__r_high__rc_high__ph_base",
+        "gap_total_minutes": 13.0,
+        "gap_n_hard_days": 1.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 1.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 5.0
+      },
+      {
+        "pair_id": "pair_0065",
+        "fixture_id": "ab_A2__r_high__rc_high__ph_base",
+        "gap_total_minutes": 62.0,
+        "gap_n_hard_days": 1.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 1.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 19.0
+      },
+      {
+        "pair_id": "pair_0066",
+        "fixture_id": "ab_A2__r_high__rc_high__ph_base",
+        "gap_total_minutes": 127.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 25.0
+      },
+      {
+        "pair_id": "pair_0067",
+        "fixture_id": "ab_A2__r_high__rc_high__ph_base",
+        "gap_total_minutes": 124.0,
+        "gap_n_hard_days": 1.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 1.0,
+        "gap_n_quality_days": 1.0,
+        "gap_n_active_days": 1.0,
+        "gap_max_day_minutes": 19.0
+      },
+      {
+        "pair_id": "pair_0068",
+        "fixture_id": "ab_A2__r_high__rc_high__ph_peak",
+        "gap_total_minutes": 34.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 30.0
+      },
+      {
+        "pair_id": "pair_0069",
+        "fixture_id": "ab_A2__r_high__rc_high__ph_peak",
+        "gap_total_minutes": 159.0,
+        "gap_n_hard_days": 1.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 2.0,
+        "gap_n_quality_days": 1.0,
+        "gap_n_active_days": 2.0,
+        "gap_max_day_minutes": 228.0
+      },
+      {
+        "pair_id": "pair_0070",
+        "fixture_id": "ab_A2__r_high__rc_high__ph_peak",
+        "gap_total_minutes": 90.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 23.0
+      },
+      {
+        "pair_id": "pair_0071",
+        "fixture_id": "ab_A2__r_high__rc_high__ph_peak",
+        "gap_total_minutes": 139.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 1.0,
+        "gap_n_rest_days": 1.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 1.0,
+        "gap_max_day_minutes": 181.0
+      },
+      {
+        "pair_id": "pair_0072",
+        "fixture_id": "ab_A2__r_high__rc_high__ph_peak",
+        "gap_total_minutes": 119.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 49.0
+      },
+      {
+        "pair_id": "pair_0073",
+        "fixture_id": "ab_A2__r_high__rc_high__ph_peak",
+        "gap_total_minutes": 38.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 1.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 1.0,
+        "gap_max_day_minutes": 10.0
+      },
+      {
+        "pair_id": "pair_0074",
+        "fixture_id": "ab_A2__r_high__rc_high__ph_peak",
+        "gap_total_minutes": 146.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 1.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 1.0,
+        "gap_max_day_minutes": 34.0
+      },
+      {
+        "pair_id": "pair_0075",
+        "fixture_id": "ab_A2__r_high__rc_low__ph_base",
+        "gap_total_minutes": 39.0,
+        "gap_n_hard_days": 2.0,
+        "gap_n_long_runs": 1.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 2.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 31.0
+      },
+      {
+        "pair_id": "pair_0076",
+        "fixture_id": "ab_A2__r_high__rc_low__ph_base",
+        "gap_total_minutes": 11.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 2.0,
+        "gap_n_rest_days": 1.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 1.0,
+        "gap_max_day_minutes": 12.0
+      },
+      {
+        "pair_id": "pair_0077",
+        "fixture_id": "ab_A2__r_high__rc_low__ph_base",
+        "gap_total_minutes": 82.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 1.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 1.0,
+        "gap_max_day_minutes": 56.0
+      },
+      {
+        "pair_id": "pair_0078",
+        "fixture_id": "ab_A2__r_high__rc_low__ph_base",
+        "gap_total_minutes": 29.0,
+        "gap_n_hard_days": 1.0,
+        "gap_n_long_runs": 2.0,
+        "gap_n_rest_days": 1.0,
+        "gap_n_quality_days": 1.0,
+        "gap_n_active_days": 1.0,
+        "gap_max_day_minutes": 9.0
+      },
+      {
+        "pair_id": "pair_0079",
+        "fixture_id": "ab_A2__r_high__rc_low__ph_base",
+        "gap_total_minutes": 45.0,
+        "gap_n_hard_days": 1.0,
+        "gap_n_long_runs": 2.0,
+        "gap_n_rest_days": 1.0,
+        "gap_n_quality_days": 1.0,
+        "gap_n_active_days": 1.0,
+        "gap_max_day_minutes": 13.0
+      },
+      {
+        "pair_id": "pair_0080",
+        "fixture_id": "ab_A2__r_high__rc_low__ph_peak",
+        "gap_total_minutes": 101.0,
+        "gap_n_hard_days": 1.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 1.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 3.0
+      },
+      {
+        "pair_id": "pair_0081",
+        "fixture_id": "ab_A2__r_high__rc_low__ph_peak",
+        "gap_total_minutes": 2.0,
+        "gap_n_hard_days": 1.0,
+        "gap_n_long_runs": 2.0,
+        "gap_n_rest_days": 1.0,
+        "gap_n_quality_days": 1.0,
+        "gap_n_active_days": 1.0,
+        "gap_max_day_minutes": 19.0
+      },
+      {
+        "pair_id": "pair_0082",
+        "fixture_id": "ab_A2__r_high__rc_low__ph_peak",
+        "gap_total_minutes": 181.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 2.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 2.0,
+        "gap_max_day_minutes": 2.0
+      },
+      {
+        "pair_id": "pair_0083",
+        "fixture_id": "ab_A2__r_high__rc_low__ph_peak",
+        "gap_total_minutes": 83.0,
+        "gap_n_hard_days": 1.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 1.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 7.0
+      },
+      {
+        "pair_id": "pair_0084",
+        "fixture_id": "ab_A2__r_high__rc_low__ph_peak",
+        "gap_total_minutes": 30.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 3.0
+      },
+      {
+        "pair_id": "pair_0085",
+        "fixture_id": "ab_A2__r_low__rc_high__ph_base",
+        "gap_total_minutes": 0.0,
+        "gap_n_hard_days": 1.0,
+        "gap_n_long_runs": 1.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 1.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 35.0
+      },
+      {
+        "pair_id": "pair_0086",
+        "fixture_id": "ab_A2__r_low__rc_high__ph_base",
+        "gap_total_minutes": 69.0,
+        "gap_n_hard_days": 1.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 1.0,
+        "gap_n_quality_days": 1.0,
+        "gap_n_active_days": 1.0,
+        "gap_max_day_minutes": 36.0
+      },
+      {
+        "pair_id": "pair_0087",
+        "fixture_id": "ab_A2__r_low__rc_high__ph_base",
+        "gap_total_minutes": 33.0,
+        "gap_n_hard_days": 1.0,
+        "gap_n_long_runs": 1.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 1.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 2.0
+      },
+      {
+        "pair_id": "pair_0088",
+        "fixture_id": "ab_A2__r_low__rc_high__ph_base",
+        "gap_total_minutes": 0.0,
+        "gap_n_hard_days": 1.0,
+        "gap_n_long_runs": 1.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 1.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 46.0
+      },
+      {
+        "pair_id": "pair_0089",
+        "fixture_id": "ab_A2__r_low__rc_high__ph_base",
+        "gap_total_minutes": 32.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 1.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 1.0,
+        "gap_max_day_minutes": 2.0
+      },
+      {
+        "pair_id": "pair_0090",
+        "fixture_id": "ab_A2__r_low__rc_high__ph_base",
+        "gap_total_minutes": 0.0,
+        "gap_n_hard_days": 1.0,
+        "gap_n_long_runs": 1.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 1.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 69.0
+      },
+      {
+        "pair_id": "pair_0091",
+        "fixture_id": "ab_A2__r_low__rc_high__ph_base",
+        "gap_total_minutes": 25.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 30.0
+      },
+      {
+        "pair_id": "pair_0092",
+        "fixture_id": "ab_A2__r_low__rc_high__ph_base",
+        "gap_total_minutes": 37.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 2.0,
+        "gap_n_rest_days": 1.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 1.0,
+        "gap_max_day_minutes": 8.0
+      },
+      {
+        "pair_id": "pair_0093",
+        "fixture_id": "ab_A2__r_low__rc_high__ph_base",
+        "gap_total_minutes": 37.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 2.0,
+        "gap_n_rest_days": 1.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 1.0,
+        "gap_max_day_minutes": 10.0
+      },
+      {
+        "pair_id": "pair_0094",
+        "fixture_id": "ab_A2__r_low__rc_high__ph_peak",
+        "gap_total_minutes": 20.0,
+        "gap_n_hard_days": 1.0,
+        "gap_n_long_runs": 1.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 1.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 3.0
+      },
+      {
+        "pair_id": "pair_0095",
+        "fixture_id": "ab_A2__r_low__rc_high__ph_peak",
+        "gap_total_minutes": 8.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 17.0
+      },
+      {
+        "pair_id": "pair_0096",
+        "fixture_id": "ab_A2__r_low__rc_high__ph_peak",
+        "gap_total_minutes": 0.0,
+        "gap_n_hard_days": 1.0,
+        "gap_n_long_runs": 1.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 1.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 30.0
+      },
+      {
+        "pair_id": "pair_0097",
+        "fixture_id": "ab_A2__r_low__rc_high__ph_peak",
+        "gap_total_minutes": 15.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 12.0
+      },
+      {
+        "pair_id": "pair_0098",
+        "fixture_id": "ab_A2__r_low__rc_high__ph_peak",
+        "gap_total_minutes": 95.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 2.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 2.0,
+        "gap_max_day_minutes": 2.0
+      },
+      {
+        "pair_id": "pair_0099",
+        "fixture_id": "ab_A2__r_low__rc_high__ph_peak",
+        "gap_total_minutes": 27.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 10.0
+      },
+      {
+        "pair_id": "pair_0100",
+        "fixture_id": "ab_A2__r_low__rc_high__ph_peak",
+        "gap_total_minutes": 60.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 2.0,
+        "gap_n_rest_days": 1.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 1.0,
+        "gap_max_day_minutes": 13.0
+      },
+      {
+        "pair_id": "pair_0101",
+        "fixture_id": "ab_A2__r_low__rc_low__ph_base",
+        "gap_total_minutes": 0.0,
+        "gap_n_hard_days": 1.0,
+        "gap_n_long_runs": 1.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 1.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 35.0
+      },
+      {
+        "pair_id": "pair_0102",
+        "fixture_id": "ab_A2__r_low__rc_low__ph_base",
+        "gap_total_minutes": 0.0,
+        "gap_n_hard_days": 1.0,
+        "gap_n_long_runs": 1.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 1.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 27.0
+      },
+      {
+        "pair_id": "pair_0103",
+        "fixture_id": "ab_A2__r_low__rc_low__ph_base",
+        "gap_total_minutes": 33.0,
+        "gap_n_hard_days": 1.0,
+        "gap_n_long_runs": 1.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 1.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 2.0
+      },
+      {
+        "pair_id": "pair_0104",
+        "fixture_id": "ab_A2__r_low__rc_low__ph_base",
+        "gap_total_minutes": 25.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 30.0
+      },
+      {
+        "pair_id": "pair_0105",
+        "fixture_id": "ab_A2__r_low__rc_low__ph_base",
+        "gap_total_minutes": 42.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 28.0
+      },
+      {
+        "pair_id": "pair_0106",
+        "fixture_id": "ab_A2__r_low__rc_low__ph_base",
+        "gap_total_minutes": 4.0,
+        "gap_n_hard_days": 1.0,
+        "gap_n_long_runs": 1.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 1.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 81.0
+      },
+      {
+        "pair_id": "pair_0107",
+        "fixture_id": "ab_A2__r_low__rc_low__ph_base",
+        "gap_total_minutes": 37.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 2.0,
+        "gap_n_rest_days": 1.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 1.0,
+        "gap_max_day_minutes": 8.0
+      },
+      {
+        "pair_id": "pair_0108",
+        "fixture_id": "ab_A2__r_low__rc_low__ph_base",
+        "gap_total_minutes": 37.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 2.0,
+        "gap_n_rest_days": 1.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 1.0,
+        "gap_max_day_minutes": 10.0
+      },
+      {
+        "pair_id": "pair_0109",
+        "fixture_id": "ab_A2__r_low__rc_low__ph_peak",
+        "gap_total_minutes": 8.0,
+        "gap_n_hard_days": 1.0,
+        "gap_n_long_runs": 1.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 1.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 3.0
+      },
+      {
+        "pair_id": "pair_0110",
+        "fixture_id": "ab_A2__r_low__rc_low__ph_peak",
+        "gap_total_minutes": 10.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 12.0
+      },
+      {
+        "pair_id": "pair_0111",
+        "fixture_id": "ab_A2__r_low__rc_low__ph_peak",
+        "gap_total_minutes": 0.0,
+        "gap_n_hard_days": 1.0,
+        "gap_n_long_runs": 1.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 1.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 30.0
+      },
+      {
+        "pair_id": "pair_0112",
+        "fixture_id": "ab_A2__r_low__rc_low__ph_peak",
+        "gap_total_minutes": 32.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 10.0
+      },
+      {
+        "pair_id": "pair_0113",
+        "fixture_id": "ab_A2__r_low__rc_low__ph_peak",
+        "gap_total_minutes": 48.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 2.0,
+        "gap_n_rest_days": 1.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 1.0,
+        "gap_max_day_minutes": 10.0
+      },
+      {
+        "pair_id": "pair_0114",
+        "fixture_id": "ab_A2__r_low__rc_low__ph_peak",
+        "gap_total_minutes": 58.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 1.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 1.0,
+        "gap_max_day_minutes": 14.0
+      },
+      {
+        "pair_id": "pair_0115",
+        "fixture_id": "ab_A2__r_low__rc_low__ph_peak",
+        "gap_total_minutes": 35.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 1.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 1.0,
+        "gap_max_day_minutes": 8.0
+      },
+      {
+        "pair_id": "pair_0116",
+        "fixture_id": "ab_A3__r_high__rc_high__ph_base",
+        "gap_total_minutes": 10.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 11.0
+      },
+      {
+        "pair_id": "pair_0117",
+        "fixture_id": "ab_A3__r_high__rc_high__ph_base",
+        "gap_total_minutes": 195.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 2.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 86.0
+      },
+      {
+        "pair_id": "pair_0118",
+        "fixture_id": "ab_A3__r_high__rc_high__ph_base",
+        "gap_total_minutes": 372.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 3.0,
+        "gap_n_rest_days": 1.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 1.0,
+        "gap_max_day_minutes": 85.0
+      },
+      {
+        "pair_id": "pair_0119",
+        "fixture_id": "ab_A3__r_high__rc_high__ph_base",
+        "gap_total_minutes": 344.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 1.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 189.0
+      },
+      {
+        "pair_id": "pair_0120",
+        "fixture_id": "ab_A3__r_high__rc_high__ph_base",
+        "gap_total_minutes": 91.0,
+        "gap_n_hard_days": 1.0,
+        "gap_n_long_runs": 1.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 1.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 24.0
+      },
+      {
+        "pair_id": "pair_0121",
+        "fixture_id": "ab_A3__r_high__rc_high__ph_base",
+        "gap_total_minutes": 119.0,
+        "gap_n_hard_days": 1.0,
+        "gap_n_long_runs": 2.0,
+        "gap_n_rest_days": 1.0,
+        "gap_n_quality_days": 1.0,
+        "gap_n_active_days": 1.0,
+        "gap_max_day_minutes": 69.0
+      },
+      {
+        "pair_id": "pair_0122",
+        "fixture_id": "ab_A3__r_high__rc_high__ph_base",
+        "gap_total_minutes": 304.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 1.0,
+        "gap_n_rest_days": 1.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 1.0,
+        "gap_max_day_minutes": 34.0
+      },
+      {
+        "pair_id": "pair_0123",
+        "fixture_id": "ab_A3__r_high__rc_high__ph_base",
+        "gap_total_minutes": 155.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 11.0
+      },
+      {
+        "pair_id": "pair_0124",
+        "fixture_id": "ab_A3__r_high__rc_high__ph_base",
+        "gap_total_minutes": 94.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 15.0
+      },
+      {
+        "pair_id": "pair_0125",
+        "fixture_id": "ab_A3__r_high__rc_high__ph_base",
+        "gap_total_minutes": 68.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 6.0
+      },
+      {
+        "pair_id": "pair_0126",
+        "fixture_id": "ab_A3__r_high__rc_high__ph_base",
+        "gap_total_minutes": 52.0,
+        "gap_n_hard_days": 1.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 1.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 18.0
+      },
+      {
+        "pair_id": "pair_0127",
+        "fixture_id": "ab_A3__r_high__rc_high__ph_base",
+        "gap_total_minutes": 129.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 12.0
+      },
+      {
+        "pair_id": "pair_0128",
+        "fixture_id": "ab_A3__r_high__rc_high__ph_peak",
+        "gap_total_minutes": 127.0,
+        "gap_n_hard_days": 1.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 1.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 37.0
+      },
+      {
+        "pair_id": "pair_0129",
+        "fixture_id": "ab_A3__r_high__rc_high__ph_peak",
+        "gap_total_minutes": 147.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 2.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 24.0
+      },
+      {
+        "pair_id": "pair_0130",
+        "fixture_id": "ab_A3__r_high__rc_high__ph_peak",
+        "gap_total_minutes": 93.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 14.0
+      },
+      {
+        "pair_id": "pair_0131",
+        "fixture_id": "ab_A3__r_high__rc_high__ph_peak",
+        "gap_total_minutes": 178.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 30.0
+      },
+      {
+        "pair_id": "pair_0132",
+        "fixture_id": "ab_A3__r_high__rc_high__ph_peak",
+        "gap_total_minutes": 200.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 46.0
+      },
+      {
+        "pair_id": "pair_0133",
+        "fixture_id": "ab_A3__r_high__rc_high__ph_peak",
+        "gap_total_minutes": 5.0,
+        "gap_n_hard_days": 1.0,
+        "gap_n_long_runs": 2.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 1.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 17.0
+      },
+      {
+        "pair_id": "pair_0134",
+        "fixture_id": "ab_A3__r_high__rc_high__ph_peak",
+        "gap_total_minutes": 42.0,
+        "gap_n_hard_days": 1.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 1.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 30.0
+      },
+      {
+        "pair_id": "pair_0135",
+        "fixture_id": "ab_A3__r_high__rc_high__ph_peak",
+        "gap_total_minutes": 139.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 29.0
+      },
+      {
+        "pair_id": "pair_0136",
+        "fixture_id": "ab_A3__r_high__rc_high__ph_peak",
+        "gap_total_minutes": 77.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 1.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 1.0,
+        "gap_max_day_minutes": 4.0
+      },
+      {
+        "pair_id": "pair_0137",
+        "fixture_id": "ab_A3__r_high__rc_low__ph_base",
+        "gap_total_minutes": 273.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 2.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 65.0
+      },
+      {
+        "pair_id": "pair_0138",
+        "fixture_id": "ab_A3__r_high__rc_low__ph_base",
+        "gap_total_minutes": 259.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 1.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 86.0
+      },
+      {
+        "pair_id": "pair_0139",
+        "fixture_id": "ab_A3__r_high__rc_low__ph_base",
+        "gap_total_minutes": 67.0,
+        "gap_n_hard_days": 2.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 2.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 18.0
+      },
+      {
+        "pair_id": "pair_0140",
+        "fixture_id": "ab_A3__r_high__rc_low__ph_base",
+        "gap_total_minutes": 206.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 2.0,
+        "gap_n_rest_days": 1.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 1.0,
+        "gap_max_day_minutes": 63.0
+      },
+      {
+        "pair_id": "pair_0141",
+        "fixture_id": "ab_A3__r_high__rc_low__ph_base",
+        "gap_total_minutes": 114.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 13.0
+      },
+      {
+        "pair_id": "pair_0142",
+        "fixture_id": "ab_A3__r_high__rc_low__ph_base",
+        "gap_total_minutes": 1.0,
+        "gap_n_hard_days": 1.0,
+        "gap_n_long_runs": 1.0,
+        "gap_n_rest_days": 1.0,
+        "gap_n_quality_days": 1.0,
+        "gap_n_active_days": 1.0,
+        "gap_max_day_minutes": 30.0
+      },
+      {
+        "pair_id": "pair_0143",
+        "fixture_id": "ab_A3__r_high__rc_low__ph_base",
+        "gap_total_minutes": 49.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 15.0
+      },
+      {
+        "pair_id": "pair_0144",
+        "fixture_id": "ab_A3__r_high__rc_low__ph_peak",
+        "gap_total_minutes": 278.0,
+        "gap_n_hard_days": 1.0,
+        "gap_n_long_runs": 3.0,
+        "gap_n_rest_days": 2.0,
+        "gap_n_quality_days": 1.0,
+        "gap_n_active_days": 2.0,
+        "gap_max_day_minutes": 56.0
+      },
+      {
+        "pair_id": "pair_0145",
+        "fixture_id": "ab_A3__r_high__rc_low__ph_peak",
+        "gap_total_minutes": 115.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 5.0
+      },
+      {
+        "pair_id": "pair_0146",
+        "fixture_id": "ab_A3__r_high__rc_low__ph_peak",
+        "gap_total_minutes": 57.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 22.0
+      },
+      {
+        "pair_id": "pair_0147",
+        "fixture_id": "ab_A3__r_high__rc_low__ph_peak",
+        "gap_total_minutes": 15.0,
+        "gap_n_hard_days": 2.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 1.0,
+        "gap_n_quality_days": 2.0,
+        "gap_n_active_days": 1.0,
+        "gap_max_day_minutes": 3.0
+      },
+      {
+        "pair_id": "pair_0148",
+        "fixture_id": "ab_A3__r_high__rc_low__ph_peak",
+        "gap_total_minutes": 71.0,
+        "gap_n_hard_days": 2.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 2.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 30.0
+      },
+      {
+        "pair_id": "pair_0149",
+        "fixture_id": "ab_A3__r_high__rc_low__ph_peak",
+        "gap_total_minutes": 51.0,
+        "gap_n_hard_days": 1.0,
+        "gap_n_long_runs": 1.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 1.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 30.0
+      },
+      {
+        "pair_id": "pair_0150",
+        "fixture_id": "ab_A3__r_high__rc_low__ph_peak",
+        "gap_total_minutes": 200.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 1.0,
+        "gap_n_rest_days": 1.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 1.0,
+        "gap_max_day_minutes": 27.0
+      },
+      {
+        "pair_id": "pair_0151",
+        "fixture_id": "ab_A3__r_high__rc_low__ph_peak",
+        "gap_total_minutes": 99.0,
+        "gap_n_hard_days": 1.0,
+        "gap_n_long_runs": 2.0,
+        "gap_n_rest_days": 1.0,
+        "gap_n_quality_days": 1.0,
+        "gap_n_active_days": 1.0,
+        "gap_max_day_minutes": 6.0
+      },
+      {
+        "pair_id": "pair_0152",
+        "fixture_id": "ab_A3__r_high__rc_low__ph_peak",
+        "gap_total_minutes": 108.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 14.0
+      },
+      {
+        "pair_id": "pair_0153",
+        "fixture_id": "ab_A3__r_high__rc_low__ph_peak",
+        "gap_total_minutes": 148.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 54.0
+      },
+      {
+        "pair_id": "pair_0154",
+        "fixture_id": "ab_A3__r_low__rc_high__ph_base",
+        "gap_total_minutes": 128.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 2.0,
+        "gap_n_rest_days": 1.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 1.0,
+        "gap_max_day_minutes": 63.0
+      },
+      {
+        "pair_id": "pair_0155",
+        "fixture_id": "ab_A3__r_low__rc_high__ph_base",
+        "gap_total_minutes": 11.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 63.0
+      },
+      {
+        "pair_id": "pair_0156",
+        "fixture_id": "ab_A3__r_low__rc_high__ph_base",
+        "gap_total_minutes": 70.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 2.0
+      },
+      {
+        "pair_id": "pair_0157",
+        "fixture_id": "ab_A3__r_low__rc_high__ph_base",
+        "gap_total_minutes": 0.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 8.0
+      },
+      {
+        "pair_id": "pair_0158",
+        "fixture_id": "ab_A3__r_low__rc_high__ph_base",
+        "gap_total_minutes": 114.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 33.0
+      },
+      {
+        "pair_id": "pair_0159",
+        "fixture_id": "ab_A3__r_low__rc_high__ph_base",
+        "gap_total_minutes": 36.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 16.0
+      },
+      {
+        "pair_id": "pair_0160",
+        "fixture_id": "ab_A3__r_low__rc_high__ph_base",
+        "gap_total_minutes": 62.0,
+        "gap_n_hard_days": 1.0,
+        "gap_n_long_runs": 1.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 1.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 52.0
+      },
+      {
+        "pair_id": "pair_0161",
+        "fixture_id": "ab_A3__r_low__rc_high__ph_base",
+        "gap_total_minutes": 19.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 7.0
+      },
+      {
+        "pair_id": "pair_0162",
+        "fixture_id": "ab_A3__r_low__rc_high__ph_base",
+        "gap_total_minutes": 34.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 6.0
+      },
+      {
+        "pair_id": "pair_0163",
+        "fixture_id": "ab_A3__r_low__rc_high__ph_base",
+        "gap_total_minutes": 45.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 9.0
+      },
+      {
+        "pair_id": "pair_0164",
+        "fixture_id": "ab_A3__r_low__rc_high__ph_peak",
+        "gap_total_minutes": 46.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 18.0
+      },
+      {
+        "pair_id": "pair_0165",
+        "fixture_id": "ab_A3__r_low__rc_high__ph_peak",
+        "gap_total_minutes": 4.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 2.0
+      },
+      {
+        "pair_id": "pair_0166",
+        "fixture_id": "ab_A3__r_low__rc_high__ph_peak",
+        "gap_total_minutes": 132.0,
+        "gap_n_hard_days": 1.0,
+        "gap_n_long_runs": 1.0,
+        "gap_n_rest_days": 1.0,
+        "gap_n_quality_days": 1.0,
+        "gap_n_active_days": 1.0,
+        "gap_max_day_minutes": 60.0
+      },
+      {
+        "pair_id": "pair_0167",
+        "fixture_id": "ab_A3__r_low__rc_high__ph_peak",
+        "gap_total_minutes": 10.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 6.0
+      },
+      {
+        "pair_id": "pair_0168",
+        "fixture_id": "ab_A3__r_low__rc_high__ph_peak",
+        "gap_total_minutes": 0.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 2.0,
+        "gap_n_rest_days": 1.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 1.0,
+        "gap_max_day_minutes": 13.0
+      },
+      {
+        "pair_id": "pair_0169",
+        "fixture_id": "ab_A3__r_low__rc_high__ph_peak",
+        "gap_total_minutes": 50.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 1.0
+      },
+      {
+        "pair_id": "pair_0170",
+        "fixture_id": "ab_A3__r_low__rc_high__ph_peak",
+        "gap_total_minutes": 108.0,
+        "gap_n_hard_days": 1.0,
+        "gap_n_long_runs": 1.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 1.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 64.0
+      },
+      {
+        "pair_id": "pair_0171",
+        "fixture_id": "ab_A3__r_low__rc_high__ph_peak",
+        "gap_total_minutes": 45.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 2.0
+      },
+      {
+        "pair_id": "pair_0172",
+        "fixture_id": "ab_A3__r_low__rc_high__ph_peak",
+        "gap_total_minutes": 78.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 74.0
+      },
+      {
+        "pair_id": "pair_0173",
+        "fixture_id": "ab_A3__r_low__rc_high__ph_peak",
+        "gap_total_minutes": 52.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 18.0
+      },
+      {
+        "pair_id": "pair_0174",
+        "fixture_id": "ab_A3__r_low__rc_low__ph_base",
+        "gap_total_minutes": 128.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 2.0,
+        "gap_n_rest_days": 1.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 1.0,
+        "gap_max_day_minutes": 63.0
+      },
+      {
+        "pair_id": "pair_0175",
+        "fixture_id": "ab_A3__r_low__rc_low__ph_base",
+        "gap_total_minutes": 0.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 2.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 132.0
+      },
+      {
+        "pair_id": "pair_0176",
+        "fixture_id": "ab_A3__r_low__rc_low__ph_base",
+        "gap_total_minutes": 252.0,
+        "gap_n_hard_days": 1.0,
+        "gap_n_long_runs": 2.0,
+        "gap_n_rest_days": 2.0,
+        "gap_n_quality_days": 1.0,
+        "gap_n_active_days": 2.0,
+        "gap_max_day_minutes": 70.0
+      },
+      {
+        "pair_id": "pair_0177",
+        "fixture_id": "ab_A3__r_low__rc_low__ph_base",
+        "gap_total_minutes": 70.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 17.0
+      },
+      {
+        "pair_id": "pair_0178",
+        "fixture_id": "ab_A3__r_low__rc_low__ph_base",
+        "gap_total_minutes": 114.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 33.0
+      },
+      {
+        "pair_id": "pair_0179",
+        "fixture_id": "ab_A3__r_low__rc_low__ph_base",
+        "gap_total_minutes": 17.0,
+        "gap_n_hard_days": 1.0,
+        "gap_n_long_runs": 1.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 1.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 22.0
+      },
+      {
+        "pair_id": "pair_0180",
+        "fixture_id": "ab_A3__r_low__rc_low__ph_base",
+        "gap_total_minutes": 19.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 13.0
+      },
+      {
+        "pair_id": "pair_0181",
+        "fixture_id": "ab_A3__r_low__rc_low__ph_base",
+        "gap_total_minutes": 20.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 7.0
+      },
+      {
+        "pair_id": "pair_0182",
+        "fixture_id": "ab_A3__r_low__rc_low__ph_base",
+        "gap_total_minutes": 34.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 6.0
+      },
+      {
+        "pair_id": "pair_0183",
+        "fixture_id": "ab_A3__r_low__rc_low__ph_base",
+        "gap_total_minutes": 96.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 31.0
+      },
+      {
+        "pair_id": "pair_0184",
+        "fixture_id": "ab_A3__r_low__rc_low__ph_base",
+        "gap_total_minutes": 164.0,
+        "gap_n_hard_days": 1.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 2.0,
+        "gap_n_quality_days": 1.0,
+        "gap_n_active_days": 2.0,
+        "gap_max_day_minutes": 33.0
+      },
+      {
+        "pair_id": "pair_0185",
+        "fixture_id": "ab_A3__r_low__rc_low__ph_peak",
+        "gap_total_minutes": 31.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 18.0
+      },
+      {
+        "pair_id": "pair_0186",
+        "fixture_id": "ab_A3__r_low__rc_low__ph_peak",
+        "gap_total_minutes": 20.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 1.0
+      },
+      {
+        "pair_id": "pair_0187",
+        "fixture_id": "ab_A3__r_low__rc_low__ph_peak",
+        "gap_total_minutes": 93.0,
+        "gap_n_hard_days": 1.0,
+        "gap_n_long_runs": 1.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 1.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 64.0
+      },
+      {
+        "pair_id": "pair_0188",
+        "fixture_id": "ab_A3__r_low__rc_low__ph_peak",
+        "gap_total_minutes": 63.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 55.0
+      },
+      {
+        "pair_id": "pair_0189",
+        "fixture_id": "ab_A3__r_low__rc_low__ph_peak",
+        "gap_total_minutes": 97.0,
+        "gap_n_hard_days": 1.0,
+        "gap_n_long_runs": 1.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 1.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 58.0
+      },
+      {
+        "pair_id": "pair_0190",
+        "fixture_id": "ab_A3__r_low__rc_low__ph_peak",
+        "gap_total_minutes": 0.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 2.0,
+        "gap_n_rest_days": 1.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 1.0,
+        "gap_max_day_minutes": 13.0
+      },
+      {
+        "pair_id": "pair_0191",
+        "fixture_id": "ab_A3__r_low__rc_low__ph_peak",
+        "gap_total_minutes": 117.0,
+        "gap_n_hard_days": 1.0,
+        "gap_n_long_runs": 1.0,
+        "gap_n_rest_days": 1.0,
+        "gap_n_quality_days": 1.0,
+        "gap_n_active_days": 1.0,
+        "gap_max_day_minutes": 60.0
+      },
+      {
+        "pair_id": "pair_0192",
+        "fixture_id": "ab_A4__r_high__rc_high__ph_base",
+        "gap_total_minutes": 162.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 1.0,
+        "gap_n_rest_days": 2.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 2.0,
+        "gap_max_day_minutes": 119.0
+      },
+      {
+        "pair_id": "pair_0193",
+        "fixture_id": "ab_A4__r_high__rc_high__ph_base",
+        "gap_total_minutes": 258.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 1.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 1.0,
+        "gap_max_day_minutes": 53.0
+      },
+      {
+        "pair_id": "pair_0194",
+        "fixture_id": "ab_A4__r_high__rc_high__ph_base",
+        "gap_total_minutes": 117.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 2.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 51.0
+      },
+      {
+        "pair_id": "pair_0195",
+        "fixture_id": "ab_A4__r_high__rc_high__ph_base",
+        "gap_total_minutes": 252.0,
+        "gap_n_hard_days": 2.0,
+        "gap_n_long_runs": 2.0,
+        "gap_n_rest_days": 1.0,
+        "gap_n_quality_days": 2.0,
+        "gap_n_active_days": 1.0,
+        "gap_max_day_minutes": 57.0
+      },
+      {
+        "pair_id": "pair_0196",
+        "fixture_id": "ab_A4__r_high__rc_high__ph_base",
+        "gap_total_minutes": 135.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 2.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 50.0
+      },
+      {
+        "pair_id": "pair_0197",
+        "fixture_id": "ab_A4__r_high__rc_high__ph_base",
+        "gap_total_minutes": 281.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 1.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 58.0
+      },
+      {
+        "pair_id": "pair_0198",
+        "fixture_id": "ab_A4__r_high__rc_high__ph_base",
+        "gap_total_minutes": 2.0,
+        "gap_n_hard_days": 1.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 1.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 4.0
+      },
+      {
+        "pair_id": "pair_0199",
+        "fixture_id": "ab_A4__r_high__rc_high__ph_base",
+        "gap_total_minutes": 264.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 66.0
+      },
+      {
+        "pair_id": "pair_0200",
+        "fixture_id": "ab_A4__r_high__rc_high__ph_base",
+        "gap_total_minutes": 9.0,
+        "gap_n_hard_days": 1.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 1.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 9.0
+      },
+      {
+        "pair_id": "pair_0201",
+        "fixture_id": "ab_A4__r_high__rc_high__ph_base",
+        "gap_total_minutes": 67.0,
+        "gap_n_hard_days": 1.0,
+        "gap_n_long_runs": 2.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 1.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 37.0
+      },
+      {
+        "pair_id": "pair_0202",
+        "fixture_id": "ab_A4__r_high__rc_high__ph_peak",
+        "gap_total_minutes": 88.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 5.0
+      },
+      {
+        "pair_id": "pair_0203",
+        "fixture_id": "ab_A4__r_high__rc_high__ph_peak",
+        "gap_total_minutes": 352.0,
+        "gap_n_hard_days": 1.0,
+        "gap_n_long_runs": 1.0,
+        "gap_n_rest_days": 2.0,
+        "gap_n_quality_days": 1.0,
+        "gap_n_active_days": 2.0,
+        "gap_max_day_minutes": 114.0
+      },
+      {
+        "pair_id": "pair_0204",
+        "fixture_id": "ab_A4__r_high__rc_high__ph_peak",
+        "gap_total_minutes": 70.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 7.0
+      },
+      {
+        "pair_id": "pair_0205",
+        "fixture_id": "ab_A4__r_high__rc_high__ph_peak",
+        "gap_total_minutes": 354.0,
+        "gap_n_hard_days": 2.0,
+        "gap_n_long_runs": 2.0,
+        "gap_n_rest_days": 1.0,
+        "gap_n_quality_days": 2.0,
+        "gap_n_active_days": 1.0,
+        "gap_max_day_minutes": 46.0
+      },
+      {
+        "pair_id": "pair_0206",
+        "fixture_id": "ab_A4__r_high__rc_high__ph_peak",
+        "gap_total_minutes": 191.0,
+        "gap_n_hard_days": 1.0,
+        "gap_n_long_runs": 1.0,
+        "gap_n_rest_days": 1.0,
+        "gap_n_quality_days": 1.0,
+        "gap_n_active_days": 1.0,
+        "gap_max_day_minutes": 47.0
+      },
+      {
+        "pair_id": "pair_0207",
+        "fixture_id": "ab_A4__r_high__rc_high__ph_peak",
+        "gap_total_minutes": 231.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 2.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 41.0
+      },
+      {
+        "pair_id": "pair_0208",
+        "fixture_id": "ab_A4__r_high__rc_high__ph_peak",
+        "gap_total_minutes": 227.0,
+        "gap_n_hard_days": 1.0,
+        "gap_n_long_runs": 1.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 1.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 65.0
+      },
+      {
+        "pair_id": "pair_0209",
+        "fixture_id": "ab_A4__r_high__rc_high__ph_peak",
+        "gap_total_minutes": 216.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 3.0
+      },
+      {
+        "pair_id": "pair_0210",
+        "fixture_id": "ab_A4__r_high__rc_high__ph_peak",
+        "gap_total_minutes": 307.0,
+        "gap_n_hard_days": 1.0,
+        "gap_n_long_runs": 1.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 1.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 50.0
+      },
+      {
+        "pair_id": "pair_0211",
+        "fixture_id": "ab_A4__r_high__rc_low__ph_base",
+        "gap_total_minutes": 235.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 3.0,
+        "gap_n_rest_days": 1.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 1.0,
+        "gap_max_day_minutes": 57.0
+      },
+      {
+        "pair_id": "pair_0212",
+        "fixture_id": "ab_A4__r_high__rc_low__ph_base",
+        "gap_total_minutes": 102.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 2.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 36.0
+      },
+      {
+        "pair_id": "pair_0213",
+        "fixture_id": "ab_A4__r_high__rc_low__ph_base",
+        "gap_total_minutes": 108.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 1.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 1.0,
+        "gap_max_day_minutes": 7.0
+      },
+      {
+        "pair_id": "pair_0214",
+        "fixture_id": "ab_A4__r_high__rc_low__ph_base",
+        "gap_total_minutes": 382.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 2.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 126.0
+      },
+      {
+        "pair_id": "pair_0215",
+        "fixture_id": "ab_A4__r_high__rc_low__ph_base",
+        "gap_total_minutes": 237.0,
+        "gap_n_hard_days": 1.0,
+        "gap_n_long_runs": 2.0,
+        "gap_n_rest_days": 1.0,
+        "gap_n_quality_days": 1.0,
+        "gap_n_active_days": 1.0,
+        "gap_max_day_minutes": 57.0
+      },
+      {
+        "pair_id": "pair_0216",
+        "fixture_id": "ab_A4__r_high__rc_low__ph_base",
+        "gap_total_minutes": 100.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 1.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 27.0
+      },
+      {
+        "pair_id": "pair_0217",
+        "fixture_id": "ab_A4__r_high__rc_low__ph_base",
+        "gap_total_minutes": 358.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 1.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 119.0
+      },
+      {
+        "pair_id": "pair_0218",
+        "fixture_id": "ab_A4__r_high__rc_low__ph_base",
+        "gap_total_minutes": 44.0,
+        "gap_n_hard_days": 1.0,
+        "gap_n_long_runs": 1.0,
+        "gap_n_rest_days": 1.0,
+        "gap_n_quality_days": 1.0,
+        "gap_n_active_days": 1.0,
+        "gap_max_day_minutes": 50.0
+      },
+      {
+        "pair_id": "pair_0219",
+        "fixture_id": "ab_A4__r_high__rc_low__ph_peak",
+        "gap_total_minutes": 15.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 7.0
+      },
+      {
+        "pair_id": "pair_0220",
+        "fixture_id": "ab_A4__r_high__rc_low__ph_peak",
+        "gap_total_minutes": 349.0,
+        "gap_n_hard_days": 1.0,
+        "gap_n_long_runs": 1.0,
+        "gap_n_rest_days": 1.0,
+        "gap_n_quality_days": 1.0,
+        "gap_n_active_days": 1.0,
+        "gap_max_day_minutes": 46.0
+      },
+      {
+        "pair_id": "pair_0221",
+        "fixture_id": "ab_A4__r_high__rc_low__ph_peak",
+        "gap_total_minutes": 135.0,
+        "gap_n_hard_days": 2.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 2.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 66.0
+      },
+      {
+        "pair_id": "pair_0222",
+        "fixture_id": "ab_A4__r_high__rc_low__ph_peak",
+        "gap_total_minutes": 183.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 1.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 1.0,
+        "gap_max_day_minutes": 5.0
+      },
+      {
+        "pair_id": "pair_0223",
+        "fixture_id": "ab_A4__r_high__rc_low__ph_peak",
+        "gap_total_minutes": 165.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 35.0
+      },
+      {
+        "pair_id": "pair_0224",
+        "fixture_id": "ab_A4__r_high__rc_low__ph_peak",
+        "gap_total_minutes": 289.0,
+        "gap_n_hard_days": 2.0,
+        "gap_n_long_runs": 1.0,
+        "gap_n_rest_days": 1.0,
+        "gap_n_quality_days": 2.0,
+        "gap_n_active_days": 1.0,
+        "gap_max_day_minutes": 3.0
+      },
+      {
+        "pair_id": "pair_0225",
+        "fixture_id": "ab_A4__r_high__rc_low__ph_peak",
+        "gap_total_minutes": 246.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 45.0
+      },
+      {
+        "pair_id": "pair_0226",
+        "fixture_id": "ab_A4__r_high__rc_low__ph_peak",
+        "gap_total_minutes": 45.0,
+        "gap_n_hard_days": 2.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 2.0,
+        "gap_n_quality_days": 2.0,
+        "gap_n_active_days": 2.0,
+        "gap_max_day_minutes": 3.0
+      },
+      {
+        "pair_id": "pair_0227",
+        "fixture_id": "ab_A4__r_low__rc_high__ph_base",
+        "gap_total_minutes": 45.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 8.0
+      },
+      {
+        "pair_id": "pair_0228",
+        "fixture_id": "ab_A4__r_low__rc_high__ph_base",
+        "gap_total_minutes": 9.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 0.0
+      },
+      {
+        "pair_id": "pair_0229",
+        "fixture_id": "ab_A4__r_low__rc_high__ph_base",
+        "gap_total_minutes": 67.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 15.0
+      },
+      {
+        "pair_id": "pair_0230",
+        "fixture_id": "ab_A4__r_low__rc_high__ph_base",
+        "gap_total_minutes": 90.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 21.0
+      },
+      {
+        "pair_id": "pair_0231",
+        "fixture_id": "ab_A4__r_low__rc_high__ph_base",
+        "gap_total_minutes": 53.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 18.0
+      },
+      {
+        "pair_id": "pair_0232",
+        "fixture_id": "ab_A4__r_low__rc_high__ph_base",
+        "gap_total_minutes": 46.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 58.0
+      },
+      {
+        "pair_id": "pair_0233",
+        "fixture_id": "ab_A4__r_low__rc_high__ph_base",
+        "gap_total_minutes": 206.0,
+        "gap_n_hard_days": 1.0,
+        "gap_n_long_runs": 1.0,
+        "gap_n_rest_days": 1.0,
+        "gap_n_quality_days": 1.0,
+        "gap_n_active_days": 1.0,
+        "gap_max_day_minutes": 27.0
+      },
+      {
+        "pair_id": "pair_0234",
+        "fixture_id": "ab_A4__r_low__rc_high__ph_base",
+        "gap_total_minutes": 184.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 43.0
+      },
+      {
+        "pair_id": "pair_0235",
+        "fixture_id": "ab_A4__r_low__rc_high__ph_base",
+        "gap_total_minutes": 222.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 2.0,
+        "gap_n_rest_days": 1.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 1.0,
+        "gap_max_day_minutes": 98.0
+      },
+      {
+        "pair_id": "pair_0236",
+        "fixture_id": "ab_A4__r_low__rc_high__ph_base",
+        "gap_total_minutes": 0.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 63.0
+      },
+      {
+        "pair_id": "pair_0237",
+        "fixture_id": "ab_A4__r_low__rc_high__ph_peak",
+        "gap_total_minutes": 34.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 14.0
+      },
+      {
+        "pair_id": "pair_0238",
+        "fixture_id": "ab_A4__r_low__rc_high__ph_peak",
+        "gap_total_minutes": 10.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 37.0
+      },
+      {
+        "pair_id": "pair_0239",
+        "fixture_id": "ab_A4__r_low__rc_high__ph_peak",
+        "gap_total_minutes": 49.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 7.0
+      },
+      {
+        "pair_id": "pair_0240",
+        "fixture_id": "ab_A4__r_low__rc_high__ph_peak",
+        "gap_total_minutes": 17.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 22.0
+      },
+      {
+        "pair_id": "pair_0241",
+        "fixture_id": "ab_A4__r_low__rc_high__ph_peak",
+        "gap_total_minutes": 80.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 1.0
+      },
+      {
+        "pair_id": "pair_0242",
+        "fixture_id": "ab_A4__r_low__rc_high__ph_peak",
+        "gap_total_minutes": 106.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 2.0
+      },
+      {
+        "pair_id": "pair_0243",
+        "fixture_id": "ab_A4__r_low__rc_low__ph_base",
+        "gap_total_minutes": 45.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 2.0
+      },
+      {
+        "pair_id": "pair_0244",
+        "fixture_id": "ab_A4__r_low__rc_low__ph_base",
+        "gap_total_minutes": 92.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 117.0
+      },
+      {
+        "pair_id": "pair_0245",
+        "fixture_id": "ab_A4__r_low__rc_low__ph_base",
+        "gap_total_minutes": 45.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 6.0
+      },
+      {
+        "pair_id": "pair_0246",
+        "fixture_id": "ab_A4__r_low__rc_low__ph_base",
+        "gap_total_minutes": 95.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 3.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 3.0,
+        "gap_max_day_minutes": 12.0
+      },
+      {
+        "pair_id": "pair_0247",
+        "fixture_id": "ab_A4__r_low__rc_low__ph_base",
+        "gap_total_minutes": 76.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 15.0
+      },
+      {
+        "pair_id": "pair_0248",
+        "fixture_id": "ab_A4__r_low__rc_low__ph_base",
+        "gap_total_minutes": 175.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 2.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 2.0,
+        "gap_max_day_minutes": 274.0
+      },
+      {
+        "pair_id": "pair_0249",
+        "fixture_id": "ab_A4__r_low__rc_low__ph_base",
+        "gap_total_minutes": 83.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 12.0
+      },
+      {
+        "pair_id": "pair_0250",
+        "fixture_id": "ab_A4__r_low__rc_low__ph_base",
+        "gap_total_minutes": 120.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 3.0
+      },
+      {
+        "pair_id": "pair_0251",
+        "fixture_id": "ab_A4__r_low__rc_low__ph_base",
+        "gap_total_minutes": 137.0,
+        "gap_n_hard_days": 1.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 2.0,
+        "gap_n_quality_days": 1.0,
+        "gap_n_active_days": 2.0,
+        "gap_max_day_minutes": 20.0
+      },
+      {
+        "pair_id": "pair_0252",
+        "fixture_id": "ab_A4__r_low__rc_low__ph_peak",
+        "gap_total_minutes": 14.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 5.0
+      },
+      {
+        "pair_id": "pair_0253",
+        "fixture_id": "ab_A4__r_low__rc_low__ph_peak",
+        "gap_total_minutes": 22.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 2.0
+      },
+      {
+        "pair_id": "pair_0254",
+        "fixture_id": "ab_A4__r_low__rc_low__ph_peak",
+        "gap_total_minutes": 60.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 1.0
+      },
+      {
+        "pair_id": "pair_0255",
+        "fixture_id": "ab_A4__r_low__rc_low__ph_peak",
+        "gap_total_minutes": 109.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 39.0
+      },
+      {
+        "pair_id": "pair_0256",
+        "fixture_id": "ab_A4__r_low__rc_low__ph_peak",
+        "gap_total_minutes": 49.0,
+        "gap_n_hard_days": 0.0,
+        "gap_n_long_runs": 0.0,
+        "gap_n_rest_days": 0.0,
+        "gap_n_quality_days": 0.0,
+        "gap_n_active_days": 0.0,
+        "gap_max_day_minutes": 43.0
+      }
+    ]
+  },
+  "style_distribution_by_arm": {
+    "title_chars": {
+      "llm": {
+        "n": 384,
+        "min": 56.0,
+        "p25": 56.0,
+        "median": 57.0,
+        "p75": 69.0,
+        "max": 84.0
+      },
+      "programmatic": {
+        "n": 640,
+        "min": 56.0,
+        "p25": 64.0,
+        "median": 67.0,
+        "p75": 72.0,
+        "max": 103.0
+      }
+    },
+    "workout_chars": {
+      "llm": {
+        "n": 384,
+        "min": 95.0,
+        "p25": 217.0,
+        "median": 276.0,
+        "p75": 321.0,
+        "max": 1401.0
+      },
+      "programmatic": {
+        "n": 640,
+        "min": 251.0,
+        "p25": 280.0,
+        "median": 292.0,
+        "p75": 298.0,
+        "max": 315.0
+      }
+    },
+    "purpose_chars": {
+      "llm": {
+        "n": 384,
+        "min": 184.0,
+        "p25": 357.0,
+        "median": 452.0,
+        "p75": 877.0,
+        "max": 2677.0
+      },
+      "programmatic": {
+        "n": 640,
+        "min": 300.0,
+        "p25": 324.0,
+        "median": 331.0,
+        "p75": 345.0,
+        "max": 367.0
+      }
+    },
+    "n_citations": {
+      "llm": {
+        "n": 384,
+        "min": 3.0,
+        "p25": 7.0,
+        "median": 9.0,
+        "p75": 12.0,
+        "max": 25.0
+      },
+      "programmatic": {
+        "n": 640,
+        "min": 4.0,
+        "p25": 7.0,
+        "median": 8.0,
+        "p75": 9.0,
+        "max": 23.0
+      }
+    },
+    "n_claim_attributions": {
+      "llm": {
+        "n": 384,
+        "min": 2.0,
+        "p25": 12.0,
+        "median": 14.0,
+        "p75": 15.0,
+        "max": 27.0
+      },
+      "programmatic": {
+        "n": 640,
+        "min": 1.0,
+        "p25": 6.0,
+        "median": 7.0,
+        "p75": 8.0,
+        "max": 17.0
+      }
+    },
+    "n_data_notes": {
+      "llm": {
+        "n": 384,
+        "min": 3.0,
+        "p25": 3.0,
+        "median": 3.0,
+        "p75": 3.0,
+        "max": 9.0
+      },
+      "programmatic": {
+        "n": 640,
+        "min": 2.0,
+        "p25": 3.0,
+        "median": 3.0,
+        "p75": 3.0,
+        "max": 11.0
+      }
+    }
+  },
+  "source_leak_audit": {
+    "n_plans_with_leaks": 0,
+    "examples": {}
+  },
+  "duplicate_session_signature_groups": {
+    "n_groups": 274,
+    "examples": {
+      "aerobic:53:0:0|aerobic:60:0:0|aerobic:60:0:0|rest:0:1:0|aerobic:60:0:0|aerobic:60:0:0|aerobic:60:0:0": [
+        "ab_A1__r_high__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s000",
+        "ab_A1__r_high__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s004"
+      ],
+      "easy:53:0:0|easy:60:0:0|easy:60:0:0|rest:0:1:0|easy:60:0:0|easy:60:0:0|easy:60:0:0": [
+        "ab_A1__r_high__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s001",
+        "ab_A1__r_high__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s003",
+        "ab_A1__r_high__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s005"
+      ],
+      "rest:0:1:0|easy:22:0:0|tempo:45:0:1|hills:57:0:1|easy:34:0:0|easy:20:0:0|easy:36:0:0": [
+        "ab_A1__r_high__rc_high__ph_base__prog__exp_t000__s001",
+        "ab_A1__r_high__rc_low__ph_base__prog__exp_t000__s001"
+      ],
+      "easy:26:0:0|cross:60:0:0|rest:0:1:0|rest:0:1:0|cross:29:0:0|easy:41:0:0|tempo:46:0:1": [
+        "ab_A1__r_high__rc_high__ph_base__prog__exp_t000__s002",
+        "ab_A1__r_high__rc_low__ph_base__prog__exp_t000__s002"
+      ],
+      "strength:21:0:0|easy:48:0:0|aerobic:76:0:0|long:71:0:0|long:101:0:0|rest:0:1:0|rest:0:1:0": [
+        "ab_A1__r_high__rc_high__ph_base__prog__exp_t000__s003",
+        "ab_A1__r_high__rc_low__ph_base__prog__exp_t000__s003"
+      ],
+      "easy:48:0:0|rest:0:1:0|easy:51:0:0|rest:0:1:0|rest:0:1:0|cross:58:0:0|long:62:0:0": [
+        "ab_A1__r_high__rc_high__ph_base__prog__exp_t000__s004",
+        "ab_A1__r_high__rc_low__ph_base__prog__exp_t000__s004"
+      ],
+      "easy:26:0:0|easy:40:0:0|easy:39:0:0|long:109:0:0|tempo:42:0:1|aerobic:52:0:0|rest:0:1:0": [
+        "ab_A1__r_high__rc_high__ph_base__prog__exp_t000__s005",
+        "ab_A1__r_high__rc_low__ph_base__prog__exp_t000__s005"
+      ],
+      "easy:23:0:0|easy:40:0:0|aerobic:65:0:0|long:73:0:0|rest:0:1:0|long:88:0:0|easy:34:0:0": [
+        "ab_A1__r_high__rc_high__ph_base__prog__exp_t000__s006",
+        "ab_A1__r_high__rc_low__ph_base__prog__exp_t000__s006"
+      ],
+      "easy:20:0:0|rest:0:1:0|tempo:47:0:1|rest:0:1:0|cross:31:0:0|tempo:36:0:1|rest:0:1:0": [
+        "ab_A1__r_high__rc_high__ph_base__prog__exp_t000__s007",
+        "ab_A1__r_high__rc_low__ph_base__prog__exp_t000__s007"
+      ],
+      "easy:48:0:0|easy:39:0:0|rest:0:1:0|easy:43:0:0|rest:0:1:0|strength:45:0:0|easy:54:0:0": [
+        "ab_A1__r_high__rc_high__ph_base__prog__exp_t000__s008",
+        "ab_A1__r_high__rc_low__ph_base__prog__exp_t000__s008"
+      ],
+      "hills:59:0:1|easy:33:0:0|rest:0:1:0|easy:53:0:0|rest:0:1:0|hills:46:0:1|easy:35:0:0": [
+        "ab_A1__r_high__rc_high__ph_base__prog__exp_t000__s009",
+        "ab_A1__r_high__rc_low__ph_base__prog__exp_t000__s009"
+      ],
+      "tempo:39:0:1|easy:49:0:0|easy:50:0:0|rest:0:1:0|easy:35:0:0|easy:34:0:0|strength:43:0:0": [
+        "ab_A1__r_high__rc_high__ph_base__prog__exp_t000__s010",
+        "ab_A1__r_high__rc_low__ph_base__prog__exp_t000__s010"
+      ],
+      "long:81:0:0|cross:41:0:0|cross:33:0:0|tempo:35:0:1|aerobic:64:0:0|tempo:40:0:1|rest:0:1:0": [
+        "ab_A1__r_high__rc_high__ph_base__prog__exp_t000__s011",
+        "ab_A1__r_high__rc_low__ph_base__prog__exp_t000__s011"
+      ],
+      "easy:37:0:0|cross:48:0:0|easy:47:0:0|rest:0:1:0|rest:0:1:0|long:77:0:0|easy:21:0:0": [
+        "ab_A1__r_high__rc_high__ph_base__prog__exp_t000__s012",
+        "ab_A1__r_high__rc_low__ph_base__prog__exp_t000__s012",
+        "ab_A1__r_low__rc_high__ph_base__prog__exp_t000__s012",
+        "ab_A1__r_low__rc_low__ph_base__prog__exp_t000__s012"
+      ],
+      "easy:20:0:0|aerobic:76:0:0|tempo:53:0:1|easy:44:0:0|rest:0:1:0|long:89:0:0|rest:0:1:0": [
+        "ab_A1__r_high__rc_high__ph_base__prog__exp_t000__s013",
+        "ab_A1__r_high__rc_low__ph_base__prog__exp_t000__s013"
+      ],
+      "easy:43:0:0|tempo:41:0:1|long:80:0:0|aerobic:56:0:0|hills:40:0:1|long:47:0:0|rest:0:1:0": [
+        "ab_A1__r_high__rc_high__ph_base__prog__exp_t000__s016",
+        "ab_A1__r_high__rc_low__ph_base__prog__exp_t000__s016"
+      ],
+      "hills:51:0:1|hills:43:0:1|easy:57:0:0|easy:20:0:0|long:53:0:0|easy:31:0:0|rest:0:1:0": [
+        "ab_A1__r_high__rc_high__ph_base__prog__exp_t000__s017",
+        "ab_A1__r_high__rc_low__ph_base__prog__exp_t000__s017"
+      ],
+      "rest:0:1:0|long:88:0:0|cross:20:0:0|rest:0:1:0|easy:47:0:0|aerobic:92:0:0|easy:32:0:0": [
+        "ab_A1__r_high__rc_high__ph_base__prog__exp_t000__s018",
+        "ab_A1__r_high__rc_low__ph_base__prog__exp_t000__s018"
+      ],
+      "tempo:38:0:1|easy:41:0:0|rest:0:1:0|easy:31:0:0|long:79:0:0|tempo:40:0:1|long:85:0:0": [
+        "ab_A1__r_high__rc_high__ph_base__prog__exp_t000__s019",
+        "ab_A1__r_high__rc_low__ph_base__prog__exp_t000__s019"
+      ],
+      "rest:0:1:0|easy:41:0:0|easy:49:0:0|rest:0:1:0|easy:49:0:0|easy:89:0:0|rest:0:1:0": [
+        "ab_A1__r_high__rc_high__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s000",
+        "ab_A1__r_high__rc_low__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s001",
+        "ab_A1__r_high__rc_low__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s003",
+        "ab_A1__r_high__rc_low__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s005"
+      ],
+      "easy:38:0:0|easy:41:0:0|easy:49:0:0|rest:0:1:0|easy:49:0:0|easy:89:0:0|easy:55:0:0": [
+        "ab_A1__r_high__rc_high__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s002",
+        "ab_A1__r_high__rc_high__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s004",
+        "ab_A1__r_high__rc_low__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s002",
+        "ab_A1__r_high__rc_low__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s004"
+      ],
+      "easy:30:0:0|easy:30:0:0|easy:46:0:0|easy:60:0:0|rest:0:1:0|easy:60:0:0|easy:60:0:0": [
+        "ab_A1__r_high__rc_high__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s000",
+        "ab_A1__r_high__rc_high__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s002",
+        "ab_A1__r_high__rc_high__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s003",
+        "ab_A1__r_high__rc_high__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s004",
+        "ab_A1__r_high__rc_high__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s005"
+      ],
+      "rest:0:1:0|easy:22:0:0|tempo:42:0:1|hills:51:0:1|easy:34:0:0|easy:20:0:0|easy:36:0:0": [
+        "ab_A1__r_high__rc_high__ph_peak__prog__exp_t000__s001",
+        "ab_A1__r_high__rc_low__ph_peak__prog__exp_t000__s001"
+      ],
+      "easy:26:0:0|cross:60:0:0|rest:0:1:0|rest:0:1:0|cross:29:0:0|easy:41:0:0|tempo:42:0:1": [
+        "ab_A1__r_high__rc_high__ph_peak__prog__exp_t000__s002",
+        "ab_A1__r_high__rc_low__ph_peak__prog__exp_t000__s002"
+      ],
+      "easy:48:0:0|rest:0:1:0|easy:51:0:0|rest:0:1:0|rest:0:1:0|cross:58:0:0|strength:20:0:0": [
+        "ab_A1__r_high__rc_high__ph_peak__prog__exp_t000__s004",
+        "ab_A1__r_high__rc_low__ph_peak__prog__exp_t000__s004",
+        "ab_A2__r_high__rc_high__ph_peak__prog__exp_t000__s004",
+        "ab_A2__r_high__rc_low__ph_peak__prog__exp_t000__s004",
+        "ab_A2__r_low__rc_high__ph_peak__prog__exp_t000__s004",
+        "ab_A2__r_low__rc_low__ph_peak__prog__exp_t000__s004",
+        "ab_A3__r_low__rc_high__ph_base__prog__exp_t000__s004",
+        "ab_A3__r_low__rc_high__ph_peak__prog__exp_t000__s004",
+        "ab_A3__r_low__rc_low__ph_base__prog__exp_t000__s004",
+        "ab_A3__r_low__rc_low__ph_peak__prog__exp_t000__s004",
+        "ab_A4__r_low__rc_high__ph_base__prog__exp_t000__s004",
+        "ab_A4__r_low__rc_high__ph_peak__prog__exp_t000__s004",
+        "ab_A4__r_low__rc_low__ph_base__prog__exp_t000__s004",
+        "ab_A4__r_low__rc_low__ph_peak__prog__exp_t000__s004"
+      ]
+    }
+  }
+}

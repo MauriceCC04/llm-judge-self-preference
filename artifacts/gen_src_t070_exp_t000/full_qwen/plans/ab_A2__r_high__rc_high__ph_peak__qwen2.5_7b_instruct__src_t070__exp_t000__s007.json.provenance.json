@@ -1,0 +1,70 @@
+{
+  "plan_id": "ab_A2__r_high__rc_high__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s007",
+  "fixture_id": "ab_A2__r_high__rc_high__ph_peak",
+  "athlete_band": "A2",
+  "readiness": "high",
+  "recovery_capability": "high",
+  "race_phase": "peak",
+  "plan_days": 7,
+  "style": "trailrunning",
+  "arm": "llm",
+  "source_model": "Qwen/Qwen2.5-7B-Instruct",
+  "explainer_model": "Qwen/Qwen2.5-3B-Instruct",
+  "actual_explainer_model": "Qwen/Qwen2.5-3B-Instruct",
+  "explainer_model_verified": true,
+  "generation_pipeline": "llm_two_stage",
+  "runtime_backend": "trailtraining.llm.coach.run_coach_brief",
+  "runtime_metadata": {
+    "source_base_url": "http://127.0.0.1:8773/v1",
+    "explainer_base_url": "http://127.0.0.1:8774/v1",
+    "judge_base_url": "http://127.0.0.1:8774/v1",
+    "using_local_base_url": true,
+    "default_patch_stage": "judge",
+    "source_model": "Qwen/Qwen2.5-7B-Instruct",
+    "actual_source_model": "Qwen/Qwen2.5-7B-Instruct",
+    "actual_explainer_model": "Qwen/Qwen2.5-3B-Instruct",
+    "explainer_model_verified": true,
+    "source_temperature": 0.7,
+    "explainer_temperature": 0.0,
+    "seed": 7,
+    "structural_lifestyle_notes_present": true,
+    "structural_lifestyle_notes_chars": 1506,
+    "artifact_lifestyle_notes_chars": 236,
+    "TRAILTRAINING_TWO_STAGE_PLAN": "1",
+    "generation_condition": "gen_src_t070__exp_t000",
+    "athlete_band": "A2",
+    "readiness": "high",
+    "recovery_capability": "high",
+    "race_phase": "peak",
+    "artifact_normalization": {
+      "normalizer_version": "artifact-presentation-normalizer-v1",
+      "normalized_at": "2026-05-05T15:17:21.460450+00:00",
+      "original_artifact_sha256": "10874e1ce2cef116450ed47263c20d293c935e9378f7f868b8889c401a3f5c12",
+      "normalized_artifact_sha256": "945cb2858e1e12fd003f4e7b100e2aceccd7ef752eb856c63fb555b495d9bac3",
+      "changed_fields": [
+        {
+          "path": "$.plan.days[2].title",
+          "old": "Aerobic run",
+          "new": "Easy run",
+          "reason": "title_session_mismatch"
+        },
+        {
+          "path": "$.plan.days[3].title",
+          "old": "Tempo session",
+          "new": "Tempo run",
+          "reason": "title_session_mismatch"
+        }
+      ],
+      "warnings": [],
+      "errors": [],
+      "score_relevant_projection_unchanged": true
+    }
+  },
+  "source_temperature": 0.7,
+  "explainer_temperature": 0.0,
+  "generation_condition": "gen_src_t070__exp_t000",
+  "seed": 7,
+  "generated_at": "2026-05-04T13:20:13.135462+00:00",
+  "plan_path": "artifacts/gen_src_t070_exp_t000/full_qwen/plans/ab_A2__r_high__rc_high__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s007.json",
+  "deterministic_score": null
+}

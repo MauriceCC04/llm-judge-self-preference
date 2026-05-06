@@ -1,0 +1,33 @@
+{
+  "validation": "understructured_plan",
+  "issues": [
+    "understructured:missing_long_or_quality_for_A2_high_high"
+  ],
+  "fixture_meta": {
+    "fixture_id": "ab_A2__r_high__rc_high__ph_base",
+    "athlete_band": "A2",
+    "readiness": "high",
+    "recovery_capability": "high",
+    "race_phase": "base",
+    "readiness_status": "primed",
+    "recovery_key": "load_sleep_resting_hr_hrv",
+    "weeks_to_race": 20,
+    "athlete_band_label": "Developing recreational",
+    "athlete_archetype": "developing_recreational_runner",
+    "athlete_profile_summary": "Modest recent consistency, moderate but not high load, some structure tolerated.",
+    "recent_volume_hint": "modest recent consistency",
+    "structure_hint": "moderately structured week with limited hard load",
+    "long_run_tolerance_minutes": 110,
+    "block_label": "base development block",
+    "style": "trailrunning",
+    "primary_goal": "to build consistent trail-running fitness with manageable structure",
+    "lifestyle_notes": "Prioritize consistent aerobic development, hill strength, and durable weekly routine. Athlete profile: Developing recreational. Training history context: Modest recent consistency, moderate but not high load, some structure tolerated.",
+    "baseline_load_hours": 5.0,
+    "baseline_distance_km": 40.0,
+    "baseline_elevation_m": 1300.0,
+    "base_speed_kmh": 8.1,
+    "weight_kg": 69.0,
+    "height_cm": 175.0,
+    "years_in_sport": 2.8
+  }
+}

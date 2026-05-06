@@ -1,0 +1,425 @@
+{
+  "citations": [
+    {
+      "citation_id": "c1",
+      "date_range": "2026-03-11..2026-03-17",
+      "signal_id": "load.last7.sleep_days_with_data",
+      "source": "combined_rollups.json:windows.7.sleep_days_with_data",
+      "value": "0"
+    },
+    {
+      "citation_id": "c2",
+      "date_range": "",
+      "signal_id": "load.last7.hrv_mean",
+      "source": "",
+      "value": "null"
+    },
+    {
+      "citation_id": "c3",
+      "date_range": "",
+      "signal_id": "load.last7.rhr_mean",
+      "source": "",
+      "value": "null"
+    }
+  ],
+  "claim_attributions": [
+    {
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3"
+      ],
+      "claim_id": "cl1",
+      "claim_text": "Deterministic readiness: primed (score 77.0). The athlete is primed based on the recent training load being compatible with current preparedness and showing no signs of overreaching. The recent training load supports continued aerobic development without obvious strain, and the athlete's profile indicates a consistent runner with a higher recent load and more robust weekly structure. The lack of sleep and HRV data suggests a focus on recovery and ensuring adequate rest days to support continued aerobic development and hill strength.",
+      "field_path": "readiness.rationale",
+      "signal_ids": [
+        "load.last7.sleep_days_with_data",
+        "load.last7.hrv_mean",
+        "load.last7.rhr_mean"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3"
+      ],
+      "claim_id": "cl2",
+      "claim_text": "Ensure adequate rest days to support recovery and ensure adequate rest days.",
+      "field_path": "recovery.actions[0]",
+      "signal_ids": [
+        "load.last7.sleep_days_with_data",
+        "load.last7.hrv_mean",
+        "load.last7.rhr_mean"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3"
+      ],
+      "claim_id": "cl3",
+      "claim_text": "Focus on recovery activities such as stretching, foam rolling, and gentle mobility exercises to aid in muscle recovery and flexibility.",
+      "field_path": "recovery.actions[1]",
+      "signal_ids": [
+        "load.last7.sleep_days_with_data",
+        "load.last7.hrv_mean",
+        "load.last7.rhr_mean"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3"
+      ],
+      "claim_id": "cl4",
+      "claim_text": "The athlete is primed, but the lack of sleep and HRV data suggests a focus on recovery and ensuring adequate rest days to support continued aerobic development and hill strength.",
+      "field_path": "risks[0].message",
+      "signal_ids": [
+        "load.last7.sleep_days_with_data",
+        "load.last7.hrv_mean",
+        "load.last7.rhr_mean"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3"
+      ],
+      "claim_id": "cl5",
+      "claim_text": "To continue building aerobic endurance and hill strength, focusing on easy trail running to support recovery and ensure adequate rest days.",
+      "field_path": "plan.days[0].purpose",
+      "signal_ids": [
+        "load.last7.sleep_days_with_data",
+        "load.last7.hrv_mean",
+        "load.last7.rhr_mean"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3"
+      ],
+      "claim_id": "cl6",
+      "claim_text": "To continue building aerobic endurance and hill strength, focusing on easy trail running to support recovery and ensure adequate rest days.",
+      "field_path": "plan.days[1].purpose",
+      "signal_ids": [
+        "load.last7.sleep_days_with_data",
+        "load.last7.hrv_mean",
+        "load.last7.rhr_mean"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3"
+      ],
+      "claim_id": "cl7",
+      "claim_text": "To continue building aerobic endurance and hill strength, focusing on easy trail running to support recovery and ensure adequate rest days.",
+      "field_path": "plan.days[2].purpose",
+      "signal_ids": [
+        "load.last7.sleep_days_with_data",
+        "load.last7.hrv_mean",
+        "load.last7.rhr_mean"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3"
+      ],
+      "claim_id": "cl8",
+      "claim_text": "To allow full recovery and maintain freshness, aligning with the primed readiness status.",
+      "field_path": "plan.days[3].purpose",
+      "signal_ids": [
+        "load.last7.sleep_days_with_data",
+        "load.last7.hrv_mean",
+        "load.last7.rhr_mean"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3"
+      ],
+      "claim_id": "cl9",
+      "claim_text": "To continue building aerobic endurance and hill strength, focusing on easy trail running to support recovery and ensure adequate rest days.",
+      "field_path": "plan.days[4].purpose",
+      "signal_ids": [
+        "load.last7.sleep_days_with_data",
+        "load.last7.hrv_mean",
+        "load.last7.rhr_mean"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3"
+      ],
+      "claim_id": "cl10",
+      "claim_text": "To continue building aerobic endurance and hill strength, focusing on easy trail running to support recovery and ensure adequate rest days.",
+      "field_path": "plan.days[5].purpose",
+      "signal_ids": [
+        "load.last7.sleep_days_with_data",
+        "load.last7.hrv_mean",
+        "load.last7.rhr_mean"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3"
+      ],
+      "claim_id": "cl11",
+      "claim_text": "To continue building aerobic endurance and hill strength, focusing on easy trail running to support recovery and ensure adequate rest days.",
+      "field_path": "plan.days[6].purpose",
+      "signal_ids": [
+        "load.last7.sleep_days_with_data",
+        "load.last7.hrv_mean",
+        "load.last7.rhr_mean"
+      ],
+      "support_level": "supported"
+    }
+  ],
+  "data_notes": [
+    "Insufficient sleep and HRV data were recorded, which limits our ability to fully assess recovery and readiness. Focus on recovery activities such as stretching, foam rolling, and gentle mobility exercises to aid in muscle recovery and flexibility.",
+    "Readiness status was set from deterministic readiness_and_risk_forecast.json.",
+    "Guardrails: enforced ramp rate (max_ramp_pct=5.0%). last7_hours=9.030, allowed_hours=9.482, planned_hours=7.500."
+  ],
+  "effective_constraints": {
+    "allowed_week1_hours": 9.4815,
+    "effective_max_consecutive_hard": 2,
+    "effective_max_hard_per_7d": 2,
+    "effective_max_ramp_pct": 5.0,
+    "lifestyle_notes": "Prioritize consistent aerobic development, hill strength, and durable weekly routine. Athlete profile: Advanced amateur. Training history context: Consistent runner, higher recent load, more robust weekly structure.",
+    "min_rest_per_7d": 1,
+    "overreach_risk_level": "low",
+    "readiness_status": "primed",
+    "reasons": [
+      "recovery telemetry is sparse",
+      "lifestyle constraints apply"
+    ],
+    "recovery_capability_key": "load_only"
+  },
+  "meta": {
+    "lifestyle_notes": "Prioritize consistent aerobic development, hill strength, and durable weekly routine. Athlete profile: Advanced amateur. Training history context: Consistent runner, higher recent load, more robust weekly structure.",
+    "plan_days": 7,
+    "plan_start": "2026-03-11",
+    "primary_goal": "to build aerobic durability and resilient trail-running capacity",
+    "style": "trailrunning",
+    "today": "2026-03-17"
+  },
+  "plan": {
+    "days": [
+      {
+        "date": "2026-03-11",
+        "duration_minutes": 60,
+        "estimated_distance_km": null,
+        "estimated_elevation_m": null,
+        "is_hard_day": false,
+        "is_rest_day": false,
+        "purpose": "Complete the planned easy run without adding extra fatigue.",
+        "session_type": "easy",
+        "signal_ids": [
+          "load.last7.sleep_days_with_data",
+          "load.last7.hrv_mean",
+          "load.last7.rhr_mean"
+        ],
+        "target_intensity": "easy",
+        "terrain": "trail",
+        "title": "Easy run",
+        "workout": "Trail Run - 10km"
+      },
+      {
+        "date": "2026-03-12",
+        "duration_minutes": 75,
+        "estimated_distance_km": null,
+        "estimated_elevation_m": null,
+        "is_hard_day": true,
+        "is_rest_day": false,
+        "purpose": "Complete the planned hill session without adding extra fatigue.",
+        "session_type": "hills",
+        "signal_ids": [
+          "load.last7.sleep_days_with_data",
+          "load.last7.hrv_mean",
+          "load.last7.rhr_mean"
+        ],
+        "target_intensity": "controlled",
+        "terrain": "trail",
+        "title": "Hill session",
+        "workout": "Hill Repeats - 6 x 60s"
+      },
+      {
+        "date": "2026-03-13",
+        "duration_minutes": 120,
+        "estimated_distance_km": null,
+        "estimated_elevation_m": null,
+        "is_hard_day": false,
+        "is_rest_day": false,
+        "purpose": "Complete the planned long run without adding extra fatigue.",
+        "session_type": "long",
+        "signal_ids": [
+          "load.last7.sleep_days_with_data",
+          "load.last7.hrv_mean",
+          "load.last7.rhr_mean"
+        ],
+        "target_intensity": "easy",
+        "terrain": "trail",
+        "title": "Long run",
+        "workout": "Trail Run - 22km"
+      },
+      {
+        "date": "2026-03-14",
+        "duration_minutes": 0,
+        "estimated_distance_km": null,
+        "estimated_elevation_m": null,
+        "is_hard_day": false,
+        "is_rest_day": true,
+        "purpose": "Recover and maintain freshness.",
+        "session_type": "rest",
+        "signal_ids": [
+          "load.last7.sleep_days_with_data",
+          "load.last7.hrv_mean",
+          "load.last7.rhr_mean"
+        ],
+        "target_intensity": "rest",
+        "terrain": "n/a",
+        "title": "Rest day",
+        "workout": "Rest day. No structured training."
+      },
+      {
+        "date": "2026-03-15",
+        "duration_minutes": 60,
+        "estimated_distance_km": null,
+        "estimated_elevation_m": null,
+        "is_hard_day": false,
+        "is_rest_day": false,
+        "purpose": "Complete the planned easy run without adding extra fatigue.",
+        "session_type": "easy",
+        "signal_ids": [
+          "load.last7.sleep_days_with_data",
+          "load.last7.hrv_mean",
+          "load.last7.rhr_mean"
+        ],
+        "target_intensity": "easy",
+        "terrain": "trail",
+        "title": "Easy run",
+        "workout": "Trail Run - 10km"
+      },
+      {
+        "date": "2026-03-16",
+        "duration_minutes": 90,
+        "estimated_distance_km": null,
+        "estimated_elevation_m": null,
+        "is_hard_day": true,
+        "is_rest_day": false,
+        "purpose": "Complete the planned tempo session without adding extra fatigue.",
+        "session_type": "tempo",
+        "signal_ids": [
+          "load.last7.sleep_days_with_data",
+          "load.last7.hrv_mean",
+          "load.last7.rhr_mean"
+        ],
+        "target_intensity": "controlled",
+        "terrain": "trail",
+        "title": "Tempo run",
+        "workout": "Tempo Run - 12km"
+      },
+      {
+        "date": "2026-03-17",
+        "duration_minutes": 45,
+        "estimated_distance_km": null,
+        "estimated_elevation_m": null,
+        "is_hard_day": false,
+        "is_rest_day": false,
+        "purpose": "Complete the planned easy run without adding extra fatigue.",
+        "session_type": "easy",
+        "signal_ids": [
+          "load.last7.sleep_days_with_data",
+          "load.last7.hrv_mean",
+          "load.last7.rhr_mean"
+        ],
+        "target_intensity": "easy",
+        "terrain": "trail",
+        "title": "Easy run",
+        "workout": "Trail Run - 7km"
+      }
+    ],
+    "weekly_totals": {
+      "planned_distance_km": null,
+      "planned_elevation_m": null,
+      "planned_moving_time_hours": 7.5
+    }
+  },
+  "readiness": {
+    "rationale": "Deterministic readiness: primed (score 77.0). The athlete is primed based on the recent training load being compatible with current preparedness and showing no signs of overreaching. The recent training load supports continued aerobic development without obvious strain, and the athlete's profile indicates a consistent runner with a higher recent load and more robust weekly structure. The lack of sleep and HRV data suggests a focus on recovery and ensuring adequate rest days to support continued aerobic development and hill strength.",
+    "signal_ids": [
+      "load.last7.sleep_days_with_data",
+      "load.last7.hrv_mean",
+      "load.last7.rhr_mean"
+    ],
+    "status": "primed"
+  },
+  "recovery": {
+    "actions": [
+      "Ensure adequate rest days to support recovery and ensure adequate rest days.",
+      "Focus on recovery activities such as stretching, foam rolling, and gentle mobility exercises to aid in muscle recovery and flexibility."
+    ],
+    "signal_ids": [
+      "load.last7.sleep_days_with_data",
+      "load.last7.hrv_mean",
+      "load.last7.rhr_mean"
+    ]
+  },
+  "risks": [
+    {
+      "message": "The athlete is primed, but the lack of sleep and HRV data suggests a focus on recovery and ensuring adequate rest days to support continued aerobic development and hill strength.",
+      "severity": "low",
+      "signal_ids": [
+        "load.last7.sleep_days_with_data",
+        "load.last7.hrv_mean",
+        "load.last7.rhr_mean"
+      ]
+    }
+  ],
+  "snapshot": {
+    "baseline28": {
+      "activity_count": "24",
+      "distance_km": "306.6",
+      "elevation_m": "10792.6",
+      "hrv_mean": "",
+      "moving_time_hours": "33.6",
+      "rhr_mean": "",
+      "sleep_hours_mean": ""
+    },
+    "last7": {
+      "activity_count": "6",
+      "distance_km": "82.6",
+      "elevation_m": "2904.3",
+      "hrv_mean": "",
+      "moving_time_hours": "9",
+      "rhr_mean": "",
+      "sleep_hours_mean": ""
+    },
+    "notes": "The athlete covered 82.6 km in the last 7 days. Moving time was 9 hours. Elevation gain was 2904.3 meters."
+  }
+}

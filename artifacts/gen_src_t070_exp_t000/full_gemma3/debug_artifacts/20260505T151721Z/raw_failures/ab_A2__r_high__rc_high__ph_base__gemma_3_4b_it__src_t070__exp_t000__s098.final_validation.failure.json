@@ -1,0 +1,10 @@
+{
+  "plan_id": "ab_A2__r_high__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s098",
+  "stage": "final_validation",
+  "error": "Plan is understructured for fixture cell: ['understructured:missing_long_or_quality_for_A2_high_high']",
+  "timestamp": "2026-05-05T11:28:13.609554+00:00",
+  "raw_text_chars": 36559,
+  "prompt_text_path": "artifacts/gen_src_t070_exp_t000/full_gemma3/plans/raw_failures/ab_A2__r_high__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s098.final_validation.prompt.txt",
+  "request_json_path": "artifacts/gen_src_t070_exp_t000/full_gemma3/plans/raw_failures/ab_A2__r_high__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s098.final_validation.request.json",
+  "raw_text_path": "artifacts/gen_src_t070_exp_t000/full_gemma3/plans/raw_failures/ab_A2__r_high__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s098.final_validation.raw.txt"
+}

@@ -1,0 +1,10 @@
+{
+  "plan_id": "ab_A4__r_low__rc_high__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s001",
+  "stage": "plan_explanation",
+  "error": "Unterminated string starting at: line 1 column 25162 (char 25161)",
+  "timestamp": "2026-05-05T09:20:51.136535+00:00",
+  "raw_text_chars": 25195,
+  "prompt_text_path": "artifacts/gen_src_t070_exp_t000/full_gemma3/plans/raw_failures/ab_A4__r_low__rc_high__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s001.plan_explanation.prompt.txt",
+  "request_json_path": "artifacts/gen_src_t070_exp_t000/full_gemma3/plans/raw_failures/ab_A4__r_low__rc_high__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s001.plan_explanation.request.json",
+  "raw_text_path": "artifacts/gen_src_t070_exp_t000/full_gemma3/plans/raw_failures/ab_A4__r_low__rc_high__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s001.plan_explanation.raw.txt"
+}

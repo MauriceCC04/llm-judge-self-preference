@@ -1,0 +1,130 @@
+{
+  "plan_id": "ab_A3__r_low__rc_high__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s001",
+  "fixture_id": "ab_A3__r_low__rc_high__ph_base",
+  "athlete_band": "A3",
+  "readiness": "low",
+  "recovery_capability": "high",
+  "race_phase": "base",
+  "plan_days": 7,
+  "style": "trailrunning",
+  "arm": "llm",
+  "source_model": "Qwen/Qwen2.5-7B-Instruct",
+  "explainer_model": "Qwen/Qwen2.5-3B-Instruct",
+  "actual_explainer_model": "Qwen/Qwen2.5-3B-Instruct",
+  "explainer_model_verified": true,
+  "generation_pipeline": "llm_two_stage",
+  "runtime_backend": "trailtraining.llm.coach.run_coach_brief",
+  "runtime_metadata": {
+    "source_base_url": "http://127.0.0.1:8773/v1",
+    "explainer_base_url": "http://127.0.0.1:8774/v1",
+    "judge_base_url": "http://127.0.0.1:8774/v1",
+    "using_local_base_url": true,
+    "default_patch_stage": "judge",
+    "source_model": "Qwen/Qwen2.5-7B-Instruct",
+    "actual_source_model": "Qwen/Qwen2.5-7B-Instruct",
+    "actual_explainer_model": "Qwen/Qwen2.5-3B-Instruct",
+    "explainer_model_verified": true,
+    "source_temperature": 0.7,
+    "explainer_temperature": 0.0,
+    "seed": 1,
+    "structural_lifestyle_notes_present": true,
+    "structural_lifestyle_notes_chars": 1633,
+    "artifact_lifestyle_notes_chars": 215,
+    "TRAILTRAINING_TWO_STAGE_PLAN": "1",
+    "generation_condition": "gen_src_t070__exp_t000",
+    "athlete_band": "A3",
+    "readiness": "low",
+    "recovery_capability": "high",
+    "race_phase": "base",
+    "artifact_normalization": {
+      "normalizer_version": "artifact-presentation-normalizer-v1",
+      "normalized_at": "2026-05-05T15:17:21.533916+00:00",
+      "original_artifact_sha256": "349cbf297b8a14a5175851e17c64fc599b60c79624f8f6fe4ad677246a314145",
+      "normalized_artifact_sha256": "5fcb849dd99d14d4980a0afe6ae3b4e9c045bf2f2e3d8fb7874e80b942dd4c24",
+      "changed_fields": [
+        {
+          "path": "$.plan.days[0].title",
+          "old": "Day 1",
+          "new": "Long run",
+          "reason": "generic_day_title"
+        },
+        {
+          "path": "$.plan.days[0].purpose",
+          "old": "",
+          "new": "Build endurance and trail-specific durability.",
+          "reason": "blank_human_facing_field"
+        },
+        {
+          "path": "$.plan.days[1].title",
+          "old": "Day 2",
+          "new": "Aerobic run",
+          "reason": "generic_day_title"
+        },
+        {
+          "path": "$.plan.days[1].purpose",
+          "old": "",
+          "new": "Develop aerobic durability while keeping effort controlled.",
+          "reason": "blank_human_facing_field"
+        },
+        {
+          "path": "$.plan.days[2].title",
+          "old": "Day 3",
+          "new": "Easy run",
+          "reason": "generic_day_title"
+        },
+        {
+          "path": "$.plan.days[2].purpose",
+          "old": "",
+          "new": "Support aerobic consistency without adding excessive fatigue.",
+          "reason": "blank_human_facing_field"
+        },
+        {
+          "path": "$.plan.days[3].title",
+          "old": "Day 4",
+          "new": "Tempo run",
+          "reason": "generic_day_title"
+        },
+        {
+          "path": "$.plan.days[3].purpose",
+          "old": "",
+          "new": "Improve sustainable effort and race-specific rhythm.",
+          "reason": "blank_human_facing_field"
+        },
+        {
+          "path": "$.plan.days[4].title",
+          "old": "Day 5",
+          "new": "Cross-training",
+          "reason": "generic_day_title"
+        },
+        {
+          "path": "$.plan.days[4].purpose",
+          "old": "",
+          "new": "Maintain aerobic stimulus while reducing impact load.",
+          "reason": "blank_human_facing_field"
+        },
+        {
+          "path": "$.plan.days[5].title",
+          "old": "Day 6",
+          "new": "Easy run",
+          "reason": "generic_day_title"
+        },
+        {
+          "path": "$.plan.days[5].purpose",
+          "old": "",
+          "new": "Support aerobic consistency without adding excessive fatigue.",
+          "reason": "blank_human_facing_field"
+        }
+      ],
+      "warnings": [],
+      "errors": [],
+      "score_relevant_projection_unchanged": true
+    }
+  },
+  "source_temperature": 0.7,
+  "explainer_temperature": 0.0,
+  "generation_condition": "gen_src_t070__exp_t000",
+  "seed": 1,
+  "generated_at": "2026-05-04T13:33:10.341089+00:00",
+  "plan_path": "artifacts/gen_src_t070_exp_t000/matching_pool/plans/ab_A3__r_low__rc_high__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s001.json",
+  "deterministic_score": 95.0
+}

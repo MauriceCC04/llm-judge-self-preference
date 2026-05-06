@@ -1,0 +1,94 @@
+{
+  "plan_id": "ab_A2__r_high__rc_high__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s249",
+  "fixture_id": "ab_A2__r_high__rc_high__ph_peak",
+  "athlete_band": "A2",
+  "readiness": "high",
+  "recovery_capability": "high",
+  "race_phase": "peak",
+  "plan_days": 7,
+  "style": "trailrunning",
+  "arm": "llm",
+  "source_model": "google/gemma-3-4b-it",
+  "explainer_model": "Qwen/Qwen2.5-3B-Instruct",
+  "actual_explainer_model": "Qwen/Qwen2.5-3B-Instruct",
+  "explainer_model_verified": true,
+  "generation_pipeline": "llm_two_stage",
+  "runtime_backend": "trailtraining.llm.coach.run_coach_brief",
+  "runtime_metadata": {
+    "source_base_url": "http://127.0.0.1:8773/v1",
+    "explainer_base_url": "http://127.0.0.1:8774/v1",
+    "judge_base_url": "http://127.0.0.1:8774/v1",
+    "using_local_base_url": true,
+    "default_patch_stage": "judge",
+    "source_model": "google/gemma-3-4b-it",
+    "actual_source_model": "google/gemma-3-4b-it",
+    "actual_explainer_model": "Qwen/Qwen2.5-3B-Instruct",
+    "explainer_model_verified": true,
+    "source_temperature": 0.7,
+    "explainer_temperature": 0.0,
+    "seed": 249,
+    "structural_lifestyle_notes_present": true,
+    "structural_lifestyle_notes_chars": 1819,
+    "artifact_lifestyle_notes_chars": 236,
+    "TRAILTRAINING_TWO_STAGE_PLAN": "1",
+    "generation_condition": "gen_src_t070__exp_t000",
+    "athlete_band": "A2",
+    "readiness": "high",
+    "recovery_capability": "high",
+    "race_phase": "peak",
+    "artifact_normalization": {
+      "normalizer_version": "artifact-presentation-normalizer-v1",
+      "normalized_at": "2026-05-05T15:17:21.772505+00:00",
+      "original_artifact_sha256": "82064213b45da3707704be53faaaa9a429ef2b3dba613473709af6ab72ed2d5e",
+      "normalized_artifact_sha256": "949cfdb2979e2046f09f232297a040d0a4c9aaa877b6ba14b8615acdb1883de8",
+      "changed_fields": [
+        {
+          "path": "$.plan.days[0].title",
+          "old": "TrailRun",
+          "new": "Easy run",
+          "reason": "title_session_mismatch"
+        },
+        {
+          "path": "$.plan.days[1].title",
+          "old": "TrailRun",
+          "new": "Strength session",
+          "reason": "title_session_mismatch"
+        },
+        {
+          "path": "$.plan.days[2].title",
+          "old": "TrailRun",
+          "new": "Easy run",
+          "reason": "title_session_mismatch"
+        },
+        {
+          "path": "$.plan.days[3].title",
+          "old": "TrailRun",
+          "new": "Long run",
+          "reason": "title_session_mismatch"
+        },
+        {
+          "path": "$.plan.days[5].title",
+          "old": "TrailRun",
+          "new": "Easy run",
+          "reason": "title_session_mismatch"
+        },
+        {
+          "path": "$.plan.days[6].title",
+          "old": "TrailRun",
+          "new": "Easy run",
+          "reason": "title_session_mismatch"
+        }
+      ],
+      "warnings": [],
+      "errors": [],
+      "score_relevant_projection_unchanged": true
+    }
+  },
+  "source_temperature": 0.7,
+  "explainer_temperature": 0.0,
+  "generation_condition": "gen_src_t070__exp_t000",
+  "seed": 249,
+  "generated_at": "2026-05-05T13:51:29.738409+00:00",
+  "plan_path": "artifacts/gen_src_t070_exp_t000/full_gemma3/plans/ab_A2__r_high__rc_high__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s249.json",
+  "deterministic_score": null
+}

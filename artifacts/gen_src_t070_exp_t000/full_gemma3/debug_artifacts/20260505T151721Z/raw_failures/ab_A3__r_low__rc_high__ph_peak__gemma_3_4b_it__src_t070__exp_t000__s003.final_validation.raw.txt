@@ -1,0 +1,459 @@
+{
+  "meta": {
+    "today": "2026-03-17",
+    "plan_start": "2026-03-11",
+    "plan_days": 7,
+    "style": "trailrunning",
+    "primary_goal": "to arrive race-ready for an upcoming trail event",
+    "lifestyle_notes": "Bias toward race specificity, freshness, and avoiding unnecessary fatigue accumulation. Athlete profile: Advanced amateur. Training history context: Consistent runner, higher recent load, more robust weekly structure."
+  },
+  "snapshot": {
+    "last7": {
+      "distance_km": "42",
+      "moving_time_hours": "5.2",
+      "elevation_m": "1185.5",
+      "activity_count": "6",
+      "sleep_hours_mean": "",
+      "hrv_mean": "",
+      "rhr_mean": ""
+    },
+    "baseline28": {
+      "distance_km": "214.1",
+      "moving_time_hours": "26.4",
+      "elevation_m": "6092.6",
+      "activity_count": "24",
+      "sleep_hours_mean": "",
+      "hrv_mean": "",
+      "rhr_mean": ""
+    },
+    "notes": "The athlete covered 42 km in the last 7 days. Moving time was 5.2 hours. Elevation gain was 1185.5 meters."
+  },
+  "readiness": {
+    "status": "fatigued",
+    "rationale": "Deterministic readiness: fatigued (score 49.0). The athlete is currently classified as fatigued based on recent recovery signals, which include low sleep duration and HRV levels. Despite the recent lower training load compared to the 28-day baseline, the athlete’s recovery signals suggest they are not yet fully recovered. The plan reflects this by including a series of easy recovery runs to support better sleep and HRV recovery, which are critical for reducing fatigue and improving readiness for the upcoming event.",
+    "signal_ids": [
+      "forecast.recovery_capability.sleep_days_7d",
+      "forecast.recovery_capability.hrv_days_7d",
+      "forecast.recovery_capability.rhr_days_7d"
+    ]
+  },
+  "plan": {
+    "weekly_totals": {
+      "planned_distance_km": null,
+      "planned_moving_time_hours": 5.8,
+      "planned_elevation_m": null
+    },
+    "days": [
+      {
+        "date": "2026-03-11",
+        "title": "Easy Run",
+        "session_type": "easy",
+        "is_rest_day": false,
+        "is_hard_day": false,
+        "duration_minutes": 46,
+        "target_intensity": "easy",
+        "terrain": "trail",
+        "workout": "46 min easy run on trail.",
+        "purpose": "To allow for adequate recovery and improve sleep and HRV levels, which are key indicators of overall readiness.",
+        "signal_ids": [
+          "forecast.recovery_capability.sleep_days_7d",
+          "forecast.recovery_capability.hrv_days_7d",
+          "forecast.recovery_capability.rhr_days_7d"
+        ],
+        "estimated_distance_km": null,
+        "estimated_elevation_m": null
+      },
+      {
+        "date": "2026-03-12",
+        "title": "Trail Run - Recovery",
+        "session_type": "easy",
+        "is_rest_day": false,
+        "is_hard_day": false,
+        "duration_minutes": 60,
+        "target_intensity": "easy",
+        "terrain": "trail",
+        "workout": "Trail Run - Recovery",
+        "purpose": "To allow for adequate recovery and improve sleep and HRV levels, which are key indicators of overall readiness.",
+        "signal_ids": [
+          "forecast.recovery_capability.sleep_days_7d",
+          "forecast.recovery_capability.hrv_days_7d",
+          "forecast.recovery_capability.rhr_days_7d"
+        ],
+        "estimated_distance_km": null,
+        "estimated_elevation_m": null
+      },
+      {
+        "date": "2026-03-13",
+        "title": "Trail Run - Recovery",
+        "session_type": "easy",
+        "is_rest_day": false,
+        "is_hard_day": false,
+        "duration_minutes": 60,
+        "target_intensity": "easy",
+        "terrain": "trail",
+        "workout": "Trail Run - Recovery",
+        "purpose": "To allow for adequate recovery and improve sleep and HRV levels, which are key indicators of overall readiness.",
+        "signal_ids": [
+          "forecast.recovery_capability.sleep_days_7d",
+          "forecast.recovery_capability.hrv_days_7d",
+          "forecast.recovery_capability.rhr_days_7d"
+        ],
+        "estimated_distance_km": null,
+        "estimated_elevation_m": null
+      },
+      {
+        "date": "2026-03-14",
+        "title": "Trail Run - Recovery",
+        "session_type": "easy",
+        "is_rest_day": false,
+        "is_hard_day": false,
+        "duration_minutes": 60,
+        "target_intensity": "easy",
+        "terrain": "trail",
+        "workout": "Trail Run - Recovery",
+        "purpose": "To allow for adequate recovery and improve sleep and HRV levels, which are key indicators of overall readiness.",
+        "signal_ids": [
+          "forecast.recovery_capability.sleep_days_7d",
+          "forecast.recovery_capability.hrv_days_7d",
+          "forecast.recovery_capability.rhr_days_7d"
+        ],
+        "estimated_distance_km": null,
+        "estimated_elevation_m": null
+      },
+      {
+        "date": "2026-03-15",
+        "title": "Rest day",
+        "session_type": "rest",
+        "is_rest_day": true,
+        "is_hard_day": false,
+        "duration_minutes": 0,
+        "target_intensity": "rest",
+        "terrain": "n/a",
+        "workout": "Rest day. No structured training.",
+        "purpose": "Recover and maintain freshness.",
+        "signal_ids": [
+          "forecast.recovery_capability.sleep_days_7d",
+          "forecast.recovery_capability.hrv_days_7d",
+          "forecast.recovery_capability.rhr_days_7d"
+        ],
+        "estimated_distance_km": null,
+        "estimated_elevation_m": null
+      },
+      {
+        "date": "2026-03-16",
+        "title": "Trail Run - Recovery",
+        "session_type": "easy",
+        "is_rest_day": false,
+        "is_hard_day": false,
+        "duration_minutes": 60,
+        "target_intensity": "easy",
+        "terrain": "trail",
+        "workout": "Trail Run - Recovery",
+        "purpose": "To allow for adequate recovery and improve sleep and HRV levels, which are key indicators of overall readiness.",
+        "signal_ids": [
+          "forecast.recovery_capability.sleep_days_7d",
+          "forecast.recovery_capability.hrv_days_7d",
+          "forecast.recovery_capability.rhr_days_7d"
+        ],
+        "estimated_distance_km": null,
+        "estimated_elevation_m": null
+      },
+      {
+        "date": "2026-03-17",
+        "title": "Trail Run - Recovery",
+        "session_type": "easy",
+        "is_rest_day": false,
+        "is_hard_day": false,
+        "duration_minutes": 60,
+        "target_intensity": "easy",
+        "terrain": "trail",
+        "workout": "Trail Run - Recovery",
+        "purpose": "To allow for adequate recovery and improve sleep and HRV levels, which are key indicators of overall readiness.",
+        "signal_ids": [
+          "forecast.recovery_capability.sleep_days_7d",
+          "forecast.recovery_capability.hrv_days_7d",
+          "forecast.recovery_capability.rhr_days_7d"
+        ],
+        "estimated_distance_km": null,
+        "estimated_elevation_m": null
+      }
+    ]
+  },
+  "recovery": {
+    "actions": [
+      "Continue with the planned easy recovery runs to support improved sleep and HRV levels.",
+      "Monitor sleep duration and HRV closely to ensure they are trending upwards.",
+      "Consider additional rest days if needed to further support recovery.",
+      "Focus on maintaining a consistent sleep schedule and aim for longer, uninterrupted sleep periods."
+    ],
+    "signal_ids": [
+      "forecast.recovery_capability.sleep_days_7d",
+      "forecast.recovery_capability.hrv_days_7d",
+      "forecast.recovery_capability.rhr_days_7d"
+    ]
+  },
+  "risks": [
+    {
+      "severity": "low",
+      "message": "The planned easy recovery runs are designed to support recovery and readiness. However, if the athlete continues to experience fatigue or poor recovery signals, they may need to consider additional rest days or adjust the training load accordingly.",
+      "signal_ids": [
+        "forecast.recovery_capability.sleep_days_7d",
+        "forecast.recovery_capability.hrv_days_7d",
+        "forecast.recovery_capability.rhr_days_7d"
+      ]
+    }
+  ],
+  "data_notes": [
+    "The athlete's recent recovery signals, including sleep duration and HRV, indicate a need for continued focus on recovery. The planned easy recovery runs are designed to support these efforts.",
+    "Readiness status was set from deterministic readiness_and_risk_forecast.json.",
+    "Guardrails: enforced ramp rate (max_ramp_pct=10.0%). last7_hours=5.250, allowed_hours=5.775, planned_hours=5.800."
+  ],
+  "citations": [
+    {
+      "citation_id": "c1",
+      "signal_id": "forecast.recovery_capability.sleep_days_7d",
+      "source": "readiness_and_risk_forecast.json:result.inputs.sleep_days_7d",
+      "date_range": "2026-03-17..2026-03-17",
+      "value": "7"
+    },
+    {
+      "citation_id": "c2",
+      "signal_id": "forecast.recovery_capability.hrv_days_7d",
+      "source": "readiness_and_risk_forecast.json:result.inputs.hrv_days_7d",
+      "date_range": "2026-03-17..2026-03-17",
+      "value": "7"
+    },
+    {
+      "citation_id": "c3",
+      "signal_id": "forecast.recovery_capability.rhr_days_7d",
+      "source": "",
+      "date_range": "",
+      "value": "null"
+    }
+  ],
+  "claim_attributions": [
+    {
+      "claim_id": "cl1",
+      "field_path": "readiness.rationale",
+      "claim_text": "Deterministic readiness: fatigued (score 49.0). The athlete is currently classified as fatigued based on recent recovery signals, which include low sleep duration and HRV levels. Despite the recent lower training load compared to the 28-day baseline, the athlete’s recovery signals suggest they are not yet fully recovered. The plan reflects this by including a series of easy recovery runs to support better sleep and HRV recovery, which are critical for reducing fatigue and improving readiness for the upcoming event.",
+      "signal_ids": [
+        "forecast.recovery_capability.sleep_days_7d",
+        "forecast.recovery_capability.hrv_days_7d",
+        "forecast.recovery_capability.rhr_days_7d"
+      ],
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "claim_id": "cl2",
+      "field_path": "recovery.actions[0]",
+      "claim_text": "Continue with the planned easy recovery runs to support improved sleep and HRV levels.",
+      "signal_ids": [
+        "forecast.recovery_capability.sleep_days_7d",
+        "forecast.recovery_capability.hrv_days_7d",
+        "forecast.recovery_capability.rhr_days_7d"
+      ],
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "claim_id": "cl3",
+      "field_path": "recovery.actions[1]",
+      "claim_text": "Monitor sleep duration and HRV closely to ensure they are trending upwards.",
+      "signal_ids": [
+        "forecast.recovery_capability.sleep_days_7d",
+        "forecast.recovery_capability.hrv_days_7d",
+        "forecast.recovery_capability.rhr_days_7d"
+      ],
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "claim_id": "cl4",
+      "field_path": "recovery.actions[2]",
+      "claim_text": "Consider additional rest days if needed to further support recovery.",
+      "signal_ids": [
+        "forecast.recovery_capability.sleep_days_7d",
+        "forecast.recovery_capability.hrv_days_7d",
+        "forecast.recovery_capability.rhr_days_7d"
+      ],
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "claim_id": "cl5",
+      "field_path": "recovery.actions[3]",
+      "claim_text": "Focus on maintaining a consistent sleep schedule and aim for longer, uninterrupted sleep periods.",
+      "signal_ids": [
+        "forecast.recovery_capability.sleep_days_7d",
+        "forecast.recovery_capability.hrv_days_7d",
+        "forecast.recovery_capability.rhr_days_7d"
+      ],
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "claim_id": "cl6",
+      "field_path": "risks[0].message",
+      "claim_text": "The planned easy recovery runs are designed to support recovery and readiness. However, if the athlete continues to experience fatigue or poor recovery signals, they may need to consider additional rest days or adjust the training load accordingly.",
+      "signal_ids": [
+        "forecast.recovery_capability.sleep_days_7d",
+        "forecast.recovery_capability.hrv_days_7d",
+        "forecast.recovery_capability.rhr_days_7d"
+      ],
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "claim_id": "cl7",
+      "field_path": "plan.days[0].purpose",
+      "claim_text": "To allow for adequate recovery and improve sleep and HRV levels, which are key indicators of overall readiness.",
+      "signal_ids": [
+        "forecast.recovery_capability.sleep_days_7d",
+        "forecast.recovery_capability.hrv_days_7d",
+        "forecast.recovery_capability.rhr_days_7d"
+      ],
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "claim_id": "cl8",
+      "field_path": "plan.days[1].purpose",
+      "claim_text": "To allow for adequate recovery and improve sleep and HRV levels, which are key indicators of overall readiness.",
+      "signal_ids": [
+        "forecast.recovery_capability.sleep_days_7d",
+        "forecast.recovery_capability.hrv_days_7d",
+        "forecast.recovery_capability.rhr_days_7d"
+      ],
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "claim_id": "cl9",
+      "field_path": "plan.days[2].purpose",
+      "claim_text": "To allow for adequate recovery and improve sleep and HRV levels, which are key indicators of overall readiness.",
+      "signal_ids": [
+        "forecast.recovery_capability.sleep_days_7d",
+        "forecast.recovery_capability.hrv_days_7d",
+        "forecast.recovery_capability.rhr_days_7d"
+      ],
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "claim_id": "cl10",
+      "field_path": "plan.days[3].purpose",
+      "claim_text": "To allow for adequate recovery and improve sleep and HRV levels, which are key indicators of overall readiness.",
+      "signal_ids": [
+        "forecast.recovery_capability.sleep_days_7d",
+        "forecast.recovery_capability.hrv_days_7d",
+        "forecast.recovery_capability.rhr_days_7d"
+      ],
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "claim_id": "cl11",
+      "field_path": "plan.days[4].purpose",
+      "claim_text": "To provide a full rest day to support recovery and improve sleep and HRV levels, which are key indicators of overall readiness.",
+      "signal_ids": [
+        "forecast.recovery_capability.sleep_days_7d",
+        "forecast.recovery_capability.hrv_days_7d",
+        "forecast.recovery_capability.rhr_days_7d"
+      ],
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "claim_id": "cl12",
+      "field_path": "plan.days[5].purpose",
+      "claim_text": "To allow for adequate recovery and improve sleep and HRV levels, which are key indicators of overall readiness.",
+      "signal_ids": [
+        "forecast.recovery_capability.sleep_days_7d",
+        "forecast.recovery_capability.hrv_days_7d",
+        "forecast.recovery_capability.rhr_days_7d"
+      ],
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3"
+      ],
+      "support_level": "supported"
+    },
+    {
+      "claim_id": "cl13",
+      "field_path": "plan.days[6].purpose",
+      "claim_text": "To allow for adequate recovery and improve sleep and HRV levels, which are key indicators of overall readiness.",
+      "signal_ids": [
+        "forecast.recovery_capability.sleep_days_7d",
+        "forecast.recovery_capability.hrv_days_7d",
+        "forecast.recovery_capability.rhr_days_7d"
+      ],
+      "citation_ids": [
+        "c1",
+        "c2",
+        "c3"
+      ],
+      "support_level": "supported"
+    }
+  ],
+  "effective_constraints": {
+    "allowed_week1_hours": 5.775,
+    "effective_max_ramp_pct": 10.0,
+    "effective_max_hard_per_7d": 1,
+    "effective_max_consecutive_hard": 2,
+    "min_rest_per_7d": 1,
+    "readiness_status": "fatigued",
+    "overreach_risk_level": "moderate",
+    "recovery_capability_key": "load_sleep_resting_hr_hrv",
+    "lifestyle_notes": "Bias toward race specificity, freshness, and avoiding unnecessary fatigue accumulation. Athlete profile: Advanced amateur. Training history context: Consistent runner, higher recent load, more robust weekly structure.",
+    "reasons": [
+      "readiness is fatigued",
+      "lifestyle constraints apply"
+    ]
+  }
+}

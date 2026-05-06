@@ -1,0 +1,10 @@
+{
+  "plan_id": "ab_A4__r_high__rc_high__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s001",
+  "stage": "machine_plan",
+  "error": "2 validation errors for MachinePlanArtifact\nplan.days.0.duration_minutes\n  Input should be less than or equal to 420 [type=less_than_equal, input_value=1620, input_type=int]\n    For further information visit https://errors.pydantic.dev/2.13/v/less_than_equal\nplan.days.3.duration_minutes\n  Input should be less than or equal to 420 [type=less_than_equal, input_value=1500, input_type=int]\n    For further information visit https://errors.pydantic.dev/2.13/v/less_than_equal",
+  "timestamp": "2026-05-05T09:41:45.801193+00:00",
+  "raw_text_chars": 2217,
+  "prompt_text_path": "artifacts/gen_src_t070_exp_t000/full_gemma3/plans/raw_failures/ab_A4__r_high__rc_high__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s001.machine_plan.prompt.txt",
+  "request_json_path": "artifacts/gen_src_t070_exp_t000/full_gemma3/plans/raw_failures/ab_A4__r_high__rc_high__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s001.machine_plan.request.json",
+  "raw_text_path": "artifacts/gen_src_t070_exp_t000/full_gemma3/plans/raw_failures/ab_A4__r_high__rc_high__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s001.machine_plan.raw.txt"
+}

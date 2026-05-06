@@ -5,31 +5,40 @@ from pathlib import Path
 from typing import Any, Mapping
 
 
-def _safe_text(value: Any) -> str:
-    return value if isinstance(value, str) else ""
+def _session_type(day: dict[str, Any]) -> str:
+    return str(day.get("session_type") or "").strip().lower()
 
 
 def extract_match_features(plan_obj: dict[str, Any]) -> dict[str, float]:
-    plan = plan_obj.get("plan") or {}
-    days = plan.get("days") or []
-    durations = [float(d.get("duration_minutes") or 0) for d in days if isinstance(d, dict)]
-    rest = sum(1 for d in days if isinstance(d, dict) and d.get("is_rest_day", False))
-    hard = sum(1 for d in days if isinstance(d, dict) and d.get("is_hard_day", False))
-    has_long = any((d.get("session_type") == "long") for d in days if isinstance(d, dict))
-    purposes = [_safe_text(d.get("purpose")) for d in days if isinstance(d, dict)]
-    workouts = [_safe_text(d.get("workout")) for d in days if isinstance(d, dict)]
-    narrative = "".join(purposes + workouts)
+    """Extract structural-only features for distance matching.
+
+    Deliberately excludes title text, workout prose, purpose prose, citations,
+    claim_attributions, data_notes, explanation/rationale text, source labels,
+    generation arm, and file names. Presentation leakage must be audited, not
+    optimized into the primary match distance.
+    """
+    days = list(((plan_obj.get("plan") or {}).get("days") or []))
+    durations = [float(day.get("duration_minutes") or 0) for day in days if isinstance(day, dict)]
+    rest = sum(1 for day in days if isinstance(day, dict) and day.get("is_rest_day", False))
+    hard = sum(1 for day in days if isinstance(day, dict) and day.get("is_hard_day", False))
+    active = sum(1 for day in days if isinstance(day, dict) and not day.get("is_rest_day", False))
+    long_runs = sum(1 for day in days if isinstance(day, dict) and _session_type(day) == "long")
+    quality_types = {"interval", "intervals", "tempo", "threshold", "hill", "hills", "fartlek", "progression", "race", "time_trial", "quality"}
+    quality = sum(
+        1
+        for day in days
+        if isinstance(day, dict)
+        and (day.get("is_hard_day", False) or _session_type(day) in quality_types)
+    )
     return {
         "total_minutes": float(sum(durations)),
         "n_rest_days": float(rest),
         "n_hard_days": float(hard),
-        "has_long_run": float(1 if has_long else 0),
+        "n_active_days": float(active),
+        "n_long_runs": float(long_runs),
+        "n_quality_days": float(quality),
         "max_day_minutes": float(max(durations) if durations else 0.0),
         "mean_day_minutes": float(sum(durations) / len(durations)) if durations else 0.0,
-        "narrative_chars": float(len(narrative)),
-        "mean_workout_chars": float(sum(len(x) for x in workouts) / len(workouts)) if workouts else 0.0,
-        "mean_purpose_chars": float(sum(len(x) for x in purposes) / len(purposes)) if purposes else 0.0,
-        "n_data_notes": float(len(plan_obj.get("data_notes") or [])),
     }
 
 

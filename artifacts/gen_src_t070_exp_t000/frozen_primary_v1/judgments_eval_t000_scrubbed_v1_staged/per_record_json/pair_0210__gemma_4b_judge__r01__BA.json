@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 50.0,
+    "mean_day_minutes": 6.286,
+    "n_active_days": 1.0,
+    "n_hard_days": 1.0,
+    "n_long_runs": 1.0,
+    "n_quality_days": 1.0,
+    "n_rest_days": 1.0,
+    "total_minutes": 44.0
+  },
+  "fixture_id": "ab_A4__r_high__rc_low__ph_base",
+  "judge": "gemma_4b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/matching_pool/eval_manifest_scrubbed_v1/judge_inputs/pair_0210__gemma_4b_judge__r01__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-4b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A4__r_high__rc_low__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s003",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0210",
+  "plan_a_advantages": [
+    "More emphasis on long, easy runs – essential for trail running endurance.",
+    "Includes more recovery days, reducing the risk of overtraining.",
+    "Prioritizes trail-specific durability through consistent long runs."
+  ],
+  "plan_b_advantages": [
+    "Incorporates dedicated interval sessions for speed development.",
+    "Includes a longer run at a moderate pace on day 6, providing a good aerobic stimulus."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A4__r_high__rc_low__ph_base__prog__exp_t000__s011",
+  "reasoning": "Plan A is the better training plan for a trail runner aiming to become faster, particularly given the implied current state of the athlete. It prioritizes consistent, longer runs at an easy pace, which is crucial for building the aerobic base necessary for faster trail running. Plan B, while including some speed work, has a higher proportion of hard days and shorter, more intense sessions, which could lead to overtraining and hinder long-term progress. Plan A’s focus on sustained endurance and trail-specific durability, coupled with a lower volume of high-intensity workouts, is more sustainable and conducive to improving speed over time.",
+  "record_id": "pair_0210__gemma_4b_judge__r01__BA",
+  "right_plan_role": "llm",
+  "run": 1,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T17:35:34.035868+00:00",
+  "winner_role": "programmatic"
+}

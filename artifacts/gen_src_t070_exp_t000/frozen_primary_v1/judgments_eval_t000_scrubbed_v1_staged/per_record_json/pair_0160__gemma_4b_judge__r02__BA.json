@@ -1,0 +1,48 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 60.0,
+    "mean_day_minutes": 5.143,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 36.0
+  },
+  "fixture_id": "ab_A3__r_low__rc_high__ph_base",
+  "judge": "gemma_4b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/matching_pool/eval_manifest_scrubbed_v1/judge_inputs/pair_0160__gemma_4b_judge__r02__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-4b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A3__r_low__rc_high__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s003",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0160",
+  "plan_a_advantages": [
+    "Dedicated tempo session for speed development",
+    "Strategic use of longer, easier runs to build endurance without excessive fatigue",
+    "Incorporation of cross-training for low-impact recovery"
+  ],
+  "plan_b_advantages": [
+    "More frequent hill work, potentially building strength and power",
+    "Longer overall duration of runs, which could be beneficial for some athletes",
+    "Includes a strength session, which is a valuable addition to any training plan"
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A3__r_low__rc_high__ph_base__prog__exp_t000__s010",
+  "reasoning": "Plan A is better suited for a trail runner aiming to become faster because it prioritizes building a sustainable threshold while minimizing fatigue. The inclusion of a dedicated tempo session alongside longer, easier runs directly addresses the need for increased speed and efficiency. Plan B, while including a tempo run, focuses more on volume and general aerobic fitness with a significant amount of running on hills, which isn't the most efficient way to improve speed for a trail runner. Plan A’s structure is more targeted towards the specific goal of becoming faster, recognizing that speed comes from more than just overall endurance.",
+  "record_id": "pair_0160__gemma_4b_judge__r02__BA",
+  "right_plan_role": "llm",
+  "run": 2,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T17:13:20.408809+00:00",
+  "winner_role": "programmatic"
+}

@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 12.0,
+    "mean_day_minutes": 1.571,
+    "n_active_days": 1.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 2.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 1.0,
+    "total_minutes": 11.0
+  },
+  "fixture_id": "ab_A2__r_high__rc_low__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0076__gemma_12b_judge__r04__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A2__r_high__rc_low__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s000",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0076",
+  "plan_a_advantages": [
+    "Includes a dedicated long run (86 and 104 minutes) to build endurance and trail-specific durability.",
+    "Features longer aerobic runs (31 and 65 minutes) to develop a strong aerobic base.",
+    "Provides a better balance between training and recovery with only one rest day."
+  ],
+  "plan_b_advantages": [
+    "Offers more rest days (2 vs 1), which could be beneficial for athletes prone to injury or those needing more recovery.",
+    "Incorporates hill work into some easy runs, which is relevant for trail running."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A2__r_high__rc_low__ph_base__prog__exp_t000__s006",
+  "reasoning": "While both plans focus on easy running, Plan A is better suited for a trail runner aiming to become faster. Plan A incorporates longer aerobic runs and a dedicated long run, which are crucial for building the aerobic base necessary for faster trail running. Plan B, with its exclusively easy runs and more rest days, lacks the specific endurance development needed to improve speed on trails. The inclusion of a long run in Plan A is a significant advantage for trail runners, as it mimics the demands of longer races and builds trail-specific durability.",
+  "record_id": "pair_0076__gemma_12b_judge__r04__BA",
+  "right_plan_role": "llm",
+  "run": 4,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T21:23:16.310076+00:00",
+  "winner_role": "programmatic"
+}

@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 35.0,
+    "mean_day_minutes": 0.143,
+    "n_active_days": 1.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 1.0,
+    "total_minutes": 1.0
+  },
+  "fixture_id": "ab_A1__r_high__rc_low__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0014__gemma_12b_judge__r02__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A1__r_high__rc_low__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s001",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0014",
+  "plan_a_advantages": [
+    "Includes a strength and mobility session, essential for trail running injury prevention and performance.",
+    "Slightly more consistent running volume across the week, potentially leading to better aerobic adaptation.",
+    "The purpose summary for the strength session explicitly mentions durability and injury resistance, demonstrating a clear understanding of trail running needs."
+  ],
+  "plan_b_advantages": [
+    "Has slightly more rest days, which could be beneficial for athletes prone to overtraining or those new to running.",
+    "The focus on rhythm and form during the easy runs is a good reminder for maintaining efficient running mechanics."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A1__r_high__rc_low__ph_base__prog__exp_t000__s008",
+  "reasoning": "Both plans focus on easy running and recovery, which is appropriate for building a base and avoiding injury. However, Plan A incorporates a strength and mobility session, which is crucial for trail running to build durability, stability, and injury resistance on uneven terrain. Plan B's focus solely on easy runs, while seemingly restful, neglects a key component of trail running preparation. Therefore, Plan A provides a more well-rounded approach to becoming a faster trail runner.",
+  "record_id": "pair_0014__gemma_12b_judge__r02__BA",
+  "right_plan_role": "llm",
+  "run": 2,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T19:52:26.370280+00:00",
+  "winner_role": "programmatic"
+}

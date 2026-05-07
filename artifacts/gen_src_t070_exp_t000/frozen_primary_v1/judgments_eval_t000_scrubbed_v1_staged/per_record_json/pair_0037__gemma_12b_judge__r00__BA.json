@@ -1,0 +1,49 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 2.0,
+    "mean_day_minutes": 2.571,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 18.0
+  },
+  "fixture_id": "ab_A1__r_low__rc_high__ph_peak",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0037__gemma_12b_judge__r00__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A1__r_low__rc_high__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s006",
+  "llm_won": true,
+  "order": "BA",
+  "pair_id": "pair_0037",
+  "plan_a_advantages": [
+    "Plan A includes cross-training, which can be beneficial for injury prevention and overall fitness.",
+    "Plan A has a slightly higher total training volume (218 minutes vs 200 minutes).",
+    "The alternating easy runs and cross-training might be preferable for athletes who find consistent running monotonous."
+  ],
+  "plan_b_advantages": [
+    "Plan B focuses specifically on trail running, improving form and rhythm on the target terrain.",
+    "Plan B incorporates a longer aerobic run, which is more effective for building trail running endurance.",
+    "The consistent easy runs in Plan B are more likely to lead to adaptation and improvement in trail running efficiency.",
+    "Plan B's structure is simpler and more focused, potentially reducing mental fatigue."
+  ],
+  "position": "BA",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A1__r_low__rc_high__ph_peak__prog__exp_t000__s002",
+  "reasoning": "While both plans focus on building aerobic fitness, Plan B is better suited for a trail runner aiming to become faster. Plan B incorporates more trail-specific running, emphasizing form and rhythm on trails, which is crucial for efficiency and injury prevention. The gradual increase in run duration in Plan B, culminating in a longer aerobic run, is more effective for building endurance than the alternating easy runs and cross-training in Plan A. The consistent easy runs in Plan A, while good for base building, lack the progressive overload needed to drive speed improvements on varied terrain.",
+  "record_id": "pair_0037__gemma_12b_judge__r00__BA",
+  "right_plan_role": "llm",
+  "run": 0,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T20:24:15.973068+00:00",
+  "winner_role": "llm"
+}

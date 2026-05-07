@@ -1,0 +1,48 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 31.0,
+    "mean_day_minutes": 13.714,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 96.0
+  },
+  "fixture_id": "ab_A3__r_low__rc_low__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0178__gemma_12b_judge__r00__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A3__r_low__rc_low__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s002",
+  "llm_won": true,
+  "order": "AB",
+  "pair_id": "pair_0178",
+  "plan_a_advantages": [
+    "Includes a tempo run, which is essential for speed development and improving sustainable effort.",
+    "Higher overall volume (390 minutes vs 294 minutes) allows for greater aerobic base development.",
+    "The 'moderate' intensity for the long run suggests a focus on rhythm and form, which can improve efficiency."
+  ],
+  "plan_b_advantages": [
+    "The hill session is valuable for building climbing strength, a key component of trail running.",
+    "Lower overall volume might be beneficial for athletes prone to injury or those in the early stages of training.",
+    "Focus on threshold intensity during the aerobic run could improve lactate threshold, contributing to endurance."
+  ],
+  "position": "AB",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A3__r_low__rc_low__ph_base__prog__exp_t000__s017",
+  "reasoning": "Given the goal of becoming a faster trail runner, Plan A appears to be the better choice. While both plans incorporate essential elements like long runs, easy runs, and rest days, Plan A's inclusion of a tempo run is crucial for developing speed and improving sustainable effort, which is directly relevant to faster trail running. Plan B focuses more on hill work and aerobic endurance, which are important but less directly impactful on speed development. The higher overall volume in Plan A also suggests a greater opportunity for building a stronger aerobic base, a foundation for faster running.",
+  "record_id": "pair_0178__gemma_12b_judge__r00__AB",
+  "right_plan_role": "programmatic",
+  "run": 0,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T23:56:51.528787+00:00",
+  "winner_role": "llm"
+}

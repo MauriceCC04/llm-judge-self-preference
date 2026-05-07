@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 41.0,
+    "mean_day_minutes": 30.857,
+    "n_active_days": 1.0,
+    "n_hard_days": 1.0,
+    "n_long_runs": 1.0,
+    "n_quality_days": 1.0,
+    "n_rest_days": 1.0,
+    "total_minutes": 216.0
+  },
+  "fixture_id": "ab_A4__r_high__rc_low__ph_peak",
+  "judge": "gemma_4b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/matching_pool/eval_manifest_scrubbed_v1/judge_inputs/pair_0217__gemma_4b_judge__r01__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-4b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A4__r_high__rc_low__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s005",
+  "llm_won": true,
+  "order": "AB",
+  "pair_id": "pair_0217",
+  "plan_a_advantages": [
+    "More focused on speed development with tempo and interval work.",
+    "Includes a longer, hilly run that mimics race conditions.",
+    "Incorporates strength training to support trail running demands."
+  ],
+  "plan_b_advantages": [
+    "Lower overall volume, potentially beneficial for recovery.",
+    "More emphasis on low-impact cross-training, which could be useful for injury prevention."
+  ],
+  "position": "AB",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A4__r_high__rc_low__ph_peak__prog__exp_t000__s002",
+  "reasoning": "Plan A is the better training plan for a trail runner aiming to become faster. It incorporates a more targeted approach to building speed and endurance, including dedicated tempo runs, interval sessions, and a longer, hilly run that simulates race conditions. Plan B, while gentle, lacks the intensity needed to truly improve speed and focuses heavily on low-impact cross-training, which is less directly beneficial for trail running performance. Plan A’s inclusion of strength training also addresses a crucial component often overlooked in trail running programs – the need for robust leg muscles to handle the demands of the terrain.",
+  "record_id": "pair_0217__gemma_4b_judge__r01__AB",
+  "right_plan_role": "programmatic",
+  "run": 1,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 1.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T17:38:25.982281+00:00",
+  "winner_role": "llm"
+}

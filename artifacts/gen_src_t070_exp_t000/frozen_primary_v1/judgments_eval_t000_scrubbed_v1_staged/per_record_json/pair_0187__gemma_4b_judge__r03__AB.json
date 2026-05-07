@@ -1,0 +1,46 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 1.0,
+    "mean_day_minutes": 2.857,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 20.0
+  },
+  "fixture_id": "ab_A3__r_low__rc_low__ph_peak",
+  "judge": "gemma_4b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/matching_pool/eval_manifest_scrubbed_v1/judge_inputs/pair_0187__gemma_4b_judge__r03__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-4b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A3__r_low__rc_low__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s001",
+  "llm_won": false,
+  "order": "AB",
+  "pair_id": "pair_0187",
+  "plan_a_advantages": [
+    "Includes a longer, more traditional long run.",
+    "More frequent easy runs to maintain aerobic fitness."
+  ],
+  "plan_b_advantages": [
+    "Incorporates a tempo run for developing threshold strength.",
+    "Long run is specifically designed for trail endurance and durability."
+  ],
+  "position": "AB",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A3__r_low__rc_low__ph_peak__prog__exp_t000__s005",
+  "reasoning": "Plan B is the better training plan for a trail runner aiming to become faster. It incorporates a dedicated tempo run and a longer, more focused long run, both crucial for developing the sustained effort required for trail racing. Plan A, while including intervals, relies heavily on lower-intensity runs and feels somewhat repetitive, lacking the specific stimulus needed to improve speed. Plan B’s structure prioritizes building a stronger aerobic base and threshold, which are foundational for faster running, while Plan A’s focus on maintaining fitness could hinder progress towards speed gains.",
+  "record_id": "pair_0187__gemma_4b_judge__r03__AB",
+  "right_plan_role": "programmatic",
+  "run": 3,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T17:25:21.078738+00:00",
+  "winner_role": "programmatic"
+}

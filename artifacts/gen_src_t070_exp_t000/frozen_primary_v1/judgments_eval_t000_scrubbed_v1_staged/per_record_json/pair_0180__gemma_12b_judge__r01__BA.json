@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 27.0,
+    "mean_day_minutes": 6.286,
+    "n_active_days": 2.0,
+    "n_hard_days": 1.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 1.0,
+    "n_rest_days": 2.0,
+    "total_minutes": 44.0
+  },
+  "fixture_id": "ab_A3__r_low__rc_low__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0180__gemma_12b_judge__r01__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A3__r_low__rc_low__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s000",
+  "llm_won": true,
+  "order": "BA",
+  "pair_id": "pair_0180",
+  "plan_a_advantages": [
+    "Plan A has more rest days, which could be beneficial for athletes prone to injury or those new to training.",
+    "Plan A's focus on easy runs may be less mentally taxing, making it more sustainable for some individuals."
+  ],
+  "plan_b_advantages": [
+    "Plan B includes a tempo run, directly addressing the goal of becoming a faster trail runner.",
+    "Plan B incorporates aerobic runs at moderate intensity, providing a more varied and effective training stimulus.",
+    "Plan B has a higher total training volume (270 minutes vs 226 minutes), which can lead to greater physiological adaptations, assuming the athlete can handle the load."
+  ],
+  "position": "BA",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A3__r_low__rc_low__ph_base__prog__exp_t000__s015",
+  "reasoning": "While both plans aim to improve trail running speed, Plan B is better suited for the stated goal. Plan B incorporates a tempo run, which is crucial for developing the speed and lactate threshold necessary for faster trail running. Plan A focuses solely on easy and long runs, which are good for building aerobic base but insufficient for improving speed. The inclusion of aerobic runs at moderate intensity in Plan B also provides a better balance of training stimulus than Plan A's exclusively easy runs.",
+  "record_id": "pair_0180__gemma_12b_judge__r01__BA",
+  "right_plan_role": "llm",
+  "run": 1,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 1.429,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-07T00:00:02.641141+00:00",
+  "winner_role": "llm"
+}

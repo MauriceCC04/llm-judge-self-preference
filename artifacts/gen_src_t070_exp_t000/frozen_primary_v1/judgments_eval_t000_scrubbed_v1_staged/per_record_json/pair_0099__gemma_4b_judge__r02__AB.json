@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 17.0,
+    "mean_day_minutes": 1.143,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 8.0
+  },
+  "fixture_id": "ab_A2__r_low__rc_high__ph_peak",
+  "judge": "gemma_4b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/matching_pool/eval_manifest_scrubbed_v1/judge_inputs/pair_0099__gemma_4b_judge__r02__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-4b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A2__r_low__rc_high__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s004",
+  "llm_won": true,
+  "order": "AB",
+  "pair_id": "pair_0099",
+  "plan_a_advantages": [
+    "More consistent low-intensity running volume.",
+    "Greater emphasis on recovery and avoiding overtraining.",
+    "Better suited for building a foundational aerobic base crucial for speed."
+  ],
+  "plan_b_advantages": [
+    "Includes a dedicated strength and mobility session.",
+    "Offers a slightly longer easy run on day 5."
+  ],
+  "position": "AB",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A2__r_low__rc_high__ph_peak__prog__exp_t000__s015",
+  "reasoning": "For a trail runner aiming to become faster, Plan A is the superior choice. It prioritizes recovery and consistent, low-intensity running, which is crucial for building a solid aerobic base – a fundamental component of speed. Plan B, while including some easy runs, focuses heavily on recovery and a single strength session, neglecting the necessary volume to improve running economy and speed. Plan A’s consistent easy runs, combined with rest days, allow for a more gradual and sustainable increase in training load, minimizing the risk of injury and maximizing adaptation for faster running.",
+  "record_id": "pair_0099__gemma_4b_judge__r02__AB",
+  "right_plan_role": "programmatic",
+  "run": 2,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 1.143,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T16:46:16.205462+00:00",
+  "winner_role": "llm"
+}

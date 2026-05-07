@@ -1,0 +1,46 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 7.0,
+    "mean_day_minutes": 8.571,
+    "n_active_days": 0.0,
+    "n_hard_days": 1.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 1.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 60.0
+  },
+  "fixture_id": "ab_A2__r_high__rc_low__ph_peak",
+  "judge": "gemma_4b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/matching_pool/eval_manifest_scrubbed_v1/judge_inputs/pair_0083__gemma_4b_judge__r02__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-4b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A2__r_high__rc_low__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s003",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0083",
+  "plan_a_advantages": [
+    "Includes a tempo run for threshold strength development.",
+    "Incorporates cross-training for varied training stimulus and injury prevention."
+  ],
+  "plan_b_advantages": [
+    "More frequent rest days, potentially beneficial for recovery.",
+    "Focuses on consistent easy running, which can be good for maintaining volume and building a base."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A2__r_high__rc_low__ph_peak__prog__exp_t000__s002",
+  "reasoning": "Plan A is the better training plan for a trail runner aiming to become faster. It incorporates a tempo run to build sustainable threshold strength, a key component of trail running speed, alongside consistent aerobic work. Plan B, conversely, focuses almost entirely on easy runs, which while beneficial for recovery and maintaining volume, don't directly address the physiological adaptations needed for increased speed. The inclusion of cross-training in Plan A also provides a valuable opportunity to work different muscle groups and prevent overuse injuries, something absent in Plan B. While both plans have similar rest days, Plan A’s structured approach to building fitness is more targeted to the athlete’s goal.",
+  "record_id": "pair_0083__gemma_4b_judge__r02__BA",
+  "right_plan_role": "llm",
+  "run": 2,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 1.143,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T16:39:25.104773+00:00",
+  "winner_role": "programmatic"
+}

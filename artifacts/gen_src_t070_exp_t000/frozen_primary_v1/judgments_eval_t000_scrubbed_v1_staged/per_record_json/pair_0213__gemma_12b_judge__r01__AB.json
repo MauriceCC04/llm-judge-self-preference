@@ -1,0 +1,49 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 17.0,
+    "mean_day_minutes": 21.286,
+    "n_active_days": 1.0,
+    "n_hard_days": 2.0,
+    "n_long_runs": 1.0,
+    "n_quality_days": 2.0,
+    "n_rest_days": 1.0,
+    "total_minutes": 149.0
+  },
+  "fixture_id": "ab_A4__r_high__rc_low__ph_peak",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0213__gemma_12b_judge__r01__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A4__r_high__rc_low__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s000",
+  "llm_won": true,
+  "order": "AB",
+  "pair_id": "pair_0213",
+  "plan_a_advantages": [
+    "Includes tempo runs to improve speed and lactate threshold.",
+    "Incorporates hill sessions to build strength and power.",
+    "Higher overall volume allows for greater adaptation and endurance development.",
+    "More structured with a mix of easy, moderate, and hard days."
+  ],
+  "plan_b_advantages": [
+    "Lower overall volume may be suitable for athletes prone to injury or those new to running.",
+    "Cross-training provides a low-impact aerobic stimulus.",
+    "More rest days may aid in recovery."
+  ],
+  "position": "AB",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A4__r_high__rc_low__ph_peak__prog__exp_t000__s012",
+  "reasoning": "Given the goal of becoming a faster trail runner, Plan A is the better choice. While Plan B focuses heavily on easy runs and cross-training, it lacks the intensity and variety needed to drive significant improvements in speed. Plan A incorporates tempo runs and hill sessions, which are crucial for developing the speed and strength required for trail running. The higher overall volume in Plan A also allows for more time on feet, which is beneficial for trail-specific endurance.",
+  "record_id": "pair_0213__gemma_12b_judge__r01__AB",
+  "right_plan_role": "programmatic",
+  "run": 1,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 1.714,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-07T00:53:02.096687+00:00",
+  "winner_role": "llm"
+}

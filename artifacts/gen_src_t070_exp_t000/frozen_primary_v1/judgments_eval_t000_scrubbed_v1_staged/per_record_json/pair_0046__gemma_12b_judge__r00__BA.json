@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 0.0,
+    "mean_day_minutes": 5.857,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 41.0
+  },
+  "fixture_id": "ab_A1__r_low__rc_low__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0046__gemma_12b_judge__r00__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A1__r_low__rc_low__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s005",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0046",
+  "plan_a_advantages": [
+    "Greater training volume: Plan A totals 249 minutes compared to Plan B's 208 minutes.",
+    "Variety in run durations: Plan A includes runs of 25, 50, 52, 54, and 68 minutes, providing a more diverse stimulus.",
+    "Dedicated aerobic run: The inclusion of a 54-minute aerobic run specifically targets aerobic endurance, a key component of trail running performance."
+  ],
+  "plan_b_advantages": [
+    "Focus on rhythm and form: Plan B explicitly mentions focusing on rhythm and form during the easy runs, which can be beneficial for efficiency.",
+    "Potential for reduced fatigue: The shorter, more repetitive runs in Plan B might be slightly less fatiguing, which could be advantageous for some athletes."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A1__r_low__rc_low__ph_base__prog__exp_t000__s014",
+  "reasoning": "Given the goal of becoming a faster trail runner, Plan A appears to be the better choice. While both plans emphasize easy running, Plan A incorporates a wider range of durations and includes a dedicated 'aerobic' run, which is likely more beneficial for building a stronger aerobic base. Plan B's repetitive nature of short, similar runs might lead to stagnation, whereas Plan A's varied durations and inclusion of an aerobic run provide a more comprehensive approach to improving trail running speed. The longer total training time in Plan A also suggests a greater volume of training, which is generally beneficial for improving fitness.",
+  "record_id": "pair_0046__gemma_12b_judge__r00__BA",
+  "right_plan_role": "llm",
+  "run": 0,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T20:37:20.589229+00:00",
+  "winner_role": "programmatic"
+}

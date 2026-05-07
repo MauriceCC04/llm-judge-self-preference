@@ -1,0 +1,49 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 30.0,
+    "mean_day_minutes": 6.0,
+    "n_active_days": 0.0,
+    "n_hard_days": 1.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 1.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 42.0
+  },
+  "fixture_id": "ab_A3__r_high__rc_high__ph_peak",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0125__gemma_12b_judge__r04__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A3__r_high__rc_high__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s003",
+  "llm_won": true,
+  "order": "AB",
+  "pair_id": "pair_0125",
+  "plan_a_advantages": [
+    "Includes tempo runs, which are essential for improving speed and lactate threshold.",
+    "Incorporates hill workouts, directly addressing the demands of trail running terrain.",
+    "Higher overall volume (315 minutes vs 273) allows for more training stimulus.",
+    "More closely mimics the demands of trail running with longer distances and elevation gain."
+  ],
+  "plan_b_advantages": [
+    "Lower overall volume might be beneficial for athletes prone to injury or those in earlier stages of training.",
+    "Cross-training session provides a low-impact alternative, potentially aiding recovery and reducing overuse injuries.",
+    "Focus on aerobic endurance is still valuable for trail running, contributing to stamina."
+  ],
+  "position": "AB",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A3__r_high__rc_high__ph_peak__prog__exp_t000__s008",
+  "reasoning": "Given the goal of becoming a faster trail runner, Plan A appears to be the better choice. While both plans incorporate rest days and a long run, Plan A includes tempo and hill workouts, which are crucial for developing the speed and strength needed for trail running. Plan B focuses more on aerobic endurance and cross-training, which are important but less directly impactful on speed development. The higher volume and intensity of Plan A, while requiring more recovery, are more likely to lead to performance gains in trail running.",
+  "record_id": "pair_0125__gemma_12b_judge__r04__AB",
+  "right_plan_role": "programmatic",
+  "run": 4,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T22:33:31.400568+00:00",
+  "winner_role": "llm"
+}

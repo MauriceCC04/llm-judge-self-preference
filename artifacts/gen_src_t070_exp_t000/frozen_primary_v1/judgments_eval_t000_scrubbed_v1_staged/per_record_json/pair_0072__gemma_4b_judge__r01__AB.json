@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 4.0,
+    "mean_day_minutes": 11.286,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 79.0
+  },
+  "fixture_id": "ab_A2__r_high__rc_high__ph_peak",
+  "judge": "gemma_4b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/matching_pool/eval_manifest_scrubbed_v1/judge_inputs/pair_0072__gemma_4b_judge__r01__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-4b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A2__r_high__rc_high__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s008",
+  "llm_won": true,
+  "order": "AB",
+  "pair_id": "pair_0072",
+  "plan_a_advantages": [
+    "More frequent running sessions promote faster adaptation and improved running economy.",
+    "The inclusion of slightly longer easy runs (50-80 minutes) better simulates the demands of trail races.",
+    "The plan emphasizes rhythm and cadence, important for efficient trail running."
+  ],
+  "plan_b_advantages": [
+    "The cross-training session could be beneficial for overall fitness and injury prevention.",
+    "The longer, single long run might be suitable for a runner prioritizing overall endurance over speed."
+  ],
+  "position": "AB",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A2__r_high__rc_high__ph_peak__prog__exp_t000__s012",
+  "reasoning": "Plan A is the better training plan for a trail runner aiming to become faster. It incorporates more frequent, shorter runs, which is crucial for building consistent speed and improving running economy – key factors for trail running performance. Plan B’s longer, less frequent runs, combined with cross-training, prioritize endurance over speed development, which isn't the primary goal here. While Plan B includes a cross-training session, Plan A’s focus on consistent, slightly longer easy runs will more directly contribute to the athlete’s goal of increased speed.",
+  "record_id": "pair_0072__gemma_4b_judge__r01__AB",
+  "right_plan_role": "programmatic",
+  "run": 1,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.143,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T16:34:30.682275+00:00",
+  "winner_role": "llm"
+}

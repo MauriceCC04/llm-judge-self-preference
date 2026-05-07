@@ -1,0 +1,46 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 2.0,
+    "mean_day_minutes": 25.857,
+    "n_active_days": 2.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 2.0,
+    "total_minutes": 181.0
+  },
+  "fixture_id": "ab_A2__r_high__rc_low__ph_peak",
+  "judge": "gemma_4b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/matching_pool/eval_manifest_scrubbed_v1/judge_inputs/pair_0080__gemma_4b_judge__r00__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-4b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A2__r_high__rc_low__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s001",
+  "llm_won": true,
+  "order": "AB",
+  "pair_id": "pair_0080",
+  "plan_a_advantages": [
+    "More trail running volume: Plan A dedicates a significant portion of the week to trail running, directly addressing the goal of becoming a faster trail runner.",
+    "Consistent pacing: The plan maintains a consistent 60-minute trail run duration, promoting endurance and adaptation to trail conditions."
+  ],
+  "plan_b_advantages": [
+    "Increased cross-training: The inclusion of a low-impact cross-training session could be beneficial for overall fitness and injury prevention.",
+    "Focus on strength and mobility: The 20-minute strength session is a valuable addition for stability and injury resistance."
+  ],
+  "position": "AB",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A2__r_high__rc_low__ph_peak__prog__exp_t000__s004",
+  "reasoning": "Plan A is the better training plan for a trail runner aiming to become faster. While both plans prioritize recovery, Plan A incorporates more consistent trail running sessions, which is crucial for trail-specific fitness. Plan B’s heavy emphasis on rest days and cross-training, while potentially beneficial for injury prevention, significantly limits the time spent actively building the aerobic base and trail running skills needed for speed. Plan A’s consistent 60-minute trail runs, even if at an easy pace, provide a more direct stimulus for trail running adaptation than Plan B’s shorter, less trail-focused sessions.",
+  "record_id": "pair_0080__gemma_4b_judge__r00__AB",
+  "right_plan_role": "programmatic",
+  "run": 0,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 1.143,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T16:37:54.446893+00:00",
+  "winner_role": "llm"
+}

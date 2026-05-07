@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 19.0,
+    "mean_day_minutes": 8.857,
+    "n_active_days": 0.0,
+    "n_hard_days": 1.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 1.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 62.0
+  },
+  "fixture_id": "ab_A2__r_high__rc_high__ph_base",
+  "judge": "gemma_4b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/matching_pool/eval_manifest_scrubbed_v1/judge_inputs/pair_0061__gemma_4b_judge__r00__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-4b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A2__r_high__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s170",
+  "llm_won": true,
+  "order": "AB",
+  "pair_id": "pair_0061",
+  "plan_a_advantages": [
+    "Includes a strength session to address trail-specific muscle imbalances and improve power.",
+    "More frequent, shorter trail runs build consistent aerobic fitness and trail-specific endurance.",
+    "The mix of easy and moderate runs allows for better recovery and adaptation."
+  ],
+  "plan_b_advantages": [
+    "Longer, continuous runs can build a strong aerobic base.",
+    "The dedicated tempo session provides a focused stimulus for threshold development."
+  ],
+  "position": "AB",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A2__r_high__rc_high__ph_base__prog__exp_t000__s005",
+  "reasoning": "Plan A is the better training plan for a trail runner aiming to become faster. It incorporates more consistent, shorter trail runs alongside a dedicated strength session, which is crucial for trail running's demands on muscles and stability. Plan B focuses heavily on longer, easier runs and a single tempo session, potentially neglecting the specific adaptations needed for trail speed and efficiency. While Plan B includes a longer run, Plan A’s varied sessions and inclusion of strength work provide a more holistic approach to improving trail running performance.",
+  "record_id": "pair_0061__gemma_4b_judge__r00__AB",
+  "right_plan_role": "programmatic",
+  "run": 0,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T16:29:43.530872+00:00",
+  "winner_role": "llm"
+}

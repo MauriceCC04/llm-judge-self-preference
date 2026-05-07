@@ -1,0 +1,49 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 9.0,
+    "mean_day_minutes": 1.286,
+    "n_active_days": 0.0,
+    "n_hard_days": 1.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 1.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 9.0
+  },
+  "fixture_id": "ab_A4__r_high__rc_high__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0189__gemma_12b_judge__r03__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A4__r_high__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s002",
+  "llm_won": true,
+  "order": "AB",
+  "pair_id": "pair_0189",
+  "plan_a_advantages": [
+    "Includes tempo runs to improve speed and lactate threshold.",
+    "Incorporates hill repeats for strength and power development on trails.",
+    "Higher overall volume, potentially leading to greater physiological adaptations.",
+    "More varied workout types, preventing monotony and targeting different aspects of fitness."
+  ],
+  "plan_b_advantages": [
+    "Greater emphasis on recovery with more easy running days.",
+    "Includes a strength and mobility session, which is beneficial for injury prevention.",
+    "Potentially lower risk of overtraining due to lower overall intensity."
+  ],
+  "position": "AB",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A4__r_high__rc_high__ph_base__prog__exp_t000__s014",
+  "reasoning": "Given the goal of becoming a faster trail runner, Plan A appears to be the better choice. While both plans incorporate long runs and rest days, Plan A includes a more diverse range of workouts – tempo runs and hill repeats – which are crucial for developing speed and power on trails. Plan B focuses heavily on easy running and a single tempo session, which may build endurance but won't sufficiently challenge the athlete to improve speed. The higher volume and intensity of Plan A, while requiring careful monitoring for overtraining, are more likely to lead to the desired outcome of faster trail running.",
+  "record_id": "pair_0189__gemma_12b_judge__r03__AB",
+  "right_plan_role": "programmatic",
+  "run": 3,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-07T00:14:49.240440+00:00",
+  "winner_role": "llm"
+}

@@ -1,0 +1,49 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 17.0,
+    "mean_day_minutes": 0.714,
+    "n_active_days": 0.0,
+    "n_hard_days": 1.0,
+    "n_long_runs": 2.0,
+    "n_quality_days": 1.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 5.0
+  },
+  "fixture_id": "ab_A3__r_high__rc_high__ph_peak",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0131__gemma_12b_judge__r00__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A3__r_high__rc_high__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s000",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0131",
+  "plan_a_advantages": [
+    "Greater emphasis on long, easy runs for building aerobic base and trail-specific endurance.",
+    "Consistent focus on 'trail-specific durability' throughout the week.",
+    "More gradual introduction of intensity with only one designated 'hard' day, reducing the risk of overtraining.",
+    "The plan is more balanced, with a good mix of long runs, easy runs, and a hill workout."
+  ],
+  "plan_b_advantages": [
+    "Includes tempo and interval sessions which can improve speed and efficiency.",
+    "Incorporates a cross-training day to maintain fitness and reduce impact load.",
+    "The plan includes a strength session which is important for injury prevention and power."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A3__r_high__rc_high__ph_peak__prog__exp_t000__s011",
+  "reasoning": "Given the primary goal of becoming a faster trail runner, Plan A appears to be the more suitable choice. While both plans incorporate rest days and a mix of run types, Plan A emphasizes building a strong aerobic base through consistent long runs and easy runs, which is crucial for trail running performance. Plan B, while including tempo and interval work, seems to prioritize race-specific intensity earlier in the week, potentially leading to fatigue before the longer endurance runs. The focus on 'trail-specific durability' in Plan A also aligns well with the demands of trail running.",
+  "record_id": "pair_0131__gemma_12b_judge__r00__BA",
+  "right_plan_role": "llm",
+  "run": 0,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 1.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T22:42:15.530661+00:00",
+  "winner_role": "programmatic"
+}

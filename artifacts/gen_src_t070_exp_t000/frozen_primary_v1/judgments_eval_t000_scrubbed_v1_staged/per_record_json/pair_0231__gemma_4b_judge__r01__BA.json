@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 1.0,
+    "mean_day_minutes": 11.429,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 80.0
+  },
+  "fixture_id": "ab_A4__r_low__rc_high__ph_peak",
+  "judge": "gemma_4b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/matching_pool/eval_manifest_scrubbed_v1/judge_inputs/pair_0231__gemma_4b_judge__r01__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-4b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A4__r_low__rc_high__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s015",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0231",
+  "plan_a_advantages": [
+    "Includes a dedicated tempo session for speed development.",
+    "Features a longer run at an easy pace, essential for building trail-specific endurance.",
+    "Prioritizes strength and mobility work, crucial for injury prevention and efficient running."
+  ],
+  "plan_b_advantages": [
+    "More consistently utilizes trail running for workouts, better simulating race conditions.",
+    "Offers a slightly longer overall training volume (431 minutes vs. 351 minutes)."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A4__r_low__rc_high__ph_peak__prog__exp_t000__s014",
+  "reasoning": "Plan A is the better training plan for a trail runner aiming to become faster. It incorporates a more strategic blend of easy runs, a dedicated tempo session, and a longer run, all crucial for building both aerobic base and speed endurance – key components for trail racing. Plan B, while including a tempo run, relies heavily on recovery runs and longer, moderate-effort runs, which, while important, don't provide the targeted stimulus needed to improve speed. Plan A’s structured approach, with a clear progression of intensity, is more directly aligned with the goal of increasing running speed.",
+  "record_id": "pair_0231__gemma_4b_judge__r01__BA",
+  "right_plan_role": "llm",
+  "run": 1,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T17:44:42.766231+00:00",
+  "winner_role": "programmatic"
+}

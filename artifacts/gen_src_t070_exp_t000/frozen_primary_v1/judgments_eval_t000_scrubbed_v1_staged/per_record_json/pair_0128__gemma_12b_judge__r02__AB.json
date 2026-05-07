@@ -1,0 +1,49 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 37.0,
+    "mean_day_minutes": 18.143,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 127.0
+  },
+  "fixture_id": "ab_A3__r_high__rc_high__ph_peak",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0128__gemma_12b_judge__r02__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A3__r_high__rc_high__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s005",
+  "llm_won": true,
+  "order": "AB",
+  "pair_id": "pair_0128",
+  "plan_a_advantages": [
+    "Includes a dedicated hill workout, which is essential for trail running strength and power.",
+    "Longer overall training volume (480 minutes vs 353 minutes) allows for greater adaptation and endurance development.",
+    "Moderate-intensity trail runs provide a more race-specific stimulus than solely easy runs.",
+    "The variety of session types (long, tempo, hills, easy) promotes well-rounded development."
+  ],
+  "plan_b_advantages": [
+    "Potentially lower risk of overtraining due to the reduced volume.",
+    "The focus on threshold tempo runs could improve lactate threshold, a key factor in endurance performance.",
+    "May be more suitable for a runner with a history of injury or limited training experience."
+  ],
+  "position": "AB",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A3__r_high__rc_high__ph_peak__prog__exp_t000__s019",
+  "reasoning": "Given the goal of becoming a faster trail runner, Plan A appears to be the better choice. While both plans incorporate tempo and long runs, Plan A's structure emphasizes a broader range of training stimuli, including dedicated hill work, which is crucial for trail running. The longer durations in Plan A, particularly for the long runs and the inclusion of a moderate-intensity trail run, better reflect the demands of trail racing, which often involves sustained effort over varied terrain. Plan B's shorter durations and focus on easy runs might be suitable for base building, but it lacks the intensity and specificity needed to improve speed on trails.",
+  "record_id": "pair_0128__gemma_12b_judge__r02__AB",
+  "right_plan_role": "programmatic",
+  "run": 2,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T22:38:11.607830+00:00",
+  "winner_role": "llm"
+}

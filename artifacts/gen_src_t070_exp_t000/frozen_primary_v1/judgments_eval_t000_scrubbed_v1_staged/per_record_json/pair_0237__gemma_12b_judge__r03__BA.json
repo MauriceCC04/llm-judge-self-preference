@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 2.0,
+    "mean_day_minutes": 6.429,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 45.0
+  },
+  "fixture_id": "ab_A4__r_low__rc_low__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0237__gemma_12b_judge__r03__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A4__r_low__rc_low__ph_base__gemma_3_4b_it__src_t070__exp_t000__s000",
+  "llm_won": true,
+  "order": "BA",
+  "pair_id": "pair_0237",
+  "plan_a_advantages": [
+    "Plan A has a tempo run, which can improve lactate threshold and speed.",
+    "Plan A's shorter easy runs might be more manageable for a beginner or someone returning from injury."
+  ],
+  "plan_b_advantages": [
+    "Plan B includes a dedicated hill workout, essential for trail running strength and efficiency.",
+    "Plan B's longer long runs better simulate the demands of trail races.",
+    "Plan B incorporates moderate intensity aerobic runs, providing a broader training stimulus."
+  ],
+  "position": "BA",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A4__r_low__rc_low__ph_base__prog__exp_t000__s005",
+  "reasoning": "While both plans aim to improve trail running speed, Plan B appears to be a more effective approach for achieving that goal. It incorporates a dedicated hill workout, which is crucial for trail running performance, something absent in Plan A. The inclusion of moderate intensity aerobic runs in Plan B also provides a different stimulus than the purely easy runs in Plan A, potentially leading to greater physiological adaptation. Finally, the longer durations of the long runs in Plan B, particularly the first one, better reflect the demands of trail running, which often involves significant time on feet.",
+  "record_id": "pair_0237__gemma_12b_judge__r03__BA",
+  "right_plan_role": "llm",
+  "run": 3,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-07T01:31:06.829723+00:00",
+  "winner_role": "llm"
+}

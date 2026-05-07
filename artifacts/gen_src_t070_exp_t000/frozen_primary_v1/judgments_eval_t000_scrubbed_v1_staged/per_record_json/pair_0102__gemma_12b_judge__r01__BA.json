@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 30.0,
+    "mean_day_minutes": 3.571,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 25.0
+  },
+  "fixture_id": "ab_A2__r_low__rc_low__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0102__gemma_12b_judge__r01__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A2__r_low__rc_low__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s000",
+  "llm_won": true,
+  "order": "BA",
+  "pair_id": "pair_0102",
+  "plan_a_advantages": [
+    "Plan A includes a cross-training day, which can provide a different stimulus and reduce the risk of overuse injuries.",
+    "Plan A's shorter runs might be preferable for a beginner or someone returning from injury."
+  ],
+  "plan_b_advantages": [
+    "Plan B has a higher overall training volume, which is generally beneficial for improving fitness.",
+    "Plan B's focus on rhythm and relaxation can help improve running efficiency.",
+    "The longer runs in Plan B better prepare the athlete for the demands of trail running, which often involves sustained effort."
+  ],
+  "position": "BA",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A2__r_low__rc_low__ph_base__prog__exp_t000__s008",
+  "reasoning": "Both plans focus on easy running, which is a good foundation for trail running speed. However, Plan B provides a slightly higher overall volume of easy running (269 minutes vs 244 minutes), which is likely more beneficial for building aerobic capacity and endurance, crucial for faster trail running. While both include rest days, Plan B's emphasis on consistent easy running throughout the week, with longer durations, is more likely to contribute to the athlete's goal. The focus on rhythm and relaxation in Plan B's workout summaries also suggests a greater attention to running form and efficiency.",
+  "record_id": "pair_0102__gemma_12b_judge__r01__BA",
+  "right_plan_role": "llm",
+  "run": 1,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T21:58:47.556869+00:00",
+  "winner_role": "llm"
+}

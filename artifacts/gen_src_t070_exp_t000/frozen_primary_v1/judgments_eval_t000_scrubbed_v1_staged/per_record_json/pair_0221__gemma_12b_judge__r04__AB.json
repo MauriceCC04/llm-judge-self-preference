@@ -1,0 +1,49 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 15.0,
+    "mean_day_minutes": 9.571,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 67.0
+  },
+  "fixture_id": "ab_A4__r_low__rc_high__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0221__gemma_12b_judge__r04__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A4__r_low__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s001",
+  "llm_won": true,
+  "order": "AB",
+  "pair_id": "pair_0221",
+  "plan_a_advantages": [
+    "Higher overall weekly volume (480 minutes vs 413) promotes greater endurance development.",
+    "Longer long runs (up to 24.3 km) better prepare the athlete for the distances commonly encountered in trail running.",
+    "Includes a tempo run, which is essential for improving speed and lactate threshold.",
+    "The average heart rate (153) across the runs suggests a more challenging and potentially more effective training stimulus."
+  ],
+  "plan_b_advantages": [
+    "Lower overall weekly volume (413 minutes) might be preferable for athletes prone to injury or those new to running.",
+    "The focus on 'threshold' intensity for aerobic runs could be beneficial for improving running economy.",
+    "Slightly shorter runs may allow for more recovery between sessions."
+  ],
+  "position": "AB",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A4__r_low__rc_high__ph_base__prog__exp_t000__s019",
+  "reasoning": "Given the goal of becoming a faster trail runner, Plan A appears to be the better choice. While both plans incorporate long runs and a tempo session, Plan A's longer runs and higher overall weekly volume (480 minutes vs 413) are more likely to build the necessary endurance base for trail running. The inclusion of a tempo run in Plan A, even if only once a week, is also crucial for improving speed and lactate threshold, which are key components of faster trail running. Plan B's focus on 'threshold' intensity for aerobic runs might be beneficial for some, but for a trail runner, the varied terrain and demands require a broader base of endurance.",
+  "record_id": "pair_0221__gemma_12b_judge__r04__AB",
+  "right_plan_role": "programmatic",
+  "run": 4,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-07T01:06:52.560567+00:00",
+  "winner_role": "llm"
+}

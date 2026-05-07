@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 12.0,
+    "mean_day_minutes": 1.429,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 10.0
+  },
+  "fixture_id": "ab_A2__r_low__rc_high__ph_peak",
+  "judge": "gemma_4b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/matching_pool/eval_manifest_scrubbed_v1/judge_inputs/pair_0096__gemma_4b_judge__r00__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-4b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A2__r_low__rc_high__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s015",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0096",
+  "plan_a_advantages": [
+    "Includes cross-training for varied stimulus.",
+    "Features longer runs (41-62 minutes) to build aerobic capacity.",
+    "More balanced distribution of running volume and rest."
+  ],
+  "plan_b_advantages": [
+    "Simpler and easier to follow.",
+    "Potentially less demanding on the athlete's recovery, given the very low intensity runs."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A2__r_low__rc_high__ph_peak__prog__exp_t000__s002",
+  "reasoning": "Plan A is the better training plan for a trail runner aiming to become faster. It incorporates a more structured approach to building aerobic endurance with a mix of easy runs and low-impact cross-training, which is crucial for developing the necessary base fitness. Plan B, conversely, is excessively cautious and focuses almost entirely on very easy, short runs with minimal variation, which won't effectively challenge the athlete to improve speed. While rest is important, Plan A’s inclusion of longer, consistent runs and cross-training provides a more holistic stimulus for physiological adaptation.",
+  "record_id": "pair_0096__gemma_4b_judge__r00__BA",
+  "right_plan_role": "llm",
+  "run": 0,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T16:44:52.200692+00:00",
+  "winner_role": "programmatic"
+}

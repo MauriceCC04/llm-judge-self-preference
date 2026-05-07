@@ -1,0 +1,48 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 12.0,
+    "mean_day_minutes": 2.143,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 15.0
+  },
+  "fixture_id": "ab_A2__r_low__rc_low__ph_peak",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0110__gemma_12b_judge__r04__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A2__r_low__rc_low__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s005",
+  "llm_won": false,
+  "order": "AB",
+  "pair_id": "pair_0110",
+  "plan_a_advantages": [
+    "Plan A has slightly more rest days, which could be beneficial for some athletes.",
+    "Plan A's simplicity might be easier to adhere to for beginners."
+  ],
+  "plan_b_advantages": [
+    "Includes cross-training for reduced impact and enhanced recovery.",
+    "Features slightly longer runs to build aerobic endurance.",
+    "More varied training stimulus with a mix of running and cross-training.",
+    "Better structured to build a solid aerobic base, which is crucial for faster trail running."
+  ],
+  "position": "AB",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A2__r_low__rc_low__ph_peak__prog__exp_t000__s002",
+  "reasoning": "While both plans focus on easy running, Plan B demonstrates a more comprehensive approach to building a faster trail runner's aerobic base. The inclusion of cross-training sessions is a significant advantage, as it allows for aerobic stimulus without the impact stress of running, aiding in recovery and injury prevention. Plan B also incorporates slightly longer runs, which can contribute to improved endurance. The overall structure of Plan B appears more balanced and strategically designed for the stated goal.",
+  "record_id": "pair_0110__gemma_12b_judge__r04__AB",
+  "right_plan_role": "programmatic",
+  "run": 4,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T22:10:43.454133+00:00",
+  "winner_role": "programmatic"
+}

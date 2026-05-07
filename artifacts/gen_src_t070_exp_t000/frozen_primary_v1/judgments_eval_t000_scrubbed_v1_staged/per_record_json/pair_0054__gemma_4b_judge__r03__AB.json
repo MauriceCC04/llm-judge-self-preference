@@ -1,0 +1,46 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 4.0,
+    "mean_day_minutes": 9.143,
+    "n_active_days": 3.0,
+    "n_hard_days": 1.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 1.0,
+    "n_rest_days": 3.0,
+    "total_minutes": 64.0
+  },
+  "fixture_id": "ab_A1__r_low__rc_low__ph_peak",
+  "judge": "gemma_4b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/matching_pool/eval_manifest_scrubbed_v1/judge_inputs/pair_0054__gemma_4b_judge__r03__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-4b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A1__r_low__rc_low__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s003",
+  "llm_won": false,
+  "order": "AB",
+  "pair_id": "pair_0054",
+  "plan_a_advantages": [
+    "More frequent easy runs could be beneficial for maintaining a consistent base level of fitness.",
+    "The emphasis on recovery might be suitable for an athlete who is new to trail running or returning from injury."
+  ],
+  "plan_b_advantages": [
+    "Includes a hill session to directly address climbing strength, a critical component of trail running.",
+    "Features a longer, steady-state run for improved aerobic endurance, a more effective training stimulus than just easy runs."
+  ],
+  "position": "AB",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A1__r_low__rc_low__ph_peak__prog__exp_t000__s013",
+  "reasoning": "Plan B is the better training plan for a trail runner aiming to become faster. It incorporates a dedicated hill session to build the crucial climbing strength and power necessary for trail running, which Plan A completely lacks. Furthermore, Plan B includes more structured aerobic work, specifically a longer steady-state run, which is a more effective way to improve aerobic endurance than simply repeating easy runs. While Plan A prioritizes recovery, it doesn't actively challenge the athlete in a way that directly addresses the demands of trail running, whereas Plan B provides a more targeted approach to improving key performance indicators.",
+  "record_id": "pair_0054__gemma_4b_judge__r03__AB",
+  "right_plan_role": "programmatic",
+  "run": 3,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 2.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T16:26:52.645123+00:00",
+  "winner_role": "programmatic"
+}

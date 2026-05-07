@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 12.0,
+    "mean_day_minutes": 2.143,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 15.0
+  },
+  "fixture_id": "ab_A2__r_low__rc_low__ph_peak",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0110__gemma_12b_judge__r03__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A2__r_low__rc_low__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s005",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0110",
+  "plan_a_advantages": [
+    "Includes cross-training sessions for injury prevention and broader fitness.",
+    "Offers a slightly higher total training volume (227 minutes vs 212 minutes), potentially leading to greater aerobic development.",
+    "The varied structure (aerobic runs and cross-training) is more engaging and less likely to lead to boredom or burnout."
+  ],
+  "plan_b_advantages": [
+    "Simpler and potentially easier to adhere to due to its repetitive nature.",
+    "May be slightly less fatiguing due to the lower overall volume."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A2__r_low__rc_low__ph_peak__prog__exp_t000__s002",
+  "reasoning": "While both plans focus on easy running, Plan A demonstrates a more well-rounded approach to building a faster trail runner. The inclusion of cross-training days is crucial for injury prevention and overall fitness, especially for trail running which can be high-impact. Plan B's repetitive focus solely on easy runs, while seemingly safe, risks plateauing and neglecting other important aspects of fitness. Plan A's varied stimulus is more likely to lead to consistent progress towards the goal of becoming a faster trail runner.",
+  "record_id": "pair_0110__gemma_12b_judge__r03__BA",
+  "right_plan_role": "llm",
+  "run": 3,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T22:10:28.522230+00:00",
+  "winner_role": "programmatic"
+}

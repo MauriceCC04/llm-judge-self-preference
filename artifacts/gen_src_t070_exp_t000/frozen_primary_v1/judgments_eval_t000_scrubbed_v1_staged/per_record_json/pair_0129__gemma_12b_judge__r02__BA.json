@@ -1,0 +1,49 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 31.0,
+    "mean_day_minutes": 25.571,
+    "n_active_days": 0.0,
+    "n_hard_days": 1.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 1.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 179.0
+  },
+  "fixture_id": "ab_A3__r_high__rc_high__ph_peak",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0129__gemma_12b_judge__r02__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A3__r_high__rc_high__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s001",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0129",
+  "plan_a_advantages": [
+    "Includes a dedicated strength and mobility session, vital for trail running injury prevention and performance.",
+    "More balanced approach with a tempo run for speed development and a longer easy run for endurance.",
+    "Lower overall volume, potentially more sustainable and less likely to lead to overtraining.",
+    "Clearer distinction between easy, tempo, and long run days, facilitating better recovery and adaptation."
+  ],
+  "plan_b_advantages": [
+    "Higher overall mileage, which could lead to greater aerobic development for some runners.",
+    "More frequent hill workouts, potentially improving leg strength and climbing ability.",
+    "More trail-specific training with all runs being trail runs."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A3__r_high__rc_high__ph_peak__prog__exp_t000__s005",
+  "reasoning": "Given the goal of becoming a faster trail runner, Plan A appears to be the more appropriate choice. While Plan B includes more mileage and hill work, it lacks a dedicated strength and mobility session, which is crucial for trail running injury prevention and overall performance. Plan A's structured approach with a tempo run and a longer easy run provides a better balance of speed development and endurance building, while also prioritizing recovery and injury resilience. The lower overall volume of Plan A is likely more sustainable for most runners, especially when starting a new training block.",
+  "record_id": "pair_0129__gemma_12b_judge__r02__BA",
+  "right_plan_role": "llm",
+  "run": 2,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T22:39:43.412979+00:00",
+  "winner_role": "programmatic"
+}

@@ -1,0 +1,48 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 2.0,
+    "mean_day_minutes": 4.571,
+    "n_active_days": 1.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 1.0,
+    "total_minutes": 32.0
+  },
+  "fixture_id": "ab_A2__r_low__rc_high__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0092__gemma_12b_judge__r01__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A2__r_low__rc_high__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s000",
+  "llm_won": true,
+  "order": "BA",
+  "pair_id": "pair_0092",
+  "plan_a_advantages": [
+    "Plan A has slightly more total training volume (227 minutes vs 195 minutes).",
+    "Plan A includes cross-training, which can provide a low-impact aerobic stimulus and reduce the risk of overuse injuries."
+  ],
+  "plan_b_advantages": [
+    "Plan B incorporates hill training, a key component of trail running fitness.",
+    "Plan B includes a strength session, which is essential for building the power and stability needed for trail running.",
+    "Plan B's structure allows for more recovery days (3 vs 2).",
+    "Plan B emphasizes relaxed form and rhythm during easy runs, which can improve running efficiency."
+  ],
+  "position": "BA",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A2__r_low__rc_high__ph_base__prog__exp_t000__s002",
+  "reasoning": "While both plans focus on aerobic development, Plan B appears better suited for a trail runner aiming to become faster. Plan B incorporates hill work and strength training, which are crucial for trail running performance, whereas Plan A lacks these elements. The inclusion of moderate-intensity aerobic runs with hills in Plan B directly addresses the demands of trail running, improving both endurance and leg strength. Plan A's focus on solely easy runs, while good for building a base, may not be sufficient to drive the speed improvements desired.",
+  "record_id": "pair_0092__gemma_12b_judge__r01__BA",
+  "right_plan_role": "llm",
+  "run": 1,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.714,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T21:44:55.187704+00:00",
+  "winner_role": "llm"
+}

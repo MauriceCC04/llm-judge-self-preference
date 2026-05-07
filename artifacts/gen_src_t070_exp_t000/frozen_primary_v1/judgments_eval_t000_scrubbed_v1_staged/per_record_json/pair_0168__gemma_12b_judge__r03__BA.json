@@ -1,0 +1,48 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 2.0,
+    "mean_day_minutes": 6.429,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 45.0
+  },
+  "fixture_id": "ab_A3__r_low__rc_high__ph_peak",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0168__gemma_12b_judge__r03__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A3__r_low__rc_high__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s005",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0168",
+  "plan_a_advantages": [
+    "More emphasis on aerobic base building: Plan A dedicates more time to steady, controlled effort runs, crucial for trail running.",
+    "Hill work integrated early: Plan A includes a dedicated hill session, which is vital for trail running strength and power.",
+    "Lower overall volume: The lower total training minutes in Plan A reduces the risk of overtraining, especially for athletes new to structured training.",
+    "Consistent easy days: Plan A has multiple easy days to promote recovery and build aerobic consistency."
+  ],
+  "plan_b_advantages": [
+    "Introduction of intervals: Plan B includes interval training, which can improve speed, but may be better suited after a solid aerobic base is established.",
+    "Cross-training: Plan B incorporates cross-training to diversify workload and reduce impact stress, which can be beneficial for injury prevention."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A3__r_low__rc_high__ph_peak__prog__exp_t000__s017",
+  "reasoning": "Given the goal of becoming a faster trail runner, Plan A appears to be the more suitable choice. While both plans incorporate essential elements like long runs and rest days, Plan A's focus on consistent aerobic base building and hill work aligns better with developing trail-specific speed and endurance. Plan B introduces interval training and cross-training which, while beneficial, might be premature without a solid aerobic foundation. The lower overall volume of Plan A also suggests a more cautious approach, which is often preferable when starting a new training plan to avoid injury.",
+  "record_id": "pair_0168__gemma_12b_judge__r03__BA",
+  "right_plan_role": "llm",
+  "run": 3,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T23:41:57.770127+00:00",
+  "winner_role": "programmatic"
+}

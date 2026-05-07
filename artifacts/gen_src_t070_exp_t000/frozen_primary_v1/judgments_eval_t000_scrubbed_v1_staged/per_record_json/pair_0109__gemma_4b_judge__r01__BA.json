@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 30.0,
+    "mean_day_minutes": 0.0,
+    "n_active_days": 0.0,
+    "n_hard_days": 1.0,
+    "n_long_runs": 1.0,
+    "n_quality_days": 1.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 0.0
+  },
+  "fixture_id": "ab_A2__r_low__rc_low__ph_peak",
+  "judge": "gemma_4b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/matching_pool/eval_manifest_scrubbed_v1/judge_inputs/pair_0109__gemma_4b_judge__r01__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-4b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A2__r_low__rc_low__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s001",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0109",
+  "plan_a_advantages": [
+    "Includes a tempo run for developing threshold strength.",
+    "Features a longer, controlled run to build endurance.",
+    "Incorporates strength training to improve stability and injury resistance."
+  ],
+  "plan_b_advantages": [
+    "More consistent running volume throughout the week.",
+    "Focuses heavily on trail running, which may be beneficial for a runner already comfortable on trails."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A2__r_low__rc_low__ph_peak__prog__exp_t000__s014",
+  "reasoning": "Plan A is the better training plan for a trail runner aiming to become faster because it incorporates a structured progression of intensity and volume. It includes a dedicated tempo run and a longer, controlled effort run, which are crucial for developing the sustained power needed for trail racing. Plan B, conversely, relies almost entirely on easy runs, which while beneficial for recovery and consistency, don't provide the stimulus required for significant speed improvements.  The inclusion of strength work in Plan A also addresses a critical area often neglected in trail running training – the need for robust leg strength and stability.",
+  "record_id": "pair_0109__gemma_4b_judge__r01__BA",
+  "right_plan_role": "llm",
+  "run": 1,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T16:50:44.037704+00:00",
+  "winner_role": "programmatic"
+}

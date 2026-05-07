@@ -1,0 +1,50 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 41.0,
+    "mean_day_minutes": 30.857,
+    "n_active_days": 1.0,
+    "n_hard_days": 1.0,
+    "n_long_runs": 1.0,
+    "n_quality_days": 1.0,
+    "n_rest_days": 1.0,
+    "total_minutes": 216.0
+  },
+  "fixture_id": "ab_A4__r_high__rc_low__ph_peak",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0217__gemma_12b_judge__r00__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A4__r_high__rc_low__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s005",
+  "llm_won": true,
+  "order": "BA",
+  "pair_id": "pair_0217",
+  "plan_a_advantages": [
+    "Plan A has a slightly lower overall volume, which might be beneficial for a runner prone to injury or new to training.",
+    "The focus on easy aerobic runs in Plan A can be a good foundation for building a solid base.",
+    "Plan A includes more rest days, which can aid in recovery and prevent burnout.",
+    "Plan A's lower intensity may be more sustainable for beginners."
+  ],
+  "plan_b_advantages": [
+    "Plan B includes tempo runs with hills, directly addressing the demands of trail running.",
+    "The strength training component in Plan B is essential for trail runners to build the necessary leg and core strength.",
+    "Plan B incorporates a longer trail run, which is more specific to the athlete's goal than the aerobic runs in Plan A.",
+    "The higher volume in Plan B, when managed properly, can lead to greater physiological adaptations and faster improvements."
+  ],
+  "position": "BA",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A4__r_high__rc_low__ph_peak__prog__exp_t000__s002",
+  "reasoning": "Plan B is the better choice for a trail runner aiming to become faster. While Plan A focuses heavily on aerobic base building, Plan B incorporates a more comprehensive approach including tempo runs with hills, strength training, and a longer trail run. This variety is crucial for trail running, which demands not only endurance but also strength, power, and the ability to handle varied terrain. The higher total volume and inclusion of hill-specific tempo work in Plan B are more likely to translate to improved speed and performance on trails.",
+  "record_id": "pair_0217__gemma_12b_judge__r00__BA",
+  "right_plan_role": "llm",
+  "run": 0,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 1.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-07T00:59:02.726914+00:00",
+  "winner_role": "llm"
+}

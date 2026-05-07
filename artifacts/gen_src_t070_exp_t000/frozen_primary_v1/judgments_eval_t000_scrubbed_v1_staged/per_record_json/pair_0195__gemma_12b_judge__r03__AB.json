@@ -1,0 +1,49 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 50.0,
+    "mean_day_minutes": 22.857,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 2.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 160.0
+  },
+  "fixture_id": "ab_A4__r_high__rc_high__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0195__gemma_12b_judge__r03__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A4__r_high__rc_high__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s000",
+  "llm_won": true,
+  "order": "AB",
+  "pair_id": "pair_0195",
+  "plan_a_advantages": [
+    "Includes two long trail runs, essential for building endurance and hill strength specific to trail running.",
+    "Features a dedicated 'aerobic' run for maintaining a solid aerobic base.",
+    "The overall volume (480 minutes) allows for more time on feet, crucial for trail adaptation and injury prevention.",
+    "The variety of workouts (long, tempo, intervals, hills, aerobic) provides a more well-rounded training stimulus."
+  ],
+  "plan_b_advantages": [
+    "Lower overall volume (320 minutes) might be beneficial for athletes prone to injury or with limited time.",
+    "Incorporates cross-training sessions, which can provide a low-impact aerobic stimulus and reduce overuse injuries.",
+    "The focus on threshold intensity in some workouts could improve lactate threshold and sustained effort capacity."
+  ],
+  "position": "AB",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A4__r_high__rc_high__ph_base__prog__exp_t000__s013",
+  "reasoning": "Given the goal of becoming a faster trail runner, Plan A appears to be the better choice. Trail running demands a strong aerobic base and hill strength, which Plan A prioritizes with two long trail runs and dedicated hill workouts. Plan B, while incorporating some hill work and intervals, lacks the sustained endurance building that is crucial for trail running success. The longer duration and focus on trail-specific workouts in Plan A make it more suitable for developing the necessary fitness for faster trail running.",
+  "record_id": "pair_0195__gemma_12b_judge__r03__AB",
+  "right_plan_role": "programmatic",
+  "run": 3,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-07T00:24:21.357856+00:00",
+  "winner_role": "llm"
+}

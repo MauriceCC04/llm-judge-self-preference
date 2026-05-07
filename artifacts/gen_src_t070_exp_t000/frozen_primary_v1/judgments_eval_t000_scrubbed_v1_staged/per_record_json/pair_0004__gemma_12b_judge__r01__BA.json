@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 12.0,
+    "mean_day_minutes": 10.714,
+    "n_active_days": 2.0,
+    "n_hard_days": 2.0,
+    "n_long_runs": 1.0,
+    "n_quality_days": 2.0,
+    "n_rest_days": 2.0,
+    "total_minutes": 75.0
+  },
+  "fixture_id": "ab_A1__r_high__rc_high__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0004__gemma_12b_judge__r01__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A1__r_high__rc_high__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s003",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0004",
+  "plan_a_advantages": [
+    "Includes hill workouts, which are essential for building trail-specific strength and power.",
+    "Features a longer run to improve endurance and trail durability.",
+    "Incorporates threshold intensity training, which is crucial for improving aerobic capacity and speed."
+  ],
+  "plan_b_advantages": [
+    "Higher rest day frequency may be beneficial for athletes prone to injury or those needing more recovery.",
+    "The focus on form and rhythm could be helpful for newer trail runners or those with inefficient running mechanics."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A1__r_high__rc_high__ph_base__prog__exp_t000__s017",
+  "reasoning": "Plan A is the better choice for an athlete aiming to become a faster trail runner. While both plans incorporate rest days, Plan A includes crucial elements for speed development that are absent in Plan B: hill workouts and a longer run. The focus on climbing strength and trail-specific power in Plan A directly addresses the demands of trail running, which often involves significant elevation changes. Plan B's repetitive easy runs, while potentially beneficial for building a base, lack the intensity and varied stimulus needed to improve speed and efficiency on trails.",
+  "record_id": "pair_0004__gemma_12b_judge__r01__BA",
+  "right_plan_role": "llm",
+  "run": 1,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T19:38:01.918460+00:00",
+  "winner_role": "programmatic"
+}

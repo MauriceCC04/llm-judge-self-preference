@@ -1,0 +1,49 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 16.0,
+    "mean_day_minutes": 5.143,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 36.0
+  },
+  "fixture_id": "ab_A3__r_low__rc_high__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0158__gemma_12b_judge__r00__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A3__r_low__rc_high__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s004",
+  "llm_won": false,
+  "order": "AB",
+  "pair_id": "pair_0158",
+  "plan_a_advantages": [
+    "Plan A has a slightly longer long run (90 minutes vs 74 minutes), which could be beneficial for building overall endurance.",
+    "Plan A includes a dedicated cross-training day, which can provide active recovery and work different muscle groups.",
+    "Plan A's hill session is described as 'hill repeats,' which can be more structured and allow for targeted speed development on hills."
+  ],
+  "plan_b_advantages": [
+    "Plan B utilizes threshold intensity for aerobic and hill sessions, promoting greater physiological adaptation for speed.",
+    "Plan B includes more easy running volume overall, which aids in recovery and builds aerobic base without excessive fatigue.",
+    "Plan B's hill session (51 minutes) is longer than Plan A's, allowing for more sustained climbing effort and strength development.",
+    "Plan B's aerobic run (61 minutes) is longer than Plan A's (45 minutes), contributing to a greater aerobic stimulus."
+  ],
+  "position": "AB",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A3__r_low__rc_high__ph_base__prog__exp_t000__s017",
+  "reasoning": "Plan B appears to be the better choice for an athlete aiming to become a faster trail runner. While both plans incorporate essential elements like long runs, easy runs, and hill work, Plan B emphasizes threshold-level intensity in both its aerobic and hill sessions. This focus on higher intensity work is more likely to drive the physiological adaptations needed for speed improvements in trail running, such as increased lactate threshold and improved running economy. Plan A's moderate and controlled intensities, while valuable for building a base, may not be sufficient to elicit the speed gains the athlete is seeking.",
+  "record_id": "pair_0158__gemma_12b_judge__r00__AB",
+  "right_plan_role": "programmatic",
+  "run": 0,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T23:24:29.698241+00:00",
+  "winner_role": "programmatic"
+}

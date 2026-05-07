@@ -1,0 +1,48 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 5.0,
+    "mean_day_minutes": 5.857,
+    "n_active_days": 1.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 2.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 1.0,
+    "total_minutes": 41.0
+  },
+  "fixture_id": "ab_A1__r_low__rc_low__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0049__gemma_12b_judge__r01__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A1__r_low__rc_low__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s009",
+  "llm_won": false,
+  "order": "AB",
+  "pair_id": "pair_0049",
+  "plan_a_advantages": [
+    "Plan A has more rest days, which could be beneficial for a beginner or someone prone to injury.",
+    "The consistent focus on form and cadence in Plan A is valuable for reinforcing good running technique."
+  ],
+  "plan_b_advantages": [
+    "Plan B includes a longer run, essential for trail running endurance.",
+    "Plan B incorporates an aerobic run, targeting aerobic capacity development.",
+    "Plan B has a slightly higher total training volume, potentially leading to greater adaptation.",
+    "Plan B's structure is more progressive, with a mix of easy and longer runs."
+  ],
+  "position": "AB",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A1__r_low__rc_low__ph_base__prog__exp_t000__s006",
+  "reasoning": "While both plans focus on easy running, Plan B demonstrates a more structured approach to building a faster trail runner. It incorporates a longer run, which is crucial for trail running to build endurance and resilience. The inclusion of an 'aerobic' run, even at an easy intensity, suggests a focus on improving aerobic capacity, a key component of speed. Plan A's repetitive focus on form and cadence, while important, lacks the progressive overload and varied stimulus needed for significant improvement.",
+  "record_id": "pair_0049__gemma_12b_judge__r01__AB",
+  "right_plan_role": "programmatic",
+  "run": 1,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T20:41:45.749628+00:00",
+  "winner_role": "programmatic"
+}

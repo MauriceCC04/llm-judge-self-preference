@@ -1,0 +1,48 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 27.0,
+    "mean_day_minutes": 14.286,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 1.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 100.0
+  },
+  "fixture_id": "ab_A4__r_high__rc_low__ph_base",
+  "judge": "gemma_4b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/matching_pool/eval_manifest_scrubbed_v1/judge_inputs/pair_0207__gemma_4b_judge__r01__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-4b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A4__r_high__rc_low__ph_base__gemma_3_4b_it__src_t070__exp_t000__s004",
+  "llm_won": true,
+  "order": "AB",
+  "pair_id": "pair_0207",
+  "plan_a_advantages": [
+    "More total running volume, particularly in long runs, directly contributing to endurance.",
+    "Includes a dedicated interval session, essential for improving speed and leg turnover.",
+    "The long runs are designed to build race-relevant durability, mimicking the demands of a trail race."
+  ],
+  "plan_b_advantages": [
+    "Incorporates cross-training, which can be beneficial for recovery and preventing overuse injuries.",
+    "Includes a strength and mobility session, important for injury prevention and maintaining efficient movement patterns.",
+    "The tempo sessions are valuable for developing threshold strength, a key component of trail running performance."
+  ],
+  "position": "AB",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A4__r_high__rc_low__ph_base__prog__exp_t000__s018",
+  "reasoning": "Plan A is the better training plan for a trail runner aiming to become faster. It prioritizes longer, more sustained trail runs, which are crucial for building the endurance and specific adaptations needed for trail racing. Plan B, while including some valuable threshold work, focuses heavily on shorter, more intense sessions, potentially leading to overtraining and neglecting the crucial element of time on feet at race pace. Plan A’s emphasis on longer runs with varying intensities better simulates the demands of a trail race, while Plan B’s structure feels more geared towards building a strong aerobic base without enough race-specific volume.",
+  "record_id": "pair_0207__gemma_4b_judge__r01__AB",
+  "right_plan_role": "programmatic",
+  "run": 1,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 2.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T17:34:09.609125+00:00",
+  "winner_role": "llm"
+}

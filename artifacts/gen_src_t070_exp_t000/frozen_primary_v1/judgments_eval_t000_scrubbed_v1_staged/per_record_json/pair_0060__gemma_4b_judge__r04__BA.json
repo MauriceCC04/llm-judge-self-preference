@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 25.0,
+    "mean_day_minutes": 4.714,
+    "n_active_days": 0.0,
+    "n_hard_days": 1.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 1.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 33.0
+  },
+  "fixture_id": "ab_A2__r_high__rc_high__ph_base",
+  "judge": "gemma_4b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/matching_pool/eval_manifest_scrubbed_v1/judge_inputs/pair_0060__gemma_4b_judge__r04__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-4b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A2__r_high__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s172",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0060",
+  "plan_a_advantages": [
+    "More focused hill training for trail-specific power.",
+    "Longer, sustained aerobic runs to build endurance.",
+    "Includes a dedicated threshold effort session for speed development."
+  ],
+  "plan_b_advantages": [
+    "Incorporates strength training for injury prevention and overall fitness.",
+    "Includes longer runs, though not as strategically designed for speed as Plan A’s long runs."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A2__r_high__rc_high__ph_base__prog__exp_t000__s011",
+  "reasoning": "Plan A is the better training plan for a trail runner aiming to become faster, primarily because it incorporates more targeted hill work and longer, sustained efforts crucial for trail running performance. While Plan B includes strength training and longer runs, it lacks the focused climbing sessions and extended aerobic endurance building that are key to improving speed on technical trails. Plan A’s structure prioritizes building a stronger aerobic base and trail-specific power, which is more directly aligned with the goal of becoming a faster trail runner than Plan B’s broader approach. Furthermore, the inclusion of a dedicated 'hard' day with a threshold hill session is a significant advantage.",
+  "record_id": "pair_0060__gemma_4b_judge__r04__BA",
+  "right_plan_role": "llm",
+  "run": 4,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T16:29:36.112050+00:00",
+  "winner_role": "programmatic"
+}

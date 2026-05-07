@@ -1,0 +1,48 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 4.0,
+    "mean_day_minutes": 9.143,
+    "n_active_days": 3.0,
+    "n_hard_days": 1.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 1.0,
+    "n_rest_days": 3.0,
+    "total_minutes": 64.0
+  },
+  "fixture_id": "ab_A1__r_low__rc_low__ph_peak",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0054__gemma_12b_judge__r01__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A1__r_low__rc_low__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s003",
+  "llm_won": false,
+  "order": "AB",
+  "pair_id": "pair_0054",
+  "plan_a_advantages": [
+    "Plan A provides more overall volume (225 minutes vs 161 minutes), which could be beneficial for building a base if the athlete is new to running.",
+    "The consistent easy runs in Plan A might be less intimidating for a beginner.",
+    "Plan A has a slightly better balance of training and rest days, which could be helpful for injury prevention in a less experienced runner."
+  ],
+  "plan_b_advantages": [
+    "Plan B includes a hill workout, directly addressing a key element of trail running speed and efficiency.",
+    "Plan B is more focused on the goal of becoming a faster trail runner, incorporating a harder workout to stimulate adaptation.",
+    "Plan B's structure allows for more focused recovery after the hill workout, potentially leading to better adaptation."
+  ],
+  "position": "AB",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A1__r_low__rc_low__ph_peak__prog__exp_t000__s013",
+  "reasoning": "While both plans focus on trail running, Plan B is better suited for an athlete aiming to become a *faster* trail runner. Plan B incorporates a hill workout, which is crucial for developing the strength and power needed to navigate trails efficiently and improve speed. Plan A consists solely of easy runs, which primarily builds aerobic base but doesn't address the specific demands of trail running like climbing and descending. The increased rest days in Plan A, while seemingly beneficial, may hinder progress if the goal is to improve speed.",
+  "record_id": "pair_0054__gemma_12b_judge__r01__AB",
+  "right_plan_role": "programmatic",
+  "run": 1,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 2.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T20:48:41.745520+00:00",
+  "winner_role": "programmatic"
+}

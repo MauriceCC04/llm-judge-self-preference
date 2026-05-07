@@ -1,0 +1,48 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 36.0,
+    "mean_day_minutes": 14.571,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 2.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 102.0
+  },
+  "fixture_id": "ab_A4__r_high__rc_low__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0205__gemma_12b_judge__r02__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A4__r_high__rc_low__ph_base__gemma_3_4b_it__src_t070__exp_t000__s001",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0205",
+  "plan_a_advantages": [
+    "More direct focus on speed development through interval and tempo sessions.",
+    "Lower overall volume (348 minutes vs 450 minutes) which can be beneficial for preventing overtraining and allowing for faster recovery, especially if the athlete is not already highly trained.",
+    "Clearer distinction between hard and easy days, promoting better recovery and adaptation."
+  ],
+  "plan_b_advantages": [
+    "Includes strength training, which is beneficial for trail running and injury prevention.",
+    "Higher volume of running, which can contribute to overall aerobic base development.",
+    "The inclusion of long runs with significant elevation gain is valuable for trail-specific endurance."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A4__r_high__rc_low__ph_base__prog__exp_t000__s008",
+  "reasoning": "Given the goal of becoming a faster trail runner, Plan A appears to be the more suitable choice. While both plans incorporate rest days, Plan A's focus on interval and tempo sessions directly targets speed development, which is crucial for faster trail running. Plan B, with its emphasis on long, easy runs and hills, prioritizes endurance and durability, which are important but secondary to speed for this specific goal. The shorter duration and more targeted intensity of Plan A are likely to be more effective for improving speed without excessive fatigue.",
+  "record_id": "pair_0205__gemma_12b_judge__r02__BA",
+  "right_plan_role": "llm",
+  "run": 2,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-07T00:40:48.887795+00:00",
+  "winner_role": "programmatic"
+}

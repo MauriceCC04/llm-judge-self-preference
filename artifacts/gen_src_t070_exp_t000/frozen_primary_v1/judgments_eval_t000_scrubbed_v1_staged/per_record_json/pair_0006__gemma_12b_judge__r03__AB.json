@@ -1,0 +1,49 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 9.0,
+    "mean_day_minutes": 11.286,
+    "n_active_days": 2.0,
+    "n_hard_days": 2.0,
+    "n_long_runs": 2.0,
+    "n_quality_days": 2.0,
+    "n_rest_days": 2.0,
+    "total_minutes": 79.0
+  },
+  "fixture_id": "ab_A1__r_high__rc_high__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0006__gemma_12b_judge__r03__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A1__r_high__rc_high__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s000",
+  "llm_won": false,
+  "order": "AB",
+  "pair_id": "pair_0006",
+  "plan_a_advantages": [
+    "Plan A has more rest days, which could be beneficial for a beginner or someone prone to injury.",
+    "The simpler structure of Plan A might be easier to adhere to for some athletes.",
+    "Plan A's focus on easy runs could build a solid aerobic base, which is a foundation for faster running."
+  ],
+  "plan_b_advantages": [
+    "Plan B includes tempo runs, which directly improve lactate threshold and running speed.",
+    "The hill workouts in Plan B build crucial climbing strength and power for trail running.",
+    "Plan B has a higher total training volume (307 minutes vs 228 minutes), allowing for more overall development.",
+    "Plan B incorporates longer runs, which contribute to endurance and trail-specific durability."
+  ],
+  "position": "AB",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A1__r_high__rc_high__ph_base__prog__exp_t000__s016",
+  "reasoning": "Plan B is the better choice for an athlete aiming to become a faster trail runner. While both plans incorporate easy runs and rest days, Plan B introduces crucial elements for speed development that are missing in Plan A: tempo runs and hill workouts. These sessions specifically target lactate threshold and climbing strength, both vital for improved trail running performance. Plan A focuses solely on building an aerobic base, which is important but insufficient for achieving a speed goal.",
+  "record_id": "pair_0006__gemma_12b_judge__r03__AB",
+  "right_plan_role": "programmatic",
+  "run": 3,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 2.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T19:41:14.338407+00:00",
+  "winner_role": "programmatic"
+}

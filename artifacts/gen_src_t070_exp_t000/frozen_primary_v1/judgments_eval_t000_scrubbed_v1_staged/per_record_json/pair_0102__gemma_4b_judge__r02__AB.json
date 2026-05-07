@@ -1,0 +1,46 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 30.0,
+    "mean_day_minutes": 3.571,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 25.0
+  },
+  "fixture_id": "ab_A2__r_low__rc_low__ph_base",
+  "judge": "gemma_4b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/matching_pool/eval_manifest_scrubbed_v1/judge_inputs/pair_0102__gemma_4b_judge__r02__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-4b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A2__r_low__rc_low__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s000",
+  "llm_won": false,
+  "order": "AB",
+  "pair_id": "pair_0102",
+  "plan_a_advantages": [
+    "More rest days: Plan A has two additional rest days, potentially beneficial for a beginner or someone prone to overtraining.",
+    "Consistent easy run duration: Plan A maintains a consistent 39-46 minute easy run, which could be easier to adhere to for some runners."
+  ],
+  "plan_b_advantages": [
+    "Cross-training: The inclusion of a low-impact cross-training session is a significant advantage, providing a different stimulus and potentially preventing overuse injuries.",
+    "Slightly longer easy runs: Plan B’s easy runs are generally slightly longer, providing a bit more aerobic stimulus compared to Plan A’s runs."
+  ],
+  "position": "AB",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A2__r_low__rc_low__ph_base__prog__exp_t000__s008",
+  "reasoning": "Plan B is the better training plan for a trail runner aiming to become faster. While both plans prioritize easy running, Plan B incorporates a cross-training session, which is crucial for trail running as it builds aerobic fitness without the high impact of trail running. Plan A’s repetitive easy runs, while beneficial for recovery, lack a strategic element to challenge the athlete beyond simply maintaining current fitness. Plan B’s inclusion of cross-training suggests a more holistic approach to building a stronger aerobic base, which is a key component of improving speed on trails.",
+  "record_id": "pair_0102__gemma_4b_judge__r02__AB",
+  "right_plan_role": "programmatic",
+  "run": 2,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T16:47:41.167817+00:00",
+  "winner_role": "programmatic"
+}

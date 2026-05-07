@@ -1,0 +1,49 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 64.0,
+    "mean_day_minutes": 15.429,
+    "n_active_days": 0.0,
+    "n_hard_days": 1.0,
+    "n_long_runs": 1.0,
+    "n_quality_days": 1.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 108.0
+  },
+  "fixture_id": "ab_A3__r_low__rc_high__ph_peak",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0165__gemma_12b_judge__r03__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A3__r_low__rc_high__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s017",
+  "llm_won": false,
+  "order": "AB",
+  "pair_id": "pair_0165",
+  "plan_a_advantages": [
+    "Plan A has a longer total training time (346 minutes vs 238 minutes), which could be beneficial for building overall endurance.",
+    "The longer long run (120 minutes) in Plan A might be useful for athletes who need to build significant time on their feet.",
+    "Plan A's consistent easy runs could be good for recovery and injury prevention, especially for beginners."
+  ],
+  "plan_b_advantages": [
+    "Plan B incorporates strength and mobility work, which is vital for trail running due to the uneven terrain and increased risk of injury.",
+    "The hill workout in Plan B directly addresses a key skill for trail running: climbing efficiently.",
+    "Plan B includes a threshold run, which is a more effective stimulus for improving speed than solely easy running.",
+    "Plan B's shorter overall training time might be preferable for athletes with limited time or those who are prone to overtraining."
+  ],
+  "position": "AB",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A3__r_low__rc_high__ph_peak__prog__exp_t000__s016",
+  "reasoning": "While both plans incorporate rest days, Plan B demonstrates a more comprehensive approach to improving trail running speed. It includes dedicated strength and mobility sessions, a crucial element often overlooked in running plans, and a hill workout specifically targeting trail-specific power. Plan A primarily focuses on easy and long runs, which are important for base building but lack the intensity and targeted training needed to significantly improve speed. The inclusion of threshold and hill workouts in Plan B makes it a more effective plan for the stated goal of becoming a faster trail runner.",
+  "record_id": "pair_0165__gemma_12b_judge__r03__AB",
+  "right_plan_role": "programmatic",
+  "run": 3,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 1.714,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T23:36:56.123009+00:00",
+  "winner_role": "programmatic"
+}

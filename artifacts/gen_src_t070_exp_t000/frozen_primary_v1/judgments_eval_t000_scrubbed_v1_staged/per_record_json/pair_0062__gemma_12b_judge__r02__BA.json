@@ -1,0 +1,49 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 31.0,
+    "mean_day_minutes": 5.571,
+    "n_active_days": 0.0,
+    "n_hard_days": 1.0,
+    "n_long_runs": 1.0,
+    "n_quality_days": 1.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 39.0
+  },
+  "fixture_id": "ab_A2__r_high__rc_high__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0062__gemma_12b_judge__r02__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A2__r_high__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s173",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0062",
+  "plan_a_advantages": [
+    "Includes a dedicated interval session for speed development.",
+    "Features a longer run to build endurance and trail-specific durability.",
+    "Incorporates cross-training for low-impact aerobic stimulus and recovery.",
+    "Provides a more varied training stimulus, targeting different aspects of trail running performance."
+  ],
+  "plan_b_advantages": [
+    "Emphasizes consistent trail running, which is highly specific to the sport.",
+    "Provides detailed metrics (distance, elevation, heart rate) for each run, allowing for more precise monitoring and adjustments.",
+    "May be more sustainable for a runner new to structured training due to the lower overall intensity."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A2__r_high__rc_high__ph_base__prog__exp_t000__s013",
+  "reasoning": "Plan A appears to be the better choice for a trail runner aiming to become faster. While both plans incorporate rest days, Plan A includes a structured interval session and a longer run, which are crucial for developing both speed and endurance – key components of faster trail running. Plan B focuses heavily on consistent, easy trail runs and a single hill workout, which is good for building base fitness but lacks the intensity needed to significantly improve speed. The inclusion of cross-training in Plan A also provides a valuable recovery tool while maintaining aerobic stimulus.",
+  "record_id": "pair_0062__gemma_12b_judge__r02__BA",
+  "right_plan_role": "llm",
+  "run": 2,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T21:00:38.218604+00:00",
+  "winner_role": "programmatic"
+}

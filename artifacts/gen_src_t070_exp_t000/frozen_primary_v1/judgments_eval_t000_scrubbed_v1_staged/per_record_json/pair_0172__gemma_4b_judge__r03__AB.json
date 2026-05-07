@@ -1,0 +1,46 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 6.0,
+    "mean_day_minutes": 4.857,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 34.0
+  },
+  "fixture_id": "ab_A3__r_low__rc_low__ph_base",
+  "judge": "gemma_4b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/matching_pool/eval_manifest_scrubbed_v1/judge_inputs/pair_0172__gemma_4b_judge__r03__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-4b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A3__r_low__rc_low__ph_base__gemma_3_4b_it__src_t070__exp_t000__s001",
+  "llm_won": false,
+  "order": "AB",
+  "pair_id": "pair_0172",
+  "plan_a_advantages": [
+    "More frequent easy runs could be beneficial for maintaining a base level of fitness.",
+    "The inclusion of a dedicated recovery day might be suitable for an athlete who needs more recovery time."
+  ],
+  "plan_b_advantages": [
+    "The tempo run directly targets lactate threshold development, a key factor in speed.",
+    "The strength and mobility session addresses a common weakness in trail runners and reduces injury risk."
+  ],
+  "position": "AB",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A3__r_low__rc_low__ph_base__prog__exp_t000__s014",
+  "reasoning": "Plan B is the better training plan for a trail runner aiming to become faster. It incorporates a dedicated tempo run, which is crucial for developing the lactate threshold – a key determinant of running speed. Plan A relies heavily on easy runs and recovery, which, while important, don't directly address the physiological adaptations needed for increased speed. Plan B also includes a strength and mobility session, addressing a critical component often overlooked in trail running training, and a longer, more focused aerobic session.  Plan A’s repetitive easy runs could lead to plateaus, whereas Plan B’s varied sessions provide a more stimulating and effective stimulus for improvement.",
+  "record_id": "pair_0172__gemma_4b_judge__r03__AB",
+  "right_plan_role": "programmatic",
+  "run": 3,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T17:18:38.632634+00:00",
+  "winner_role": "programmatic"
+}

@@ -1,0 +1,48 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 39.0,
+    "mean_day_minutes": 10.143,
+    "n_active_days": 0.0,
+    "n_hard_days": 1.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 1.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 71.0
+  },
+  "fixture_id": "ab_A1__r_high__rc_high__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0002__gemma_12b_judge__r03__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A1__r_high__rc_high__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s002",
+  "llm_won": false,
+  "order": "AB",
+  "pair_id": "pair_0002",
+  "plan_a_advantages": [
+    "Plan A includes longer runs, which can build endurance.",
+    "Plan A consistently maintains a moderate effort, which may be suitable for beginners.",
+    "Plan A has a slightly higher total volume (321 minutes vs 250 minutes)."
+  ],
+  "plan_b_advantages": [
+    "Plan B incorporates a tempo run, directly targeting speed development.",
+    "Plan B includes a strength and mobility session, improving running economy and reducing injury risk.",
+    "Plan B's lower overall volume may be beneficial for runners prone to overtraining or injury."
+  ],
+  "position": "AB",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A1__r_high__rc_high__ph_base__prog__exp_t000__s010",
+  "reasoning": "While both plans offer a structured approach, Plan B is better suited for a trail runner aiming to become faster. The inclusion of a tempo run (threshold effort) in Plan B is crucial for improving speed and lactate threshold, a key factor in trail running performance. Plan A focuses solely on easy runs, which are valuable for building aerobic base but insufficient for developing the speed necessary to become a faster trail runner. The strength and mobility session in Plan B also contributes to injury prevention and improved running economy, further enhancing performance.",
+  "record_id": "pair_0002__gemma_12b_judge__r03__AB",
+  "right_plan_role": "programmatic",
+  "run": 3,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T19:36:04.758788+00:00",
+  "winner_role": "programmatic"
+}

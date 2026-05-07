@@ -1,0 +1,49 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 35.0,
+    "mean_day_minutes": 13.143,
+    "n_active_days": 1.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 1.0,
+    "total_minutes": 92.0
+  },
+  "fixture_id": "ab_A1__r_high__rc_high__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0001__gemma_12b_judge__r01__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A1__r_high__rc_high__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s004",
+  "llm_won": true,
+  "order": "BA",
+  "pair_id": "pair_0001",
+  "plan_a_advantages": [
+    "Plan A has more rest days (2 vs 1), which could be beneficial for recovery, especially for a beginner.",
+    "The strength and mobility session in Plan A is a good addition for injury prevention.",
+    "Plan A's shorter overall duration (229 minutes vs 321) might be more manageable for someone with limited time."
+  ],
+  "plan_b_advantages": [
+    "Plan B includes a longer run, which is essential for trail running endurance.",
+    "Plan B's workout summaries are more specific to trail running, focusing on form, cadence, and hill strength.",
+    "Plan B consistently reinforces trail-running fundamentals and recent gains.",
+    "Plan B's focus on hill strength is particularly relevant for trail running."
+  ],
+  "position": "BA",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A1__r_high__rc_high__ph_base__prog__exp_t000__s008",
+  "reasoning": "While both plans focus on easy running, Plan B appears to be slightly better suited for a trail runner aiming to improve speed. It incorporates a longer run (89 minutes) on one day, which is crucial for building aerobic endurance on trails. The emphasis on 'trail running' specifically in the workout summaries of Plan B, focusing on form, cadence, and hill strength, suggests a more targeted approach to trail running compared to Plan A's more general 'conversational effort' descriptions. Plan A's strength and mobility session is a positive, but Plan B's consistent focus on trail-specific elements makes it preferable.",
+  "record_id": "pair_0001__gemma_12b_judge__r01__BA",
+  "right_plan_role": "llm",
+  "run": 1,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T19:34:00.984819+00:00",
+  "winner_role": "llm"
+}

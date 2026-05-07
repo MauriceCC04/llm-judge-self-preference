@@ -1,0 +1,48 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 4.0,
+    "mean_day_minutes": 11.286,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 79.0
+  },
+  "fixture_id": "ab_A2__r_high__rc_high__ph_peak",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0072__gemma_12b_judge__r04__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A2__r_high__rc_high__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s008",
+  "llm_won": false,
+  "order": "AB",
+  "pair_id": "pair_0072",
+  "plan_a_advantages": [
+    "Plan A has a longer total run time (308 minutes vs 229 minutes), which could contribute to greater overall endurance.",
+    "The longer duration of some of the easy runs in Plan A might be beneficial for some runners to build base mileage."
+  ],
+  "plan_b_advantages": [
+    "Plan B includes cross-training, which reduces impact and provides a different stimulus.",
+    "Plan B's distribution of runs and rest days appears more balanced, potentially leading to better recovery and adaptation.",
+    "The shorter, more frequent easy runs in Plan B may be more manageable for some runners, reducing the risk of overtraining.",
+    "Plan B's total volume is lower, which may be preferable for athletes prone to injury or those who are newer to trail running."
+  ],
+  "position": "AB",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A2__r_high__rc_high__ph_peak__prog__exp_t000__s012",
+  "reasoning": "While both plans focus on easy running and include a long run, Plan B appears to be a more well-rounded and potentially more effective plan for improving trail running speed. It incorporates cross-training, which is beneficial for injury prevention and building overall fitness without the impact of running. The distribution of easy runs in Plan B also seems more strategic, with shorter runs interspersed with rest days, potentially allowing for better recovery and adaptation. Plan A's repetitive easy runs, while not inherently bad, lack the variety and potential benefits of cross-training.",
+  "record_id": "pair_0072__gemma_12b_judge__r04__AB",
+  "right_plan_role": "programmatic",
+  "run": 4,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.143,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T21:17:19.235664+00:00",
+  "winner_role": "programmatic"
+}

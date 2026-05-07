@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 53.0,
+    "mean_day_minutes": 14.286,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 100.0
+  },
+  "fixture_id": "ab_A3__r_low__rc_low__ph_base",
+  "judge": "gemma_4b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/matching_pool/eval_manifest_scrubbed_v1/judge_inputs/pair_0174__gemma_4b_judge__r00__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-4b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A3__r_low__rc_low__ph_base__gemma_3_4b_it__src_t070__exp_t000__s007",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0174",
+  "plan_a_advantages": [
+    "Includes dedicated threshold and hill training for speed development.",
+    "Features a longer long run to build endurance.",
+    "Incorporates a strength and mobility session for injury prevention and power."
+  ],
+  "plan_b_advantages": [
+    "Offers a more consistent recovery schedule.",
+    "Provides longer, continuous easy runs, potentially beneficial for maintaining a base level of fitness."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A3__r_low__rc_low__ph_base__prog__exp_t000__s016",
+  "reasoning": "Plan A is the better training plan for a trail runner aiming to become faster, primarily because it incorporates a more structured approach to building aerobic fitness and strength specific to trail running. While Plan B focuses heavily on recovery and relatively short, easy runs, Plan A includes dedicated threshold work, hill sessions, and a longer long run – all crucial components for improving speed and endurance on technical terrain. The inclusion of a strength and mobility session is also a significant advantage for injury prevention and power development, something absent in Plan B.  Plan B’s emphasis on recovery, while important, feels like it’s prioritizing maintenance over genuine progress towards the athlete’s goal of increased speed.",
+  "record_id": "pair_0174__gemma_4b_judge__r00__BA",
+  "right_plan_role": "llm",
+  "run": 0,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T17:19:17.737588+00:00",
+  "winner_role": "programmatic"
+}

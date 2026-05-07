@@ -1,0 +1,49 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 37.0,
+    "mean_day_minutes": 1.429,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 10.0
+  },
+  "fixture_id": "ab_A4__r_low__rc_high__ph_peak",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0233__gemma_12b_judge__r02__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A4__r_low__rc_high__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s001",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0233",
+  "plan_a_advantages": [
+    "Includes a tempo run, directly targeting speed development.",
+    "Higher volume of easy running promotes aerobic base building without excessive fatigue.",
+    "More balanced approach between hard and easy days, potentially reducing risk of overtraining.",
+    "Clear focus on sustainable threshold strength, a key component of faster running."
+  ],
+  "plan_b_advantages": [
+    "Includes a strength training day, which can improve overall power and stability.",
+    "Long runs are at a moderate intensity, which could be beneficial for some athletes.",
+    "More variety in workout types (intervals, aerobic, strength) which may be more engaging for some runners."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A4__r_low__rc_high__ph_peak__prog__exp_t000__s010",
+  "reasoning": "Given the goal of becoming a *faster* trail runner, Plan A appears to be the more appropriate choice. While both plans include long runs, Plan A prioritizes a tempo run, which is crucial for improving speed and lactate threshold – a key factor in faster trail running. Plan B, on the other hand, focuses more on sustained aerobic effort and includes a strength training day, which are important for overall fitness but less directly related to speed development. The higher volume of easy running in Plan A also suggests a focus on building a strong aerobic base without excessive fatigue, which is beneficial for long-term progress.",
+  "record_id": "pair_0233__gemma_12b_judge__r02__BA",
+  "right_plan_role": "llm",
+  "run": 2,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-07T01:24:38.846249+00:00",
+  "winner_role": "programmatic"
+}

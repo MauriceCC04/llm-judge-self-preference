@@ -1,0 +1,48 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 30.0,
+    "mean_day_minutes": 0.0,
+    "n_active_days": 0.0,
+    "n_hard_days": 1.0,
+    "n_long_runs": 1.0,
+    "n_quality_days": 1.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 0.0
+  },
+  "fixture_id": "ab_A2__r_low__rc_low__ph_peak",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0109__gemma_12b_judge__r03__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A2__r_low__rc_low__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s001",
+  "llm_won": false,
+  "order": "AB",
+  "pair_id": "pair_0109",
+  "plan_a_advantages": [
+    "Plan A has a slightly higher volume of easy running, which could be beneficial for building a very solid aerobic base.",
+    "Plan A's simplicity might be easier to adhere to for a beginner."
+  ],
+  "plan_b_advantages": [
+    "Includes a tempo run to improve lactate threshold and speed.",
+    "Incorporates a longer run to build endurance and trail-specific durability.",
+    "Includes strength and mobility work, crucial for injury prevention and efficient movement on trails.",
+    "Provides a more structured and progressive approach to training, targeting different aspects of performance."
+  ],
+  "position": "AB",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A2__r_low__rc_low__ph_peak__prog__exp_t000__s014",
+  "reasoning": "While both plans focus on trail running, Plan B is significantly better suited for an athlete aiming to become a *faster* trail runner. Plan B incorporates a tempo run and a longer run, both crucial for improving speed and endurance. Plan A consists solely of easy runs, which, while good for building a base, won't lead to significant speed gains. The inclusion of strength and mobility work in Plan B is also a key advantage, addressing a critical component of trail running performance and injury prevention.",
+  "record_id": "pair_0109__gemma_12b_judge__r03__AB",
+  "right_plan_role": "programmatic",
+  "run": 3,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T22:09:03.513039+00:00",
+  "winner_role": "programmatic"
+}

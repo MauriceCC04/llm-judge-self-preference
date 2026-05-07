@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 36.0,
+    "mean_day_minutes": 1.143,
+    "n_active_days": 1.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 1.0,
+    "total_minutes": 8.0
+  },
+  "fixture_id": "ab_A1__r_low__rc_high__ph_peak",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0038__gemma_12b_judge__r00__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A1__r_low__rc_high__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s001",
+  "llm_won": false,
+  "order": "AB",
+  "pair_id": "pair_0038",
+  "plan_a_advantages": [
+    "Plan A has slightly more total running time (176 minutes vs 168 minutes).",
+    "Plan A has fewer rest days (2 vs 3), which could be beneficial for some athletes who prefer more frequent training."
+  ],
+  "plan_b_advantages": [
+    "Plan B includes longer aerobic runs, which are more effective for building endurance.",
+    "Plan B has a more varied structure, incorporating both longer and shorter runs.",
+    "Plan B's emphasis on aerobic development aligns better with the goal of becoming a faster trail runner."
+  ],
+  "position": "AB",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A1__r_low__rc_high__ph_peak__prog__exp_t000__s003",
+  "reasoning": "While both plans focus on easy running, Plan B demonstrates a more structured approach to building aerobic endurance, which is crucial for becoming a faster trail runner. The inclusion of longer 'aerobic' runs (72 and 41 minutes) alongside shorter easy runs provides a better stimulus for improving the athlete's aerobic base. Plan A's repetitive, short easy runs, while good for form, lack the volume needed to significantly improve endurance. Therefore, Plan B is better suited to the stated goal of becoming a faster trail runner.",
+  "record_id": "pair_0038__gemma_12b_judge__r00__AB",
+  "right_plan_role": "programmatic",
+  "run": 0,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T20:25:46.954089+00:00",
+  "winner_role": "programmatic"
+}

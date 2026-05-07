@@ -1,0 +1,48 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 33.0,
+    "mean_day_minutes": 16.286,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 114.0
+  },
+  "fixture_id": "ab_A3__r_low__rc_high__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0154__gemma_12b_judge__r01__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A3__r_low__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s328",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0154",
+  "plan_a_advantages": [
+    "Includes cross-training to build aerobic fitness with reduced impact, which can be beneficial for injury prevention and overall fitness.",
+    "Incorporates a strength and mobility session, crucial for trail running where stability and injury resistance are paramount.",
+    "Offers a more varied training week, which can help prevent boredom and plateaus.",
+    "Total training time is lower (276 minutes vs 390), which can be beneficial for athletes with limited time or those prone to overtraining."
+  ],
+  "plan_b_advantages": [
+    "Higher total training volume (390 minutes) might be suitable for a more experienced runner with a higher training base.",
+    "The focus on trail running throughout the week provides more trail-specific adaptation."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A3__r_low__rc_high__ph_base__prog__exp_t000__s018",
+  "reasoning": "Given the goal of becoming a *faster* trail runner, Plan A appears to be the more appropriate choice. While both plans incorporate a long run and a rest day, Plan A demonstrates a more varied and structured approach to training, including cross-training and strength/mobility work. Plan B heavily emphasizes easy recovery runs, which, while important, may not be sufficient to stimulate the speed improvements desired. The inclusion of cross-training and strength work in Plan A suggests a more holistic approach to building a faster and more durable trail runner.",
+  "record_id": "pair_0154__gemma_12b_judge__r01__BA",
+  "right_plan_role": "llm",
+  "run": 1,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T23:18:24.712064+00:00",
+  "winner_role": "programmatic"
+}

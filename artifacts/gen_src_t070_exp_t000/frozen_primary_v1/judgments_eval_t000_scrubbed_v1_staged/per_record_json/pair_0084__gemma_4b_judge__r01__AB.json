@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 35.0,
+    "mean_day_minutes": 0.0,
+    "n_active_days": 0.0,
+    "n_hard_days": 1.0,
+    "n_long_runs": 1.0,
+    "n_quality_days": 1.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 0.0
+  },
+  "fixture_id": "ab_A2__r_low__rc_high__ph_base",
+  "judge": "gemma_4b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/matching_pool/eval_manifest_scrubbed_v1/judge_inputs/pair_0084__gemma_4b_judge__r01__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-4b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A2__r_low__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s002",
+  "llm_won": false,
+  "order": "AB",
+  "pair_id": "pair_0084",
+  "plan_a_advantages": [
+    "More consistent easy running volume",
+    "Simpler structure, potentially easier to adhere to"
+  ],
+  "plan_b_advantages": [
+    "Includes a dedicated tempo and threshold session",
+    "Longer, more impactful aerobic session",
+    "Incorporates cross-training for recovery and muscle support"
+  ],
+  "position": "AB",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A2__r_low__rc_high__ph_base__prog__exp_t000__s011",
+  "reasoning": "Plan B is the better training plan for a trail runner aiming to become faster. It incorporates a longer, more challenging aerobic session (95 minutes) early in the week, which is crucial for building the sustained endurance needed for trail running. Furthermore, it includes a tempo run and a dedicated threshold session, directly addressing the goal of increasing speed and efficiency. Plan A, while consistent, primarily focuses on easy aerobic runs and shorter trail runs, lacking the specific intensity work required for significant speed improvements.  The inclusion of cross-training in Plan B also provides valuable recovery and strengthens supporting muscles.",
+  "record_id": "pair_0084__gemma_4b_judge__r01__AB",
+  "right_plan_role": "programmatic",
+  "run": 1,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T16:39:43.885845+00:00",
+  "winner_role": "programmatic"
+}

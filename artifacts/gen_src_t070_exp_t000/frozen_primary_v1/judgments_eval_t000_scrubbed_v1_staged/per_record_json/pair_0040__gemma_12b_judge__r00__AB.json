@@ -1,0 +1,49 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 32.0,
+    "mean_day_minutes": 4.571,
+    "n_active_days": 3.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 3.0,
+    "total_minutes": 32.0
+  },
+  "fixture_id": "ab_A1__r_low__rc_high__ph_peak",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0040__gemma_12b_judge__r00__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A1__r_low__rc_high__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s016",
+  "llm_won": false,
+  "order": "AB",
+  "pair_id": "pair_0040",
+  "plan_a_advantages": [
+    "Plan A has a slightly higher frequency of running days (6 vs 3 in Plan B).",
+    "Plan A's shorter runs might be more manageable for a beginner or someone returning from injury.",
+    "The consistent, shorter runs in Plan A could help build a solid base mileage without excessive fatigue."
+  ],
+  "plan_b_advantages": [
+    "Plan B includes longer aerobic runs, directly targeting endurance, a key factor in trail running speed.",
+    "Plan B prioritizes recovery with more rest days, reducing the risk of overtraining and injury.",
+    "Plan B's structure is more progressive, with longer runs gradually increasing in duration.",
+    "Plan B's focus on aerobic consistency is more likely to lead to tangible improvements in trail running performance."
+  ],
+  "position": "AB",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A1__r_low__rc_high__ph_peak__prog__exp_t000__s004",
+  "reasoning": "While both plans focus on easy running, Plan B demonstrates a more structured approach to building aerobic endurance, which is crucial for faster trail running. The inclusion of longer aerobic runs (58 and 70 minutes) directly addresses the endurance component needed for trail running, whereas Plan A consists solely of shorter, repetitive runs. The greater emphasis on rest days in Plan B also suggests a better understanding of recovery needs, which is vital for preventing injury and maximizing adaptation. Overall, Plan B's design is more aligned with the goal of improving trail running speed through aerobic development.",
+  "record_id": "pair_0040__gemma_12b_judge__r00__AB",
+  "right_plan_role": "programmatic",
+  "run": 0,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T20:28:40.584134+00:00",
+  "winner_role": "programmatic"
+}

@@ -1,0 +1,49 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 166.0,
+    "mean_day_minutes": 17.429,
+    "n_active_days": 2.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 1.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 2.0,
+    "total_minutes": 122.0
+  },
+  "fixture_id": "ab_A2__r_high__rc_high__ph_peak",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0073__gemma_12b_judge__r04__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A2__r_high__rc_high__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s015",
+  "llm_won": true,
+  "order": "AB",
+  "pair_id": "pair_0073",
+  "plan_a_advantages": [
+    "Includes a longer aerobic run (60 minutes) which is crucial for building trail running endurance.",
+    "Features a tempo session (55 minutes) which directly targets improving lactate threshold and running economy.",
+    "The interval session (4 x 1km) is more demanding and better suited for developing speed on trails compared to Plan B's threshold intervals.",
+    "Higher total training volume (375 minutes) allows for more overall stimulus and potential adaptation."
+  ],
+  "plan_b_advantages": [
+    "Lower total training volume (253 minutes) might be beneficial for athletes prone to injury or those new to structured training.",
+    "Incorporates a cross-training session (23 minutes) which can provide a low-impact aerobic stimulus and aid in recovery.",
+    "More rest days (3 vs 2) which could be advantageous for athletes needing more recovery time."
+  ],
+  "position": "AB",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A2__r_high__rc_high__ph_peak__prog__exp_t000__s013",
+  "reasoning": "Given the goal of becoming a faster trail runner, Plan A appears to be the more suitable choice. While both plans incorporate essential elements like rest and strength training, Plan A's inclusion of a longer aerobic run and a dedicated tempo session provides a more direct pathway to improving speed and endurance on trails. The interval session in Plan A, with its 4 x 1km repeats at a hard effort, is also more geared towards developing the speed necessary for trail running, compared to Plan B's threshold intervals. Plan B's focus on easy runs and cross-training, while valuable for recovery and injury prevention, doesn't offer the same level of intensity needed to drive significant performance gains in trail running speed.",
+  "record_id": "pair_0073__gemma_12b_judge__r04__AB",
+  "right_plan_role": "programmatic",
+  "run": 4,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 2.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T21:19:00.022473+00:00",
+  "winner_role": "llm"
+}

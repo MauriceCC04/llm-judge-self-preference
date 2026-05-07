@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 132.0,
+    "mean_day_minutes": 0.0,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 2.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 0.0
+  },
+  "fixture_id": "ab_A3__r_low__rc_low__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0181__gemma_12b_judge__r02__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A3__r_low__rc_low__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s001",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0181",
+  "plan_a_advantages": [
+    "More consistent long runs: Plan A includes three long runs, allowing for better adaptation and endurance development compared to Plan B's single long run.",
+    "Emphasis on easy running: The majority of Plan A's runs are at an easy intensity, promoting aerobic development without excessive fatigue.",
+    "Dedicated strength and mobility work: Plan A incorporates a specific strength and mobility session, addressing a key component of trail running performance and injury prevention."
+  ],
+  "plan_b_advantages": [
+    "Variety in terrain: Plan B includes runs on both mixed and flat terrain, which could be beneficial for developing adaptability.",
+    "Moderate intensity runs: The inclusion of moderate intensity runs in Plan B may help improve lactate threshold, although the risk of overtraining is higher."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A3__r_low__rc_low__ph_base__prog__exp_t000__s000",
+  "reasoning": "While both plans aim to improve trail running speed, Plan A is the better choice for a runner seeking to become faster. Plan A prioritizes building a strong aerobic base through consistent, longer easy runs, which is crucial for trail running endurance. Plan B, with its single, very long moderate-intensity run, risks overtraining and injury, especially without a more gradual build-up. The inclusion of a dedicated strength and mobility session in Plan A also contributes to injury prevention and improved running economy, which are vital for trail running.",
+  "record_id": "pair_0181__gemma_12b_judge__r02__BA",
+  "right_plan_role": "llm",
+  "run": 2,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 2.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-07T00:01:53.734967+00:00",
+  "winner_role": "programmatic"
+}

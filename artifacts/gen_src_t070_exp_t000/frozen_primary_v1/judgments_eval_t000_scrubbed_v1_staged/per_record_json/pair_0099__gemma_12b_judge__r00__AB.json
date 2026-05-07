@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 17.0,
+    "mean_day_minutes": 1.143,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 8.0
+  },
+  "fixture_id": "ab_A2__r_low__rc_high__ph_peak",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0099__gemma_12b_judge__r00__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A2__r_low__rc_high__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s004",
+  "llm_won": false,
+  "order": "AB",
+  "pair_id": "pair_0099",
+  "plan_a_advantages": [
+    "Plan A has slightly more rest days, which could be beneficial for athletes who are particularly prone to fatigue or injury.",
+    "The consistent easy runs in Plan A might be preferable for beginners who are still building a base level of fitness."
+  ],
+  "plan_b_advantages": [
+    "The inclusion of a strength and mobility session directly addresses the demands of trail running, improving stability and injury resistance.",
+    "The varied run durations in Plan B provide a slightly broader stimulus for aerobic development.",
+    "Plan B's phrasing around 'absorbing training' suggests a more deliberate focus on adaptation and recovery."
+  ],
+  "position": "AB",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A2__r_low__rc_high__ph_peak__prog__exp_t000__s015",
+  "reasoning": "While both plans focus on easy running and recovery, Plan B demonstrates a slightly more structured and potentially beneficial approach for a trail runner aiming to improve speed. The inclusion of a strength and mobility session on day 7 is a significant advantage, as trail running demands more than just cardiovascular fitness; it requires robust muscles and joint stability to handle uneven terrain and prevent injuries. Plan B's varied run durations also provide a slightly broader base of aerobic development compared to Plan A's more consistent, shorter runs. Although both plans prioritize recovery, Plan B's phrasing around 'absorbing training' suggests a more deliberate focus on adaptation.",
+  "record_id": "pair_0099__gemma_12b_judge__r00__AB",
+  "right_plan_role": "programmatic",
+  "run": 0,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 1.143,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T21:54:07.948166+00:00",
+  "winner_role": "programmatic"
+}

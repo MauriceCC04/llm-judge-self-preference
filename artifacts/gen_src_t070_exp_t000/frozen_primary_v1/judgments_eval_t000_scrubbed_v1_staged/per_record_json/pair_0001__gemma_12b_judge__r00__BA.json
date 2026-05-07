@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 35.0,
+    "mean_day_minutes": 13.143,
+    "n_active_days": 1.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 1.0,
+    "total_minutes": 92.0
+  },
+  "fixture_id": "ab_A1__r_high__rc_high__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0001__gemma_12b_judge__r00__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A1__r_high__rc_high__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s004",
+  "llm_won": true,
+  "order": "BA",
+  "pair_id": "pair_0001",
+  "plan_a_advantages": [
+    "Plan A has a slightly higher frequency of rest days (2 vs 1), which could be beneficial for athletes prone to injury or those needing more recovery.",
+    "The shorter overall training volume (229 minutes vs 321) might be preferable for beginners or those with limited time."
+  ],
+  "plan_b_advantages": [
+    "Plan B explicitly mentions focusing on form and cadence, which are important for efficient trail running.",
+    "The longer run in Plan B (89 minutes) provides a greater aerobic stimulus and opportunity to build endurance.",
+    "Plan B incorporates hill training, a key component of trail running fitness, while Plan A does not explicitly mention it."
+  ],
+  "position": "BA",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A1__r_high__rc_high__ph_base__prog__exp_t000__s008",
+  "reasoning": "While both plans focus on easy running, Plan B appears to be slightly better suited for a trail runner aiming to become faster. It incorporates a greater emphasis on trail-specific elements like form, cadence, and hill strength, which are crucial for trail running performance. The longer run on day 6 in Plan B (89 minutes) provides a more substantial aerobic stimulus and opportunity to build endurance compared to the shorter runs in Plan A. Although both plans include rest days, Plan B's single rest day allows for more consistent training throughout the week.",
+  "record_id": "pair_0001__gemma_12b_judge__r00__BA",
+  "right_plan_role": "llm",
+  "run": 0,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T19:33:33.028693+00:00",
+  "winner_role": "llm"
+}

@@ -1,0 +1,48 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 13.0,
+    "mean_day_minutes": 0.0,
+    "n_active_days": 0.0,
+    "n_hard_days": 1.0,
+    "n_long_runs": 1.0,
+    "n_quality_days": 1.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 0.0
+  },
+  "fixture_id": "ab_A1__r_low__rc_high__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0025__gemma_12b_judge__r00__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A1__r_low__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s001",
+  "llm_won": false,
+  "order": "AB",
+  "pair_id": "pair_0025",
+  "plan_a_advantages": [
+    "Plan A has a simpler structure, which might be preferable for a complete beginner or someone returning from injury.",
+    "The consistent easy runs in Plan A could be beneficial for building a solid aerobic base without overstressing the body."
+  ],
+  "plan_b_advantages": [
+    "Plan B includes a tempo run, which is essential for improving speed and lactate threshold.",
+    "The cross-training sessions in Plan B offer a lower-impact way to build aerobic fitness and recover from trail running.",
+    "The long run in Plan B directly addresses trail running endurance, a key component of faster trail running.",
+    "The varied intensities in Plan B (easy, threshold, tempo) provide a more comprehensive training stimulus than Plan A's solely easy runs."
+  ],
+  "position": "AB",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A1__r_low__rc_high__ph_base__prog__exp_t000__s011",
+  "reasoning": "While both plans aim to improve trail running speed, Plan B is structured more effectively to achieve that goal. It incorporates a variety of training types – long runs, cross-training, aerobic runs at both easy and threshold intensities, and a tempo session – which provides a more well-rounded stimulus for improving speed and endurance. Plan A relies almost exclusively on easy runs, which, while important for building a base, won't be sufficient to drive significant improvements in speed. The inclusion of a hard day (tempo) in Plan B is crucial for developing the necessary speed and lactate threshold for faster trail running.",
+  "record_id": "pair_0025__gemma_12b_judge__r00__AB",
+  "right_plan_role": "programmatic",
+  "run": 0,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T20:07:15.734149+00:00",
+  "winner_role": "programmatic"
+}

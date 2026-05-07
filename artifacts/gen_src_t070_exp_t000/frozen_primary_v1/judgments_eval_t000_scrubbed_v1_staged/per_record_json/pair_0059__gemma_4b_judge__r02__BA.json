@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 14.0,
+    "mean_day_minutes": 10.429,
+    "n_active_days": 2.0,
+    "n_hard_days": 1.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 1.0,
+    "n_rest_days": 2.0,
+    "total_minutes": 73.0
+  },
+  "fixture_id": "ab_A1__r_low__rc_low__ph_peak",
+  "judge": "gemma_4b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/matching_pool/eval_manifest_scrubbed_v1/judge_inputs/pair_0059__gemma_4b_judge__r02__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-4b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A1__r_low__rc_low__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s015",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0059",
+  "plan_a_advantages": [
+    "Includes a dedicated threshold workout for speed development.",
+    "Incorporates cross-training for variety and injury prevention.",
+    "Provides a more balanced approach to aerobic development."
+  ],
+  "plan_b_advantages": [
+    "Prioritizes recovery and form with ample easy runs.",
+    "Offers a simpler, less demanding training schedule."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A1__r_low__rc_low__ph_peak__prog__exp_t000__s007",
+  "reasoning": "Plan A is the superior training plan for a trail runner aiming to become faster. It incorporates a structured approach with aerobic development (threshold runs and easy runs), while Plan B solely focuses on easy runs, which, while beneficial for recovery and form, won't provide the stimulus needed for significant speed improvements. Plan A includes a dedicated threshold workout, crucial for building the sustainable strength required for faster trail running, and the inclusion of cross-training adds variety and reduces the risk of overuse injuries. Furthermore, the inclusion of a tempo run is a key element for improving running economy and speed.",
+  "record_id": "pair_0059__gemma_4b_judge__r02__BA",
+  "right_plan_role": "llm",
+  "run": 2,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.286,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T16:29:03.216717+00:00",
+  "winner_role": "programmatic"
+}

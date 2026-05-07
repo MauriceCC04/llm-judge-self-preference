@@ -1,0 +1,48 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 25.0,
+    "mean_day_minutes": 0.571,
+    "n_active_days": 0.0,
+    "n_hard_days": 1.0,
+    "n_long_runs": 1.0,
+    "n_quality_days": 1.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 4.0
+  },
+  "fixture_id": "ab_A1__r_low__rc_low__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0043__gemma_12b_judge__r01__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A1__r_low__rc_low__ph_base__gemma_3_4b_it__src_t070__exp_t000__s002",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0043",
+  "plan_a_advantages": [
+    "Includes a tempo run to improve lactate threshold and running speed.",
+    "Features a long run to build endurance and trail-specific durability.",
+    "Incorporates cross-training for recovery and injury prevention.",
+    "More varied training stimulus, promoting more well-rounded development."
+  ],
+  "plan_b_advantages": [
+    "Higher volume of easy running, which could be beneficial for building a base if the athlete is new to running.",
+    "All runs are on trails, providing more specific trail running experience."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A1__r_low__rc_low__ph_base__prog__exp_t000__s019",
+  "reasoning": "Plan A is the better choice for an athlete aiming to become a faster trail runner. While both plans incorporate rest days, Plan A includes a tempo run and a long run, which are crucial for developing speed and endurance respectively. Plan B consists almost entirely of easy runs, which, while important for building a base, won't sufficiently challenge the athlete to improve their speed or ability to handle longer distances on trails. The inclusion of cross-training in Plan A also provides a valuable recovery tool and reduces the risk of overuse injuries.",
+  "record_id": "pair_0043__gemma_12b_judge__r01__BA",
+  "right_plan_role": "llm",
+  "run": 1,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T20:33:09.525307+00:00",
+  "winner_role": "programmatic"
+}

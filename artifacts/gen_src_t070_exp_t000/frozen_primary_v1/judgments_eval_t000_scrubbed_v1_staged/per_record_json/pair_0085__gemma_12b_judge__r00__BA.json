@@ -1,0 +1,48 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 2.0,
+    "mean_day_minutes": 4.714,
+    "n_active_days": 0.0,
+    "n_hard_days": 1.0,
+    "n_long_runs": 1.0,
+    "n_quality_days": 1.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 33.0
+  },
+  "fixture_id": "ab_A2__r_low__rc_high__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0085__gemma_12b_judge__r00__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A2__r_low__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s000",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0085",
+  "plan_a_advantages": [
+    "Includes hill workouts to build climbing strength and power, a key component of trail running.",
+    "Incorporates threshold-intensity aerobic runs to improve lactate threshold and running economy.",
+    "Features a longer run to build endurance and trail-specific durability.",
+    "Offers a more varied training stimulus, promoting more comprehensive development."
+  ],
+  "plan_b_advantages": [
+    "Higher total weekly mileage (306 minutes vs 273 minutes) which could be beneficial for some athletes.",
+    "Simplicity: The plan is very straightforward and easy to follow."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A2__r_low__rc_high__ph_base__prog__exp_t000__s017",
+  "reasoning": "Plan A is the better choice for an athlete aiming to become a faster trail runner. While both plans incorporate rest days, Plan A includes a variety of training types – aerobic, hill, and long runs – which are crucial for developing a well-rounded trail running skillset. Plan B focuses solely on easy runs, which, while important for building a base, won't sufficiently challenge the athlete to improve speed and strength on trails. The inclusion of hill work in Plan A is particularly valuable for trail running, as it directly addresses the demands of climbing and descending.",
+  "record_id": "pair_0085__gemma_12b_judge__r00__BA",
+  "right_plan_role": "llm",
+  "run": 0,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T21:34:45.517000+00:00",
+  "winner_role": "programmatic"
+}

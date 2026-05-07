@@ -1,0 +1,46 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 14.0,
+    "mean_day_minutes": 13.0,
+    "n_active_days": 1.0,
+    "n_hard_days": 2.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 2.0,
+    "n_rest_days": 1.0,
+    "total_minutes": 91.0
+  },
+  "fixture_id": "ab_A1__r_high__rc_high__ph_base",
+  "judge": "gemma_4b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/matching_pool/eval_manifest_scrubbed_v1/judge_inputs/pair_0005__gemma_4b_judge__r02__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-4b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A1__r_high__rc_high__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s001",
+  "llm_won": false,
+  "order": "AB",
+  "pair_id": "pair_0005",
+  "plan_a_advantages": [
+    "More rest days, potentially beneficial for a beginner or someone prone to overtraining.",
+    "Emphasis on form and cadence, which are crucial for efficient trail running."
+  ],
+  "plan_b_advantages": [
+    "Includes threshold hill work, directly targeting the power needed for faster trail running.",
+    "Higher overall training volume (total minutes) which is likely to lead to greater improvements in aerobic fitness and strength."
+  ],
+  "position": "AB",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A1__r_high__rc_high__ph_base__prog__exp_t000__s009",
+  "reasoning": "Plan B is the better training plan for a trail runner aiming to become faster, primarily because it incorporates more targeted hill work and a higher overall volume of training. While Plan A focuses heavily on easy runs, which is beneficial for recovery and maintaining form, it lacks the intensity needed to truly improve speed. Plan B’s hill sessions at threshold intensity directly address the demands of trail running, building the strength and power required for climbing efficiently, and the longer easy runs contribute to a greater aerobic base. Plan A’s consistent easy runs, while good for recovery, won’t push the athlete to the point of adaptation necessary for faster times.",
+  "record_id": "pair_0005__gemma_4b_judge__r02__AB",
+  "right_plan_role": "programmatic",
+  "run": 2,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 2.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T16:05:17.688006+00:00",
+  "winner_role": "programmatic"
+}

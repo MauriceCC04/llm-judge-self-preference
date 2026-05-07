@@ -1,0 +1,46 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 29.0,
+    "mean_day_minutes": 11.571,
+    "n_active_days": 0.0,
+    "n_hard_days": 1.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 1.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 81.0
+  },
+  "fixture_id": "ab_A1__r_high__rc_high__ph_base",
+  "judge": "gemma_4b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/matching_pool/eval_manifest_scrubbed_v1/judge_inputs/pair_0003__gemma_4b_judge__r00__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-4b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A1__r_high__rc_high__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s005",
+  "llm_won": false,
+  "order": "AB",
+  "pair_id": "pair_0003",
+  "plan_a_advantages": [
+    "Reduced overall training volume (fewer minutes spent running).",
+    "Potentially lower risk of overtraining due to the extremely low intensity of the runs."
+  ],
+  "plan_b_advantages": [
+    "Includes a tempo run to specifically target speed development.",
+    "Incorporates cross-training for varied recovery and potential strength gains."
+  ],
+  "position": "AB",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A1__r_high__rc_high__ph_base__prog__exp_t000__s002",
+  "reasoning": "Plan B is the better training plan for a trail runner aiming to become faster. While Plan A focuses heavily on very easy, almost recovery-oriented runs, it lacks any structured effort to improve speed or endurance beyond what's already present. Plan B incorporates a cross-training session and a dedicated tempo run, which are crucial for building the aerobic base and lactate threshold necessary for faster trail running. The inclusion of a tempo run, even if relatively short, directly addresses the goal of increasing speed, whereas Plan A’s consistent easy runs will likely plateau without additional stimulus. Furthermore, the cross-training provides a valuable low-impact recovery method.",
+  "record_id": "pair_0003__gemma_4b_judge__r00__AB",
+  "right_plan_role": "programmatic",
+  "run": 0,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T16:04:14.009425+00:00",
+  "winner_role": "programmatic"
+}

@@ -1,0 +1,48 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 17.0,
+    "mean_day_minutes": 8.0,
+    "n_active_days": 2.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 2.0,
+    "total_minutes": 56.0
+  },
+  "fixture_id": "ab_A4__r_high__rc_low__ph_peak",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0214__gemma_12b_judge__r00__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A4__r_high__rc_low__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s002",
+  "llm_won": false,
+  "order": "AB",
+  "pair_id": "pair_0214",
+  "plan_a_advantages": [
+    "Plan A has more rest days (3 vs 1), which could be beneficial for athletes prone to injury or those needing more recovery.",
+    "The interval session in Plan A might introduce a different stimulus that could be valuable for some runners."
+  ],
+  "plan_b_advantages": [
+    "Plan B utilizes threshold-based intensity for hill sessions, which is more effective for building climbing strength and power than simply 'hard' efforts.",
+    "The higher overall volume in Plan B allows for greater physiological adaptation and improvement.",
+    "The inclusion of two easy runs in Plan B promotes aerobic consistency and recovery without adding significant fatigue.",
+    "Plan B's long run is longer than Plan A's, which is beneficial for trail running endurance."
+  ],
+  "position": "AB",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A4__r_high__rc_low__ph_peak__prog__exp_t000__s017",
+  "reasoning": "Plan B appears to be the better choice for a trail runner aiming to become faster. While both plans incorporate essential elements like hill work and long runs, Plan B's emphasis on threshold-based efforts and consistent easy running is more conducive to building sustainable speed and endurance on trails. The higher total training volume in Plan B (326 minutes vs 270) also suggests a greater opportunity for adaptation and improvement, especially given the context of trail running which often demands significant time on feet. Finally, the inclusion of two easy runs in Plan B provides valuable recovery and builds aerobic base without adding significant fatigue.",
+  "record_id": "pair_0214__gemma_12b_judge__r00__AB",
+  "right_plan_role": "programmatic",
+  "run": 0,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.714,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-07T00:54:14.560242+00:00",
+  "winner_role": "programmatic"
+}

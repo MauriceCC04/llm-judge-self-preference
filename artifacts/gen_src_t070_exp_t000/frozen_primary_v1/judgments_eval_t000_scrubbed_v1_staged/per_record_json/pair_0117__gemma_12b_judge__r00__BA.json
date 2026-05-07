@@ -1,0 +1,48 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 18.0,
+    "mean_day_minutes": 7.429,
+    "n_active_days": 0.0,
+    "n_hard_days": 1.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 1.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 52.0
+  },
+  "fixture_id": "ab_A3__r_high__rc_high__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0117__gemma_12b_judge__r00__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A3__r_high__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s003",
+  "llm_won": true,
+  "order": "BA",
+  "pair_id": "pair_0117",
+  "plan_a_advantages": [
+    "Plan A has a slightly higher volume of easy running, which can contribute to aerobic base development.",
+    "Plan A's tempo runs are a good way to improve lactate threshold, a key factor in running speed.",
+    "Plan A has a slightly more structured approach with clearly defined tempo sessions."
+  ],
+  "plan_b_advantages": [
+    "Plan B includes dedicated hill workouts, crucial for trail running strength and power.",
+    "Plan B incorporates more active recovery days, potentially reducing injury risk and promoting faster adaptation.",
+    "Plan B's overall structure seems to prioritize strength and endurance balance more effectively for trail running."
+  ],
+  "position": "BA",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A3__r_high__rc_high__ph_base__prog__exp_t000__s019",
+  "reasoning": "While both plans incorporate essential elements for trail running improvement, Plan B appears better suited for the goal of becoming a faster trail runner. The inclusion of hill repeats (a dedicated strength workout) is a significant advantage, as trail running demands substantial leg strength and power for climbing. Plan A focuses primarily on tempo and long runs, which are important but don't directly address the specific strength requirements of trail terrain. Plan B's emphasis on recovery runs and active recovery also suggests a more thoughtful approach to managing fatigue and promoting adaptation.",
+  "record_id": "pair_0117__gemma_12b_judge__r00__BA",
+  "right_plan_role": "llm",
+  "run": 0,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T22:19:32.458131+00:00",
+  "winner_role": "llm"
+}

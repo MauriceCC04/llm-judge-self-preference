@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 30.0,
+    "mean_day_minutes": 25.429,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 178.0
+  },
+  "fixture_id": "ab_A3__r_high__rc_high__ph_peak",
+  "judge": "gemma_4b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/matching_pool/eval_manifest_scrubbed_v1/judge_inputs/pair_0133__gemma_4b_judge__r00__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-4b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A3__r_high__rc_high__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s001",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0133",
+  "plan_a_advantages": [
+    "Prioritizes hill training for trail-specific power.",
+    "Includes a longer, controlled long run to consolidate climbing gains.",
+    "More focused on building the endurance required for sustained climbing efforts."
+  ],
+  "plan_b_advantages": [
+    "More variety in session types (tempo, intervals).",
+    "Slightly longer total training volume (minutes)."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A3__r_high__rc_high__ph_peak__prog__exp_t000__s017",
+  "reasoning": "Plan A is the better training plan for a trail runner aiming to become faster, primarily because it directly addresses the key demands of trail running – climbing strength and trail-specific power – through a significant focus on hill workouts. Plan B, while including tempo and interval work, lacks the targeted hill training crucial for trail performance. Plan A’s longer, dedicated hill sessions build the muscular endurance needed for sustained climbing, a critical component of trail races. Furthermore, the inclusion of a longer, controlled long run (90 minutes) after the hill work helps consolidate the gains made. While Plan B has a slightly longer overall duration, it doesn't prioritize the specific adaptations needed for trail running speed and efficiency.",
+  "record_id": "pair_0133__gemma_4b_judge__r00__BA",
+  "right_plan_role": "llm",
+  "run": 0,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T17:01:23.015779+00:00",
+  "winner_role": "programmatic"
+}

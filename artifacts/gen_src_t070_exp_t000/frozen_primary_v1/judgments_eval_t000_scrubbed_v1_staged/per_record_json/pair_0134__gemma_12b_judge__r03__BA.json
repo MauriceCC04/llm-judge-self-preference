@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 15.0,
+    "mean_day_minutes": 2.714,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 19.0
+  },
+  "fixture_id": "ab_A3__r_high__rc_low__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0134__gemma_12b_judge__r03__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A3__r_high__rc_low__ph_base__gemma_3_4b_it__src_t070__exp_t000__s004",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0134",
+  "plan_a_advantages": [
+    "Includes a tempo run to improve speed and lactate threshold.",
+    "More varied workout types (easy, long, tempo) compared to Plan B's predominantly easy runs.",
+    "The tempo run is a more targeted approach to improving speed than the hill repeats in Plan B."
+  ],
+  "plan_b_advantages": [
+    "Emphasizes trail-specific endurance with a greater volume of trail running.",
+    "Hill repeats can build strength and power, which is beneficial for trail running."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A3__r_high__rc_low__ph_base__prog__exp_t000__s005",
+  "reasoning": "Plan A appears to be the better choice for an athlete aiming to become a faster trail runner. While both plans incorporate long runs and rest days, Plan A includes a tempo run, which is crucial for developing speed and lactate threshold – a key factor in trail running performance. Plan B focuses heavily on endurance with a lot of easy trail running, which is important but doesn't directly address speed development. The structured inclusion of a tempo run in Plan A makes it more effective for the stated goal.",
+  "record_id": "pair_0134__gemma_12b_judge__r03__BA",
+  "right_plan_role": "llm",
+  "run": 3,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T22:47:54.629809+00:00",
+  "winner_role": "programmatic"
+}

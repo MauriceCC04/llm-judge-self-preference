@@ -1,0 +1,48 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 30.0,
+    "mean_day_minutes": 0.0,
+    "n_active_days": 0.0,
+    "n_hard_days": 1.0,
+    "n_long_runs": 1.0,
+    "n_quality_days": 1.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 0.0
+  },
+  "fixture_id": "ab_A2__r_low__rc_high__ph_peak",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0094__gemma_12b_judge__r01__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A2__r_low__rc_high__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s001",
+  "llm_won": false,
+  "order": "AB",
+  "pair_id": "pair_0094",
+  "plan_a_advantages": [
+    "Plan A has a slightly higher volume of easy running, which could be beneficial for building a solid aerobic base.",
+    "The simplicity of Plan A might be easier to adhere to for some athletes."
+  ],
+  "plan_b_advantages": [
+    "Plan B includes a strength and mobility session, crucial for injury prevention and efficient movement on trails.",
+    "The tempo run in Plan B directly targets lactate threshold, a key determinant of running speed.",
+    "The longer run in Plan B better prepares the athlete for the endurance demands of trail running.",
+    "Plan B's structured approach with varied session types is more likely to lead to performance improvements."
+  ],
+  "position": "AB",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A2__r_low__rc_high__ph_peak__prog__exp_t000__s014",
+  "reasoning": "While both plans involve easy running, Plan B demonstrates a more structured and effective approach to improving trail running speed. It incorporates a strength and mobility session, an aerobic run, and crucially, a tempo run, all of which are vital for developing the necessary fitness components. Plan A solely focuses on easy runs, which, while important for base building, lacks the intensity and variety needed to drive significant performance gains. The inclusion of a longer run in Plan B also better prepares the athlete for the demands of trail races.",
+  "record_id": "pair_0094__gemma_12b_judge__r01__AB",
+  "right_plan_role": "programmatic",
+  "run": 1,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T21:47:41.930295+00:00",
+  "winner_role": "programmatic"
+}

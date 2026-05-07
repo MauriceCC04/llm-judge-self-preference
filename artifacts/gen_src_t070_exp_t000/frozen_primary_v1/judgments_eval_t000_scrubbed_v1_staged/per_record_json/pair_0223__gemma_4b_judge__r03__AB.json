@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 44.0,
+    "mean_day_minutes": 26.143,
+    "n_active_days": 1.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 2.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 1.0,
+    "total_minutes": 183.0
+  },
+  "fixture_id": "ab_A4__r_low__rc_high__ph_base",
+  "judge": "gemma_4b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/matching_pool/eval_manifest_scrubbed_v1/judge_inputs/pair_0223__gemma_4b_judge__r03__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-4b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A4__r_low__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s002",
+  "llm_won": true,
+  "order": "AB",
+  "pair_id": "pair_0223",
+  "plan_a_advantages": [
+    "Longer trail runs build essential endurance.",
+    "Includes a dedicated hill session for climbing strength.",
+    "More closely mimics the demands of trail races."
+  ],
+  "plan_b_advantages": [
+    "Shorter training sessions may be appealing to some runners.",
+    "More rest days could be beneficial for recovery, especially for beginners."
+  ],
+  "position": "AB",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A4__r_low__rc_high__ph_base__prog__exp_t000__s009",
+  "reasoning": "Plan A is the better training plan for a trail runner aiming to become faster, primarily because it incorporates longer, trail-specific runs that build endurance and durability – crucial for trail racing. While Plan B includes some aerobic work, it lacks the extended mileage necessary to truly develop the sustained effort required on trails. Plan A’s focus on longer runs with elevation gain directly addresses the demands of trail running, whereas Plan B’s shorter, more consistent efforts might not translate to the same level of performance on varied terrain. Furthermore, the inclusion of a dedicated hill session in Plan A is more targeted towards improving climbing strength, a key differentiator for trail runners.",
+  "record_id": "pair_0223__gemma_4b_judge__r03__AB",
+  "right_plan_role": "programmatic",
+  "run": 3,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 1.857,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T17:41:18.311355+00:00",
+  "winner_role": "llm"
+}

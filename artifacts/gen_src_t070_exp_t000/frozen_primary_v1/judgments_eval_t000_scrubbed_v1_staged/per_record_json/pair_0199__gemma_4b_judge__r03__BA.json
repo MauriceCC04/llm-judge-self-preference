@@ -1,0 +1,46 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 37.0,
+    "mean_day_minutes": 10.714,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 75.0
+  },
+  "fixture_id": "ab_A4__r_high__rc_high__ph_peak",
+  "judge": "gemma_4b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/matching_pool/eval_manifest_scrubbed_v1/judge_inputs/pair_0199__gemma_4b_judge__r03__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-4b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A4__r_high__rc_high__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s007",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0199",
+  "plan_a_advantages": [
+    "More focused threshold training sessions.",
+    "Better balance between aerobic base building and speed development."
+  ],
+  "plan_b_advantages": [
+    "Includes dedicated hill repeats, which are beneficial for trail running.",
+    "Longer total training volume (more minutes) overall."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A4__r_high__rc_high__ph_peak__prog__exp_t000__s019",
+  "reasoning": "Plan A is the better training plan for a trail runner aiming to become faster, primarily because it incorporates dedicated threshold work more consistently. While both plans include long runs, Plan A dedicates two full sessions to threshold training (51 min tempo runs), which is crucial for building the sustainable strength needed for faster trail running. Plan B’s hill repeats are valuable, but don’t directly address the key component of improving speed – sustained effort at a higher intensity. Furthermore, Plan A’s structure feels more balanced, with a greater emphasis on building a strong aerobic base alongside specific speed work, whereas Plan B leans heavily into longer runs and hill work, potentially leading to overtraining if the athlete isn't already very experienced.",
+  "record_id": "pair_0199__gemma_4b_judge__r03__BA",
+  "right_plan_role": "llm",
+  "run": 3,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T17:30:39.132576+00:00",
+  "winner_role": "programmatic"
+}

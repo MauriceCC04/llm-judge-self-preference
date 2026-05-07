@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 66.0,
+    "mean_day_minutes": 7.857,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 55.0
+  },
+  "fixture_id": "ab_A4__r_low__rc_high__ph_base",
+  "judge": "gemma_4b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/matching_pool/eval_manifest_scrubbed_v1/judge_inputs/pair_0226__gemma_4b_judge__r03__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-4b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A4__r_low__rc_high__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s006",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0226",
+  "plan_a_advantages": [
+    "More targeted workouts for speed and climbing.",
+    "Includes a longer, controlled long run for endurance.",
+    "Incorporates a strength session to build trail-specific muscle endurance."
+  ],
+  "plan_b_advantages": [
+    "Greater emphasis on recovery, potentially beneficial for a runner returning from injury or needing more rest.",
+    "Includes a longer cross-training run, which could be useful for maintaining overall fitness beyond just trail running."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A4__r_low__rc_high__ph_base__prog__exp_t000__s016",
+  "reasoning": "Plan A is the better training plan for a trail runner aiming to become faster, primarily because it incorporates more targeted workouts designed to improve speed and climbing ability. While Plan B emphasizes recovery, it lacks the specific intensity work needed to build a stronger aerobic base and improve trail-specific power. Plan A’s inclusion of dedicated hill sessions and a longer, controlled long run directly addresses the demands of trail running, whereas Plan B’s longer aerobic run feels more like a sustained effort without a clear focus on speed development. Furthermore, the strength session in Plan A is crucial for trail running, building the necessary muscle endurance for tackling varied terrain.",
+  "record_id": "pair_0226__gemma_4b_judge__r03__BA",
+  "right_plan_role": "llm",
+  "run": 3,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T17:42:41.324629+00:00",
+  "winner_role": "programmatic"
+}

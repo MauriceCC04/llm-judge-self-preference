@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 52.0,
+    "mean_day_minutes": 8.857,
+    "n_active_days": 0.0,
+    "n_hard_days": 1.0,
+    "n_long_runs": 1.0,
+    "n_quality_days": 1.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 62.0
+  },
+  "fixture_id": "ab_A3__r_low__rc_high__ph_base",
+  "judge": "gemma_4b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/matching_pool/eval_manifest_scrubbed_v1/judge_inputs/pair_0153__gemma_4b_judge__r00__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-4b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A3__r_low__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s006",
+  "llm_won": true,
+  "order": "AB",
+  "pair_id": "pair_0153",
+  "plan_a_advantages": [
+    "Lower overall volume and intensity, reducing the risk of overtraining.",
+    "More consistent easy running, promoting aerobic base building.",
+    "Longer, moderate-paced runs are beneficial for trail running specific endurance."
+  ],
+  "plan_b_advantages": [
+    "Includes interval training, directly targeting speed development.",
+    "Introduces a more varied training stimulus with cross-training and interval sessions."
+  ],
+  "position": "AB",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A3__r_low__rc_high__ph_base__prog__exp_t000__s020",
+  "reasoning": "Plan A is the better training plan for a trail runner aiming to become faster, particularly given the implied current state of the athlete. It prioritizes consistent aerobic work with manageable volume, focusing on building a solid base and avoiding excessive fatigue. Plan B, while incorporating interval training, introduces a harder day earlier in the plan and a higher overall volume of structured training, which could be overwhelming for someone focused on speed development. Plan A’s consistent easy runs and longer, moderate-paced runs are more conducive to improving running economy and sustained effort – key factors for trail speed.",
+  "record_id": "pair_0153__gemma_4b_judge__r00__AB",
+  "right_plan_role": "programmatic",
+  "run": 0,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T17:10:00.479667+00:00",
+  "winner_role": "llm"
+}

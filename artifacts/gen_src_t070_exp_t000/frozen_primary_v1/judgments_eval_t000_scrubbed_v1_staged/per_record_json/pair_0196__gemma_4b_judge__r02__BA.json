@@ -1,0 +1,48 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 58.0,
+    "mean_day_minutes": 33.0,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 231.0
+  },
+  "fixture_id": "ab_A4__r_high__rc_high__ph_base",
+  "judge": "gemma_4b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/matching_pool/eval_manifest_scrubbed_v1/judge_inputs/pair_0196__gemma_4b_judge__r02__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-4b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A4__r_high__rc_high__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s005",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0196",
+  "plan_a_advantages": [
+    "More focused on speed development with dedicated interval sessions.",
+    "Includes a greater proportion of easy running, promoting recovery and aerobic base building.",
+    "Better balance between aerobic and speed work, reducing the risk of overtraining."
+  ],
+  "plan_b_advantages": [
+    "Stronger emphasis on hill training, directly beneficial for trail running.",
+    "Incorporates a strength session, addressing a key area often neglected in trail running plans.",
+    "Longer duration runs, potentially building greater overall endurance (though this could be a detriment if not managed carefully)."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A4__r_high__rc_high__ph_base__prog__exp_t000__s001",
+  "reasoning": "For a trail runner aiming to become faster, Plan A is the superior choice. It strategically balances aerobic development with targeted speed work, prioritizing threshold intervals and consistent easy running – crucial for improving running economy and sustained pace. Plan B, while incorporating hill work and strength training, leans heavily into longer, more demanding sessions, which could lead to burnout or injury, especially without a clear progression. Plan A’s structured approach allows for a more measured and sustainable improvement in speed and endurance.",
+  "record_id": "pair_0196__gemma_4b_judge__r02__BA",
+  "right_plan_role": "llm",
+  "run": 2,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T17:29:14.665527+00:00",
+  "winner_role": "programmatic"
+}

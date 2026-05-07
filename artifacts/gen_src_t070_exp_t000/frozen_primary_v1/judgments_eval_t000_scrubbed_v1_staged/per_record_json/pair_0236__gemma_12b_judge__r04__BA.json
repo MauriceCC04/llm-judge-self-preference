@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 6.0,
+    "mean_day_minutes": 5.143,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 36.0
+  },
+  "fixture_id": "ab_A4__r_low__rc_low__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0236__gemma_12b_judge__r04__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A4__r_low__rc_low__ph_base__gemma_3_4b_it__src_t070__exp_t000__s003",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0236",
+  "plan_a_advantages": [
+    "More consistent easy running: Plan A includes three dedicated easy runs, promoting aerobic development and recovery. This contrasts with Plan B's more varied approach.",
+    "Dedicated strength and mobility session: Plan A explicitly incorporates a strength and mobility day, vital for trail runners to prevent injuries and improve performance.",
+    "Lower overall volume: Plan A has a slightly lower total training volume (444 minutes vs 480 minutes), which can be beneficial for reducing fatigue and injury risk, especially for those new to structured training."
+  ],
+  "plan_b_advantages": [
+    "Potentially more race-specific: Plan B's descriptions of sessions (e.g., 'Trail Run - Tempo') suggest a slightly more focused approach on race-specific efforts.",
+    "Longer long runs: Plan B includes two longer long runs (120 and 150 minutes) compared to Plan A's (122 and 144 minutes), which could be beneficial for building endurance."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A4__r_low__rc_low__ph_base__prog__exp_t000__s014",
+  "reasoning": "Plan A appears to be the better choice for a trail runner aiming to become faster. While both plans incorporate essential elements like long runs and tempo sessions, Plan A's structure prioritizes building a solid aerobic base with consistent easy runs and a dedicated strength/mobility day. This foundation is crucial for trail running, where durability and injury prevention are paramount. Plan B, while including similar elements, seems to have a slightly higher overall volume and less emphasis on consistent easy running, which could lead to overtraining or injury risk, especially for someone not already at a high level of fitness.",
+  "record_id": "pair_0236__gemma_12b_judge__r04__BA",
+  "right_plan_role": "llm",
+  "run": 4,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-07T01:29:59.480199+00:00",
+  "winner_role": "programmatic"
+}

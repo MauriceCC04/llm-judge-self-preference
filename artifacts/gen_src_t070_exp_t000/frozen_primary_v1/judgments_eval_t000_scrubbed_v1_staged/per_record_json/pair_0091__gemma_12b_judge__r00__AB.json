@@ -1,0 +1,49 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 36.0,
+    "mean_day_minutes": 9.857,
+    "n_active_days": 1.0,
+    "n_hard_days": 1.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 1.0,
+    "n_rest_days": 1.0,
+    "total_minutes": 69.0
+  },
+  "fixture_id": "ab_A2__r_low__rc_high__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0091__gemma_12b_judge__r00__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A2__r_low__rc_high__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s001",
+  "llm_won": false,
+  "order": "AB",
+  "pair_id": "pair_0091",
+  "plan_a_advantages": [
+    "Simplicity: Plan A is very straightforward and easy to follow.",
+    "Lower overall volume: It might be suitable for a runner with very limited time or a high risk of injury.",
+    "Recovery focused: The emphasis on easy runs and rest could be beneficial for runners returning from injury or those who are new to running."
+  ],
+  "plan_b_advantages": [
+    "Variety of training: Plan B includes aerobic, easy, and hill workouts, addressing multiple aspects of trail running fitness.",
+    "Hill training: The dedicated hill session is essential for building strength and power needed for climbing on trails.",
+    "Higher intensity: The inclusion of threshold runs provides a stimulus for improving aerobic capacity and speed.",
+    "More structured: The plan is more thoughtfully structured to include different types of workouts and recovery periods."
+  ],
+  "position": "AB",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A2__r_low__rc_high__ph_base__prog__exp_t000__s009",
+  "reasoning": "While both plans aim to improve trail running speed, Plan B is significantly better suited for achieving that goal. Plan B incorporates a variety of training types – aerobic runs at threshold and easy intensities, a dedicated hill workout, and rest days – which is crucial for developing the necessary fitness components for faster trail running. Plan A, consisting solely of easy runs, lacks the intensity and specificity needed to drive significant improvements in speed and strength on trails. The inclusion of hill work in Plan B is particularly important for trail running, where climbing is a major factor.",
+  "record_id": "pair_0091__gemma_12b_judge__r00__AB",
+  "right_plan_role": "programmatic",
+  "run": 0,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.143,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T21:43:01.948744+00:00",
+  "winner_role": "programmatic"
+}

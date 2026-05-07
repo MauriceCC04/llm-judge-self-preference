@@ -1,0 +1,48 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 0.0,
+    "mean_day_minutes": 1.714,
+    "n_active_days": 1.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 2.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 1.0,
+    "total_minutes": 12.0
+  },
+  "fixture_id": "ab_A1__r_low__rc_high__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0032__gemma_12b_judge__r01__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A1__r_low__rc_high__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s028",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0032",
+  "plan_a_advantages": [
+    "Includes longer runs (60 minutes) to build endurance, a key component of trail running.",
+    "Incorporates cross-training (37 and 45 minutes) to reduce impact and build aerobic fitness without stressing running muscles.",
+    "Features aerobic runs (30 minutes) at a steady effort, providing a slightly higher intensity stimulus than just easy runs.",
+    "Offers a more varied training week, which can help prevent boredom and reduce the risk of overuse injuries."
+  ],
+  "plan_b_advantages": [
+    "Has more rest days (2 vs 1), which could be beneficial for recovery, especially for beginners.",
+    "The simplicity of the plan might be easier to adhere to for some individuals."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A1__r_low__rc_high__ph_base__prog__exp_t000__s000",
+  "reasoning": "While both plans focus on easy running, Plan A demonstrates a more comprehensive approach to trail running development. It incorporates longer runs and cross-training, which are crucial for building both endurance and overall fitness necessary for trail running. Plan B's repetitive easy runs, while potentially beneficial for base building, lack the variety and stimulus needed to become a *faster* trail runner. The inclusion of aerobic runs in Plan A also provides a slightly higher intensity stimulus than solely easy runs.",
+  "record_id": "pair_0032__gemma_12b_judge__r01__BA",
+  "right_plan_role": "llm",
+  "run": 1,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T20:17:33.818995+00:00",
+  "winner_role": "programmatic"
+}

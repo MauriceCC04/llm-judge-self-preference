@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 17.0,
+    "mean_day_minutes": 8.0,
+    "n_active_days": 2.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 2.0,
+    "total_minutes": 56.0
+  },
+  "fixture_id": "ab_A4__r_high__rc_low__ph_peak",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0214__gemma_12b_judge__r03__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A4__r_high__rc_low__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s002",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0214",
+  "plan_a_advantages": [
+    "More consistent aerobic work: Plan A includes more time spent at threshold and easy paces, building a solid aerobic foundation.",
+    "Lower overall intensity: The plan avoids high-intensity intervals, which can be taxing and increase injury risk, especially for trail running.",
+    "Better distribution of hill work: Plan A spreads hill sessions across the week, allowing for more recovery between sessions."
+  ],
+  "plan_b_advantages": [
+    "More rest days: Plan B includes three rest days compared to Plan A's one, which could be beneficial for recovery, especially for athletes prone to injury.",
+    "Longer long run: The 120-minute long run in Plan B provides more time to build endurance."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A4__r_high__rc_low__ph_peak__prog__exp_t000__s017",
+  "reasoning": "Plan A appears to be the better choice for a trail runner aiming to become faster. While both plans incorporate essential elements like hill work and long runs, Plan A's emphasis on consistent aerobic work at threshold and easy paces throughout the week is more conducive to building a strong aerobic base, which is crucial for trail running performance. Plan B's inclusion of interval training on day 6, while potentially beneficial, might be too much intensity too early in a training cycle without more context on the athlete's current fitness level. The more balanced approach of Plan A, with its focus on controlled effort and consistent volume, is likely to lead to more sustainable improvements in speed and endurance.",
+  "record_id": "pair_0214__gemma_12b_judge__r03__BA",
+  "right_plan_role": "llm",
+  "run": 3,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.714,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-07T00:55:15.635419+00:00",
+  "winner_role": "programmatic"
+}

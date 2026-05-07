@@ -1,0 +1,49 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 2.0,
+    "mean_day_minutes": 6.429,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 45.0
+  },
+  "fixture_id": "ab_A3__r_low__rc_high__ph_peak",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0168__gemma_12b_judge__r00__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A3__r_low__rc_high__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s005",
+  "llm_won": false,
+  "order": "AB",
+  "pair_id": "pair_0168",
+  "plan_a_advantages": [
+    "Plan A includes interval training, which can improve top-end speed, a component of faster trail running.",
+    "Plan A includes a strength session, which can improve overall power and efficiency.",
+    "Plan A has a slightly longer total training time, which could be beneficial for athletes with more time to dedicate to training."
+  ],
+  "plan_b_advantages": [
+    "Plan B includes a dedicated hill workout, essential for trail running.",
+    "Plan B emphasizes varied aerobic intensities (threshold and easy), promoting a more well-rounded aerobic base.",
+    "Plan B's structure appears more focused on building the specific endurance and strength needed for trail running.",
+    "Plan B has a slightly lower total training time, which could be beneficial for athletes with less time to dedicate to training."
+  ],
+  "position": "AB",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A3__r_low__rc_high__ph_peak__prog__exp_t000__s017",
+  "reasoning": "While both plans aim to improve trail running speed, Plan B appears to be more strategically designed for that goal. It incorporates a dedicated hill workout, which is crucial for trail running performance given the varied terrain. Plan B also emphasizes consistent aerobic work at different intensities (threshold, easy), which is more likely to build a robust aerobic base than Plan A's more generalized approach. The overall structure of Plan B seems to prioritize building a strong foundation for faster trail running, while Plan A feels slightly less targeted.",
+  "record_id": "pair_0168__gemma_12b_judge__r00__AB",
+  "right_plan_role": "programmatic",
+  "run": 0,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T23:41:02.161938+00:00",
+  "winner_role": "programmatic"
+}

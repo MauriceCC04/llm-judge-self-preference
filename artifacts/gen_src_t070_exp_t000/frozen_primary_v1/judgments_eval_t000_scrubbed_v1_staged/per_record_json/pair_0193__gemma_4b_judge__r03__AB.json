@@ -1,0 +1,46 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 27.0,
+    "mean_day_minutes": 27.143,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 2.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 190.0
+  },
+  "fixture_id": "ab_A4__r_high__rc_high__ph_base",
+  "judge": "gemma_4b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/matching_pool/eval_manifest_scrubbed_v1/judge_inputs/pair_0193__gemma_4b_judge__r03__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-4b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A4__r_high__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s004",
+  "llm_won": true,
+  "order": "AB",
+  "pair_id": "pair_0193",
+  "plan_a_advantages": [
+    "More emphasis on long, easy runs – essential for trail running endurance.",
+    "Includes dedicated hill work, directly addressing a key trail running component."
+  ],
+  "plan_b_advantages": [
+    "Incorporates cross-training for aerobic stimulus with reduced impact.",
+    "Includes a strength and mobility session, which is beneficial for injury prevention and overall athleticism."
+  ],
+  "position": "AB",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A4__r_high__rc_high__ph_base__prog__exp_t000__s018",
+  "reasoning": "Plan A is the better training plan for a trail runner aiming to become faster. It prioritizes building a strong base of endurance through longer, easier runs, alongside targeted hill work, which is crucial for trail running. Plan B, while including tempo and hill sessions, focuses more on threshold training and strength work, which could lead to burnout or over-reliance on specific efforts without sufficient foundational endurance. Plan A’s consistent emphasis on longer, lower-intensity runs will better translate to the sustained effort required in a trail race, while Plan B’s more intense sessions could be detrimental to overall race performance.",
+  "record_id": "pair_0193__gemma_4b_judge__r03__AB",
+  "right_plan_role": "programmatic",
+  "run": 3,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 1.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T17:28:03.513366+00:00",
+  "winner_role": "llm"
+}

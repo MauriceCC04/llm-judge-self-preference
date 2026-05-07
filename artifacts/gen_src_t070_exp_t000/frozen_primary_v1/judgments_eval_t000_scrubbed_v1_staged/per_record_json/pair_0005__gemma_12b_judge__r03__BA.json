@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 14.0,
+    "mean_day_minutes": 13.0,
+    "n_active_days": 1.0,
+    "n_hard_days": 2.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 2.0,
+    "n_rest_days": 1.0,
+    "total_minutes": 91.0
+  },
+  "fixture_id": "ab_A1__r_high__rc_high__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0005__gemma_12b_judge__r03__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A1__r_high__rc_high__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s001",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0005",
+  "plan_a_advantages": [
+    "Includes dedicated hill sessions at threshold intensity, directly addressing the need for climbing strength and power.",
+    "Features two hard training days, providing a more substantial stimulus for adaptation and improvement.",
+    "Higher total training volume (226 minutes vs 135 minutes) allows for more overall work and potential gains."
+  ],
+  "plan_b_advantages": [
+    "Higher number of rest days (3 vs 2) may be beneficial for athletes prone to injury or those needing more recovery.",
+    "The focus on form and cadence during easy runs could be helpful for newer trail runners."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A1__r_high__rc_high__ph_base__prog__exp_t000__s009",
+  "reasoning": "For a trail runner aiming to become faster, Plan A is the better choice. While both plans incorporate rest days, Plan A includes dedicated hill sessions at a threshold intensity, which is crucial for developing the strength and power needed for efficient climbing – a key element of trail running. Plan B focuses solely on easy runs, which are valuable for building aerobic base but lack the specific stimulus required for trail-specific speed development. The inclusion of two hard days in Plan A, compared to zero in Plan B, provides a more effective training load for improvement.",
+  "record_id": "pair_0005__gemma_12b_judge__r03__BA",
+  "right_plan_role": "llm",
+  "run": 3,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 2.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T19:39:49.830516+00:00",
+  "winner_role": "programmatic"
+}

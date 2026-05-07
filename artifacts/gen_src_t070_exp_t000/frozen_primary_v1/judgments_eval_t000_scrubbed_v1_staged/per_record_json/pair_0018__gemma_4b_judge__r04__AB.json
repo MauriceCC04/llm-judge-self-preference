@@ -1,0 +1,46 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 1.0,
+    "mean_day_minutes": 13.571,
+    "n_active_days": 2.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 2.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 2.0,
+    "total_minutes": 95.0
+  },
+  "fixture_id": "ab_A1__r_high__rc_low__ph_base",
+  "judge": "gemma_4b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/matching_pool/eval_manifest_scrubbed_v1/judge_inputs/pair_0018__gemma_4b_judge__r04__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-4b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A1__r_high__rc_low__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s003",
+  "llm_won": false,
+  "order": "AB",
+  "pair_id": "pair_0018",
+  "plan_a_advantages": [
+    "More frequent rest days (3 vs. 1) which could be beneficial for a runner who needs more recovery.",
+    "Focus on ‘enjoying the scenery’ which could be motivating for some runners, though it doesn’t contribute to performance directly."
+  ],
+  "plan_b_advantages": [
+    "Includes a dedicated 65-minute aerobic session, a key component for building sustained endurance.",
+    "Features a 73-minute long run specifically targeting trail durability, a critical aspect of trail running training."
+  ],
+  "position": "AB",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A1__r_high__rc_low__ph_base__prog__exp_t000__s006",
+  "reasoning": "Plan B is the better training plan for a trail runner aiming to become faster. It incorporates a more structured approach to building aerobic endurance with a longer, dedicated aerobic session (65 minutes) and a longer run specifically designed for trail durability (73 minutes). Plan A, while emphasizing ‘easy’ runs, lacks a focused effort to develop true aerobic capacity beyond simply maintaining a steady pace, and its longer runs are consistently at a very easy effort.  The inclusion of a longer, controlled aerobic session in Plan B directly addresses the goal of increasing speed by improving the runner's ability to sustain effort over longer distances, which is crucial for trail running performance.",
+  "record_id": "pair_0018__gemma_4b_judge__r04__AB",
+  "right_plan_role": "programmatic",
+  "run": 4,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 1.3,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T16:11:13.159566+00:00",
+  "winner_role": "programmatic"
+}

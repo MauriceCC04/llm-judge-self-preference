@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 10.0,
+    "mean_day_minutes": 4.571,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 32.0
+  },
+  "fixture_id": "ab_A2__r_low__rc_high__ph_peak",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0097__gemma_12b_judge__r03__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A2__r_low__rc_high__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s007",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0097",
+  "plan_a_advantages": [
+    "Includes a cross-training day for low-impact aerobic stimulus and injury prevention.",
+    "Slightly higher total training volume (244 minutes vs 212 minutes) which can contribute to greater aerobic development.",
+    "The varied durations of the easy runs may help prevent monotony and provide slightly different stimulus."
+  ],
+  "plan_b_advantages": [
+    "Slightly lower total training volume might be preferable for athletes with a history of injury or those who are particularly sensitive to training load.",
+    "The simplicity of the plan could be beneficial for beginners who are still learning to manage their training."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A2__r_low__rc_high__ph_peak__prog__exp_t000__s008",
+  "reasoning": "While both plans focus on easy running, Plan A demonstrates a more thoughtful approach to building a foundation for faster trail running. The inclusion of a cross-training day in Plan A is a significant advantage, offering a low-impact aerobic stimulus that can improve cardiovascular fitness without the repetitive stress of running. Plan B's entirely running-focused approach, while seemingly simple, lacks this crucial element of varied stimulus. Ultimately, Plan A's slightly higher volume and the addition of cross-training make it a more robust and well-rounded plan for the stated goal.",
+  "record_id": "pair_0097__gemma_12b_judge__r03__BA",
+  "right_plan_role": "llm",
+  "run": 3,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T21:52:20.731577+00:00",
+  "winner_role": "programmatic"
+}

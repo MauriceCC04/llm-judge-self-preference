@@ -1,0 +1,48 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 43.0,
+    "mean_day_minutes": 7.0,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 49.0
+  },
+  "fixture_id": "ab_A4__r_low__rc_low__ph_peak",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0249__gemma_12b_judge__r03__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A4__r_low__rc_low__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s001",
+  "llm_won": false,
+  "order": "AB",
+  "pair_id": "pair_0249",
+  "plan_a_advantages": [
+    "Plan A includes interval training, which can be beneficial for developing speed and power.",
+    "Plan A has a slightly higher total training volume (333 minutes vs 284 minutes)."
+  ],
+  "plan_b_advantages": [
+    "Plan B emphasizes aerobic base building with a longer long run and more easy runs.",
+    "Plan B incorporates a tempo run, which is more suitable for trail running than intervals.",
+    "Plan B's strength and mobility session is focused on durability and injury prevention, which is crucial for trail runners.",
+    "Plan B has a lower overall volume, which may be preferable for an athlete who is fatigued or prone to injury."
+  ],
+  "position": "AB",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A4__r_low__rc_low__ph_peak__prog__exp_t000__s013",
+  "reasoning": "While both plans address the goal of becoming a faster trail runner, Plan B appears to be the more strategically sound choice, especially given the unspecified current state of the athlete. Plan B prioritizes building a strong aerobic base with a longer long run and more easy runs, which is crucial for trail running performance. The inclusion of a tempo run, rather than intervals, is also more appropriate for developing sustainable speed and endurance on varied terrain. Finally, the strength and mobility session in Plan B is shorter and focuses on durability and injury resistance, which is vital for trail runners.",
+  "record_id": "pair_0249__gemma_12b_judge__r03__AB",
+  "right_plan_role": "programmatic",
+  "run": 3,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-07T01:50:40.434996+00:00",
+  "winner_role": "programmatic"
+}

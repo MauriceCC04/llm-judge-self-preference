@@ -1,0 +1,48 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 0.0,
+    "mean_day_minutes": 33.429,
+    "n_active_days": 1.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 1.0,
+    "total_minutes": 234.0
+  },
+  "fixture_id": "ab_A4__r_high__rc_low__ph_peak",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0218__gemma_12b_judge__r00__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A4__r_high__rc_low__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s006",
+  "llm_won": true,
+  "order": "AB",
+  "pair_id": "pair_0218",
+  "plan_a_advantages": [
+    "Higher overall volume: Plan A totals 490 minutes compared to Plan B's 256, allowing for greater adaptation and improvement.",
+    "Interval training: The inclusion of interval sessions in Plan A directly addresses speed and anaerobic capacity, vital for faster trail running.",
+    "Strength training focus: Plan A dedicates a full 60 minutes to strength training, supporting injury prevention and power development.",
+    "More balanced distribution: Plan A's distribution of workout types seems more balanced, incorporating a wider range of training stimuli."
+  ],
+  "plan_b_advantages": [
+    "Lower overall volume: This might be beneficial for athletes prone to injury or those in the early stages of training.",
+    "Emphasis on mobility: The initial strength and mobility session in Plan B could be advantageous for improving movement efficiency."
+  ],
+  "position": "AB",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A4__r_high__rc_low__ph_peak__prog__exp_t000__s003",
+  "reasoning": "Plan A appears to be the better choice for a trail runner aiming to become faster. While both plans incorporate essential elements like tempo runs, long runs, and rest days, Plan A provides a more comprehensive and balanced approach to training. The higher overall volume in Plan A, particularly in the aerobic and long run sessions, is likely to contribute more significantly to improved endurance, a crucial factor for faster trail running. The inclusion of interval training in Plan A is also a key differentiator, directly targeting anaerobic capacity and speed development, which are often overlooked in less structured plans.",
+  "record_id": "pair_0218__gemma_12b_judge__r00__AB",
+  "right_plan_role": "programmatic",
+  "run": 0,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 1.286,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-07T01:00:45.919898+00:00",
+  "winner_role": "llm"
+}

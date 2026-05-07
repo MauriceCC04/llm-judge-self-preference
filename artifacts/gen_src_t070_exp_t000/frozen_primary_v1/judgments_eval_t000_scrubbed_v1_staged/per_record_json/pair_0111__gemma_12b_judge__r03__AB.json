@@ -1,0 +1,48 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 10.0,
+    "mean_day_minutes": 3.857,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 27.0
+  },
+  "fixture_id": "ab_A2__r_low__rc_low__ph_peak",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0111__gemma_12b_judge__r03__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A2__r_low__rc_low__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s008",
+  "llm_won": false,
+  "order": "AB",
+  "pair_id": "pair_0111",
+  "plan_a_advantages": [
+    "Plan A has a slightly simpler structure, which might be preferable for a complete beginner.",
+    "Plan A has a slightly lower total training volume, which could be beneficial for someone very new to running or recovering from an injury."
+  ],
+  "plan_b_advantages": [
+    "Includes a cross-training day to reduce impact and provide aerobic stimulus.",
+    "Has a slightly higher total training volume, potentially leading to greater aerobic development.",
+    "The varied run durations in Plan B may help prevent monotony and improve adaptability.",
+    "The focus on 'conversational effort' in Plan B provides a clearer intensity guideline for the athlete."
+  ],
+  "position": "AB",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A2__r_low__rc_low__ph_peak__prog__exp_t000__s008",
+  "reasoning": "While both plans focus on easy running, Plan B demonstrates a more thoughtful approach to building a base for faster trail running. The inclusion of a cross-training day is a significant advantage, allowing for aerobic stimulus without the impact stress of running. Plan B also has a slightly higher total training volume, which, when kept at an easy intensity, can contribute to improved aerobic capacity. The slightly more varied structure of Plan B, with its cross-training and varied run durations, is likely to be more sustainable and engaging for the athlete over time.",
+  "record_id": "pair_0111__gemma_12b_judge__r03__AB",
+  "right_plan_role": "programmatic",
+  "run": 3,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T22:11:53.598731+00:00",
+  "winner_role": "programmatic"
+}

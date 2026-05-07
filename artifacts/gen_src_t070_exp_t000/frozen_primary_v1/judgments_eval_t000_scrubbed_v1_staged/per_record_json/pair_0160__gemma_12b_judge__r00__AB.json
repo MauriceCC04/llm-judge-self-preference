@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 60.0,
+    "mean_day_minutes": 5.143,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 36.0
+  },
+  "fixture_id": "ab_A3__r_low__rc_high__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0160__gemma_12b_judge__r00__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A3__r_low__rc_high__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s003",
+  "llm_won": true,
+  "order": "AB",
+  "pair_id": "pair_0160",
+  "plan_a_advantages": [
+    "Includes a tempo run, which is crucial for improving lactate threshold and running speed.",
+    "Incorporates strength training, essential for trail running's demands.",
+    "Offers a more varied workout schedule with aerobic, easy, and strength sessions."
+  ],
+  "plan_b_advantages": [
+    "Prioritizes long, easy runs, which can build a strong aerobic base.",
+    "Includes a cross-training session for low-impact aerobic stimulus."
+  ],
+  "position": "AB",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A3__r_low__rc_high__ph_base__prog__exp_t000__s010",
+  "reasoning": "While both plans aim to improve trail running speed, Plan A appears better suited for a runner looking to become faster. Plan B heavily emphasizes long, easy runs, which are important for endurance but may not be the most efficient way to improve speed. Plan A incorporates a tempo run and a mix of easy, aerobic, and strength sessions, providing a more balanced approach to developing both speed and endurance. The inclusion of strength training in Plan A is also a significant advantage for trail running, which demands more muscular strength than road running.",
+  "record_id": "pair_0160__gemma_12b_judge__r00__AB",
+  "right_plan_role": "programmatic",
+  "run": 0,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T23:28:08.577007+00:00",
+  "winner_role": "llm"
+}

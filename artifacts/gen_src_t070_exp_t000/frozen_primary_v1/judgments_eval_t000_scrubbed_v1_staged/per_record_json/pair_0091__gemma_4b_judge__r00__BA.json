@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 36.0,
+    "mean_day_minutes": 9.857,
+    "n_active_days": 1.0,
+    "n_hard_days": 1.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 1.0,
+    "n_rest_days": 1.0,
+    "total_minutes": 69.0
+  },
+  "fixture_id": "ab_A2__r_low__rc_high__ph_base",
+  "judge": "gemma_4b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/matching_pool/eval_manifest_scrubbed_v1/judge_inputs/pair_0091__gemma_4b_judge__r00__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-4b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A2__r_low__rc_high__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s001",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0091",
+  "plan_a_advantages": [
+    "Includes hill work for trail-specific strength.",
+    "Incorporates a threshold run to improve aerobic capacity.",
+    "Offers a more varied stimulus, targeting different aspects of fitness."
+  ],
+  "plan_b_advantages": [
+    "Simpler and less demanding, potentially easier to adhere to.",
+    "More rest days, which could be beneficial for an athlete who is currently fatigued or overtrained."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A2__r_low__rc_high__ph_base__prog__exp_t000__s009",
+  "reasoning": "Plan A is the superior training plan for a trail runner aiming to become faster. It incorporates a crucial element – hill work – which directly addresses the demands of trail running, building the strength and power needed for climbing. Furthermore, Plan A includes a threshold run, a key component for improving aerobic capacity at a faster pace. Plan B, conversely, is excessively focused on easy running, providing minimal stimulus for speed development and neglecting the specific adaptations required for trail running terrain. While recovery is important, the lack of intensity in Plan B will likely hinder progress towards the athlete's goal.",
+  "record_id": "pair_0091__gemma_4b_judge__r00__BA",
+  "right_plan_role": "llm",
+  "run": 0,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.143,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T16:42:41.922473+00:00",
+  "winner_role": "programmatic"
+}

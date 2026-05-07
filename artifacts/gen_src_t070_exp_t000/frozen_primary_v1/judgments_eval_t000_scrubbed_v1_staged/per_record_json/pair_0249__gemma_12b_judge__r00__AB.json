@@ -1,0 +1,49 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 43.0,
+    "mean_day_minutes": 7.0,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 49.0
+  },
+  "fixture_id": "ab_A4__r_low__rc_low__ph_peak",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0249__gemma_12b_judge__r00__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A4__r_low__rc_low__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s001",
+  "llm_won": false,
+  "order": "AB",
+  "pair_id": "pair_0249",
+  "plan_a_advantages": [
+    "Plan A includes an interval session, which can be beneficial for developing speed.",
+    "Plan A's strength training session is longer, potentially allowing for more comprehensive muscle development.",
+    "Plan A has a slightly higher total training volume (333 minutes vs 284 minutes)."
+  ],
+  "plan_b_advantages": [
+    "Plan B emphasizes aerobic base building with a longer long run and more easy runs.",
+    "Plan B incorporates a tempo run, which is more sustainable and effective for improving speed and lactate threshold than intervals for a fatigued athlete.",
+    "Plan B's strength and mobility session is shorter and focuses on durability and injury resistance, which is more appropriate for a fatigued athlete.",
+    "Plan B has a lower total training volume, which is beneficial for a fatigued athlete."
+  ],
+  "position": "AB",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A4__r_low__rc_low__ph_peak__prog__exp_t000__s013",
+  "reasoning": "While both plans address the goal of becoming a faster trail runner, Plan B appears to be the better choice, especially considering the context of a potentially fatigued athlete. Plan B prioritizes building a strong aerobic base with a longer long run and more easy runs, which is crucial for trail running performance and recovery. The inclusion of a tempo run in Plan B is also a more effective way to improve speed and lactate threshold than the interval run in Plan A, as tempo runs are generally more sustainable and less taxing. Finally, Plan B's strength and mobility session is shorter and focuses on durability and injury resistance, which is more appropriate for a fatigued athlete.",
+  "record_id": "pair_0249__gemma_12b_judge__r00__AB",
+  "right_plan_role": "programmatic",
+  "run": 0,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-07T01:49:40.645079+00:00",
+  "winner_role": "programmatic"
+}

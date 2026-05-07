@@ -1,0 +1,46 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 18.0,
+    "mean_day_minutes": 5.0,
+    "n_active_days": 2.0,
+    "n_hard_days": 1.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 1.0,
+    "n_rest_days": 2.0,
+    "total_minutes": 35.0
+  },
+  "fixture_id": "ab_A1__r_low__rc_low__ph_base",
+  "judge": "gemma_4b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/matching_pool/eval_manifest_scrubbed_v1/judge_inputs/pair_0050__gemma_4b_judge__r04__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-4b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A1__r_low__rc_low__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s008",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0050",
+  "plan_a_advantages": [
+    "Includes structured workouts like tempo and threshold runs to directly improve speed and endurance.",
+    "More varied workout types (aerobic, cross-training, tempo) provide a broader stimulus for adaptation."
+  ],
+  "plan_b_advantages": [
+    "More rest days, which could be beneficial for an athlete who is new to structured training or recovering from injury.",
+    "Focuses on form and breathing during easy runs, which is a good foundational element for any runner."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A1__r_low__rc_low__ph_base__prog__exp_t000__s007",
+  "reasoning": "Plan A is the superior training plan for a trail runner aiming to become faster. It incorporates structured workouts designed to build aerobic endurance and threshold strength, including a dedicated tempo run and a threshold-based aerobic session. Plan B, conversely, is almost entirely focused on recovery and very short, easy runs, which would likely hinder the athlete's progress towards increased speed. While recovery is crucial, a runner needs targeted training to improve their performance, and Plan A provides that.",
+  "record_id": "pair_0050__gemma_4b_judge__r04__BA",
+  "right_plan_role": "llm",
+  "run": 4,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 2.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T16:25:10.477832+00:00",
+  "winner_role": "programmatic"
+}

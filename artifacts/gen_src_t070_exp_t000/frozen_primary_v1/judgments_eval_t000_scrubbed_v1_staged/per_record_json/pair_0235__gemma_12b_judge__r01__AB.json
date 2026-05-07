@@ -1,0 +1,48 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 22.0,
+    "mean_day_minutes": 6.714,
+    "n_active_days": 1.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 1.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 1.0,
+    "total_minutes": 47.0
+  },
+  "fixture_id": "ab_A4__r_low__rc_high__ph_peak",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0235__gemma_12b_judge__r01__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A4__r_low__rc_high__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s009",
+  "llm_won": false,
+  "order": "AB",
+  "pair_id": "pair_0235",
+  "plan_a_advantages": [
+    "Plan A includes more aerobic runs (3 vs 1 in Plan B), which could contribute to a greater overall aerobic base.",
+    "Plan A has two long runs, potentially providing more opportunities to build endurance."
+  ],
+  "plan_b_advantages": [
+    "Plan B incorporates strength and mobility work, which is vital for trail runners to prevent injuries and improve efficiency.",
+    "Plan B's longer long run (112 minutes) provides a greater stimulus for aerobic development.",
+    "Plan B's tempo run focuses on threshold intensity, which is more effective for improving sustainable speed than a general 'hard' intensity.",
+    "Plan B includes cross-training, which allows for aerobic stimulus with reduced impact, aiding recovery and injury prevention."
+  ],
+  "position": "AB",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A4__r_low__rc_high__ph_peak__prog__exp_t000__s011",
+  "reasoning": "While both plans aim to improve trail running speed, Plan B appears better suited for achieving that goal, especially considering the context of a recent heavy training load. Plan B prioritizes building a strong foundation with strength and cross-training, which is crucial for injury prevention and overall durability – essential for trail running. The longer long run in Plan B (112 minutes vs. 90 minutes) also provides a greater stimulus for aerobic development, a key factor in trail running performance. Finally, the focus on threshold intensity in the tempo run is more beneficial for improving sustainable speed than the 'hard' intensity in Plan A.",
+  "record_id": "pair_0235__gemma_12b_judge__r01__AB",
+  "right_plan_role": "programmatic",
+  "run": 1,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 2.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-07T01:27:25.878094+00:00",
+  "winner_role": "programmatic"
+}

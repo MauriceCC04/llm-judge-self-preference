@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 17.0,
+    "mean_day_minutes": 1.143,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 8.0
+  },
+  "fixture_id": "ab_A2__r_low__rc_high__ph_peak",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0099__gemma_12b_judge__r02__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A2__r_low__rc_high__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s004",
+  "llm_won": false,
+  "order": "AB",
+  "pair_id": "pair_0099",
+  "plan_a_advantages": [
+    "Plan A has slightly more total running time (167 minutes vs 159 minutes).",
+    "Plan A's simplicity might be easier to adhere to for someone new to structured training."
+  ],
+  "plan_b_advantages": [
+    "Plan B includes a strength and mobility session, which is vital for trail running injury prevention and performance.",
+    "Plan B's varied run durations (20, 33, 42, 64 minutes) provide slightly more stimulus than Plan A's consistent 42 and 47-minute runs.",
+    "Plan B's purpose summaries are more descriptive and highlight the rationale behind each workout."
+  ],
+  "position": "AB",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A2__r_low__rc_high__ph_peak__prog__exp_t000__s015",
+  "reasoning": "While both plans focus on easy running and recovery, Plan B demonstrates a slightly more structured approach to building aerobic consistency and incorporates strength training, which is crucial for trail running. Plan A's repetitive nature of solely easy runs, while safe, might not be as effective for improving speed over time. The inclusion of a strength and mobility session in Plan B addresses a key element often overlooked in beginner trail running plans – building the necessary muscle strength and stability to handle uneven terrain and prevent injuries. Overall, Plan B offers a more well-rounded foundation for becoming a faster trail runner.",
+  "record_id": "pair_0099__gemma_12b_judge__r02__AB",
+  "right_plan_role": "programmatic",
+  "run": 2,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 1.143,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T21:54:43.238398+00:00",
+  "winner_role": "programmatic"
+}

@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 1.0,
+    "mean_day_minutes": 11.429,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 80.0
+  },
+  "fixture_id": "ab_A4__r_low__rc_high__ph_peak",
+  "judge": "gemma_4b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/matching_pool/eval_manifest_scrubbed_v1/judge_inputs/pair_0231__gemma_4b_judge__r03__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-4b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A4__r_low__rc_high__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s015",
+  "llm_won": true,
+  "order": "AB",
+  "pair_id": "pair_0231",
+  "plan_a_advantages": [
+    "Includes a dedicated tempo run for improved aerobic capacity.",
+    "Features a longer, moderate-intensity run to build trail-specific endurance.",
+    "Prioritizes recovery with dedicated recovery runs after harder sessions."
+  ],
+  "plan_b_advantages": [
+    "Incorporates a strength and mobility session to support injury resistance.",
+    "Includes a threshold tempo run, which can be beneficial for some athletes, though potentially more demanding than Plan A’s tempo session."
+  ],
+  "position": "AB",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A4__r_low__rc_high__ph_peak__prog__exp_t000__s014",
+  "reasoning": "Plan A is the better training plan for a trail runner aiming to become faster. It incorporates a dedicated tempo run, crucial for improving aerobic capacity and race pace, which is absent in Plan B. Furthermore, Plan A includes a longer, moderate-intensity run, directly addressing the need to build endurance specific to trail running, while Plan B’s long run is at a very easy pace. The inclusion of recovery runs after harder sessions in Plan A is also a key advantage for promoting adaptation and preventing overtraining, a factor not explicitly addressed in Plan B.",
+  "record_id": "pair_0231__gemma_4b_judge__r03__AB",
+  "right_plan_role": "programmatic",
+  "run": 3,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T17:44:53.504427+00:00",
+  "winner_role": "llm"
+}

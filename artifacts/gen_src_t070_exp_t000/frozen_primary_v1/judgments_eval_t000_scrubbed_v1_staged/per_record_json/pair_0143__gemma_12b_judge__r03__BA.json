@@ -1,0 +1,48 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 14.0,
+    "mean_day_minutes": 15.429,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 108.0
+  },
+  "fixture_id": "ab_A3__r_high__rc_low__ph_peak",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0143__gemma_12b_judge__r03__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A3__r_high__rc_low__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s002",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0143",
+  "plan_a_advantages": [
+    "Includes a dedicated strength and mobility session, which is essential for trail running injury prevention and performance.",
+    "Features a tempo run, which is a key workout for improving lactate threshold and speed.",
+    "Provides a more varied training week with different types of runs (easy, aerobic, long, tempo), promoting more complete development.",
+    "The total training volume (342 minutes) is more manageable and sustainable, reducing the risk of overtraining compared to Plan B's 450 minutes."
+  ],
+  "plan_b_advantages": [
+    "Higher total training volume (450 minutes) might be beneficial for runners with a very high base fitness level, although it also increases the risk of injury.",
+    "The focus on trail-specific running is good for race preparation, assuming the athlete already has a solid base of fitness."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A3__r_high__rc_low__ph_peak__prog__exp_t000__s014",
+  "reasoning": "Plan A appears to be a more well-rounded and sustainable training plan for the stated goal of becoming a faster trail runner. While Plan B focuses heavily on trail running, it lacks the crucial strength and mobility work present in Plan A. The structured progression of easy runs, tempo work, and a long run in Plan A provides a better foundation for improvement than the repetitive easy trail runs in Plan B. Ultimately, Plan A's balance of aerobic work, strength, and recovery makes it a superior choice for long-term development.",
+  "record_id": "pair_0143__gemma_12b_judge__r03__BA",
+  "right_plan_role": "llm",
+  "run": 3,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T23:01:53.582732+00:00",
+  "winner_role": "programmatic"
+}

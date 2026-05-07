@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 13.0,
+    "mean_day_minutes": 6.429,
+    "n_active_days": 1.0,
+    "n_hard_days": 1.0,
+    "n_long_runs": 2.0,
+    "n_quality_days": 1.0,
+    "n_rest_days": 1.0,
+    "total_minutes": 45.0
+  },
+  "fixture_id": "ab_A2__r_high__rc_low__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0078__gemma_12b_judge__r01__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A2__r_high__rc_low__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s006",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0078",
+  "plan_a_advantages": [
+    "Includes a tempo run to improve speed and lactate threshold.",
+    "More balanced distribution of training volume with a mix of easy, tempo, and long runs.",
+    "Lower total volume (326 minutes vs 371 minutes) which may be preferable for athletes prone to overtraining or injury."
+  ],
+  "plan_b_advantages": [
+    "Higher total volume (371 minutes) may be beneficial for athletes with a very strong aerobic base.",
+    "More rest days (2 vs 1) which could be advantageous for athletes needing more recovery."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A2__r_high__rc_low__ph_base__prog__exp_t000__s010",
+  "reasoning": "While both plans focus on trail running, Plan A is better suited for an athlete aiming to become a *faster* trail runner. Plan A incorporates a tempo run, which is crucial for developing speed and lactate threshold – a key factor in faster running. Plan B consists entirely of easy runs, which are valuable for building aerobic base and recovery, but insufficient for improving speed. The inclusion of a tempo run in Plan A, combined with a more balanced distribution of training volume, makes it a more effective plan for the stated goal.",
+  "record_id": "pair_0078__gemma_12b_judge__r01__BA",
+  "right_plan_role": "llm",
+  "run": 1,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T21:25:13.153007+00:00",
+  "winner_role": "programmatic"
+}

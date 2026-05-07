@@ -1,0 +1,50 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 44.0,
+    "mean_day_minutes": 26.143,
+    "n_active_days": 1.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 2.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 1.0,
+    "total_minutes": 183.0
+  },
+  "fixture_id": "ab_A4__r_low__rc_high__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0223__gemma_12b_judge__r01__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A4__r_low__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s002",
+  "llm_won": true,
+  "order": "BA",
+  "pair_id": "pair_0223",
+  "plan_a_advantages": [
+    "Plan A has a slightly higher frequency of rest days, which could be beneficial for recovery, especially for beginners.",
+    "Plan A's shorter runs might be less daunting for someone new to trail running.",
+    "Plan A's focus on threshold efforts could improve lactate threshold, a key factor in speed.",
+    "Plan A's lower overall volume may reduce the risk of overuse injuries."
+  ],
+  "plan_b_advantages": [
+    "Plan B prioritizes trail-specific endurance with two long trail runs, crucial for trail running performance.",
+    "The higher volume in Plan B will likely lead to greater physiological adaptations for trail running.",
+    "Plan B includes a dedicated hill session with controlled efforts, promoting both strength and efficient mechanics.",
+    "Plan B's longer runs with elevation gain better simulate race conditions and build the necessary durability."
+  ],
+  "position": "BA",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A4__r_low__rc_high__ph_base__prog__exp_t000__s009",
+  "reasoning": "Given the goal of becoming a faster trail runner, Plan B appears to be the more effective choice. While both plans incorporate essential elements like hill work and rest days, Plan B emphasizes trail-specific endurance and durability through longer runs with significant elevation gain. The higher volume and focus on trail running in Plan B will better prepare the athlete for the demands of trail racing, whereas Plan A's shorter, more controlled sessions might be better suited for a base-building phase or a runner with a history of injury. The inclusion of two long trail runs in Plan B is a significant advantage for developing the necessary stamina and strength.",
+  "record_id": "pair_0223__gemma_12b_judge__r01__BA",
+  "right_plan_role": "llm",
+  "run": 1,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 1.857,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-07T01:08:59.377528+00:00",
+  "winner_role": "llm"
+}

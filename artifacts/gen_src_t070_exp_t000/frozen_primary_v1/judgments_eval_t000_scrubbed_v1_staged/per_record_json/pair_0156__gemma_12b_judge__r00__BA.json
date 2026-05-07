@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 8.0,
+    "mean_day_minutes": 0.0,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 0.0
+  },
+  "fixture_id": "ab_A3__r_low__rc_high__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0156__gemma_12b_judge__r00__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A3__r_low__rc_high__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s001",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0156",
+  "plan_a_advantages": [
+    "Includes a dedicated interval session for speed development, which is missing in Plan B.",
+    "Features more consistent easy runs, building a stronger aerobic base.",
+    "The longer run is explicitly described as being at a controlled aerobic effort, promoting endurance without excessive fatigue."
+  ],
+  "plan_b_advantages": [
+    "Incorporates a tempo run, which can improve lactate threshold, although it's only one session.",
+    "Includes cross-training, which can provide a break from running and build overall fitness and strength."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A3__r_low__rc_high__ph_base__prog__exp_t000__s021",
+  "reasoning": "Given the goal of becoming a faster trail runner, Plan A appears to be the more suitable choice. While both plans incorporate essential elements like easy runs and a rest day, Plan A's structure prioritizes building a strong aerobic base with consistent easy runs and a single, longer run. The inclusion of a dedicated interval session (threshold intensity) is crucial for improving speed and lactate threshold, which are key components of faster trail running. Plan B, while including a tempo run, lacks the consistent aerobic volume and the specific speed work that Plan A provides, making it less directly targeted towards the stated goal.",
+  "record_id": "pair_0156__gemma_12b_judge__r00__BA",
+  "right_plan_role": "llm",
+  "run": 0,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T23:21:29.523945+00:00",
+  "winner_role": "programmatic"
+}

@@ -1,0 +1,49 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 57.0,
+    "mean_day_minutes": 31.714,
+    "n_active_days": 1.0,
+    "n_hard_days": 1.0,
+    "n_long_runs": 2.0,
+    "n_quality_days": 1.0,
+    "n_rest_days": 1.0,
+    "total_minutes": 222.0
+  },
+  "fixture_id": "ab_A4__r_high__rc_low__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0209__gemma_12b_judge__r01__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A4__r_high__rc_low__ph_base__gemma_3_4b_it__src_t070__exp_t000__s005",
+  "llm_won": true,
+  "order": "AB",
+  "pair_id": "pair_0209",
+  "plan_a_advantages": [
+    "Includes long runs, which are essential for building endurance and preparing for the demands of trail races.",
+    "Features hill workouts, which are critical for developing the strength and power needed to navigate challenging terrain.",
+    "Incorporates interval training, which helps improve speed and running economy.",
+    "Higher total training volume (450 minutes vs 228 minutes) allows for greater physiological adaptation."
+  ],
+  "plan_b_advantages": [
+    "Lower training volume may be suitable for athletes with a history of injury or those new to running.",
+    "Emphasis on cross-training can provide a low-impact alternative for recovery or injury prevention.",
+    "The focus on aerobic base building can be a good starting point for a longer training cycle."
+  ],
+  "position": "AB",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A4__r_high__rc_low__ph_base__prog__exp_t000__s002",
+  "reasoning": "Given the primary goal of becoming a faster trail runner, Plan A is the better choice. It incorporates a wider variety of training stimuli crucial for trail running performance, including long runs, hill workouts, and interval training. Plan B focuses almost exclusively on aerobic base building with cross-training and easy runs, which is insufficient for developing the speed and strength needed for trail running. While aerobic base is important, Plan A's more comprehensive approach is more likely to lead to faster trail running times.",
+  "record_id": "pair_0209__gemma_12b_judge__r01__AB",
+  "right_plan_role": "programmatic",
+  "run": 1,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 0.857,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-07T00:46:49.578003+00:00",
+  "winner_role": "llm"
+}

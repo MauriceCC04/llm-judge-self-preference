@@ -1,0 +1,48 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 14.0,
+    "mean_day_minutes": 10.429,
+    "n_active_days": 2.0,
+    "n_hard_days": 1.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 1.0,
+    "n_rest_days": 2.0,
+    "total_minutes": 73.0
+  },
+  "fixture_id": "ab_A1__r_low__rc_low__ph_peak",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0059__gemma_12b_judge__r00__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A1__r_low__rc_low__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s015",
+  "llm_won": false,
+  "order": "AB",
+  "pair_id": "pair_0059",
+  "plan_a_advantages": [
+    "Plan A has a higher total training volume (211 minutes vs 138 minutes), which could be beneficial for some athletes.",
+    "The simplicity of Plan A might be appealing to beginners or those who prefer a less structured approach."
+  ],
+  "plan_b_advantages": [
+    "Plan B includes a tempo run, which is vital for improving lactate threshold and running speed.",
+    "The cross-training session in Plan B provides a low-impact aerobic stimulus and helps prevent overuse injuries.",
+    "Plan B incorporates more strategic rest days, allowing for better recovery and adaptation.",
+    "Plan B's varied training stimulus is more likely to lead to improvements in overall trail running performance."
+  ],
+  "position": "AB",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A1__r_low__rc_low__ph_peak__prog__exp_t000__s007",
+  "reasoning": "While both plans aim to improve trail running speed, Plan B is the better choice for achieving that goal. It incorporates a more varied and progressive training approach, including a tempo run and cross-training, which are crucial for developing both aerobic endurance and strength. Plan A consists solely of easy runs, which, while important for base building, won't sufficiently challenge the athlete to improve speed. The inclusion of rest days in Plan B is also strategically placed to allow for recovery and adaptation, which is essential for preventing injury and maximizing performance gains.",
+  "record_id": "pair_0059__gemma_12b_judge__r00__AB",
+  "right_plan_role": "programmatic",
+  "run": 0,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.286,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T20:55:26.699464+00:00",
+  "winner_role": "programmatic"
+}

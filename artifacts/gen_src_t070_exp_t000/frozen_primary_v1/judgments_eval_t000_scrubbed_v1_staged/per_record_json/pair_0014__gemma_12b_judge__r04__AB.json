@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 35.0,
+    "mean_day_minutes": 0.143,
+    "n_active_days": 1.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 1.0,
+    "total_minutes": 1.0
+  },
+  "fixture_id": "ab_A1__r_high__rc_low__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0014__gemma_12b_judge__r04__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A1__r_high__rc_low__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s001",
+  "llm_won": false,
+  "order": "AB",
+  "pair_id": "pair_0014",
+  "plan_a_advantages": [
+    "Plan A has slightly more rest days (3 vs 2), which could be beneficial for some athletes needing more recovery.",
+    "The focus on rhythm and form in Plan A's easy runs is a good reminder, though this could be incorporated into Plan B as well."
+  ],
+  "plan_b_advantages": [
+    "Includes a strength and mobility session, crucial for trail running injury prevention and performance.",
+    "Slightly higher total training volume (229 vs 228 minutes) may lead to greater fitness gains.",
+    "The purpose summaries in Plan B are more specific and actionable, guiding the athlete's focus during each session."
+  ],
+  "position": "AB",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A1__r_high__rc_low__ph_base__prog__exp_t000__s008",
+  "reasoning": "While both plans focus on easy running, Plan B demonstrates a more thoughtful approach to building a faster trail runner. The inclusion of a strength and mobility session on day 6 is a significant advantage, as trail running demands more than just cardiovascular fitness; it requires robust muscles and joints to handle uneven terrain and prevent injuries. Plan A's repetitive focus solely on easy runs, while not inherently bad, lacks the proactive injury prevention and strength building that Plan B incorporates. The slightly higher total minutes in Plan B also suggests a marginally greater training volume, which can contribute to improved fitness over time.",
+  "record_id": "pair_0014__gemma_12b_judge__r04__AB",
+  "right_plan_role": "programmatic",
+  "run": 4,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T19:53:09.248435+00:00",
+  "winner_role": "programmatic"
+}

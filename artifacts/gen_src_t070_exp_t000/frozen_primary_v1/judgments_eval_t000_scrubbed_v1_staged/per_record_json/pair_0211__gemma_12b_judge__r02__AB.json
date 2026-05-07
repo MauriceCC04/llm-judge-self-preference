@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 10.0,
+    "mean_day_minutes": 6.143,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 43.0
+  },
+  "fixture_id": "ab_A4__r_high__rc_low__ph_peak",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0211__gemma_12b_judge__r02__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A4__r_high__rc_low__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s004",
+  "llm_won": false,
+  "order": "AB",
+  "pair_id": "pair_0211",
+  "plan_a_advantages": [
+    "Plan A has a higher overall weekly volume (450 minutes vs 407 minutes), which *could* be beneficial for an athlete already with a strong base.",
+    "Plan A includes a tempo run that is slightly longer than Plan B's (13.9 km vs 54 minutes), potentially providing a slightly greater stimulus for lactate threshold development."
+  ],
+  "plan_b_advantages": [
+    "Plan B prioritizes consistent, easy running, which is more effective for building aerobic endurance and reducing injury risk.",
+    "The emphasis on 'conversational effort' in Plan B's easy runs ensures the athlete is truly recovering and building a solid aerobic base.",
+    "Plan B's tempo run, while shorter in duration, is explicitly targeted at 'threshold strength,' suggesting a more focused approach to improving speed at a sustainable effort level."
+  ],
+  "position": "AB",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A4__r_high__rc_low__ph_peak__prog__exp_t000__s005",
+  "reasoning": "Plan B appears to be the better choice for a trail runner aiming to become faster. While both plans include long runs and a tempo session, Plan B emphasizes consistent, easy running throughout the week, which is crucial for building a strong aerobic base – a foundation for faster trail running. The longer duration of the easy runs in Plan B, and the focus on 'conversational effort,' suggests a greater emphasis on aerobic development. Plan A's longer runs are interspersed with shorter, less frequent easy runs, and the overall volume is higher, which could lead to burnout or injury if the athlete isn't already well-conditioned.",
+  "record_id": "pair_0211__gemma_12b_judge__r02__AB",
+  "right_plan_role": "programmatic",
+  "run": 2,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-07T00:50:20.279642+00:00",
+  "winner_role": "programmatic"
+}

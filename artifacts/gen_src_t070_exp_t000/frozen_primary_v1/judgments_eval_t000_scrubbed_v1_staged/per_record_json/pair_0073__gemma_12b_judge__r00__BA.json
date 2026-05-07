@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 166.0,
+    "mean_day_minutes": 17.429,
+    "n_active_days": 2.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 1.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 2.0,
+    "total_minutes": 122.0
+  },
+  "fixture_id": "ab_A2__r_high__rc_high__ph_peak",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0073__gemma_12b_judge__r00__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A2__r_high__rc_high__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s015",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0073",
+  "plan_a_advantages": [
+    "More frequent aerobic runs: Plan A includes more frequent aerobic runs at a controlled effort, which is crucial for building the aerobic base necessary for faster trail running.",
+    "Lower overall volume: The total training time (253 minutes) is lower than Plan B (375 minutes), which reduces the risk of overtraining and injury, particularly important for trail running where impact forces are higher.",
+    "Controlled intensity: Plan A emphasizes 'controlled' intensity in its interval sessions, suggesting a focus on sustainable effort rather than maximal exertion, which is better for building aerobic power without excessive fatigue."
+  ],
+  "plan_b_advantages": [
+    "Includes a long run: Plan B incorporates a 60-minute long run, which can be beneficial for developing endurance and mental toughness on trails.",
+    "Tempo session: The tempo session in Plan B can help improve lactate threshold, a key factor in running faster for longer."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A2__r_high__rc_high__ph_peak__prog__exp_t000__s013",
+  "reasoning": "Given the goal of becoming a faster trail runner, Plan A appears to be the more suitable choice. While both plans incorporate interval and strength training, Plan A's focus on consistent aerobic development and controlled intensity seems more appropriate for building a solid foundation for speed. Plan B's longer intervals and single long run, while potentially beneficial for some, could be overwhelming and increase the risk of injury, especially without knowing the athlete's current fitness level. Plan A's structure prioritizes building a base and gradually increasing intensity, which is generally a safer and more effective approach for trail running performance.",
+  "record_id": "pair_0073__gemma_12b_judge__r00__BA",
+  "right_plan_role": "llm",
+  "run": 0,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 2.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T21:17:30.474100+00:00",
+  "winner_role": "programmatic"
+}

@@ -1,0 +1,46 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 30.0,
+    "mean_day_minutes": 25.429,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 178.0
+  },
+  "fixture_id": "ab_A3__r_high__rc_high__ph_peak",
+  "judge": "gemma_4b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/matching_pool/eval_manifest_scrubbed_v1/judge_inputs/pair_0133__gemma_4b_judge__r03__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-4b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A3__r_high__rc_high__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s001",
+  "llm_won": true,
+  "order": "AB",
+  "pair_id": "pair_0133",
+  "plan_a_advantages": [
+    "More varied intensity work (intervals, tempo runs) directly targets speed and endurance.",
+    "Includes a longer, sustained aerobic run, mimicking race distances and building overall endurance."
+  ],
+  "plan_b_advantages": [
+    "Specifically focuses on climbing strength, which is highly relevant to trail running.",
+    "Potentially more effective for runners who thrive on consistent hill training."
+  ],
+  "position": "AB",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A3__r_high__rc_high__ph_peak__prog__exp_t000__s017",
+  "reasoning": "Plan A is the better training plan for a trail runner aiming to become faster. It incorporates a more balanced approach, including dedicated interval sessions and longer tempo runs, which are crucial for improving speed and lactate threshold – key components of trail running performance. Plan B heavily emphasizes hill work, which is valuable but could lead to over-specialization and potentially neglect other important aspects of trail running fitness. Plan A’s inclusion of varied intensity sessions and a longer, more sustained aerobic run better prepares the athlete for the demands of a race, while Plan B’s repetitive hill sessions could lead to burnout or imbalances.",
+  "record_id": "pair_0133__gemma_4b_judge__r03__AB",
+  "right_plan_role": "programmatic",
+  "run": 3,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T17:01:37.278748+00:00",
+  "winner_role": "llm"
+}

@@ -1,0 +1,48 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 1.0,
+    "mean_day_minutes": 0.0,
+    "n_active_days": 0.0,
+    "n_hard_days": 2.0,
+    "n_long_runs": 1.0,
+    "n_quality_days": 2.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 0.0
+  },
+  "fixture_id": "ab_A3__r_high__rc_low__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0137__gemma_12b_judge__r01__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A3__r_high__rc_low__ph_base__gemma_3_4b_it__src_t070__exp_t000__s005",
+  "llm_won": true,
+  "order": "AB",
+  "pair_id": "pair_0137",
+  "plan_a_advantages": [
+    "Includes hill repeats for strength and power development, essential for trail running.",
+    "Incorporates tempo runs to improve aerobic threshold and speed.",
+    "Features a dedicated strength training session to support durability and injury prevention.",
+    "Offers a more varied training week, reducing the risk of overuse injuries and promoting well-rounded fitness."
+  ],
+  "plan_b_advantages": [
+    "Focuses heavily on building aerobic base through long runs, which is a foundational element of trail running.",
+    "May be suitable for a runner who is new to trail running and needs to build a solid endurance base before introducing more intense workouts."
+  ],
+  "position": "AB",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A3__r_high__rc_low__ph_base__prog__exp_t000__s000",
+  "reasoning": "While both plans aim to improve trail running speed, Plan A offers a more well-rounded approach. It incorporates a variety of training types – long runs, hill repeats, tempo runs, and strength training – which is crucial for developing a complete trail runner. Plan B heavily emphasizes long, easy runs, which, while important for endurance, may not be sufficient to improve speed and power on varied terrain. The inclusion of hill repeats and tempo runs in Plan A directly addresses the demands of trail running, making it a more effective plan for the stated goal.",
+  "record_id": "pair_0137__gemma_12b_judge__r01__AB",
+  "right_plan_role": "programmatic",
+  "run": 1,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 2.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T22:52:02.038480+00:00",
+  "winner_role": "llm"
+}

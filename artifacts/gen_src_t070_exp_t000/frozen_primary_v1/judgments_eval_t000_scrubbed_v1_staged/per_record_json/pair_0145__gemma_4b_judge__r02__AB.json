@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 27.0,
+    "mean_day_minutes": 25.0,
+    "n_active_days": 1.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 1.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 1.0,
+    "total_minutes": 175.0
+  },
+  "fixture_id": "ab_A3__r_high__rc_low__ph_peak",
+  "judge": "gemma_4b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/matching_pool/eval_manifest_scrubbed_v1/judge_inputs/pair_0145__gemma_4b_judge__r02__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-4b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A3__r_high__rc_low__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s001",
+  "llm_won": true,
+  "order": "AB",
+  "pair_id": "pair_0145",
+  "plan_a_advantages": [
+    "Includes interval sessions for speed work.",
+    "Features dedicated tempo runs to improve lactate threshold.",
+    "More closely aligns with the goal of becoming a faster trail runner."
+  ],
+  "plan_b_advantages": [
+    "Stronger emphasis on injury prevention with strength and mobility work.",
+    "Provides a solid aerobic base with longer, easier runs."
+  ],
+  "position": "AB",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A3__r_high__rc_low__ph_peak__prog__exp_t000__s003",
+  "reasoning": "Plan A is the better training plan for a trail runner aiming to become faster. It incorporates a more targeted approach to speed development with interval sessions and a dedicated focus on pacing control, crucial for race success. While Plan B prioritizes building a strong aerobic base and stability, it lacks the specific workouts needed to improve running speed. Plan A’s inclusion of tempo runs and interval sessions directly addresses the athlete’s goal of increasing speed, whereas Plan B’s emphasis on threshold work and long, easy runs is beneficial but doesn’t directly translate to faster times.",
+  "record_id": "pair_0145__gemma_4b_judge__r02__AB",
+  "right_plan_role": "programmatic",
+  "run": 2,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 0.571,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T17:06:40.997251+00:00",
+  "winner_role": "llm"
+}

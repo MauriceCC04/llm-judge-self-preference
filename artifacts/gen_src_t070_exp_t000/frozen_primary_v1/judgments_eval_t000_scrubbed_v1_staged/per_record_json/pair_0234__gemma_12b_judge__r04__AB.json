@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 19.0,
+    "mean_day_minutes": 4.143,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 29.0
+  },
+  "fixture_id": "ab_A4__r_low__rc_high__ph_peak",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0234__gemma_12b_judge__r04__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A4__r_low__rc_high__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s004",
+  "llm_won": true,
+  "order": "AB",
+  "pair_id": "pair_0234",
+  "plan_a_advantages": [
+    "Includes a dedicated strength training session, which is crucial for trail running performance and injury prevention.",
+    "Features a mix of terrain in the aerobic runs, better simulating the demands of trail running.",
+    "The 'controlled' intensity for the long run allows for building endurance without excessive fatigue, which is important for trail runners."
+  ],
+  "plan_b_advantages": [
+    "The longer long run (71 minutes vs. 90 minutes) could potentially build more base endurance, although the 'easy' intensity might limit its effectiveness.",
+    "More frequent easy runs could be beneficial for recovery, especially for runners prone to injury."
+  ],
+  "position": "AB",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A4__r_low__rc_high__ph_peak__prog__exp_t000__s017",
+  "reasoning": "While both plans incorporate essential elements for trail running improvement, Plan A appears better suited for a runner aiming to become faster. Plan B's emphasis on frequent easy runs, while beneficial for recovery, might not provide sufficient stimulus for significant speed gains. Plan A's inclusion of a dedicated strength training session alongside the hill workouts offers a more comprehensive approach to building the power and resilience needed for faster trail running. The varied intensity and terrain in Plan A's aerobic runs also better reflects the demands of trail running.",
+  "record_id": "pair_0234__gemma_12b_judge__r04__AB",
+  "right_plan_role": "programmatic",
+  "run": 4,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.571,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-07T01:26:35.267840+00:00",
+  "winner_role": "llm"
+}

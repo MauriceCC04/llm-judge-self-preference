@@ -1,0 +1,48 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 9.0,
+    "mean_day_minutes": 11.286,
+    "n_active_days": 2.0,
+    "n_hard_days": 2.0,
+    "n_long_runs": 2.0,
+    "n_quality_days": 2.0,
+    "n_rest_days": 2.0,
+    "total_minutes": 79.0
+  },
+  "fixture_id": "ab_A1__r_high__rc_high__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0006__gemma_12b_judge__r03__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A1__r_high__rc_high__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s000",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0006",
+  "plan_a_advantages": [
+    "Includes tempo runs to improve lactate threshold, a key factor in running speed.",
+    "Incorporates hill workouts to build climbing strength and power, essential for trail running.",
+    "Has a more balanced structure with a mix of easy, tempo, and hill sessions.",
+    "Higher total training volume (307 minutes vs 228) allows for more overall development."
+  ],
+  "plan_b_advantages": [
+    "Higher rest days (3 vs 1) may be beneficial for athletes prone to injury or those needing more recovery.",
+    "Simpler structure might be easier to adhere to for beginners."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A1__r_high__rc_high__ph_base__prog__exp_t000__s016",
+  "reasoning": "Plan A is the better choice for a trail runner aiming to become faster. While both plans prioritize easy running, Plan A incorporates key elements crucial for speed development that Plan B lacks: tempo runs and hill workouts. These sessions specifically target threshold pace and climbing strength, both vital for trail running performance. Plan B's focus solely on easy running, while good for building a base, won't provide the necessary stimulus to improve speed and power on varied terrain.",
+  "record_id": "pair_0006__gemma_12b_judge__r03__BA",
+  "right_plan_role": "llm",
+  "run": 3,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 2.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T19:41:22.376666+00:00",
+  "winner_role": "programmatic"
+}

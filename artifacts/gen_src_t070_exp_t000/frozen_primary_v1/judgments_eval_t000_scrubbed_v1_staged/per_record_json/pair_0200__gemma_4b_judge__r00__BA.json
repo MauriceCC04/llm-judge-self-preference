@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 32.0,
+    "mean_day_minutes": 23.0,
+    "n_active_days": 1.0,
+    "n_hard_days": 1.0,
+    "n_long_runs": 1.0,
+    "n_quality_days": 1.0,
+    "n_rest_days": 1.0,
+    "total_minutes": 161.0
+  },
+  "fixture_id": "ab_A4__r_high__rc_high__ph_peak",
+  "judge": "gemma_4b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/matching_pool/eval_manifest_scrubbed_v1/judge_inputs/pair_0200__gemma_4b_judge__r00__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-4b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A4__r_high__rc_high__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s006",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0200",
+  "plan_a_advantages": [
+    "Includes a dedicated threshold workout for speed development.",
+    "Features a longer, more specific endurance run (103 minutes) designed to build durability.",
+    "Has a more balanced distribution of hard and easy days."
+  ],
+  "plan_b_advantages": [
+    "Offers longer total running volume.",
+    "Includes a hill workout, which can be beneficial for trail running strength and technique."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A4__r_high__rc_high__ph_peak__prog__exp_t000__s008",
+  "reasoning": "Plan A is the better training plan for a trail runner aiming to become faster. It incorporates a dedicated threshold workout, crucial for building sustainable speed, alongside a longer, more focused endurance run. Plan B, while including some longer runs, focuses heavily on maintaining freshness and volume with a higher overall duration and less targeted intensity work. Plan A’s structure is more strategically designed to improve the athlete’s running economy and lactate threshold, which are key determinants of speed on trails, whereas Plan B feels more like a general maintenance plan.",
+  "record_id": "pair_0200__gemma_4b_judge__r00__BA",
+  "right_plan_role": "llm",
+  "run": 0,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T17:30:50.072313+00:00",
+  "winner_role": "programmatic"
+}

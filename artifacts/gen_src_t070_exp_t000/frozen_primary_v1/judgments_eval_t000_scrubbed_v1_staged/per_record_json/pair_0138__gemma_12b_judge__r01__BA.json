@@ -1,0 +1,48 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 63.0,
+    "mean_day_minutes": 29.429,
+    "n_active_days": 1.0,
+    "n_hard_days": 2.0,
+    "n_long_runs": 2.0,
+    "n_quality_days": 2.0,
+    "n_rest_days": 1.0,
+    "total_minutes": 206.0
+  },
+  "fixture_id": "ab_A3__r_high__rc_low__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0138__gemma_12b_judge__r01__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A3__r_high__rc_low__ph_base__gemma_3_4b_it__src_t070__exp_t000__s001",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0138",
+  "plan_a_advantages": [
+    "Includes hill sessions at threshold intensity, directly targeting speed and power development.",
+    "Lower overall volume allows for better recovery and potentially more frequent training cycles.",
+    "Simpler structure may be easier to adhere to and adjust based on individual needs."
+  ],
+  "plan_b_advantages": [
+    "Higher overall volume may contribute to greater aerobic base development.",
+    "Includes a dedicated strength training session, which is beneficial for injury prevention and overall athleticism.",
+    "Provides more time on trail, which can improve trail-specific skills and confidence."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A3__r_high__rc_low__ph_base__prog__exp_t000__s009",
+  "reasoning": "Given the goal of becoming a *faster* trail runner, Plan A appears to be the more appropriate choice. While endurance is important, focusing solely on long, easy runs (as in Plan B) may not be the most efficient path to speed. Plan A incorporates hill sessions at threshold intensity, which are crucial for developing the power and strength needed for faster climbing and overall improved performance on trails. The shorter overall volume of Plan A also allows for more focused recovery and potentially more frequent training cycles.",
+  "record_id": "pair_0138__gemma_12b_judge__r01__BA",
+  "right_plan_role": "llm",
+  "run": 1,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T22:53:32.842521+00:00",
+  "winner_role": "programmatic"
+}

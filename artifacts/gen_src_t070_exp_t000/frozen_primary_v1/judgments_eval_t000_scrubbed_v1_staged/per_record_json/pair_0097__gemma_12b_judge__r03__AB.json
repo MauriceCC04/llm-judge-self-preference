@@ -1,0 +1,48 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 10.0,
+    "mean_day_minutes": 4.571,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 32.0
+  },
+  "fixture_id": "ab_A2__r_low__rc_high__ph_peak",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0097__gemma_12b_judge__r03__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A2__r_low__rc_high__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s007",
+  "llm_won": false,
+  "order": "AB",
+  "pair_id": "pair_0097",
+  "plan_a_advantages": [
+    "Plan A has slightly more rest days, which could be beneficial for athletes prone to injury or those new to running.",
+    "The simplicity of Plan A might be easier to adhere to for some individuals."
+  ],
+  "plan_b_advantages": [
+    "The inclusion of cross-training provides a valuable alternative stimulus and reduces impact stress.",
+    "The slightly longer run durations in Plan B contribute to a greater aerobic stimulus.",
+    "The explicit instruction to run at 'conversational effort' promotes better pacing and fatigue management.",
+    "Plan B has a slightly higher total training volume, which can lead to greater physiological adaptations."
+  ],
+  "position": "AB",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A2__r_low__rc_high__ph_peak__prog__exp_t000__s008",
+  "reasoning": "While both plans focus on easy running, Plan B demonstrates a more thoughtful approach to building a base for faster trail running. The inclusion of a cross-training day is a significant advantage, allowing for aerobic stimulus without the impact stress of running. Plan B also has slightly longer run durations overall, which can contribute to improved aerobic capacity. The emphasis on 'conversational effort' in Plan B is also a good cue for maintaining a sustainable pace, crucial for building a solid foundation.",
+  "record_id": "pair_0097__gemma_12b_judge__r03__AB",
+  "right_plan_role": "programmatic",
+  "run": 3,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T21:52:11.858681+00:00",
+  "winner_role": "programmatic"
+}

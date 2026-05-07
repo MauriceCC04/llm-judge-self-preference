@@ -1,0 +1,49 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 19.0,
+    "mean_day_minutes": 8.857,
+    "n_active_days": 0.0,
+    "n_hard_days": 1.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 1.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 62.0
+  },
+  "fixture_id": "ab_A2__r_high__rc_high__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0061__gemma_12b_judge__r04__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A2__r_high__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s170",
+  "llm_won": false,
+  "order": "AB",
+  "pair_id": "pair_0061",
+  "plan_a_advantages": [
+    "Plan A has slightly longer easy runs on some days, which could be beneficial for building base endurance.",
+    "Plan A includes a strength training day, which is important for injury prevention and overall athleticism.",
+    "Plan A has a slightly higher total volume (395 minutes vs 333 minutes), which might be suitable for a runner with a higher training background."
+  ],
+  "plan_b_advantages": [
+    "Plan B incorporates a tempo run, directly targeting speed development.",
+    "Plan B emphasizes consistent, shorter easy runs, promoting aerobic development with less fatigue.",
+    "Plan B's structure is more varied and likely to stimulate greater adaptation.",
+    "Plan B has a slightly lower total volume, which may be more appropriate for a runner looking to improve speed without overtraining."
+  ],
+  "position": "AB",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A2__r_high__rc_high__ph_base__prog__exp_t000__s005",
+  "reasoning": "Plan B appears to be the better choice for a trail runner aiming to become faster. While both plans incorporate easy runs and a long run, Plan B strategically includes a tempo session, which is crucial for improving speed and lactate threshold – a key factor in trail running performance. The focus on consistent, shorter easy runs in Plan B also promotes aerobic development with lower fatigue, allowing for more effective hard workouts. Plan A's repetitive easy runs without a dedicated speed workout may lead to plateauing, whereas Plan B's structure is more likely to drive performance gains.",
+  "record_id": "pair_0061__gemma_12b_judge__r04__AB",
+  "right_plan_role": "programmatic",
+  "run": 4,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T20:59:34.436771+00:00",
+  "winner_role": "programmatic"
+}

@@ -1,0 +1,46 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 10.0,
+    "mean_day_minutes": 4.571,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 32.0
+  },
+  "fixture_id": "ab_A2__r_low__rc_high__ph_peak",
+  "judge": "gemma_4b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/matching_pool/eval_manifest_scrubbed_v1/judge_inputs/pair_0097__gemma_4b_judge__r03__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-4b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A2__r_low__rc_high__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s007",
+  "llm_won": true,
+  "order": "AB",
+  "pair_id": "pair_0097",
+  "plan_a_advantages": [
+    "More frequent rest days, reducing the risk of overtraining.",
+    "Lower overall running volume, minimizing the potential for fatigue and promoting recovery."
+  ],
+  "plan_b_advantages": [
+    "Incorporates cross-training, potentially improving overall fitness and reducing injury risk.",
+    "Includes a longer, dedicated cross-training session, which could be beneficial for building strength and endurance outside of running."
+  ],
+  "position": "AB",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A2__r_low__rc_high__ph_peak__prog__exp_t000__s008",
+  "reasoning": "For a trail runner aiming to become faster, Plan A is the superior choice. It prioritizes consistent, low-intensity easy runs, which is crucial for building a solid aerobic base – a foundational element for speed. Plan B, while including some cross-training, has a higher overall volume of easy running and a longer cross-training session, which could lead to unnecessary fatigue and hinder progress. Plan A’s focus on recovery days and a more conservative approach to volume aligns better with the goal of sustainable improvement for a faster trail runner.",
+  "record_id": "pair_0097__gemma_4b_judge__r03__AB",
+  "right_plan_role": "programmatic",
+  "run": 3,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T16:45:28.627861+00:00",
+  "winner_role": "llm"
+}

@@ -1,0 +1,48 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 9.0,
+    "mean_day_minutes": 2.286,
+    "n_active_days": 1.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 1.0,
+    "total_minutes": 16.0
+  },
+  "fixture_id": "ab_A1__r_high__rc_high__ph_peak",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0007__gemma_12b_judge__r02__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A1__r_high__rc_high__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s002",
+  "llm_won": false,
+  "order": "AB",
+  "pair_id": "pair_0007",
+  "plan_a_advantages": [
+    "Plan A has a slightly higher total training volume (260 minutes vs 244 minutes).",
+    "Plan A's descriptions of runs sometimes include specific focus points like form and cadence, which could be beneficial for newer runners."
+  ],
+  "plan_b_advantages": [
+    "Plan B includes a cross-training day, providing a valuable alternative for aerobic development and injury prevention.",
+    "Plan B incorporates two rest days compared to Plan A's one, promoting better recovery and reducing the risk of overtraining.",
+    "Plan B's emphasis on 'conversational effort' ensures a more sustainable and effective aerobic base building approach.",
+    "Plan B's structure is more consistent, with a clear focus on easy runs and rest, which is ideal for building a foundation for faster running."
+  ],
+  "position": "AB",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A1__r_high__rc_high__ph_peak__prog__exp_t000__s008",
+  "reasoning": "While both plans focus on easy running, Plan B demonstrates a more thoughtful approach to building a base for faster trail running. The inclusion of a cross-training day is a significant advantage, allowing for aerobic stimulus without the impact stress of running. Plan B also incorporates more rest days, which is crucial for recovery and preventing overtraining, especially when aiming for speed improvements down the line. The consistent focus on 'conversational effort' in Plan B also suggests a better understanding of building a solid aerobic base.",
+  "record_id": "pair_0007__gemma_12b_judge__r02__AB",
+  "right_plan_role": "programmatic",
+  "run": 2,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T19:42:24.365771+00:00",
+  "winner_role": "programmatic"
+}

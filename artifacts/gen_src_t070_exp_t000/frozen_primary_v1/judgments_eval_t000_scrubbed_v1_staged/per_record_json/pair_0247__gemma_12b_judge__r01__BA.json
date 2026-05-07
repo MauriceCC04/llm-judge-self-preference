@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 2.0,
+    "mean_day_minutes": 3.143,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 22.0
+  },
+  "fixture_id": "ab_A4__r_low__rc_low__ph_peak",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0247__gemma_12b_judge__r01__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A4__r_low__rc_low__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s002",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0247",
+  "plan_a_advantages": [
+    "Plan A includes dedicated strength and mobility sessions, which are crucial for trail running injury prevention and overall performance.",
+    "The inclusion of cross-training days in Plan A offers a lower-impact aerobic stimulus, aiding recovery and preventing overuse injuries.",
+    "Plan A's aerobic run at threshold intensity is strategically placed, allowing for adaptation before the longer run and tempo session."
+  ],
+  "plan_b_advantages": [
+    "Plan B's longer trail runs early in the week could build trail-specific endurance more quickly.",
+    "The tempo run is performed on the trail, which may better translate to race conditions."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A4__r_low__rc_low__ph_peak__prog__exp_t000__s011",
+  "reasoning": "Given the goal of becoming a faster trail runner, Plan A appears to be the more effective choice. While both plans incorporate essential elements like long runs, tempo runs, and strength training, Plan A's structure prioritizes a more balanced approach with a greater emphasis on foundational work like strength and mobility, and aerobic base building. Plan B's focus on longer trail runs and tempo runs early in the week might be too taxing for an athlete seeking to improve speed, potentially leading to burnout or injury. The inclusion of cross-training days in Plan A also provides valuable recovery and injury prevention.",
+  "record_id": "pair_0247__gemma_12b_judge__r01__BA",
+  "right_plan_role": "llm",
+  "run": 1,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-07T01:46:24.426427+00:00",
+  "winner_role": "programmatic"
+}

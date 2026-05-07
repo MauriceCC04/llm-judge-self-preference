@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 7.0,
+    "mean_day_minutes": 22.143,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 155.0
+  },
+  "fixture_id": "ab_A4__r_high__rc_low__ph_peak",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0216__gemma_12b_judge__r00__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A4__r_high__rc_low__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s000",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0216",
+  "plan_a_advantages": [
+    "Lower overall volume: 390 minutes compared to Plan B's 545 minutes reduces the risk of overtraining and injury.",
+    "Threshold focus: The emphasis on tempo runs at the threshold intensity is more directly applicable to improving speed on trails.",
+    "Easy run recovery: The inclusion of dedicated easy runs helps with recovery and builds aerobic base without excessive strain."
+  ],
+  "plan_b_advantages": [
+    "Longer long runs: The longer long runs in Plan B could build more endurance, although this may come at the cost of speed.",
+    "Higher intensity aerobic work: The 'hard' intensity aerobic runs could improve lactate threshold, but may be too taxing for some athletes."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A4__r_high__rc_low__ph_peak__prog__exp_t000__s019",
+  "reasoning": "Given the goal of becoming a faster trail runner, Plan A appears to be the more suitable choice. While both plans incorporate tempo and long runs, Plan A emphasizes a more sustainable approach with its focus on threshold running and easy runs, which is crucial for trail running where consistent effort over varied terrain is key. Plan B's higher intensity aerobic runs and longer overall duration might lead to excessive fatigue and potential injury, especially without more information about the athlete's current fitness level. The lower overall volume of Plan A also suggests a better starting point for someone looking to improve speed without overtraining.",
+  "record_id": "pair_0216__gemma_12b_judge__r00__BA",
+  "right_plan_role": "llm",
+  "run": 0,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-07T00:57:17.845267+00:00",
+  "winner_role": "programmatic"
+}

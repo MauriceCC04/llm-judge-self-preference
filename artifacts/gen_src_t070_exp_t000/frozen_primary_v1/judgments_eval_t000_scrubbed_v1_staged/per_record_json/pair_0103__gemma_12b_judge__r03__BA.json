@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 28.0,
+    "mean_day_minutes": 6.0,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 42.0
+  },
+  "fixture_id": "ab_A2__r_low__rc_low__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0103__gemma_12b_judge__r03__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A2__r_low__rc_low__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s002",
+  "llm_won": true,
+  "order": "BA",
+  "pair_id": "pair_0103",
+  "plan_a_advantages": [
+    "Plan A includes cross-training, which can provide a broader base of fitness and reduce the risk of overuse injuries.",
+    "Plan A has a slightly more varied schedule with a mix of running and cross-training, which some athletes may find more engaging."
+  ],
+  "plan_b_advantages": [
+    "Plan B is more directly aligned with the goal of becoming a faster trail runner by focusing solely on trail running.",
+    "The longer duration of the runs in Plan B (especially the 90-minute run) allows for greater aerobic development and adaptation to trail conditions.",
+    "Plan B provides more time on trails, allowing for skill development and improved comfort on varied terrain."
+  ],
+  "position": "BA",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A2__r_low__rc_low__ph_base__prog__exp_t000__s002",
+  "reasoning": "Given the goal of becoming a faster trail runner, Plan B appears to be the better choice. While both plans focus on aerobic development, Plan B dedicates the entire week to easy trail running, which is more specific to the athlete's goal. The consistent trail running in Plan B allows for adaptation to the terrain and development of trail-specific skills like footwork and balance, which are crucial for speed on trails. Plan A's inclusion of cross-training, while beneficial for overall fitness, dilutes the focus on trail-specific training and may not be as effective for achieving the stated goal.",
+  "record_id": "pair_0103__gemma_12b_judge__r03__BA",
+  "right_plan_role": "llm",
+  "run": 3,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T22:00:41.006032+00:00",
+  "winner_role": "llm"
+}

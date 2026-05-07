@@ -1,0 +1,48 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 62.0,
+    "mean_day_minutes": 29.286,
+    "n_active_days": 0.0,
+    "n_hard_days": 1.0,
+    "n_long_runs": 2.0,
+    "n_quality_days": 1.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 205.0
+  },
+  "fixture_id": "ab_A3__r_high__rc_high__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0119__gemma_12b_judge__r00__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A3__r_high__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s000",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0119",
+  "plan_a_advantages": [
+    "Includes a tempo run, which is essential for improving speed and lactate threshold.",
+    "Lower overall volume may be more sustainable and reduce the risk of overtraining, especially for athletes who are not already at a high training level.",
+    "The strength and mobility session is a valuable addition for injury prevention and overall athletic development."
+  ],
+  "plan_b_advantages": [
+    "Higher volume of trail running may build greater trail-specific endurance.",
+    "Incorporates hill training, which is important for trail running performance.",
+    "Provides more specific distance and elevation data for each run."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A3__r_high__rc_high__ph_base__prog__exp_t000__s012",
+  "reasoning": "Given the goal of becoming a faster trail runner, Plan A appears to be the more appropriate choice. While Plan B incorporates longer runs and hill sessions, it lacks a dedicated tempo run, which is crucial for improving speed and lactate threshold. Plan A's inclusion of a tempo run, alongside a focus on aerobic endurance and strength, provides a more balanced approach to developing speed and resilience. The higher volume of Plan B might be beneficial for some, but without a structured speed component, it risks prioritizing endurance over the primary goal of increased speed.",
+  "record_id": "pair_0119__gemma_12b_judge__r00__BA",
+  "right_plan_role": "llm",
+  "run": 0,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 1.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T22:22:27.013409+00:00",
+  "winner_role": "programmatic"
+}

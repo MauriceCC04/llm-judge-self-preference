@@ -1,0 +1,48 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 15.0,
+    "mean_day_minutes": 13.429,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 94.0
+  },
+  "fixture_id": "ab_A3__r_high__rc_high__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0116__gemma_12b_judge__r01__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A3__r_high__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s001",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0116",
+  "plan_a_advantages": [
+    "Includes a tempo run, which directly targets speed development and lactate threshold.",
+    "Lower overall volume (416 minutes vs 510) may reduce the risk of overtraining and allow for better recovery.",
+    "The consistent easy runs throughout the week build a strong aerobic base without excessive fatigue."
+  ],
+  "plan_b_advantages": [
+    "Higher volume of trail running may improve trail-specific endurance and durability.",
+    "Hill repeats are a valuable addition for building strength and power on trails.",
+    "The plan emphasizes recovery runs, which can be beneficial for managing fatigue."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A3__r_high__rc_high__ph_base__prog__exp_t000__s005",
+  "reasoning": "Given the goal of becoming a faster trail runner, Plan A appears to be the more effective choice. While both plans incorporate essential elements like easy runs and long runs, Plan A's inclusion of a tempo run is crucial for developing speed and lactate threshold, a key factor in faster trail running. Plan B's focus on longer, moderate-intensity runs and hill repeats, while beneficial for endurance, doesn't directly address the speed component as effectively. The shorter overall volume of Plan A also suggests a better balance between training load and recovery, which is important for preventing injury and maximizing adaptation.",
+  "record_id": "pair_0116__gemma_12b_judge__r01__BA",
+  "right_plan_role": "llm",
+  "run": 1,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T22:18:11.822248+00:00",
+  "winner_role": "programmatic"
+}

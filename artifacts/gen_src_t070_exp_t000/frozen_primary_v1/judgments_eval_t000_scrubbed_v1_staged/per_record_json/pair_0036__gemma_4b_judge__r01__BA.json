@@ -1,0 +1,48 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 11.0,
+    "mean_day_minutes": 0.714,
+    "n_active_days": 0.0,
+    "n_hard_days": 1.0,
+    "n_long_runs": 1.0,
+    "n_quality_days": 1.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 5.0
+  },
+  "fixture_id": "ab_A1__r_low__rc_high__ph_peak",
+  "judge": "gemma_4b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/matching_pool/eval_manifest_scrubbed_v1/judge_inputs/pair_0036__gemma_4b_judge__r01__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-4b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A1__r_low__rc_high__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s002",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0036",
+  "plan_a_advantages": [
+    "Includes a tempo run for threshold development.",
+    "Features a longer, sustained run to build endurance.",
+    "Incorporates cross-training for recovery and variation."
+  ],
+  "plan_b_advantages": [
+    "More consistent and predictable schedule.",
+    "Simpler and potentially easier to adhere to.",
+    "Focuses on trail running, which could be beneficial for maintaining trail-specific fitness."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A1__r_low__rc_high__ph_peak__prog__exp_t000__s019",
+  "reasoning": "Plan A is the better training plan for a trail runner aiming to become faster because it incorporates a dedicated tempo run and a longer, sustained effort, both crucial for improving threshold and endurance – key components of trail running speed. Plan B, while consistent, lacks this focused intensity work and relies solely on easy runs, which won't provide the necessary stimulus for significant performance gains. Furthermore, Plan A’s inclusion of cross-training offers a valuable recovery and variation element. While Plan B’s simplicity might be appealing, it’s too conservative for an athlete actively seeking to improve their speed.",
+  "record_id": "pair_0036__gemma_4b_judge__r01__BA",
+  "right_plan_role": "llm",
+  "run": 1,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T16:18:45.215006+00:00",
+  "winner_role": "programmatic"
+}

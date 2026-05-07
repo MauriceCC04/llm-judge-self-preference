@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 2.0,
+    "mean_day_minutes": 8.714,
+    "n_active_days": 3.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 3.0,
+    "total_minutes": 61.0
+  },
+  "fixture_id": "ab_A1__r_low__rc_high__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0033__gemma_12b_judge__r00__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A1__r_low__rc_high__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s016",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0033",
+  "plan_a_advantages": [
+    "Greater emphasis on aerobic base building: Plan A includes longer runs (54-70 minutes) which are more effective for developing aerobic endurance than the shorter, repeated runs in Plan B.",
+    "More rest days: Plan A incorporates more rest days (4 out of 7), which is important for recovery and preventing overtraining, particularly for trail running which is inherently more demanding on the body.",
+    "Better for varied terrain: The longer runs in Plan A allow the athlete to practice pacing and effort management over varied terrain, a critical skill for trail running."
+  ],
+  "plan_b_advantages": [
+    "Consistent trail-specific training: Plan B consistently incorporates trail running, which can help with developing specific trail running skills and adapting to the terrain.",
+    "Potentially lower impact: The shorter runs in Plan B might be slightly less impactful on the joints, which could be beneficial for athletes prone to injury (though this is marginal)."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A1__r_low__rc_high__ph_base__prog__exp_t000__s004",
+  "reasoning": "Plan A is the better choice for an athlete aiming to become a faster trail runner, especially if they are at a relatively early stage of training or have a history of injury. While Plan B provides consistent, short trail runs, Plan A prioritizes building a strong aerobic base with longer, steady-state runs. This foundation is crucial for trail running performance, as it allows the athlete to handle the demands of varied terrain and longer distances more efficiently. The longer durations in Plan A, even at an easy pace, will contribute more to improving cardiovascular fitness and lactate threshold, which are key factors in trail running speed.",
+  "record_id": "pair_0033__gemma_12b_judge__r00__BA",
+  "right_plan_role": "llm",
+  "run": 0,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T20:18:47.643863+00:00",
+  "winner_role": "programmatic"
+}

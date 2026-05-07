@@ -1,0 +1,48 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 0.0,
+    "mean_day_minutes": 5.0,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 35.0
+  },
+  "fixture_id": "ab_A1__r_low__rc_high__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0029__gemma_12b_judge__r02__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A1__r_low__rc_high__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s022",
+  "llm_won": false,
+  "order": "AB",
+  "pair_id": "pair_0029",
+  "plan_a_advantages": [
+    "Plan A has a slightly lower total weekly volume (214 minutes vs 249 minutes), which might be preferable for a runner who is very new to trail running or prone to injury.",
+    "The simplicity of Plan A could be beneficial for a runner who prefers a very straightforward training approach."
+  ],
+  "plan_b_advantages": [
+    "Plan B includes a wider range of run durations, which can help build aerobic endurance more effectively.",
+    "The emphasis on 'absorbing training' in Plan B suggests a more thoughtful approach to recovery.",
+    "The inclusion of an 'aerobic' run on day 7, even at an easy intensity, indicates a slight progression beyond just easy running, which is valuable for improving speed.",
+    "The total volume is higher, which, assuming the athlete can handle it, will lead to greater gains."
+  ],
+  "position": "AB",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A1__r_low__rc_high__ph_base__prog__exp_t000__s014",
+  "reasoning": "Both plans focus on easy running, which is a good foundation for trail running speed. However, Plan B demonstrates a slightly more progressive approach to building aerobic endurance. The varying run durations in Plan B, including a longer run on day 3 and a shorter run on day 5, suggest a better understanding of how to manage fatigue and build consistency. While both include rest days, Plan B's descriptions emphasize 'absorbing training,' which is a more holistic view of recovery than simply 'maintaining freshness.'",
+  "record_id": "pair_0029__gemma_12b_judge__r02__AB",
+  "right_plan_role": "programmatic",
+  "run": 2,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T20:13:13.833450+00:00",
+  "winner_role": "programmatic"
+}

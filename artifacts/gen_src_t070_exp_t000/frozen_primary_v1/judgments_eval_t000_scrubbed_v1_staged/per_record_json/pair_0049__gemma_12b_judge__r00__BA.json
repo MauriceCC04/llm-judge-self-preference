@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 5.0,
+    "mean_day_minutes": 5.857,
+    "n_active_days": 1.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 2.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 1.0,
+    "total_minutes": 41.0
+  },
+  "fixture_id": "ab_A1__r_low__rc_low__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0049__gemma_12b_judge__r00__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A1__r_low__rc_low__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s009",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0049",
+  "plan_a_advantages": [
+    "Includes aerobic runs to build a stronger aerobic base, which is vital for faster running.",
+    "Features two long runs, promoting trail-specific endurance and durability.",
+    "Offers a more varied training week, preventing potential plateaus from repetitive easy runs."
+  ],
+  "plan_b_advantages": [
+    "May be better suited for a complete beginner or someone returning from injury due to the lower overall volume.",
+    "The focus on form and cadence during every run could be beneficial for correcting running mechanics."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A1__r_low__rc_low__ph_base__prog__exp_t000__s006",
+  "reasoning": "While both plans focus on easy running, Plan A demonstrates a more comprehensive approach to improving trail running speed. It incorporates both aerobic and long runs, which are crucial for building endurance and trail-specific durability, elements essential for faster trail running. Plan B's repetitive focus on easy runs, while potentially beneficial for form, lacks the varied stimulus needed for significant performance gains. The inclusion of longer runs in Plan A allows for greater physiological adaptation and prepares the athlete for the demands of longer trail races or training sessions.",
+  "record_id": "pair_0049__gemma_12b_judge__r00__BA",
+  "right_plan_role": "llm",
+  "run": 0,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T20:41:38.034787+00:00",
+  "winner_role": "programmatic"
+}

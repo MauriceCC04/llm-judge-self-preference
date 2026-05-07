@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 25.0,
+    "mean_day_minutes": 18.143,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 127.0
+  },
+  "fixture_id": "ab_A2__r_high__rc_high__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0066__gemma_12b_judge__r02__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A2__r_high__rc_high__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s010",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0066",
+  "plan_a_advantages": [
+    "Lower overall volume: Plan A's total training time (244 minutes) is significantly less than Plan B (371 minutes), reducing the risk of overtraining and injury, particularly important for trail running which is inherently more demanding on the body.",
+    "Incorporation of cross-training: The inclusion of a low-impact cross-training day in Plan A provides a valuable opportunity for aerobic stimulus without the pounding of trail running, aiding recovery and preventing overuse injuries.",
+    "Emphasis on aerobic consistency: The frequent, shorter easy runs in Plan A are ideal for building a strong aerobic base, which is crucial for faster trail running."
+  ],
+  "plan_b_advantages": [
+    "Longer long run: Plan B's long run (116 minutes) is longer than Plan A's (91 minutes), potentially providing a greater stimulus for endurance development.",
+    "Moderate intensity long run: Plan B specifies a 'moderate' intensity for the long run, which could be beneficial for building hill strength, a key component of trail running."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A2__r_high__rc_high__ph_base__prog__exp_t000__s012",
+  "reasoning": "Given the goal of becoming a faster trail runner, Plan A appears to be the more suitable choice. While both plans incorporate rest days and a long run, Plan A prioritizes building a base of aerobic consistency with shorter, more frequent easy runs and a cross-training day. Plan B, with its significantly longer daily runs, risks accumulating fatigue before the athlete has established a solid foundation. A focus on consistent, lower-intensity training is generally more effective for improving speed and endurance in trail running, especially for someone looking to improve their overall pace.",
+  "record_id": "pair_0066__gemma_12b_judge__r02__BA",
+  "right_plan_role": "llm",
+  "run": 2,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T21:06:57.649990+00:00",
+  "winner_role": "programmatic"
+}

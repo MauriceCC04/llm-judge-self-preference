@@ -1,0 +1,48 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 8.0,
+    "mean_day_minutes": 6.714,
+    "n_active_days": 0.0,
+    "n_hard_days": 2.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 2.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 47.0
+  },
+  "fixture_id": "ab_A1__r_high__rc_high__ph_peak",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0010__gemma_12b_judge__r00__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A1__r_high__rc_high__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s001",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0010",
+  "plan_a_advantages": [
+    "Includes tempo runs to improve lactate threshold and running economy.",
+    "Incorporates hill workouts to build trail-specific strength and power.",
+    "Features strength and mobility sessions to improve durability and reduce injury risk.",
+    "Provides a more balanced training stimulus compared to Plan B."
+  ],
+  "plan_b_advantages": [
+    "Focuses heavily on building confidence through consistent, easy trail running.",
+    "Provides a high volume of easy miles, which can be beneficial for base building."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A1__r_high__rc_high__ph_peak__prog__exp_t000__s016",
+  "reasoning": "Plan A is the better choice for an athlete aiming to become a faster trail runner. While both plans incorporate rest days, Plan A includes a variety of training types – easy runs, tempo runs, hill workouts, and strength training – which is crucial for developing speed and trail-specific fitness. Plan B consists solely of easy trail runs, which, while beneficial for building base mileage and confidence, lacks the intensity and varied stimulus needed to improve speed. The inclusion of tempo and hill sessions in Plan A will contribute more effectively to the athlete's goal.",
+  "record_id": "pair_0010__gemma_12b_judge__r00__BA",
+  "right_plan_role": "llm",
+  "run": 0,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T19:46:16.744691+00:00",
+  "winner_role": "programmatic"
+}

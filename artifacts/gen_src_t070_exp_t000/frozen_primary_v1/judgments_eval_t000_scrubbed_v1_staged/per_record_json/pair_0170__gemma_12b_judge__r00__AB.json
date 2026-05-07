@@ -1,0 +1,48 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 46.0,
+    "mean_day_minutes": 2.286,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 16.0
+  },
+  "fixture_id": "ab_A3__r_low__rc_high__ph_peak",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0170__gemma_12b_judge__r00__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A3__r_low__rc_high__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s009",
+  "llm_won": false,
+  "order": "AB",
+  "pair_id": "pair_0170",
+  "plan_a_advantages": [
+    "Plan A has a slightly higher frequency of aerobic runs, which could be beneficial for base building.",
+    "Plan A's interval session might provide a quicker boost in speed, although without threshold work, the gains may be less sustainable."
+  ],
+  "plan_b_advantages": [
+    "Plan B includes a tempo run, directly targeting the athlete's sustainable race pace.",
+    "Plan B incorporates a strength and mobility session, crucial for trail running injury prevention and efficiency.",
+    "Plan B's longer long run (106 minutes vs. 60 minutes) provides more time to build endurance and adapt to trail conditions.",
+    "Plan B prioritizes easy runs for recovery and consistency, which is vital for long-term progress."
+  ],
+  "position": "AB",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A3__r_low__rc_high__ph_peak__prog__exp_t000__s013",
+  "reasoning": "Plan B appears to be the better choice for an athlete aiming to become a faster trail runner. While both plans incorporate essential elements like long runs and rest days, Plan B demonstrates a more structured and progressive approach to building speed and endurance. The inclusion of a tempo run (threshold training) in Plan B is a significant advantage, as it directly targets the pace at which trail runners often operate during races. Furthermore, the dedicated strength and mobility session in Plan B addresses a crucial aspect of trail running performance and injury prevention, which is often overlooked.",
+  "record_id": "pair_0170__gemma_12b_judge__r00__AB",
+  "right_plan_role": "programmatic",
+  "run": 0,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T23:44:17.830520+00:00",
+  "winner_role": "programmatic"
+}

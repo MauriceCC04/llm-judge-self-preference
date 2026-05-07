@@ -1,0 +1,49 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 37.0,
+    "mean_day_minutes": 8.857,
+    "n_active_days": 0.0,
+    "n_hard_days": 1.0,
+    "n_long_runs": 1.0,
+    "n_quality_days": 1.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 62.0
+  },
+  "fixture_id": "ab_A3__r_low__rc_low__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0179__gemma_12b_judge__r04__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A3__r_low__rc_low__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s004",
+  "llm_won": true,
+  "order": "BA",
+  "pair_id": "pair_0179",
+  "plan_a_advantages": [
+    "Plan A includes a threshold interval session, which can improve lactate threshold and speed.",
+    "Plan A has a slightly lower total volume (328 minutes vs 390 minutes), which might be preferable for a runner prone to overtraining or injury.",
+    "Plan A's cross-training day offers a low-impact alternative for recovery."
+  ],
+  "plan_b_advantages": [
+    "Plan B includes a dedicated strength training day, which is essential for trail running.",
+    "Plan B incorporates a longer trail run, directly addressing the endurance demands of the sport.",
+    "Plan B has a higher total volume, which can be beneficial for building overall fitness and endurance, assuming the athlete can handle it.",
+    "Plan B emphasizes trail-specific running more consistently throughout the week."
+  ],
+  "position": "BA",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A3__r_low__rc_low__ph_base__prog__exp_t000__s020",
+  "reasoning": "Given the goal of becoming a faster trail runner, Plan B appears to be the more effective choice. While both plans incorporate aerobic work and rest, Plan B prioritizes longer, sustained efforts on trails, which is crucial for trail running performance. The inclusion of a dedicated strength training day in Plan B is also a significant advantage, as strength is vital for navigating technical trails and preventing injuries. Plan A's focus on shorter intervals and a greater emphasis on cross-training seems less directly aligned with the specific demands of trail running.",
+  "record_id": "pair_0179__gemma_12b_judge__r04__BA",
+  "right_plan_role": "llm",
+  "run": 4,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T23:59:36.338973+00:00",
+  "winner_role": "llm"
+}

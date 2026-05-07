@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 6.0,
+    "mean_day_minutes": 5.571,
+    "n_active_days": 1.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 1.0,
+    "total_minutes": 39.0
+  },
+  "fixture_id": "ab_A2__r_high__rc_high__ph_peak",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0071__gemma_12b_judge__r01__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A2__r_high__rc_high__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s004",
+  "llm_won": true,
+  "order": "BA",
+  "pair_id": "pair_0071",
+  "plan_a_advantages": [
+    "Plan A includes cross-training sessions, which can provide an aerobic stimulus with reduced impact, potentially aiding recovery and injury prevention.",
+    "Plan A has a slightly more balanced distribution of training across the week, with cross-training interspersed with running."
+  ],
+  "plan_b_advantages": [
+    "Plan B emphasizes trail-specific running more consistently, which is crucial for developing the skills and strength needed for faster trail running.",
+    "Plan B has a higher total training volume, potentially leading to greater physiological adaptation.",
+    "Plan B includes two rest days, which may be beneficial for recovery and injury prevention, especially for a runner new to higher volumes."
+  ],
+  "position": "BA",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A2__r_high__rc_high__ph_peak__prog__exp_t000__s018",
+  "reasoning": "While both plans focus on building aerobic endurance, Plan B appears to be slightly better suited for a trail runner aiming to become faster. It prioritizes trail-specific running more consistently, with all easy runs explicitly stated as 'trail runs' and emphasizing rhythm and form. Plan B also incorporates a longer total training volume (295 minutes vs 256 minutes), which, when managed correctly with adequate rest, can contribute to greater physiological adaptation and improved performance. The increased rest days in Plan B also suggest a slightly more conservative approach, which can be beneficial for injury prevention and ensuring the athlete is adequately recovered.",
+  "record_id": "pair_0071__gemma_12b_judge__r01__BA",
+  "right_plan_role": "llm",
+  "run": 1,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T21:14:46.809576+00:00",
+  "winner_role": "llm"
+}

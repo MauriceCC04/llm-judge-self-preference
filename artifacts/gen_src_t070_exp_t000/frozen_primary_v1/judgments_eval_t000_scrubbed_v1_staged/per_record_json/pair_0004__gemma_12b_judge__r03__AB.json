@@ -1,0 +1,49 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 12.0,
+    "mean_day_minutes": 10.714,
+    "n_active_days": 2.0,
+    "n_hard_days": 2.0,
+    "n_long_runs": 1.0,
+    "n_quality_days": 2.0,
+    "n_rest_days": 2.0,
+    "total_minutes": 75.0
+  },
+  "fixture_id": "ab_A1__r_high__rc_high__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0004__gemma_12b_judge__r03__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A1__r_high__rc_high__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s003",
+  "llm_won": false,
+  "order": "AB",
+  "pair_id": "pair_0004",
+  "plan_a_advantages": [
+    "Plan A prioritizes form and rhythm, which is always beneficial.",
+    "Plan A has more rest days, which could be helpful for a beginner or someone recovering from injury.",
+    "Plan A's simplicity might be easier to adhere to."
+  ],
+  "plan_b_advantages": [
+    "Plan B includes hill training, essential for trail running speed and strength.",
+    "Plan B incorporates a longer run, building endurance crucial for longer trail races.",
+    "Plan B has a more varied workout schedule, providing a broader stimulus for improvement.",
+    "Plan B's total training volume is higher, potentially leading to greater gains (assuming the athlete can handle the load)."
+  ],
+  "position": "AB",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A1__r_high__rc_high__ph_base__prog__exp_t000__s017",
+  "reasoning": "While both plans have merit, Plan B is the better choice for an athlete aiming to become a faster trail runner. Plan B incorporates hill training and a longer run, both crucial for trail running performance. The focus on climbing strength and endurance in Plan B directly addresses the demands of trail running, which often involves significant elevation changes. Plan A, with its repetitive easy runs, lacks the stimulus needed to improve speed and power on trails.",
+  "record_id": "pair_0004__gemma_12b_judge__r03__AB",
+  "right_plan_role": "programmatic",
+  "run": 3,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T19:38:25.692066+00:00",
+  "winner_role": "programmatic"
+}

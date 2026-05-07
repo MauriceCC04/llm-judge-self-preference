@@ -1,0 +1,49 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 10.0,
+    "mean_day_minutes": 6.143,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 43.0
+  },
+  "fixture_id": "ab_A4__r_high__rc_low__ph_peak",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0211__gemma_12b_judge__r04__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A4__r_high__rc_low__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s004",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0211",
+  "plan_a_advantages": [
+    "More emphasis on building aerobic base with multiple easy runs, which is foundational for speed development.",
+    "Includes a dedicated tempo session for improving lactate threshold, a key factor in faster running.",
+    "Lower overall volume may reduce the risk of overtraining and allow for better recovery, crucial for speed gains.",
+    "Clearer purpose summary for each workout, emphasizing the training goal."
+  ],
+  "plan_b_advantages": [
+    "Includes trail-specific details like distance and elevation gain for each run, providing more context.",
+    "Potentially higher overall volume (450 minutes vs 407) could contribute to greater endurance, although not necessarily speed.",
+    "The inclusion of average heart rate data provides a more precise measure of intensity."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A4__r_high__rc_low__ph_peak__prog__exp_t000__s005",
+  "reasoning": "Given the primary goal of becoming a *faster* trail runner, Plan A appears to be the more suitable choice. While both plans incorporate essential elements like long runs and rest days, Plan A's focus on building a base of aerobic consistency through multiple easy runs, combined with a single tempo session, is more aligned with developing speed. Plan B, with its longer runs at a moderate intensity and a greater emphasis on maintaining freshness, seems geared more towards endurance and race preparation rather than speed development. The lower overall volume of Plan A also suggests a lower risk of overtraining, which is crucial for athletes aiming to improve speed.",
+  "record_id": "pair_0211__gemma_12b_judge__r04__BA",
+  "right_plan_role": "llm",
+  "run": 4,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-07T00:50:51.638775+00:00",
+  "winner_role": "programmatic"
+}

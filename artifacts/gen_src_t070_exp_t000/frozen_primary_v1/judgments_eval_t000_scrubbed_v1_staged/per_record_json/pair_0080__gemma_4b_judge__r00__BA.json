@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 2.0,
+    "mean_day_minutes": 25.857,
+    "n_active_days": 2.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 2.0,
+    "total_minutes": 181.0
+  },
+  "fixture_id": "ab_A2__r_high__rc_low__ph_peak",
+  "judge": "gemma_4b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/matching_pool/eval_manifest_scrubbed_v1/judge_inputs/pair_0080__gemma_4b_judge__r00__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-4b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A2__r_high__rc_low__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s001",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0080",
+  "plan_a_advantages": [
+    "Includes strength and mobility work.",
+    "Balances aerobic development with cross-training.",
+    "Provides a more varied training stimulus."
+  ],
+  "plan_b_advantages": [
+    "More frequent recovery runs.",
+    "Potentially less taxing on the body due to lower overall volume."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A2__r_high__rc_low__ph_peak__prog__exp_t000__s004",
+  "reasoning": "Plan A is the better training plan for a trail runner aiming to become faster. It incorporates a more balanced approach, including dedicated easy runs for aerobic base building alongside cross-training and strength work, which are crucial for trail running's demands. Plan B, conversely, focuses almost entirely on active recovery and easy runs, which, while beneficial for recovery, doesn't provide the necessary stimulus for improving speed and endurance. The inclusion of a strength session in Plan A directly addresses the need for stability and injury prevention, a key factor for trail runners.",
+  "record_id": "pair_0080__gemma_4b_judge__r00__BA",
+  "right_plan_role": "llm",
+  "run": 0,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 1.143,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T16:37:51.250732+00:00",
+  "winner_role": "programmatic"
+}

@@ -1,0 +1,48 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 30.0,
+    "mean_day_minutes": 4.857,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 34.0
+  },
+  "fixture_id": "ab_A2__r_high__rc_high__ph_peak",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0068__gemma_12b_judge__r03__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A2__r_high__rc_high__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s248",
+  "llm_won": false,
+  "order": "AB",
+  "pair_id": "pair_0068",
+  "plan_a_advantages": [
+    "Plan A includes a longer trail run (13.4km vs 8.4km) on day 6, providing more specific trail experience.",
+    "Plan A has a slightly higher total training volume (375 minutes vs 341 minutes)."
+  ],
+  "plan_b_advantages": [
+    "Plan B has a longer long run (80 minutes vs 62 minutes), which is more effective for building endurance.",
+    "Plan B includes a dedicated strength and mobility session at the beginning of the week, which is beneficial for injury prevention and performance.",
+    "Plan B's aerobic run (66 minutes) provides a targeted stimulus for improving aerobic capacity.",
+    "Plan B's overall structure seems more focused on progressive overload and building a solid aerobic base, which is key for faster trail running."
+  ],
+  "position": "AB",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A2__r_high__rc_high__ph_peak__prog__exp_t000__s000",
+  "reasoning": "While both plans incorporate essential elements for trail running, Plan B appears better suited for an athlete aiming to become a faster trail runner. Plan B prioritizes building a strong aerobic base with a longer long run and more consistent easy/aerobic runs, which is crucial for speed development. The inclusion of a dedicated strength and mobility session at the start of the week in Plan B is also a smart move for injury prevention and performance enhancement. Plan A's focus on 'maintaining freshness' across most sessions feels less targeted towards actively improving speed and endurance.",
+  "record_id": "pair_0068__gemma_12b_judge__r03__AB",
+  "right_plan_role": "programmatic",
+  "run": 3,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T21:10:23.585338+00:00",
+  "winner_role": "programmatic"
+}

@@ -1,0 +1,49 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 46.0,
+    "mean_day_minutes": 0.0,
+    "n_active_days": 0.0,
+    "n_hard_days": 1.0,
+    "n_long_runs": 1.0,
+    "n_quality_days": 1.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 0.0
+  },
+  "fixture_id": "ab_A2__r_low__rc_high__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0086__gemma_12b_judge__r03__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A2__r_low__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s001",
+  "llm_won": false,
+  "order": "AB",
+  "pair_id": "pair_0086",
+  "plan_a_advantages": [
+    "Plan A prioritizes recovery, which is beneficial if the athlete is currently experiencing fatigue.",
+    "The simplicity of Plan A might be easier to adhere to for some athletes.",
+    "The focus on easy running can help prevent injury if the athlete is prone to them."
+  ],
+  "plan_b_advantages": [
+    "Plan B includes a long run to build endurance, a key component of trail running performance.",
+    "The interval training session (hard day) directly addresses the goal of becoming a faster runner by improving speed and threshold.",
+    "Cross-training provides a low-impact aerobic stimulus, reducing the risk of overuse injuries while maintaining fitness.",
+    "Plan B offers a more varied and comprehensive training stimulus compared to Plan A."
+  ],
+  "position": "AB",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A2__r_low__rc_high__ph_base__prog__exp_t000__s020",
+  "reasoning": "Given the primary goal of becoming a faster trail runner, Plan B is the better choice. While Plan A focuses solely on recovery and easy running, which is appropriate if the athlete is significantly fatigued, it lacks the necessary stimulus for improvement. Plan B incorporates a long run, interval training, and cross-training, all of which contribute to building endurance, speed, and overall fitness more effectively than Plan A's repetitive easy runs. The inclusion of a hard day (intervals) is crucial for developing the athlete's speed and threshold, which are essential for faster trail running.",
+  "record_id": "pair_0086__gemma_12b_judge__r03__AB",
+  "right_plan_role": "programmatic",
+  "run": 3,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T21:37:03.655012+00:00",
+  "winner_role": "programmatic"
+}

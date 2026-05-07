@@ -1,0 +1,50 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 21.0,
+    "mean_day_minutes": 24.286,
+    "n_active_days": 1.0,
+    "n_hard_days": 1.0,
+    "n_long_runs": 1.0,
+    "n_quality_days": 1.0,
+    "n_rest_days": 1.0,
+    "total_minutes": 170.0
+  },
+  "fixture_id": "ab_A4__r_low__rc_high__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0227__gemma_12b_judge__r01__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A4__r_low__rc_high__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s005",
+  "llm_won": true,
+  "order": "BA",
+  "pair_id": "pair_0227",
+  "plan_a_advantages": [
+    "Plan A has more rest days, which could be beneficial for athletes prone to injury or those new to training.",
+    "Plan A's lower overall volume might be more manageable for beginners.",
+    "Plan A's focus on easy runs promotes aerobic development with a lower risk of overtraining.",
+    "Plan A's cross-training day provides a low-impact alternative for recovery or injury prevention."
+  ],
+  "plan_b_advantages": [
+    "Plan B includes interval training, directly addressing the goal of becoming a faster runner.",
+    "Plan B incorporates more moderate intensity work, which is important for improving speed and lactate threshold.",
+    "Plan B has a higher overall training volume, potentially leading to greater physiological adaptations.",
+    "Plan B emphasizes trail-specific training with all runs occurring on trails, better preparing the athlete for race conditions."
+  ],
+  "position": "BA",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A4__r_low__rc_high__ph_base__prog__exp_t000__s012",
+  "reasoning": "Given the goal of becoming a faster trail runner, Plan B is the superior choice. While both plans incorporate aerobic work, Plan B includes a dedicated interval session, which is crucial for developing speed and power – key components of faster trail running. Plan A focuses almost exclusively on easy and long runs, which are important for building endurance but insufficient for improving speed. The higher volume and inclusion of moderate intensity work in Plan B also provide a greater stimulus for adaptation and performance gains.",
+  "record_id": "pair_0227__gemma_12b_judge__r01__BA",
+  "right_plan_role": "llm",
+  "run": 1,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-07T01:15:12.572497+00:00",
+  "winner_role": "llm"
+}

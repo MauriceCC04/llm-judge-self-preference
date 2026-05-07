@@ -1,0 +1,48 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 0.0,
+    "mean_day_minutes": 5.0,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 35.0
+  },
+  "fixture_id": "ab_A1__r_low__rc_high__ph_base",
+  "judge": "gemma_4b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/matching_pool/eval_manifest_scrubbed_v1/judge_inputs/pair_0029__gemma_4b_judge__r01__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-4b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A1__r_low__rc_high__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s022",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0029",
+  "plan_a_advantages": [
+    "Includes a dedicated aerobic session for endurance development.",
+    "Offers a longer workout duration (54 minutes) compared to Plan B.",
+    "Provides a more structured approach to building a base."
+  ],
+  "plan_b_advantages": [
+    "More frequent rest days, potentially aiding in recovery.",
+    "Focuses on rhythm and light effort, which could be beneficial for injury prevention.",
+    "Simpler and less demanding schedule, potentially easier to adhere to."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A1__r_low__rc_high__ph_base__prog__exp_t000__s014",
+  "reasoning": "Plan A is the better training plan for a trail runner aiming to become faster. It incorporates a single, longer aerobic session designed to build endurance, a key component of trail running speed. Plan B, conversely, consists entirely of very short, easy runs, which while beneficial for recovery, won't provide the stimulus needed to improve performance. The inclusion of a 54-minute aerobic run in Plan A directly addresses the goal of increasing speed by developing a stronger aerobic base, whereas Plan B’s repetitive short runs are unlikely to lead to significant gains in trail running speed.",
+  "record_id": "pair_0029__gemma_4b_judge__r01__BA",
+  "right_plan_role": "llm",
+  "run": 1,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T16:15:46.216573+00:00",
+  "winner_role": "programmatic"
+}

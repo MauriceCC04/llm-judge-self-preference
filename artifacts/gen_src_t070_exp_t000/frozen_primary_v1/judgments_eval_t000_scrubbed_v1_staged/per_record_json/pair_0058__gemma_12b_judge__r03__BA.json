@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 9.0,
+    "mean_day_minutes": 8.714,
+    "n_active_days": 2.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 2.0,
+    "total_minutes": 61.0
+  },
+  "fixture_id": "ab_A1__r_low__rc_low__ph_peak",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0058__gemma_12b_judge__r03__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A1__r_low__rc_low__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s008",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0058",
+  "plan_a_advantages": [
+    "Includes a strength and mobility session, which is essential for trail running performance and injury prevention.",
+    "More balanced rest days, promoting better recovery and preventing burnout.",
+    "Provides a slightly more varied approach, which can be more engaging and prevent plateaus."
+  ],
+  "plan_b_advantages": [
+    "Higher total training volume (176 minutes vs 115 minutes) which *could* lead to greater aerobic development, though this is questionable given the lack of intensity.",
+    "Strong emphasis on form and cadence during easy runs, which is beneficial for efficiency."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A1__r_low__rc_low__ph_peak__prog__exp_t000__s008",
+  "reasoning": "While both plans focus on easy running, Plan A appears to be a more well-rounded and sustainable approach for a trail runner aiming to become faster. Plan B's repetitive focus on easy runs, while emphasizing recovery, lacks the crucial element of strength and mobility work. A faster trail runner needs more than just aerobic base; they need the strength and stability to handle varied terrain and prevent injuries. Plan A's inclusion of a strength and mobility session is a significant advantage, and its more balanced distribution of rest days is likely to be more sustainable long-term.",
+  "record_id": "pair_0058__gemma_12b_judge__r03__BA",
+  "right_plan_role": "llm",
+  "run": 3,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T20:54:52.452300+00:00",
+  "winner_role": "programmatic"
+}

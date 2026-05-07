@@ -1,0 +1,46 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 12.0,
+    "mean_day_minutes": 16.286,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 114.0
+  },
+  "fixture_id": "ab_A3__r_high__rc_high__ph_base",
+  "judge": "gemma_4b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/matching_pool/eval_manifest_scrubbed_v1/judge_inputs/pair_0121__gemma_4b_judge__r01__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-4b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A3__r_high__rc_high__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s002",
+  "llm_won": false,
+  "order": "AB",
+  "pair_id": "pair_0121",
+  "plan_a_advantages": [
+    "More frequent easy runs could be beneficial for recovery and maintaining a consistent aerobic base.",
+    "The inclusion of a dedicated strength session is a positive addition for injury prevention and overall stability."
+  ],
+  "plan_b_advantages": [
+    "Prioritizes interval training, a key element for improving speed and power.",
+    "The shorter, more focused sessions in Plan B are likely to be more effective for developing the specific physiological adaptations required for faster trail running."
+  ],
+  "position": "AB",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A3__r_high__rc_high__ph_base__prog__exp_t000__s018",
+  "reasoning": "Plan B is the better training plan for a trail runner aiming to become faster, particularly given the implied current state of the athlete. Plan B incorporates more targeted interval training to develop higher aerobic power, a crucial component for faster trail running. Plan A’s focus on longer, consistent endurance runs, while valuable, doesn’t prioritize the specific adaptations needed for speed. Plan B’s shorter, more intense sessions, combined with a strength session focused on stability, are more directly geared towards improving running economy and power, which will translate to faster times on the trails. Plan A’s longer runs, while good for base building, could potentially lead to overtraining if not carefully managed, especially without a clear progression plan.",
+  "record_id": "pair_0121__gemma_4b_judge__r01__AB",
+  "right_plan_role": "programmatic",
+  "run": 1,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T16:56:09.566774+00:00",
+  "winner_role": "programmatic"
+}

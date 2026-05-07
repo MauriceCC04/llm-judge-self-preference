@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 12.0,
+    "mean_day_minutes": 1.571,
+    "n_active_days": 1.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 2.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 1.0,
+    "total_minutes": 11.0
+  },
+  "fixture_id": "ab_A2__r_high__rc_low__ph_base",
+  "judge": "gemma_4b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/matching_pool/eval_manifest_scrubbed_v1/judge_inputs/pair_0076__gemma_4b_judge__r00__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-4b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A2__r_high__rc_low__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s000",
+  "llm_won": true,
+  "order": "AB",
+  "pair_id": "pair_0076",
+  "plan_a_advantages": [
+    "More frequent hill work directly addresses trail running strength.",
+    "More rest days support faster adaptation and prevent overtraining.",
+    "Easier runs with varied paces better mimic trail conditions."
+  ],
+  "plan_b_advantages": [
+    "Longer runs build a strong aerobic base.",
+    "Consistent easy runs promote aerobic consistency."
+  ],
+  "position": "AB",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A2__r_high__rc_low__ph_base__prog__exp_t000__s006",
+  "reasoning": "Plan A is the better training plan for a trail runner aiming to become faster. It prioritizes consistent, easy running with strategic hill work, which is crucial for trail running strength and efficiency. Plan B focuses heavily on longer, steady-state aerobic runs, which, while beneficial for endurance, doesn't directly address the speed and technical demands of trail racing. Plan A’s inclusion of moderate easy runs with hills better simulates the varied terrain and effort levels encountered on trails, ultimately contributing more effectively to improved speed and performance. Furthermore, the more frequent rest days in Plan A are likely more appropriate for a runner focused on increasing speed, allowing for better recovery and adaptation.",
+  "record_id": "pair_0076__gemma_4b_judge__r00__AB",
+  "right_plan_role": "programmatic",
+  "run": 0,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T16:36:11.786878+00:00",
+  "winner_role": "llm"
+}

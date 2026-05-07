@@ -1,0 +1,48 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 13.0,
+    "mean_day_minutes": 0.0,
+    "n_active_days": 1.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 2.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 1.0,
+    "total_minutes": 0.0
+  },
+  "fixture_id": "ab_A3__r_low__rc_high__ph_peak",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0163__gemma_12b_judge__r04__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A3__r_low__rc_high__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s004",
+  "llm_won": true,
+  "order": "BA",
+  "pair_id": "pair_0163",
+  "plan_a_advantages": [
+    "Plan A includes a strength and mobility session, which is beneficial for injury prevention and overall athleticism.",
+    "Plan A has more rest days, which could be beneficial for athletes prone to overtraining.",
+    "Plan A's longer runs may be more suitable for athletes with a very high existing aerobic base."
+  ],
+  "plan_b_advantages": [
+    "Plan B includes more trail-specific workouts with varying distances and elevation, better simulating race conditions.",
+    "Plan B incorporates heart rate data for more precise intensity control.",
+    "Plan B has a more balanced distribution of easy runs and a longer run, providing a better mix of endurance and recovery."
+  ],
+  "position": "BA",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A3__r_low__rc_high__ph_peak__prog__exp_t000__s003",
+  "reasoning": "While both plans aim to improve trail running speed, Plan B is better suited for the stated goal. Plan B incorporates more trail-specific training with varied distances and elevation gains, which is crucial for trail running performance. Plan A focuses heavily on long, easy runs, which are good for building aerobic base but don't adequately address the demands of trail running, such as navigating technical terrain and climbing. The inclusion of heart rate data in Plan B also allows for better monitoring and adjustment of intensity.",
+  "record_id": "pair_0163__gemma_12b_judge__r04__BA",
+  "right_plan_role": "llm",
+  "run": 4,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 1.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T23:34:04.858296+00:00",
+  "winner_role": "llm"
+}

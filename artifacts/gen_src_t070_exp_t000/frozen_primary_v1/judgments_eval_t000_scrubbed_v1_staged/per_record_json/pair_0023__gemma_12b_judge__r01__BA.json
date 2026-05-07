@@ -1,0 +1,48 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 25.0,
+    "mean_day_minutes": 0.714,
+    "n_active_days": 0.0,
+    "n_hard_days": 1.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 1.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 5.0
+  },
+  "fixture_id": "ab_A1__r_high__rc_low__ph_peak",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0023__gemma_12b_judge__r01__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A1__r_high__rc_low__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s004",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0023",
+  "plan_a_advantages": [
+    "Includes a tempo run to improve speed and lactate threshold.",
+    "Features a longer aerobic run for enhanced endurance.",
+    "Incorporates strength and mobility training for injury prevention and performance.",
+    "More varied training stimulus, promoting more well-rounded development."
+  ],
+  "plan_b_advantages": [
+    "Potentially lower overall fatigue due to consistently easy runs.",
+    "Simpler and easier to follow, which could be beneficial for beginners."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A1__r_high__rc_low__ph_peak__prog__exp_t000__s013",
+  "reasoning": "Plan A is the better choice for a trail runner aiming to become faster. While both plans incorporate rest days, Plan A includes a tempo run, which is crucial for developing speed and lactate threshold – a key factor in trail running performance. The aerobic run in Plan A also provides a longer duration for building endurance compared to the consistently shorter easy runs in Plan B. The inclusion of strength and mobility work in Plan A is also a significant advantage for trail runners, who require robust muscles and joint stability to handle varied terrain.",
+  "record_id": "pair_0023__gemma_12b_judge__r01__BA",
+  "right_plan_role": "llm",
+  "run": 1,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T20:04:47.083277+00:00",
+  "winner_role": "programmatic"
+}

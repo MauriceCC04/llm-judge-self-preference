@@ -1,0 +1,48 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 13.0,
+    "mean_day_minutes": 0.0,
+    "n_active_days": 0.0,
+    "n_hard_days": 1.0,
+    "n_long_runs": 1.0,
+    "n_quality_days": 1.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 0.0
+  },
+  "fixture_id": "ab_A1__r_low__rc_high__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0025__gemma_12b_judge__r02__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A1__r_low__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s001",
+  "llm_won": false,
+  "order": "AB",
+  "pair_id": "pair_0025",
+  "plan_a_advantages": [
+    "Plan A provides a consistent, low-impact approach that could be beneficial for beginners or those returning from injury.",
+    "The simplicity of Plan A might be easier to adhere to for some individuals."
+  ],
+  "plan_b_advantages": [
+    "Plan B includes a tempo run, which is essential for improving lactate threshold and running speed.",
+    "The cross-training sessions in Plan B offer active recovery and reduce the risk of overuse injuries.",
+    "The long run in Plan B builds endurance, a critical component of trail running performance.",
+    "Plan B's varied intensity levels better mimic the demands of trail running, which often involves changes in pace and terrain."
+  ],
+  "position": "AB",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A1__r_low__rc_high__ph_base__prog__exp_t000__s011",
+  "reasoning": "While both plans aim to improve trail running speed, Plan B is the better choice for achieving that goal. It incorporates a wider variety of training stimuli, including a long run, cross-training, threshold runs, and a tempo session. This variety is crucial for developing a well-rounded trail runner who can handle different terrains and distances. Plan A focuses solely on easy runs, which, while important for building a base, won't sufficiently challenge the athlete to improve speed and efficiency.",
+  "record_id": "pair_0025__gemma_12b_judge__r02__AB",
+  "right_plan_role": "programmatic",
+  "run": 2,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T20:07:54.846620+00:00",
+  "winner_role": "programmatic"
+}

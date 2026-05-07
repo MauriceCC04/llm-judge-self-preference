@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 5.0,
+    "mean_day_minutes": 12.571,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 88.0
+  },
+  "fixture_id": "ab_A4__r_high__rc_high__ph_peak",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0198__gemma_12b_judge__r03__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A4__r_high__rc_high__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s000",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0198",
+  "plan_a_advantages": [
+    "More structured progression: Plan A introduces a tempo run, a key workout for improving speed, which is absent in Plan B.",
+    "Consistent easy runs: The repeated easy runs in Plan A build a solid aerobic base more effectively than the varied distances in Plan B.",
+    "Lower overall volume: For an athlete aiming to get faster, a slightly lower volume with a focus on quality (like the tempo run) can be more beneficial than a higher volume with less specific speed work."
+  ],
+  "plan_b_advantages": [
+    "Trail-specific distances: Plan B's workouts incorporate distances and elevation gains more closely resembling typical trail running scenarios.",
+    "Emphasis on recovery: Plan B's frequent 'active recovery' runs might be beneficial for athletes prone to injury or those needing more recovery time."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A4__r_high__rc_high__ph_peak__prog__exp_t000__s005",
+  "reasoning": "Given the primary goal of becoming a faster trail runner, Plan A appears to be the more effective choice. While both plans incorporate essential elements like easy runs, tempo work, and long runs, Plan A's structure is more focused on building a base and introducing a key speed element (tempo) in a controlled manner. Plan B, while including trail-specific distances and elevation gains, seems to prioritize maintaining freshness over aggressively pursuing speed development. The longer, more consistent easy runs in Plan A are likely to contribute more to aerobic development, which is crucial for faster trail running.",
+  "record_id": "pair_0198__gemma_12b_judge__r03__BA",
+  "right_plan_role": "llm",
+  "run": 3,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-07T00:29:32.843374+00:00",
+  "winner_role": "programmatic"
+}

@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 0.0,
+    "mean_day_minutes": 5.857,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 41.0
+  },
+  "fixture_id": "ab_A1__r_low__rc_low__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0046__gemma_12b_judge__r00__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A1__r_low__rc_low__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s005",
+  "llm_won": false,
+  "order": "AB",
+  "pair_id": "pair_0046",
+  "plan_a_advantages": [
+    "Plan A includes a longer run (68 minutes) which could be beneficial for building overall endurance.",
+    "Plan A's focus on hill strength, while not explicitly detailed, is mentioned in the purpose summaries, which could be valuable for trail running."
+  ],
+  "plan_b_advantages": [
+    "Plan B has a more varied schedule of run durations, promoting adaptability.",
+    "Plan B includes a dedicated aerobic run, which can improve aerobic capacity.",
+    "Plan B has a slightly higher total training volume (249 minutes vs 208 minutes), potentially leading to greater gains."
+  ],
+  "position": "AB",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A1__r_low__rc_low__ph_base__prog__exp_t000__s014",
+  "reasoning": "While both plans focus on building aerobic endurance, Plan B appears to be slightly better suited for a trail runner aiming to become faster. Plan B incorporates a wider range of easy run durations, which can help build consistency and adaptability to varying terrain. The inclusion of a dedicated 'aerobic' run on day 6, even at an easy intensity, suggests a more deliberate approach to building aerobic capacity compared to Plan A's consistent 'easy' runs. Overall, Plan B's structure seems more likely to contribute to improved speed and endurance on trails.",
+  "record_id": "pair_0046__gemma_12b_judge__r00__AB",
+  "right_plan_role": "programmatic",
+  "run": 0,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T20:37:29.159962+00:00",
+  "winner_role": "programmatic"
+}

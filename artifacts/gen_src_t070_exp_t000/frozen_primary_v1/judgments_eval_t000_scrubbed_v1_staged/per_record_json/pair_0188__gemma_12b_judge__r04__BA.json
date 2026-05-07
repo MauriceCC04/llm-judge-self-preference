@@ -1,0 +1,49 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 46.0,
+    "mean_day_minutes": 0.429,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 3.0
+  },
+  "fixture_id": "ab_A3__r_low__rc_low__ph_peak",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0188__gemma_12b_judge__r04__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A3__r_low__rc_low__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s004",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0188",
+  "plan_a_advantages": [
+    "Greater emphasis on aerobic base building with a longer easy run (20 minutes) and a longer long run (106 minutes).",
+    "Dedicated tempo session (57 minutes) at a 'threshold' intensity, which is more effective for improving lactate threshold and speed.",
+    "Includes a strength and mobility session, which is important for injury prevention and trail-specific strength.",
+    "Clearer purpose summaries for each day, emphasizing the specific training goal."
+  ],
+  "plan_b_advantages": [
+    "Focus on cadence and form during the long run, which can improve running efficiency.",
+    "Tempo intervals on rolling hills, which simulates trail conditions more closely.",
+    "Strength training focusing on core and legs, which is beneficial for trail running stability."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A3__r_low__rc_low__ph_peak__prog__exp_t000__s013",
+  "reasoning": "While both plans incorporate essential elements for trail running improvement, Plan A appears to be the better choice for an athlete aiming to become a faster trail runner. Plan A's structure prioritizes building a strong aerobic base with a longer easy run and a dedicated tempo session, which are crucial for sustained speed on trails. Plan B, while including a long run and tempo session, lacks the consistent easy running volume that Plan A provides, potentially hindering aerobic development. The emphasis on 'controlled' and 'moderate' intensity in Plan B, while important, doesn't seem to build the same level of sustainable effort as Plan A's 'easy' and 'threshold' designations.",
+  "record_id": "pair_0188__gemma_12b_judge__r04__BA",
+  "right_plan_role": "llm",
+  "run": 4,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-07T00:13:20.214575+00:00",
+  "winner_role": "programmatic"
+}

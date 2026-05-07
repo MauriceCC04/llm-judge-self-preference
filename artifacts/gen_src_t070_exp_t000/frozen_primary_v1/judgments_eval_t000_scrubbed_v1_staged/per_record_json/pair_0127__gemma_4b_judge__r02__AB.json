@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 29.0,
+    "mean_day_minutes": 17.714,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 124.0
+  },
+  "fixture_id": "ab_A3__r_high__rc_high__ph_peak",
+  "judge": "gemma_4b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/matching_pool/eval_manifest_scrubbed_v1/judge_inputs/pair_0127__gemma_4b_judge__r02__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-4b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A3__r_high__rc_high__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s000",
+  "llm_won": true,
+  "order": "AB",
+  "pair_id": "pair_0127",
+  "plan_a_advantages": [
+    "Includes longer trail runs mimicking race distances.",
+    "Incorporates a tempo run to improve lactate threshold, a key factor for faster running.",
+    "More closely aligns with the demands of trail running – varied distances and terrain."
+  ],
+  "plan_b_advantages": [
+    "Utilizes cross-training, which can be beneficial for injury prevention and overall fitness.",
+    "Focuses on building aerobic consistency, a foundational element for any runner."
+  ],
+  "position": "AB",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A3__r_high__rc_high__ph_peak__prog__exp_t000__s018",
+  "reasoning": "Plan A is better suited for a trail runner aiming to become faster. It incorporates longer, more trail-specific runs (18.2km and 11.5km) which are crucial for building the endurance and leg strength needed for trail racing. Plan B’s focus on cross-training and shorter, easier runs, while beneficial for recovery, doesn’t directly address the primary goal of increasing speed on technical terrain. Plan A’s structured approach with tempo runs and varied distances provides a more targeted stimulus for improving trail running performance.",
+  "record_id": "pair_0127__gemma_4b_judge__r02__AB",
+  "right_plan_role": "programmatic",
+  "run": 2,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T16:58:53.324291+00:00",
+  "winner_role": "llm"
+}

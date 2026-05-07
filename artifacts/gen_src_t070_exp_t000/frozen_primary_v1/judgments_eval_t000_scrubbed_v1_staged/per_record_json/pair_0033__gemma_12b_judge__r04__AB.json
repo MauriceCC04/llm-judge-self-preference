@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 2.0,
+    "mean_day_minutes": 8.714,
+    "n_active_days": 3.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 3.0,
+    "total_minutes": 61.0
+  },
+  "fixture_id": "ab_A1__r_low__rc_high__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0033__gemma_12b_judge__r04__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A1__r_low__rc_high__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s016",
+  "llm_won": false,
+  "order": "AB",
+  "pair_id": "pair_0033",
+  "plan_a_advantages": [
+    "Plan A has a slightly higher total training volume (243 minutes vs 182 minutes).",
+    "Plan A includes a longer run (9.1 km) which could be beneficial for some runners."
+  ],
+  "plan_b_advantages": [
+    "Plan B incorporates more rest days (4 vs 1), promoting better recovery and reducing the risk of overtraining.",
+    "Plan B's structure of rest, then a longer aerobic run, is more strategically designed for building endurance without excessive fatigue.",
+    "Plan B's focus on conversational effort for the easy runs is more likely to ensure the athlete is truly running at an easy intensity, preventing unintended hard work."
+  ],
+  "position": "AB",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A1__r_low__rc_high__ph_base__prog__exp_t000__s004",
+  "reasoning": "While both plans focus on easy running, Plan B demonstrates a more thoughtful approach to recovery and building a base for faster trail running. The increased rest days in Plan B are crucial for allowing the body to adapt and recover, which is essential for long-term progress. Plan A's consistent daily runs, even at an easy intensity, might lead to accumulated fatigue without sufficient recovery. Plan B's structure prioritizes recovery and then builds consistency with longer easy runs, which is a more sustainable and effective strategy for improving trail running speed.",
+  "record_id": "pair_0033__gemma_12b_judge__r04__AB",
+  "right_plan_role": "programmatic",
+  "run": 4,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T20:19:50.816995+00:00",
+  "winner_role": "programmatic"
+}

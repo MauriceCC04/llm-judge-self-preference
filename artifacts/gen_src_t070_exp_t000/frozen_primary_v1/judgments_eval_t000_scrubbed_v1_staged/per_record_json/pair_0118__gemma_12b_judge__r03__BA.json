@@ -1,0 +1,48 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 24.0,
+    "mean_day_minutes": 10.857,
+    "n_active_days": 0.0,
+    "n_hard_days": 1.0,
+    "n_long_runs": 1.0,
+    "n_quality_days": 1.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 76.0
+  },
+  "fixture_id": "ab_A3__r_high__rc_high__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0118__gemma_12b_judge__r03__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A3__r_high__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s002",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0118",
+  "plan_a_advantages": [
+    "Lower overall volume: Plan A totals 489 minutes compared to Plan B's 565, reducing the risk of overtraining.",
+    "More emphasis on easy running: Plan A includes more easy runs, which are crucial for aerobic development and recovery.",
+    "Strategic hill workout: A single, focused hill workout at threshold intensity is more effective than Plan B's two hill sessions at moderate intensity for building strength and power.",
+    "Better recovery balance: The plan includes a rest day and a good balance of easy and hard days."
+  ],
+  "plan_b_advantages": [
+    "More trail-specific details: Plan B provides distances and elevation gains for each run, which can be helpful for planning routes.",
+    "Tempo run inclusion: Plan B includes a tempo run, which can improve lactate threshold and running economy, though its effectiveness depends on the athlete's current fitness level."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A3__r_high__rc_high__ph_base__prog__exp_t000__s011",
+  "reasoning": "Given the goal of becoming a faster trail runner, Plan A appears to be the more appropriate choice. While both plans incorporate long runs and hill work, Plan A's structure emphasizes consistent aerobic development with a greater focus on easy running and a single, well-placed threshold hill workout. Plan B, with its higher overall volume and more frequent hard days, risks overtraining and hindering speed development, especially if the athlete isn't already at a high level of fitness. The lower volume and more balanced approach of Plan A is more likely to lead to sustainable improvements in speed and efficiency.",
+  "record_id": "pair_0118__gemma_12b_judge__r03__BA",
+  "right_plan_role": "llm",
+  "run": 3,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 0.5,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T22:21:48.682288+00:00",
+  "winner_role": "programmatic"
+}

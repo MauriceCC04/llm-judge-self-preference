@@ -1,0 +1,49 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 60.0,
+    "mean_day_minutes": 18.857,
+    "n_active_days": 1.0,
+    "n_hard_days": 1.0,
+    "n_long_runs": 1.0,
+    "n_quality_days": 1.0,
+    "n_rest_days": 1.0,
+    "total_minutes": 132.0
+  },
+  "fixture_id": "ab_A3__r_low__rc_high__ph_peak",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0164__gemma_12b_judge__r01__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A3__r_low__rc_high__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s010",
+  "llm_won": false,
+  "order": "AB",
+  "pair_id": "pair_0164",
+  "plan_a_advantages": [
+    "Plan A includes a longer long run (120 minutes) which can build aerobic endurance.",
+    "Plan A has a slightly higher total training volume (346 minutes vs 214 minutes), which might be beneficial for some athletes.",
+    "Plan A's focus on easy runs can be good for injury prevention, especially for beginners."
+  ],
+  "plan_b_advantages": [
+    "Plan B includes a tempo run, directly addressing the goal of becoming a faster trail runner.",
+    "Plan B incorporates cross-training, which can reduce impact and provide a different stimulus.",
+    "Plan B has more rest days (2 vs 1), potentially leading to better recovery and reduced risk of overtraining.",
+    "Plan B's structured approach with a dedicated tempo session is more targeted towards performance improvement."
+  ],
+  "position": "AB",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A3__r_low__rc_high__ph_peak__prog__exp_t000__s002",
+  "reasoning": "While both plans prioritize recovery, Plan B is better suited for the goal of becoming a faster trail runner. Plan B incorporates a tempo run, which is crucial for improving speed and lactate threshold – a key factor in trail running performance. Plan A focuses solely on easy and long runs, which are important for base building but insufficient for speed development. The increased rest days in Plan B also allow for better recovery and adaptation to the more intense tempo session.",
+  "record_id": "pair_0164__gemma_12b_judge__r01__AB",
+  "right_plan_role": "programmatic",
+  "run": 1,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 0.143,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T23:34:40.527408+00:00",
+  "winner_role": "programmatic"
+}

@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 3.0,
+    "mean_day_minutes": 2.857,
+    "n_active_days": 0.0,
+    "n_hard_days": 1.0,
+    "n_long_runs": 1.0,
+    "n_quality_days": 1.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 20.0
+  },
+  "fixture_id": "ab_A2__r_low__rc_high__ph_peak",
+  "judge": "gemma_4b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/matching_pool/eval_manifest_scrubbed_v1/judge_inputs/pair_0093__gemma_4b_judge__r04__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-4b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A2__r_low__rc_high__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s000",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0093",
+  "plan_a_advantages": [
+    "Includes specific workouts designed to improve speed and power (threshold and hill sessions).",
+    "Features a longer run that contributes to overall endurance.",
+    "Provides a more balanced approach to training, combining aerobic and strength work."
+  ],
+  "plan_b_advantages": [
+    "Offers a more consistent and gentle approach to training, potentially reducing the risk of overtraining.",
+    "Incorporates trail runs with varying terrain to mimic real-world conditions."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A2__r_low__rc_high__ph_peak__prog__exp_t000__s017",
+  "reasoning": "Plan A is the superior training plan for a trail runner aiming to become faster. It incorporates structured workouts targeting key aspects of trail running performance – threshold running for sustained speed, hill work for climbing strength, and longer runs to build endurance. Plan B, conversely, focuses almost entirely on active recovery and easy runs, which, while beneficial for recovery, doesn't provide the stimulus needed to improve speed or power. Plan A’s inclusion of threshold and hill sessions directly addresses the athlete’s goal of becoming a faster trail runner, while Plan B’s emphasis on easy running risks maintaining a current, rather than improving, fitness level.",
+  "record_id": "pair_0093__gemma_4b_judge__r04__BA",
+  "right_plan_role": "llm",
+  "run": 4,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T16:43:53.344191+00:00",
+  "winner_role": "programmatic"
+}

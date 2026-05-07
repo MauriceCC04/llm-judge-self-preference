@@ -1,0 +1,48 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 30.0,
+    "mean_day_minutes": 7.286,
+    "n_active_days": 0.0,
+    "n_hard_days": 1.0,
+    "n_long_runs": 1.0,
+    "n_quality_days": 1.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 51.0
+  },
+  "fixture_id": "ab_A3__r_high__rc_low__ph_peak",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0148__gemma_12b_judge__r02__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A3__r_high__rc_low__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s004",
+  "llm_won": true,
+  "order": "AB",
+  "pair_id": "pair_0148",
+  "plan_a_advantages": [
+    "Includes tempo runs, which are essential for improving anaerobic threshold and speed.",
+    "Incorporates interval training to develop power and pacing, vital for trail running.",
+    "Features a long run to build endurance, a key component of trail running performance.",
+    "Includes strength training to support injury prevention and power development."
+  ],
+  "plan_b_advantages": [
+    "Emphasizes low-impact cross-training, which can be beneficial for recovery and injury prevention.",
+    "Has a slightly lower total training volume (219 minutes vs 270 minutes), which might be preferable for a runner prone to injury or with limited time."
+  ],
+  "position": "AB",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A3__r_high__rc_low__ph_peak__prog__exp_t000__s002",
+  "reasoning": "Plan A is the better choice for a trail runner aiming to become faster. While both plans incorporate rest days, Plan A includes a more comprehensive range of training types crucial for trail running speed: long runs, tempo runs, intervals, and strength training. Plan B focuses heavily on aerobic work and cross-training, which is valuable for base building but less effective for developing the speed and power needed for faster trail running. The inclusion of hard days with interval and tempo sessions in Plan A directly addresses the goal of increased speed.",
+  "record_id": "pair_0148__gemma_12b_judge__r02__AB",
+  "right_plan_role": "programmatic",
+  "run": 2,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.857,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T23:09:26.329845+00:00",
+  "winner_role": "llm"
+}

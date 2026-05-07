@@ -1,0 +1,49 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 5.0,
+    "mean_day_minutes": 2.0,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 14.0
+  },
+  "fixture_id": "ab_A4__r_low__rc_low__ph_peak",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0246__gemma_12b_judge__r04__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A4__r_low__rc_low__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s005",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0246",
+  "plan_a_advantages": [
+    "Includes a tempo run, which is essential for improving speed and lactate threshold.",
+    "Longer easy runs contribute to a greater aerobic base.",
+    "More balanced distribution of training load across the week, allowing for better recovery and adaptation.",
+    "Clearer progression in volume and intensity."
+  ],
+  "plan_b_advantages": [
+    "Incorporates strength training, which is beneficial for trail running.",
+    "Long runs include specific distance and elevation targets, providing more concrete goals.",
+    "The focus on nutrition and hydration during long runs is a good reminder."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A4__r_low__rc_low__ph_peak__prog__exp_t000__s005",
+  "reasoning": "While both plans aim to improve trail running speed, Plan A appears to be a more structured and progressive approach, particularly suitable for someone looking to build a solid foundation. Plan B's emphasis on 'recovering and maintaining freshness' throughout the week, while important, seems overly cautious and potentially limits the opportunity for significant gains. Plan A incorporates a tempo run, which is crucial for developing speed and lactate threshold, a key component of faster trail running. The longer easy runs in Plan A also contribute to building aerobic capacity more effectively than the shorter, more frequent easy runs in Plan B.",
+  "record_id": "pair_0246__gemma_12b_judge__r04__BA",
+  "right_plan_role": "llm",
+  "run": 4,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-07T01:45:57.473215+00:00",
+  "winner_role": "programmatic"
+}

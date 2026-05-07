@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 24.0,
+    "mean_day_minutes": 21.0,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 2.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 147.0
+  },
+  "fixture_id": "ab_A3__r_high__rc_high__ph_peak",
+  "judge": "gemma_4b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/matching_pool/eval_manifest_scrubbed_v1/judge_inputs/pair_0132__gemma_4b_judge__r00__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-4b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A3__r_high__rc_high__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s005",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0132",
+  "plan_a_advantages": [
+    "Prioritizes threshold training for speed development.",
+    "Incorporates strength and mobility work.",
+    "More focused on high-intensity efforts directly related to improving running pace."
+  ],
+  "plan_b_advantages": [
+    "Includes more long runs, which are beneficial for building overall mileage and trail adaptation.",
+    "More varied terrain for tempo and hill work, potentially better simulating race conditions."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A3__r_high__rc_high__ph_peak__prog__exp_t000__s013",
+  "reasoning": "Plan A is the better training plan for a trail runner aiming to become faster, primarily because it focuses intensely on developing threshold aerobic power through repeated interval sessions. While Plan B includes valuable long runs and tempo work, it lacks the targeted, high-intensity work crucial for improving speed. Plan A’s emphasis on threshold intervals directly addresses the goal of increasing running speed, whereas Plan B’s structure feels more geared towards building overall endurance and general fitness. Furthermore, the inclusion of strength and mobility work in Plan A is a valuable addition for injury prevention and performance enhancement, something absent in Plan B.",
+  "record_id": "pair_0132__gemma_4b_judge__r00__BA",
+  "right_plan_role": "llm",
+  "run": 0,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T17:00:53.141907+00:00",
+  "winner_role": "programmatic"
+}

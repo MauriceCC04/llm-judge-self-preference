@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 35.0,
+    "mean_day_minutes": 0.0,
+    "n_active_days": 0.0,
+    "n_hard_days": 1.0,
+    "n_long_runs": 1.0,
+    "n_quality_days": 1.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 0.0
+  },
+  "fixture_id": "ab_A2__r_low__rc_low__ph_base",
+  "judge": "gemma_4b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/matching_pool/eval_manifest_scrubbed_v1/judge_inputs/pair_0100__gemma_4b_judge__r04__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-4b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A2__r_low__rc_low__ph_base__gemma_3_4b_it__src_t070__exp_t000__s000",
+  "llm_won": false,
+  "order": "AB",
+  "pair_id": "pair_0100",
+  "plan_a_advantages": [
+    "More frequent easy runs could be beneficial for maintaining a base level of fitness.",
+    "The consistent easy runs might be less demanding on the body, potentially reducing the risk of overtraining."
+  ],
+  "plan_b_advantages": [
+    "Includes a dedicated tempo run for building sustainable strength.",
+    "The longer aerobic session and cross-training contribute to greater overall endurance development.",
+    "The inclusion of a tempo run is a more effective way to improve speed than simply increasing easy run volume."
+  ],
+  "position": "AB",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A2__r_low__rc_low__ph_base__prog__exp_t000__s011",
+  "reasoning": "Plan B is the better training plan for a trail runner aiming to become faster. It incorporates a longer, more focused aerobic session (95 minutes) early in the week, directly addressing the need for increased endurance – a key component of trail running speed. Furthermore, it includes a tempo run, which is crucial for developing the sustainable strength required for tackling challenging trails. Plan A, while prioritizing recovery, lacks this targeted intensity work and relies heavily on easy runs, which won't significantly improve speed.  The inclusion of cross-training in Plan B also provides a valuable low-impact recovery method.",
+  "record_id": "pair_0100__gemma_4b_judge__r04__AB",
+  "right_plan_role": "programmatic",
+  "run": 4,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T16:46:55.506022+00:00",
+  "winner_role": "programmatic"
+}

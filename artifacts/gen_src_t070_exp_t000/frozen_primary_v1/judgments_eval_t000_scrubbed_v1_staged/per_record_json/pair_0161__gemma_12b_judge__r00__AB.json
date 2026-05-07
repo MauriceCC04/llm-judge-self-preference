@@ -1,0 +1,49 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 18.0,
+    "mean_day_minutes": 6.571,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 46.0
+  },
+  "fixture_id": "ab_A3__r_low__rc_high__ph_peak",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0161__gemma_12b_judge__r00__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A3__r_low__rc_high__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s001",
+  "llm_won": false,
+  "order": "AB",
+  "pair_id": "pair_0161",
+  "plan_a_advantages": [
+    "Plan A has slightly more total training volume (346 minutes vs 300 minutes).",
+    "Plan A's long run includes elevation gain (420m+), which is more representative of trail running.",
+    "Plan A has a slightly more varied distribution of easy runs."
+  ],
+  "plan_b_advantages": [
+    "Plan B includes a dedicated strength and mobility session, which is vital for trail running.",
+    "Plan B's 'aerobic' sessions are more targeted for building aerobic endurance.",
+    "Plan B has a longer long run, promoting greater endurance development.",
+    "Plan B has a rest day mid-week, which can be beneficial for recovery."
+  ],
+  "position": "AB",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A3__r_low__rc_high__ph_peak__prog__exp_t000__s006",
+  "reasoning": "While both plans focus on building a base for faster trail running, Plan B appears to be slightly better suited for achieving that goal. It incorporates a dedicated strength and mobility session, which is crucial for trail runners to prevent injuries and improve efficiency on uneven terrain. Plan B also emphasizes aerobic endurance with 'aerobic' sessions, which are more specific than simply 'easy' runs, suggesting a focus on building a strong aerobic base. The longer long run in Plan B (102 minutes vs. 80 minutes) also contributes to better endurance development.",
+  "record_id": "pair_0161__gemma_12b_judge__r00__AB",
+  "right_plan_role": "programmatic",
+  "run": 0,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T23:29:43.926839+00:00",
+  "winner_role": "programmatic"
+}

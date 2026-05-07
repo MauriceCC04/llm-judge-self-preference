@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 42.0,
+    "mean_day_minutes": 8.143,
+    "n_active_days": 0.0,
+    "n_hard_days": 1.0,
+    "n_long_runs": 1.0,
+    "n_quality_days": 1.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 57.0
+  },
+  "fixture_id": "ab_A1__r_low__rc_high__ph_peak",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0039__gemma_12b_judge__r04__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A1__r_low__rc_high__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s007",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0039",
+  "plan_a_advantages": [
+    "Includes a long run to build endurance, which is essential for trail running.",
+    "Incorporates threshold and tempo runs to improve speed and running economy.",
+    "Provides a more varied training stimulus, promoting more well-rounded development."
+  ],
+  "plan_b_advantages": [
+    "Simpler and potentially easier to adhere to, especially for beginners.",
+    "Focuses heavily on easy running, which can be beneficial for recovery and injury prevention."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A1__r_low__rc_high__ph_peak__prog__exp_t000__s001",
+  "reasoning": "Plan A is the better choice for a trail runner aiming to become faster. While both plans incorporate rest days, Plan A includes a variety of training intensities – easy runs, a long run, aerobic work, and a tempo session – which is crucial for developing speed and endurance. Plan B consists almost entirely of easy runs, which, while important for recovery and base building, won't sufficiently challenge the athlete to improve their speed. The inclusion of threshold and tempo work in Plan A is key to improving running economy and lactate threshold, both vital for faster trail running.",
+  "record_id": "pair_0039__gemma_12b_judge__r04__BA",
+  "right_plan_role": "llm",
+  "run": 4,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T20:28:30.763315+00:00",
+  "winner_role": "programmatic"
+}

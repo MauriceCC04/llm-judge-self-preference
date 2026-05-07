@@ -1,0 +1,48 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 14.0,
+    "mean_day_minutes": 15.429,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 108.0
+  },
+  "fixture_id": "ab_A3__r_high__rc_low__ph_peak",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0143__gemma_12b_judge__r00__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A3__r_high__rc_low__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s002",
+  "llm_won": false,
+  "order": "AB",
+  "pair_id": "pair_0143",
+  "plan_a_advantages": [
+    "Plan A has a higher total training volume (450 minutes vs 342 minutes), which could be beneficial for runners with a higher training base.",
+    "The tempo run in Plan A provides a specific workout for improving speed, which is missing in Plan B."
+  ],
+  "plan_b_advantages": [
+    "Plan B incorporates strength and mobility training, which is vital for trail running and injury prevention.",
+    "Plan B's varied easy run durations suggest a more thoughtful approach to managing training load and recovery.",
+    "Plan B's tempo run is at threshold intensity, which is more effective for improving speed than a tempo run on trails.",
+    "Plan B has a better distribution of training load, with more emphasis on aerobic development and recovery."
+  ],
+  "position": "AB",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A3__r_high__rc_low__ph_peak__prog__exp_t000__s014",
+  "reasoning": "Plan B appears to be the better choice for a trail runner aiming to become faster. While both plans include essential elements like easy runs and a long run, Plan B demonstrates a more structured and progressive approach to building speed and endurance. The inclusion of strength and mobility work is a significant advantage, as trail running demands robust lower body strength and stability. Furthermore, the varied intensities and durations of the easy runs in Plan B suggest a more nuanced understanding of training load management, which is crucial for injury prevention and consistent progress.",
+  "record_id": "pair_0143__gemma_12b_judge__r00__AB",
+  "right_plan_role": "programmatic",
+  "run": 0,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T23:00:51.417262+00:00",
+  "winner_role": "programmatic"
+}

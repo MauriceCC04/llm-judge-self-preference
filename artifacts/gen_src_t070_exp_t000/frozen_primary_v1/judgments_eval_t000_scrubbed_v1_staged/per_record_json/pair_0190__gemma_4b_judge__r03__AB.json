@@ -1,0 +1,49 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 36.0,
+    "mean_day_minutes": 12.429,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 2.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 87.0
+  },
+  "fixture_id": "ab_A4__r_high__rc_high__ph_base",
+  "judge": "gemma_4b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/matching_pool/eval_manifest_scrubbed_v1/judge_inputs/pair_0190__gemma_4b_judge__r03__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-4b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A4__r_high__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s005",
+  "llm_won": true,
+  "order": "AB",
+  "pair_id": "pair_0190",
+  "plan_a_advantages": [
+    "Includes longer runs that simulate race distances.",
+    "Incorporates hill repeats to build trail-specific strength.",
+    "Features a tempo run to improve lactate threshold.",
+    "Provides a more holistic approach to training, addressing multiple facets of trail running."
+  ],
+  "plan_b_advantages": [
+    "Focuses on threshold training, which can be beneficial for improving speed on climbs.",
+    "Utilizes shorter, more frequent easy runs, potentially reducing overall fatigue.",
+    "More structured interval sessions could be beneficial for some runners looking to sharpen their speed work."
+  ],
+  "position": "AB",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A4__r_high__rc_high__ph_base__prog__exp_t000__s008",
+  "reasoning": "Plan A is the better training plan for a trail runner aiming to become faster, primarily because it incorporates a more balanced approach to building both aerobic base and race-specific endurance. While Plan B focuses heavily on threshold work and shorter, consistent easy runs, Plan A includes longer, sustained runs at an easy pace alongside hill repeats and a tempo run – all crucial elements for trail running performance. The longer runs in Plan A directly mimic the demands of trail races, while the hill work specifically addresses the strength and power needed on technical trails. Plan B’s emphasis on shorter, more frequent sessions might lead to overtraining and a lack of true aerobic capacity for longer distances.",
+  "record_id": "pair_0190__gemma_4b_judge__r03__AB",
+  "right_plan_role": "programmatic",
+  "run": 3,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T17:26:41.969726+00:00",
+  "winner_role": "llm"
+}

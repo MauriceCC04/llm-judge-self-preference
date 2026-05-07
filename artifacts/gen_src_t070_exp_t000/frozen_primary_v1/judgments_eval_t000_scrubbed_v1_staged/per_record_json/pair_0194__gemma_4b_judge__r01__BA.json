@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 37.0,
+    "mean_day_minutes": 9.571,
+    "n_active_days": 0.0,
+    "n_hard_days": 1.0,
+    "n_long_runs": 2.0,
+    "n_quality_days": 1.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 67.0
+  },
+  "fixture_id": "ab_A4__r_high__rc_high__ph_base",
+  "judge": "gemma_4b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/matching_pool/eval_manifest_scrubbed_v1/judge_inputs/pair_0194__gemma_4b_judge__r01__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-4b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A4__r_high__rc_high__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s002",
+  "llm_won": true,
+  "order": "BA",
+  "pair_id": "pair_0194",
+  "plan_a_advantages": [
+    "More consistent easy running volume",
+    "Potentially lower risk of overtraining due to fewer hard days"
+  ],
+  "plan_b_advantages": [
+    "More targeted training for trail running specific demands (hills, speed)",
+    "Greater variety in workouts, preventing boredom and promoting well-rounded development",
+    "Incorporates more race-specific workouts like tempo runs and hill sprints"
+  ],
+  "position": "BA",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A4__r_high__rc_high__ph_base__prog__exp_t000__s012",
+  "reasoning": "Plan B is the better training plan for a trail runner aiming to become faster, primarily because it incorporates more targeted, race-specific training elements. While Plan A focuses heavily on aerobic endurance with a lot of easy runs, Plan B includes dedicated hill sprint sessions, tempo runs, and two longer trail runs – all crucial for developing the strength and speed needed for trail racing. Plan A’s structure feels somewhat repetitive and lacks the intensity needed to truly improve speed, whereas Plan B’s varied workouts address multiple facets of trail running performance. Furthermore, the inclusion of strength work focused on hill sprints in Plan B is a significant advantage.",
+  "record_id": "pair_0194__gemma_4b_judge__r01__BA",
+  "right_plan_role": "llm",
+  "run": 1,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T17:28:16.451692+00:00",
+  "winner_role": "llm"
+}

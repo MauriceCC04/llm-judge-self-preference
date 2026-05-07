@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 17.0,
+    "mean_day_minutes": 1.143,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 8.0
+  },
+  "fixture_id": "ab_A2__r_low__rc_high__ph_peak",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0099__gemma_12b_judge__r01__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A2__r_low__rc_high__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s004",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0099",
+  "plan_a_advantages": [
+    "Includes a strength and mobility session, which is essential for trail running injury prevention and performance.",
+    "More varied schedule with a mix of run durations, potentially preventing monotony and promoting adaptation.",
+    "Slightly more balanced distribution of running days compared to Plan B."
+  ],
+  "plan_b_advantages": [
+    "Emphasizes recovery with a slightly higher number of easy run minutes.",
+    "The focus on 'smooth strides and gentle terrain' during easy runs could be beneficial for newer trail runners."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A2__r_low__rc_high__ph_peak__prog__exp_t000__s015",
+  "reasoning": "Both plans focus on easy running and recovery, which is a good starting point for building a base. However, Plan A incorporates a strength and mobility session, which is crucial for trail running to prevent injuries and improve efficiency on uneven terrain. While both plans have rest days, Plan A's distribution of runs feels slightly more balanced, avoiding consecutive days of running. Ultimately, the inclusion of strength work makes Plan A a more well-rounded and effective plan for a trail runner aiming to become faster.",
+  "record_id": "pair_0099__gemma_12b_judge__r01__BA",
+  "right_plan_role": "llm",
+  "run": 1,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 1.143,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T21:54:25.099775+00:00",
+  "winner_role": "programmatic"
+}

@@ -1,0 +1,48 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 3.0,
+    "mean_day_minutes": 33.143,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 232.0
+  },
+  "fixture_id": "ab_A4__r_high__rc_high__ph_peak",
+  "judge": "gemma_4b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/matching_pool/eval_manifest_scrubbed_v1/judge_inputs/pair_0202__gemma_4b_judge__r04__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-4b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A4__r_high__rc_high__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s004",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0202",
+  "plan_a_advantages": [
+    "Prioritizes climbing strength and trail-specific power through dedicated hill sessions.",
+    "More frequent, shorter hill sessions likely lead to better recovery and adaptation.",
+    "Includes a greater emphasis on threshold training, a key component of trail running speed."
+  ],
+  "plan_b_advantages": [
+    "Offers a wider variety of session types (intervals, strength, tempo).",
+    "Longer runs provide a greater opportunity for building overall endurance.",
+    "The inclusion of a strength session could be beneficial for injury prevention and overall athleticism."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A4__r_high__rc_high__ph_peak__prog__exp_t000__s017",
+  "reasoning": "Plan A is the better training plan for a trail runner aiming to become faster, primarily due to its focused approach on climbing strength and trail-specific power. While Plan B incorporates a broader range of sessions, it lacks the dedicated hill work that is crucial for trail running performance. Plan A’s consistent inclusion of threshold hill sessions directly addresses the demands of navigating varied terrain, building the muscular endurance needed for sustained uphill efforts. Furthermore, the shorter, more frequent hill sessions in Plan A are likely to be less taxing on the body than the longer, more demanding hill sessions in Plan B, allowing for better recovery and adaptation.",
+  "record_id": "pair_0202__gemma_4b_judge__r04__BA",
+  "right_plan_role": "llm",
+  "run": 4,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T17:32:09.567521+00:00",
+  "winner_role": "programmatic"
+}

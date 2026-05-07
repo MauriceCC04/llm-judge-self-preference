@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 63.0,
+    "mean_day_minutes": 0.0,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 0.0
+  },
+  "fixture_id": "ab_A4__r_low__rc_high__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0225__gemma_12b_judge__r01__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A4__r_low__rc_high__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s001",
+  "llm_won": false,
+  "order": "AB",
+  "pair_id": "pair_0225",
+  "plan_a_advantages": [
+    "Plan A has a more consistent aerobic block, which could be beneficial for building a solid base.",
+    "Plan A's rest days are evenly spaced throughout the week."
+  ],
+  "plan_b_advantages": [
+    "Plan B prioritizes tempo runs earlier in the week, allowing for better recovery and adaptation.",
+    "Plan B includes a substantially longer long run, crucial for trail running endurance.",
+    "Plan B's aerobic runs are shorter, potentially allowing for more focused recovery."
+  ],
+  "position": "AB",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A4__r_low__rc_high__ph_base__prog__exp_t000__s008",
+  "reasoning": "While both plans aim to improve trail running speed, Plan B appears better suited for achieving that goal. It prioritizes tempo runs early in the week, which are crucial for improving lactate threshold and overall speed. Plan A's tempo run is at the end of the week, potentially diminishing its impact due to accumulated fatigue. Furthermore, Plan B incorporates a significantly longer long run, which is essential for building the endurance base necessary for faster trail running, especially given the demands of trail terrain.",
+  "record_id": "pair_0225__gemma_12b_judge__r01__AB",
+  "right_plan_role": "programmatic",
+  "run": 1,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-07T01:12:10.261099+00:00",
+  "winner_role": "programmatic"
+}

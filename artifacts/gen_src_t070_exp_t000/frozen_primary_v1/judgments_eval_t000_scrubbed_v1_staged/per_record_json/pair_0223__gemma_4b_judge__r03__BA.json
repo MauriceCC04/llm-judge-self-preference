@@ -1,0 +1,46 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 44.0,
+    "mean_day_minutes": 26.143,
+    "n_active_days": 1.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 2.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 1.0,
+    "total_minutes": 183.0
+  },
+  "fixture_id": "ab_A4__r_low__rc_high__ph_base",
+  "judge": "gemma_4b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/matching_pool/eval_manifest_scrubbed_v1/judge_inputs/pair_0223__gemma_4b_judge__r03__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-4b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A4__r_low__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s002",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0223",
+  "plan_a_advantages": [
+    "More targeted intensity work (threshold and hill sessions).",
+    "Strategic placement of rest days for optimal recovery."
+  ],
+  "plan_b_advantages": [
+    "Longer runs provide more trail mileage.",
+    "More consistent trail running volume throughout the week."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A4__r_low__rc_high__ph_base__prog__exp_t000__s009",
+  "reasoning": "Plan A is the better training plan for a trail runner aiming to become faster, primarily because it focuses on building a solid aerobic base with targeted threshold work and hill sessions, while Plan B prioritizes longer, less structured runs. Plan A incorporates more specific intensity work (threshold runs and hill sessions) which is crucial for improving running economy and power on trails, directly addressing the goal of increased speed. Furthermore, the inclusion of two rest days is strategically placed to allow for recovery between more demanding sessions, preventing overtraining and promoting adaptation. While Plan B includes longer runs, they are less focused on developing the specific physiological adaptations needed for faster trail running.",
+  "record_id": "pair_0223__gemma_4b_judge__r03__BA",
+  "right_plan_role": "llm",
+  "run": 3,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 1.857,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T17:41:20.729589+00:00",
+  "winner_role": "programmatic"
+}

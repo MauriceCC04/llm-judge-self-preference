@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 3.0,
+    "mean_day_minutes": 5.0,
+    "n_active_days": 0.0,
+    "n_hard_days": 1.0,
+    "n_long_runs": 1.0,
+    "n_quality_days": 1.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 35.0
+  },
+  "fixture_id": "ab_A1__r_low__rc_high__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0031__gemma_12b_judge__r02__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A1__r_low__rc_high__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s015",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0031",
+  "plan_a_advantages": [
+    "Includes a hill workout to build climbing strength and power, a key component of trail running.",
+    "Features a longer run to improve endurance and trail-specific durability.",
+    "Incorporates a threshold intensity hill session, which is more effective for improving speed than solely easy runs."
+  ],
+  "plan_b_advantages": [
+    "May be suitable for a complete beginner or someone returning from injury due to its lower overall volume and intensity.",
+    "The consistent easy runs could be beneficial for improving running economy if the athlete is currently very fatigued."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A1__r_low__rc_high__ph_base__prog__exp_t000__s021",
+  "reasoning": "Plan A is the better choice for an athlete aiming to become a faster trail runner. While both plans incorporate rest days, Plan A includes a dedicated hill workout and a longer run, both crucial for trail running performance. The hill workout specifically targets climbing strength and power, essential for tackling varied terrain, while the longer run builds endurance and trail-specific durability. Plan B focuses almost exclusively on easy runs, which, while important for base building, doesn't provide the stimulus needed to improve speed and efficiency on trails.",
+  "record_id": "pair_0031__gemma_12b_judge__r02__BA",
+  "right_plan_role": "llm",
+  "run": 2,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T20:16:24.897637+00:00",
+  "winner_role": "programmatic"
+}

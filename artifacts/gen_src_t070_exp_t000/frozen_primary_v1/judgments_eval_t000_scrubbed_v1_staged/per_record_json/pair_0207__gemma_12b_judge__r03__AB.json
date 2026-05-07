@@ -1,0 +1,49 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 27.0,
+    "mean_day_minutes": 14.286,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 1.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 100.0
+  },
+  "fixture_id": "ab_A4__r_high__rc_low__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0207__gemma_12b_judge__r03__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A4__r_high__rc_low__ph_base__gemma_3_4b_it__src_t070__exp_t000__s004",
+  "llm_won": true,
+  "order": "AB",
+  "pair_id": "pair_0207",
+  "plan_a_advantages": [
+    "Higher volume of trail running: Plan A includes significantly longer runs (up to 34.7 km) compared to Plan B (1.8 km long run), which is essential for building endurance.",
+    "More race-specific elevation gain: Plan A's runs incorporate substantial elevation gain (up to 1165m+), simulating the demands of trail races.",
+    "Interval training: Plan A includes a dedicated interval session, which is important for improving speed and anaerobic capacity, crucial for faster trail running.",
+    "Greater total training time: The higher total training time (450 minutes) allows for more comprehensive development of both aerobic and muscular systems."
+  ],
+  "plan_b_advantages": [
+    "Incorporation of cross-training: Plan B includes cross-training sessions, which can help reduce impact and prevent injuries.",
+    "Strength and mobility work: Plan B dedicates a session to strength and mobility, which is important for injury prevention and overall athletic development.",
+    "Lower overall volume: The lower volume might be beneficial for athletes prone to injury or those who are newer to trail running."
+  ],
+  "position": "AB",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A4__r_high__rc_low__ph_base__prog__exp_t000__s018",
+  "reasoning": "Given the primary goal of becoming a faster trail runner, Plan A appears to be the better choice. It prioritizes higher volume and race-specific training, including longer trail runs with significant elevation gain. While Plan B incorporates valuable elements like cross-training and strength work, it lacks the sustained aerobic and muscular endurance development that is crucial for trail running performance. The longer runs in Plan A, with their substantial distance and elevation, more closely mimic the demands of a trail race and will better prepare the athlete for those conditions.",
+  "record_id": "pair_0207__gemma_12b_judge__r03__AB",
+  "right_plan_role": "programmatic",
+  "run": 3,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 2.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-07T00:44:20.399349+00:00",
+  "winner_role": "llm"
+}

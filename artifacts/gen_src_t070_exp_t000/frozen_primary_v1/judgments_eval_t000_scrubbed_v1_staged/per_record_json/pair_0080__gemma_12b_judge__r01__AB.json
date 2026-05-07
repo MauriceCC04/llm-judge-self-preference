@@ -1,0 +1,48 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 2.0,
+    "mean_day_minutes": 25.857,
+    "n_active_days": 2.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 2.0,
+    "total_minutes": 181.0
+  },
+  "fixture_id": "ab_A2__r_high__rc_low__ph_peak",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0080__gemma_12b_judge__r01__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A2__r_high__rc_low__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s001",
+  "llm_won": false,
+  "order": "AB",
+  "pair_id": "pair_0080",
+  "plan_a_advantages": [
+    "Plan A provides more time on the trails, which can be valuable for developing trail-specific skills and familiarity with terrain.",
+    "The consistent easy running in Plan A might be preferable for athletes who are new to running or have a history of injuries, as it minimizes the risk of overtraining."
+  ],
+  "plan_b_advantages": [
+    "Plan B includes cross-training, which can improve cardiovascular fitness without the impact stress of running, aiding recovery and preventing overuse injuries.",
+    "The strength and mobility work in Plan B directly addresses the demands of trail running, improving stability, power, and injury resistance.",
+    "Plan B's higher rest day count allows for greater recovery and adaptation, potentially leading to better long-term progress.",
+    "Plan B's shorter overall training volume may be more sustainable for athletes with busy schedules or limited time."
+  ],
+  "position": "AB",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A2__r_high__rc_low__ph_peak__prog__exp_t000__s004",
+  "reasoning": "While both plans prioritize recovery, Plan B demonstrates a more thoughtful approach to building a foundation for faster trail running. Plan A consists almost entirely of easy trail runs, which, while beneficial for base fitness, lacks the variety needed to stimulate improvement. Plan B incorporates cross-training and strength/mobility work, addressing crucial aspects of trail running performance like injury prevention and overall athleticism. The increased rest days in Plan B also allow for better recovery and adaptation, which is vital for long-term progress.",
+  "record_id": "pair_0080__gemma_12b_judge__r01__AB",
+  "right_plan_role": "programmatic",
+  "run": 1,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 1.143,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T21:28:11.226470+00:00",
+  "winner_role": "programmatic"
+}

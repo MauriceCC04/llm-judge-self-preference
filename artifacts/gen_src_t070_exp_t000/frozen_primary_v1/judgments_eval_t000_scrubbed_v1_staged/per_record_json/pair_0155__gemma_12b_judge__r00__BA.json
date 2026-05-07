@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 63.0,
+    "mean_day_minutes": 18.286,
+    "n_active_days": 1.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 2.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 1.0,
+    "total_minutes": 128.0
+  },
+  "fixture_id": "ab_A3__r_low__rc_high__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0155__gemma_12b_judge__r00__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A3__r_low__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s004",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0155",
+  "plan_a_advantages": [
+    "More consistent aerobic base building: Plan A emphasizes consistent easy runs, which is fundamental for trail running speed.",
+    "Lower risk of overtraining: The focus on easy effort minimizes the risk of injury and burnout.",
+    "Better suited for a beginner or intermediate trail runner: The plan is less demanding and allows for gradual adaptation."
+  ],
+  "plan_b_advantages": [
+    "Includes a strength session: Strength training can be beneficial for trail running, but it's less critical than aerobic base building in this context.",
+    "Longer runs: While beneficial, the longer runs in Plan B might be too much too soon without a solid aerobic base."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A3__r_low__rc_high__ph_base__prog__exp_t000__s008",
+  "reasoning": "Given the goal of becoming a faster trail runner, Plan A appears to be the more suitable choice. While Plan B includes longer runs and a strength session, it lacks the consistent, lower-intensity aerobic base building that is crucial for trail running speed. Plan A prioritizes building a solid foundation of aerobic fitness with consistent easy runs and a longer aerobic run, which is more likely to translate to improved speed over time. The focus on conversational effort in Plan A also minimizes the risk of overtraining and injury, which is particularly important for trail runners who often encounter uneven terrain.",
+  "record_id": "pair_0155__gemma_12b_judge__r00__BA",
+  "right_plan_role": "llm",
+  "run": 0,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T23:19:56.510499+00:00",
+  "winner_role": "programmatic"
+}

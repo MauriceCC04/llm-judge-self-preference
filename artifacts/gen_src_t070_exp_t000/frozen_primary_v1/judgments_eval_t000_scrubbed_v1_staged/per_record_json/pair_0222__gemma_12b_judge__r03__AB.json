@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 18.0,
+    "mean_day_minutes": 11.857,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 83.0
+  },
+  "fixture_id": "ab_A4__r_low__rc_high__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0222__gemma_12b_judge__r03__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A4__r_low__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s005",
+  "llm_won": true,
+  "order": "AB",
+  "pair_id": "pair_0222",
+  "plan_a_advantages": [
+    "Includes tempo runs, which are essential for improving speed and lactate threshold.",
+    "Higher overall volume (480 minutes vs 397) potentially leading to greater physiological adaptation.",
+    "More varied distances for easy runs, which can help build resilience and adaptability on trails."
+  ],
+  "plan_b_advantages": [
+    "Lower overall volume might be preferable for athletes with limited time or higher injury risk.",
+    "Incorporates cross-training, which can provide a low-impact aerobic stimulus and aid recovery."
+  ],
+  "position": "AB",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A4__r_low__rc_high__ph_base__prog__exp_t000__s010",
+  "reasoning": "Given the goal of becoming a faster trail runner, Plan A appears to be the more suitable choice. While both plans incorporate essential elements like long runs and rest days, Plan A's inclusion of tempo runs is crucial for improving speed. Tempo runs specifically target lactate threshold, a key determinant of running pace, which is absent in Plan B. The higher overall volume in Plan A, while requiring more commitment, likely translates to greater physiological adaptation and ultimately, faster trail running performance.",
+  "record_id": "pair_0222__gemma_12b_judge__r03__AB",
+  "right_plan_role": "programmatic",
+  "run": 3,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-07T01:08:01.353681+00:00",
+  "winner_role": "llm"
+}

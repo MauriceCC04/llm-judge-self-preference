@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 8.0,
+    "mean_day_minutes": 0.0,
+    "n_active_days": 1.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 1.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 1.0,
+    "total_minutes": 0.0
+  },
+  "fixture_id": "ab_A3__r_low__rc_low__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0176__gemma_12b_judge__r02__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A3__r_low__rc_low__ph_base__gemma_3_4b_it__src_t070__exp_t000__s003",
+  "llm_won": true,
+  "order": "AB",
+  "pair_id": "pair_0176",
+  "plan_a_advantages": [
+    "Includes strength training twice a week, which is vital for trail running performance and injury prevention.",
+    "More balanced distribution of training volume, with a mix of long runs, easy runs, and strength work.",
+    "Potentially more sustainable for long-term progress due to lower overall volume and inclusion of strength."
+  ],
+  "plan_b_advantages": [
+    "Higher volume of long runs could contribute to improved aerobic base.",
+    "Two rest days may allow for greater recovery, although this could also indicate undertraining."
+  ],
+  "position": "AB",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A3__r_low__rc_low__ph_base__prog__exp_t000__s003",
+  "reasoning": "While both plans aim to improve trail running speed, Plan A appears to be a more balanced and sustainable approach, especially for someone looking to become *faster*. Plan B heavily emphasizes long, easy runs, which, while important for endurance, might not be the most efficient way to improve speed. Plan A incorporates strength training twice a week, which is crucial for trail running, where power and stability are essential. The distribution of training load in Plan A seems more manageable and less likely to lead to overtraining.",
+  "record_id": "pair_0176__gemma_12b_judge__r02__AB",
+  "right_plan_role": "programmatic",
+  "run": 2,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 2.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T23:54:08.302114+00:00",
+  "winner_role": "llm"
+}

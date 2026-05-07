@@ -1,0 +1,49 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 7.0,
+    "mean_day_minutes": 22.143,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 155.0
+  },
+  "fixture_id": "ab_A4__r_high__rc_low__ph_peak",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0216__gemma_12b_judge__r04__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A4__r_high__rc_low__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s000",
+  "llm_won": true,
+  "order": "AB",
+  "pair_id": "pair_0216",
+  "plan_a_advantages": [
+    "Higher overall volume: Plan A totals 545 minutes compared to Plan B's 390, allowing for more training stimulus.",
+    "Aerobic runs on mixed terrain: These runs are specifically beneficial for trail running, building strength and adaptability to uneven surfaces.",
+    "Longer long runs: The longer long runs in Plan A (106 and 74 minutes) better prepare the athlete for the distances and durations common in trail races.",
+    "Moderate intensity long runs: Maintaining a steady pace during long runs is a key skill for trail running, and Plan A emphasizes this."
+  ],
+  "plan_b_advantages": [
+    "Lower overall volume: This might be beneficial for athletes prone to injury or those with limited time.",
+    "Threshold tempo sessions: Focusing on threshold pace can improve lactate threshold and running economy.",
+    "Emphasis on easy runs: The inclusion of easy runs helps with recovery and prevents overtraining."
+  ],
+  "position": "AB",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A4__r_high__rc_low__ph_peak__prog__exp_t000__s019",
+  "reasoning": "Given the goal of becoming a faster trail runner, Plan A appears to be the better choice. While both plans incorporate tempo and long runs, Plan A's higher overall volume and inclusion of 'mixed' terrain aerobic runs are more likely to build the necessary endurance and strength for trail running. Plan B's focus on shorter, easier runs and tempo sessions at threshold intensity might be beneficial for some, but it doesn't seem to prioritize the sustained effort and varied terrain crucial for trail speed. The longer durations in Plan A, particularly the long runs, will better prepare the athlete for the demands of trail races.",
+  "record_id": "pair_0216__gemma_12b_judge__r04__AB",
+  "right_plan_role": "programmatic",
+  "run": 4,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-07T00:58:42.941935+00:00",
+  "winner_role": "llm"
+}

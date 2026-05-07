@@ -1,0 +1,48 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 25.0,
+    "mean_day_minutes": 0.571,
+    "n_active_days": 0.0,
+    "n_hard_days": 1.0,
+    "n_long_runs": 1.0,
+    "n_quality_days": 1.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 4.0
+  },
+  "fixture_id": "ab_A1__r_low__rc_low__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0043__gemma_12b_judge__r00__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A1__r_low__rc_low__ph_base__gemma_3_4b_it__src_t070__exp_t000__s002",
+  "llm_won": false,
+  "order": "AB",
+  "pair_id": "pair_0043",
+  "plan_a_advantages": [
+    "Plan A has a slightly higher total training volume (249 minutes vs 245 minutes).",
+    "Plan A has a slightly more structured approach to recovery with a dedicated rest day at the start of the week."
+  ],
+  "plan_b_advantages": [
+    "Plan B includes a tempo run, which is essential for improving lactate threshold and running speed.",
+    "Plan B incorporates a long run, which builds endurance and trail-specific durability.",
+    "Plan B includes cross-training, which provides a low-impact recovery option and reduces injury risk.",
+    "Plan B has a more varied training week, which can help prevent plateaus and maintain motivation."
+  ],
+  "position": "AB",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A1__r_low__rc_low__ph_base__prog__exp_t000__s019",
+  "reasoning": "Plan B is the better choice for an athlete aiming to become a faster trail runner. While both plans focus on easy running, Plan B incorporates a tempo run and a long run, which are crucial for developing speed and endurance – key components of trail running performance. The inclusion of cross-training in Plan B also provides a valuable recovery tool and reduces the risk of overuse injuries. Plan A's repetitive easy runs, while good for base building, lack the intensity and variety needed to drive significant improvements in speed and trail-specific fitness.",
+  "record_id": "pair_0043__gemma_12b_judge__r00__AB",
+  "right_plan_role": "programmatic",
+  "run": 0,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T20:33:01.513642+00:00",
+  "winner_role": "programmatic"
+}

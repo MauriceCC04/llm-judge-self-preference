@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 31.0,
+    "mean_day_minutes": 13.714,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 96.0
+  },
+  "fixture_id": "ab_A3__r_low__rc_low__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0178__gemma_12b_judge__r04__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A3__r_low__rc_low__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s002",
+  "llm_won": true,
+  "order": "AB",
+  "pair_id": "pair_0178",
+  "plan_a_advantages": [
+    "Includes a tempo run, which is specifically designed to improve speed and sustainable effort.",
+    "Higher overall training volume allows for greater aerobic development and adaptation.",
+    "Focuses on rhythm and form during the long run, which can contribute to efficiency and speed."
+  ],
+  "plan_b_advantages": [
+    "Incorporates a dedicated hill session, which is beneficial for trail-specific strength and power.",
+    "Lower overall volume might be preferable for athletes prone to injury or those in earlier stages of training."
+  ],
+  "position": "AB",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A3__r_low__rc_low__ph_base__prog__exp_t000__s017",
+  "reasoning": "Given the goal of becoming a faster trail runner, Plan A appears to be the more suitable choice. While both plans incorporate essential elements like long runs, easy runs, and rest days, Plan A's inclusion of a tempo run is a significant advantage for speed development. The longer overall training volume in Plan A (390 minutes vs 294) also suggests a greater opportunity for building both aerobic base and speed, which are crucial for trail running performance. Plan B's focus on hills, while valuable, is less directly linked to overall speed improvement compared to the tempo work in Plan A.",
+  "record_id": "pair_0178__gemma_12b_judge__r04__AB",
+  "right_plan_role": "programmatic",
+  "run": 4,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T23:58:02.188468+00:00",
+  "winner_role": "llm"
+}

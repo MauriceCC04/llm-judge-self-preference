@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 11.0,
+    "mean_day_minutes": 1.429,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 10.0
+  },
+  "fixture_id": "ab_A3__r_high__rc_high__ph_base",
+  "judge": "gemma_4b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/matching_pool/eval_manifest_scrubbed_v1/judge_inputs/pair_0115__gemma_4b_judge__r00__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-4b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A3__r_high__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s005",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0115",
+  "plan_a_advantages": [
+    "Dedicated strength and mobility work for injury prevention and durability.",
+    "More consistent long run durations (134-118 minutes) which allows for better aerobic development.",
+    "A balance of longer, easier runs and shorter, more focused sessions."
+  ],
+  "plan_b_advantages": [
+    "Slightly shorter total workout time (535 minutes vs. 525 minutes).",
+    "More clearly defined session types (e.g., 'Hill Endurance', 'Aerobic Volume') which could provide more targeted guidance."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A3__r_high__rc_high__ph_base__prog__exp_t000__s000",
+  "reasoning": "Both plans are built around a high volume of trail running, which is appropriate for a trail runner aiming to improve speed. However, Plan A’s inclusion of a dedicated strength and mobility session is a crucial differentiator. It directly addresses the need for durability and injury resistance, which are paramount for trail runners who often encounter varied terrain and uneven surfaces. Plan B’s recovery runs, while beneficial, don’t proactively build the foundational strength needed to handle the demands of trail running, making Plan A the superior choice for this athlete’s goal.",
+  "record_id": "pair_0115__gemma_4b_judge__r00__BA",
+  "right_plan_role": "llm",
+  "run": 0,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T16:53:25.030496+00:00",
+  "winner_role": "programmatic"
+}

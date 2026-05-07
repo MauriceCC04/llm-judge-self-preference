@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 63.0,
+    "mean_day_minutes": 0.0,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 0.0
+  },
+  "fixture_id": "ab_A4__r_low__rc_high__ph_base",
+  "judge": "gemma_4b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/matching_pool/eval_manifest_scrubbed_v1/judge_inputs/pair_0225__gemma_4b_judge__r04__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-4b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A4__r_low__rc_high__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s001",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0225",
+  "plan_a_advantages": [
+    "Includes a dedicated threshold workout for strength development.",
+    "Features a longer, trail-specific endurance run.",
+    "Incorporates cross-training for varied movement and recovery."
+  ],
+  "plan_b_advantages": [
+    "More consistent aerobic volume with longer runs.",
+    "Tempo run is included, providing a structured speed workout."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A4__r_low__rc_high__ph_base__prog__exp_t000__s008",
+  "reasoning": "Plan A is the better training plan for a trail runner aiming to become faster. It incorporates a dedicated threshold workout, crucial for building the sustainable strength needed for sustained pace on trails, alongside a longer, more trail-specific endurance run. Plan B, while including a tempo run, relies heavily on consistent, longer aerobic runs which, while beneficial, don't directly target the speed improvements desired. The inclusion of a cross-training session in Plan A also provides a valuable opportunity for varied movement and recovery, complementing the other workouts.  Ultimately, Plan A’s focus on both strength and targeted endurance is more directly aligned with the goal of becoming a faster trail runner.",
+  "record_id": "pair_0225__gemma_4b_judge__r04__BA",
+  "right_plan_role": "llm",
+  "run": 4,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T17:42:19.943470+00:00",
+  "winner_role": "programmatic"
+}

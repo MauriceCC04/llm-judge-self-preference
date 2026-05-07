@@ -1,0 +1,49 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 12.0,
+    "mean_day_minutes": 13.143,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 92.0
+  },
+  "fixture_id": "ab_A4__r_low__rc_low__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0239__gemma_12b_judge__r02__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A4__r_low__rc_low__ph_base__gemma_3_4b_it__src_t070__exp_t000__s002",
+  "llm_won": true,
+  "order": "BA",
+  "pair_id": "pair_0239",
+  "plan_a_advantages": [
+    "Plan A has a slightly lower total volume (397 minutes vs 489 minutes), which could be beneficial for a runner prone to overtraining or injury.",
+    "Plan A's tempo run is slightly shorter (39 minutes) which may be more manageable for a beginner.",
+    "Plan A has a greater number of easy runs (3) compared to Plan B (2)."
+  ],
+  "plan_b_advantages": [
+    "Plan B incorporates more trail-specific training with longer distances (up to 30km) and significant elevation gain (up to 900m).",
+    "Plan B includes average heart rate data, allowing for more precise intensity control and monitoring.",
+    "Plan B's tempo run (15km) is longer than Plan A's, providing a greater stimulus for sustained effort.",
+    "Plan B's long runs are longer and include more elevation gain, better simulating trail race conditions."
+  ],
+  "position": "BA",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A4__r_low__rc_low__ph_base__prog__exp_t000__s010",
+  "reasoning": "Plan B appears to be the better choice for a trail runner aiming to become faster. While both plans incorporate essential elements like tempo runs, easy runs, and long runs, Plan B demonstrates a greater emphasis on trail-specific training, including significant elevation gain and longer distances. The inclusion of average heart rate data in Plan B also suggests a more structured and monitored approach to intensity, which is beneficial for optimizing training and preventing overtraining. Plan A's focus on longer, flatter easy runs might not translate as effectively to improved trail running performance.",
+  "record_id": "pair_0239__gemma_12b_judge__r02__BA",
+  "right_plan_role": "llm",
+  "run": 2,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-07T01:33:52.720165+00:00",
+  "winner_role": "llm"
+}

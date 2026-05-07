@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 9.0,
+    "mean_day_minutes": 1.714,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 12.0
+  },
+  "fixture_id": "ab_A1__r_high__rc_low__ph_peak",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0020__gemma_12b_judge__r03__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A1__r_high__rc_low__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s006",
+  "llm_won": false,
+  "order": "AB",
+  "pair_id": "pair_0020",
+  "plan_a_advantages": [
+    "Plan A has slightly more rest days, which could be beneficial for some athletes.",
+    "The focus on trail running in Plan A might be preferable for athletes who want to specifically adapt to trail conditions."
+  ],
+  "plan_b_advantages": [
+    "Plan B includes a cross-training day, reducing impact and providing aerobic stimulus.",
+    "Plan B has slightly more total training minutes, potentially leading to greater aerobic development.",
+    "Plan B's varied run durations suggest a more progressive approach to building endurance."
+  ],
+  "position": "AB",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A1__r_high__rc_low__ph_peak__prog__exp_t000__s008",
+  "reasoning": "While both plans focus on easy running, Plan B demonstrates a more thoughtful approach to building a base for faster trail running. The inclusion of a cross-training day in Plan B is a significant advantage, allowing for aerobic stimulus without the impact stress of running. This is particularly beneficial for trail runners who often encounter uneven terrain. Plan A's repetitive focus solely on easy trail runs, while not inherently bad, lacks the variety and potential for injury prevention that Plan B offers. Overall, Plan B provides a slightly more well-rounded and sustainable approach to building a foundation for speed.",
+  "record_id": "pair_0020__gemma_12b_judge__r03__AB",
+  "right_plan_role": "programmatic",
+  "run": 3,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T20:01:14.894425+00:00",
+  "winner_role": "programmatic"
+}

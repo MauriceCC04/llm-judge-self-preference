@@ -1,0 +1,46 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 41.0,
+    "mean_day_minutes": 30.857,
+    "n_active_days": 1.0,
+    "n_hard_days": 1.0,
+    "n_long_runs": 1.0,
+    "n_quality_days": 1.0,
+    "n_rest_days": 1.0,
+    "total_minutes": 216.0
+  },
+  "fixture_id": "ab_A4__r_high__rc_low__ph_peak",
+  "judge": "gemma_4b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/matching_pool/eval_manifest_scrubbed_v1/judge_inputs/pair_0217__gemma_4b_judge__r00__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-4b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A4__r_high__rc_low__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s005",
+  "llm_won": true,
+  "order": "AB",
+  "pair_id": "pair_0217",
+  "plan_a_advantages": [
+    "More focused on speed and power development with tempo and interval workouts.",
+    "Includes a longer, more demanding long run crucial for trail running endurance."
+  ],
+  "plan_b_advantages": [
+    "Lower overall volume, potentially beneficial for a runner returning from injury or needing more recovery.",
+    "Reduced risk of overtraining due to fewer hard days and more rest days."
+  ],
+  "position": "AB",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A4__r_high__rc_low__ph_peak__prog__exp_t000__s002",
+  "reasoning": "Plan A is the better training plan for a trail runner aiming to become faster. It incorporates a more targeted approach to improving speed and endurance, including dedicated tempo runs, interval sessions, and a longer, more challenging long run. Plan B, while gentle, lacks the specific workouts needed to build the necessary strength and speed for trail running. Plan A’s inclusion of strength training and varied intensity sessions directly addresses the athlete’s goal of becoming faster, while Plan B focuses primarily on building a base level of aerobic fitness without pushing the athlete to improve their speed or power.",
+  "record_id": "pair_0217__gemma_4b_judge__r00__AB",
+  "right_plan_role": "programmatic",
+  "run": 0,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 1.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T17:38:20.314317+00:00",
+  "winner_role": "llm"
+}

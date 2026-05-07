@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 43.0,
+    "mean_day_minutes": 7.0,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 49.0
+  },
+  "fixture_id": "ab_A4__r_low__rc_low__ph_peak",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0249__gemma_12b_judge__r00__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A4__r_low__rc_low__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s001",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0249",
+  "plan_a_advantages": [
+    "Dedicated tempo run: Plan A includes a specific tempo run, directly addressing the goal of increased speed.",
+    "Lower overall volume: Plan A has a lower total training volume (284 minutes vs 333), which is beneficial for preventing overtraining, especially if the athlete is not already highly conditioned.",
+    "Clearer progression: The plan progresses logically from easy runs to a tempo session, then back to easy runs and rest, providing a structured approach to building fitness."
+  ],
+  "plan_b_advantages": [
+    "More trail-specific aerobic work: Plan B includes two aerobic runs on trails, which could be beneficial for developing trail-specific endurance.",
+    "Strength training focus: Plan B's strength training session is explicitly focused on leg muscles, which is important for trail running power."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A4__r_low__rc_low__ph_peak__prog__exp_t000__s013",
+  "reasoning": "Given the goal of becoming a faster trail runner, Plan A appears to be the more suitable choice. While both plans incorporate essential elements like long runs, strength training, and rest days, Plan A's structure prioritizes building a solid aerobic base and threshold strength before introducing more intense speed work. The inclusion of a dedicated tempo run (57 minutes at threshold intensity) is a key differentiator, directly targeting the speed improvement goal. Plan B, with its focus on 'maintaining freshness' and moderate intensity across multiple sessions, might be better suited for an athlete already at a higher fitness level or recovering from fatigue, but it lacks the targeted intensity needed for significant speed gains.",
+  "record_id": "pair_0249__gemma_12b_judge__r00__BA",
+  "right_plan_role": "llm",
+  "run": 0,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-07T01:49:30.138903+00:00",
+  "winner_role": "programmatic"
+}

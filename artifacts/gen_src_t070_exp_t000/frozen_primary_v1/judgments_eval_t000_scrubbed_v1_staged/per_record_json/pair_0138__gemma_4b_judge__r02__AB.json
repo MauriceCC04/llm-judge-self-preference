@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 63.0,
+    "mean_day_minutes": 29.429,
+    "n_active_days": 1.0,
+    "n_hard_days": 2.0,
+    "n_long_runs": 2.0,
+    "n_quality_days": 2.0,
+    "n_rest_days": 1.0,
+    "total_minutes": 206.0
+  },
+  "fixture_id": "ab_A3__r_high__rc_low__ph_base",
+  "judge": "gemma_4b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/matching_pool/eval_manifest_scrubbed_v1/judge_inputs/pair_0138__gemma_4b_judge__r02__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-4b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A3__r_high__rc_low__ph_base__gemma_3_4b_it__src_t070__exp_t000__s001",
+  "llm_won": true,
+  "order": "AB",
+  "pair_id": "pair_0138",
+  "plan_a_advantages": [
+    "More emphasis on long, trail-specific runs for endurance development.",
+    "Incorporates strength training to support injury prevention and mechanics.",
+    "Provides a more balanced approach to training volume and intensity."
+  ],
+  "plan_b_advantages": [
+    "Includes dedicated hill sessions for building climbing power.",
+    "Potentially more effective for runners already comfortable with higher intensity efforts."
+  ],
+  "position": "AB",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A3__r_high__rc_low__ph_base__prog__exp_t000__s009",
+  "reasoning": "Plan A is the better training plan for a trail runner aiming to become faster. It prioritizes consistent, longer trail runs (24.5km and 22.2km) which are crucial for building the endurance needed for trail racing. Plan B, while including hill work, focuses heavily on shorter, more intense threshold sessions, which could lead to overtraining and neglecting the crucial element of sustained effort. Plan A’s inclusion of varied, longer runs alongside easy runs and strength work provides a more holistic approach to developing both aerobic capacity and trail-specific resilience.",
+  "record_id": "pair_0138__gemma_4b_judge__r02__AB",
+  "right_plan_role": "programmatic",
+  "run": 2,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T17:03:40.167485+00:00",
+  "winner_role": "llm"
+}

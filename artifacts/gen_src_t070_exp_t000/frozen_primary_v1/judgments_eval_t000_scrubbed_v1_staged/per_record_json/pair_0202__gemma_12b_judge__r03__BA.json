@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 3.0,
+    "mean_day_minutes": 33.143,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 232.0
+  },
+  "fixture_id": "ab_A4__r_high__rc_high__ph_peak",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0202__gemma_12b_judge__r03__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A4__r_high__rc_high__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s004",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0202",
+  "plan_a_advantages": [
+    "Lower overall volume: 326 minutes compared to Plan B's 558 minutes, reducing the risk of overtraining and allowing for better recovery.",
+    "Focus on hill work: Three dedicated hill sessions per week are ideal for developing trail-specific strength and power, crucial for faster trail running.",
+    "Balanced approach: Combines hill work with easy runs for aerobic consistency and recovery, promoting sustainable progress."
+  ],
+  "plan_b_advantages": [
+    "Variety of workouts: Includes intervals, tempo runs, and strength training, which can contribute to overall fitness and address different aspects of performance.",
+    "Detailed workout information: Provides specific distances, elevation gain, and heart rate data for each workout, allowing for more precise monitoring and adjustments."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A4__r_high__rc_high__ph_peak__prog__exp_t000__s017",
+  "reasoning": "Given the goal of becoming a faster trail runner, Plan A appears to be the more suitable choice. While Plan B includes a wider variety of workouts (intervals, tempo, strength), it also significantly increases the overall training volume (558 minutes vs. 326 minutes). For someone aiming to improve speed, a more focused approach with a good balance of hill work and easy runs, as seen in Plan A, is likely to be more effective than a higher volume plan that could lead to overtraining and injury. Plan A's emphasis on consistent, shorter hill sessions is a good foundation for building trail-specific power and climbing strength without excessive fatigue.",
+  "record_id": "pair_0202__gemma_12b_judge__r03__BA",
+  "right_plan_role": "llm",
+  "run": 3,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-07T00:36:24.309045+00:00",
+  "winner_role": "programmatic"
+}

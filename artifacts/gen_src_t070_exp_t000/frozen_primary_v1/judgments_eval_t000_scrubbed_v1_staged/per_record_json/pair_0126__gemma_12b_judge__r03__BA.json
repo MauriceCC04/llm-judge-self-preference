@@ -1,0 +1,49 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 14.0,
+    "mean_day_minutes": 15.429,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 108.0
+  },
+  "fixture_id": "ab_A3__r_high__rc_high__ph_peak",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0126__gemma_12b_judge__r03__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A3__r_high__rc_high__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s004",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0126",
+  "plan_a_advantages": [
+    "Includes a strength and mobility session, which is crucial for trail running injury prevention and performance.",
+    "Features a dedicated aerobic run to build endurance at a controlled pace, which is more targeted than Plan B's general 'easy' runs.",
+    "The tempo run provides a specific stimulus for improving speed and lactate threshold, absent in Plan B.",
+    "The overall structure of Plan A seems more adaptable to different fitness levels, as it doesn't rely on consistently high mileage."
+  ],
+  "plan_b_advantages": [
+    "Higher total mileage might be beneficial for an athlete already with a solid base.",
+    "The trail-specific nature of all workouts (trail runs) could be advantageous for developing trail-specific skills and conditioning.",
+    "The longer long run (18km) could be useful for building endurance, though the moderate pace might not be optimal for speed development."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A3__r_high__rc_high__ph_peak__prog__exp_t000__s014",
+  "reasoning": "Plan A appears to be a more well-rounded and sustainable plan for improving trail running speed, especially without knowing the athlete's current fitness level. While Plan B includes more mileage, its repetitive 'easy' and 'moderate' trail runs, coupled with a single tempo day, lack the structured progression and variety needed for significant speed gains. Plan A incorporates a strength and mobility session, a dedicated aerobic run, and a tempo run, providing a more comprehensive approach to building both endurance and speed. The focus on controlled effort across various sessions in Plan A suggests a safer and more adaptable plan for a wider range of athletes.",
+  "record_id": "pair_0126__gemma_12b_judge__r03__BA",
+  "right_plan_role": "llm",
+  "run": 3,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T22:34:55.902852+00:00",
+  "winner_role": "programmatic"
+}

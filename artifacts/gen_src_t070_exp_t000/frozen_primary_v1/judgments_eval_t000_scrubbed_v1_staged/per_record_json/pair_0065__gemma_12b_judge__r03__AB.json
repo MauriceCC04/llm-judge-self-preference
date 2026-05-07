@@ -1,0 +1,48 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 25.0,
+    "mean_day_minutes": 14.286,
+    "n_active_days": 0.0,
+    "n_hard_days": 1.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 1.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 100.0
+  },
+  "fixture_id": "ab_A2__r_high__rc_high__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0065__gemma_12b_judge__r03__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A2__r_high__rc_high__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s001",
+  "llm_won": false,
+  "order": "AB",
+  "pair_id": "pair_0065",
+  "plan_a_advantages": [
+    "Plan A has a longer total training time (371 minutes vs 271 minutes), which could be beneficial for a beginner needing more volume.",
+    "The longer long run in Plan A (72 minutes) might be more suitable for someone already with a decent base and looking to build endurance further."
+  ],
+  "plan_b_advantages": [
+    "Plan B includes a tempo run, directly targeting lactate threshold improvement for faster running.",
+    "Plan B incorporates cross-training, offering a lower-impact aerobic stimulus and aiding recovery.",
+    "Plan B's shorter overall volume might be preferable for athletes with limited time or those prone to overtraining.",
+    "Plan B's structure appears more focused on speed development, aligning better with the stated goal of becoming a faster trail runner."
+  ],
+  "position": "AB",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A2__r_high__rc_high__ph_base__prog__exp_t000__s008",
+  "reasoning": "While both plans incorporate rest and easy runs, Plan B demonstrates a more targeted approach to improving trail running speed. The inclusion of a tempo run (threshold training) is crucial for developing the lactate threshold, a key determinant of running speed and endurance. Plan A focuses solely on easy and long runs, which are important for base building but less effective for directly improving speed. Plan B's cross-training session also provides a valuable recovery and aerobic stimulus with reduced impact.",
+  "record_id": "pair_0065__gemma_12b_judge__r03__AB",
+  "right_plan_role": "programmatic",
+  "run": 3,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T21:05:33.782994+00:00",
+  "winner_role": "programmatic"
+}

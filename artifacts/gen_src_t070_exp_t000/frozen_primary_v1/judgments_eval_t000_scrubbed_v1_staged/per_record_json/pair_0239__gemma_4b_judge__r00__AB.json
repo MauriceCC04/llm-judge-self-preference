@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 12.0,
+    "mean_day_minutes": 13.143,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 92.0
+  },
+  "fixture_id": "ab_A4__r_low__rc_low__ph_base",
+  "judge": "gemma_4b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/matching_pool/eval_manifest_scrubbed_v1/judge_inputs/pair_0239__gemma_4b_judge__r00__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-4b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A4__r_low__rc_low__ph_base__gemma_3_4b_it__src_t070__exp_t000__s002",
+  "llm_won": true,
+  "order": "AB",
+  "pair_id": "pair_0239",
+  "plan_a_advantages": [
+    "More frequent and varied long runs (25km, 30km) provide a better stimulus for trail-specific endurance.",
+    "Incorporates a tempo run, directly targeting speed development.",
+    "Shorter, easier runs support recovery and consistent training throughout the week."
+  ],
+  "plan_b_advantages": [
+    "Includes cross-training, offering a low-impact option for recovery and potentially addressing muscle imbalances.",
+    "The longer, sustained aerobic runs in Plan B could be beneficial for an athlete with a very high base level of fitness, but are riskier for someone aiming to *become* faster."
+  ],
+  "position": "AB",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A4__r_low__rc_low__ph_base__prog__exp_t000__s010",
+  "reasoning": "Plan A is the better training plan for a trail runner aiming to become faster, primarily because it incorporates more varied and strategically placed long runs, crucial for building the aerobic base and hill strength necessary for trail racing. While Plan B includes longer runs, they are significantly longer and more consistently demanding, which could lead to overtraining and reduced recovery. Plan A’s shorter, more frequent long runs, combined with the inclusion of a tempo run, allow for a more balanced approach to building speed and endurance without excessive fatigue. Furthermore, the inclusion of shorter, easier runs interspersed throughout the week supports recovery and consistent training.",
+  "record_id": "pair_0239__gemma_4b_judge__r00__AB",
+  "right_plan_role": "programmatic",
+  "run": 0,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T17:48:04.631125+00:00",
+  "winner_role": "llm"
+}

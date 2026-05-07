@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 11.0,
+    "mean_day_minutes": 1.429,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 10.0
+  },
+  "fixture_id": "ab_A3__r_high__rc_high__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0115__gemma_12b_judge__r03__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A3__r_high__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s005",
+  "llm_won": true,
+  "order": "BA",
+  "pair_id": "pair_0115",
+  "plan_a_advantages": [
+    "Plan A's consistent easy runs might be beneficial for runners prone to injury or those needing a very gradual increase in volume.",
+    "The strength and mobility session in Plan A is a nice addition for injury prevention, which is missing in Plan B."
+  ],
+  "plan_b_advantages": [
+    "Plan B includes moderate intensity runs, which are essential for improving speed and aerobic capacity.",
+    "The hill endurance workout in Plan B directly addresses a key element of trail running.",
+    "Plan B's workout summaries are more descriptive, providing better guidance on the type of effort to exert."
+  ],
+  "position": "BA",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A3__r_high__rc_high__ph_base__prog__exp_t000__s000",
+  "reasoning": "While both plans prioritize endurance, Plan B appears better suited for a trail runner aiming for increased speed. The key difference lies in the intensity. Plan B incorporates 'moderate' intensity runs, specifically targeting aerobic base and hill endurance, which are crucial for trail running performance. Plan A exclusively uses 'easy' intensity, which, while good for building a base, won't sufficiently challenge the athlete to improve speed. The inclusion of hill endurance work in Plan B is a significant advantage for trail running, as it directly addresses a common and challenging aspect of the sport.",
+  "record_id": "pair_0115__gemma_12b_judge__r03__BA",
+  "right_plan_role": "llm",
+  "run": 3,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T22:17:26.994071+00:00",
+  "winner_role": "llm"
+}

@@ -1,0 +1,48 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 52.0,
+    "mean_day_minutes": 16.714,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 3.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 117.0
+  },
+  "fixture_id": "ab_A3__r_high__rc_low__ph_peak",
+  "judge": "gemma_4b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/matching_pool/eval_manifest_scrubbed_v1/judge_inputs/pair_0144__gemma_4b_judge__r02__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-4b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A3__r_high__rc_low__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s000",
+  "llm_won": true,
+  "order": "AB",
+  "pair_id": "pair_0144",
+  "plan_a_advantages": [
+    "More trail-specific workouts (hill repeats, long runs) that mimic race conditions.",
+    "Includes a dedicated 'tempo' session for building speed and lactate threshold.",
+    "Greater overall volume of training, contributing to a stronger aerobic base."
+  ],
+  "plan_b_advantages": [
+    "Lower overall training volume, potentially reducing the risk of overtraining.",
+    "Incorporates cross-training, which can be beneficial for injury prevention and overall fitness.",
+    "Focuses on threshold intervals, which is a valuable component of any runner's training program."
+  ],
+  "position": "AB",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A3__r_high__rc_low__ph_peak__prog__exp_t000__s020",
+  "reasoning": "Plan A is the better training plan for a trail runner aiming to become faster, primarily because it incorporates more targeted trail-specific workouts like hill repeats and longer runs at moderate intensity. These sessions directly address the demands of trail running – navigating varied terrain and building the muscular endurance needed for sustained effort. Plan B, while including interval training, relies heavily on aerobic runs and cross-training, which, while beneficial for base fitness, don't adequately prepare the athlete for the specific challenges of a trail race. Plan A’s focus on simulating race conditions through hill work and longer runs will translate more effectively to improved race performance.",
+  "record_id": "pair_0144__gemma_4b_judge__r02__AB",
+  "right_plan_role": "programmatic",
+  "run": 2,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 2.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T17:06:14.766790+00:00",
+  "winner_role": "llm"
+}

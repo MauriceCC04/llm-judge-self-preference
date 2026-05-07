@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 30.0,
+    "mean_day_minutes": 24.857,
+    "n_active_days": 1.0,
+    "n_hard_days": 2.0,
+    "n_long_runs": 1.0,
+    "n_quality_days": 2.0,
+    "n_rest_days": 1.0,
+    "total_minutes": 174.0
+  },
+  "fixture_id": "ab_A3__r_high__rc_high__ph_base",
+  "judge": "gemma_4b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/matching_pool/eval_manifest_scrubbed_v1/judge_inputs/pair_0123__gemma_4b_judge__r01__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-4b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A3__r_high__rc_high__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s001",
+  "llm_won": true,
+  "order": "BA",
+  "pair_id": "pair_0123",
+  "plan_a_advantages": [
+    "More consistent low-intensity volume",
+    "Potentially lower risk of overtraining due to fewer hard days"
+  ],
+  "plan_b_advantages": [
+    "Directly addresses trail-specific skills (hills, tempo)",
+    "Incorporates strength training for improved uphill power and efficiency",
+    "Greater variety in workout types, promoting more engaged training"
+  ],
+  "position": "BA",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A3__r_high__rc_high__ph_base__prog__exp_t000__s006",
+  "reasoning": "Plan B is the better training plan for a trail runner aiming to become faster, primarily because it incorporates more targeted efforts to improve key aspects of trail running performance. While Plan A focuses heavily on building a strong aerobic base with long, easy runs, Plan B includes hill repeats, tempo runs, and a strength run – all of which directly address the demands of trail running, such as climbing and maintaining speed on varied terrain. Plan A’s consistent easy runs, while beneficial, don’t provide the same level of stimulus for developing power and race-specific skills as Plan B does.  Furthermore, the inclusion of a strength run in Plan B is a crucial element often overlooked in endurance training, directly contributing to uphill efficiency.",
+  "record_id": "pair_0123__gemma_4b_judge__r01__BA",
+  "right_plan_role": "llm",
+  "run": 1,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T16:57:01.225685+00:00",
+  "winner_role": "llm"
+}

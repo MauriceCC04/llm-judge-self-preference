@@ -1,0 +1,46 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 18.0,
+    "mean_day_minutes": 7.429,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 52.0
+  },
+  "fixture_id": "ab_A3__r_low__rc_high__ph_peak",
+  "judge": "gemma_4b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/matching_pool/eval_manifest_scrubbed_v1/judge_inputs/pair_0162__gemma_4b_judge__r02__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-4b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A3__r_low__rc_high__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s025",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0162",
+  "plan_a_advantages": [
+    "More varied running types (cross-training, shorter runs) contribute to a more complete training stimulus.",
+    "The inclusion of a cross-training session provides a low-impact way to build aerobic fitness without overloading the legs."
+  ],
+  "plan_b_advantages": [
+    "The longer initial long run in Plan B (13.3km) could be beneficial for building a solid aerobic base, though it's a single, sustained effort.",
+    "The focus on form and cadence during the easy runs in Plan B could be helpful for improving running efficiency."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A3__r_low__rc_high__ph_peak__prog__exp_t000__s018",
+  "reasoning": "Plan A is the better training plan for a trail runner aiming to become faster. It incorporates more varied running types, including cross-training and shorter, more frequent runs, which are crucial for building a well-rounded aerobic base and addressing specific weaknesses. Plan B, while including trail runs, relies heavily on easy runs and recovery, potentially limiting the stimulus needed for speed development. Plan A’s inclusion of a cross-training session and a wider range of run durations allows for a more targeted approach to improving both endurance and efficiency, which are key to faster trail running.",
+  "record_id": "pair_0162__gemma_4b_judge__r02__BA",
+  "right_plan_role": "llm",
+  "run": 2,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T17:14:14.032149+00:00",
+  "winner_role": "programmatic"
+}

@@ -1,0 +1,46 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 8.0,
+    "mean_day_minutes": 0.0,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 0.0
+  },
+  "fixture_id": "ab_A3__r_low__rc_high__ph_base",
+  "judge": "gemma_4b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/matching_pool/eval_manifest_scrubbed_v1/judge_inputs/pair_0156__gemma_4b_judge__r02__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-4b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A3__r_low__rc_high__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s001",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0156",
+  "plan_a_advantages": [
+    "Dedicated interval training for threshold development",
+    "Longer, consistent easy runs to build aerobic base"
+  ],
+  "plan_b_advantages": [
+    "More varied running surfaces (mixed, hilly, flat)",
+    "Incorporates cross-training for overall fitness"
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A3__r_low__rc_high__ph_base__prog__exp_t000__s021",
+  "reasoning": "Plan A is the better training plan for a trail runner aiming to become faster. It incorporates a more strategic approach to building aerobic base and threshold power, crucial for trail running speed. Plan A includes dedicated interval training to improve lactate threshold, a key determinant of running speed, while Plan B’s tempo run is a single, more intense session. Furthermore, Plan A’s longer, consistent easy runs build a stronger aerobic foundation than Plan B’s shorter, more varied sessions, which could lead to quicker fatigue.",
+  "record_id": "pair_0156__gemma_4b_judge__r02__BA",
+  "right_plan_role": "llm",
+  "run": 2,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T17:11:30.120491+00:00",
+  "winner_role": "programmatic"
+}

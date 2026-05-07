@@ -1,0 +1,49 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 26.0,
+    "mean_day_minutes": 13.286,
+    "n_active_days": 0.0,
+    "n_hard_days": 1.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 1.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 93.0
+  },
+  "fixture_id": "ab_A3__r_high__rc_high__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0120__gemma_12b_judge__r04__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A3__r_high__rc_high__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s000",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0120",
+  "plan_a_advantages": [
+    "Includes a tempo run, which is essential for improving speed and lactate threshold.",
+    "Incorporates a dedicated strength and mobility session, promoting injury prevention and overall durability.",
+    "Focuses on building a strong aerobic base with consistent easy runs.",
+    "The overall volume is slightly lower, which may be beneficial for athletes prone to overtraining or injury."
+  ],
+  "plan_b_advantages": [
+    "Includes hill repeats, which can improve leg strength and efficiency on trails.",
+    "Features longer moderate runs, potentially building greater endurance.",
+    "Provides a rest day mid-week, which can aid in recovery."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A3__r_high__rc_high__ph_base__prog__exp_t000__s014",
+  "reasoning": "Given the goal of becoming a faster trail runner, Plan A appears to be the more suitable choice. While both plans incorporate essential elements like easy runs and a long run, Plan A's structure prioritizes building a solid aerobic base and introducing a tempo run, which is crucial for improving speed and endurance. Plan B, with its emphasis on longer moderate runs and hill repeats, might be better suited for someone already possessing a decent level of fitness who wants to focus on strength and endurance over speed development. The inclusion of a dedicated strength and mobility session in Plan A is also a significant advantage for injury prevention and overall durability.",
+  "record_id": "pair_0120__gemma_12b_judge__r04__BA",
+  "right_plan_role": "llm",
+  "run": 4,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T22:25:10.198602+00:00",
+  "winner_role": "programmatic"
+}

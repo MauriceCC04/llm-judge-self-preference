@@ -1,0 +1,46 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 57.0,
+    "mean_day_minutes": 31.714,
+    "n_active_days": 1.0,
+    "n_hard_days": 1.0,
+    "n_long_runs": 2.0,
+    "n_quality_days": 1.0,
+    "n_rest_days": 1.0,
+    "total_minutes": 222.0
+  },
+  "fixture_id": "ab_A4__r_high__rc_low__ph_base",
+  "judge": "gemma_4b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/matching_pool/eval_manifest_scrubbed_v1/judge_inputs/pair_0209__gemma_4b_judge__r01__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-4b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A4__r_high__rc_low__ph_base__gemma_3_4b_it__src_t070__exp_t000__s005",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0209",
+  "plan_a_advantages": [
+    "More conservative volume and intensity, reducing the risk of overtraining.",
+    "Includes a dedicated tempo run to improve threshold strength, a key component of faster trail running."
+  ],
+  "plan_b_advantages": [
+    "Longer runs provide valuable experience with trail navigation and pacing.",
+    "Interval work directly targets speed and efficiency, which is beneficial for a runner focused on improving their pace."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A4__r_high__rc_low__ph_base__prog__exp_t000__s002",
+  "reasoning": "Plan A is the better training plan for a trail runner aiming to become faster, particularly at this stage of their development. It prioritizes building a solid aerobic base with a focus on consistent, low-impact work, alongside a single, strategically placed tempo run. Plan B, while incorporating longer runs and interval work, feels overly focused on volume and intensity early on, potentially leading to burnout and hindering the development of sustainable speed. Plan A’s approach is more measured and allows for better recovery, crucial for a runner seeking to improve their speed.",
+  "record_id": "pair_0209__gemma_4b_judge__r01__BA",
+  "right_plan_role": "llm",
+  "run": 1,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 0.857,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T17:35:05.675339+00:00",
+  "winner_role": "programmatic"
+}

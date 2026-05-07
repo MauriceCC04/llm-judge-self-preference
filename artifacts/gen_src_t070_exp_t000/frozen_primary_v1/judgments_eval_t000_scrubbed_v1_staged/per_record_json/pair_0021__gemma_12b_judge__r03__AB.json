@@ -1,0 +1,48 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 10.0,
+    "mean_day_minutes": 4.571,
+    "n_active_days": 1.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 1.0,
+    "total_minutes": 32.0
+  },
+  "fixture_id": "ab_A1__r_high__rc_low__ph_peak",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0021__gemma_12b_judge__r03__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A1__r_high__rc_low__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s000",
+  "llm_won": false,
+  "order": "AB",
+  "pair_id": "pair_0021",
+  "plan_a_advantages": [
+    "Plan A has slightly more running time overall (209 minutes vs 177 minutes).",
+    "The focus on form and cadence in every run of Plan A is a good starting point for any runner."
+  ],
+  "plan_b_advantages": [
+    "Plan B includes cross-training, which provides a different stimulus and reduces the risk of overuse injuries.",
+    "Plan B incorporates strength and mobility work, essential for trail running's technical demands and injury prevention.",
+    "Plan B's rest day distribution is more strategic, allowing for better recovery and adaptation.",
+    "Plan B's overall structure is more well-rounded, addressing aerobic fitness, strength, and recovery."
+  ],
+  "position": "AB",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A1__r_high__rc_low__ph_peak__prog__exp_t000__s004",
+  "reasoning": "While both plans focus on easy running, Plan B demonstrates a more holistic approach to improving trail running speed. It incorporates cross-training and strength work, which are crucial for building a robust foundation and preventing injuries, especially important for trail running's demanding nature. Plan A's repetitive focus solely on easy trail runs, while good for form, lacks the varied stimulus needed for significant speed gains. The inclusion of rest days in Plan B is also more strategically placed, allowing for better recovery and adaptation.",
+  "record_id": "pair_0021__gemma_12b_judge__r03__AB",
+  "right_plan_role": "programmatic",
+  "run": 3,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T20:02:43.509438+00:00",
+  "winner_role": "programmatic"
+}

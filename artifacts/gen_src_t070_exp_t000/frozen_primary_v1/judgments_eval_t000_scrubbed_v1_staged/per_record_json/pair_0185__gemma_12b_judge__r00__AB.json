@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 13.0,
+    "mean_day_minutes": 0.0,
+    "n_active_days": 1.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 2.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 1.0,
+    "total_minutes": 0.0
+  },
+  "fixture_id": "ab_A3__r_low__rc_low__ph_peak",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0185__gemma_12b_judge__r00__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A3__r_low__rc_low__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s014",
+  "llm_won": true,
+  "order": "AB",
+  "pair_id": "pair_0185",
+  "plan_a_advantages": [
+    "Better balance of endurance and speed development with a mix of short and long runs.",
+    "More frequent easy runs can contribute to improved aerobic base and recovery.",
+    "The single long run allows for adequate recovery and adaptation without excessive fatigue."
+  ],
+  "plan_b_advantages": [
+    "Higher volume of easy running may improve aerobic base.",
+    "The strength and mobility session on day 1 is a good addition for injury prevention."
+  ],
+  "position": "AB",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A3__r_low__rc_low__ph_peak__prog__exp_t000__s003",
+  "reasoning": "While both plans incorporate easy runs and rest days, Plan A appears to be a more balanced and effective approach for a trail runner aiming to become faster. Plan B heavily emphasizes long, easy runs, which, while beneficial for endurance, may not be the most efficient way to improve speed. Plan A includes a single, longer run alongside shorter, more frequent easy runs, allowing for a better balance of endurance and speed development. The inclusion of a single long run in Plan A is more appropriate for someone looking to improve speed, as it allows for recovery and adaptation without overstressing the body.",
+  "record_id": "pair_0185__gemma_12b_judge__r00__AB",
+  "right_plan_role": "programmatic",
+  "run": 0,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 1.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-07T00:07:08.142087+00:00",
+  "winner_role": "llm"
+}

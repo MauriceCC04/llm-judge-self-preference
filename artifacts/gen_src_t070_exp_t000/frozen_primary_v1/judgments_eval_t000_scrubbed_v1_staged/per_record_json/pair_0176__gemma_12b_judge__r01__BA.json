@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 8.0,
+    "mean_day_minutes": 0.0,
+    "n_active_days": 1.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 1.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 1.0,
+    "total_minutes": 0.0
+  },
+  "fixture_id": "ab_A3__r_low__rc_low__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0176__gemma_12b_judge__r01__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A3__r_low__rc_low__ph_base__gemma_3_4b_it__src_t070__exp_t000__s003",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0176",
+  "plan_a_advantages": [
+    "More extensive long runs: Plan A includes three long runs exceeding 90 minutes, promoting greater trail-specific endurance.",
+    "Consistent structure: The plan follows a predictable pattern of strength, easy run, and long run, which can aid in recovery and adaptation.",
+    "Focus on durability: The strength and mobility session is explicitly stated to support durability and injury resistance, a key concern for trail runners."
+  ],
+  "plan_b_advantages": [
+    "More frequent strength training: Plan B incorporates strength training twice a week, which could be beneficial for some athletes, though the moderate intensity might be too much without a solid base.",
+    "Slightly more recovery focus: The 'Recovery' run in Plan B suggests a slightly greater emphasis on active recovery, though this is already present in Plan A's easy runs."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A3__r_low__rc_low__ph_base__prog__exp_t000__s003",
+  "reasoning": "Plan A is the better choice for a trail runner aiming to become faster. While both plans incorporate essential elements like long runs, easy runs, and strength training, Plan A's structure is more conducive to building a robust base for speed development. The consistent, longer long runs in Plan A (127, 98, and 115 minutes) are more effective for developing trail-specific endurance, which is crucial for faster times. Plan B's shorter long runs and more frequent strength sessions might lead to fatigue before the athlete has built sufficient aerobic capacity.",
+  "record_id": "pair_0176__gemma_12b_judge__r01__BA",
+  "right_plan_role": "llm",
+  "run": 1,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 2.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T23:53:52.537998+00:00",
+  "winner_role": "programmatic"
+}

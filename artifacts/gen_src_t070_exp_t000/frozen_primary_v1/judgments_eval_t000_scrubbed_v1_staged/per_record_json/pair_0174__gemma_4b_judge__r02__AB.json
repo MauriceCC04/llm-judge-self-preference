@@ -1,0 +1,46 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 53.0,
+    "mean_day_minutes": 14.286,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 100.0
+  },
+  "fixture_id": "ab_A3__r_low__rc_low__ph_base",
+  "judge": "gemma_4b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/matching_pool/eval_manifest_scrubbed_v1/judge_inputs/pair_0174__gemma_4b_judge__r02__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-4b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A3__r_low__rc_low__ph_base__gemma_3_4b_it__src_t070__exp_t000__s007",
+  "llm_won": false,
+  "order": "AB",
+  "pair_id": "pair_0174",
+  "plan_a_advantages": [
+    "More recovery days: Plan A includes an extra rest day, potentially beneficial for a runner who needs more recovery.",
+    "Shorter overall duration: The total training time is less, which could be preferable for someone with limited time or a lower training volume baseline."
+  ],
+  "plan_b_advantages": [
+    "More targeted training: Plan B includes a threshold run and a dedicated hill session, directly addressing speed and climbing strength – key components of trail running performance.",
+    "Longer aerobic session: The 67-minute long run is longer and at a controlled aerobic effort, building a stronger aerobic base than Plan A’s longer, easier runs."
+  ],
+  "position": "AB",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A3__r_low__rc_low__ph_base__prog__exp_t000__s016",
+  "reasoning": "Plan B is the better training plan for a trail runner aiming to become faster. It incorporates more targeted training sessions, specifically including a threshold run and a dedicated hill session designed to build climbing strength – crucial for trail running. Plan A, while including some hill work, relies heavily on longer, easier runs which, while beneficial for volume, don’t directly address the power and speed needed for faster times. Plan B’s structured approach with varied intensity and focus on key trail-specific elements will likely yield greater improvements in speed and efficiency compared to Plan A’s more generalized approach.",
+  "record_id": "pair_0174__gemma_4b_judge__r02__AB",
+  "right_plan_role": "programmatic",
+  "run": 2,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T17:19:33.040593+00:00",
+  "winner_role": "programmatic"
+}

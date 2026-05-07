@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 13.0,
+    "mean_day_minutes": 2.714,
+    "n_active_days": 0.0,
+    "n_hard_days": 2.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 2.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 19.0
+  },
+  "fixture_id": "ab_A1__r_high__rc_high__ph_peak",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0009__gemma_12b_judge__r00__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A1__r_high__rc_high__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s000",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0009",
+  "plan_a_advantages": [
+    "Includes strength and mobility work, which is essential for trail running injury prevention and overall performance.",
+    "Incorporates tempo runs to specifically target speed development.",
+    "Provides a more varied training stimulus, preventing plateaus and promoting well-rounded fitness."
+  ],
+  "plan_b_advantages": [
+    "Higher total volume of running, which could contribute to base endurance.",
+    "Provides a consistent, low-impact stimulus, potentially good for recovery or very early stages of training."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A1__r_high__rc_high__ph_peak__prog__exp_t000__s011",
+  "reasoning": "Plan A is the better choice for an athlete aiming to become a faster trail runner. While Plan B focuses solely on easy trail runs, Plan A incorporates strength training and tempo runs, which are crucial for developing speed and efficiency on trails. The inclusion of strength and mobility work in Plan A addresses injury prevention and builds a foundation for more intense training, while the tempo runs directly target improving speed at a sustainable effort level. Plan B's repetitive easy runs, while good for base building, lack the stimulus needed to drive significant improvements in speed.",
+  "record_id": "pair_0009__gemma_12b_judge__r00__BA",
+  "right_plan_role": "llm",
+  "run": 0,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T19:44:53.004863+00:00",
+  "winner_role": "programmatic"
+}

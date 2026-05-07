@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 86.0,
+    "mean_day_minutes": 37.0,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 1.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 259.0
+  },
+  "fixture_id": "ab_A3__r_high__rc_low__ph_base",
+  "judge": "gemma_4b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/matching_pool/eval_manifest_scrubbed_v1/judge_inputs/pair_0140__gemma_4b_judge__r00__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-4b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A3__r_high__rc_low__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s004",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0140",
+  "plan_a_advantages": [
+    "Prioritizes speed development with interval and threshold training.",
+    "Includes a dedicated strength and mobility session crucial for injury prevention and efficient movement on trails.",
+    "Offers a more balanced approach, combining endurance building with targeted speed work."
+  ],
+  "plan_b_advantages": [
+    "Features a longer initial long run, potentially beneficial for building a strong base.",
+    "Incorporates hill repeats, which are valuable for trail running-specific strength and climbing efficiency."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A3__r_high__rc_low__ph_base__prog__exp_t000__s013",
+  "reasoning": "For a trail runner aiming to become faster, Plan A is the superior choice. It strategically incorporates threshold work and interval sessions, directly targeting improvements in speed and lactate threshold – key components of faster trail running. Plan B, while including some hill work, heavily emphasizes long, easy runs and extended tempo efforts, which, while beneficial for endurance, don't provide the focused stimulus needed for speed development. Plan A’s structured approach to building aerobic power and strength, alongside dedicated speed work, is more aligned with the goal of becoming a faster trail runner.",
+  "record_id": "pair_0140__gemma_4b_judge__r00__BA",
+  "right_plan_role": "llm",
+  "run": 0,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 1.8,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T17:04:20.460331+00:00",
+  "winner_role": "programmatic"
+}

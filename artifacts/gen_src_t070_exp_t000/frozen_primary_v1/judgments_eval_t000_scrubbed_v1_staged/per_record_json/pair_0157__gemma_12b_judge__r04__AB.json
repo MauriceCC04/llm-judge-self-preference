@@ -1,0 +1,49 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 7.0,
+    "mean_day_minutes": 2.714,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 19.0
+  },
+  "fixture_id": "ab_A3__r_low__rc_high__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0157__gemma_12b_judge__r04__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A3__r_low__rc_high__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s005",
+  "llm_won": false,
+  "order": "AB",
+  "pair_id": "pair_0157",
+  "plan_a_advantages": [
+    "Plan A has a slightly higher total training volume (390 minutes vs 371 minutes).",
+    "Plan A's hill session provides a specific stimulus for strength and power on inclines, which is relevant to trail running.",
+    "Plan A's workout summaries are slightly more descriptive, mentioning cadence and form focus."
+  ],
+  "plan_b_advantages": [
+    "Plan B includes interval training, which is essential for improving speed and aerobic power.",
+    "Plan B incorporates strength and mobility work, which is vital for injury prevention and overall performance in trail running.",
+    "Plan B has a greater emphasis on aerobic endurance with multiple easy aerobic runs.",
+    "Plan B's workout summaries emphasize controlled effort and durability, aligning well with the demands of trail running."
+  ],
+  "position": "AB",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A3__r_low__rc_high__ph_base__prog__exp_t000__s013",
+  "reasoning": "Plan B appears to be the better choice for a trail runner aiming to become faster. While both plans incorporate essential elements like long runs and rest days, Plan B demonstrates a more comprehensive approach to speed development by including interval training and strength/mobility work. The inclusion of threshold intervals (day 3) is crucial for improving aerobic power, a key factor in trail running speed. Plan A's focus is almost entirely on aerobic runs and a single hill session, which is less likely to yield significant speed gains.",
+  "record_id": "pair_0157__gemma_12b_judge__r04__AB",
+  "right_plan_role": "programmatic",
+  "run": 4,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T23:23:58.623502+00:00",
+  "winner_role": "programmatic"
+}

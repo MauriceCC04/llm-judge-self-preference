@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 8.0,
+    "mean_day_minutes": 5.0,
+    "n_active_days": 1.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 1.0,
+    "total_minutes": 35.0
+  },
+  "fixture_id": "ab_A2__r_low__rc_low__ph_peak",
+  "judge": "gemma_4b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/matching_pool/eval_manifest_scrubbed_v1/judge_inputs/pair_0114__gemma_4b_judge__r00__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-4b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A2__r_low__rc_low__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s009",
+  "llm_won": true,
+  "order": "AB",
+  "pair_id": "pair_0114",
+  "plan_a_advantages": [
+    "More consistent running volume (longer easy runs) which is beneficial for building endurance.",
+    "Incorporates varied terrain in the easy runs, simulating trail conditions and improving adaptation.",
+    "Less frequent rest days, allowing for more consistent training stimulus."
+  ],
+  "plan_b_advantages": [
+    "Includes cross-training, which can supplement running and improve overall fitness.",
+    "Incorporates a strength and mobility session, addressing important aspects of injury prevention and performance."
+  ],
+  "position": "AB",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A2__r_low__rc_low__ph_peak__prog__exp_t000__s004",
+  "reasoning": "Plan A is the better training plan for a trail runner aiming to become faster. It focuses on consistent, easy running, which is crucial for building a solid aerobic base and preventing injury – key elements for trail running speed. Plan B, while including cross-training and strength work, relies heavily on very short, easy runs with frequent rest days, which could hinder the development of the sustained effort required for trail racing. Plan A’s slightly longer runs and varied terrain introduce a bit more stimulus without overstressing the athlete, aligning better with the goal of increasing speed.",
+  "record_id": "pair_0114__gemma_4b_judge__r00__AB",
+  "right_plan_role": "programmatic",
+  "run": 0,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 1.714,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T16:52:54.728859+00:00",
+  "winner_role": "llm"
+}

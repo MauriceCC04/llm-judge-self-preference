@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 27.0,
+    "mean_day_minutes": 6.286,
+    "n_active_days": 2.0,
+    "n_hard_days": 1.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 1.0,
+    "n_rest_days": 2.0,
+    "total_minutes": 44.0
+  },
+  "fixture_id": "ab_A3__r_low__rc_low__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0180__gemma_12b_judge__r04__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A3__r_low__rc_low__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s000",
+  "llm_won": true,
+  "order": "AB",
+  "pair_id": "pair_0180",
+  "plan_a_advantages": [
+    "Includes a tempo run, essential for speed development.",
+    "Incorporates aerobic runs to build endurance and speed.",
+    "Has a more balanced mix of training intensities."
+  ],
+  "plan_b_advantages": [
+    "Higher rest day frequency may be beneficial for recovery, especially for beginners.",
+    "The longer long run could build more endurance, though at the expense of speed development."
+  ],
+  "position": "AB",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A3__r_low__rc_low__ph_base__prog__exp_t000__s015",
+  "reasoning": "While both plans aim to improve trail running speed, Plan A is the better choice for someone seeking that goal. Plan A incorporates a tempo run, which is crucial for developing the speed and lactate threshold necessary for faster trail running. Plan B focuses almost exclusively on easy running and a single long run, which is more suited for building base endurance rather than speed development. The inclusion of aerobic runs in Plan A, alongside the tempo session, provides a more well-rounded approach to improving trail running performance.",
+  "record_id": "pair_0180__gemma_12b_judge__r04__AB",
+  "right_plan_role": "programmatic",
+  "run": 4,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 1.429,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-07T00:00:54.961026+00:00",
+  "winner_role": "llm"
+}

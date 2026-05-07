@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 30.0,
+    "mean_day_minutes": 3.571,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 25.0
+  },
+  "fixture_id": "ab_A2__r_low__rc_high__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0088__gemma_12b_judge__r02__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A2__r_low__rc_high__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s002",
+  "llm_won": true,
+  "order": "AB",
+  "pair_id": "pair_0088",
+  "plan_a_advantages": [
+    "Includes a trail run with hills, directly addressing the demands of trail running.",
+    "Offers slightly more total training volume (269 minutes vs 244 minutes), which can contribute to improved fitness.",
+    "The workout summaries emphasize form and technique, which is important for efficient and injury-free trail running."
+  ],
+  "plan_b_advantages": [
+    "Incorporates cross-training, which can provide a low-impact aerobic stimulus and reduce the risk of overuse injuries.",
+    "The easy runs are explicitly described as 'conversational effort,' which helps ensure the athlete is running at the correct intensity."
+  ],
+  "position": "AB",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A2__r_low__rc_high__ph_base__prog__exp_t000__s008",
+  "reasoning": "Given the goal of becoming a faster trail runner, Plan A appears to be the better choice. While both plans focus on easy runs and incorporate rest days, Plan A includes a dedicated trail run with hills, which is crucial for developing the specific strength and technical skills needed for trail running. Plan B's inclusion of cross-training, while beneficial for overall fitness, doesn't directly address the demands of trail running. The focus on trail-specific workouts in Plan A makes it more aligned with the athlete's goal.",
+  "record_id": "pair_0088__gemma_12b_judge__r02__AB",
+  "right_plan_role": "programmatic",
+  "run": 2,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T21:39:29.514793+00:00",
+  "winner_role": "llm"
+}

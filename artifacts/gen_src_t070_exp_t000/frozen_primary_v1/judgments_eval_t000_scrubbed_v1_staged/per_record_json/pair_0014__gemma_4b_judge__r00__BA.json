@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 35.0,
+    "mean_day_minutes": 0.143,
+    "n_active_days": 1.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 1.0,
+    "total_minutes": 1.0
+  },
+  "fixture_id": "ab_A1__r_high__rc_low__ph_base",
+  "judge": "gemma_4b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/matching_pool/eval_manifest_scrubbed_v1/judge_inputs/pair_0014__gemma_4b_judge__r00__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-4b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A1__r_high__rc_low__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s001",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0014",
+  "plan_a_advantages": [
+    "Includes strength and mobility training.",
+    "Offers slightly longer easy runs, potentially building more aerobic capacity.",
+    "Provides a more varied training stimulus."
+  ],
+  "plan_b_advantages": [
+    "More rest days, which could be beneficial for an athlete recovering from a previous injury or burnout.",
+    "Focuses on rhythm and form, which is a good habit to develop for trail running."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A1__r_high__rc_low__ph_base__prog__exp_t000__s008",
+  "reasoning": "Both plans are extremely conservative, prioritizing recovery and easy runs, which isn't ideal for a goal of becoming a faster trail runner. However, Plan A incorporates a dedicated strength and mobility session, crucial for injury prevention and building the necessary muscle strength for trail running. Plan B’s consistent easy runs, while potentially beneficial for maintaining base fitness, lack the targeted stimulus needed for improvement. Plan A’s inclusion of strength work and slightly longer easy runs (43-54 minutes) provides a more balanced approach to building a stronger foundation for speed.",
+  "record_id": "pair_0014__gemma_4b_judge__r00__BA",
+  "right_plan_role": "llm",
+  "run": 0,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T16:08:58.499012+00:00",
+  "winner_role": "programmatic"
+}

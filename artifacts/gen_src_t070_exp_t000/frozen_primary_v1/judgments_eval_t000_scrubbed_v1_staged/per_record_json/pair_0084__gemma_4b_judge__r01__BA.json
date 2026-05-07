@@ -1,0 +1,48 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 35.0,
+    "mean_day_minutes": 0.0,
+    "n_active_days": 0.0,
+    "n_hard_days": 1.0,
+    "n_long_runs": 1.0,
+    "n_quality_days": 1.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 0.0
+  },
+  "fixture_id": "ab_A2__r_low__rc_high__ph_base",
+  "judge": "gemma_4b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/matching_pool/eval_manifest_scrubbed_v1/judge_inputs/pair_0084__gemma_4b_judge__r01__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-4b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A2__r_low__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s002",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0084",
+  "plan_a_advantages": [
+    "Includes a tempo run for threshold development.",
+    "Incorporates cross-training for impact management and recovery.",
+    "More varied session types (long, aerobic, tempo) target different aspects of fitness."
+  ],
+  "plan_b_advantages": [
+    "More consistent aerobic volume.",
+    "Focuses specifically on trail running with trail runs as workouts.",
+    "Simpler and potentially easier to adhere to due to its straightforward structure."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A2__r_low__rc_high__ph_base__prog__exp_t000__s011",
+  "reasoning": "Plan A is the better training plan for a trail runner aiming to become faster because it incorporates a more structured approach to building aerobic capacity and introducing speed work. It includes a dedicated tempo run and utilizes cross-training to manage impact, crucial for trail running. Plan B, while providing consistent aerobic volume, lacks specific efforts to improve speed and threshold, which are key components of becoming a faster runner. The longer, consistent aerobic runs in Plan B could lead to plateaus without targeted intensity work.",
+  "record_id": "pair_0084__gemma_4b_judge__r01__BA",
+  "right_plan_role": "llm",
+  "run": 1,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T16:39:46.316257+00:00",
+  "winner_role": "programmatic"
+}

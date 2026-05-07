@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 48.0,
+    "mean_day_minutes": 18.286,
+    "n_active_days": 1.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 2.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 1.0,
+    "total_minutes": 128.0
+  },
+  "fixture_id": "ab_A3__r_low__rc_low__ph_base",
+  "judge": "gemma_4b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/matching_pool/eval_manifest_scrubbed_v1/judge_inputs/pair_0175__gemma_4b_judge__r01__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-4b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A3__r_low__rc_low__ph_base__gemma_3_4b_it__src_t070__exp_t000__s006",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0175",
+  "plan_a_advantages": [
+    "More varied workout types (easy runs, cross-training, aerobic runs) provide a broader stimulus.",
+    "Better recovery schedule with more frequent rest days.",
+    "Focus on building a solid aerobic base through consistent easy running."
+  ],
+  "plan_b_advantages": [
+    "Includes longer runs, which are important for trail running endurance.",
+    "Potentially more familiar to a runner accustomed to longer, moderate-paced runs."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A3__r_low__rc_low__ph_base__prog__exp_t000__s008",
+  "reasoning": "Plan A is the better training plan for a trail runner aiming to become faster. It incorporates a more strategic approach to building aerobic base, prioritizing consistent easy running and incorporating cross-training to avoid overuse injuries. Plan B, while including longer runs, lacks the focused volume and varied stimulus needed for significant speed development. The consistent 'easy' runs in Plan A, combined with the cross-training, are crucial for improving running economy and lactate threshold – key factors for faster trail running. Furthermore, the inclusion of rest days is more thoughtfully spaced, allowing for better recovery and adaptation.",
+  "record_id": "pair_0175__gemma_4b_judge__r01__BA",
+  "right_plan_role": "llm",
+  "run": 1,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T17:19:53.108090+00:00",
+  "winner_role": "programmatic"
+}

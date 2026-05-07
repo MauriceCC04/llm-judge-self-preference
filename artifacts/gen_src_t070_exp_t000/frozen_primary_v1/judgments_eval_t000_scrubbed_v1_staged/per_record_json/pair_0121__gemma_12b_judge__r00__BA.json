@@ -1,0 +1,48 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 12.0,
+    "mean_day_minutes": 16.286,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 114.0
+  },
+  "fixture_id": "ab_A3__r_high__rc_high__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0121__gemma_12b_judge__r00__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A3__r_high__rc_high__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s002",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0121",
+  "plan_a_advantages": [
+    "Includes a dedicated interval session for speed development, which is missing in Plan B.",
+    "Lower overall volume reduces the risk of overtraining and allows for better recovery.",
+    "Cross-training session provides a low-impact aerobic stimulus, beneficial for injury prevention and recovery."
+  ],
+  "plan_b_advantages": [
+    "Longer long runs may contribute to greater overall endurance.",
+    "Hill repeats are a good way to build leg strength, which can improve trail running efficiency.",
+    "More cross-training days may help with injury prevention."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A3__r_high__rc_high__ph_base__prog__exp_t000__s018",
+  "reasoning": "Given the goal of becoming a *faster* trail runner, Plan A appears to be the more appropriate choice. While both plans incorporate essential elements like long runs, strength training, and rest, Plan A's inclusion of a dedicated interval session targeting threshold intensity is crucial for speed development. Plan B's focus on longer, moderate-intensity runs and hill repeats, while beneficial for endurance, doesn't directly address the speed component. Plan A's lower overall volume (321 minutes vs 435) is also advantageous, as it reduces the risk of overtraining and allows for better recovery, which is vital for speed work.",
+  "record_id": "pair_0121__gemma_12b_judge__r00__BA",
+  "right_plan_role": "llm",
+  "run": 0,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T22:25:41.561835+00:00",
+  "winner_role": "programmatic"
+}

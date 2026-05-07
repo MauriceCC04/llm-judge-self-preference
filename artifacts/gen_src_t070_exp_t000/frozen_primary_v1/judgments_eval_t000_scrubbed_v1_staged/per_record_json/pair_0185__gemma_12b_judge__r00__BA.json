@@ -1,0 +1,48 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 13.0,
+    "mean_day_minutes": 0.0,
+    "n_active_days": 1.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 2.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 1.0,
+    "total_minutes": 0.0
+  },
+  "fixture_id": "ab_A3__r_low__rc_low__ph_peak",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0185__gemma_12b_judge__r00__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A3__r_low__rc_low__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s014",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0185",
+  "plan_a_advantages": [
+    "More emphasis on building aerobic base with multiple long runs.",
+    "Includes a dedicated strength and mobility session for injury prevention and improved running economy.",
+    "Higher overall volume of easy running, promoting durability and consistency.",
+    "The multiple long runs at an easy pace are more conducive to building endurance without excessive fatigue."
+  ],
+  "plan_b_advantages": [
+    "Provides specific distances and elevation gains for trail runs, offering more trail-specific training.",
+    "Potentially allows for more recovery due to fewer long runs."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A3__r_low__rc_low__ph_peak__prog__exp_t000__s003",
+  "reasoning": "While both plans involve a similar total training time, Plan A appears to be a more robust and well-rounded approach for a trail runner aiming to become faster. Plan A prioritizes building a strong foundation of durability and aerobic consistency through multiple long runs at an easy pace, which is crucial for trail running where sustained effort and injury prevention are paramount. Plan B, while including trail-specific distances and elevation gains, lacks the volume of easy running and long runs necessary to build the aerobic base required for faster trail times. The inclusion of a strength and mobility session in Plan A is also a significant advantage, addressing a key area often neglected in running training.",
+  "record_id": "pair_0185__gemma_12b_judge__r00__BA",
+  "right_plan_role": "llm",
+  "run": 0,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 1.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-07T00:07:17.062795+00:00",
+  "winner_role": "programmatic"
+}

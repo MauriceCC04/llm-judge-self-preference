@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 3.0,
+    "mean_day_minutes": 4.286,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 30.0
+  },
+  "fixture_id": "ab_A2__r_high__rc_low__ph_peak",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0081__gemma_12b_judge__r03__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A2__r_high__rc_low__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s001",
+  "llm_won": false,
+  "order": "AB",
+  "pair_id": "pair_0081",
+  "plan_a_advantages": [
+    "Plan A has a slightly longer long run (90 minutes vs 87 minutes), which could be beneficial for some athletes seeking to maximize endurance.",
+    "Plan A's simplicity might be appealing to beginners who prefer a straightforward training schedule."
+  ],
+  "plan_b_advantages": [
+    "Plan B includes a dedicated strength and mobility session, addressing a key need for trail runners.",
+    "Plan B incorporates 'aerobic' runs alongside 'easy' runs, providing a more varied stimulus and potentially leading to greater improvements in speed and efficiency.",
+    "Plan B's total training volume is slightly lower (285 minutes vs 315 minutes), which could be beneficial for athletes prone to overtraining or those with limited time."
+  ],
+  "position": "AB",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A2__r_high__rc_low__ph_peak__prog__exp_t000__s006",
+  "reasoning": "While both plans focus on building endurance, Plan B demonstrates a more comprehensive approach to improving trail running speed. It incorporates strength and mobility work, which is crucial for trail runners to prevent injuries and improve efficiency on uneven terrain. Plan A solely relies on running, neglecting the importance of strength training. The varied run types (aerobic and easy) in Plan B also suggest a more nuanced understanding of training principles, promoting a broader range of physiological adaptations.",
+  "record_id": "pair_0081__gemma_12b_judge__r03__AB",
+  "right_plan_role": "programmatic",
+  "run": 3,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T21:30:28.499501+00:00",
+  "winner_role": "programmatic"
+}

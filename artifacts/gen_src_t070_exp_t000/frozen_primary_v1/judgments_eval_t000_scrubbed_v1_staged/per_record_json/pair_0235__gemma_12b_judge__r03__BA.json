@@ -1,0 +1,49 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 22.0,
+    "mean_day_minutes": 6.714,
+    "n_active_days": 1.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 1.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 1.0,
+    "total_minutes": 47.0
+  },
+  "fixture_id": "ab_A4__r_low__rc_high__ph_peak",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0235__gemma_12b_judge__r03__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A4__r_low__rc_high__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s009",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0235",
+  "plan_a_advantages": [
+    "Includes a dedicated strength and mobility session, crucial for trail running injury prevention and power.",
+    "Features a threshold run, which is specifically designed to improve lactate threshold and running speed at a sustainable effort.",
+    "The overall volume is lower, which may be beneficial for an athlete not currently in a high-volume training phase, allowing for better recovery and adaptation.",
+    "More balanced distribution of training types (strength, cross, aerobic, tempo, long) compared to Plan B's emphasis on long runs and recovery."
+  ],
+  "plan_b_advantages": [
+    "Higher overall volume, which could be beneficial for an athlete already accustomed to high mileage.",
+    "Two long runs per week may contribute to increased endurance, although this may not be the primary driver of speed.",
+    "The emphasis on recovery could be advantageous if the athlete is experiencing fatigue or has a history of injuries."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A4__r_low__rc_high__ph_peak__prog__exp_t000__s011",
+  "reasoning": "Given the primary goal of becoming a faster trail runner, Plan A appears to be the more suitable choice. While both plans incorporate rest days, Plan A demonstrates a more balanced approach to training, prioritizing strength and mobility alongside aerobic and tempo runs. Plan B seems heavily focused on recovery and maintaining freshness, which suggests the athlete may be coming off a period of very high volume. However, the prompt doesn't indicate this, and a focus on speed development is more aligned with the stated goal. Plan A's inclusion of strength training and a threshold run is more likely to contribute to improved speed and efficiency on trails.",
+  "record_id": "pair_0235__gemma_12b_judge__r03__BA",
+  "right_plan_role": "llm",
+  "run": 3,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 2.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-07T01:27:58.165934+00:00",
+  "winner_role": "programmatic"
+}

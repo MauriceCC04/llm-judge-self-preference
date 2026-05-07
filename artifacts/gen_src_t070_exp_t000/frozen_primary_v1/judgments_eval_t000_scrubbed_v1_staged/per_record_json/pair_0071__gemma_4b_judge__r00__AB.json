@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 6.0,
+    "mean_day_minutes": 5.571,
+    "n_active_days": 1.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 1.0,
+    "total_minutes": 39.0
+  },
+  "fixture_id": "ab_A2__r_high__rc_high__ph_peak",
+  "judge": "gemma_4b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/matching_pool/eval_manifest_scrubbed_v1/judge_inputs/pair_0071__gemma_4b_judge__r00__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-4b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A2__r_high__rc_high__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s004",
+  "llm_won": true,
+  "order": "AB",
+  "pair_id": "pair_0071",
+  "plan_a_advantages": [
+    "Higher running volume (total minutes) directly contributes to improved endurance.",
+    "Includes a controlled long run, essential for trail running distance adaptation.",
+    "More frequent easy runs allow for consistent training and adaptation."
+  ],
+  "plan_b_advantages": [
+    "Cross-training provides a low-impact recovery option.",
+    "Shorter runs may be suitable for a runner who needs to manage fatigue more carefully, though this isn't explicitly stated as a need."
+  ],
+  "position": "AB",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A2__r_high__rc_high__ph_peak__prog__exp_t000__s018",
+  "reasoning": "Plan A is the better training plan for a trail runner aiming to become faster. It incorporates more running volume, specifically with longer easy runs and a controlled long run, which directly addresses the goal of increasing endurance and speed. Plan B’s focus on cross-training and shorter, less intense runs, while beneficial for recovery, doesn’t provide the necessary stimulus for significant speed development. Plan A’s structure prioritizes building a solid aerobic base and trail-specific endurance, crucial for a faster trail runner.",
+  "record_id": "pair_0071__gemma_4b_judge__r00__AB",
+  "right_plan_role": "programmatic",
+  "run": 0,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T16:33:55.469404+00:00",
+  "winner_role": "llm"
+}

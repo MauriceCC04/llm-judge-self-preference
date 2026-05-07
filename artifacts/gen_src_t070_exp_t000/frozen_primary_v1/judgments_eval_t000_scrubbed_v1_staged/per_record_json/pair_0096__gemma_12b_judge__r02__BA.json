@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 12.0,
+    "mean_day_minutes": 1.429,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 10.0
+  },
+  "fixture_id": "ab_A2__r_low__rc_high__ph_peak",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0096__gemma_12b_judge__r02__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A2__r_low__rc_high__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s015",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0096",
+  "plan_a_advantages": [
+    "Includes cross-training for strength and injury prevention.",
+    "Offers a slightly higher total training volume (227 minutes vs 217 minutes), potentially leading to greater aerobic development.",
+    "Varied session types (aerobic and cross-training) can help maintain motivation and prevent boredom."
+  ],
+  "plan_b_advantages": [
+    "Simpler and potentially easier to adhere to due to its straightforward structure.",
+    "May be preferable for athletes with a history of overuse injuries who need to minimize impact."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A2__r_low__rc_high__ph_peak__prog__exp_t000__s002",
+  "reasoning": "While both plans focus on easy running, Plan A demonstrates a more comprehensive approach to building a faster trail runner. It incorporates cross-training, which is crucial for trail running to build strength and stability while reducing impact stress. Plan B solely relies on easy runs, potentially neglecting important supporting muscle groups and increasing the risk of overuse injuries. The inclusion of cross-training in Plan A makes it a more well-rounded and sustainable plan for long-term improvement.",
+  "record_id": "pair_0096__gemma_12b_judge__r02__BA",
+  "right_plan_role": "llm",
+  "run": 2,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T21:50:41.590462+00:00",
+  "winner_role": "programmatic"
+}

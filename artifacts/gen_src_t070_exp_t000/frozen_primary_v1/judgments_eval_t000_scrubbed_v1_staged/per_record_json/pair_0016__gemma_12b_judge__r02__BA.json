@@ -1,0 +1,49 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 39.0,
+    "mean_day_minutes": 10.143,
+    "n_active_days": 0.0,
+    "n_hard_days": 1.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 1.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 71.0
+  },
+  "fixture_id": "ab_A1__r_high__rc_low__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0016__gemma_12b_judge__r02__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A1__r_high__rc_low__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s002",
+  "llm_won": true,
+  "order": "BA",
+  "pair_id": "pair_0016",
+  "plan_a_advantages": [
+    "Includes a tempo run, which can improve lactate threshold and speed.",
+    "Slightly lower overall volume may be preferable for athletes prone to injury or those new to running.",
+    "Strength and mobility session is explicitly included, which is beneficial for injury prevention and overall athleticism."
+  ],
+  "plan_b_advantages": [
+    "Focuses entirely on trail running, providing specific adaptation to the demands of the sport.",
+    "Higher overall volume likely leads to greater aerobic development.",
+    "Includes consistent elevation gain, crucial for trail running performance.",
+    "Provides more varied distances and elevation profiles, simulating real trail conditions."
+  ],
+  "position": "BA",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A1__r_high__rc_low__ph_base__prog__exp_t000__s010",
+  "reasoning": "Given the goal of becoming a faster trail runner, Plan B appears to be the better choice. While both plans incorporate a rest day and easy runs, Plan B emphasizes trail-specific training with consistent easy trail runs including elevation gain. The focus on trail running with varying distances and elevation profiles in Plan B is more directly applicable to the athlete's goal than Plan A's single tempo session and primarily flat easy runs. The higher total volume in Plan B also suggests a greater stimulus for aerobic development, which is crucial for trail running performance.",
+  "record_id": "pair_0016__gemma_12b_judge__r02__BA",
+  "right_plan_role": "llm",
+  "run": 2,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 1.1,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T19:55:16.789348+00:00",
+  "winner_role": "llm"
+}

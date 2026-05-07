@@ -1,0 +1,49 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 11.0,
+    "mean_day_minutes": 14.0,
+    "n_active_days": 1.0,
+    "n_hard_days": 1.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 1.0,
+    "n_rest_days": 1.0,
+    "total_minutes": 98.0
+  },
+  "fixture_id": "ab_A3__r_high__rc_high__ph_peak",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0130__gemma_12b_judge__r00__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A3__r_high__rc_high__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s002",
+  "llm_won": false,
+  "order": "AB",
+  "pair_id": "pair_0130",
+  "plan_a_advantages": [
+    "Plan A has a longer long run, which could be beneficial for building overall endurance.",
+    "Plan A has more rest days, which could be helpful for recovery, especially for beginners.",
+    "Plan A's longer easy runs might contribute to a higher overall weekly mileage, which can be beneficial for some runners."
+  ],
+  "plan_b_advantages": [
+    "Includes hill workouts, crucial for trail running strength and power.",
+    "Features a more varied intensity distribution with aerobic sessions, promoting well-rounded fitness.",
+    "Shorter overall duration may reduce the risk of overtraining.",
+    "Focuses on threshold and climbing efforts, directly addressing trail-specific demands."
+  ],
+  "position": "AB",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A3__r_high__rc_high__ph_peak__prog__exp_t000__s010",
+  "reasoning": "While both plans aim to improve trail running speed, Plan B appears better suited for the goal due to its inclusion of hill workouts and a more varied intensity distribution. Plan A focuses heavily on easy and tempo runs, potentially lacking the specific strength and power development needed for trail running. Plan B's shorter overall duration and inclusion of aerobic sessions also suggest a more focused and potentially less fatiguing approach, which is beneficial for trail runners who need to be durable. The emphasis on threshold and climbing efforts in Plan B directly addresses the demands of trail running.",
+  "record_id": "pair_0130__gemma_12b_judge__r00__AB",
+  "right_plan_role": "programmatic",
+  "run": 0,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T22:40:56.113756+00:00",
+  "winner_role": "programmatic"
+}

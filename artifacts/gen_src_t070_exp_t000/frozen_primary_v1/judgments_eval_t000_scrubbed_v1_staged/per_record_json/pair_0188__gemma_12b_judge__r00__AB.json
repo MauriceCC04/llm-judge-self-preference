@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 46.0,
+    "mean_day_minutes": 0.429,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 3.0
+  },
+  "fixture_id": "ab_A3__r_low__rc_low__ph_peak",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0188__gemma_12b_judge__r00__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A3__r_low__rc_low__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s004",
+  "llm_won": true,
+  "order": "AB",
+  "pair_id": "pair_0188",
+  "plan_a_advantages": [
+    "Includes a dedicated aerobic run, which is important for building a strong aerobic base.",
+    "Strength training is specifically focused on core and legs, which are crucial for trail running.",
+    "The overall volume feels more balanced, allowing for better recovery and adaptation."
+  ],
+  "plan_b_advantages": [
+    "The longer long run could be beneficial for building overall endurance.",
+    "The strength and mobility session is a good addition for injury prevention."
+  ],
+  "position": "AB",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A3__r_low__rc_low__ph_peak__prog__exp_t000__s013",
+  "reasoning": "While both plans incorporate essential elements for trail running improvement, Plan A appears to be the better choice for an athlete aiming to become a faster trail runner. Plan A's structure includes a dedicated aerobic run alongside the long and tempo sessions, which is crucial for building a strong aerobic base – a foundation for speed. Plan B's emphasis on longer easy runs and a longer long run, while beneficial for endurance, might not prioritize the speed development needed to achieve the stated goal as effectively. The inclusion of a strength session in Plan A, specifically targeting core and legs, is also more directly applicable to trail running demands than Plan B's broader strength and mobility focus.",
+  "record_id": "pair_0188__gemma_12b_judge__r00__AB",
+  "right_plan_role": "programmatic",
+  "run": 0,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-07T00:12:13.092845+00:00",
+  "winner_role": "llm"
+}

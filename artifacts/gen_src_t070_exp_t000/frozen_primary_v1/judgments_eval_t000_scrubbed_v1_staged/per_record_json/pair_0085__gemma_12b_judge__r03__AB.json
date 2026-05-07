@@ -1,0 +1,48 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 2.0,
+    "mean_day_minutes": 4.714,
+    "n_active_days": 0.0,
+    "n_hard_days": 1.0,
+    "n_long_runs": 1.0,
+    "n_quality_days": 1.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 33.0
+  },
+  "fixture_id": "ab_A2__r_low__rc_high__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0085__gemma_12b_judge__r03__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A2__r_low__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s000",
+  "llm_won": false,
+  "order": "AB",
+  "pair_id": "pair_0085",
+  "plan_a_advantages": [
+    "Plan A has a slightly higher total volume (306 minutes vs 273 minutes), which could be beneficial for some athletes.",
+    "Plan A's consistent easy runs might be preferable for athletes who are new to trail running or recovering from injury."
+  ],
+  "plan_b_advantages": [
+    "Plan B includes a hill workout, which is essential for trail running speed and strength.",
+    "Plan B incorporates threshold runs, which improve aerobic capacity and running economy.",
+    "Plan B has a long run, which builds endurance and prepares the athlete for longer races.",
+    "Plan B's varied workout types provide a more comprehensive training stimulus for improving speed."
+  ],
+  "position": "AB",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A2__r_low__rc_high__ph_base__prog__exp_t000__s017",
+  "reasoning": "While both plans involve trail running, Plan B is better suited for the goal of becoming a faster trail runner. It incorporates a variety of training types – aerobic, hill, easy, and long runs – which is crucial for developing a well-rounded skillset. Plan A solely focuses on easy runs, which, while important for base building, won't significantly improve speed. The inclusion of hill work in Plan B is particularly valuable for trail running, as it directly addresses the demands of the terrain and builds strength and power.",
+  "record_id": "pair_0085__gemma_12b_judge__r03__AB",
+  "right_plan_role": "programmatic",
+  "run": 3,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T21:35:36.850362+00:00",
+  "winner_role": "programmatic"
+}

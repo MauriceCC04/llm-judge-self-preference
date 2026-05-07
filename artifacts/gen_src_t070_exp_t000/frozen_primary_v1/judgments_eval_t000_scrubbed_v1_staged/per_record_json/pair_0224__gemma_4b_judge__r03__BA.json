@@ -1,0 +1,48 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 2.0,
+    "mean_day_minutes": 13.143,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 92.0
+  },
+  "fixture_id": "ab_A4__r_low__rc_high__ph_base",
+  "judge": "gemma_4b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/matching_pool/eval_manifest_scrubbed_v1/judge_inputs/pair_0224__gemma_4b_judge__r03__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-4b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A4__r_low__rc_high__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s007",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0224",
+  "plan_a_advantages": [
+    "Includes a dedicated threshold interval session for speed development.",
+    "Longer, more substantial long runs (123 minutes) to build endurance.",
+    "More varied session types, including cross-training for recovery and a focused interval session."
+  ],
+  "plan_b_advantages": [
+    "More specific trail running distances and elevation gain in the workouts, providing a more realistic trail experience.",
+    "Incorporates strength training, which can be beneficial for trail running stability and injury prevention.",
+    "Slightly longer total workout time overall."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A4__r_low__rc_high__ph_base__prog__exp_t000__s013",
+  "reasoning": "Both plans are solid for a trail runner aiming to improve speed, but Plan A is better suited to the athlete's goal given its focus on building a stronger aerobic base and incorporating more targeted interval work. Plan A includes a dedicated threshold interval session, which is crucial for increasing running economy and speed, something Plan B lacks. Furthermore, Plan A’s longer, controlled long runs (123 minutes) are more beneficial for building the sustained endurance needed for longer trail races than Plan B’s slightly shorter runs. While Plan B incorporates hill work, it doesn’t prioritize the specific speed development that comes from structured intervals.",
+  "record_id": "pair_0224__gemma_4b_judge__r03__BA",
+  "right_plan_role": "llm",
+  "run": 3,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T17:41:47.391431+00:00",
+  "winner_role": "programmatic"
+}

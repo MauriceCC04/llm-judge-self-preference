@@ -1,0 +1,49 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 35.0,
+    "mean_day_minutes": 23.143,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 1.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 162.0
+  },
+  "fixture_id": "ab_A4__r_high__rc_high__ph_peak",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0201__gemma_12b_judge__r04__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A4__r_high__rc_high__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s002",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0201",
+  "plan_a_advantages": [
+    "Lower overall volume: Reduces risk of overtraining and allows for better recovery, which is important for speed development.",
+    "Threshold-focused tempo session: Directly targets the speed-enhancing threshold pace.",
+    "Hill session with steady climbing efforts: Builds strength and power specifically for trail running, which is more relevant than hill repeats.",
+    "More balanced distribution of effort: The plan includes a good mix of easy, moderate, and hard efforts, promoting well-rounded development."
+  ],
+  "plan_b_advantages": [
+    "Higher volume: Could be beneficial for athletes with a very high base fitness level, but potentially detrimental for those seeking speed.",
+    "Two long runs: Provides more time on feet, which can improve endurance, but may not be necessary for a speed-focused goal.",
+    "Explicit 'Endurance' long run: Clearly designates one long run for endurance building."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A4__r_high__rc_high__ph_peak__prog__exp_t000__s010",
+  "reasoning": "Given the goal of becoming a faster trail runner, Plan A appears to be the more suitable choice. While Plan B has a higher total volume (460 minutes vs 298), it may be excessive for an athlete seeking speed gains. Plan A's focus on threshold and hill work, combined with a more moderate overall volume, is likely to be more effective for improving speed and efficiency on trails. The lower volume also reduces the risk of overtraining and injury, which is crucial for consistent progress.",
+  "record_id": "pair_0201__gemma_12b_judge__r04__BA",
+  "right_plan_role": "llm",
+  "run": 4,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 1.286,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-07T00:34:59.799330+00:00",
+  "winner_role": "programmatic"
+}

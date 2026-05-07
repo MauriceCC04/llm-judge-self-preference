@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 2.0,
+    "mean_day_minutes": 6.429,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 45.0
+  },
+  "fixture_id": "ab_A4__r_low__rc_high__ph_base",
+  "judge": "gemma_4b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/matching_pool/eval_manifest_scrubbed_v1/judge_inputs/pair_0219__gemma_4b_judge__r02__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-4b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A4__r_low__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s004",
+  "llm_won": true,
+  "order": "AB",
+  "pair_id": "pair_0219",
+  "plan_a_advantages": [
+    "More focused hill training to build trail-specific strength.",
+    "Shorter, more frequent long runs promote greater endurance development.",
+    "Includes a dedicated hill workout (55 min) which is crucial for trail running."
+  ],
+  "plan_b_advantages": [
+    "Includes a tempo run to improve lactate threshold.",
+    "Longer duration easy runs could be beneficial for a runner who needs to build a larger aerobic base initially."
+  ],
+  "position": "AB",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A4__r_low__rc_high__ph_base__prog__exp_t000__s005",
+  "reasoning": "Plan A is better suited for a trail runner aiming to become faster because it incorporates more targeted hill work and shorter, more frequent long runs. This approach directly addresses the demands of trail running – navigating varied terrain and building the specific muscular endurance required for uphill sections. Plan B, while including a tempo run, relies heavily on easy runs, which, while beneficial for base building, won't significantly improve speed or the ability to handle the intensity of a trail race. Plan A’s structured hill sessions and varied long run durations are more directly aligned with improving trail running performance.",
+  "record_id": "pair_0219__gemma_4b_judge__r02__AB",
+  "right_plan_role": "programmatic",
+  "run": 2,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T17:39:26.381445+00:00",
+  "winner_role": "llm"
+}

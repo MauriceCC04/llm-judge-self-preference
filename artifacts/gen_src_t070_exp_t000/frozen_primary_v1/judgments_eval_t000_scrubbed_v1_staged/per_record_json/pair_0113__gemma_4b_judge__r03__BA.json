@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 14.0,
+    "mean_day_minutes": 7.571,
+    "n_active_days": 1.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 1.0,
+    "total_minutes": 53.0
+  },
+  "fixture_id": "ab_A2__r_low__rc_low__ph_peak",
+  "judge": "gemma_4b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/matching_pool/eval_manifest_scrubbed_v1/judge_inputs/pair_0113__gemma_4b_judge__r03__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-4b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A2__r_low__rc_low__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s007",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0113",
+  "plan_a_advantages": [
+    "Includes a strength and mobility session.",
+    "Features slightly longer easy runs, promoting aerobic base building.",
+    "More rest days, reducing the risk of overtraining."
+  ],
+  "plan_b_advantages": [
+    "More total running time.",
+    "Potentially more consistent running volume throughout the week."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A2__r_low__rc_low__ph_peak__prog__exp_t000__s015",
+  "reasoning": "Both plans prioritize easy running, which is appropriate for a foundational building phase, but Plan A is better suited to the athlete's goal of becoming a faster trail runner. Plan A incorporates a dedicated strength and mobility session, crucial for injury prevention and efficient movement – a key component of trail running speed. Furthermore, Plan A includes slightly longer easy runs, which are more likely to contribute to aerobic base building, a fundamental aspect of improving trail running speed. While Plan B has more total running time, it lacks a targeted approach to strength and stability, potentially increasing injury risk and hindering long-term progress.",
+  "record_id": "pair_0113__gemma_4b_judge__r03__BA",
+  "right_plan_role": "llm",
+  "run": 3,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.857,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T16:52:43.394078+00:00",
+  "winner_role": "programmatic"
+}

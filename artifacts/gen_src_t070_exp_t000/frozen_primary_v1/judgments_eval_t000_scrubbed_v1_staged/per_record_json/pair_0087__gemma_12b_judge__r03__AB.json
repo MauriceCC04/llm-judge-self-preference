@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 63.0,
+    "mean_day_minutes": 0.0,
+    "n_active_days": 0.0,
+    "n_hard_days": 1.0,
+    "n_long_runs": 1.0,
+    "n_quality_days": 1.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 0.0
+  },
+  "fixture_id": "ab_A2__r_low__rc_high__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0087__gemma_12b_judge__r03__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A2__r_low__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s004",
+  "llm_won": false,
+  "order": "AB",
+  "pair_id": "pair_0087",
+  "plan_a_advantages": [
+    "Plan A includes a strength training session, which is beneficial for injury prevention and overall athleticism, something missing in Plan B.",
+    "Plan A has a slightly more balanced distribution of aerobic runs throughout the week."
+  ],
+  "plan_b_advantages": [
+    "Plan B includes a tempo run, which is essential for improving running speed and lactate threshold.",
+    "Plan B incorporates a longer run, which builds trail-specific endurance and durability.",
+    "Plan B's structure allows for a more progressive overload, with a dedicated hard day and a long run."
+  ],
+  "position": "AB",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A2__r_low__rc_high__ph_base__prog__exp_t000__s005",
+  "reasoning": "Plan B is the better choice for a trail runner aiming to become faster. While both plans involve aerobic work, Plan B incorporates a tempo run and a significantly longer run, both crucial for improving speed and endurance on trails. The inclusion of a tempo session specifically targets lactate threshold, a key determinant of running speed, which is absent in Plan A. The longer run builds trail-specific durability and aerobic capacity more effectively than the consistently shorter runs in Plan A.",
+  "record_id": "pair_0087__gemma_12b_judge__r03__AB",
+  "right_plan_role": "programmatic",
+  "run": 3,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T21:38:16.120416+00:00",
+  "winner_role": "programmatic"
+}

@@ -1,0 +1,46 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 7.0,
+    "mean_day_minutes": 0.286,
+    "n_active_days": 0.0,
+    "n_hard_days": 1.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 1.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 2.0
+  },
+  "fixture_id": "ab_A1__r_high__rc_low__ph_peak",
+  "judge": "gemma_4b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/matching_pool/eval_manifest_scrubbed_v1/judge_inputs/pair_0022__gemma_4b_judge__r03__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-4b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A1__r_high__rc_low__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s002",
+  "llm_won": false,
+  "order": "AB",
+  "pair_id": "pair_0022",
+  "plan_a_advantages": [
+    "Consistent volume of easy runs could be beneficial for building a base level of fitness.",
+    "The plan prioritizes maintaining freshness, which is a reasonable approach for a runner preparing for a race."
+  ],
+  "plan_b_advantages": [
+    "Incorporates a tempo run to specifically target threshold strength, a key factor for faster trail running.",
+    "Includes cross-training for low-impact recovery and added aerobic stimulus."
+  ],
+  "position": "AB",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A1__r_high__rc_low__ph_peak__prog__exp_t000__s010",
+  "reasoning": "Plan B is the better training plan for a trail runner aiming to become faster. It incorporates a dedicated tempo session to build threshold strength, a crucial component for sustained speed on trails, while Plan A focuses solely on easy runs. The inclusion of cross-training in Plan B provides a valuable low-impact recovery method and adds aerobic stimulus without the stress of trail running. Plan A’s consistent easy runs, while beneficial for maintaining freshness, don’t actively challenge the runner’s speed or endurance in the same way as Plan B’s structured workouts.",
+  "record_id": "pair_0022__gemma_4b_judge__r03__AB",
+  "right_plan_role": "programmatic",
+  "run": 3,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T16:12:54.506683+00:00",
+  "winner_role": "programmatic"
+}

@@ -1,0 +1,49 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 41.0,
+    "mean_day_minutes": 10.429,
+    "n_active_days": 0.0,
+    "n_hard_days": 1.0,
+    "n_long_runs": 1.0,
+    "n_quality_days": 1.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 73.0
+  },
+  "fixture_id": "ab_A4__r_high__rc_high__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0192__gemma_12b_judge__r01__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A4__r_high__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s000",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0192",
+  "plan_a_advantages": [
+    "More recovery days and lower overall volume, reducing the risk of overtraining.",
+    "Consistent focus on easy aerobic runs, building a strong aerobic base without excessive strain.",
+    "Clearer distinction between hard and easy days, promoting better recovery and adaptation.",
+    "The plan is more adaptable to a wider range of current fitness levels."
+  ],
+  "plan_b_advantages": [
+    "Includes tempo runs, which can improve lactate threshold and sustainable pace.",
+    "Higher overall volume may be beneficial for more experienced trail runners.",
+    "Provides specific distances and elevation gains for each run, offering more detailed guidance."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A4__r_high__rc_high__ph_base__prog__exp_t000__s011",
+  "reasoning": "Given the goal of becoming a faster trail runner, Plan A appears to be the more suitable choice. While both plans incorporate essential elements like long runs and hill work, Plan A's emphasis on consistent, lower-intensity aerobic work is more conducive to building a strong aerobic base, which is crucial for trail running speed. Plan B, with its higher volume and more frequent tempo runs, risks overtraining and potential injury, especially without knowing the athlete's current fitness level. Plan A's structure allows for better recovery and adaptation, ultimately leading to sustainable improvements in speed.",
+  "record_id": "pair_0192__gemma_12b_judge__r01__BA",
+  "right_plan_role": "llm",
+  "run": 1,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 2.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-07T00:18:43.498633+00:00",
+  "winner_role": "programmatic"
+}

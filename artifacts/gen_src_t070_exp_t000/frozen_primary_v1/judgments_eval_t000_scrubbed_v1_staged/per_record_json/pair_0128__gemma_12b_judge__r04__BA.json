@@ -1,0 +1,48 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 37.0,
+    "mean_day_minutes": 18.143,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 127.0
+  },
+  "fixture_id": "ab_A3__r_high__rc_high__ph_peak",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0128__gemma_12b_judge__r04__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A3__r_high__rc_high__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s005",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0128",
+  "plan_a_advantages": [
+    "Lower overall volume: 353 minutes compared to Plan B's 480 minutes, reducing the risk of overtraining and allowing for better recovery.",
+    "Focus on threshold training: Two tempo sessions per week directly target the athlete's ability to sustain a hard effort, crucial for faster trail running.",
+    "Balanced approach: Combines threshold work, easy runs, and long runs for a well-rounded training stimulus."
+  ],
+  "plan_b_advantages": [
+    "More trail-specific training: Includes hill sessions, which are highly relevant to trail running and build strength and power.",
+    "Higher volume: May be beneficial for athletes with a strong base and a higher tolerance for training load, although it's not necessarily optimal for speed development.",
+    "Longer long runs: The longer long runs (120 and 135 minutes) could improve endurance, but at the expense of speed-focused training."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A3__r_high__rc_high__ph_peak__prog__exp_t000__s019",
+  "reasoning": "Given the primary goal of becoming a faster trail runner, Plan A appears to be the more suitable choice. While Plan B incorporates more trail-specific elements like hills and longer runs, it also significantly increases the overall training volume (480 minutes vs 353 minutes). For an athlete aiming to improve speed, a more focused approach with a balance of threshold work and recovery, as seen in Plan A, is likely to be more effective than a higher volume plan that could lead to overtraining and hinder speed development. Plan A's structure prioritizes sustainable threshold strength, a key component of faster trail running, while still incorporating essential long runs for endurance.",
+  "record_id": "pair_0128__gemma_12b_judge__r04__BA",
+  "right_plan_role": "llm",
+  "run": 4,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T22:38:45.059919+00:00",
+  "winner_role": "programmatic"
+}

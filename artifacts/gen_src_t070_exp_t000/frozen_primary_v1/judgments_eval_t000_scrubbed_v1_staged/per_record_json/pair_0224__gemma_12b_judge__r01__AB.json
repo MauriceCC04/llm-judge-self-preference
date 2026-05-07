@@ -1,0 +1,49 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 2.0,
+    "mean_day_minutes": 13.143,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 92.0
+  },
+  "fixture_id": "ab_A4__r_low__rc_high__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0224__gemma_12b_judge__r01__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A4__r_low__rc_high__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s007",
+  "llm_won": false,
+  "order": "AB",
+  "pair_id": "pair_0224",
+  "plan_a_advantages": [
+    "Plan A includes more hill work, which is beneficial for trail-specific strength and endurance.",
+    "Plan A has a slightly higher total volume (489 minutes vs 397 minutes), which could be advantageous for some athletes.",
+    "Plan A's longer runs might better prepare an athlete for longer trail races."
+  ],
+  "plan_b_advantages": [
+    "Plan B incorporates interval training, which is essential for improving speed and anaerobic capacity.",
+    "Plan B includes cross-training, which can reduce impact and promote recovery.",
+    "Plan B's emphasis on controlled, easy aerobic work allows for higher volume without excessive fatigue.",
+    "Plan B's structure appears more focused on speed development, aligning better with the stated goal."
+  ],
+  "position": "AB",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A4__r_low__rc_high__ph_base__prog__exp_t000__s013",
+  "reasoning": "While both plans address trail running fitness, Plan B is better suited for an athlete aiming to become a *faster* trail runner. Plan B incorporates interval training, a crucial element for improving speed and anaerobic capacity, which is missing from Plan A. The focus on controlled, easy aerobic work in Plan B also allows for greater volume without excessive fatigue, promoting endurance gains without sacrificing speed development. Plan A's repetitive nature of moderate-intensity runs and hills, while good for base building, lacks the targeted speed work needed for significant performance improvements.",
+  "record_id": "pair_0224__gemma_12b_judge__r01__AB",
+  "right_plan_role": "programmatic",
+  "run": 1,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-07T01:10:51.998733+00:00",
+  "winner_role": "programmatic"
+}

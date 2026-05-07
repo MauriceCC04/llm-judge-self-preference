@@ -1,0 +1,48 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 36.0,
+    "mean_day_minutes": 14.571,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 2.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 102.0
+  },
+  "fixture_id": "ab_A4__r_high__rc_low__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0205__gemma_12b_judge__r04__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A4__r_high__rc_low__ph_base__gemma_3_4b_it__src_t070__exp_t000__s001",
+  "llm_won": true,
+  "order": "AB",
+  "pair_id": "pair_0205",
+  "plan_a_advantages": [
+    "Includes long runs, which are essential for building aerobic endurance, a key component of trail running.",
+    "Incorporates hill training, directly addressing the terrain-specific demands of trail running.",
+    "Includes a strength training session, which is important for injury prevention and power on trails.",
+    "Provides a more balanced approach to training, covering multiple aspects of trail running fitness."
+  ],
+  "plan_b_advantages": [
+    "The interval session could improve speed and efficiency, though its relevance to trail running is less direct.",
+    "The tempo run could improve lactate threshold, which is beneficial for sustained effort."
+  ],
+  "position": "AB",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A4__r_high__rc_low__ph_base__prog__exp_t000__s008",
+  "reasoning": "Given the goal of becoming a faster trail runner, Plan A appears to be the better choice. Trail running demands a blend of aerobic endurance, strength, and the ability to handle varied terrain. Plan A incorporates long runs, hills, and strength training, all crucial for trail running performance. Plan B, while including interval and tempo sessions, lacks the consistent long-duration aerobic work and hill training necessary for trail running, and the focus on intervals and tempo may not translate as effectively to the demands of trail running.",
+  "record_id": "pair_0205__gemma_12b_judge__r04__AB",
+  "right_plan_role": "programmatic",
+  "run": 4,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-07T00:41:31.669722+00:00",
+  "winner_role": "llm"
+}

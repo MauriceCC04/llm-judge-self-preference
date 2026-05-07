@@ -1,0 +1,48 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 4.0,
+    "mean_day_minutes": 0.0,
+    "n_active_days": 0.0,
+    "n_hard_days": 1.0,
+    "n_long_runs": 1.0,
+    "n_quality_days": 1.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 0.0
+  },
+  "fixture_id": "ab_A1__r_low__rc_high__ph_peak",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0034__gemma_12b_judge__r02__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A1__r_low__rc_high__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s000",
+  "llm_won": false,
+  "order": "AB",
+  "pair_id": "pair_0034",
+  "plan_a_advantages": [
+    "Plan A prioritizes recovery with consistent easy runs, which could be beneficial for a beginner or someone returning from injury.",
+    "The simplicity of Plan A might be easier to adhere to for some individuals."
+  ],
+  "plan_b_advantages": [
+    "Plan B includes a hill workout, which is essential for developing trail-specific strength and power.",
+    "The longer run in Plan B helps build aerobic endurance, a key factor in trail running performance.",
+    "Plan B incorporates threshold-intensity training, which is more effective for improving speed than solely easy running.",
+    "The variety of workouts in Plan B (aerobic, hills, long) provides a more well-rounded training stimulus."
+  ],
+  "position": "AB",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A1__r_low__rc_high__ph_peak__prog__exp_t000__s017",
+  "reasoning": "Plan B is the better choice for an athlete aiming to become a faster trail runner. While both plans involve running, Plan B incorporates a more varied and targeted approach to training. It includes a dedicated hill workout and a longer run, both crucial for trail running performance, whereas Plan A consists solely of easy runs. The inclusion of threshold-intensity work in Plan B will contribute more effectively to improved speed and endurance than the repetitive easy runs in Plan A.",
+  "record_id": "pair_0034__gemma_12b_judge__r02__AB",
+  "right_plan_role": "programmatic",
+  "run": 2,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T20:20:41.767690+00:00",
+  "winner_role": "programmatic"
+}

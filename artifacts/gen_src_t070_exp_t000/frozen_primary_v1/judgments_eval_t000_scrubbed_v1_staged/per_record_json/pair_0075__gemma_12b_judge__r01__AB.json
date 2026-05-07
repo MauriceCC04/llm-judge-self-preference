@@ -1,0 +1,49 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 56.0,
+    "mean_day_minutes": 11.714,
+    "n_active_days": 1.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 1.0,
+    "total_minutes": 82.0
+  },
+  "fixture_id": "ab_A2__r_high__rc_low__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0075__gemma_12b_judge__r01__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A2__r_high__rc_low__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s002",
+  "llm_won": false,
+  "order": "AB",
+  "pair_id": "pair_0075",
+  "plan_a_advantages": [
+    "Plan A includes a longer aerobic run (65 minutes) compared to Plan B's 35-minute aerobic run, potentially building a slightly larger aerobic base.",
+    "Plan A's hill workout, while limited, directly addresses trail-specific terrain.",
+    "Plan A has 3 rest days compared to Plan B's 2, which may be beneficial for some athletes."
+  ],
+  "plan_b_advantages": [
+    "Plan B includes a tempo run, which is essential for improving running speed and lactate threshold.",
+    "Plan B incorporates cross-training, reducing impact and aiding recovery.",
+    "Plan B's structure appears more balanced, with a mix of aerobic work, cross-training, and a threshold workout.",
+    "Plan B has a lower total volume (217 minutes vs 299 minutes), which may be preferable for athletes prone to overtraining or injury."
+  ],
+  "position": "AB",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A2__r_high__rc_low__ph_base__prog__exp_t000__s002",
+  "reasoning": "While both plans aim to improve trail running speed, Plan B is the better choice for several reasons. It incorporates a tempo run, which is crucial for developing the lactate threshold – a key factor in faster running. Plan A's single hill workout is insufficient for comprehensive speed development, whereas Plan B's tempo run provides a more targeted stimulus. Furthermore, Plan B includes cross-training, which reduces impact and aids in recovery, a significant benefit for trail runners who are prone to injury.",
+  "record_id": "pair_0075__gemma_12b_judge__r01__AB",
+  "right_plan_role": "programmatic",
+  "run": 1,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T21:21:05.284842+00:00",
+  "winner_role": "programmatic"
+}

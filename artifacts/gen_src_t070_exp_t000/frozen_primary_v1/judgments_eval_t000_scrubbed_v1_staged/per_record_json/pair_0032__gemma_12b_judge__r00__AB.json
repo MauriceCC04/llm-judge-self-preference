@@ -1,0 +1,48 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 0.0,
+    "mean_day_minutes": 1.714,
+    "n_active_days": 1.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 2.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 1.0,
+    "total_minutes": 12.0
+  },
+  "fixture_id": "ab_A1__r_low__rc_high__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0032__gemma_12b_judge__r00__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A1__r_low__rc_high__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s028",
+  "llm_won": false,
+  "order": "AB",
+  "pair_id": "pair_0032",
+  "plan_a_advantages": [
+    "Simplicity: Plan A is very straightforward and easy to follow.",
+    "Higher rest days: Plan A has two rest days compared to Plan B's one, which could be beneficial for recovery, especially for beginners.",
+    "Less total volume: Plan A has slightly less total volume (240 minutes) than Plan B (252 minutes)."
+  ],
+  "plan_b_advantages": [
+    "Variety: Plan B includes cross-training, which provides a different stimulus and reduces the risk of overuse injuries.",
+    "Longer run: The inclusion of a 60-minute long run in Plan B is more effective for building trail-specific endurance than the shorter, repetitive easy runs in Plan A.",
+    "Aerobic focus: Plan B explicitly includes an 'aerobic' run, suggesting a focus on building a strong aerobic base, which is essential for faster trail running."
+  ],
+  "position": "AB",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A1__r_low__rc_high__ph_base__prog__exp_t000__s000",
+  "reasoning": "While both plans focus on easy running, Plan B demonstrates a more comprehensive approach to improving trail running speed. It incorporates cross-training and a longer run, which are crucial for building overall endurance and resilience on trails. Plan A's repetitive easy runs, while beneficial for base building, lack the variety and stimulus needed to drive significant improvements in speed. The inclusion of cross-training in Plan B helps reduce impact and allows for aerobic development without the constant stress of trail running, which is particularly important for injury prevention.",
+  "record_id": "pair_0032__gemma_12b_judge__r00__AB",
+  "right_plan_role": "programmatic",
+  "run": 0,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T20:17:16.079882+00:00",
+  "winner_role": "programmatic"
+}

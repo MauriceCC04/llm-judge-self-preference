@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 9.0,
+    "mean_day_minutes": 6.429,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 45.0
+  },
+  "fixture_id": "ab_A3__r_low__rc_high__ph_base",
+  "judge": "gemma_4b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/matching_pool/eval_manifest_scrubbed_v1/judge_inputs/pair_0159__gemma_4b_judge__r03__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-4b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A3__r_low__rc_high__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s008",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0159",
+  "plan_a_advantages": [
+    "Includes a dedicated hill session for trail-specific power development.",
+    "Features a longer, sustained long run (67 minutes) to build endurance.",
+    "Prioritizes aerobic consistency and controlled load throughout the week."
+  ],
+  "plan_b_advantages": [
+    "Incorporates a tempo run, which can be beneficial for speed work.",
+    "Includes a strength session focused on leg muscles and hill work, though less emphasized than in Plan A."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A3__r_low__rc_high__ph_base__prog__exp_t000__s016",
+  "reasoning": "For a trail runner aiming to become faster, Plan A is the superior choice. It incorporates a dedicated hill session and a longer, more sustained long run, both crucial for developing the specific power and endurance needed for trail racing. Plan B, while including a tempo run, lacks the focused climbing work and longer, lower-intensity runs that build the foundational aerobic capacity and trail-specific strength that a faster runner requires. Plan A’s structure prioritizes building a stronger aerobic base and trail-specific power, which are more directly linked to speed improvements than Plan B’s approach.",
+  "record_id": "pair_0159__gemma_4b_judge__r03__BA",
+  "right_plan_role": "llm",
+  "run": 3,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T17:12:56.559943+00:00",
+  "winner_role": "programmatic"
+}

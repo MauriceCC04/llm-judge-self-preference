@@ -1,0 +1,46 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 39.0,
+    "mean_day_minutes": 10.143,
+    "n_active_days": 0.0,
+    "n_hard_days": 1.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 1.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 71.0
+  },
+  "fixture_id": "ab_A1__r_high__rc_high__ph_base",
+  "judge": "gemma_4b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/matching_pool/eval_manifest_scrubbed_v1/judge_inputs/pair_0002__gemma_4b_judge__r01__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-4b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A1__r_high__rc_high__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s002",
+  "llm_won": true,
+  "order": "AB",
+  "pair_id": "pair_0002",
+  "plan_a_advantages": [
+    "Increased overall mileage and longer runs contribute to greater aerobic development.",
+    "Consistent elevation gain in runs simulates the demands of trail running, building relevant strength and endurance."
+  ],
+  "plan_b_advantages": [
+    "Includes a dedicated tempo run to improve lactate threshold, a key factor in speed.",
+    "Incorporates a strength and mobility session, which is beneficial for injury prevention and overall movement quality."
+  ],
+  "position": "AB",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A1__r_high__rc_high__ph_base__prog__exp_t000__s010",
+  "reasoning": "Plan A is the better training plan for a trail runner aiming to become faster. It focuses on consistent, moderate-effort runs with a gradual increase in distance, building a solid aerobic base and hill strength – crucial for trail running. Plan B, while including a tempo run, relies heavily on easy runs and a strength session, which, without a significant increase in volume or intensity, are unlikely to translate to speed gains. Plan A’s longer runs and consistent mileage will more effectively develop the endurance needed for faster trail times.  Furthermore, the consistent elevation gain in Plan A’s runs mirrors the demands of trail running, directly addressing the athlete’s goal.",
+  "record_id": "pair_0002__gemma_4b_judge__r01__AB",
+  "right_plan_role": "programmatic",
+  "run": 1,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T16:03:53.403548+00:00",
+  "winner_role": "llm"
+}

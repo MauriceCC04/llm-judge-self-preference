@@ -1,0 +1,49 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 56.0,
+    "mean_day_minutes": 11.714,
+    "n_active_days": 1.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 1.0,
+    "total_minutes": 82.0
+  },
+  "fixture_id": "ab_A2__r_high__rc_low__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0075__gemma_12b_judge__r04__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A2__r_high__rc_low__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s002",
+  "llm_won": true,
+  "order": "BA",
+  "pair_id": "pair_0075",
+  "plan_a_advantages": [
+    "Plan A has a tempo run, which can improve lactate threshold, a valuable component of running speed.",
+    "Plan A has a slightly more structured approach with a mix of aerobic and cross-training.",
+    "Plan A has fewer rest days, which might be preferable for athletes who can tolerate higher training loads."
+  ],
+  "plan_b_advantages": [
+    "Plan B includes a dedicated hill workout, essential for trail running.",
+    "Plan B prioritizes recovery with more rest days and a greater emphasis on easy running.",
+    "Plan B has a higher total training volume, potentially leading to greater adaptation.",
+    "Plan B incorporates trail-specific running (easy trail run) which is more relevant to the athlete's goal."
+  ],
+  "position": "BA",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A2__r_high__rc_low__ph_base__prog__exp_t000__s002",
+  "reasoning": "While both plans aim to improve trail running speed, Plan B appears better suited for achieving that goal. It incorporates a dedicated hill workout, which is crucial for trail running performance, whereas Plan A lacks this element. Plan B also emphasizes easy running and recovery more consistently throughout the week, which is vital for preventing injury and allowing the body to adapt to training. The higher total training volume in Plan B, while requiring more commitment, likely translates to greater physiological adaptation and ultimately, faster trail running.",
+  "record_id": "pair_0075__gemma_12b_judge__r04__BA",
+  "right_plan_role": "llm",
+  "run": 4,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T21:22:01.361508+00:00",
+  "winner_role": "llm"
+}

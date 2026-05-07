@@ -1,0 +1,48 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 36.0,
+    "mean_day_minutes": 14.571,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 2.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 102.0
+  },
+  "fixture_id": "ab_A4__r_high__rc_low__ph_base",
+  "judge": "gemma_4b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/matching_pool/eval_manifest_scrubbed_v1/judge_inputs/pair_0205__gemma_4b_judge__r04__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-4b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A4__r_high__rc_low__ph_base__gemma_3_4b_it__src_t070__exp_t000__s001",
+  "llm_won": true,
+  "order": "AB",
+  "pair_id": "pair_0205",
+  "plan_a_advantages": [
+    "Longer runs that better mimic race distances and terrain.",
+    "Incorporation of hill workouts to build strength and simulate trail conditions.",
+    "Includes a dedicated strength session to address a common weakness in trail runners."
+  ],
+  "plan_b_advantages": [
+    "More focused on developing threshold fitness, which can contribute to speed.",
+    "Shorter, more frequent sessions might be easier to fit into a busy schedule.",
+    "Potentially lower overall volume, which could be beneficial for an athlete recovering from a previous injury or needing to manage fatigue more effectively."
+  ],
+  "position": "AB",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A4__r_high__rc_low__ph_base__prog__exp_t000__s008",
+  "reasoning": "Plan A is the better training plan for a trail runner aiming to become faster, primarily because it incorporates a more balanced approach to building both aerobic base and race-specific endurance. While Plan B focuses heavily on threshold work and shorter, more frequent easy runs, Plan A includes longer, sustained runs at an easy pace alongside hill workouts, which are crucial for trail running's technical terrain and simulating race conditions. The inclusion of a strength session also addresses a common weakness in trail runners – often neglecting lower body power. Plan B’s emphasis on shorter, less varied sessions could lead to a plateau in overall fitness and a lack of the specific adaptations needed for trail speed.",
+  "record_id": "pair_0205__gemma_4b_judge__r04__AB",
+  "right_plan_role": "programmatic",
+  "run": 4,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T17:33:32.448400+00:00",
+  "winner_role": "llm"
+}

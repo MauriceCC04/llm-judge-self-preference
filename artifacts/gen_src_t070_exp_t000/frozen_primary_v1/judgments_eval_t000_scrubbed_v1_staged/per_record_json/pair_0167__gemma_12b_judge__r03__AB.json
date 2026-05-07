@@ -1,0 +1,48 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 6.0,
+    "mean_day_minutes": 1.429,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 10.0
+  },
+  "fixture_id": "ab_A3__r_low__rc_high__ph_peak",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0167__gemma_12b_judge__r03__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A3__r_low__rc_high__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s002",
+  "llm_won": false,
+  "order": "AB",
+  "pair_id": "pair_0167",
+  "plan_a_advantages": [
+    "Plan A includes a dedicated strength training day on the trail, which could be beneficial for trail-specific stability.",
+    "Plan A's long run is slightly longer than Plan B's, potentially providing a bit more endurance development."
+  ],
+  "plan_b_advantages": [
+    "Plan B emphasizes aerobic development with more easy runs, which is fundamental for faster trail running.",
+    "Plan B incorporates a tempo run, directly targeting the athlete's goal of improved speed.",
+    "Plan B's long run is performed at a controlled aerobic effort, minimizing fatigue and maximizing endurance gains.",
+    "Plan B includes a strength and mobility session, which is beneficial for injury prevention and overall durability."
+  ],
+  "position": "AB",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A3__r_low__rc_high__ph_peak__prog__exp_t000__s014",
+  "reasoning": "Given the goal of becoming a faster trail runner, Plan B appears to be the more effective choice. While both plans incorporate essential elements like long runs and strength training, Plan B prioritizes building a strong aerobic base with more frequent and longer easy runs. The inclusion of a tempo run in Plan B is also a significant advantage, directly targeting the threshold pace crucial for faster trail running. Plan A's interval session seems less focused on the athlete's goal, and the overall volume of easy running is lower.",
+  "record_id": "pair_0167__gemma_12b_judge__r03__AB",
+  "right_plan_role": "programmatic",
+  "run": 3,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T23:40:08.831540+00:00",
+  "winner_role": "programmatic"
+}

@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 3.0,
+    "mean_day_minutes": 4.286,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 30.0
+  },
+  "fixture_id": "ab_A2__r_high__rc_low__ph_peak",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0081__gemma_12b_judge__r01__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A2__r_high__rc_low__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s001",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0081",
+  "plan_a_advantages": [
+    "Includes a strength and mobility session, which is essential for trail runners to build durability and prevent injuries.",
+    "Features varied run durations (31, 40, 65, 34, 87 minutes) which provides a more progressive stimulus for aerobic development compared to Plan B's consistent 45-minute runs.",
+    "The inclusion of 'aerobic' runs alongside 'easy' runs suggests a slightly higher intensity focus, which can contribute to faster running speeds."
+  ],
+  "plan_b_advantages": [
+    "The longer total training time (315 minutes vs 285 minutes) *could* lead to slightly more overall endurance development, although the lack of variety may limit its effectiveness.",
+    "The 'moderate' intensity for the long run in Plan B might be slightly more challenging than Plan A's 'easy' long run, potentially leading to greater adaptation (though this is speculative without knowing the athlete's current fitness level)."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A2__r_high__rc_low__ph_peak__prog__exp_t000__s006",
+  "reasoning": "While both plans incorporate a rest day and a long run, Plan A appears to be a more well-rounded and progressive approach for a trail runner aiming to become faster. Plan B's repetitive nature of solely easy runs, while good for building base endurance, lacks the variety needed to stimulate adaptation and improve speed. Plan A includes a strength and mobility session, which is crucial for trail running to prevent injuries and improve efficiency, and it also incorporates aerobic runs of varying durations, which is more likely to lead to improvements in both endurance and speed.",
+  "record_id": "pair_0081__gemma_12b_judge__r01__BA",
+  "right_plan_role": "llm",
+  "run": 1,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T21:29:48.722095+00:00",
+  "winner_role": "programmatic"
+}

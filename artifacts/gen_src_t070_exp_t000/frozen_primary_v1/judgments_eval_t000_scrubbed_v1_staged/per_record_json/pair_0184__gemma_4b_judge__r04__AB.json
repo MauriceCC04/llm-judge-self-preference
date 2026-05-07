@@ -1,0 +1,46 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 58.0,
+    "mean_day_minutes": 13.857,
+    "n_active_days": 0.0,
+    "n_hard_days": 1.0,
+    "n_long_runs": 1.0,
+    "n_quality_days": 1.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 97.0
+  },
+  "fixture_id": "ab_A3__r_low__rc_low__ph_peak",
+  "judge": "gemma_4b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/matching_pool/eval_manifest_scrubbed_v1/judge_inputs/pair_0184__gemma_4b_judge__r04__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-4b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A3__r_low__rc_low__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s007",
+  "llm_won": false,
+  "order": "AB",
+  "pair_id": "pair_0184",
+  "plan_a_advantages": [
+    "Includes a longer, controlled trail run (15km) which could be beneficial for building overall endurance.",
+    "Incorporates strength training, which is a valuable addition for trail runners."
+  ],
+  "plan_b_advantages": [
+    "Prioritizes aerobic development with threshold runs and consistent easy runs, directly targeting speed.",
+    "Includes dedicated hill sessions to build climbing strength and power, a key element of trail running success."
+  ],
+  "position": "AB",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A3__r_low__rc_low__ph_peak__prog__exp_t000__s001",
+  "reasoning": "Plan B is the better training plan for a trail runner aiming to become faster. It prioritizes building a stronger aerobic base and incorporating more targeted hill work, which are crucial for trail running performance. Plan A, conversely, focuses heavily on recovery and easy runs, potentially hindering the development of the necessary power and endurance. While Plan A includes a longer run, it’s significantly longer and at a controlled pace, lacking the intensity needed for speed gains. Plan B’s structured approach to building aerobic capacity and strength through hill sessions directly addresses the athlete’s goal of becoming faster.",
+  "record_id": "pair_0184__gemma_4b_judge__r04__AB",
+  "right_plan_role": "programmatic",
+  "run": 4,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 0.857,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T17:24:06.584596+00:00",
+  "winner_role": "programmatic"
+}

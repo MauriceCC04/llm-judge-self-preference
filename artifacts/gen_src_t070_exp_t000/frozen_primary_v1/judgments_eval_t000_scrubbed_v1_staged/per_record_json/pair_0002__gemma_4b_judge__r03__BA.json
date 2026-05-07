@@ -1,0 +1,46 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 39.0,
+    "mean_day_minutes": 10.143,
+    "n_active_days": 0.0,
+    "n_hard_days": 1.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 1.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 71.0
+  },
+  "fixture_id": "ab_A1__r_high__rc_high__ph_base",
+  "judge": "gemma_4b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/matching_pool/eval_manifest_scrubbed_v1/judge_inputs/pair_0002__gemma_4b_judge__r03__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-4b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A1__r_high__rc_high__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s002",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0002",
+  "plan_a_advantages": [
+    "Includes a dedicated threshold workout for speed development.",
+    "Prioritizes building sustainable strength, a key component of trail running speed."
+  ],
+  "plan_b_advantages": [
+    "Offers longer, more consistent runs, potentially beneficial for building overall mileage.",
+    "Provides more specific trail run data (distance, elevation gain) for each session, allowing for better monitoring of progress."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A1__r_high__rc_high__ph_base__prog__exp_t000__s010",
+  "reasoning": "Plan A is better suited for a trail runner aiming to become faster because it incorporates a dedicated threshold workout, a crucial element for improving sustained speed on trails. While Plan B focuses heavily on easy, consistent runs, it lacks a structured approach to building the specific strength and endurance needed for faster times. Plan A’s single hard day, combined with the emphasis on threshold development, directly addresses the goal of increasing running speed, whereas Plan B’s consistent easy runs are more geared towards building overall volume and resilience.",
+  "record_id": "pair_0002__gemma_4b_judge__r03__BA",
+  "right_plan_role": "llm",
+  "run": 3,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T16:04:03.361508+00:00",
+  "winner_role": "programmatic"
+}

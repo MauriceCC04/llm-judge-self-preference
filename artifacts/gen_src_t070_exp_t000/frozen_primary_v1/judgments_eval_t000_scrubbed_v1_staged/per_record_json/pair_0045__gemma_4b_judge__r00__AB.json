@@ -1,0 +1,46 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 6.0,
+    "mean_day_minutes": 1.429,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 10.0
+  },
+  "fixture_id": "ab_A1__r_low__rc_low__ph_base",
+  "judge": "gemma_4b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/matching_pool/eval_manifest_scrubbed_v1/judge_inputs/pair_0045__gemma_4b_judge__r00__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-4b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A1__r_low__rc_low__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s003",
+  "llm_won": true,
+  "order": "AB",
+  "pair_id": "pair_0045",
+  "plan_a_advantages": [
+    "Includes specific sessions targeting hill strength, a key component of trail running speed.",
+    "Maintains a higher volume of trail running, which is more relevant to the athlete's goal than cross-training."
+  ],
+  "plan_b_advantages": [
+    "Incorporates cross-training, which can be beneficial for overall fitness and injury prevention.",
+    "Provides a slightly more varied workout structure with both easy runs and cross-training sessions."
+  ],
+  "position": "AB",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A1__r_low__rc_low__ph_base__prog__exp_t000__s002",
+  "reasoning": "Plan A is the better training plan for a trail runner aiming to become faster. It focuses on consistent, easy trail running with a deliberate emphasis on form and cadence, which are crucial for trail efficiency. Plan B, while including cross-training, relies heavily on easy runs and cross-training, lacking the specific hill work and targeted trail running volume that directly addresses the goal of speed. Plan A’s structure is more directly aligned with building the aerobic endurance and strength needed for faster trail running, while Plan B’s approach feels more generalized and less focused on the unique demands of the sport.",
+  "record_id": "pair_0045__gemma_4b_judge__r00__AB",
+  "right_plan_role": "programmatic",
+  "run": 0,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T16:22:37.657737+00:00",
+  "winner_role": "llm"
+}

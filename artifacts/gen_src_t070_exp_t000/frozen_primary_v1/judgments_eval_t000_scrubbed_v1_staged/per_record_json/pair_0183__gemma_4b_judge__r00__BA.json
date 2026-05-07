@@ -1,0 +1,48 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 64.0,
+    "mean_day_minutes": 13.286,
+    "n_active_days": 0.0,
+    "n_hard_days": 1.0,
+    "n_long_runs": 1.0,
+    "n_quality_days": 1.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 93.0
+  },
+  "fixture_id": "ab_A3__r_low__rc_low__ph_peak",
+  "judge": "gemma_4b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/matching_pool/eval_manifest_scrubbed_v1/judge_inputs/pair_0183__gemma_4b_judge__r00__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-4b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A3__r_low__rc_low__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s002",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0183",
+  "plan_a_advantages": [
+    "Includes threshold and hill workouts for power and climbing strength.",
+    "Incorporates strength training to support durability and injury prevention.",
+    "Offers a more balanced approach to training, combining aerobic development with targeted intensity."
+  ],
+  "plan_b_advantages": [
+    "Provides ample recovery days, which is important for overall well-being.",
+    "Features longer trail runs, allowing for adaptation to the demands of trail running distances.",
+    "Offers a more consistent, low-impact training volume."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A3__r_low__rc_low__ph_peak__prog__exp_t000__s016",
+  "reasoning": "Plan A is the better training plan for a trail runner aiming to become faster, primarily because it incorporates targeted workouts designed to improve specific aspects of trail running performance. While Plan B focuses heavily on recovery and easy runs, Plan A includes a threshold run, hill sessions, and strength training – all crucial for building the endurance and power needed for faster trail times. Plan B’s emphasis on recovery is valuable, but it lacks the structured intensity required for genuine speed development. Furthermore, Plan A’s inclusion of a dedicated strength and mobility session is a key differentiator.",
+  "record_id": "pair_0183__gemma_4b_judge__r00__BA",
+  "right_plan_role": "llm",
+  "run": 0,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 0.286,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T17:23:20.398896+00:00",
+  "winner_role": "programmatic"
+}

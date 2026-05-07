@@ -1,0 +1,48 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 0.0,
+    "mean_day_minutes": 20.429,
+    "n_active_days": 1.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 1.0,
+    "total_minutes": 143.0
+  },
+  "fixture_id": "ab_A2__r_high__rc_high__ph_base",
+  "judge": "gemma_4b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/matching_pool/eval_manifest_scrubbed_v1/judge_inputs/pair_0064__gemma_4b_judge__r04__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-4b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A2__r_high__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s175",
+  "llm_won": true,
+  "order": "AB",
+  "pair_id": "pair_0064",
+  "plan_a_advantages": [
+    "Includes hill repeats for trail-specific strength.",
+    "Features a dedicated 'hills' day for focused hill training.",
+    "More closely aligns with the demands of trail running compared to Plan B."
+  ],
+  "plan_b_advantages": [
+    "Incorporates cross-training for overall fitness.",
+    "Includes a tempo session, which can be beneficial for improving lactate threshold.",
+    "Has more rest days, potentially reducing the risk of overtraining."
+  ],
+  "position": "AB",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A2__r_high__rc_high__ph_base__prog__exp_t000__s002",
+  "reasoning": "Plan A is the better training plan for a trail runner aiming to become faster, particularly given the implied current state of the athlete (as no context is provided). Plan A incorporates hill repeats and a dedicated 'hills' day, directly addressing the demands of trail running and building the necessary strength and power. While Plan B includes cross-training, it lacks focused hill work and a structured tempo session, both crucial for trail speed development. Plan A’s consistent focus on building aerobic fitness and hill strength, combined with a single harder day, provides a more targeted approach to improving trail running performance.",
+  "record_id": "pair_0064__gemma_4b_judge__r04__AB",
+  "right_plan_role": "programmatic",
+  "run": 4,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 0.429,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T16:31:16.623211+00:00",
+  "winner_role": "llm"
+}

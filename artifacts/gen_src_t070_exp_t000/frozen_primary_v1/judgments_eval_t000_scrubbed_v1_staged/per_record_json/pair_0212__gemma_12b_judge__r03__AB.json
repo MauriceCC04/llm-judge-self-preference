@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 66.0,
+    "mean_day_minutes": 19.286,
+    "n_active_days": 0.0,
+    "n_hard_days": 2.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 2.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 135.0
+  },
+  "fixture_id": "ab_A4__r_high__rc_low__ph_peak",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0212__gemma_12b_judge__r03__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A4__r_high__rc_low__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s001",
+  "llm_won": true,
+  "order": "AB",
+  "pair_id": "pair_0212",
+  "plan_a_advantages": [
+    "Includes tempo runs to improve lactate threshold, a key factor in running speed.",
+    "Incorporates hill workouts to build strength and power, essential for trail running.",
+    "Offers a more varied training stimulus, promoting more well-rounded development."
+  ],
+  "plan_b_advantages": [
+    "Prioritizes durability and injury resistance with a focus on easy runs and cross-training.",
+    "May be more suitable for a beginner or someone returning from injury."
+  ],
+  "position": "AB",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A4__r_high__rc_low__ph_peak__prog__exp_t000__s000",
+  "reasoning": "Plan A appears to be the better choice for an athlete aiming to become a faster trail runner. While both plans incorporate easy runs and rest days, Plan A includes tempo runs and hill workouts, which are crucial for improving speed and power on trails. Plan B focuses heavily on endurance and durability with long, easy runs and cross-training, which is valuable but doesn't directly address the speed component of the goal. The inclusion of varied intensities in Plan A will lead to greater physiological adaptations for faster trail running.",
+  "record_id": "pair_0212__gemma_12b_judge__r03__AB",
+  "right_plan_role": "programmatic",
+  "run": 3,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-07T00:52:10.389759+00:00",
+  "winner_role": "llm"
+}

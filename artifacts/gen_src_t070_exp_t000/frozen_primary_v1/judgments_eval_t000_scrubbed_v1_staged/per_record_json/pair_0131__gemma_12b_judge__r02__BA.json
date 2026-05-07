@@ -1,0 +1,49 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 17.0,
+    "mean_day_minutes": 0.714,
+    "n_active_days": 0.0,
+    "n_hard_days": 1.0,
+    "n_long_runs": 2.0,
+    "n_quality_days": 1.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 5.0
+  },
+  "fixture_id": "ab_A3__r_high__rc_high__ph_peak",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0131__gemma_12b_judge__r02__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A3__r_high__rc_high__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s000",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0131",
+  "plan_a_advantages": [
+    "Greater emphasis on long, easy runs: This builds aerobic endurance, crucial for trail running where distances are often longer and terrain is more challenging.",
+    "Dedicated hill workout: This directly addresses the climbing demands of trail running, improving strength and power.",
+    "Lower overall intensity: This reduces the risk of overtraining and injury, allowing for consistent training over time.",
+    "More long runs: Three long runs in a week are more beneficial for trail runners than one."
+  ],
+  "plan_b_advantages": [
+    "Incorporates tempo and interval training: These sessions can improve speed and efficiency, but are best implemented after a solid aerobic base is established.",
+    "Includes strength training: Strength work is important for injury prevention and power, but the plan lacks detail on what this entails.",
+    "Cross-training: Provides a break from the impact of trail running and maintains overall fitness."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A3__r_high__rc_high__ph_peak__prog__exp_t000__s011",
+  "reasoning": "Given the primary goal of becoming a faster trail runner, Plan A appears to be the more suitable choice. While both plans incorporate rest days and address endurance, Plan A emphasizes consistent, lower-intensity long runs and a dedicated hill workout, which are foundational for trail running development. Plan B, with its tempo and interval sessions, seems geared more towards race-specific speed work, which might be premature without a stronger aerobic base. Plan A's focus on building a solid aerobic base and trail-specific strength is more likely to lead to sustainable improvements in overall trail running speed.",
+  "record_id": "pair_0131__gemma_12b_judge__r02__BA",
+  "right_plan_role": "llm",
+  "run": 2,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 1.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T22:43:02.273449+00:00",
+  "winner_role": "programmatic"
+}

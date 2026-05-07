@@ -1,0 +1,48 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 6.0,
+    "mean_day_minutes": 4.857,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 34.0
+  },
+  "fixture_id": "ab_A3__r_low__rc_high__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0151__gemma_12b_judge__r01__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A3__r_low__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s000",
+  "llm_won": true,
+  "order": "BA",
+  "pair_id": "pair_0151",
+  "plan_a_advantages": [
+    "Plan A includes a strength and mobility session, which is beneficial for injury prevention and overall athleticism.",
+    "Plan A has a slightly higher total volume (356 minutes vs 390 minutes), which could be beneficial for some athletes.",
+    "Plan A's tempo run provides a good introduction to threshold training."
+  ],
+  "plan_b_advantages": [
+    "Plan B incorporates hill repeats, a vital component for trail running speed and strength.",
+    "Plan B emphasizes trail-specific training with all runs being on trails.",
+    "Plan B's long run is at a moderate intensity, which is more appropriate for trail running than Plan A's controlled aerobic effort."
+  ],
+  "position": "BA",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A3__r_low__rc_high__ph_base__prog__exp_t000__s014",
+  "reasoning": "Given the goal of becoming a faster trail runner, Plan B appears to be the more effective choice. While both plans incorporate easy runs and a long run, Plan B specifically includes hill repeats, which are crucial for trail running performance. Trail running demands significant climbing ability, and Plan B directly addresses this with a dedicated session. Plan A's focus on a single tempo run feels insufficient for developing the specific strength and power needed for trail running, whereas Plan B's structure is more tailored to the demands of the sport.",
+  "record_id": "pair_0151__gemma_12b_judge__r01__BA",
+  "right_plan_role": "llm",
+  "run": 1,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T23:13:51.374740+00:00",
+  "winner_role": "llm"
+}

@@ -1,0 +1,49 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 37.0,
+    "mean_day_minutes": 8.857,
+    "n_active_days": 0.0,
+    "n_hard_days": 1.0,
+    "n_long_runs": 1.0,
+    "n_quality_days": 1.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 62.0
+  },
+  "fixture_id": "ab_A3__r_low__rc_low__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0179__gemma_12b_judge__r01__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A3__r_low__rc_low__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s004",
+  "llm_won": false,
+  "order": "AB",
+  "pair_id": "pair_0179",
+  "plan_a_advantages": [
+    "Plan A includes a strength training session, which is important for injury prevention and overall athleticism.",
+    "Plan A has a longer long run, which can be beneficial for building endurance.",
+    "Plan A has a slightly higher total volume, which could be useful for athletes who can handle a higher load."
+  ],
+  "plan_b_advantages": [
+    "Plan B incorporates interval training, which is essential for speed development.",
+    "Plan B includes a wider range of aerobic intensities (easy and threshold), leading to more comprehensive aerobic development.",
+    "Plan B has a lower overall volume, potentially reducing the risk of overtraining.",
+    "Plan B's focus on controlled effort and reduced impact (cross-training) is beneficial for injury prevention."
+  ],
+  "position": "AB",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A3__r_low__rc_low__ph_base__prog__exp_t000__s020",
+  "reasoning": "While both plans incorporate essential elements for trail running improvement, Plan B is the better choice for an athlete aiming to become a faster trail runner. Plan B includes a dedicated interval session, which is crucial for developing speed and power – a key component often missing in plans focused solely on endurance. The emphasis on aerobic work at varying intensities (easy and threshold) in Plan B provides a more comprehensive stimulus for improving aerobic capacity. Finally, the lower overall volume of Plan B might be beneficial for preventing overtraining, especially if the athlete is already at a moderate fitness level.",
+  "record_id": "pair_0179__gemma_12b_judge__r01__AB",
+  "right_plan_role": "programmatic",
+  "run": 1,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T23:58:30.937490+00:00",
+  "winner_role": "programmatic"
+}

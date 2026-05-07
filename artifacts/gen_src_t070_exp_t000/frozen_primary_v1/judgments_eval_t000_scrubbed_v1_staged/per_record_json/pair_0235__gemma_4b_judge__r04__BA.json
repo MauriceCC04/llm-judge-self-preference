@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 22.0,
+    "mean_day_minutes": 6.714,
+    "n_active_days": 1.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 1.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 1.0,
+    "total_minutes": 47.0
+  },
+  "fixture_id": "ab_A4__r_low__rc_high__ph_peak",
+  "judge": "gemma_4b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/matching_pool/eval_manifest_scrubbed_v1/judge_inputs/pair_0235__gemma_4b_judge__r04__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-4b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A4__r_low__rc_high__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s009",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0235",
+  "plan_a_advantages": [
+    "Includes a dedicated tempo run for speed work.",
+    "Incorporates a strength and mobility session to improve stability and reduce injury risk.",
+    "More balanced distribution of intensity types (aerobic, tempo, strength)."
+  ],
+  "plan_b_advantages": [
+    "Longer total training volume (more minutes overall).",
+    "Two longer runs, potentially beneficial for building a strong aerobic base."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A4__r_low__rc_high__ph_peak__prog__exp_t000__s011",
+  "reasoning": "Both plans prioritize recovery, which is appropriate given the context of a recent heavy training load. However, Plan A is better suited for a runner aiming to *become faster* because it incorporates a dedicated tempo run and a structured strength session, directly addressing speed and power development. Plan B’s focus on longer, mostly aerobic runs, while beneficial for endurance, doesn’t provide the targeted stimulus needed to improve running speed. Plan A’s inclusion of a strength session is crucial for trail running, where stability and injury resistance are paramount, and the tempo run will directly translate to faster times on the trails.",
+  "record_id": "pair_0235__gemma_4b_judge__r04__BA",
+  "right_plan_role": "llm",
+  "run": 4,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 2.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T17:46:45.961871+00:00",
+  "winner_role": "programmatic"
+}

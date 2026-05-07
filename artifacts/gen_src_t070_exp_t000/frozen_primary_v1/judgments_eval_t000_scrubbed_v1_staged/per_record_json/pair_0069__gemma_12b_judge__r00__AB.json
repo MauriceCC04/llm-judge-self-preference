@@ -1,0 +1,49 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 23.0,
+    "mean_day_minutes": 12.857,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 90.0
+  },
+  "fixture_id": "ab_A2__r_high__rc_high__ph_peak",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0069__gemma_12b_judge__r00__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A2__r_high__rc_high__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s249",
+  "llm_won": false,
+  "order": "AB",
+  "pair_id": "pair_0069",
+  "plan_a_advantages": [
+    "Plan A has a slightly longer long run (13.4 km vs 8.7 km), which could be beneficial for building overall endurance if the athlete is already well-conditioned.",
+    "Plan A includes a dedicated strength training session, which is important for trail running.",
+    "Plan A's total volume (375 minutes) is higher, which could lead to greater overall training stimulus if the athlete can handle it."
+  ],
+  "plan_b_advantages": [
+    "Plan B's focus on controlled aerobic effort is more conducive to building a strong aerobic base, which is essential for faster trail running.",
+    "Plan B's lower overall volume (285 minutes) reduces the risk of overtraining and injury.",
+    "Plan B's strength and mobility session is shorter and more focused on durability and stability, which is a good approach for trail runners.",
+    "Plan B's session descriptions are more specific and actionable (e.g., 'conversational effort' vs. 'easy')."
+  ],
+  "position": "AB",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A2__r_high__rc_high__ph_peak__prog__exp_t000__s006",
+  "reasoning": "While both plans aim to improve trail running speed, Plan B appears to be the better choice for building a solid aerobic base, which is crucial for faster trail running. Plan B emphasizes consistent, controlled aerobic effort throughout the week, with a focus on building endurance gradually. The shorter overall volume of Plan B is also a benefit, reducing the risk of overtraining and injury, especially for someone who is not already at a high level of fitness. Plan A's longer runs and slightly higher overall volume might be beneficial for a more advanced runner, but for a general goal of becoming a faster trail runner, Plan B's structured aerobic focus is more appropriate.",
+  "record_id": "pair_0069__gemma_12b_judge__r00__AB",
+  "right_plan_role": "programmatic",
+  "run": 0,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T21:11:03.832585+00:00",
+  "winner_role": "programmatic"
+}

@@ -1,0 +1,48 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 29.0,
+    "mean_day_minutes": 2.857,
+    "n_active_days": 1.0,
+    "n_hard_days": 1.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 1.0,
+    "n_rest_days": 1.0,
+    "total_minutes": 20.0
+  },
+  "fixture_id": "ab_A1__r_high__rc_low__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0015__gemma_12b_judge__r00__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A1__r_high__rc_low__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s000",
+  "llm_won": false,
+  "order": "AB",
+  "pair_id": "pair_0015",
+  "plan_a_advantages": [
+    "Plan A has more rest days, which could be beneficial for athletes prone to injury or those new to running.",
+    "The focus on form and rhythm in every easy run in Plan A is a good reminder for maintaining efficient running mechanics."
+  ],
+  "plan_b_advantages": [
+    "Includes a tempo run, which is essential for improving speed and threshold pace.",
+    "Incorporates cross-training to build aerobic fitness while minimizing impact.",
+    "More structured with a clear progression of effort, moving beyond just easy runs.",
+    "Has a slightly more balanced approach to training and recovery with 2 rest days."
+  ],
+  "position": "AB",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A1__r_high__rc_low__ph_base__prog__exp_t000__s002",
+  "reasoning": "While both plans prioritize easy running, Plan B demonstrates a more structured and effective approach to improving trail running speed. The inclusion of a tempo run (threshold effort) in Plan B is crucial for developing the necessary speed and endurance for faster trail running. Plan A solely focuses on easy runs and rest, which, while important for recovery, lacks the stimulus needed to improve speed. Plan B's cross-training days also offer a valuable opportunity to build aerobic fitness with reduced impact, preventing overuse injuries common in trail running.",
+  "record_id": "pair_0015__gemma_12b_judge__r00__AB",
+  "right_plan_role": "programmatic",
+  "run": 0,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T19:53:25.109546+00:00",
+  "winner_role": "programmatic"
+}

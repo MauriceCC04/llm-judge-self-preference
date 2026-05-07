@@ -1,0 +1,48 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 28.0,
+    "mean_day_minutes": 6.0,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 42.0
+  },
+  "fixture_id": "ab_A2__r_low__rc_low__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0103__gemma_12b_judge__r04__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A2__r_low__rc_low__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s002",
+  "llm_won": false,
+  "order": "AB",
+  "pair_id": "pair_0103",
+  "plan_a_advantages": [
+    "Plan A dedicates more time to trail running, which could be beneficial for developing trail-specific skills and comfort.",
+    "The plan is simpler to understand and follow, which might be preferable for a beginner."
+  ],
+  "plan_b_advantages": [
+    "Incorporates cross-training to reduce impact and build aerobic base.",
+    "Provides more variety in training, potentially leading to better overall development.",
+    "The structure allows for more recovery through the inclusion of two rest days and cross-training.",
+    "The plan is slightly more structured with a clear purpose for each session."
+  ],
+  "position": "AB",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A2__r_low__rc_low__ph_base__prog__exp_t000__s002",
+  "reasoning": "While both plans focus on easy running, Plan B demonstrates a more thoughtful approach to building a base for faster trail running. The inclusion of cross-training sessions is a significant advantage, allowing for aerobic stimulus without the impact stress of trail running. This is particularly beneficial for injury prevention and overall endurance development. Plan A's repetitive focus solely on easy trail runs, while not inherently bad, lacks the variety and potential for broader aerobic development that Plan B offers. Ultimately, Plan B's structure is more likely to contribute to the athlete's goal of becoming a faster trail runner.",
+  "record_id": "pair_0103__gemma_12b_judge__r04__AB",
+  "right_plan_role": "programmatic",
+  "run": 4,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T22:00:57.808776+00:00",
+  "winner_role": "programmatic"
+}

@@ -1,0 +1,48 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 6.0,
+    "mean_day_minutes": 4.857,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 34.0
+  },
+  "fixture_id": "ab_A3__r_low__rc_low__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0172__gemma_12b_judge__r01__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A3__r_low__rc_low__ph_base__gemma_3_4b_it__src_t070__exp_t000__s001",
+  "llm_won": false,
+  "order": "AB",
+  "pair_id": "pair_0172",
+  "plan_a_advantages": [
+    "Plan A has a slightly longer total training time, which could be beneficial for building overall endurance if the athlete is already quite fit.",
+    "Plan A's hill repeats, while limited, do address strength development, which is important for trail running."
+  ],
+  "plan_b_advantages": [
+    "Plan B incorporates a tempo run, which is essential for improving speed and lactate threshold.",
+    "Plan B includes a strength and mobility session, which is vital for injury prevention and improving running economy on trails.",
+    "Plan B has a more balanced approach to training, combining aerobic work, strength, and speed development.",
+    "Plan B's consistent easy runs build a strong aerobic base without excessive fatigue."
+  ],
+  "position": "AB",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A3__r_low__rc_low__ph_base__prog__exp_t000__s014",
+  "reasoning": "Plan B appears to be the better choice for a trail runner aiming to become faster. While both plans incorporate easy runs and a long run, Plan B includes a tempo session and strength/mobility work, which are crucial for developing speed and injury resilience. The more consistent easy runs in Plan B also contribute to building a solid aerobic base. Plan A's single hill workout is insufficient for developing the strength and power needed for efficient trail running, and the overall volume is slightly higher without a corresponding increase in intensity.",
+  "record_id": "pair_0172__gemma_12b_judge__r01__AB",
+  "right_plan_role": "programmatic",
+  "run": 1,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T23:47:45.601020+00:00",
+  "winner_role": "programmatic"
+}

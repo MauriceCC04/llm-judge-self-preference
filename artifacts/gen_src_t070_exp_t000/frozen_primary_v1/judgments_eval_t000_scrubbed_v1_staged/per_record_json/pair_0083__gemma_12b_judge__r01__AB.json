@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 7.0,
+    "mean_day_minutes": 8.571,
+    "n_active_days": 0.0,
+    "n_hard_days": 1.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 1.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 60.0
+  },
+  "fixture_id": "ab_A2__r_high__rc_low__ph_peak",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0083__gemma_12b_judge__r01__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A2__r_high__rc_low__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s003",
+  "llm_won": false,
+  "order": "AB",
+  "pair_id": "pair_0083",
+  "plan_a_advantages": [
+    "Plan A has more total running time, which could be beneficial for building overall endurance.",
+    "Plan A has a simpler structure, which might be easier to follow for a beginner."
+  ],
+  "plan_b_advantages": [
+    "Plan B includes a tempo run, which is essential for improving speed and lactate threshold.",
+    "Plan B incorporates cross-training, providing active recovery and reducing the risk of overuse injuries.",
+    "Plan B has a more varied structure, which can help prevent boredom and maintain motivation."
+  ],
+  "position": "AB",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A2__r_high__rc_low__ph_peak__prog__exp_t000__s002",
+  "reasoning": "While both plans focus on easy running, Plan B demonstrates a more structured approach to improving speed for trail running. The inclusion of a tempo run (threshold effort) in Plan B is crucial for developing the speed and lactate threshold necessary for faster trail times, something entirely absent in Plan A. Plan A's repetitive easy runs, while good for base building, lack the intensity needed to drive significant performance gains. Plan B's cross-training days also offer a valuable recovery and injury prevention tool.",
+  "record_id": "pair_0083__gemma_12b_judge__r01__AB",
+  "right_plan_role": "programmatic",
+  "run": 1,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 1.143,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T21:32:19.815263+00:00",
+  "winner_role": "programmatic"
+}

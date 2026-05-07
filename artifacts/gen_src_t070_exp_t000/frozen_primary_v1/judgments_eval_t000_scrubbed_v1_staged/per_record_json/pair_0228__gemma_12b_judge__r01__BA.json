@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 58.0,
+    "mean_day_minutes": 24.714,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 173.0
+  },
+  "fixture_id": "ab_A4__r_low__rc_high__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0228__gemma_12b_judge__r01__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A4__r_low__rc_high__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s000",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0228",
+  "plan_a_advantages": [
+    "Includes a dedicated hill workout, essential for trail running strength and power.",
+    "More balanced intensity distribution, reducing the risk of overtraining compared to Plan B's higher volume and potentially more demanding aerobic sessions.",
+    "Clearer purpose summaries for each session, indicating a thoughtful progression."
+  ],
+  "plan_b_advantages": [
+    "Higher total volume, which could be beneficial for experienced runners with a strong base.",
+    "More trail-specific focus in the descriptions, emphasizing relaxed effort and recovery on trails."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A4__r_low__rc_high__ph_base__prog__exp_t000__s017",
+  "reasoning": "Plan A appears to be the better choice for a trail runner aiming to become faster, especially if they are at an intermediate level or are newer to structured training. While Plan B has a higher total volume, its intensity distribution seems less optimal for building speed. Plan A incorporates a dedicated hill workout, which is crucial for trail running performance, while Plan B lacks this specific focus. The more balanced approach of Plan A, with a mix of easy, aerobic, and hill sessions, is more likely to lead to sustainable progress and reduce the risk of overtraining.",
+  "record_id": "pair_0228__gemma_12b_judge__r01__BA",
+  "right_plan_role": "llm",
+  "run": 1,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-07T01:16:43.247762+00:00",
+  "winner_role": "programmatic"
+}

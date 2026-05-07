@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 25.0,
+    "mean_day_minutes": 3.286,
+    "n_active_days": 0.0,
+    "n_hard_days": 2.0,
+    "n_long_runs": 2.0,
+    "n_quality_days": 2.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 23.0
+  },
+  "fixture_id": "ab_A1__r_high__rc_low__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0012__gemma_12b_judge__r03__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A1__r_high__rc_low__ph_base__gemma_3_4b_it__src_t070__exp_t000__s001",
+  "llm_won": false,
+  "order": "AB",
+  "pair_id": "pair_0012",
+  "plan_a_advantages": [
+    "Plan A has slightly more total training time (337 minutes vs 314 minutes).",
+    "Plan A's consistent easy runs might be beneficial for beginners or those recovering from injury."
+  ],
+  "plan_b_advantages": [
+    "Plan B incorporates tempo runs, which are essential for improving speed and lactate threshold.",
+    "Plan B includes longer runs, which are crucial for trail running endurance.",
+    "Plan B has a more varied training week with a mix of tempo, easy, and long runs, promoting more well-rounded development."
+  ],
+  "position": "AB",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A1__r_high__rc_low__ph_base__prog__exp_t000__s019",
+  "reasoning": "While both plans incorporate trail running, Plan B demonstrates a more structured approach to improving speed for a trail runner. It includes tempo runs, which are crucial for developing lactate threshold and improving running economy at faster paces. Plan A solely focuses on easy runs, which are important for building a base but insufficient for significant speed gains. The inclusion of longer runs in Plan B also better prepares the athlete for the demands of longer trail races.",
+  "record_id": "pair_0012__gemma_12b_judge__r03__AB",
+  "right_plan_role": "programmatic",
+  "run": 3,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 0.7,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T19:50:02.058559+00:00",
+  "winner_role": "programmatic"
+}

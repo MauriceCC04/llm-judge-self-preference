@@ -1,0 +1,49 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 2.0,
+    "mean_day_minutes": 0.571,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 4.0
+  },
+  "fixture_id": "ab_A3__r_low__rc_high__ph_peak",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0166__gemma_12b_judge__r04__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A3__r_low__rc_high__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s001",
+  "llm_won": false,
+  "order": "AB",
+  "pair_id": "pair_0166",
+  "plan_a_advantages": [
+    "Plan A includes a strength session on days 3 and 7, which could be beneficial for building overall strength.",
+    "Plan A's tempo run could improve speed, although it's risky to combine with a long run.",
+    "Plan A has a slightly lower total volume (346 minutes vs 342 minutes), which might be preferable for athletes prone to overtraining."
+  ],
+  "plan_b_advantages": [
+    "Plan B prioritizes aerobic endurance with longer long runs and more easy/threshold runs, better reflecting trail running demands.",
+    "The focus on threshold running in Plan B is more likely to improve running economy and speed on varied terrain.",
+    "Plan B's emphasis on easy running promotes recovery and reduces the risk of injury, crucial for trail runners.",
+    "The longer long runs in Plan B (91 and 98 minutes) better prepare the athlete for the extended durations often encountered in trail races."
+  ],
+  "position": "AB",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A3__r_low__rc_high__ph_peak__prog__exp_t000__s019",
+  "reasoning": "Given the goal of becoming a faster trail runner, Plan B appears to be the more effective choice. While both plans incorporate long runs and strength training, Plan B emphasizes aerobic development with a greater focus on threshold and easy runs, which are crucial for trail running efficiency and endurance. The longer long runs in Plan B (91 and 98 minutes) are also more aligned with the demands of trail running, which often involves extended periods of sustained effort. Plan A's moderate long runs and inclusion of a tempo run alongside a long run on the same week may be too much volume for some athletes.",
+  "record_id": "pair_0166__gemma_12b_judge__r04__AB",
+  "right_plan_role": "programmatic",
+  "run": 4,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T23:38:50.107726+00:00",
+  "winner_role": "programmatic"
+}

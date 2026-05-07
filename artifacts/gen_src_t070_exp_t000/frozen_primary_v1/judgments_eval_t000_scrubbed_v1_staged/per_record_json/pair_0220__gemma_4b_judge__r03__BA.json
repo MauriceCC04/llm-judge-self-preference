@@ -1,0 +1,49 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 6.0,
+    "mean_day_minutes": 6.429,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 45.0
+  },
+  "fixture_id": "ab_A4__r_low__rc_high__ph_base",
+  "judge": "gemma_4b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/matching_pool/eval_manifest_scrubbed_v1/judge_inputs/pair_0220__gemma_4b_judge__r03__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-4b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A4__r_low__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s003",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0220",
+  "plan_a_advantages": [
+    "More focused tempo session for threshold development.",
+    "Slightly longer long runs for increased endurance.",
+    "Includes dedicated strength and mobility work.",
+    "More consistent easy running volume."
+  ],
+  "plan_b_advantages": [
+    "Initial trail run is longer, providing a good starting point.",
+    "Hill repeats are a good way to build uphill strength.",
+    "Active recovery run at the end of the week is beneficial for recovery."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A4__r_low__rc_high__ph_base__prog__exp_t000__s014",
+  "reasoning": "Plan A is the better training plan for a trail runner aiming to become faster, primarily because it incorporates more targeted aerobic work and a more gradual increase in volume. While Plan B includes a longer initial trail run, it lacks the focused tempo session crucial for developing sustainable threshold strength, a key component of faster trail running. Plan A’s consistent easy runs build a solid aerobic base, and the inclusion of strength work addresses a critical area often neglected in trail running programs. Furthermore, the two longer runs in Plan A are slightly longer than those in Plan B, which is beneficial for building endurance.",
+  "record_id": "pair_0220__gemma_4b_judge__r03__BA",
+  "right_plan_role": "llm",
+  "run": 3,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T17:39:59.126828+00:00",
+  "winner_role": "programmatic"
+}

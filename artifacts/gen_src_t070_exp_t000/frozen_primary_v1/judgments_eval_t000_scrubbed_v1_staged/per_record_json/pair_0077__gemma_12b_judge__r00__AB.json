@@ -1,0 +1,48 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 9.0,
+    "mean_day_minutes": 4.143,
+    "n_active_days": 1.0,
+    "n_hard_days": 1.0,
+    "n_long_runs": 2.0,
+    "n_quality_days": 1.0,
+    "n_rest_days": 1.0,
+    "total_minutes": 29.0
+  },
+  "fixture_id": "ab_A2__r_high__rc_low__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0077__gemma_12b_judge__r00__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A2__r_high__rc_low__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s004",
+  "llm_won": false,
+  "order": "AB",
+  "pair_id": "pair_0077",
+  "plan_a_advantages": [
+    "Plan A has more rest days, which could be beneficial for athletes prone to injury or those who need more recovery time.",
+    "The simplicity of Plan A might be easier to adhere to for beginners or those new to structured training."
+  ],
+  "plan_b_advantages": [
+    "Plan B incorporates a tempo run, which is essential for developing speed and lactate threshold, key components of faster trail running.",
+    "The longer runs in Plan B directly address the endurance demands of trail running, improving the athlete's ability to handle longer distances and elevation changes.",
+    "Plan B includes aerobic runs, which can help improve efficiency at a steady pace, a common requirement in trail running.",
+    "The structured progression with longer runs and a tempo session provides a more comprehensive training stimulus than Plan A's solely easy runs."
+  ],
+  "position": "AB",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A2__r_high__rc_low__ph_base__prog__exp_t000__s014",
+  "reasoning": "While both plans focus on easy running, Plan B demonstrates a more structured approach to improving trail running speed. The inclusion of a tempo run (hard day) and longer runs specifically designed to extend endurance is crucial for trail runners who need both speed and stamina. Plan A solely relies on easy runs, which, while important for base building, won't effectively challenge the athlete to improve their speed or ability to handle longer distances with varied terrain. Plan B's variety of sessions is more likely to lead to tangible improvements in the athlete's goal.",
+  "record_id": "pair_0077__gemma_12b_judge__r00__AB",
+  "right_plan_role": "programmatic",
+  "run": 0,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T21:23:42.538480+00:00",
+  "winner_role": "programmatic"
+}

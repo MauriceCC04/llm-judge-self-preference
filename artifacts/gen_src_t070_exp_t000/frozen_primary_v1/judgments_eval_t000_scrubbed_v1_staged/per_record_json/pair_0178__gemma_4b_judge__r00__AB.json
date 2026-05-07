@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 31.0,
+    "mean_day_minutes": 13.714,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 96.0
+  },
+  "fixture_id": "ab_A3__r_low__rc_low__ph_base",
+  "judge": "gemma_4b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/matching_pool/eval_manifest_scrubbed_v1/judge_inputs/pair_0178__gemma_4b_judge__r00__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-4b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A3__r_low__rc_low__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s002",
+  "llm_won": true,
+  "order": "AB",
+  "pair_id": "pair_0178",
+  "plan_a_advantages": [
+    "Includes a tempo run for speed development.",
+    "Features a longer, harder aerobic session to build endurance.",
+    "More directly addresses the need for race-specific rhythm and sustained effort."
+  ],
+  "plan_b_advantages": [
+    "Hill sessions are a valuable component of trail running training.",
+    "The shorter, more frequent easy runs could be beneficial for recovery and maintaining volume."
+  ],
+  "position": "AB",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A3__r_low__rc_low__ph_base__prog__exp_t000__s017",
+  "reasoning": "Plan A is the better training plan for a trail runner aiming to become faster, primarily because it incorporates a dedicated tempo run and a longer, harder aerobic session. This directly addresses the need for both sustained speed and aerobic capacity – key components of trail running performance. Plan B, while including hill work, focuses heavily on threshold training and shorter, more frequent easy runs, which, while beneficial for building a base, doesn't provide the same targeted stimulus for improving speed and race-specific rhythm. Plan A’s structure is more strategically aligned with the goal of becoming a faster runner.",
+  "record_id": "pair_0178__gemma_4b_judge__r00__AB",
+  "right_plan_role": "programmatic",
+  "run": 0,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T17:21:09.731083+00:00",
+  "winner_role": "llm"
+}

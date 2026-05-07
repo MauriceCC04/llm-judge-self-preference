@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 17.0,
+    "mean_day_minutes": 16.714,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 117.0
+  },
+  "fixture_id": "ab_A2__r_high__rc_high__ph_base",
+  "judge": "gemma_4b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/matching_pool/eval_manifest_scrubbed_v1/judge_inputs/pair_0063__gemma_4b_judge__r01__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-4b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A2__r_high__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s169",
+  "llm_won": true,
+  "order": "AB",
+  "pair_id": "pair_0063",
+  "plan_a_advantages": [
+    "Longer runs with more elevation gain directly address trail running fitness.",
+    "Includes dedicated strength sessions to build leg strength and stability.",
+    "Provides a more realistic simulation of race conditions through longer, hilly runs."
+  ],
+  "plan_b_advantages": [
+    "Cross-training could be beneficial for overall fitness and injury prevention.",
+    "The shorter, more frequent runs might be less taxing on the body for a runner who is already relatively fit."
+  ],
+  "position": "AB",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A2__r_high__rc_high__ph_base__prog__exp_t000__s018",
+  "reasoning": "Plan A is the better training plan for a trail runner aiming to become faster. It incorporates longer runs with more elevation gain, which is crucial for trail running fitness and simulating race conditions. While Plan B focuses on consistent easy runs and cross-training, it lacks the specific stimulus needed to build the endurance and hill strength that directly translate to faster times on trails. Plan A’s longer runs and consistent hill work provide a more targeted approach to improving trail running speed, whereas Plan B’s emphasis on low-impact cross-training might not be as effective for developing the necessary leg strength and aerobic capacity for challenging trails.",
+  "record_id": "pair_0063__gemma_4b_judge__r01__AB",
+  "right_plan_role": "programmatic",
+  "run": 1,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T16:30:34.856956+00:00",
+  "winner_role": "llm"
+}

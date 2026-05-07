@@ -1,0 +1,48 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 6.0,
+    "mean_day_minutes": 1.429,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 10.0
+  },
+  "fixture_id": "ab_A1__r_low__rc_low__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0045__gemma_12b_judge__r04__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A1__r_low__rc_low__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s003",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0045",
+  "plan_a_advantages": [
+    "Includes cross-training: This is vital for trail runners to build strength and resilience, reducing injury risk.",
+    "Gradual increase in run duration: This allows for progressive overload and aerobic development.",
+    "More varied structure: The mix of easy runs and cross-training prevents monotony and addresses different aspects of fitness.",
+    "Better suited for a broader range of trail running experience levels."
+  ],
+  "plan_b_advantages": [
+    "Simplicity: The plan is very straightforward and easy to follow.",
+    "Focus on form and cadence: The emphasis on form and cadence is beneficial, especially for newer runners."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A1__r_low__rc_low__ph_base__prog__exp_t000__s002",
+  "reasoning": "While both plans focus on easy running, Plan A demonstrates a more balanced and adaptable approach to building a trail runner's fitness. Plan B's repetitive nature of short, easy runs, while potentially useful for very early-stage athletes, lacks the variation needed for consistent progress. Plan A incorporates cross-training, which is crucial for trail runners to build strength and reduce impact stress, and it gradually increases the duration of the easy runs, promoting aerobic development without excessive fatigue. The inclusion of cross-training and varied run durations in Plan A makes it a more robust and effective plan for a trail runner aiming to improve speed.",
+  "record_id": "pair_0045__gemma_12b_judge__r04__BA",
+  "right_plan_role": "llm",
+  "run": 4,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T20:37:01.122402+00:00",
+  "winner_role": "programmatic"
+}

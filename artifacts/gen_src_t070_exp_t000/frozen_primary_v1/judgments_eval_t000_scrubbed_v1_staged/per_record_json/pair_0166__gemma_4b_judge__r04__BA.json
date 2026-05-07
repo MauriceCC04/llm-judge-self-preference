@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 2.0,
+    "mean_day_minutes": 0.571,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 4.0
+  },
+  "fixture_id": "ab_A3__r_low__rc_high__ph_peak",
+  "judge": "gemma_4b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/matching_pool/eval_manifest_scrubbed_v1/judge_inputs/pair_0166__gemma_4b_judge__r04__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-4b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A3__r_low__rc_high__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s001",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0166",
+  "plan_a_advantages": [
+    "Includes dedicated threshold work for speed development.",
+    "Longer runs are specifically targeted at trail durability and endurance.",
+    "Better balance between aerobic and intensity training."
+  ],
+  "plan_b_advantages": [
+    "More consistent pacing focus during long runs.",
+    "Strength sessions are included, which is beneficial for trail runners."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A3__r_low__rc_high__ph_peak__prog__exp_t000__s019",
+  "reasoning": "Plan A is the better training plan for a trail runner aiming to become faster. It incorporates a more strategic approach to building aerobic endurance, with dedicated threshold work and longer runs designed to improve sustained effort – crucial for trail running. Plan B, while including tempo and long runs, prioritizes completing planned sessions without adding fatigue, which could hinder the development of true speed and resilience. Plan A’s structured approach, focusing on specific intensity zones, is more directly aligned with the goal of increasing running speed, whereas Plan B feels more like a maintenance plan.",
+  "record_id": "pair_0166__gemma_4b_judge__r04__BA",
+  "right_plan_role": "llm",
+  "run": 4,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T17:16:12.623095+00:00",
+  "winner_role": "programmatic"
+}

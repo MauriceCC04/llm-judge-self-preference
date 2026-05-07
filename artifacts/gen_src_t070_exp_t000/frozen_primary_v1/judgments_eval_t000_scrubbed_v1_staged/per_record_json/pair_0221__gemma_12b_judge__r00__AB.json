@@ -1,0 +1,49 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 15.0,
+    "mean_day_minutes": 9.571,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 67.0
+  },
+  "fixture_id": "ab_A4__r_low__rc_high__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0221__gemma_12b_judge__r00__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A4__r_low__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s001",
+  "llm_won": true,
+  "order": "AB",
+  "pair_id": "pair_0221",
+  "plan_a_advantages": [
+    "Higher weekly mileage: Plan A provides a greater training load (480 minutes) compared to Plan B (413 minutes), which is crucial for improving fitness and speed.",
+    "Longer long runs: Plan A's long runs are significantly longer (up to 24.3 km with 810m+) than Plan B's (up to 135 minutes), providing more time on feet and better preparing the athlete for longer trail races.",
+    "More trail-specific elevation: Plan A's long runs include substantial elevation gain (810m+), which is essential for trail running performance and building leg strength.",
+    "More balanced approach: Plan A includes a mix of long runs, easy runs, and a tempo session, providing a more well-rounded training stimulus."
+  ],
+  "plan_b_advantages": [
+    "Lower overall volume: Plan B's lower volume might be preferable for athletes prone to injury or those who are newer to running.",
+    "Threshold focus: The emphasis on threshold runs in Plan B could improve lactate threshold and running economy, although this is less critical than overall volume for trail running speed.",
+    "Potentially less fatiguing: The lower volume may result in less overall fatigue, allowing for better recovery."
+  ],
+  "position": "AB",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A4__r_low__rc_high__ph_base__prog__exp_t000__s019",
+  "reasoning": "Given the goal of becoming a faster trail runner, Plan A appears to be the better choice. While both plans incorporate long runs and a tempo session, Plan A's significantly higher weekly mileage (480 minutes vs. 413 minutes) and longer long runs (up to 24.3 km with 810m+ elevation gain) are more likely to build the necessary endurance and strength for trail running. The higher volume, especially on trails with significant elevation, will better prepare the athlete for the demands of faster trail running. Plan B's focus on 'threshold' intensity for shorter aerobic runs might be beneficial for some, but it doesn't seem to prioritize the overall volume and trail-specific conditioning needed for speed improvement.",
+  "record_id": "pair_0221__gemma_12b_judge__r00__AB",
+  "right_plan_role": "programmatic",
+  "run": 0,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-07T01:05:29.016271+00:00",
+  "winner_role": "llm"
+}

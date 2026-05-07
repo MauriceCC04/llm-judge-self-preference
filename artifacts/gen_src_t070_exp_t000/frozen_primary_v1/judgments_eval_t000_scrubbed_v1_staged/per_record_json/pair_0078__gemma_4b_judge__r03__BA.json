@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 13.0,
+    "mean_day_minutes": 6.429,
+    "n_active_days": 1.0,
+    "n_hard_days": 1.0,
+    "n_long_runs": 2.0,
+    "n_quality_days": 1.0,
+    "n_rest_days": 1.0,
+    "total_minutes": 45.0
+  },
+  "fixture_id": "ab_A2__r_high__rc_low__ph_base",
+  "judge": "gemma_4b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/matching_pool/eval_manifest_scrubbed_v1/judge_inputs/pair_0078__gemma_4b_judge__r03__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-4b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A2__r_high__rc_low__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s006",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0078",
+  "plan_a_advantages": [
+    "Includes a tempo session for building threshold strength.",
+    "Features two longer runs to enhance endurance.",
+    "Provides a cross-training session for low-impact recovery."
+  ],
+  "plan_b_advantages": [
+    "More rest days, potentially beneficial for recovery and injury prevention.",
+    "Focuses on enjoying the trail, which can be motivating for the runner."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A2__r_high__rc_low__ph_base__prog__exp_t000__s010",
+  "reasoning": "Plan A is the better training plan for a trail runner aiming to become faster. It incorporates a dedicated tempo session to build sustainable threshold strength, a crucial component for improving speed on trails. Furthermore, it includes two longer runs, which are vital for developing the endurance needed for longer races. Plan B, conversely, is almost entirely composed of easy trail runs with minimal variation, which will likely not provide the stimulus necessary for significant speed gains. While recovery is important, the lack of structured intensity work in Plan B makes it less effective for a runner focused on improving performance.",
+  "record_id": "pair_0078__gemma_4b_judge__r03__BA",
+  "right_plan_role": "llm",
+  "run": 3,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T16:37:13.479030+00:00",
+  "winner_role": "programmatic"
+}

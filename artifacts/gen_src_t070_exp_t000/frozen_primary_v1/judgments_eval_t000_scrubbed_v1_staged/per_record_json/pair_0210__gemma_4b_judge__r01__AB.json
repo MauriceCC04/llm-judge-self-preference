@@ -1,0 +1,46 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 50.0,
+    "mean_day_minutes": 6.286,
+    "n_active_days": 1.0,
+    "n_hard_days": 1.0,
+    "n_long_runs": 1.0,
+    "n_quality_days": 1.0,
+    "n_rest_days": 1.0,
+    "total_minutes": 44.0
+  },
+  "fixture_id": "ab_A4__r_high__rc_low__ph_base",
+  "judge": "gemma_4b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/matching_pool/eval_manifest_scrubbed_v1/judge_inputs/pair_0210__gemma_4b_judge__r01__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-4b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A4__r_high__rc_low__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s003",
+  "llm_won": true,
+  "order": "AB",
+  "pair_id": "pair_0210",
+  "plan_a_advantages": [
+    "More focused speed and power development through interval and tempo runs.",
+    "A slightly more balanced distribution of hard and easy days, potentially aiding recovery."
+  ],
+  "plan_b_advantages": [
+    "Greater emphasis on building overall endurance with longer, easier runs.",
+    "A single dedicated hill session, which is beneficial for trail running but less frequent than Plan A’s hill-focused long runs."
+  ],
+  "position": "AB",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A4__r_high__rc_low__ph_base__prog__exp_t000__s011",
+  "reasoning": "Plan A is the better training plan for a trail runner aiming to become faster, primarily because it incorporates more targeted speed work and interval sessions. While Plan B emphasizes endurance, it lacks the specific stimulus needed to improve running economy and speed. Plan A’s inclusion of tempo runs and interval sessions directly addresses the goal of increasing speed and power, crucial for trail running performance. Furthermore, Plan A has a slightly more balanced distribution of hard and easy days, allowing for better recovery and adaptation.",
+  "record_id": "pair_0210__gemma_4b_judge__r01__AB",
+  "right_plan_role": "programmatic",
+  "run": 1,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T17:35:31.323469+00:00",
+  "winner_role": "llm"
+}

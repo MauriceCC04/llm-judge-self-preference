@@ -1,0 +1,46 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 27.0,
+    "mean_day_minutes": 6.286,
+    "n_active_days": 2.0,
+    "n_hard_days": 1.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 1.0,
+    "n_rest_days": 2.0,
+    "total_minutes": 44.0
+  },
+  "fixture_id": "ab_A3__r_low__rc_low__ph_base",
+  "judge": "gemma_4b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/matching_pool/eval_manifest_scrubbed_v1/judge_inputs/pair_0180__gemma_4b_judge__r03__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-4b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A3__r_low__rc_low__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s000",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0180",
+  "plan_a_advantages": [
+    "More emphasis on consistent aerobic base building through longer, easier runs.",
+    "Better recovery structure with more frequent rest days, reducing the risk of burnout."
+  ],
+  "plan_b_advantages": [
+    "Includes a tempo run, which is beneficial for improving speed and lactate threshold.",
+    "Slightly higher overall volume, potentially leading to greater total training minutes."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A3__r_low__rc_low__ph_base__prog__exp_t000__s015",
+  "reasoning": "Plan A is the better training plan for a trail runner aiming to become faster. It prioritizes consistent aerobic development with a focus on easy runs and recovery, which is crucial for building a strong foundation and preventing overtraining, a common pitfall for trail runners. Plan B, while including a tempo run, feels more focused on completing specific workouts without a clear strategy for building sustained speed and endurance, and the higher volume of shorter, moderately intense runs could lead to fatigue. Plan A’s longer, slower runs are more representative of the demands of trail running, and the consistent easy running will support the athlete's ability to handle the longer distances and varied terrain.",
+  "record_id": "pair_0180__gemma_4b_judge__r03__BA",
+  "right_plan_role": "llm",
+  "run": 3,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 1.429,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T17:22:16.588992+00:00",
+  "winner_role": "programmatic"
+}

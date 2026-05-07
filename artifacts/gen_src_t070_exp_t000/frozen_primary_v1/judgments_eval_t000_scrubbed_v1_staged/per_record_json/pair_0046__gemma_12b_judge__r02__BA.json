@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 0.0,
+    "mean_day_minutes": 5.857,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 41.0
+  },
+  "fixture_id": "ab_A1__r_low__rc_low__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0046__gemma_12b_judge__r02__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A1__r_low__rc_low__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s005",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0046",
+  "plan_a_advantages": [
+    "Greater variety in run durations, preventing monotony and potentially stimulating different physiological adaptations.",
+    "Includes a dedicated aerobic run, which is specifically designed to improve aerobic endurance.",
+    "Higher total training volume (249 minutes vs 208 minutes) which can contribute to greater overall fitness gains, assuming the athlete can handle the load."
+  ],
+  "plan_b_advantages": [
+    "Potentially lower overall fatigue due to shorter runs, which could be beneficial for a beginner or someone prone to injury.",
+    "The focus on rhythm and form in Plan B's easy runs could help improve running efficiency."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A1__r_low__rc_low__ph_base__prog__exp_t000__s014",
+  "reasoning": "Given the goal of becoming a faster trail runner, Plan A appears to be the better choice. While both plans emphasize easy running, Plan A incorporates a wider range of durations and includes a dedicated 'aerobic' run, which is likely more beneficial for building a stronger aerobic base. Plan B's repetitive nature of short, easy runs might not be as effective for developing the endurance needed for faster trail running. The longer durations in Plan A, particularly the 68-minute runs, provide a greater stimulus for aerobic adaptation.",
+  "record_id": "pair_0046__gemma_12b_judge__r02__BA",
+  "right_plan_role": "llm",
+  "run": 2,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T20:38:03.119416+00:00",
+  "winner_role": "programmatic"
+}

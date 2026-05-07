@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 13.0,
+    "mean_day_minutes": 4.286,
+    "n_active_days": 0.0,
+    "n_hard_days": 2.0,
+    "n_long_runs": 2.0,
+    "n_quality_days": 2.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 30.0
+  },
+  "fixture_id": "ab_A1__r_high__rc_low__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0011__gemma_12b_judge__r03__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A1__r_high__rc_low__ph_base__gemma_3_4b_it__src_t070__exp_t000__s000",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0011",
+  "plan_a_advantages": [
+    "Includes a tempo run to improve lactate threshold, a key factor in running speed.",
+    "Incorporates a hill session to build climbing strength and power, essential for trail running.",
+    "More balanced distribution of workout types, including aerobic, tempo, and hill sessions."
+  ],
+  "plan_b_advantages": [
+    "Prioritizes strength and mobility work, which can contribute to injury prevention and running efficiency.",
+    "Slightly higher total training volume (337 minutes vs 307 minutes) which could contribute to aerobic development."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A1__r_high__rc_low__ph_base__prog__exp_t000__s016",
+  "reasoning": "Plan A appears to be the better choice for an athlete aiming to become a faster trail runner. While both plans incorporate rest days and easy runs, Plan A includes key workouts specifically designed to improve speed: a tempo run and a hill session. These sessions target threshold and power development, crucial for faster trail running, which are absent in Plan B. Plan B focuses more on building aerobic base and strength, which are important but not the primary drivers of speed in this context.",
+  "record_id": "pair_0011__gemma_12b_judge__r03__BA",
+  "right_plan_role": "llm",
+  "run": 3,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 0.3,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T19:48:35.512801+00:00",
+  "winner_role": "programmatic"
+}

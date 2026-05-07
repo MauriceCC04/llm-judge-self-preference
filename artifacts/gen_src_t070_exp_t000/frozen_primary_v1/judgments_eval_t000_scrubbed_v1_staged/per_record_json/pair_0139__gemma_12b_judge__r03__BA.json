@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 30.0,
+    "mean_day_minutes": 0.143,
+    "n_active_days": 1.0,
+    "n_hard_days": 1.0,
+    "n_long_runs": 1.0,
+    "n_quality_days": 1.0,
+    "n_rest_days": 1.0,
+    "total_minutes": 1.0
+  },
+  "fixture_id": "ab_A3__r_high__rc_low__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0139__gemma_12b_judge__r03__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A3__r_high__rc_low__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s003",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0139",
+  "plan_a_advantages": [
+    "More rest days: Plan A includes 2 rest days compared to Plan B's 3, allowing for better recovery and adaptation.",
+    "Gradual progression: The plan focuses on building aerobic base with easy runs and a single tempo run, which is a safer approach for most runners.",
+    "Cross-training: The inclusion of cross-training sessions helps reduce impact and provides an alternative stimulus, minimizing injury risk."
+  ],
+  "plan_b_advantages": [
+    "Hill training: Plan B incorporates dedicated hill training, which is essential for trail running and builds strength.",
+    "Tempo runs: The plan includes a tempo run, which can improve speed and lactate threshold."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A3__r_high__rc_low__ph_base__prog__exp_t000__s002",
+  "reasoning": "Given the goal of becoming a faster trail runner, Plan A appears to be the better choice, especially for someone who is likely at an intermediate level or needs a more gradual progression. Plan B is more aggressive with two hard days and a long run, which could be risky without a solid base. Plan A prioritizes building aerobic endurance and consistency with a focus on easy and threshold runs, which is crucial for trail running performance. The emphasis on low-impact cross-training also helps manage injury risk, a common concern for trail runners.",
+  "record_id": "pair_0139__gemma_12b_judge__r03__BA",
+  "right_plan_role": "llm",
+  "run": 3,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.143,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T22:55:29.629774+00:00",
+  "winner_role": "programmatic"
+}

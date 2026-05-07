@@ -1,0 +1,46 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 26.0,
+    "mean_day_minutes": 13.286,
+    "n_active_days": 0.0,
+    "n_hard_days": 1.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 1.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 93.0
+  },
+  "fixture_id": "ab_A3__r_high__rc_high__ph_base",
+  "judge": "gemma_4b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/matching_pool/eval_manifest_scrubbed_v1/judge_inputs/pair_0120__gemma_4b_judge__r04__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-4b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A3__r_high__rc_high__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s000",
+  "llm_won": true,
+  "order": "AB",
+  "pair_id": "pair_0120",
+  "plan_a_advantages": [
+    "More focused on speed development with interval and hill training.",
+    "Includes longer, more challenging workouts that directly translate to improved running performance."
+  ],
+  "plan_b_advantages": [
+    "Prioritizes injury prevention with a dedicated strength and mobility session.",
+    "Offers a more gradual and consistent approach to building aerobic fitness, potentially reducing the risk of overtraining."
+  ],
+  "position": "AB",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A3__r_high__rc_high__ph_base__prog__exp_t000__s014",
+  "reasoning": "Plan A is the better training plan for a trail runner aiming to become faster. It incorporates more targeted speed work (intervals) and hill repeats, which are crucial for improving running economy and power – key components of trail speed. Plan B, while prioritizing consistency and injury prevention, lacks sufficient intensity to truly challenge the athlete and drive significant improvements in speed. Plan A’s structure directly addresses the goal of becoming faster by incorporating workouts designed to build strength and speed, while Plan B focuses more on building a solid aerobic base, which is important but not sufficient on its own for a speed-focused athlete.",
+  "record_id": "pair_0120__gemma_4b_judge__r04__AB",
+  "right_plan_role": "programmatic",
+  "run": 4,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T16:55:56.373952+00:00",
+  "winner_role": "llm"
+}

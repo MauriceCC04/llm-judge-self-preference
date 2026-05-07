@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 2.0,
+    "mean_day_minutes": 4.571,
+    "n_active_days": 1.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 1.0,
+    "total_minutes": 32.0
+  },
+  "fixture_id": "ab_A2__r_low__rc_high__ph_base",
+  "judge": "gemma_4b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/matching_pool/eval_manifest_scrubbed_v1/judge_inputs/pair_0092__gemma_4b_judge__r01__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-4b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A2__r_low__rc_high__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s000",
+  "llm_won": true,
+  "order": "AB",
+  "pair_id": "pair_0092",
+  "plan_a_advantages": [
+    "Includes hill repeats for hill strength and power.",
+    "Incorporates a dedicated strength session to improve leg turnover and efficiency.",
+    "More directly addresses the specific demands of trail running."
+  ],
+  "plan_b_advantages": [
+    "Longer total training time (227 minutes vs. 195 minutes).",
+    "More consistent easy running volume, potentially building a solid aerobic base."
+  ],
+  "position": "AB",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A2__r_low__rc_high__ph_base__prog__exp_t000__s002",
+  "reasoning": "Plan A is better suited for an athlete aiming to become a faster trail runner. It incorporates hill repeats and a dedicated strength session, directly addressing the key physiological demands of trail running – power, efficiency, and hill climbing ability. Plan B, while prioritizing aerobic endurance, lacks this crucial strength component and relies heavily on easy runs and cross-training, which, while beneficial, won't translate to faster trail times.  The inclusion of focused strength work in Plan A will build the necessary muscle power to handle the varied terrain of trail running.",
+  "record_id": "pair_0092__gemma_4b_judge__r01__AB",
+  "right_plan_role": "programmatic",
+  "run": 1,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.714,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T16:43:11.322791+00:00",
+  "winner_role": "llm"
+}

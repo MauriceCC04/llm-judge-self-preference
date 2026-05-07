@@ -1,0 +1,49 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 6.0,
+    "mean_day_minutes": 1.429,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 10.0
+  },
+  "fixture_id": "ab_A1__r_low__rc_low__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0045__gemma_12b_judge__r00__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A1__r_low__rc_low__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s003",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0045",
+  "plan_a_advantages": [
+    "Includes cross-training days for active recovery and injury prevention.",
+    "Offers a wider range of run durations, promoting more varied aerobic stimulus.",
+    "Higher total training volume (218 minutes vs 208 minutes) potentially leading to greater gains.",
+    "More adaptable to individual needs - the cross-training can be tailored to the athlete's preferences and limitations."
+  ],
+  "plan_b_advantages": [
+    "The focus on form and cadence in the easy runs could be beneficial for newer trail runners.",
+    "The repetitive nature might be suitable for athletes needing very consistent, low-impact training.",
+    "Potentially slightly less fatiguing due to the shorter run durations."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A1__r_low__rc_low__ph_base__prog__exp_t000__s002",
+  "reasoning": "While both plans focus on easy running and incorporate rest days, Plan A appears to be a more well-rounded and adaptable starting point for a trail runner aiming to become faster. Plan B's repetitive nature of short, easy runs, while potentially useful for very specific situations (like injury recovery or very early base building), lacks the variety needed to stimulate consistent improvement. Plan A's inclusion of cross-training days provides a valuable opportunity for active recovery and injury prevention, while still maintaining aerobic fitness. The longer easy runs in Plan A also contribute to a greater overall training volume, which is generally beneficial for improving endurance and speed.",
+  "record_id": "pair_0045__gemma_12b_judge__r00__BA",
+  "right_plan_role": "llm",
+  "run": 0,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T20:35:58.313636+00:00",
+  "winner_role": "programmatic"
+}

@@ -1,0 +1,46 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 66.0,
+    "mean_day_minutes": 19.286,
+    "n_active_days": 0.0,
+    "n_hard_days": 2.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 2.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 135.0
+  },
+  "fixture_id": "ab_A4__r_high__rc_low__ph_peak",
+  "judge": "gemma_4b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/matching_pool/eval_manifest_scrubbed_v1/judge_inputs/pair_0212__gemma_4b_judge__r01__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-4b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A4__r_high__rc_low__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s001",
+  "llm_won": true,
+  "order": "BA",
+  "pair_id": "pair_0212",
+  "plan_a_advantages": [
+    "Focus on injury prevention with strength and mobility work.",
+    "More consistent easy running volume."
+  ],
+  "plan_b_advantages": [
+    "Includes a tempo run to improve lactate threshold.",
+    "Incorporates hill repeats to build strength and power, crucial for trail running."
+  ],
+  "position": "BA",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A4__r_high__rc_low__ph_peak__prog__exp_t000__s000",
+  "reasoning": "Plan B is the better training plan for a trail runner aiming to become faster. It incorporates a tempo run and hill repeats, directly addressing the need to improve lactate threshold and running strength – key components for faster trail running. Plan A, while prioritizing durability and consistency, lacks this focused intensity work. Furthermore, Plan B’s longer runs, particularly the 23km run, better mimic the demands of trail races, building the aerobic endurance required for sustained effort. Plan A’s emphasis on ‘support durability’ is valuable, but shouldn’t overshadow the need for specific speed and strength development.",
+  "record_id": "pair_0212__gemma_4b_judge__r01__BA",
+  "right_plan_role": "llm",
+  "run": 1,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T17:36:21.183959+00:00",
+  "winner_role": "llm"
+}

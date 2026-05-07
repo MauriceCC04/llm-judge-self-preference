@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 30.0,
+    "mean_day_minutes": 3.571,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 25.0
+  },
+  "fixture_id": "ab_A2__r_low__rc_high__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0088__gemma_12b_judge__r00__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A2__r_low__rc_high__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s002",
+  "llm_won": true,
+  "order": "BA",
+  "pair_id": "pair_0088",
+  "plan_a_advantages": [
+    "Plan A includes a low-impact cross-training day, which can be beneficial for injury prevention and active recovery.",
+    "Plan A's shorter overall duration might be preferable for athletes with limited time or those who are particularly sensitive to training load."
+  ],
+  "plan_b_advantages": [
+    "The inclusion of hill work directly addresses a key skill for trail running.",
+    "The longer duration allows for more time spent running and building endurance.",
+    "The focus on form and technique in the workout summaries promotes efficient running mechanics."
+  ],
+  "position": "BA",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A2__r_low__rc_high__ph_base__prog__exp_t000__s008",
+  "reasoning": "While both plans focus on easy running to build aerobic consistency, Plan B appears to be slightly better suited for a trail runner aiming to become faster. The key difference is the inclusion of hill work in one of the runs (Plan B, day 6), which is crucial for trail running performance. Plan B also has a longer total training time (269 minutes vs 244 minutes), allowing for more time on feet and potentially greater adaptation. The emphasis on rhythm, relaxation, and form in Plan B's workout summaries also suggests a more deliberate approach to building efficient trail running technique.",
+  "record_id": "pair_0088__gemma_12b_judge__r00__BA",
+  "right_plan_role": "llm",
+  "run": 0,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T21:38:55.694514+00:00",
+  "winner_role": "llm"
+}

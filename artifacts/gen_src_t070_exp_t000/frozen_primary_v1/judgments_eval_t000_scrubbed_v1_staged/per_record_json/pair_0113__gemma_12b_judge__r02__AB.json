@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 14.0,
+    "mean_day_minutes": 7.571,
+    "n_active_days": 1.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 1.0,
+    "total_minutes": 53.0
+  },
+  "fixture_id": "ab_A2__r_low__rc_low__ph_peak",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0113__gemma_12b_judge__r02__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A2__r_low__rc_low__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s007",
+  "llm_won": false,
+  "order": "AB",
+  "pair_id": "pair_0113",
+  "plan_a_advantages": [
+    "Plan A has slightly more total running time, which could contribute to a greater aerobic base.",
+    "Plan A has fewer rest days, which might be preferable for athletes who tolerate higher training loads."
+  ],
+  "plan_b_advantages": [
+    "Plan B incorporates a strength and mobility session, which is essential for trail running injury prevention and performance.",
+    "Plan B's varied run durations and more rest days likely promote better recovery and adaptation.",
+    "Plan B's shorter runs on some days may allow for more consistent effort and reduce the risk of burnout."
+  ],
+  "position": "AB",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A2__r_low__rc_low__ph_peak__prog__exp_t000__s015",
+  "reasoning": "While both plans focus on easy running, Plan B demonstrates a more thoughtful approach to building a foundation for faster trail running. The inclusion of a strength and mobility session on day 7 is a significant advantage, directly addressing the durability and injury resistance crucial for trail runners. Plan A's consistent, longer easy runs might lead to accumulated fatigue without the benefit of targeted strength work. Plan B's varied run durations and increased rest days suggest a better understanding of recovery and adaptation.",
+  "record_id": "pair_0113__gemma_12b_judge__r02__AB",
+  "right_plan_role": "programmatic",
+  "run": 2,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.857,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T22:14:14.806164+00:00",
+  "winner_role": "programmatic"
+}

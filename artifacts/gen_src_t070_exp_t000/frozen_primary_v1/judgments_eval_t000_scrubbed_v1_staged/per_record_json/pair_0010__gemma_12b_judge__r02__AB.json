@@ -1,0 +1,49 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 8.0,
+    "mean_day_minutes": 6.714,
+    "n_active_days": 0.0,
+    "n_hard_days": 2.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 2.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 47.0
+  },
+  "fixture_id": "ab_A1__r_high__rc_high__ph_peak",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0010__gemma_12b_judge__r02__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A1__r_high__rc_high__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s001",
+  "llm_won": false,
+  "order": "AB",
+  "pair_id": "pair_0010",
+  "plan_a_advantages": [
+    "Plan A provides a higher volume of easy running, which can be beneficial for building aerobic base.",
+    "Plan A's simplicity might be easier to adhere to for some athletes.",
+    "Plan A has a slightly lower total training time."
+  ],
+  "plan_b_advantages": [
+    "Plan B includes tempo runs, which are essential for improving lactate threshold and running speed.",
+    "Plan B incorporates hill workouts, directly addressing the demands of trail running.",
+    "Plan B includes strength and mobility sessions, which are vital for injury prevention and stability on trails.",
+    "Plan B is more varied and likely to lead to greater adaptations."
+  ],
+  "position": "AB",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A1__r_high__rc_high__ph_peak__prog__exp_t000__s016",
+  "reasoning": "Plan B is the better choice for an athlete aiming to become a faster trail runner. While Plan A focuses solely on easy runs, Plan B incorporates tempo runs and hill workouts, which are crucial for developing the speed and strength needed for trail running. The inclusion of strength and mobility sessions in Plan B also addresses a key aspect of trail running – injury prevention and stability on uneven terrain. Plan A's repetitive easy runs, while good for base building, lack the intensity needed to drive significant performance improvements.",
+  "record_id": "pair_0010__gemma_12b_judge__r02__AB",
+  "right_plan_role": "programmatic",
+  "run": 2,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T19:46:41.727985+00:00",
+  "winner_role": "programmatic"
+}

@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 18.0,
+    "mean_day_minutes": 11.857,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 83.0
+  },
+  "fixture_id": "ab_A4__r_low__rc_high__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0222__gemma_12b_judge__r04__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A4__r_low__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s005",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0222",
+  "plan_a_advantages": [
+    "Dedicated Tempo Run: Plan A includes a specific tempo run targeting threshold intensity, which is vital for speed development.",
+    "Higher Volume of Easy Running: Plan A incorporates more easy running days, promoting aerobic base development and recovery.",
+    "Cross-Training: The inclusion of cross-training in Plan A provides an opportunity for active recovery and injury prevention."
+  ],
+  "plan_b_advantages": [
+    "More Trail-Specific Mileage: Plan B generally features higher mileage on trails, which can improve trail-specific strength and endurance.",
+    "Detailed Workout Summaries: Plan B provides more specific details about each run (distance, elevation gain, time), which can be helpful for monitoring progress."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A4__r_low__rc_high__ph_base__prog__exp_t000__s010",
+  "reasoning": "Given the goal of becoming a faster trail runner, Plan A appears to be the more suitable choice. While both plans incorporate long runs and easy days, Plan A's inclusion of a dedicated tempo run is crucial for improving speed. Plan B's single tempo run is buried within an 'easy session' designation, potentially diluting its impact. Plan A's structured approach with a clear focus on threshold development is more likely to yield improvements in speed and efficiency for a trail runner.",
+  "record_id": "pair_0222__gemma_12b_judge__r04__BA",
+  "right_plan_role": "llm",
+  "run": 4,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-07T01:08:19.100626+00:00",
+  "winner_role": "programmatic"
+}

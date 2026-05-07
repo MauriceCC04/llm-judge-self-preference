@@ -1,0 +1,46 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 18.0,
+    "mean_day_minutes": 7.429,
+    "n_active_days": 0.0,
+    "n_hard_days": 1.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 1.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 52.0
+  },
+  "fixture_id": "ab_A3__r_high__rc_high__ph_base",
+  "judge": "gemma_4b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/matching_pool/eval_manifest_scrubbed_v1/judge_inputs/pair_0117__gemma_4b_judge__r04__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-4b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A3__r_high__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s003",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0117",
+  "plan_a_advantages": [
+    "Dedicated threshold training for speed development",
+    "Two longer runs that build endurance and trail-specific durability"
+  ],
+  "plan_b_advantages": [
+    "More frequent active recovery sessions",
+    "Hill repeats directly address climbing strength and mechanics"
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A3__r_high__rc_high__ph_base__prog__exp_t000__s019",
+  "reasoning": "Plan A is the better training plan for a trail runner aiming to become faster, primarily because it incorporates dedicated threshold work alongside longer runs, which are crucial for improving sustained pace. While Plan B includes hill repeats, it lacks a focused approach to building the specific aerobic capacity needed for faster trail running. Plan A’s structured tempo sessions directly target the physiological adaptations required for faster times, while Plan B’s emphasis on recovery and shorter runs might not adequately challenge the athlete to improve their speed. Furthermore, the repetition of threshold work in Plan A, though demanding, is strategically placed to avoid excessive fatigue, allowing for continued progress.",
+  "record_id": "pair_0117__gemma_4b_judge__r04__BA",
+  "right_plan_role": "llm",
+  "run": 4,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T16:54:35.685844+00:00",
+  "winner_role": "programmatic"
+}

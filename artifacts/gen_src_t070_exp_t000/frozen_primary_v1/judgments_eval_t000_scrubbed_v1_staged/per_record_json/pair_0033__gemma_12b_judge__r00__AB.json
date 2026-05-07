@@ -1,0 +1,48 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 2.0,
+    "mean_day_minutes": 8.714,
+    "n_active_days": 3.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 3.0,
+    "total_minutes": 61.0
+  },
+  "fixture_id": "ab_A1__r_low__rc_high__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0033__gemma_12b_judge__r00__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A1__r_low__rc_high__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s016",
+  "llm_won": false,
+  "order": "AB",
+  "pair_id": "pair_0033",
+  "plan_a_advantages": [
+    "Plan A has slightly more total training time (243 minutes vs 182 minutes).",
+    "Plan A has fewer rest days (1 vs 4)."
+  ],
+  "plan_b_advantages": [
+    "Plan B incorporates longer aerobic runs, which are crucial for building endurance.",
+    "Plan B prioritizes recovery with more rest days, reducing the risk of overtraining.",
+    "Plan B's structure is more likely to lead to improvements in aerobic capacity, a key factor in becoming a faster trail runner.",
+    "Plan B's session descriptions are more descriptive and provide better guidance on effort level (e.g., 'conversational effort')."
+  ],
+  "position": "AB",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A1__r_low__rc_high__ph_base__prog__exp_t000__s004",
+  "reasoning": "While both plans focus on easy running, Plan B demonstrates a more thoughtful approach to recovery and building a base for faster trail running. The inclusion of longer aerobic runs interspersed with rest days is more conducive to developing the aerobic endurance necessary for trail running, especially given the goal of becoming a *faster* trail runner. Plan A's repetitive, short easy runs, while not harmful, lack the stimulus needed to drive significant improvements in aerobic capacity. Plan B's structure allows for better absorption of training and reduces the risk of overtraining.",
+  "record_id": "pair_0033__gemma_12b_judge__r00__AB",
+  "right_plan_role": "programmatic",
+  "run": 0,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T20:18:36.012332+00:00",
+  "winner_role": "programmatic"
+}

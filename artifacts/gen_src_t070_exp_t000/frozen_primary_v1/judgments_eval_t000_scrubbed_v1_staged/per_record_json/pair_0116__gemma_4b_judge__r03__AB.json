@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 15.0,
+    "mean_day_minutes": 13.429,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 94.0
+  },
+  "fixture_id": "ab_A3__r_high__rc_high__ph_base",
+  "judge": "gemma_4b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/matching_pool/eval_manifest_scrubbed_v1/judge_inputs/pair_0116__gemma_4b_judge__r03__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-4b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A3__r_high__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s001",
+  "llm_won": true,
+  "order": "AB",
+  "pair_id": "pair_0116",
+  "plan_a_advantages": [
+    "Includes hill repeats for targeted strength development.",
+    "Incorporates active recovery runs to aid in recovery and prevent overtraining.",
+    "Offers a more balanced approach to building aerobic capacity with varied session types."
+  ],
+  "plan_b_advantages": [
+    "Longer, continuous runs could be beneficial for building overall endurance.",
+    "The tempo session provides a focused effort to improve threshold strength."
+  ],
+  "position": "AB",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A3__r_high__rc_high__ph_base__prog__exp_t000__s005",
+  "reasoning": "Plan A is the better training plan for a trail runner aiming to become faster, particularly given the implied current state of the athlete (likely a developing trail runner). Plan A incorporates more varied running types – including hill repeats and active recovery – which are crucial for building the specific strength and endurance needed for trail running. Plan B focuses almost entirely on easy runs and longer, steady-state efforts, which, while beneficial for building a base, doesn't adequately address the demands of varied terrain and the need for speed development. Plan A’s inclusion of hill work directly targets the strength and power required for uphill sections, a key differentiator in trail running.",
+  "record_id": "pair_0116__gemma_4b_judge__r03__AB",
+  "right_plan_role": "programmatic",
+  "run": 3,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T16:54:04.498069+00:00",
+  "winner_role": "llm"
+}

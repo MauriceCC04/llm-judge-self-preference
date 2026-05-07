@@ -1,0 +1,48 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 1.0,
+    "mean_day_minutes": 0.0,
+    "n_active_days": 0.0,
+    "n_hard_days": 2.0,
+    "n_long_runs": 1.0,
+    "n_quality_days": 2.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 0.0
+  },
+  "fixture_id": "ab_A3__r_high__rc_low__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0137__gemma_12b_judge__r00__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A3__r_high__rc_low__ph_base__gemma_3_4b_it__src_t070__exp_t000__s005",
+  "llm_won": true,
+  "order": "BA",
+  "pair_id": "pair_0137",
+  "plan_a_advantages": [
+    "Plan A has a slightly higher volume of easy running, which could be beneficial for building a very solid aerobic base.",
+    "Plan A's simpler structure might be easier to adhere to for some athletes, especially those new to structured training."
+  ],
+  "plan_b_advantages": [
+    "Plan B includes hill repeats and tempo runs, which are essential for developing trail-specific strength and speed.",
+    "Plan B incorporates more variety in training, which can help prevent plateaus and maintain motivation.",
+    "Plan B's inclusion of hard days allows for more targeted development of key fitness components.",
+    "Plan B's structure allows for more recovery between hard sessions."
+  ],
+  "position": "BA",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A3__r_high__rc_low__ph_base__prog__exp_t000__s000",
+  "reasoning": "While both plans aim to improve trail running speed, Plan B is better structured to achieve this goal. It incorporates a variety of training types – long runs, hill repeats, tempo runs, and strength training – which is crucial for developing the diverse skillset needed for faster trail running. Plan A focuses almost exclusively on long, easy runs, which, while important for base endurance, doesn't adequately address the strength and speed components necessary for faster times on varied terrain. The inclusion of hard days (hills and tempo) in Plan B allows for more targeted development of these key areas.",
+  "record_id": "pair_0137__gemma_12b_judge__r00__BA",
+  "right_plan_role": "llm",
+  "run": 0,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 2.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T22:51:34.768139+00:00",
+  "winner_role": "llm"
+}

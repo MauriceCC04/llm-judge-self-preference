@@ -1,0 +1,48 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 10.0,
+    "mean_day_minutes": 6.143,
+    "n_active_days": 1.0,
+    "n_hard_days": 1.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 1.0,
+    "n_rest_days": 1.0,
+    "total_minutes": 43.0
+  },
+  "fixture_id": "ab_A4__r_low__rc_low__ph_base",
+  "judge": "gemma_4b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/matching_pool/eval_manifest_scrubbed_v1/judge_inputs/pair_0243__gemma_4b_judge__r02__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-4b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A4__r_low__rc_low__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s003",
+  "llm_won": true,
+  "order": "AB",
+  "pair_id": "pair_0243",
+  "plan_a_advantages": [
+    "Includes a tempo run for lactate threshold development.",
+    "Features a longer, more demanding run to mimic race conditions.",
+    "More directly addresses the goal of becoming a faster runner."
+  ],
+  "plan_b_advantages": [
+    "More rest days, potentially beneficial for recovery.",
+    "Focuses on consistent, easy running, which can be good for building a base.",
+    "Slightly longer total workout time."
+  ],
+  "position": "AB",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A4__r_low__rc_low__ph_base__prog__exp_t000__s015",
+  "reasoning": "Plan A is the better training plan for a trail runner aiming to become faster. It incorporates a tempo run to directly address lactate threshold, a key factor in improving speed, which is absent in Plan B. Furthermore, Plan A includes a longer, more challenging run that simulates the demands of trail races, while Plan B’s long run is significantly shorter and at a lower intensity. The inclusion of a hard day with a tempo run is crucial for building the necessary physiological adaptations for faster trail running, whereas Plan B prioritizes consistent, easy running which, while beneficial for recovery, doesn’t directly target speed improvements.",
+  "record_id": "pair_0243__gemma_4b_judge__r02__AB",
+  "right_plan_role": "programmatic",
+  "run": 2,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 1.858,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T17:50:01.303508+00:00",
+  "winner_role": "llm"
+}

@@ -1,0 +1,48 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 18.0,
+    "mean_day_minutes": 7.429,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 52.0
+  },
+  "fixture_id": "ab_A3__r_low__rc_high__ph_peak",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0162__gemma_12b_judge__r01__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A3__r_low__rc_high__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s025",
+  "llm_won": true,
+  "order": "AB",
+  "pair_id": "pair_0162",
+  "plan_a_advantages": [
+    "More frequent easy runs: Plan A includes more frequent easy runs, allowing for more consistent aerobic development and adaptation to trail conditions.",
+    "Focus on form and cadence: Specific mentions of form and cadence in the easy runs highlight a focus on running efficiency, vital for trail running.",
+    "Slightly longer total volume: The slightly higher total volume (345 minutes vs 293) may contribute to greater aerobic development, assuming the athlete can handle it without overtraining.",
+    "More trail-specific focus: The workouts are consistently described as 'Trail Run,' reinforcing the goal of improving trail running performance."
+  ],
+  "plan_b_advantages": [
+    "Incorporates cross-training: The inclusion of cross-training offers a low-impact alternative, which could be useful for injury prevention or active recovery.",
+    "Slightly lower total volume: The lower total volume might be preferable for athletes who are more prone to overtraining or have limited time."
+  ],
+  "position": "AB",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A3__r_low__rc_high__ph_peak__prog__exp_t000__s018",
+  "reasoning": "While both plans prioritize easy running and include a long run, Plan A appears to be a more well-rounded and practical approach for a trail runner aiming to improve speed. Plan A incorporates shorter, more frequent easy runs with specific focuses like form and cadence, which are crucial for trail running efficiency. Plan B's inclusion of cross-training, while potentially beneficial, isn't explicitly necessary for a trail runner and could detract from trail-specific conditioning. The overall structure of Plan A feels more tailored to the demands of trail running, emphasizing consistent trail time and recovery.",
+  "record_id": "pair_0162__gemma_12b_judge__r01__AB",
+  "right_plan_role": "programmatic",
+  "run": 1,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T23:31:41.411854+00:00",
+  "winner_role": "llm"
+}

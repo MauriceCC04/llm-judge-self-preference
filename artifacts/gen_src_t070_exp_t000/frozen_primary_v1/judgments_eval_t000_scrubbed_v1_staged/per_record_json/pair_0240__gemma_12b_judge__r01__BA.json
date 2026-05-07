@@ -1,0 +1,49 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 34.0,
+    "mean_day_minutes": 13.0,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 91.0
+  },
+  "fixture_id": "ab_A4__r_low__rc_low__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0240__gemma_12b_judge__r01__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A4__r_low__rc_low__ph_base__gemma_3_4b_it__src_t070__exp_t000__s005",
+  "llm_won": true,
+  "order": "BA",
+  "pair_id": "pair_0240",
+  "plan_a_advantages": [
+    "Plan A has a slightly higher volume of easy running throughout the week, which could contribute to overall endurance.",
+    "Plan A's hill workout is described as 'steady climbing efforts,' which might be more accessible for runners new to hill training.",
+    "Plan A's overall volume is lower, which could be beneficial for athletes prone to injury or those in the early stages of training."
+  ],
+  "plan_b_advantages": [
+    "Plan B includes a tempo run, directly targeting speed development, a key component of becoming a faster trail runner.",
+    "Plan B provides more specific details (distance, elevation gain, average heart rate) for each run, allowing for more precise monitoring and adjustments.",
+    "Plan B's longer long run (25km) is likely to provide a greater stimulus for endurance development compared to Plan A's 86-minute long run.",
+    "Plan B's structured approach with specific session types (tempo, aerobic) suggests a more deliberate and targeted training plan."
+  ],
+  "position": "BA",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A4__r_low__rc_low__ph_base__prog__exp_t000__s017",
+  "reasoning": "Plan B appears to be the better choice for a trail runner aiming to become faster. While both plans incorporate essential elements like long runs, easy runs, and a hill workout, Plan B demonstrates a more structured and progressive approach. The inclusion of a tempo run in Plan B is a significant advantage, directly targeting speed development, which is crucial for faster trail running. Furthermore, Plan B provides more specific details about the runs, including distance and elevation gain, allowing for better monitoring and adjustment of training load.",
+  "record_id": "pair_0240__gemma_12b_judge__r01__BA",
+  "right_plan_role": "llm",
+  "run": 1,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-07T01:35:23.655775+00:00",
+  "winner_role": "llm"
+}

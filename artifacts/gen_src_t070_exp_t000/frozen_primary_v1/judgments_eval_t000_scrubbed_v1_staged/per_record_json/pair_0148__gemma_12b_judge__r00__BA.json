@@ -1,0 +1,49 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 30.0,
+    "mean_day_minutes": 7.286,
+    "n_active_days": 0.0,
+    "n_hard_days": 1.0,
+    "n_long_runs": 1.0,
+    "n_quality_days": 1.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 51.0
+  },
+  "fixture_id": "ab_A3__r_high__rc_low__ph_peak",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0148__gemma_12b_judge__r00__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A3__r_high__rc_low__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s004",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0148",
+  "plan_a_advantages": [
+    "More gradual progression: Plan A introduces intensity more slowly, reducing the risk of injury and burnout.",
+    "Focus on aerobic base: The plan prioritizes building a strong aerobic foundation, which is crucial for trail running performance.",
+    "Adequate rest: Plan A includes two rest days, allowing for proper recovery and adaptation.",
+    "Lower overall intensity: The consistent easy effort minimizes fatigue and promotes consistency."
+  ],
+  "plan_b_advantages": [
+    "Includes a long run: Plan B incorporates a long run, which can be beneficial for endurance development.",
+    "Tempo and interval sessions: The plan includes tempo and interval sessions, which can improve speed and anaerobic threshold.",
+    "Strength training: Plan B includes a strength training session, which can support recovery and strength gains."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A3__r_high__rc_low__ph_peak__prog__exp_t000__s002",
+  "reasoning": "Given the goal of becoming a faster trail runner, Plan A appears to be the better choice, especially for someone who is likely at an intermediate level or needs a more gradual progression. Plan B introduces a long run, tempo run, and interval session within the first week, which could be overwhelming and lead to injury if the athlete isn't already well-conditioned. Plan A focuses on building a solid aerobic base with consistent, controlled effort runs and cross-training, which is a more sustainable approach for improving speed over time. The emphasis on easy running and adequate rest in Plan A promotes recovery and reduces the risk of burnout.",
+  "record_id": "pair_0148__gemma_12b_judge__r00__BA",
+  "right_plan_role": "llm",
+  "run": 0,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.857,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T23:08:58.714709+00:00",
+  "winner_role": "programmatic"
+}

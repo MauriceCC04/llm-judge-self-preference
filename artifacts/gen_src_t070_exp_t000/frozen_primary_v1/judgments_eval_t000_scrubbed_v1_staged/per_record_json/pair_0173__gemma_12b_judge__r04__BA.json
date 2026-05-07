@@ -1,0 +1,49 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 2.0,
+    "mean_day_minutes": 10.0,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 70.0
+  },
+  "fixture_id": "ab_A3__r_low__rc_low__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0173__gemma_12b_judge__r04__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A3__r_low__rc_low__ph_base__gemma_3_4b_it__src_t070__exp_t000__s000",
+  "llm_won": true,
+  "order": "BA",
+  "pair_id": "pair_0173",
+  "plan_a_advantages": [
+    "Plan A includes a dedicated strength and mobility session, which is beneficial for injury prevention and overall athleticism.",
+    "Plan A's structure is simpler and potentially easier to follow for a beginner.",
+    "Plan A has a slightly lower overall volume, which might be preferable for someone with a higher injury risk or limited time."
+  ],
+  "plan_b_advantages": [
+    "Plan B consistently incorporates trail running with varying distances and elevation, directly addressing the athlete's goal.",
+    "Plan B provides specific data (distance, elevation, average heart rate) for each run, allowing for more precise monitoring and adjustments.",
+    "Plan B's higher volume and trail-specific focus likely leads to greater adaptation and improved performance on trails.",
+    "Plan B's workouts are more varied in distance and elevation, which can help prevent plateaus and improve overall fitness."
+  ],
+  "position": "BA",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A3__r_low__rc_low__ph_base__prog__exp_t000__s006",
+  "reasoning": "While both plans focus on building endurance, Plan B appears to be better suited for a trail runner aiming to become faster. Plan B incorporates trail-specific workouts with elevation gain and distance, which is crucial for trail running performance. Plan A, while including a long run, lacks the consistent trail-specific training that Plan B provides. The inclusion of distance and elevation data in Plan B allows for more targeted progression and adaptation to trail conditions, ultimately contributing more effectively to the athlete's goal.",
+  "record_id": "pair_0173__gemma_12b_judge__r04__BA",
+  "right_plan_role": "llm",
+  "run": 4,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T23:50:05.693711+00:00",
+  "winner_role": "llm"
+}

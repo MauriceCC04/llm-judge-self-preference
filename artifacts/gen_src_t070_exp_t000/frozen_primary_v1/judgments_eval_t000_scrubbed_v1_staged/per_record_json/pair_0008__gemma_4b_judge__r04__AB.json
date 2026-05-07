@@ -1,0 +1,46 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 2.0,
+    "mean_day_minutes": 1.429,
+    "n_active_days": 0.0,
+    "n_hard_days": 2.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 2.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 10.0
+  },
+  "fixture_id": "ab_A1__r_high__rc_high__ph_peak",
+  "judge": "gemma_4b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/matching_pool/eval_manifest_scrubbed_v1/judge_inputs/pair_0008__gemma_4b_judge__r04__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-4b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A1__r_high__rc_high__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s003",
+  "llm_won": true,
+  "order": "AB",
+  "pair_id": "pair_0008",
+  "plan_a_advantages": [
+    "Focuses on running form and efficiency through easy runs.",
+    "Provides a more balanced approach to training, prioritizing recovery and maintaining freshness."
+  ],
+  "plan_b_advantages": [
+    "Includes dedicated hill work to build strength and power.",
+    "Offers a more intense stimulus for climbing, which is a significant component of trail running."
+  ],
+  "position": "AB",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A1__r_high__rc_high__ph_peak__prog__exp_t000__s009",
+  "reasoning": "For a trail runner aiming to become faster, Plan A is the superior choice. It prioritizes consistent, low-intensity easy runs focused on specific aspects of form (rhythm, breathing, cadence) which are crucial for efficiency and injury prevention – key elements for speed. Plan B, while including hill work, relies heavily on threshold efforts and doesn’t dedicate enough time to building a strong aerobic base or refining running mechanics. Plan A’s emphasis on easy runs with targeted drills will contribute more directly to improved running economy and speed than Plan B’s more demanding sessions, especially for a runner focused on becoming faster.",
+  "record_id": "pair_0008__gemma_4b_judge__r04__AB",
+  "right_plan_role": "programmatic",
+  "run": 4,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T16:06:45.196572+00:00",
+  "winner_role": "llm"
+}

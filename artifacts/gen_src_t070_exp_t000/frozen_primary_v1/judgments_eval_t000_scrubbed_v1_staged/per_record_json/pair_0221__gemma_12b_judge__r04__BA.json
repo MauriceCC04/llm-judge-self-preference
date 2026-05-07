@@ -1,0 +1,49 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 15.0,
+    "mean_day_minutes": 9.571,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 67.0
+  },
+  "fixture_id": "ab_A4__r_low__rc_high__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0221__gemma_12b_judge__r04__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A4__r_low__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s001",
+  "llm_won": true,
+  "order": "BA",
+  "pair_id": "pair_0221",
+  "plan_a_advantages": [
+    "Plan A's aerobic sessions are explicitly defined as 'threshold' intensity, which can be beneficial for developing lactate threshold.",
+    "Plan A's longer easy runs (125-135 minutes) might build a stronger aerobic base.",
+    "Plan A's simpler structure might be easier to understand and follow for some athletes."
+  ],
+  "plan_b_advantages": [
+    "Plan B provides specific distances and elevation gains for each run, allowing for more targeted trail training.",
+    "Plan B has a higher overall training volume, potentially leading to greater adaptations.",
+    "Plan B's inclusion of average heart rate data offers a more objective measure of training intensity.",
+    "Plan B's workouts are explicitly described as 'TrailRun', reinforcing the focus on trail-specific training."
+  ],
+  "position": "BA",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A4__r_low__rc_high__ph_base__prog__exp_t000__s019",
+  "reasoning": "Plan B appears to be the better choice for a trail runner aiming to become faster. While both plans incorporate essential elements like long runs, easy runs, and a tempo session, Plan B provides more specific and trail-focused workouts. The inclusion of distance and elevation gain for each run in Plan B allows for more targeted training and better tracking of progress on trail-specific terrain. The higher overall volume in Plan B (480 minutes vs 413) also suggests a greater training load, which, when managed properly, can lead to faster improvements.",
+  "record_id": "pair_0221__gemma_12b_judge__r04__BA",
+  "right_plan_role": "llm",
+  "run": 4,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-07T01:07:02.230473+00:00",
+  "winner_role": "llm"
+}

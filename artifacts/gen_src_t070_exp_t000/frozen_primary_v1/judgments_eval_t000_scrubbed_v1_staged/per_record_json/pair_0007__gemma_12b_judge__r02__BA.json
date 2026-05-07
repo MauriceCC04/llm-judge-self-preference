@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 9.0,
+    "mean_day_minutes": 2.286,
+    "n_active_days": 1.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 1.0,
+    "total_minutes": 16.0
+  },
+  "fixture_id": "ab_A1__r_high__rc_high__ph_peak",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0007__gemma_12b_judge__r02__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A1__r_high__rc_high__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s002",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0007",
+  "plan_a_advantages": [
+    "Includes a cross-training day for varied stimulus and reduced impact.",
+    "Has more rest days (2 vs 1), potentially aiding recovery and preventing overtraining.",
+    "Slightly lower total volume may be preferable for injury prevention, especially for trail running."
+  ],
+  "plan_b_advantages": [
+    "Slightly higher total volume could lead to a greater aerobic base.",
+    "More frequent focus on form and cadence may improve running efficiency."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A1__r_high__rc_high__ph_peak__prog__exp_t000__s008",
+  "reasoning": "Given the goal of becoming a faster trail runner, Plan A appears to be the better choice. Both plans focus on easy running, which is appropriate for building a base, but Plan A incorporates a cross-training day, which can provide an aerobic stimulus with reduced impact, potentially aiding recovery and preventing overuse injuries. Plan B's focus on 'form and cadence' in several runs is good, but without any higher intensity work or hill training, it's unlikely to significantly improve speed. Plan A's slightly lower total volume and more frequent rest days also suggest a more conservative approach, which is often beneficial for trail runners to avoid burnout and injury.",
+  "record_id": "pair_0007__gemma_12b_judge__r02__BA",
+  "right_plan_role": "llm",
+  "run": 2,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T19:42:32.838284+00:00",
+  "winner_role": "programmatic"
+}

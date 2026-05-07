@@ -1,0 +1,48 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 50.0,
+    "mean_day_minutes": 41.571,
+    "n_active_days": 0.0,
+    "n_hard_days": 1.0,
+    "n_long_runs": 1.0,
+    "n_quality_days": 1.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 291.0
+  },
+  "fixture_id": "ab_A4__r_high__rc_high__ph_peak",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0204__gemma_12b_judge__r02__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A4__r_high__rc_high__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s000",
+  "llm_won": true,
+  "order": "AB",
+  "pair_id": "pair_0204",
+  "plan_a_advantages": [
+    "Higher overall training volume (542 minutes vs 251 minutes) allows for greater physiological adaptation.",
+    "Includes a long run, essential for building trail running endurance.",
+    "Incorporates interval training, directly targeting speed development.",
+    "Hill workout with controlled efforts builds climbing strength and power, vital for trail running."
+  ],
+  "plan_b_advantages": [
+    "Lower volume may be beneficial for injury prevention or recovery.",
+    "Tempo run is at a 'threshold' intensity, which could be more effective for some athletes than Plan A's 'hard' intensity."
+  ],
+  "position": "AB",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A4__r_high__rc_high__ph_peak__prog__exp_t000__s016",
+  "reasoning": "Given the goal of becoming a faster trail runner, Plan A appears to be the better choice. While both plans incorporate essential elements like tempo runs, strength training, and rest, Plan A provides a significantly higher overall training volume and includes a long run, which is crucial for building endurance and aerobic capacity necessary for trail running. The inclusion of interval training in Plan A also directly addresses speed development, a key component of becoming a faster trail runner. Plan B, while potentially suitable for a less experienced runner or someone needing a recovery phase, lacks the intensity and volume needed to drive significant performance improvements for someone aiming to become faster.",
+  "record_id": "pair_0204__gemma_12b_judge__r02__AB",
+  "right_plan_role": "programmatic",
+  "run": 2,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.571,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-07T00:39:15.399791+00:00",
+  "winner_role": "llm"
+}

@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 10.0,
+    "mean_day_minutes": 6.143,
+    "n_active_days": 1.0,
+    "n_hard_days": 1.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 1.0,
+    "n_rest_days": 1.0,
+    "total_minutes": 43.0
+  },
+  "fixture_id": "ab_A4__r_low__rc_low__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0243__gemma_12b_judge__r00__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A4__r_low__rc_low__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s003",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0243",
+  "plan_a_advantages": [
+    "Gradual progression: Plan A's consistent easy runs build endurance without excessive fatigue, suitable for a wider range of current fitness levels.",
+    "Higher volume of easy running: The increased time spent running at an easy pace in Plan A promotes aerobic development and trail-specific durability.",
+    "Reduced risk of overtraining: The consistent rest days and focus on easy effort minimize the risk of injury or burnout, especially important without knowing the athlete's current state."
+  ],
+  "plan_b_advantages": [
+    "Introduction of tempo runs: Plan B incorporates a tempo run, which can be beneficial for improving lactate threshold and speed, but may be premature without a stronger aerobic base.",
+    "Potentially more efficient: The shorter overall duration (210 minutes vs 253) could be appealing to athletes with limited time, although this is secondary to the training principles."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A4__r_low__rc_low__ph_base__prog__exp_t000__s015",
+  "reasoning": "Given the goal of becoming a faster trail runner and without knowing the athlete's current state, Plan A is the better choice. Plan A prioritizes building a solid aerobic base with consistent, easy runs and a single long run, which is a foundational approach for trail running improvement. Plan B, while including a tempo run, starts with three consecutive rest days and immediately jumps into a moderate-intensity long run, which could be risky for an athlete whose current fitness level is unknown. A gradual build-up, as seen in Plan A, is generally safer and more sustainable for long-term progress.",
+  "record_id": "pair_0243__gemma_12b_judge__r00__BA",
+  "right_plan_role": "llm",
+  "run": 0,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 1.858,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-07T01:39:53.730242+00:00",
+  "winner_role": "programmatic"
+}

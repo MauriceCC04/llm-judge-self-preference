@@ -1,0 +1,50 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 36.0,
+    "mean_day_minutes": 12.429,
+    "n_active_days": 0.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 2.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 87.0
+  },
+  "fixture_id": "ab_A4__r_high__rc_high__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0190__gemma_12b_judge__r02__BA.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "programmatic",
+  "llm_plan_id": "ab_A4__r_high__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s005",
+  "llm_won": false,
+  "order": "BA",
+  "pair_id": "pair_0190",
+  "plan_a_advantages": [
+    "Includes interval and tempo sessions, directly targeting speed development.",
+    "Focuses on controlled intensity, minimizing the risk of overtraining while still pushing limits.",
+    "The shorter overall volume (348 minutes vs 435) may be more manageable for an athlete looking to improve speed without excessive fatigue.",
+    "Clearer distinction between hard and easy days, promoting better recovery and adaptation."
+  ],
+  "plan_b_advantages": [
+    "Higher overall volume (435 minutes) could contribute to greater aerobic base development.",
+    "Includes dedicated strength training, which is beneficial for trail running.",
+    "Long runs with significant elevation gain mimic race conditions more closely.",
+    "Provides specific heart rate targets for each workout, which can be helpful for intensity management."
+  ],
+  "position": "BA",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A4__r_high__rc_high__ph_base__prog__exp_t000__s008",
+  "reasoning": "Given the goal of becoming a *faster* trail runner, Plan A appears to be the more appropriate choice. While Plan B emphasizes endurance and durability with long runs and significant elevation gain, it lacks the focused intensity needed to improve speed. Plan A incorporates interval and tempo sessions, which are crucial for developing the speed and lactate threshold necessary for faster trail running. The focus on controlled, high-end aerobic power and sustainable threshold strength in Plan A directly addresses the goal of increased speed, whereas Plan B's emphasis on long, easy runs might be better suited for an ultra-endurance athlete.",
+  "record_id": "pair_0190__gemma_12b_judge__r02__BA",
+  "right_plan_role": "llm",
+  "run": 2,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-07T00:16:07.082892+00:00",
+  "winner_role": "programmatic"
+}

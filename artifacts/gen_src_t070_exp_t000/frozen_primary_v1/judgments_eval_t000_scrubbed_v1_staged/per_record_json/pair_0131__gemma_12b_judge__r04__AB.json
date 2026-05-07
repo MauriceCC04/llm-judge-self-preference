@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 17.0,
+    "mean_day_minutes": 0.714,
+    "n_active_days": 0.0,
+    "n_hard_days": 1.0,
+    "n_long_runs": 2.0,
+    "n_quality_days": 1.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 5.0
+  },
+  "fixture_id": "ab_A3__r_high__rc_high__ph_peak",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0131__gemma_12b_judge__r04__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A3__r_high__rc_high__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s000",
+  "llm_won": true,
+  "order": "AB",
+  "pair_id": "pair_0131",
+  "plan_a_advantages": [
+    "Includes interval training to build speed and power, which is essential for faster trail running.",
+    "Incorporates tempo runs to improve sustainable effort and race-specific rhythm.",
+    "Features a dedicated strength training session to build supporting muscles and improve stability on trails."
+  ],
+  "plan_b_advantages": [
+    "Higher volume of long runs, which can contribute to overall endurance.",
+    "Focus on aerobic consistency with easy runs, which can help build a solid base."
+  ],
+  "position": "AB",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A3__r_high__rc_high__ph_peak__prog__exp_t000__s011",
+  "reasoning": "Given the goal of becoming a faster trail runner, Plan A appears to be the more effective choice. While both plans incorporate long runs and a rest day, Plan A includes interval training and tempo runs, which are crucial for developing speed and improving running economy – key components of faster trail running. Plan B focuses heavily on endurance and easy running, which is important but doesn't directly address the speed component. The inclusion of strength training in Plan A is also a significant advantage for trail runners, who need both cardiovascular fitness and muscular strength to handle varied terrain.",
+  "record_id": "pair_0131__gemma_12b_judge__r04__AB",
+  "right_plan_role": "programmatic",
+  "run": 4,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 1.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T22:43:28.567680+00:00",
+  "winner_role": "llm"
+}

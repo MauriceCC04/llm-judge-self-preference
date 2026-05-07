@@ -1,0 +1,48 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 42.0,
+    "mean_day_minutes": 8.143,
+    "n_active_days": 0.0,
+    "n_hard_days": 1.0,
+    "n_long_runs": 1.0,
+    "n_quality_days": 1.0,
+    "n_rest_days": 0.0,
+    "total_minutes": 57.0
+  },
+  "fixture_id": "ab_A1__r_low__rc_high__ph_peak",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0039__gemma_12b_judge__r04__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A1__r_low__rc_high__ph_peak__qwen2.5_7b_instruct__src_t070__exp_t000__s007",
+  "llm_won": false,
+  "order": "AB",
+  "pair_id": "pair_0039",
+  "plan_a_advantages": [
+    "Simplicity: Plan A is easier to understand and follow.",
+    "Lower overall volume: The lower total minutes may be preferable for a runner with limited time or a higher risk of injury.",
+    "Focus on recovery: The emphasis on easy runs and rest days promotes recovery and reduces the risk of overtraining."
+  ],
+  "plan_b_advantages": [
+    "Variety of training intensities: Plan B incorporates long runs, threshold runs, and tempo runs, leading to more comprehensive development.",
+    "Improved aerobic capacity: The threshold and tempo runs will improve the athlete's ability to sustain a faster pace for longer.",
+    "Higher potential for performance gains: The more challenging workouts in Plan B are more likely to lead to noticeable improvements in speed and endurance."
+  ],
+  "position": "AB",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A1__r_low__rc_high__ph_peak__prog__exp_t000__s001",
+  "reasoning": "Plan B is the better choice for a trail runner aiming to become faster. While both plans incorporate rest days, Plan B introduces a variety of training intensities – long runs, threshold runs, and tempo runs – which are crucial for developing the aerobic base and speed necessary for faster trail running. Plan A solely focuses on easy runs, which, while important for recovery and building a base, won't sufficiently challenge the athlete to improve speed. The inclusion of a tempo run in Plan B is particularly valuable for increasing lactate threshold, a key factor in trail running performance.",
+  "record_id": "pair_0039__gemma_12b_judge__r04__AB",
+  "right_plan_role": "programmatic",
+  "run": 4,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T20:28:22.989489+00:00",
+  "winner_role": "programmatic"
+}

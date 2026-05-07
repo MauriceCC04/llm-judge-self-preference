@@ -1,0 +1,47 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 48.0,
+    "mean_day_minutes": 18.286,
+    "n_active_days": 1.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 2.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 1.0,
+    "total_minutes": 128.0
+  },
+  "fixture_id": "ab_A3__r_low__rc_low__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0175__gemma_12b_judge__r00__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A3__r_low__rc_low__ph_base__gemma_3_4b_it__src_t070__exp_t000__s006",
+  "llm_won": true,
+  "order": "AB",
+  "pair_id": "pair_0175",
+  "plan_a_advantages": [
+    "Includes two longer runs (90 and 120 minutes) which are essential for trail running endurance.",
+    "Total training volume (390 minutes) is significantly higher than Plan B (262 minutes), allowing for more aerobic development.",
+    "The plan is more directly aligned with the demands of trail running, focusing on time on feet on trails."
+  ],
+  "plan_b_advantages": [
+    "Incorporates cross-training, which can be beneficial for injury prevention and active recovery.",
+    "Has more rest days (2 vs 1), potentially leading to better recovery, although this may come at the cost of overall training stimulus."
+  ],
+  "position": "AB",
+  "preferred": "plan_a",
+  "programmatic_plan_id": "ab_A3__r_low__rc_low__ph_base__prog__exp_t000__s008",
+  "reasoning": "Given the goal of becoming a faster trail runner, Plan A is the better choice. While both plans focus on aerobic development, Plan A incorporates longer runs, which are crucial for trail running performance. Trail running demands endurance and the ability to handle varied terrain for extended periods, something Plan A's longer runs directly address. Plan B, with its shorter runs and cross-training, lacks the specific endurance building necessary for trail running success.",
+  "record_id": "pair_0175__gemma_12b_judge__r00__AB",
+  "right_plan_role": "programmatic",
+  "run": 0,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T23:52:17.131546+00:00",
+  "winner_role": "llm"
+}

@@ -1,0 +1,49 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 60.0,
+    "mean_day_minutes": 16.714,
+    "n_active_days": 1.0,
+    "n_hard_days": 1.0,
+    "n_long_runs": 1.0,
+    "n_quality_days": 1.0,
+    "n_rest_days": 1.0,
+    "total_minutes": 117.0
+  },
+  "fixture_id": "ab_A3__r_low__rc_low__ph_peak",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0186__gemma_12b_judge__r00__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A3__r_low__rc_low__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s025",
+  "llm_won": false,
+  "order": "AB",
+  "pair_id": "pair_0186",
+  "plan_a_advantages": [
+    "Plan A includes a longer long run (15.40 km vs. no long run in Plan B), which can be beneficial for building overall endurance.",
+    "Plan A has more total training minutes (331 vs 214), which might be suitable for an athlete with a higher training volume base.",
+    "Plan A provides more consistent easy running days."
+  ],
+  "plan_b_advantages": [
+    "Plan B includes a tempo run, directly targeting speed development.",
+    "Plan B incorporates cross-training for recovery and injury prevention.",
+    "Plan B has more rest days (2 vs 1), which can be beneficial for recovery and preventing overtraining.",
+    "Plan B is more focused on improving speed, aligning better with the stated goal."
+  ],
+  "position": "AB",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A3__r_low__rc_low__ph_peak__prog__exp_t000__s002",
+  "reasoning": "While both plans focus on trail running, Plan B is better suited for an athlete aiming to become a *faster* trail runner. Plan B incorporates a tempo run, which is crucial for improving speed and lactate threshold – a key factor in faster running. Plan A solely consists of easy and long runs, which are important for building endurance but don't directly address speed development. The inclusion of cross-training in Plan B also provides a valuable recovery tool and reduces the risk of overuse injuries, allowing for more consistent training.",
+  "record_id": "pair_0186__gemma_12b_judge__r00__AB",
+  "right_plan_role": "programmatic",
+  "run": 0,
+  "self_family_match": true,
+  "source_model_family": "gemma",
+  "structural_score_gap": 1.286,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-07T00:08:52.146163+00:00",
+  "winner_role": "programmatic"
+}

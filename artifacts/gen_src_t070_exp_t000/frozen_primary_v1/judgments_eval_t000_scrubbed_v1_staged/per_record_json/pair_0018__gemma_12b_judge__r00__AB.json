@@ -1,0 +1,48 @@
+{
+  "canonical_masking_version": "canonical_masked_scrubbed_v1",
+  "feature_gaps": {
+    "max_day_minutes": 1.0,
+    "mean_day_minutes": 13.571,
+    "n_active_days": 2.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 2.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 2.0,
+    "total_minutes": 95.0
+  },
+  "fixture_id": "ab_A1__r_high__rc_low__ph_base",
+  "judge": "gemma_12b_judge",
+  "judge_input_path": "artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/pair_0018__gemma_12b_judge__r00__AB.json",
+  "judge_model_family": "gemma",
+  "judge_model_id": "google/gemma-3-12b-it",
+  "judge_temperature": 0.0,
+  "judge_view": "canonical_masked",
+  "left_plan_role": "llm",
+  "llm_plan_id": "ab_A1__r_high__rc_low__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s003",
+  "llm_won": false,
+  "order": "AB",
+  "pair_id": "pair_0018",
+  "plan_a_advantages": [
+    "Plan A has more rest days, which could be beneficial for athletes prone to injury or those new to running.",
+    "The simpler structure of Plan A might be easier to follow and adhere to, especially for beginners."
+  ],
+  "plan_b_advantages": [
+    "Plan B includes a dedicated aerobic run, which helps build a stronger aerobic base.",
+    "Plan B incorporates a longer long run, which is essential for trail running endurance.",
+    "Plan B has a higher total training volume (323 minutes vs 228 minutes), potentially leading to greater improvements.",
+    "Plan B has a more progressive structure, gradually increasing the duration of runs."
+  ],
+  "position": "AB",
+  "preferred": "plan_b",
+  "programmatic_plan_id": "ab_A1__r_high__rc_low__ph_base__prog__exp_t000__s006",
+  "reasoning": "While both plans focus on building aerobic endurance, Plan B is better suited for a trail runner aiming to become faster. Plan B incorporates a longer long run and a dedicated aerobic run, which are crucial for developing the sustained effort capacity needed in trail running. The increased volume in Plan B, while still maintaining an easy intensity, will likely lead to greater physiological adaptations and improved performance. Plan A's repetitive easy runs, while good for recovery, lack the stimulus needed to drive significant improvements in speed and endurance.",
+  "record_id": "pair_0018__gemma_12b_judge__r00__AB",
+  "right_plan_role": "programmatic",
+  "run": 0,
+  "self_family_match": false,
+  "source_model_family": "qwen",
+  "structural_score_gap": 1.3,
+  "structural_score_version": "structural_score_v1.0.0",
+  "timestamp": "2026-05-06T19:57:32.249005+00:00",
+  "winner_role": "programmatic"
+}

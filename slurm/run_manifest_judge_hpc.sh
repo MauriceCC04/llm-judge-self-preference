@@ -36,6 +36,7 @@ export HF_HUB_OFFLINE=1
 export HF_HUB_DISABLE_XET=1
 export OPENAI_API_KEY=dummy
 export OPENROUTER_API_KEY=dummy
+export TRAILTRAINING_STRUCTURED_MAX_TOKENS="${TRAILTRAINING_STRUCTURED_MAX_TOKENS:-768}"
 
 JUDGE_MODEL=$("$PY" - <<PY
 from judge.panel import get_judge
@@ -46,7 +47,10 @@ PY
 JUDGE_QUANT=$("$PY" - <<PY
 from judge.panel import get_judge
 j = get_judge("${JUDGE_NAME}")
-print("" if j.quant == "fp16" else j.quant)
+q = "" if j.quant == "fp16" else j.quant
+if q == "awq_int4":
+    q = "awq"
+print(q)
 PY
 )
 
@@ -62,8 +66,8 @@ VLLM_CMD="$PY -m vllm.entrypoints.openai.api_server \
   --model ${JUDGE_MODEL} \
   --port ${VLLM_PORT} \
   --host 127.0.0.1 \
-  --max-model-len 8192 \
-  --disable-log-requests"
+  --max-model-len 4096 \
+  --no-enable-log-requests"
 
 if [[ -n "${JUDGE_QUANT}" ]]; then
   VLLM_CMD="${VLLM_CMD} --quantization ${JUDGE_QUANT}"
@@ -71,6 +75,14 @@ fi
 
 eval "${VLLM_CMD}" > "out/vllm_manifest_${JUDGE_NAME}.log" 2>&1 &
 VLLM_PID=$!
+
+echo "VLLM_PID=${VLLM_PID}"
+echo "VLLM_LOG=out/vllm_manifest_${JUDGE_NAME}.log"
+sleep 30
+echo "--- initial vLLM log ---"
+tail -n 120 "out/vllm_manifest_${JUDGE_NAME}.log" || true
+echo "--- process check ---"
+ps -p "${VLLM_PID}" -f || true
 
 cleanup() {
   set +e
@@ -84,8 +96,8 @@ trap cleanup EXIT
 from judge.vllm_server import VllmServer
 from pathlib import Path
 import sys
-server = VllmServer("${JUDGE_MODEL}", ${VLLM_PORT}, log_dir=Path("out"), max_model_len=8192)
-sys.exit(0 if server.health_poll(timeout_s=900, interval_s=15) else 1)
+server = VllmServer("${JUDGE_MODEL}", ${VLLM_PORT}, log_dir=Path("out"), max_model_len=4096)
+sys.exit(0 if server.health_poll(timeout_s=1800, interval_s=15) else 1)
 PY
 
 export TRAILTRAINING_LLM_BASE_URL="http://127.0.0.1:${VLLM_PORT}/v1"

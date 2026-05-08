@@ -1,0 +1,16 @@
+category,judge,n,rate
+position_consistent_plan_a,gemma_12b_judge,325,0.26
+position_consistent_plan_b,gemma_12b_judge,75,0.06
+source_consistent_llm,gemma_12b_judge,170,0.136
+source_consistent_programmatic,gemma_12b_judge,680,0.544
+position_consistent_plan_a,gemma_4b_judge,714,0.5712
+source_consistent_llm,gemma_4b_judge,61,0.0488
+source_consistent_programmatic,gemma_4b_judge,475,0.38
+position_consistent_plan_a,qwen_14b_judge,835,0.668
+position_consistent_plan_b,qwen_14b_judge,10,0.008
+source_consistent_llm,qwen_14b_judge,95,0.076
+source_consistent_programmatic,qwen_14b_judge,310,0.248
+position_consistent_plan_a,qwen_7b_judge,377,0.3016
+position_consistent_plan_b,qwen_7b_judge,65,0.052
+source_consistent_llm,qwen_7b_judge,300,0.24
+source_consistent_programmatic,qwen_7b_judge,508,0.4064

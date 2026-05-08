@@ -1,0 +1,41 @@
+{
+  "records": 10000,
+  "unique_record_ids": 10000,
+  "judges": {
+    "gemma_4b_judge": 2500,
+    "gemma_12b_judge": 2500,
+    "qwen_7b_judge": 2500,
+    "qwen_14b_judge": 2500
+  },
+  "orders": {
+    "AB": 5000,
+    "BA": 5000
+  },
+  "runs": {
+    "0": 2000,
+    "1": 2000,
+    "2": 2000,
+    "3": 2000,
+    "4": 2000
+  },
+  "winner_role": {
+    "programmatic": 6347,
+    "llm": 3653
+  },
+  "llm_won": {
+    "False": 6347,
+    "True": 3653
+  },
+  "source_model_family": {
+    "gemma": 4640,
+    "qwen": 5360
+  },
+  "judge_model_family": {
+    "gemma": 5000,
+    "qwen": 5000
+  },
+  "self_family_match": {
+    "True": 5000,
+    "False": 5000
+  }
+}

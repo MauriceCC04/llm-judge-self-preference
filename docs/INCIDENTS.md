@@ -1,37 +1,269 @@
-# Incidents and Operational Decisions
+# Incidents and Fixes
 
-## INC-022 - Legacy deterministic quality score failed as primary matching score
+This document records major execution and methodology issues encountered during the Qwen/Gemma self-preference study.
 
-Date: 2026-05-06
-Phase: matching
-Severity: blocking
+## 1. Original matcher produced only about 30 pairs
 
-Symptoms: the old matcher produced approximately 30 pairs from the 1024-plan matching pool. LLM plans scored near 97-100 under the old score while most programmatic plans scored around 30, despite the programmatic corpus passing structural/artifact audits.
+### Symptom
 
-Root cause: the legacy matching path called TrailTraining's full deterministic quality score and the matching feature distance included presentation-derived terms such as narrative length and data-note counts. These are not valid primary controls for a study of judge preference because they may encode the very presentation confounds under investigation.
+The original matcher produced only about 30 matched pairs from the 1,024-plan matching pool, far below the required 250 pairs.
 
-Fix: introduce `match/structural_score.py` and make structural score the primary matching score. Retain the old quality score only as a diagnostic. Remove narrative/prose/data-note features from weighted match distance.
+### Root cause
 
-Impact: full judging remains blocked until structural matching produces at least 250 same-cell matched pairs and the launch gate confirms at least 10,000 pairwise judgment records.
+The old deterministic score did not provide adequate overlap between LLM-source and programmatic plans. Programmatic plans mostly scored around 30 while LLM-source plans mostly scored 85--100.
 
-## INC-023 - 10,000 pairwise-judgment requirement clarified
+### Fix
 
-Date: 2026-05-06
-Phase: evaluation planning
-Severity: validity-critical
+Use source-neutral structural matching rather than the original presentation-contaminated quality score.
 
-The full study requires:
+### Current status
+
+Resolved.
+
+Final matching:
 
 ```text
-250 matched pairs x 4 judge models x 5 repeated runs x 2 AB/BA positions = 10,000 pairwise judgments
+n_pairs: 250
+coverage_ok: true
+coverage_ratio: 1.0
+mean_structural_score_gap: 0.3076
+p95_structural_score_gap: 2.0
+max_structural_score_gap: 2.0
 ```
 
-Generated training plans are not evaluation documents. A 30-pair match would produce only 1,200 pairwise records and is invalid for the full study.
+## 2. `$PY` / heredoc shell paste failures
 
-## INC-024 - Source masking and launch gate required before judging
+### Symptom
 
-Date: 2026-05-06
-Phase: evaluation
-Severity: validity-critical
+Commands failed with malformed fragments like:
 
-Judge-facing artifacts must not include model names, source-family labels, generation arm labels, file names, or provenance sidecars. Source-family metadata is retained only in output metadata for analysis. The launch gate checks matching volume, judges, repetitions, AB/BA positions, source family coverage, structural score gaps, and masking before full pairwise evaluation.
+```text
+PYint("PASS...")
+-bash: : command not found
+```
+
+### Root cause
+
+Heredoc text was pasted incorrectly, gluing the closing marker to Python text.
+
+### Fix
+
+Use one-line Python commands or shell/JQ checks when the terminal is in a bad heredoc state.
+
+### Current status
+
+Resolved operationally.
+
+## 3. `pytest` unavailable locally
+
+### Symptom
+
+```text
+No module named pytest
+```
+
+### Root cause
+
+Local virtual environment did not have `pytest` installed.
+
+### Fix
+
+Install/test environment as needed or use shell integrity checks for artifact validation.
+
+## 4. Missing model cache under quota constraints
+
+### Symptom
+
+```text
+Model not found in cache: Qwen/Qwen2.5-7B-Instruct
+Model not found in cache: Qwen/Qwen2.5-14B-Instruct-AWQ
+Model not found in cache: google/gemma-3-12b-it
+```
+
+### Root cause
+
+50 GB quota made it impossible to keep all four judge models cached at once.
+
+### Fix
+
+Run staged judging one model at a time. After each model completes and outputs are hashed/synced, remove only that model cache if needed.
+
+### Current status
+
+Resolved for primary pairwise study. Still relevant for explicit marker-level rerun.
+
+## 5. vLLM flag mismatch
+
+### Symptom
+
+```text
+api_server.py: error: unrecognized arguments: --disable-log-requests
+```
+
+### Root cause
+
+Installed vLLM version expected `--no-enable-log-requests`, not `--disable-log-requests`.
+
+### Fix
+
+Patch SLURM runner to use:
+
+```text
+--no-enable-log-requests
+```
+
+### Current status
+
+Resolved.
+
+## 6. Qwen 14B AWQ quantization mismatch
+
+### Symptom
+
+```text
+Quantization method specified in the model config (awq) does not match the quantization argument (awq_int4)
+```
+
+### Root cause
+
+Repository judge panel or wrapper used `awq_int4`, but vLLM expected `awq` for `Qwen/Qwen2.5-14B-Instruct-AWQ`.
+
+### Fix
+
+Normalize quantization argument:
+
+```python
+q = "" if j.quant == "fp16" else j.quant
+if "${JUDGE_NAME}" == "qwen_14b_judge":
+    q = "awq"
+elif q == "awq_int4":
+    q = "awq"
+print(q)
+```
+
+### Current status
+
+Resolved for primary pairwise run. Ensure the same fix is present in marker SLURM runner.
+
+## 7. Qwen 14B structured output token issue
+
+### Symptom
+
+```text
+model maximum context length is 4096 tokens; requested 4096 output tokens plus prompt
+```
+
+### Root cause
+
+The TrailTraining client default requested 4,096 output tokens, leaving no room for the input prompt under `max_model_len=4096`.
+
+### Fix
+
+Set:
+
+```bash
+export TRAILTRAINING_STRUCTURED_MAX_TOKENS=768
+```
+
+For marker-level runner also set:
+
+```bash
+export MARKER_MAX_TOKENS=768
+```
+
+### Current status
+
+Resolved for primary pairwise run. Required for Qwen 14B marker rerun.
+
+## 8. Qwen 14B primary run was cancelled before completion
+
+### Symptom
+
+The Qwen 14B job was cancelled after 2,197 rows, initially thought to have no output because the shell was in the wrong directory.
+
+### Fix
+
+Resume the same output file. The runner skips existing `record_id`s. The final Qwen 14B pairwise file reached 2,500 rows with 0 duplicate record IDs.
+
+### Current status
+
+Resolved.
+
+## 9. Empty Gemma 4B per-file checksum
+
+### Symptom
+
+The per-file `.sha256` for the Gemma 4B pairwise JSONL was empty in one uploaded artifact.
+
+### Impact
+
+The Gemma 4B JSONL was covered by `SHA256SUMS.txt`, so this was not a data integrity issue.
+
+### Fix
+
+Regenerate:
+
+```bash
+D="artifacts/gen_src_t070_exp_t000/frozen_primary_v1/judgments_eval_t000_scrubbed_v1_staged"
+sha256sum "$D/pairwise_gemma_4b_judge_canonical_masked_scrubbed_v1_t000.jsonl" \
+  > "$D/pairwise_gemma_4b_judge_canonical_masked_scrubbed_v1_t000.sha256"
+```
+
+## 10. macOS metadata in uploaded archives
+
+### Symptom
+
+Uploaded archives contained:
+
+```text
+__MACOSX/
+.DS_Store
+```
+
+### Impact
+
+Harmless, but noisy for reproducibility bundles.
+
+### Fix
+
+Exclude in final zip:
+
+```bash
+zip -r final_primary_artifacts.zip artifacts results \
+  -x '*/.DS_Store' \
+  -x '__MACOSX/*'
+```
+
+## 11. Marker rerun output path bug
+
+### Symptom
+
+Qwen 14B explicit marker run produced 701 valid rows but wrote them into:
+
+```text
+marker_eval_t000_scrubbed_v1_staged/pairwise_qwen_14b_judge_canonical_masked_scrubbed_v1_t000.jsonl/marker_qwen_14b_judge_canonical_masked_scrubbed_v1_t000.jsonl
+```
+
+instead of:
+
+```text
+marker_eval_t000_scrubbed_v1_staged/marker_qwen_14b_judge_canonical_masked_scrubbed_v1_t000.jsonl
+```
+
+### Root cause
+
+The marker SLURM script was copied from the pairwise runner and still constructed an output-file path, then passed that path as `--output-dir` to the marker runner.
+
+### Fix
+
+Patch `slurm/run_marker_manifest_judge_hpc.sh` so the marker runner receives:
+
+```bash
+--output-dir "$OUTPUT_DIR"
+```
+
+Move the 701 rows to the correct path and resume.
+
+### Current status
+
+In progress. See `MARKER_LEVEL_RERUN.md`.

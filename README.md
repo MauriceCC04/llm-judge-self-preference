@@ -1,119 +1,263 @@
 # LLM Judge Self-Preference Study
 
-This repository supports a controlled empirical study of whether LLM judges systematically prefer LLM-generated training plans over programmatically generated control plans when deterministic structural plan quality is controlled.
+This repository supports an empirical study of whether LLM judges systematically prefer LLM-generated trail-training plans over structurally matched programmatic plans.
 
-## Current Qwen/Gemma design
+## Current study state
 
-The current study uses only Qwen and Gemma source families:
+The primary Qwen/Gemma study has completed its main pairwise-judgment run.
 
-- Qwen LLM source: `Qwen/Qwen2.5-7B-Instruct`
-- Gemma LLM source: `google/gemma-3-4b-it`
-- Programmatic controls: deterministic structural sampler plus the shared explainer for narrative fields
-
-The current candidate pool is expected to contain:
-
-| Corpus | Path | Plans |
-|---|---:|---:|
-| Qwen LLM source | `artifacts/gen_src_t070_exp_t000/full_qwen/plans` | 192 |
-| Gemma 3 LLM source | `artifacts/gen_src_t070_exp_t000/full_gemma3/plans` | 192 |
-| Programmatic controls | `artifacts/gen_src_t070_exp_t000/full_programmatic/plans` | 640 |
-| Matching pool | `artifacts/gen_src_t070_exp_t000/matching_pool/plans` | 1024 |
-
-The full pairwise-judgment requirement is:
+Primary design:
 
 ```text
-250 matched pairs x 4 judge models x 5 repeated runs x 2 AB/BA positions = 10,000 pairwise judgments
+250 structurally matched LLM-vs-programmatic pairs
+x 4 local Qwen/Gemma judge models
+x 5 repeated runs
+x 2 AB/BA orders
+= 10,000 pairwise judgment records
 ```
 
-The preferred run uses at least 256 matched pairs, yielding at least 10,000 pairwise judgment records.
+Primary source families:
 
-Do not count generated training plans as pairwise evaluation documents. One pairwise evaluation document is one judge-facing comparison for one matched pair, one judge model, one run index, and one AB/BA order.
+- `Qwen/Qwen2.5-7B-Instruct`
+- `google/gemma-3-4b-it`
 
-## Why structural scoring is required
+Primary judge models:
 
-The legacy matcher called TrailTraining's full deterministic quality score and also used feature-distance terms derived from narrative/prose length. That made matching vulnerable to presentation confounds. The primary matching score is now `structural_score_v1.0.0`, which excludes:
+- `qwen_7b_judge`
+- `qwen_14b_judge`
+- `gemma_4b_judge`
+- `gemma_12b_judge`
 
-- title wording
-- workout and purpose prose richness
-- citations and claim attributions
-- data-note verbosity
-- rationale/explanation fields
-- source model name, generation arm, and file names
+No Llama source or judge is part of the current frozen study.
 
-The score uses source-neutral structure only: session types, durations, rest/hard flags, active-day count, hard/rest spacing, long-run and quality-session counts, plan length, and fixture-cell constraints such as athlete band, readiness, recovery capability, and race phase.
+## Primary artifact locations
 
-## Structural matching command
+Primary frozen input bundle:
+
+```text
+artifacts/gen_src_t070_exp_t000/frozen_primary_v1/
+```
+
+Important files:
+
+```text
+artifacts/gen_src_t070_exp_t000/frozen_primary_v1/matched_pairs.json
+artifacts/gen_src_t070_exp_t000/frozen_primary_v1/matching_audit.json
+artifacts/gen_src_t070_exp_t000/frozen_primary_v1/matching_prefilter_audit.json
+artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/pairwise_eval_manifest.jsonl
+artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/judge_inputs/
+artifacts/gen_src_t070_exp_t000/frozen_primary_v1/judgments_eval_t000_scrubbed_v1_staged/
+```
+
+Primary combined judgment file:
+
+```text
+artifacts/gen_src_t070_exp_t000/frozen_primary_v1/judgments_eval_t000_scrubbed_v1_staged/pairwise_all_judges_canonical_masked_scrubbed_v1_t000.jsonl
+```
+
+Primary analysis output:
+
+```text
+results/primary_t000_scrubbed_v1/analysis/
+results/primary_t000_scrubbed_v1/final_audit/final_integrity_summary.json
+```
+
+## Completed data processing
+
+Final corpora used for the primary study:
+
+| Corpus | Path | Count |
+|---|---|---:|
+| Qwen LLM plans | `artifacts/gen_src_t070_exp_t000/full_qwen/plans` | 192 |
+| Gemma LLM plans | `artifacts/gen_src_t070_exp_t000/full_gemma3/plans` | 192 |
+| Programmatic plans | `artifacts/gen_src_t070_exp_t000/full_programmatic/plans` | 640 |
+| Matching pool | `artifacts/gen_src_t070_exp_t000/matching_pool/plans` | 1,024 |
+
+The original matcher failed because the original deterministic score was not structurally source-neutral. It produced only about 30 usable matches under the old score. The study was repaired by using a source-neutral structural matching score and a canonical masked judge view.
+
+Final matching audit:
+
+```text
+matched pairs: 250
+coverage_ok: true
+coverage_ratio: 1.0
+pairs_by_source_family:
+  qwen: 134
+  gemma: 116
+pairs_by_athlete_band:
+  A1: 60
+  A2: 55
+  A3: 74
+  A4: 61
+mean_structural_score_gap: 0.3076
+p95_structural_score_gap: 2.0
+max_structural_score_gap: 2.0
+```
+
+Final prefilter audit:
+
+```text
+n_input: 1024
+n_kept: 1023
+n_dropped: 1
+drop_reasons:
+  impossible_duration: 1
+```
+
+## Completed primary pairwise judgments
+
+Final primary judgment integrity:
+
+```text
+total records: 10,000
+duplicate record_ids: 0
+judges:
+  gemma_4b_judge: 2,500
+  gemma_12b_judge: 2,500
+  qwen_7b_judge: 2,500
+  qwen_14b_judge: 2,500
+orders:
+  AB: 5,000
+  BA: 5,000
+runs:
+  0: 2,000
+  1: 2,000
+  2: 2,000
+  3: 2,000
+  4: 2,000
+```
+
+Primary row-level result:
+
+```text
+LLM wins: 3,653 / 10,000 = 36.53%
+Programmatic wins: 6,347 / 10,000 = 63.47%
+```
+
+By judge:
+
+| Judge | LLM wins | Programmatic wins | LLM win rate |
+|---|---:|---:|---:|
+| `gemma_4b_judge` | 836 | 1,664 | 33.44% |
+| `gemma_12b_judge` | 740 | 1,760 | 29.60% |
+| `qwen_7b_judge` | 1,042 | 1,458 | 41.68% |
+| `qwen_14b_judge` | 1,035 | 1,465 | 41.40% |
+
+By judge family:
+
+| Judge family | LLM win rate |
+|---|---:|
+| Gemma | 31.52% |
+| Qwen | 41.54% |
+
+By source family:
+
+| Source family | LLM win rate |
+|---|---:|
+| Gemma-source | 38.64% |
+| Qwen-source | 34.70% |
+
+Self-family row-level result:
+
+| Self-family match | LLM win rate |
+|---|---:|
+| False | 36.34% |
+| True | 36.72% |
+
+The row-level self-family difference is tiny and does not support a strong self-family preference claim.
+
+## Position-bias finding
+
+Order effects are large and must be treated as a central result/threat to validity.
+
+| Order | LLM win rate |
+|---|---:|
+| AB, LLM as Plan A | 57.54% |
+| BA, LLM as Plan B | 15.52% |
+
+AB/BA pair-run consistency summary:
+
+| Category | Count | Rate |
+|---|---:|---:|
+| `source_consistent_llm` | 626 | 12.52% |
+| `source_consistent_programmatic` | 1,973 | 39.46% |
+| `position_consistent_plan_a` | 2,251 | 45.02% |
+| `position_consistent_plan_b` | 150 | 3.00% |
+
+This means the primary interpretation should not rely only on raw row-level win rates. Pair-run consistency is essential.
+
+## Marker-level status
+
+Two marker-related analyses must be distinguished.
+
+### Completed: exploratory rationale-marker analysis
+
+An exploratory keyword coding was run over the primary judges' free-text rationales and advantage lists. This analysis suggested that programmatic plans were more often credited with training-relevant winning advantages across most marker-like categories.
+
+This is useful but not a formal marker-level result because the original primary outputs do not include explicit marker ratings.
+
+### In progress: explicit marker-level rerun
+
+A secondary explicit marker-level evaluation pass was started. It should use the frozen 10,000 manifest rows and produce 9 marker judgments per record:
+
+```text
+plan_coherence
+training_specificity
+load_progression
+recovery_safety
+quality_session_design
+endurance_development
+readiness_alignment
+clarity_actionability
+explanation_quality
+```
+
+Expected marker output:
+
+```text
+10,000 marker judgment records x 9 markers = 90,000 explicit marker decisions
+```
+
+Current marker rerun status from the latest working session:
+
+- The Qwen 14B marker smoke test succeeded.
+- The full Qwen 14B marker run produced 701 valid rows with 0 failures.
+- Those rows were written into an unintended nested directory because the copied SLURM script passed an old pairwise output-file path as `--output-dir`.
+- The next step is to patch `slurm/run_marker_manifest_judge_hpc.sh`, move the 701 valid rows to the correct marker output directory, and resume Qwen 14B to 2,500 rows.
+
+See `MARKER_LEVEL_RERUN.md` for exact commands.
+
+## What has not been completed yet
+
+Not yet complete:
+
+- Full explicit marker-level rerun for all 4 judges.
+- Bootstrap confidence intervals.
+- Mixed/logistic modeling with order, judge family, source family, and self-family effects.
+- Final report populated with all final marker-level tables.
+- Temperature sensitivity runs for evaluation temperature beyond the primary `t000` condition.
+- Clean final archive excluding macOS metadata and historical/pilot artifacts.
+
+## Minimal local integrity check
+
+From repo root:
 
 ```bash
-export REPO_ROOT=/mnt/beegfsstudents/home/<USER_ID>/llm-judge-self-preference
-export TRAILTRAINING_REPO=/mnt/beegfsstudents/home/<USER_ID>/trailtraining
-export PY=/home/<USER_ID>/.conda/envs/judge-bias/bin/python
-export PYTHONPATH="${REPO_ROOT}:${TRAILTRAINING_REPO}/src:${PYTHONPATH:-}"
-cd "$REPO_ROOT"
+D="artifacts/gen_src_t070_exp_t000/frozen_primary_v1/judgments_eval_t000_scrubbed_v1_staged"
 
-$PY cli.py match \
-  --plans artifacts/gen_src_t070_exp_t000/matching_pool/plans \
-  --output artifacts/gen_src_t070_exp_t000/matching_pool/matched_pairs.json \
-  --allow-mixed-generation-conditions \
-  --tolerance 2.0 \
-  --target-pairs 250 \
-  --fail-below-target-ratio 1.0
+wc -l "$D"/pairwise_all_judges_canonical_masked_scrubbed_v1_t000.jsonl
+cat "$D"/pairwise_all_judges_canonical_masked_scrubbed_v1_t000.jsonl | jq -r '.record_id' | sort | uniq -d | wc -l
+cat "$D"/pairwise_all_judges_canonical_masked_scrubbed_v1_t000.jsonl | jq -r '.judge' | sort | uniq -c
+cat "$D"/pairwise_all_judges_canonical_masked_scrubbed_v1_t000.jsonl | jq -r '.order' | sort | uniq -c
+cat "$D"/pairwise_all_judges_canonical_masked_scrubbed_v1_t000.jsonl | jq -r '.run' | sort | uniq -c
 ```
 
-The final full-study gate must fail if fewer than 250 pairs are produced.
+Expected:
 
-## Diagnostics before judging
-
-```bash
-$PY cli.py match-diagnostics \
-  --plans artifacts/gen_src_t070_exp_t000/matching_pool/plans \
-  --output artifacts/gen_src_t070_exp_t000/matching_pool/structural_diagnostics
-
-$PY cli.py build-eval-manifest \
-  --plans artifacts/gen_src_t070_exp_t000/matching_pool/plans \
-  --pairs artifacts/gen_src_t070_exp_t000/matching_pool/matched_pairs.json \
-  --output artifacts/gen_src_t070_exp_t000/matching_pool/eval_manifest \
-  --seed 20260506
-
-$PY cli.py launch-gate \
-  --plans artifacts/gen_src_t070_exp_t000/matching_pool/plans \
-  --pairs artifacts/gen_src_t070_exp_t000/matching_pool/matched_pairs.json \
-  --style-audit artifacts/gen_src_t070_exp_t000/matching_pool/results/style_audit_summary.json
+```text
+10,000 rows
+0 duplicate record_ids
+2,500 per judge
+5,000 AB / 5,000 BA
+2,000 per run index
 ```
-
-The launch gate checks: at least 250 pairs, expected pairwise documents at least 10,000, both Qwen and Gemma source plans represented, exactly four Qwen/Gemma judges, five repeats, both AB and BA orders, structural matching audit, and source masking audit.
-
-## Pairwise judging
-
-Pairwise judging uses `compare_plans` from `trailtraining.llm.soft_eval` via `judge/harness.py`. Source-family metadata is retained only in output metadata; it is not placed in the judge-facing plan payload.
-
-Run one job per judge:
-
-```bash
-for J in qwen_7b_judge qwen_14b_judge gemma_4b_judge gemma_12b_judge; do
-  JUDGE_NAME="$J" \
-  PLANS_DIR=artifacts/gen_src_t070_exp_t000/matching_pool/plans \
-  PAIRS_FILE=artifacts/gen_src_t070_exp_t000/matching_pool/matched_pairs.json \
-  JUDGMENTS_DIR=artifacts/gen_src_t070_exp_t000/matching_pool/judgments_t000 \
-  PAIRWISE_VIEW=canonical_masked \
-  JUDGE_TEMPERATURE=0.0 \
-  sbatch slurm/run_judge_hpc.sh
-done
-```
-
-Temperature sensitivity runs should use separate output directories such as `judgments_eval_t030` and must not be mixed with the primary `judgments_t000` results.
-
-## Analysis
-
-```bash
-$PY tools/analyze_pairwise_results.py \
-  --judgments artifacts/gen_src_t070_exp_t000/matching_pool/judgments_t000 \
-  --pairs artifacts/gen_src_t070_exp_t000/matching_pool/matched_pairs.json \
-  --output artifacts/gen_src_t070_exp_t000/matching_pool/results_t000
-```
-
-The analysis reports overall LLM win rate, bootstrap confidence intervals, per-judge and per-family summaries, self-family summaries where defined, order bias, and score-gap sensitivity. Do not fill report conclusions until real judge outputs exist.
-
-## v4 validity tightening
-
-After final artifact inspection, the primary risk shifted from pair count to residual structural and presentation confounding. The v4 patch therefore uses target-cardinality min-cost structural matching with soft caliper penalties and makes `canonical_masked` the default judge-facing view. Strict hard calipers are available through `cli.py match --caliper feature=value`, but the current candidate pool does not reach 250 pairs under the strict calipers recommended for a cleaner primary causal claim; use those calipers to size targeted programmatic top-up generation or to define a smaller pilot.

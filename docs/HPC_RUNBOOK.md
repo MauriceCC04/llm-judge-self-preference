@@ -1,173 +1,226 @@
-# HPC Runbook for the Current Qwen/Gemma Study
+# HPC Runbook
 
-This runbook is the operational guide for the 1024-candidate Qwen/Gemma matching pool and the 10,000 pairwise-judgment full study.
+This runbook records the working HPC setup, common failures, and current next steps for the Qwen/Gemma judge-bias study.
 
 ## Environment setup
 
-Do not rely on `conda activate` in batch scripts. Use the environment Python directly and explicitly set both repository paths.
+Use explicit paths. Do not rely on `conda activate`.
 
 ```bash
-export REPO_ROOT=/mnt/beegfsstudents/home/<USER_ID>/llm-judge-self-preference
-export TRAILTRAINING_REPO=/mnt/beegfsstudents/home/<USER_ID>/trailtraining
-export PY=/home/<USER_ID>/.conda/envs/judge-bias/bin/python
+export REPO_ROOT=/mnt/beegfsstudents/home/3202029/llm-judge-self-preference
+export TRAILTRAINING_REPO=/mnt/beegfsstudents/home/3202029/trailtraining
+export PY=/home/3202029/.conda/envs/judge-bias/bin/python
 export PYTHONPATH="${REPO_ROOT}:${TRAILTRAINING_REPO}/src:${PYTHONPATH:-}"
 cd "$REPO_ROOT"
+```
 
-$PY - <<'PY'
-import sys
-import pydantic
-import trailtraining
-print('python', sys.executable)
-print('pydantic', pydantic.__version__)
-print('trailtraining', trailtraining.__file__)
+Verify:
+
+```bash
+"$PY" - <<'PY'
+import sys, pydantic, trailtraining
+print(sys.executable)
+print("pydantic", pydantic.__version__)
+print("trailtraining", trailtraining.__file__)
 PY
 ```
 
-This prevents the known failures:
-
-- `ModuleNotFoundError: No module named 'pydantic'`
-- `ModuleNotFoundError: No module named 'trailtraining'`
-- broken `conda activate`
-- using the wrong interpreter
-
-## Hugging Face cache
+## Hugging Face cache setup
 
 ```bash
-export HF_HOME=/mnt/beegfsstudents/home/<USER_ID>/hf_cache
+export HF_HOME=/mnt/beegfsstudents/home/3202029/hf_cache
 export HF_HUB_CACHE="${HF_HOME}/hub"
 export HUGGINGFACE_HUB_CACHE="${HF_HUB_CACHE}"
 export TRANSFORMERS_CACHE="${HF_HOME}/transformers"
 export HF_HUB_DISABLE_XET=1
-mkdir -p "$HF_HOME" "$HF_HUB_CACHE" "$TRANSFORMERS_CACHE"
+```
+
+For downloads:
+
+```bash
+unset HF_HUB_OFFLINE
+```
+
+For offline model execution:
+
+```bash
+export HF_HUB_OFFLINE=1
+```
+
+Check quota:
+
+```bash
 lquota
+du -sh "$HF_HOME" 2>/dev/null || true
+find "$HF_HUB_CACHE" -maxdepth 4 -type d -name 'models--*' -print 2>/dev/null
 ```
 
-Check exactly the models needed for the current job:
+Do not delete model cache unless the relevant judgment output has been completed, hashed, and synced/backed up.
+
+## Model cache checks
 
 ```bash
-$PY tools/check_model_cache.py "Qwen/Qwen2.5-3B-Instruct"
-$PY tools/check_model_cache.py "Qwen/Qwen2.5-7B-Instruct"
-$PY tools/check_model_cache.py "google/gemma-3-4b-it"
+"$PY" tools/check_model_cache.py Qwen/Qwen2.5-7B-Instruct
+"$PY" tools/check_model_cache.py Qwen/Qwen2.5-14B-Instruct-AWQ
+"$PY" tools/check_model_cache.py google/gemma-3-4b-it
+"$PY" tools/check_model_cache.py google/gemma-3-12b-it
 ```
 
-For judge jobs, also check the active judge model. Do not delete cached models unless that deletion is intentional and safe for later jobs.
+Because the quota is tight, the study was run one model at a time.
 
-## Matching pool audit
+## Primary pairwise judging status
 
-```bash
-$PY cli.py match-diagnostics \
-  --plans artifacts/gen_src_t070_exp_t000/matching_pool/plans \
-  --output artifacts/gen_src_t070_exp_t000/matching_pool/structural_diagnostics
-```
+The primary 10,000 pairwise judgments are complete.
 
-Inspect:
-
-- structural score distributions by source/arm
-- per-fixture overlap
-- possible match counts by tolerance
-- final pair coverage by fixture and source family
-- feature-balance gaps
-- style/leakage audit outputs
-
-## Structural matching SLURM command
-
-Do not run full matching or judging on a login node except for tiny diagnostics.
-
-```bash
-mkdir -p out err
-sbatch \
-  --account=<USER_ID> \
-  --partition=stud \
-  --qos=stud \
-  --time=00:45:00 \
-  --chdir=/mnt/beegfsstudents/home/<USER_ID>/llm-judge-self-preference \
-  --output=out/match_structural_%j.out \
-  --error=err/match_structural_%j.err \
-  --wrap='
-set -euo pipefail
-export REPO_ROOT=/mnt/beegfsstudents/home/<USER_ID>/llm-judge-self-preference
-export TRAILTRAINING_REPO=/mnt/beegfsstudents/home/<USER_ID>/trailtraining
-export PY=/home/<USER_ID>/.conda/envs/judge-bias/bin/python
-export PYTHONPATH="${REPO_ROOT}:${TRAILTRAINING_REPO}/src:${PYTHONPATH:-}"
-cd "$REPO_ROOT"
-$PY cli.py match \
-  --plans artifacts/gen_src_t070_exp_t000/matching_pool/plans \
-  --output artifacts/gen_src_t070_exp_t000/matching_pool/matched_pairs.json \
-  --allow-mixed-generation-conditions \
-  --tolerance 2.0 \
-  --target-pairs 250 \
-  --fail-below-target-ratio 1.0
-$PY cli.py match-diagnostics \
-  --plans artifacts/gen_src_t070_exp_t000/matching_pool/plans \
-  --output artifacts/gen_src_t070_exp_t000/matching_pool/structural_diagnostics
-'
-```
-
-## Full-study launch gate
-
-Full judging requires:
+Primary output directory:
 
 ```text
-matched_pairs >= 250
-expected_pairwise_documents >= 10,000
-exactly 4 valid Qwen/Gemma judge models
-5 repeats
-AB and BA positions
-both Qwen and Gemma source plans represented
-structural matching audit passes
-source masking audit passes
-style audit passes
+artifacts/gen_src_t070_exp_t000/frozen_primary_v1/judgments_eval_t000_scrubbed_v1_staged/
 ```
 
-Run:
+Combined primary file:
+
+```text
+pairwise_all_judges_canonical_masked_scrubbed_v1_t000.jsonl
+```
+
+Verify from repo root:
 
 ```bash
-$PY cli.py audit-style \
-  --plans artifacts/gen_src_t070_exp_t000/matching_pool/plans \
-  --pairs artifacts/gen_src_t070_exp_t000/matching_pool/matched_pairs.json \
-  --output artifacts/gen_src_t070_exp_t000/matching_pool/results
+D="artifacts/gen_src_t070_exp_t000/frozen_primary_v1/judgments_eval_t000_scrubbed_v1_staged"
 
-$PY cli.py build-eval-manifest \
-  --plans artifacts/gen_src_t070_exp_t000/matching_pool/plans \
-  --pairs artifacts/gen_src_t070_exp_t000/matching_pool/matched_pairs.json \
-  --output artifacts/gen_src_t070_exp_t000/matching_pool/eval_manifest \
-  --seed 20260506
-
-$PY cli.py launch-gate \
-  --plans artifacts/gen_src_t070_exp_t000/matching_pool/plans \
-  --pairs artifacts/gen_src_t070_exp_t000/matching_pool/matched_pairs.json \
-  --style-audit artifacts/gen_src_t070_exp_t000/matching_pool/results/style_audit_summary.json
+wc -l "$D"/pairwise_all_judges_canonical_masked_scrubbed_v1_t000.jsonl
+cat "$D"/pairwise_all_judges_canonical_masked_scrubbed_v1_t000.jsonl | jq -r '.record_id' | sort | uniq -d | wc -l
+cat "$D"/pairwise_all_judges_canonical_masked_scrubbed_v1_t000.jsonl | jq -r '.judge' | sort | uniq -c
+cat "$D"/pairwise_all_judges_canonical_masked_scrubbed_v1_t000.jsonl | jq -r '.order' | sort | uniq -c
+cat "$D"/pairwise_all_judges_canonical_masked_scrubbed_v1_t000.jsonl | jq -r '.run' | sort | uniq -c
 ```
 
-Do not proceed if the gate fails.
+Expected:
 
-## Judge jobs
+```text
+10,000 rows
+0 duplicate record_ids
+2,500 per judge
+5,000 AB / 5,000 BA
+2,000 per run index
+```
 
-Run one judge per job. Keep temperature-specific outputs separate.
+## Primary pairwise incidents and fixes
+
+### vLLM log request flag mismatch
+
+Observed error:
+
+```text
+api_server.py: error: unrecognized arguments: --disable-log-requests
+```
+
+Fix:
+
+```text
+Use --no-enable-log-requests
+```
+
+### Qwen 14B AWQ quantization mismatch
+
+Observed error:
+
+```text
+Quantization method specified in the model config (awq) does not match the quantization argument (awq_int4)
+```
+
+Fix in SLURM script:
+
+```python
+q = "" if j.quant == "fp16" else j.quant
+if "${JUDGE_NAME}" == "qwen_14b_judge":
+    q = "awq"
+elif q == "awq_int4":
+    q = "awq"
+print(q)
+```
+
+### Qwen 14B max token/context issue
+
+Observed error:
+
+```text
+model maximum context length is 4096; requested 4096 output tokens plus prompt
+```
+
+Fix:
 
 ```bash
-for J in qwen_7b_judge qwen_14b_judge gemma_4b_judge gemma_12b_judge; do
-  JUDGE_NAME="$J" \
-  JUDGE_MODE=full \
-  RUN_PAIRWISE=1 \
-  RUN_SOFT_EVAL=0 \
-  PLANS_DIR=artifacts/gen_src_t070_exp_t000/matching_pool/plans \
-  PAIRS_FILE=artifacts/gen_src_t070_exp_t000/matching_pool/matched_pairs.json \
-  JUDGMENTS_DIR=artifacts/gen_src_t070_exp_t000/matching_pool/judgments_eval_t000 \
-  PAIRWISE_VIEW=canonical_masked \
-  JUDGE_TEMPERATURE=0.0 \
-  CLEANUP_MODEL_CACHE=0 \
-  sbatch slurm/run_judge_hpc.sh
-done
+export TRAILTRAINING_STRUCTURED_MAX_TOKENS=768
 ```
 
-## Analysis
+For marker reruns also use:
 
 ```bash
-$PY tools/analyze_pairwise_results.py \
-  --judgments artifacts/gen_src_t070_exp_t000/matching_pool/judgments_eval_t000 \
-  --pairs artifacts/gen_src_t070_exp_t000/matching_pool/matched_pairs.json \
-  --output artifacts/gen_src_t070_exp_t000/matching_pool/results_eval_t000
+export MARKER_MAX_TOKENS=768
 ```
 
-Do not report pilot outputs as the full study.
+### Wrong directory while monitoring
+
+A primary Qwen 14B job was mistakenly thought to be stalled because the shell was in the wrong directory. Always run monitoring commands from repo root or use absolute paths.
+
+## Sync artifacts back to laptop
+
+From laptop:
+
+```bash
+LOCAL="/Users/cameroncaputa/PycharmProjects/llm-judge-self-preference"
+REMOTE_HOST="bocconi-hpc"
+REMOTE_ROOT="/mnt/beegfsstudents/home/3202029/llm-judge-self-preference"
+
+rsync -avz --itemize-changes \
+  --exclude='.git/' \
+  --exclude='.venv/' \
+  --exclude='venv/' \
+  --exclude='__pycache__/' \
+  --exclude='.pytest_cache/' \
+  --exclude='.mypy_cache/' \
+  --exclude='.ruff_cache/' \
+  --exclude='.DS_Store' \
+  --exclude='.env' \
+  --exclude='*.token' \
+  --exclude='hf_cache/' \
+  --exclude='hub/' \
+  --exclude='transformers/' \
+  --exclude='models/' \
+  --exclude='*.safetensors' \
+  --exclude='*.bin' \
+  --exclude='*.pt' \
+  --exclude='*.pth' \
+  "${REMOTE_HOST}:${REMOTE_ROOT}/" \
+  "${LOCAL}/"
+```
+
+## Explicit marker-level rerun current status
+
+A new marker-level evaluation pass is in progress. It should not replace the completed primary pairwise run.
+
+Output directory:
+
+```bash
+export MARKER_OUT="artifacts/gen_src_t070_exp_t000/frozen_primary_v1/marker_eval_t000_scrubbed_v1_staged"
+export PRIMARY_MANIFEST="artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/pairwise_eval_manifest.jsonl"
+```
+
+Current known issue:
+
+The first Qwen 14B full marker run wrote 701 valid rows into a nested wrong path:
+
+```text
+$MARKER_OUT/pairwise_qwen_14b_judge_canonical_masked_scrubbed_v1_t000.jsonl/marker_qwen_14b_judge_canonical_masked_scrubbed_v1_t000.jsonl
+```
+
+Correct target:
+
+```text
+$MARKER_OUT/marker_qwen_14b_judge_canonical_masked_scrubbed_v1_t000.jsonl
+```
+
+See `MARKER_LEVEL_RERUN.md` for patch/move/resume commands.
+

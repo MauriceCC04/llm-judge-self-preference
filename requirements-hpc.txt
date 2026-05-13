@@ -8,7 +8,7 @@
 # Run all study commands from the repo root with:
 #   export PYTHONPATH=$PWD:${PYTHONPATH:-}
 
-trailtraining @ git+https://github.com/MauriceCC04/trailtraining.git@3e7f1793ca051ba1aae05f1714d594691202ad7e
+trailtraining @ git+https://github.com/MauriceCC04/trailtraining.git@nlp-screenshot
 openai>=1.0.0
 pydantic>=2.8
 numpy>=1.26

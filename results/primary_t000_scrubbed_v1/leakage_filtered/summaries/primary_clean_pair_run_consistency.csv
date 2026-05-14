@@ -1,0 +1,5 @@
+category,n,rate
+position_consistent_plan_a,861,0.4179611650485437
+position_consistent_plan_b,90,0.043689320388349516
+source_consistent_llm,234,0.11359223300970873
+source_consistent_programmatic,875,0.42475728155339804

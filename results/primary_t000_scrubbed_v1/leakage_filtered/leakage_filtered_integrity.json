@@ -1,0 +1,28 @@
+{
+  "clean_pairs": 103,
+  "flagged_pairs": 147,
+  "frozen_root": "/Users/cameroncaputa/PycharmProjects/llm-judge-self-preference/artifacts/gen_src_t070_exp_t000/frozen_primary_v1",
+  "manifest_records": 10000,
+  "marker_decisions_clean": 37080,
+  "marker_records_clean": 4120,
+  "marker_records_flagged": 5880,
+  "marker_records_total": 10000,
+  "marker_source": "/Users/cameroncaputa/PycharmProjects/llm-judge-self-preference/artifacts/gen_src_t070_exp_t000/frozen_primary_v1/marker_eval_t000_scrubbed_v1_staged/marker_all_judges_canonical_masked_scrubbed_v1_t000.jsonl",
+  "matched_pairs_seen": 250,
+  "note": "Clean/flagged splits are post-hoc sensitivity datasets based on presentation artifacts in judge-facing inputs. They do not change the prompts originally seen by judges.",
+  "pair_flag_counts": {
+    "any_presentation_artifact": 147,
+    "llm_activity_like_fragment": 91,
+    "llm_any_presentation_artifact": 147,
+    "llm_avg_hr": 51,
+    "llm_duration_text_inconsistency": 40,
+    "llm_elevation_or_vertical": 7,
+    "llm_ellipsis": 109,
+    "llm_km_unit": 91,
+    "llm_trailrun_pipe": 56
+  },
+  "primary_records_clean": 4120,
+  "primary_records_flagged": 5880,
+  "primary_records_total": 10000,
+  "primary_source": "/Users/cameroncaputa/PycharmProjects/llm-judge-self-preference/artifacts/gen_src_t070_exp_t000/frozen_primary_v1/judgments_eval_t000_scrubbed_v1_staged/pairwise_all_judges_canonical_masked_scrubbed_v1_t000.jsonl"
+}

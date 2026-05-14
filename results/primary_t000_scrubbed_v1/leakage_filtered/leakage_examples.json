@@ -1,0 +1,688 @@
+{
+  "activity_like_fragment": [
+    {
+      "context": "g…\", \"session_type\": \"aerobic\", \"target_intensity\": \"easy\", \"workout_summary\": \"TrailRun | 5.40 km | 212 m+ | 41 min | avgHR 146\"}, {\"day_index\": 3, \"duration_minutes\": 60, \"is_hard_day\": false, \"is_rest_day\": ",
+      "pair_id": "pair_0000",
+      "plan_id": "ab_A1__r_high__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s000",
+      "record_id": "pair_0000__qwen_7b_judge__r00__AB",
+      "role": "llm",
+      "side": "plan_a"
+    },
+    {
+      "context": "g…\", \"session_type\": \"aerobic\", \"target_intensity\": \"easy\", \"workout_summary\": \"TrailRun | 5.40 km | 212 m+ | 41 min | avgHR 146\"}, {\"day_index\": 3, \"duration_minutes\": 60, \"is_hard_day\": false, \"is_rest_day\": ",
+      "pair_id": "pair_0000",
+      "plan_id": "ab_A1__r_high__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s000",
+      "record_id": "pair_0000__qwen_7b_judge__r00__BA",
+      "role": "llm",
+      "side": "plan_b"
+    },
+    {
+      "context": "g…\", \"session_type\": \"aerobic\", \"target_intensity\": \"easy\", \"workout_summary\": \"TrailRun | 5.40 km | 212 m+ | 41 min | avgHR 146\"}, {\"day_index\": 3, \"duration_minutes\": 60, \"is_hard_day\": false, \"is_rest_day\": ",
+      "pair_id": "pair_0000",
+      "plan_id": "ab_A1__r_high__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s000",
+      "record_id": "pair_0000__qwen_7b_judge__r01__BA",
+      "role": "llm",
+      "side": "plan_b"
+    },
+    {
+      "context": "g…\", \"session_type\": \"aerobic\", \"target_intensity\": \"easy\", \"workout_summary\": \"TrailRun | 5.40 km | 212 m+ | 41 min | avgHR 146\"}, {\"day_index\": 3, \"duration_minutes\": 60, \"is_hard_day\": false, \"is_rest_day\": ",
+      "pair_id": "pair_0000",
+      "plan_id": "ab_A1__r_high__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s000",
+      "record_id": "pair_0000__qwen_7b_judge__r01__AB",
+      "role": "llm",
+      "side": "plan_a"
+    },
+    {
+      "context": "g…\", \"session_type\": \"aerobic\", \"target_intensity\": \"easy\", \"workout_summary\": \"TrailRun | 5.40 km | 212 m+ | 41 min | avgHR 146\"}, {\"day_index\": 3, \"duration_minutes\": 60, \"is_hard_day\": false, \"is_rest_day\": ",
+      "pair_id": "pair_0000",
+      "plan_id": "ab_A1__r_high__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s000",
+      "record_id": "pair_0000__qwen_7b_judge__r02__AB",
+      "role": "llm",
+      "side": "plan_a"
+    },
+    {
+      "context": "g…\", \"session_type\": \"aerobic\", \"target_intensity\": \"easy\", \"workout_summary\": \"TrailRun | 5.40 km | 212 m+ | 41 min | avgHR 146\"}, {\"day_index\": 3, \"duration_minutes\": 60, \"is_hard_day\": false, \"is_rest_day\": ",
+      "pair_id": "pair_0000",
+      "plan_id": "ab_A1__r_high__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s000",
+      "record_id": "pair_0000__qwen_7b_judge__r02__BA",
+      "role": "llm",
+      "side": "plan_b"
+    },
+    {
+      "context": "g…\", \"session_type\": \"aerobic\", \"target_intensity\": \"easy\", \"workout_summary\": \"TrailRun | 5.40 km | 212 m+ | 41 min | avgHR 146\"}, {\"day_index\": 3, \"duration_minutes\": 60, \"is_hard_day\": false, \"is_rest_day\": ",
+      "pair_id": "pair_0000",
+      "plan_id": "ab_A1__r_high__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s000",
+      "record_id": "pair_0000__qwen_7b_judge__r03__BA",
+      "role": "llm",
+      "side": "plan_b"
+    },
+    {
+      "context": "g…\", \"session_type\": \"aerobic\", \"target_intensity\": \"easy\", \"workout_summary\": \"TrailRun | 5.40 km | 212 m+ | 41 min | avgHR 146\"}, {\"day_index\": 3, \"duration_minutes\": 60, \"is_hard_day\": false, \"is_rest_day\": ",
+      "pair_id": "pair_0000",
+      "plan_id": "ab_A1__r_high__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s000",
+      "record_id": "pair_0000__qwen_7b_judge__r03__AB",
+      "role": "llm",
+      "side": "plan_a"
+    },
+    {
+      "context": "g…\", \"session_type\": \"aerobic\", \"target_intensity\": \"easy\", \"workout_summary\": \"TrailRun | 5.40 km | 212 m+ | 41 min | avgHR 146\"}, {\"day_index\": 3, \"duration_minutes\": 60, \"is_hard_day\": false, \"is_rest_day\": ",
+      "pair_id": "pair_0000",
+      "plan_id": "ab_A1__r_high__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s000",
+      "record_id": "pair_0000__qwen_7b_judge__r04__BA",
+      "role": "llm",
+      "side": "plan_b"
+    },
+    {
+      "context": "g…\", \"session_type\": \"aerobic\", \"target_intensity\": \"easy\", \"workout_summary\": \"TrailRun | 5.40 km | 212 m+ | 41 min | avgHR 146\"}, {\"day_index\": 3, \"duration_minutes\": 60, \"is_hard_day\": false, \"is_rest_day\": ",
+      "pair_id": "pair_0000",
+      "plan_id": "ab_A1__r_high__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s000",
+      "record_id": "pair_0000__qwen_7b_judge__r04__AB",
+      "role": "llm",
+      "side": "plan_a"
+    },
+    {
+      "context": "g…\", \"session_type\": \"aerobic\", \"target_intensity\": \"easy\", \"workout_summary\": \"TrailRun | 5.40 km | 212 m+ | 41 min | avgHR 146\"}, {\"day_index\": 3, \"duration_minutes\": 60, \"is_hard_day\": false, \"is_rest_day\": ",
+      "pair_id": "pair_0000",
+      "plan_id": "ab_A1__r_high__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s000",
+      "record_id": "pair_0000__qwen_14b_judge__r00__AB",
+      "role": "llm",
+      "side": "plan_a"
+    },
+    {
+      "context": "g…\", \"session_type\": \"aerobic\", \"target_intensity\": \"easy\", \"workout_summary\": \"TrailRun | 5.40 km | 212 m+ | 41 min | avgHR 146\"}, {\"day_index\": 3, \"duration_minutes\": 60, \"is_hard_day\": false, \"is_rest_day\": ",
+      "pair_id": "pair_0000",
+      "plan_id": "ab_A1__r_high__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s000",
+      "record_id": "pair_0000__qwen_14b_judge__r00__BA",
+      "role": "llm",
+      "side": "plan_b"
+    }
+  ],
+  "avg_hr": [
+    {
+      "context": "_intensity\": \"easy\", \"workout_summary\": \"TrailRun | 5.40 km | 212 m+ | 41 min | avgHR 146\"}, {\"day_index\": 3, \"duration_minutes\": 60, \"is_hard_day\": false, \"is_rest_day\": false, \"purpose_summary\": \"To cont",
+      "pair_id": "pair_0000",
+      "plan_id": "ab_A1__r_high__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s000",
+      "record_id": "pair_0000__qwen_7b_judge__r00__AB",
+      "role": "llm",
+      "side": "plan_a"
+    },
+    {
+      "context": "_intensity\": \"easy\", \"workout_summary\": \"TrailRun | 5.40 km | 212 m+ | 41 min | avgHR 146\"}, {\"day_index\": 3, \"duration_minutes\": 60, \"is_hard_day\": false, \"is_rest_day\": false, \"purpose_summary\": \"To cont",
+      "pair_id": "pair_0000",
+      "plan_id": "ab_A1__r_high__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s000",
+      "record_id": "pair_0000__qwen_7b_judge__r00__BA",
+      "role": "llm",
+      "side": "plan_b"
+    },
+    {
+      "context": "_intensity\": \"easy\", \"workout_summary\": \"TrailRun | 5.40 km | 212 m+ | 41 min | avgHR 146\"}, {\"day_index\": 3, \"duration_minutes\": 60, \"is_hard_day\": false, \"is_rest_day\": false, \"purpose_summary\": \"To cont",
+      "pair_id": "pair_0000",
+      "plan_id": "ab_A1__r_high__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s000",
+      "record_id": "pair_0000__qwen_7b_judge__r01__BA",
+      "role": "llm",
+      "side": "plan_b"
+    },
+    {
+      "context": "_intensity\": \"easy\", \"workout_summary\": \"TrailRun | 5.40 km | 212 m+ | 41 min | avgHR 146\"}, {\"day_index\": 3, \"duration_minutes\": 60, \"is_hard_day\": false, \"is_rest_day\": false, \"purpose_summary\": \"To cont",
+      "pair_id": "pair_0000",
+      "plan_id": "ab_A1__r_high__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s000",
+      "record_id": "pair_0000__qwen_7b_judge__r01__AB",
+      "role": "llm",
+      "side": "plan_a"
+    },
+    {
+      "context": "_intensity\": \"easy\", \"workout_summary\": \"TrailRun | 5.40 km | 212 m+ | 41 min | avgHR 146\"}, {\"day_index\": 3, \"duration_minutes\": 60, \"is_hard_day\": false, \"is_rest_day\": false, \"purpose_summary\": \"To cont",
+      "pair_id": "pair_0000",
+      "plan_id": "ab_A1__r_high__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s000",
+      "record_id": "pair_0000__qwen_7b_judge__r02__AB",
+      "role": "llm",
+      "side": "plan_a"
+    },
+    {
+      "context": "_intensity\": \"easy\", \"workout_summary\": \"TrailRun | 5.40 km | 212 m+ | 41 min | avgHR 146\"}, {\"day_index\": 3, \"duration_minutes\": 60, \"is_hard_day\": false, \"is_rest_day\": false, \"purpose_summary\": \"To cont",
+      "pair_id": "pair_0000",
+      "plan_id": "ab_A1__r_high__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s000",
+      "record_id": "pair_0000__qwen_7b_judge__r02__BA",
+      "role": "llm",
+      "side": "plan_b"
+    },
+    {
+      "context": "_intensity\": \"easy\", \"workout_summary\": \"TrailRun | 5.40 km | 212 m+ | 41 min | avgHR 146\"}, {\"day_index\": 3, \"duration_minutes\": 60, \"is_hard_day\": false, \"is_rest_day\": false, \"purpose_summary\": \"To cont",
+      "pair_id": "pair_0000",
+      "plan_id": "ab_A1__r_high__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s000",
+      "record_id": "pair_0000__qwen_7b_judge__r03__BA",
+      "role": "llm",
+      "side": "plan_b"
+    },
+    {
+      "context": "_intensity\": \"easy\", \"workout_summary\": \"TrailRun | 5.40 km | 212 m+ | 41 min | avgHR 146\"}, {\"day_index\": 3, \"duration_minutes\": 60, \"is_hard_day\": false, \"is_rest_day\": false, \"purpose_summary\": \"To cont",
+      "pair_id": "pair_0000",
+      "plan_id": "ab_A1__r_high__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s000",
+      "record_id": "pair_0000__qwen_7b_judge__r03__AB",
+      "role": "llm",
+      "side": "plan_a"
+    },
+    {
+      "context": "_intensity\": \"easy\", \"workout_summary\": \"TrailRun | 5.40 km | 212 m+ | 41 min | avgHR 146\"}, {\"day_index\": 3, \"duration_minutes\": 60, \"is_hard_day\": false, \"is_rest_day\": false, \"purpose_summary\": \"To cont",
+      "pair_id": "pair_0000",
+      "plan_id": "ab_A1__r_high__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s000",
+      "record_id": "pair_0000__qwen_7b_judge__r04__BA",
+      "role": "llm",
+      "side": "plan_b"
+    },
+    {
+      "context": "_intensity\": \"easy\", \"workout_summary\": \"TrailRun | 5.40 km | 212 m+ | 41 min | avgHR 146\"}, {\"day_index\": 3, \"duration_minutes\": 60, \"is_hard_day\": false, \"is_rest_day\": false, \"purpose_summary\": \"To cont",
+      "pair_id": "pair_0000",
+      "plan_id": "ab_A1__r_high__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s000",
+      "record_id": "pair_0000__qwen_7b_judge__r04__AB",
+      "role": "llm",
+      "side": "plan_a"
+    },
+    {
+      "context": "_intensity\": \"easy\", \"workout_summary\": \"TrailRun | 5.40 km | 212 m+ | 41 min | avgHR 146\"}, {\"day_index\": 3, \"duration_minutes\": 60, \"is_hard_day\": false, \"is_rest_day\": false, \"purpose_summary\": \"To cont",
+      "pair_id": "pair_0000",
+      "plan_id": "ab_A1__r_high__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s000",
+      "record_id": "pair_0000__qwen_14b_judge__r00__AB",
+      "role": "llm",
+      "side": "plan_a"
+    },
+    {
+      "context": "_intensity\": \"easy\", \"workout_summary\": \"TrailRun | 5.40 km | 212 m+ | 41 min | avgHR 146\"}, {\"day_index\": 3, \"duration_minutes\": 60, \"is_hard_day\": false, \"is_rest_day\": false, \"purpose_summary\": \"To cont",
+      "pair_id": "pair_0000",
+      "plan_id": "ab_A1__r_high__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s000",
+      "record_id": "pair_0000__qwen_14b_judge__r00__BA",
+      "role": "llm",
+      "side": "plan_b"
+    }
+  ],
+  "duration_text_inconsistency": [
+    {
+      "context": "duration_minutes=60; embedded_minutes=[15]; text= TrailRun | 8.10 km | 300 m+ | 1h 15 min | avgHR 150 Absorb training and reduce fatigue. ",
+      "pair_id": "pair_0043",
+      "plan_id": "ab_A1__r_low__rc_low__ph_base__gemma_3_4b_it__src_t070__exp_t000__s002",
+      "record_id": "pair_0043__qwen_7b_judge__r00__BA",
+      "role": "llm",
+      "side": "plan_b"
+    },
+    {
+      "context": "duration_minutes=60; embedded_minutes=[15]; text= TrailRun | 8.10 km | 300 m+ | 1h 15 min | avgHR 150 Absorb training and reduce fatigue. ",
+      "pair_id": "pair_0043",
+      "plan_id": "ab_A1__r_low__rc_low__ph_base__gemma_3_4b_it__src_t070__exp_t000__s002",
+      "record_id": "pair_0043__qwen_7b_judge__r00__AB",
+      "role": "llm",
+      "side": "plan_a"
+    },
+    {
+      "context": "duration_minutes=60; embedded_minutes=[15]; text= TrailRun | 8.10 km | 300 m+ | 1h 15 min | avgHR 150 Absorb training and reduce fatigue. ",
+      "pair_id": "pair_0043",
+      "plan_id": "ab_A1__r_low__rc_low__ph_base__gemma_3_4b_it__src_t070__exp_t000__s002",
+      "record_id": "pair_0043__qwen_7b_judge__r01__BA",
+      "role": "llm",
+      "side": "plan_b"
+    },
+    {
+      "context": "duration_minutes=60; embedded_minutes=[15]; text= TrailRun | 8.10 km | 300 m+ | 1h 15 min | avgHR 150 Absorb training and reduce fatigue. ",
+      "pair_id": "pair_0043",
+      "plan_id": "ab_A1__r_low__rc_low__ph_base__gemma_3_4b_it__src_t070__exp_t000__s002",
+      "record_id": "pair_0043__qwen_7b_judge__r01__AB",
+      "role": "llm",
+      "side": "plan_a"
+    },
+    {
+      "context": "duration_minutes=60; embedded_minutes=[15]; text= TrailRun | 8.10 km | 300 m+ | 1h 15 min | avgHR 150 Absorb training and reduce fatigue. ",
+      "pair_id": "pair_0043",
+      "plan_id": "ab_A1__r_low__rc_low__ph_base__gemma_3_4b_it__src_t070__exp_t000__s002",
+      "record_id": "pair_0043__qwen_7b_judge__r02__BA",
+      "role": "llm",
+      "side": "plan_b"
+    },
+    {
+      "context": "duration_minutes=60; embedded_minutes=[15]; text= TrailRun | 8.10 km | 300 m+ | 1h 15 min | avgHR 150 Absorb training and reduce fatigue. ",
+      "pair_id": "pair_0043",
+      "plan_id": "ab_A1__r_low__rc_low__ph_base__gemma_3_4b_it__src_t070__exp_t000__s002",
+      "record_id": "pair_0043__qwen_7b_judge__r02__AB",
+      "role": "llm",
+      "side": "plan_a"
+    },
+    {
+      "context": "duration_minutes=60; embedded_minutes=[15]; text= TrailRun | 8.10 km | 300 m+ | 1h 15 min | avgHR 150 Absorb training and reduce fatigue. ",
+      "pair_id": "pair_0043",
+      "plan_id": "ab_A1__r_low__rc_low__ph_base__gemma_3_4b_it__src_t070__exp_t000__s002",
+      "record_id": "pair_0043__qwen_7b_judge__r03__AB",
+      "role": "llm",
+      "side": "plan_a"
+    },
+    {
+      "context": "duration_minutes=60; embedded_minutes=[15]; text= TrailRun | 8.10 km | 300 m+ | 1h 15 min | avgHR 150 Absorb training and reduce fatigue. ",
+      "pair_id": "pair_0043",
+      "plan_id": "ab_A1__r_low__rc_low__ph_base__gemma_3_4b_it__src_t070__exp_t000__s002",
+      "record_id": "pair_0043__qwen_7b_judge__r03__BA",
+      "role": "llm",
+      "side": "plan_b"
+    },
+    {
+      "context": "duration_minutes=60; embedded_minutes=[15]; text= TrailRun | 8.10 km | 300 m+ | 1h 15 min | avgHR 150 Absorb training and reduce fatigue. ",
+      "pair_id": "pair_0043",
+      "plan_id": "ab_A1__r_low__rc_low__ph_base__gemma_3_4b_it__src_t070__exp_t000__s002",
+      "record_id": "pair_0043__qwen_7b_judge__r04__BA",
+      "role": "llm",
+      "side": "plan_b"
+    },
+    {
+      "context": "duration_minutes=60; embedded_minutes=[15]; text= TrailRun | 8.10 km | 300 m+ | 1h 15 min | avgHR 150 Absorb training and reduce fatigue. ",
+      "pair_id": "pair_0043",
+      "plan_id": "ab_A1__r_low__rc_low__ph_base__gemma_3_4b_it__src_t070__exp_t000__s002",
+      "record_id": "pair_0043__qwen_7b_judge__r04__AB",
+      "role": "llm",
+      "side": "plan_a"
+    },
+    {
+      "context": "duration_minutes=60; embedded_minutes=[15]; text= TrailRun | 8.10 km | 300 m+ | 1h 15 min | avgHR 150 Absorb training and reduce fatigue. ",
+      "pair_id": "pair_0043",
+      "plan_id": "ab_A1__r_low__rc_low__ph_base__gemma_3_4b_it__src_t070__exp_t000__s002",
+      "record_id": "pair_0043__qwen_14b_judge__r00__AB",
+      "role": "llm",
+      "side": "plan_a"
+    },
+    {
+      "context": "duration_minutes=60; embedded_minutes=[15]; text= TrailRun | 8.10 km | 300 m+ | 1h 15 min | avgHR 150 Absorb training and reduce fatigue. ",
+      "pair_id": "pair_0043",
+      "plan_id": "ab_A1__r_low__rc_low__ph_base__gemma_3_4b_it__src_t070__exp_t000__s002",
+      "record_id": "pair_0043__qwen_14b_judge__r00__BA",
+      "role": "llm",
+      "side": "plan_b"
+    }
+  ],
+  "elevation_or_vertical": [
+    {
+      "context": "\"easy\", \"target_intensity\": \"easy\", \"workout_summary\": \"Trail Run - 4km, gentle elevation, focus on recovery.\"}], \"summary\": {\"hard_days\": 0, \"long_runs\": 0, \"plan_days\": 7, \"rest_days\": 1, \"total_minutes\": 23",
+      "pair_id": "pair_0034",
+      "plan_id": "ab_A1__r_low__rc_high__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s000",
+      "record_id": "pair_0034__qwen_7b_judge__r00__AB",
+      "role": "llm",
+      "side": "plan_a"
+    },
+    {
+      "context": "\"easy\", \"target_intensity\": \"easy\", \"workout_summary\": \"Trail Run - 4km, gentle elevation, focus on recovery.\"}], \"summary\": {\"hard_days\": 0, \"long_runs\": 0, \"plan_days\": 7, \"rest_days\": 1, \"total_minutes\": 23",
+      "pair_id": "pair_0034",
+      "plan_id": "ab_A1__r_low__rc_high__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s000",
+      "record_id": "pair_0034__qwen_7b_judge__r00__BA",
+      "role": "llm",
+      "side": "plan_b"
+    },
+    {
+      "context": "\"easy\", \"target_intensity\": \"easy\", \"workout_summary\": \"Trail Run - 4km, gentle elevation, focus on recovery.\"}], \"summary\": {\"hard_days\": 0, \"long_runs\": 0, \"plan_days\": 7, \"rest_days\": 1, \"total_minutes\": 23",
+      "pair_id": "pair_0034",
+      "plan_id": "ab_A1__r_low__rc_high__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s000",
+      "record_id": "pair_0034__qwen_7b_judge__r01__BA",
+      "role": "llm",
+      "side": "plan_b"
+    },
+    {
+      "context": "\"easy\", \"target_intensity\": \"easy\", \"workout_summary\": \"Trail Run - 4km, gentle elevation, focus on recovery.\"}], \"summary\": {\"hard_days\": 0, \"long_runs\": 0, \"plan_days\": 7, \"rest_days\": 1, \"total_minutes\": 23",
+      "pair_id": "pair_0034",
+      "plan_id": "ab_A1__r_low__rc_high__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s000",
+      "record_id": "pair_0034__qwen_7b_judge__r01__AB",
+      "role": "llm",
+      "side": "plan_a"
+    },
+    {
+      "context": "\"easy\", \"target_intensity\": \"easy\", \"workout_summary\": \"Trail Run - 4km, gentle elevation, focus on recovery.\"}], \"summary\": {\"hard_days\": 0, \"long_runs\": 0, \"plan_days\": 7, \"rest_days\": 1, \"total_minutes\": 23",
+      "pair_id": "pair_0034",
+      "plan_id": "ab_A1__r_low__rc_high__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s000",
+      "record_id": "pair_0034__qwen_7b_judge__r02__BA",
+      "role": "llm",
+      "side": "plan_b"
+    },
+    {
+      "context": "\"easy\", \"target_intensity\": \"easy\", \"workout_summary\": \"Trail Run - 4km, gentle elevation, focus on recovery.\"}], \"summary\": {\"hard_days\": 0, \"long_runs\": 0, \"plan_days\": 7, \"rest_days\": 1, \"total_minutes\": 23",
+      "pair_id": "pair_0034",
+      "plan_id": "ab_A1__r_low__rc_high__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s000",
+      "record_id": "pair_0034__qwen_7b_judge__r02__AB",
+      "role": "llm",
+      "side": "plan_a"
+    },
+    {
+      "context": "\"easy\", \"target_intensity\": \"easy\", \"workout_summary\": \"Trail Run - 4km, gentle elevation, focus on recovery.\"}], \"summary\": {\"hard_days\": 0, \"long_runs\": 0, \"plan_days\": 7, \"rest_days\": 1, \"total_minutes\": 23",
+      "pair_id": "pair_0034",
+      "plan_id": "ab_A1__r_low__rc_high__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s000",
+      "record_id": "pair_0034__qwen_7b_judge__r03__AB",
+      "role": "llm",
+      "side": "plan_a"
+    },
+    {
+      "context": "\"easy\", \"target_intensity\": \"easy\", \"workout_summary\": \"Trail Run - 4km, gentle elevation, focus on recovery.\"}], \"summary\": {\"hard_days\": 0, \"long_runs\": 0, \"plan_days\": 7, \"rest_days\": 1, \"total_minutes\": 23",
+      "pair_id": "pair_0034",
+      "plan_id": "ab_A1__r_low__rc_high__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s000",
+      "record_id": "pair_0034__qwen_7b_judge__r03__BA",
+      "role": "llm",
+      "side": "plan_b"
+    },
+    {
+      "context": "\"easy\", \"target_intensity\": \"easy\", \"workout_summary\": \"Trail Run - 4km, gentle elevation, focus on recovery.\"}], \"summary\": {\"hard_days\": 0, \"long_runs\": 0, \"plan_days\": 7, \"rest_days\": 1, \"total_minutes\": 23",
+      "pair_id": "pair_0034",
+      "plan_id": "ab_A1__r_low__rc_high__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s000",
+      "record_id": "pair_0034__qwen_7b_judge__r04__BA",
+      "role": "llm",
+      "side": "plan_b"
+    },
+    {
+      "context": "\"easy\", \"target_intensity\": \"easy\", \"workout_summary\": \"Trail Run - 4km, gentle elevation, focus on recovery.\"}], \"summary\": {\"hard_days\": 0, \"long_runs\": 0, \"plan_days\": 7, \"rest_days\": 1, \"total_minutes\": 23",
+      "pair_id": "pair_0034",
+      "plan_id": "ab_A1__r_low__rc_high__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s000",
+      "record_id": "pair_0034__qwen_7b_judge__r04__AB",
+      "role": "llm",
+      "side": "plan_a"
+    },
+    {
+      "context": "\"easy\", \"target_intensity\": \"easy\", \"workout_summary\": \"Trail Run - 4km, gentle elevation, focus on recovery.\"}], \"summary\": {\"hard_days\": 0, \"long_runs\": 0, \"plan_days\": 7, \"rest_days\": 1, \"total_minutes\": 23",
+      "pair_id": "pair_0034",
+      "plan_id": "ab_A1__r_low__rc_high__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s000",
+      "record_id": "pair_0034__qwen_14b_judge__r00__AB",
+      "role": "llm",
+      "side": "plan_a"
+    },
+    {
+      "context": "\"easy\", \"target_intensity\": \"easy\", \"workout_summary\": \"Trail Run - 4km, gentle elevation, focus on recovery.\"}], \"summary\": {\"hard_days\": 0, \"long_runs\": 0, \"plan_days\": 7, \"rest_days\": 1, \"total_minutes\": 23",
+      "pair_id": "pair_0034",
+      "plan_id": "ab_A1__r_low__rc_high__ph_peak__gemma_3_4b_it__src_t070__exp_t000__s000",
+      "record_id": "pair_0034__qwen_14b_judge__r00__BA",
+      "role": "llm",
+      "side": "plan_b"
+    }
+  ],
+  "ellipsis": [
+    {
+      "context": "g aerobic endurance and hill strength, supporting the primary goal of developing…\", \"session_type\": \"aerobic\", \"target_intensity\": \"easy\", \"workout_summary\": \"53 min steady aerobic run on trail.\"}, {\"d",
+      "pair_id": "pair_0000",
+      "plan_id": "ab_A1__r_high__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s000",
+      "record_id": "pair_0000__qwen_7b_judge__r00__AB",
+      "role": "llm",
+      "side": "plan_a"
+    },
+    {
+      "context": "g aerobic endurance and hill strength, supporting the primary goal of developing…\", \"session_type\": \"aerobic\", \"target_intensity\": \"easy\", \"workout_summary\": \"53 min steady aerobic run on trail.\"}, {\"d",
+      "pair_id": "pair_0000",
+      "plan_id": "ab_A1__r_high__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s000",
+      "record_id": "pair_0000__qwen_7b_judge__r00__BA",
+      "role": "llm",
+      "side": "plan_b"
+    },
+    {
+      "context": "g aerobic endurance and hill strength, supporting the primary goal of developing…\", \"session_type\": \"aerobic\", \"target_intensity\": \"easy\", \"workout_summary\": \"53 min steady aerobic run on trail.\"}, {\"d",
+      "pair_id": "pair_0000",
+      "plan_id": "ab_A1__r_high__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s000",
+      "record_id": "pair_0000__qwen_7b_judge__r01__BA",
+      "role": "llm",
+      "side": "plan_b"
+    },
+    {
+      "context": "g aerobic endurance and hill strength, supporting the primary goal of developing…\", \"session_type\": \"aerobic\", \"target_intensity\": \"easy\", \"workout_summary\": \"53 min steady aerobic run on trail.\"}, {\"d",
+      "pair_id": "pair_0000",
+      "plan_id": "ab_A1__r_high__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s000",
+      "record_id": "pair_0000__qwen_7b_judge__r01__AB",
+      "role": "llm",
+      "side": "plan_a"
+    },
+    {
+      "context": "g aerobic endurance and hill strength, supporting the primary goal of developing…\", \"session_type\": \"aerobic\", \"target_intensity\": \"easy\", \"workout_summary\": \"53 min steady aerobic run on trail.\"}, {\"d",
+      "pair_id": "pair_0000",
+      "plan_id": "ab_A1__r_high__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s000",
+      "record_id": "pair_0000__qwen_7b_judge__r02__AB",
+      "role": "llm",
+      "side": "plan_a"
+    },
+    {
+      "context": "g aerobic endurance and hill strength, supporting the primary goal of developing…\", \"session_type\": \"aerobic\", \"target_intensity\": \"easy\", \"workout_summary\": \"53 min steady aerobic run on trail.\"}, {\"d",
+      "pair_id": "pair_0000",
+      "plan_id": "ab_A1__r_high__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s000",
+      "record_id": "pair_0000__qwen_7b_judge__r02__BA",
+      "role": "llm",
+      "side": "plan_b"
+    },
+    {
+      "context": "g aerobic endurance and hill strength, supporting the primary goal of developing…\", \"session_type\": \"aerobic\", \"target_intensity\": \"easy\", \"workout_summary\": \"53 min steady aerobic run on trail.\"}, {\"d",
+      "pair_id": "pair_0000",
+      "plan_id": "ab_A1__r_high__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s000",
+      "record_id": "pair_0000__qwen_7b_judge__r03__BA",
+      "role": "llm",
+      "side": "plan_b"
+    },
+    {
+      "context": "g aerobic endurance and hill strength, supporting the primary goal of developing…\", \"session_type\": \"aerobic\", \"target_intensity\": \"easy\", \"workout_summary\": \"53 min steady aerobic run on trail.\"}, {\"d",
+      "pair_id": "pair_0000",
+      "plan_id": "ab_A1__r_high__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s000",
+      "record_id": "pair_0000__qwen_7b_judge__r03__AB",
+      "role": "llm",
+      "side": "plan_a"
+    },
+    {
+      "context": "g aerobic endurance and hill strength, supporting the primary goal of developing…\", \"session_type\": \"aerobic\", \"target_intensity\": \"easy\", \"workout_summary\": \"53 min steady aerobic run on trail.\"}, {\"d",
+      "pair_id": "pair_0000",
+      "plan_id": "ab_A1__r_high__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s000",
+      "record_id": "pair_0000__qwen_7b_judge__r04__BA",
+      "role": "llm",
+      "side": "plan_b"
+    },
+    {
+      "context": "g aerobic endurance and hill strength, supporting the primary goal of developing…\", \"session_type\": \"aerobic\", \"target_intensity\": \"easy\", \"workout_summary\": \"53 min steady aerobic run on trail.\"}, {\"d",
+      "pair_id": "pair_0000",
+      "plan_id": "ab_A1__r_high__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s000",
+      "record_id": "pair_0000__qwen_7b_judge__r04__AB",
+      "role": "llm",
+      "side": "plan_a"
+    },
+    {
+      "context": "g aerobic endurance and hill strength, supporting the primary goal of developing…\", \"session_type\": \"aerobic\", \"target_intensity\": \"easy\", \"workout_summary\": \"53 min steady aerobic run on trail.\"}, {\"d",
+      "pair_id": "pair_0000",
+      "plan_id": "ab_A1__r_high__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s000",
+      "record_id": "pair_0000__qwen_14b_judge__r00__AB",
+      "role": "llm",
+      "side": "plan_a"
+    },
+    {
+      "context": "g aerobic endurance and hill strength, supporting the primary goal of developing…\", \"session_type\": \"aerobic\", \"target_intensity\": \"easy\", \"workout_summary\": \"53 min steady aerobic run on trail.\"}, {\"d",
+      "pair_id": "pair_0000",
+      "plan_id": "ab_A1__r_high__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s000",
+      "record_id": "pair_0000__qwen_14b_judge__r00__BA",
+      "role": "llm",
+      "side": "plan_b"
+    }
+  ],
+  "km_unit": [
+    {
+      "context": "on_type\": \"aerobic\", \"target_intensity\": \"easy\", \"workout_summary\": \"TrailRun | 5.40 km | 212 m+ | 41 min | avgHR 146\"}, {\"day_index\": 3, \"duration_minutes\": 60, \"is_hard_day\": false, \"is_rest_day\": false, \"",
+      "pair_id": "pair_0000",
+      "plan_id": "ab_A1__r_high__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s000",
+      "record_id": "pair_0000__qwen_7b_judge__r00__AB",
+      "role": "llm",
+      "side": "plan_a"
+    },
+    {
+      "context": "on_type\": \"aerobic\", \"target_intensity\": \"easy\", \"workout_summary\": \"TrailRun | 5.40 km | 212 m+ | 41 min | avgHR 146\"}, {\"day_index\": 3, \"duration_minutes\": 60, \"is_hard_day\": false, \"is_rest_day\": false, \"",
+      "pair_id": "pair_0000",
+      "plan_id": "ab_A1__r_high__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s000",
+      "record_id": "pair_0000__qwen_7b_judge__r00__BA",
+      "role": "llm",
+      "side": "plan_b"
+    },
+    {
+      "context": "on_type\": \"aerobic\", \"target_intensity\": \"easy\", \"workout_summary\": \"TrailRun | 5.40 km | 212 m+ | 41 min | avgHR 146\"}, {\"day_index\": 3, \"duration_minutes\": 60, \"is_hard_day\": false, \"is_rest_day\": false, \"",
+      "pair_id": "pair_0000",
+      "plan_id": "ab_A1__r_high__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s000",
+      "record_id": "pair_0000__qwen_7b_judge__r01__BA",
+      "role": "llm",
+      "side": "plan_b"
+    },
+    {
+      "context": "on_type\": \"aerobic\", \"target_intensity\": \"easy\", \"workout_summary\": \"TrailRun | 5.40 km | 212 m+ | 41 min | avgHR 146\"}, {\"day_index\": 3, \"duration_minutes\": 60, \"is_hard_day\": false, \"is_rest_day\": false, \"",
+      "pair_id": "pair_0000",
+      "plan_id": "ab_A1__r_high__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s000",
+      "record_id": "pair_0000__qwen_7b_judge__r01__AB",
+      "role": "llm",
+      "side": "plan_a"
+    },
+    {
+      "context": "on_type\": \"aerobic\", \"target_intensity\": \"easy\", \"workout_summary\": \"TrailRun | 5.40 km | 212 m+ | 41 min | avgHR 146\"}, {\"day_index\": 3, \"duration_minutes\": 60, \"is_hard_day\": false, \"is_rest_day\": false, \"",
+      "pair_id": "pair_0000",
+      "plan_id": "ab_A1__r_high__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s000",
+      "record_id": "pair_0000__qwen_7b_judge__r02__AB",
+      "role": "llm",
+      "side": "plan_a"
+    },
+    {
+      "context": "on_type\": \"aerobic\", \"target_intensity\": \"easy\", \"workout_summary\": \"TrailRun | 5.40 km | 212 m+ | 41 min | avgHR 146\"}, {\"day_index\": 3, \"duration_minutes\": 60, \"is_hard_day\": false, \"is_rest_day\": false, \"",
+      "pair_id": "pair_0000",
+      "plan_id": "ab_A1__r_high__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s000",
+      "record_id": "pair_0000__qwen_7b_judge__r02__BA",
+      "role": "llm",
+      "side": "plan_b"
+    },
+    {
+      "context": "on_type\": \"aerobic\", \"target_intensity\": \"easy\", \"workout_summary\": \"TrailRun | 5.40 km | 212 m+ | 41 min | avgHR 146\"}, {\"day_index\": 3, \"duration_minutes\": 60, \"is_hard_day\": false, \"is_rest_day\": false, \"",
+      "pair_id": "pair_0000",
+      "plan_id": "ab_A1__r_high__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s000",
+      "record_id": "pair_0000__qwen_7b_judge__r03__BA",
+      "role": "llm",
+      "side": "plan_b"
+    },
+    {
+      "context": "on_type\": \"aerobic\", \"target_intensity\": \"easy\", \"workout_summary\": \"TrailRun | 5.40 km | 212 m+ | 41 min | avgHR 146\"}, {\"day_index\": 3, \"duration_minutes\": 60, \"is_hard_day\": false, \"is_rest_day\": false, \"",
+      "pair_id": "pair_0000",
+      "plan_id": "ab_A1__r_high__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s000",
+      "record_id": "pair_0000__qwen_7b_judge__r03__AB",
+      "role": "llm",
+      "side": "plan_a"
+    },
+    {
+      "context": "on_type\": \"aerobic\", \"target_intensity\": \"easy\", \"workout_summary\": \"TrailRun | 5.40 km | 212 m+ | 41 min | avgHR 146\"}, {\"day_index\": 3, \"duration_minutes\": 60, \"is_hard_day\": false, \"is_rest_day\": false, \"",
+      "pair_id": "pair_0000",
+      "plan_id": "ab_A1__r_high__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s000",
+      "record_id": "pair_0000__qwen_7b_judge__r04__BA",
+      "role": "llm",
+      "side": "plan_b"
+    },
+    {
+      "context": "on_type\": \"aerobic\", \"target_intensity\": \"easy\", \"workout_summary\": \"TrailRun | 5.40 km | 212 m+ | 41 min | avgHR 146\"}, {\"day_index\": 3, \"duration_minutes\": 60, \"is_hard_day\": false, \"is_rest_day\": false, \"",
+      "pair_id": "pair_0000",
+      "plan_id": "ab_A1__r_high__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s000",
+      "record_id": "pair_0000__qwen_7b_judge__r04__AB",
+      "role": "llm",
+      "side": "plan_a"
+    },
+    {
+      "context": "on_type\": \"aerobic\", \"target_intensity\": \"easy\", \"workout_summary\": \"TrailRun | 5.40 km | 212 m+ | 41 min | avgHR 146\"}, {\"day_index\": 3, \"duration_minutes\": 60, \"is_hard_day\": false, \"is_rest_day\": false, \"",
+      "pair_id": "pair_0000",
+      "plan_id": "ab_A1__r_high__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s000",
+      "record_id": "pair_0000__qwen_14b_judge__r00__AB",
+      "role": "llm",
+      "side": "plan_a"
+    },
+    {
+      "context": "on_type\": \"aerobic\", \"target_intensity\": \"easy\", \"workout_summary\": \"TrailRun | 5.40 km | 212 m+ | 41 min | avgHR 146\"}, {\"day_index\": 3, \"duration_minutes\": 60, \"is_hard_day\": false, \"is_rest_day\": false, \"",
+      "pair_id": "pair_0000",
+      "plan_id": "ab_A1__r_high__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s000",
+      "record_id": "pair_0000__qwen_14b_judge__r00__BA",
+      "role": "llm",
+      "side": "plan_b"
+    }
+  ],
+  "trailrun_pipe": [
+    {
+      "context": "g…\", \"session_type\": \"aerobic\", \"target_intensity\": \"easy\", \"workout_summary\": \"TrailRun | 5.40 km | 212 m+ | 41 min | avgHR 146\"}, {\"day_index\": 3, \"duration_minutes\": 60, \"is_hard_day\": false, \"is_rest_day\": ",
+      "pair_id": "pair_0000",
+      "plan_id": "ab_A1__r_high__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s000",
+      "record_id": "pair_0000__qwen_7b_judge__r00__AB",
+      "role": "llm",
+      "side": "plan_a"
+    },
+    {
+      "context": "g…\", \"session_type\": \"aerobic\", \"target_intensity\": \"easy\", \"workout_summary\": \"TrailRun | 5.40 km | 212 m+ | 41 min | avgHR 146\"}, {\"day_index\": 3, \"duration_minutes\": 60, \"is_hard_day\": false, \"is_rest_day\": ",
+      "pair_id": "pair_0000",
+      "plan_id": "ab_A1__r_high__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s000",
+      "record_id": "pair_0000__qwen_7b_judge__r00__BA",
+      "role": "llm",
+      "side": "plan_b"
+    },
+    {
+      "context": "g…\", \"session_type\": \"aerobic\", \"target_intensity\": \"easy\", \"workout_summary\": \"TrailRun | 5.40 km | 212 m+ | 41 min | avgHR 146\"}, {\"day_index\": 3, \"duration_minutes\": 60, \"is_hard_day\": false, \"is_rest_day\": ",
+      "pair_id": "pair_0000",
+      "plan_id": "ab_A1__r_high__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s000",
+      "record_id": "pair_0000__qwen_7b_judge__r01__BA",
+      "role": "llm",
+      "side": "plan_b"
+    },
+    {
+      "context": "g…\", \"session_type\": \"aerobic\", \"target_intensity\": \"easy\", \"workout_summary\": \"TrailRun | 5.40 km | 212 m+ | 41 min | avgHR 146\"}, {\"day_index\": 3, \"duration_minutes\": 60, \"is_hard_day\": false, \"is_rest_day\": ",
+      "pair_id": "pair_0000",
+      "plan_id": "ab_A1__r_high__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s000",
+      "record_id": "pair_0000__qwen_7b_judge__r01__AB",
+      "role": "llm",
+      "side": "plan_a"
+    },
+    {
+      "context": "g…\", \"session_type\": \"aerobic\", \"target_intensity\": \"easy\", \"workout_summary\": \"TrailRun | 5.40 km | 212 m+ | 41 min | avgHR 146\"}, {\"day_index\": 3, \"duration_minutes\": 60, \"is_hard_day\": false, \"is_rest_day\": ",
+      "pair_id": "pair_0000",
+      "plan_id": "ab_A1__r_high__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s000",
+      "record_id": "pair_0000__qwen_7b_judge__r02__AB",
+      "role": "llm",
+      "side": "plan_a"
+    },
+    {
+      "context": "g…\", \"session_type\": \"aerobic\", \"target_intensity\": \"easy\", \"workout_summary\": \"TrailRun | 5.40 km | 212 m+ | 41 min | avgHR 146\"}, {\"day_index\": 3, \"duration_minutes\": 60, \"is_hard_day\": false, \"is_rest_day\": ",
+      "pair_id": "pair_0000",
+      "plan_id": "ab_A1__r_high__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s000",
+      "record_id": "pair_0000__qwen_7b_judge__r02__BA",
+      "role": "llm",
+      "side": "plan_b"
+    },
+    {
+      "context": "g…\", \"session_type\": \"aerobic\", \"target_intensity\": \"easy\", \"workout_summary\": \"TrailRun | 5.40 km | 212 m+ | 41 min | avgHR 146\"}, {\"day_index\": 3, \"duration_minutes\": 60, \"is_hard_day\": false, \"is_rest_day\": ",
+      "pair_id": "pair_0000",
+      "plan_id": "ab_A1__r_high__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s000",
+      "record_id": "pair_0000__qwen_7b_judge__r03__BA",
+      "role": "llm",
+      "side": "plan_b"
+    },
+    {
+      "context": "g…\", \"session_type\": \"aerobic\", \"target_intensity\": \"easy\", \"workout_summary\": \"TrailRun | 5.40 km | 212 m+ | 41 min | avgHR 146\"}, {\"day_index\": 3, \"duration_minutes\": 60, \"is_hard_day\": false, \"is_rest_day\": ",
+      "pair_id": "pair_0000",
+      "plan_id": "ab_A1__r_high__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s000",
+      "record_id": "pair_0000__qwen_7b_judge__r03__AB",
+      "role": "llm",
+      "side": "plan_a"
+    },
+    {
+      "context": "g…\", \"session_type\": \"aerobic\", \"target_intensity\": \"easy\", \"workout_summary\": \"TrailRun | 5.40 km | 212 m+ | 41 min | avgHR 146\"}, {\"day_index\": 3, \"duration_minutes\": 60, \"is_hard_day\": false, \"is_rest_day\": ",
+      "pair_id": "pair_0000",
+      "plan_id": "ab_A1__r_high__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s000",
+      "record_id": "pair_0000__qwen_7b_judge__r04__BA",
+      "role": "llm",
+      "side": "plan_b"
+    },
+    {
+      "context": "g…\", \"session_type\": \"aerobic\", \"target_intensity\": \"easy\", \"workout_summary\": \"TrailRun | 5.40 km | 212 m+ | 41 min | avgHR 146\"}, {\"day_index\": 3, \"duration_minutes\": 60, \"is_hard_day\": false, \"is_rest_day\": ",
+      "pair_id": "pair_0000",
+      "plan_id": "ab_A1__r_high__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s000",
+      "record_id": "pair_0000__qwen_7b_judge__r04__AB",
+      "role": "llm",
+      "side": "plan_a"
+    },
+    {
+      "context": "g…\", \"session_type\": \"aerobic\", \"target_intensity\": \"easy\", \"workout_summary\": \"TrailRun | 5.40 km | 212 m+ | 41 min | avgHR 146\"}, {\"day_index\": 3, \"duration_minutes\": 60, \"is_hard_day\": false, \"is_rest_day\": ",
+      "pair_id": "pair_0000",
+      "plan_id": "ab_A1__r_high__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s000",
+      "record_id": "pair_0000__qwen_14b_judge__r00__AB",
+      "role": "llm",
+      "side": "plan_a"
+    },
+    {
+      "context": "g…\", \"session_type\": \"aerobic\", \"target_intensity\": \"easy\", \"workout_summary\": \"TrailRun | 5.40 km | 212 m+ | 41 min | avgHR 146\"}, {\"day_index\": 3, \"duration_minutes\": 60, \"is_hard_day\": false, \"is_rest_day\": ",
+      "pair_id": "pair_0000",
+      "plan_id": "ab_A1__r_high__rc_high__ph_base__gemma_3_4b_it__src_t070__exp_t000__s000",
+      "record_id": "pair_0000__qwen_14b_judge__r00__BA",
+      "role": "llm",
+      "side": "plan_b"
+    }
+  ]
+}

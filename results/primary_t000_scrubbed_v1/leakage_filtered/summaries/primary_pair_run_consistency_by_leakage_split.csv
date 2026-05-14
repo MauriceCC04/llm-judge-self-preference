@@ -1,0 +1,9 @@
+category,leakage_split,n,rate
+position_consistent_plan_a,clean,861,0.4179611650485437
+position_consistent_plan_b,clean,90,0.043689320388349516
+source_consistent_llm,clean,234,0.11359223300970873
+source_consistent_programmatic,clean,875,0.42475728155339804
+position_consistent_plan_a,flagged,1390,0.47278911564625853
+position_consistent_plan_b,flagged,60,0.02040816326530612
+source_consistent_llm,flagged,392,0.13333333333333333
+source_consistent_programmatic,flagged,1098,0.373469387755102

@@ -137,6 +137,7 @@ def post_chat_completion(
         "messages": messages,
         "temperature": temperature,
         "max_tokens": max_tokens,
+        "response_format": {"type": "json_object"},
     }
     data = json.dumps(payload).encode("utf-8")
     req = urllib.request.Request(
@@ -184,14 +185,6 @@ def normalize_marker_result(raw: Dict[str, Any]) -> Dict[str, Any]:
         if not isinstance(m, dict):
             raise ValueError(f"Missing marker {marker}")
 
-        preferred = str(m.get("preferred", "")).strip().lower()
-        if preferred in {"a", "plan a", "plana"}:
-            preferred = "plan_a"
-        if preferred in {"b", "plan b", "planb"}:
-            preferred = "plan_b"
-        if preferred not in {"plan_a", "plan_b", "tie"}:
-            raise ValueError(f"Bad preferred value for {marker}: {preferred!r}")
-
         def score(name: str) -> Optional[int]:
             try:
                 v = int(float(m.get(name)))
@@ -203,19 +196,53 @@ def normalize_marker_result(raw: Dict[str, Any]) -> Dict[str, Any]:
                 v = 5
             return v
 
+        plan_a_score = score("plan_a_score")
+        plan_b_score = score("plan_b_score")
+
+        preferred_raw = str(m.get("preferred", "")).strip().lower()
+        preferred = preferred_raw
+        if preferred in {"a", "plan a", "plana"}:
+            preferred = "plan_a"
+        if preferred in {"b", "plan b", "planb"}:
+            preferred = "plan_b"
+        if preferred in {"", "none", "null", "n/a", "na"}:
+            preferred = ""
+
+        normalization_warnings = []
+        if preferred not in {"plan_a", "plan_b", "tie"}:
+            if plan_a_score is not None and plan_b_score is not None:
+                if plan_a_score > plan_b_score:
+                    preferred = "plan_a"
+                elif plan_b_score > plan_a_score:
+                    preferred = "plan_b"
+                else:
+                    preferred = "tie"
+                normalization_warnings.append(
+                    f"repaired_preferred_from_scores: raw={preferred_raw!r}"
+                )
+            else:
+                preferred = "tie"
+                normalization_warnings.append(
+                    f"repaired_preferred_to_tie_without_scores: raw={preferred_raw!r}"
+                )
+
         try:
             confidence = float(m.get("confidence", 0.0))
         except Exception:
             confidence = 0.0
         confidence = max(0.0, min(1.0, confidence))
 
-        out[marker] = {
+        out_marker = {
             "preferred": preferred,
-            "plan_a_score": score("plan_a_score"),
-            "plan_b_score": score("plan_b_score"),
+            "plan_a_score": plan_a_score,
+            "plan_b_score": plan_b_score,
             "confidence": confidence,
             "rationale": str(m.get("rationale", ""))[:500],
         }
+        if normalization_warnings:
+            out_marker["normalization_warnings"] = normalization_warnings
+
+        out[marker] = out_marker
 
     return {
         "markers": out,

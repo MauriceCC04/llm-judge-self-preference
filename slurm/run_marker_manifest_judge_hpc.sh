@@ -9,7 +9,7 @@
 #SBATCH --time=20:00:00
 #SBATCH --output=out/manifest_judge_%x_%j.out
 #SBATCH --error=err/manifest_judge_%x_%j.err
-#SBATCH --exclude=gnode04
+#SBATCH --exclude=gnode02
 
 set -euo pipefail
 

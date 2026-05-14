@@ -1,0 +1,4 @@
+{"error": "JSONDecodeError(\"Expecting ',' delimiter: line 1 column 1839 (char 1838)\")", "judge": "gemma_4b_judge", "record_id": "pair_0115__gemma_4b_judge__r01__AB", "timestamp": "2026-05-14T08:45:21.212741+00:00"}
+{"error": "JSONDecodeError(\"Expecting ',' delimiter: line 1 column 1839 (char 1838)\")", "judge": "gemma_4b_judge", "record_id": "pair_0115__gemma_4b_judge__r02__AB", "timestamp": "2026-05-14T08:45:34.143569+00:00"}
+{"error": "JSONDecodeError(\"Expecting ',' delimiter: line 1 column 1839 (char 1838)\")", "judge": "gemma_4b_judge", "record_id": "pair_0115__gemma_4b_judge__r03__AB", "timestamp": "2026-05-14T08:45:40.851267+00:00"}
+{"error": "JSONDecodeError(\"Expecting ',' delimiter: line 1 column 1839 (char 1838)\")", "judge": "gemma_4b_judge", "record_id": "pair_0115__gemma_4b_judge__r04__AB", "timestamp": "2026-05-14T08:46:00.006634+00:00"}

@@ -1,165 +1,95 @@
-# Temperature Sweeps and Sensitivity Runs
+# Temperature Sweeps and Evaluation Conditions
 
-This document defines how generation and evaluation temperature conditions should be handled.
+This document records the temperature conditions used in the completed study and how future temperature sensitivity checks should be handled.
 
-## Current primary temperature state
+## Final primary condition
 
-The primary frozen pairwise study uses:
-
-```text
-source generation temperature: src_t070
-generation explanation temperature: exp_t000
-primary judge evaluation temperature: t000
-```
-
-Primary artifact root:
+The completed primary and marker-level results use:
 
 ```text
-artifacts/gen_src_t070_exp_t000/frozen_primary_v1/
+JUDGE_TEMPERATURE=0.0
 ```
 
-Primary pairwise output:
+This is encoded in output names as:
 
 ```text
-artifacts/gen_src_t070_exp_t000/frozen_primary_v1/judgments_eval_t000_scrubbed_v1_staged/pairwise_all_judges_canonical_masked_scrubbed_v1_t000.jsonl
+t000
 ```
 
-Primary marker output directory:
+Primary pairwise outputs:
+
+```text
+artifacts/gen_src_t070_exp_t000/frozen_primary_v1/judgments_eval_t000_scrubbed_v1_staged/
+```
+
+Marker outputs:
 
 ```text
 artifacts/gen_src_t070_exp_t000/frozen_primary_v1/marker_eval_t000_scrubbed_v1_staged/
 ```
 
-The uploaded explicit marker archive currently contains Qwen-only marker outputs at `t000`.
-
-## Rule: do not mix temperature conditions
-
-Each evaluation temperature must use a separate output directory and separate combined file.
-
-Recommended naming:
+Derived results:
 
 ```text
-judgments_eval_t000_scrubbed_v1_staged/
-judgments_eval_t020_scrubbed_v1_sensitivity/
-judgments_eval_t070_scrubbed_v1_sensitivity/
-
-marker_eval_t000_scrubbed_v1_staged/
-marker_eval_t020_scrubbed_v1_sensitivity/
-marker_eval_t070_scrubbed_v1_sensitivity/
+results/primary_t000_scrubbed_v1/
 ```
 
-Do not append sensitivity runs into the primary `t000` directories.
+## Completed temperature status
 
-## Primary vs sensitivity
+The finished report should treat `t000` as the primary completed evaluation condition.
 
-Primary result:
+Temperature sweeps beyond `t000` were not required to complete the current report. If future sweeps are performed, they should be treated as sensitivity analyses and stored in separate directories.
+
+## Do not mix conditions
+
+Never mix generation/evaluation temperature conditions in the same output directory.
+
+Use separate names such as:
 
 ```text
-eval_t000 on canonical_masked_scrubbed_v1 judge inputs
+judgments_eval_t020_scrubbed_v1_staged/
+marker_eval_t020_scrubbed_v1_staged/
+results/primary_t020_scrubbed_v1/
 ```
 
-Sensitivity results may explore:
+The current completed outputs are strictly `t000`.
 
-- `eval_t020`
-- `eval_t070`
-- other temperatures if justified
+## Recommended future sweep design
 
-Sensitivity results should not replace the primary result. They should be reported separately as robustness checks.
+If future time permits, run a smaller temperature sensitivity check rather than a full rerun:
 
-## Required metadata
+- Use the same frozen matched pairs and judge inputs.
+- Use the same judge set.
+- Keep AB/BA order and repeated runs.
+- Store outputs in temperature-specific directories.
+- Do not combine temperature conditions in the primary analysis.
 
-Every temperature-specific record must include or be recoverable from file path/metadata:
-
-- judge model
-- judge family
-- source family
-- pair ID
-- run index
-- AB/BA order
-- evaluation temperature
-- judge view / masking version
-- marker schema version for marker runs
-
-## Required checks before a temperature run
-
-For pairwise:
-
-```bash
-MANIFEST="artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/pairwise_eval_manifest.jsonl"
-wc -l "$MANIFEST"
-jq -r '.judge' "$MANIFEST" | sort | uniq -c
-jq -r '.order' "$MANIFEST" | sort | uniq -c
-jq -r '.run' "$MANIFEST" | sort | uniq -c
-```
-
-Expected:
+Possible sensitivity temperatures:
 
 ```text
-10000 rows
-2500 per judge
-5000 AB / 5000 BA
-2000 per run index
+0.0 primary
+0.2 sensitivity
+0.7 stress/sensitivity only
 ```
 
-For marker runs, confirm the marker output directory is temperature-specific and empty or intentionally resumable.
+Because the current primary results show strong position effects, any temperature sensitivity analysis must include AB/BA pair-run consistency, not just row-level win rates.
 
-## Pairwise sensitivity run example
+## Required gates for any future temperature run
 
-```bash
-PRIMARY_MANIFEST="artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/pairwise_eval_manifest.jsonl"
-OUT="artifacts/gen_src_t070_exp_t000/frozen_primary_v1/judgments_eval_t020_scrubbed_v1_sensitivity"
-mkdir -p "$OUT"
+Before launching a full future temperature condition:
 
-VLLM_PORT=8820 \
-JUDGE_NAME=qwen_7b_judge \
-MANIFEST="$PRIMARY_MANIFEST" \
-OUTPUT_DIR="$OUT" \
-JUDGE_TEMPERATURE=0.2 \
-CLEANUP_MODEL_CACHE=0 \
-sbatch slurm/run_manifest_judge_hpc.sh
+- Frozen matched pairs exist and have at least 250 pairs.
+- Manifest has exactly 10,000 records for the full design.
+- Exactly 4 Qwen/Gemma judges are configured.
+- Both AB and BA orders are present.
+- Source masking audit passes.
+- Output directory is temperature-specific.
+- Existing primary `t000` outputs are not overwritten.
+
+## Final report wording
+
+Use this wording for the completed report:
+
+```text
+The primary analyses use deterministic judge settings at temperature 0.0. Additional temperature sweeps were not included in the completed primary report. All reported primary and marker-level results are from the frozen `t000` evaluation condition.
 ```
-
-## Marker sensitivity run example
-
-```bash
-PRIMARY_MANIFEST="artifacts/gen_src_t070_exp_t000/frozen_primary_v1/eval_manifest/pairwise_eval_manifest.jsonl"
-OUT="artifacts/gen_src_t070_exp_t000/frozen_primary_v1/marker_eval_t020_scrubbed_v1_sensitivity"
-mkdir -p "$OUT"
-
-VLLM_PORT=8821 \
-JUDGE_NAME=qwen_7b_judge \
-MANIFEST="$PRIMARY_MANIFEST" \
-OUTPUT_DIR="$OUT" \
-JUDGE_TEMPERATURE=0.2 \
-TRAILTRAINING_STRUCTURED_MAX_TOKENS=768 \
-MARKER_MAX_TOKENS=768 \
-CLEANUP_MODEL_CACHE=0 \
-sbatch slurm/run_marker_manifest_judge_hpc.sh
-```
-
-## Reporting temperature checks
-
-For every temperature condition, report:
-
-- number of records
-- duplicate record IDs
-- per-judge row counts
-- AB/BA balance
-- run balance
-- primary LLM win rates
-- pair-run consistency
-- marker-level rates if marker run
-- comparison to primary `t000`
-
-Do not pool temperatures in primary tables unless explicitly modeling temperature as a factor.
-
-## Current status
-
-As of the uploaded frozen artifact bundle:
-
-- Primary pairwise `eval_t000` is complete.
-- Explicit marker `eval_t000` is complete for Qwen judges only.
-- No complete Gemma marker files are present in the uploaded marker archive.
-- No complete nonzero-temperature sensitivity results are present in the uploaded artifact bundle.
-
-Future temperature runs should be clearly labeled as sensitivity analyses.

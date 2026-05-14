@@ -1,370 +1,207 @@
-# Incidents and Reproducibility Notes
+# Incidents, Fixes, and Final Provenance Notes
 
-This document records issues encountered during the Qwen/Gemma study and the fixes that should remain visible for reproducibility.
+This document records the major operational and methodological incidents encountered during the completed Qwen/Gemma study, along with their fixes and final status.
 
-## 1. Initial matching failure from inappropriate score
+## Incident 1: Original matcher produced only 30 pairs
 
 ### Symptom
 
-The original matcher produced only about 30 matched pairs from a 1,024-plan matching pool.
-
-Observed state:
-
-```text
-Pairs yielded: 30
-Target: 256
-Coverage ratio: 0.117
-Coverage OK: False
-```
-
-Relaxing score-bin and tolerance settings did not solve the problem.
+The original matching run produced only about 30 matched pairs from the 1,024-plan matching pool, far below the 250-pair gate for the full study.
 
 ### Root cause
 
-The deterministic score used by the matcher was not appropriate as the primary matching score. LLM plans clustered near 97-100, while most programmatic plans scored around 30. The score appeared to include presentation/explanation quality rather than source-neutral structural quality.
+The deterministic score used by the matcher was not suitable as a source-neutral structural score. Programmatic plans mostly scored around 30, while LLM-source plans mostly scored 97-100. Relaxing tolerance did not solve the issue.
 
 ### Fix
 
-A source-neutral structural score was introduced for matching. It excludes prose quality, titles, rationale richness, citations, claim attributions, data notes, model names, and source labels.
+A source-neutral structural score was implemented and used for matching. The final frozen matched set contains 250 matched pairs with low structural gaps.
 
-Frozen matching after the fix:
+### Final status
 
-```text
-matched pairs: 250
-target pairs: 250
-coverage_ok: true
-mean structural score gap: 0.3076
-p95 structural score gap: 2.0
-max structural score gap: 2.0
-```
+Resolved. The full 10,000-record study uses the frozen 250-pair structural matched set.
 
-### Lesson
+## Incident 2: Environment errors on HPC
 
-Do not use TrailTraining/global quality scores as structural matching scores unless it has been proven that presentation fields do not affect the score.
-
-## 2. Broken shell snippets with placeholders
-
-### Symptom
-
-Commands using placeholder values were pasted directly:
-
-```bash
-export REPO_ROOT=/path/to/llm-judge-self-preference
-export PY=/home/<USER>/.conda/envs/judge-bias/bin/python
-```
-
-This produced errors such as:
-
-```text
--bash: USER: No such file or directory
-cd: /path/to/llm-judge-self-preference: No such file or directory
-```
-
-### Fix
-
-Use actual HPC paths or documented placeholders only in docs. For this cluster:
-
-```bash
-export REPO_ROOT=/mnt/beegfsstudents/home/<USER>/llm-judge-self-preference
-export TRAILTRAINING_REPO=/mnt/beegfsstudents/home/<USER>/trailtraining
-export PY=/home/<USER>/.conda/envs/judge-bias/bin/python
-export PYTHONPATH="${REPO_ROOT}:${TRAILTRAINING_REPO}/src:${PYTHONPATH:-}"
-cd "$REPO_ROOT"
-```
-
-### Lesson
-
-Docs should make clear which commands contain placeholders and which are literal.
-
-## 3. Wrong working directory during monitoring
-
-### Symptom
-
-Artifact files appeared missing while jobs were running:
-
-```text
-no output file yet
-missing
-find: artifacts/gen_src_t070_exp_t000/frozen_primary_v1: No such file or directory
-```
-
-### Root cause
-
-Commands were run from `~` rather than the repository root.
-
-### Fix
-
-Always run:
-
-```bash
-cd /mnt/beegfsstudents/home/<USER>/llm-judge-self-preference
-```
-
-before using relative artifact paths.
-
-### Lesson
-
-Monitoring commands in runbooks must begin with `cd "$REPO_ROOT"` or use absolute paths.
-
-## 4. Conda activation and Python environment errors
-
-### Symptom
+### Symptoms
 
 Observed errors included:
 
 ```text
-CondaError: Run 'conda init' before 'conda activate'
 ModuleNotFoundError: No module named 'pydantic'
 ModuleNotFoundError: No module named 'trailtraining'
+broken conda activate
+wrong Python interpreter
 ```
 
 ### Fix
 
-Use the environment Python directly:
+Use explicit environment variables and direct Python path:
 
 ```bash
-export PY=/home/<USER>/.conda/envs/judge-bias/bin/python
+export REPO_ROOT=/mnt/beegfsstudents/home/3202029/llm-judge-self-preference
+export TRAILTRAINING_REPO=/mnt/beegfsstudents/home/3202029/trailtraining
+export PY=/home/3202029/.conda/envs/judge-bias/bin/python
 export PYTHONPATH="${REPO_ROOT}:${TRAILTRAINING_REPO}/src:${PYTHONPATH:-}"
+cd "$REPO_ROOT"
 ```
 
-### Lesson
+### Final status
 
-Avoid relying on interactive shell conda activation in SLURM jobs.
+Resolved.
 
-## 5. vLLM argument incompatibility
+## Incident 3: Model cache and quota constraints
 
 ### Symptom
 
-A vLLM job failed with:
+Quota limitations prevented all models from being cached simultaneously. Gemma gated models also required Hugging Face authentication.
+
+### Fix
+
+Models were cached and run one at a time. Gated Gemma models required `HF_TOKEN` and accepted model terms.
+
+### Final status
+
+Resolved. All four primary and marker judge outputs are complete.
+
+## Incident 4: vLLM flag mismatch for Qwen 14B AWQ
+
+### Symptom
+
+Qwen 14B failed with a quantization mismatch:
 
 ```text
-api_server.py: error: unrecognized arguments: --disable-log-requests
+Quantization method specified in the model config (awq) does not match the quantization argument (awq_int4)
 ```
 
 ### Fix
 
-Remove `--disable-log-requests` for the installed vLLM version.
+The vLLM quantization argument was normalized to `awq` for `Qwen/Qwen2.5-14B-Instruct-AWQ`.
 
-### Lesson
+### Final status
 
-Do not assume vLLM CLI flags are stable across installed versions. Keep cluster-specific SLURM scripts in the repo.
+Resolved.
 
-## 6. Model cache and quota constraints
-
-### Symptom
-
-Jobs failed or could not launch because required models were not cached:
-
-```text
-Model not found in cache: Qwen/Qwen2.5-7B-Instruct
-Model not found in cache: Qwen/Qwen2.5-14B-Instruct-AWQ
-Model not found in cache: google/gemma-3-12b-it
-```
-
-The quota was limited, so all four judge models could not always be kept simultaneously.
-
-### Fix
-
-Cache one model at a time, run its jobs, sync outputs locally, verify hashes, then remove cache only if necessary.
-
-### Lesson
-
-Never delete a model cache until its outputs are complete, synced, and verified.
-
-## 7. Qwen 14B primary pairwise resume
+## Incident 5: Qwen 14B structured-output token cap
 
 ### Symptom
 
-A Qwen 14B pairwise job appeared to run too long and was manually cancelled. It had actually produced a partial output file.
+Qwen 14B failed because the runner requested 4096 output tokens with a 4096-token model context.
 
 ### Fix
 
-The job was resumed and eventually produced a complete 2,500-row Qwen 14B pairwise output.
-
-Final Qwen 14B pairwise integrity:
-
-```text
-rows: 2,500
-duplicate record IDs: 0
-orders: 1,250 AB / 1,250 BA
-runs: 500 each for 0-4
-```
-
-### Lesson
-
-Before cancelling, inspect the correct repository path and output file. Resumability by `record_id` is important.
-
-## 8. Primary pairwise completion status typo
-
-### Symptom
-
-A shell heredoc intended to write `PRIMARY_COMPLETION_STATUS.md` was malformed and inserted garbled text.
-
-### Fix
-
-The primary output data itself is valid. Documentation should be rewritten cleanly rather than relying on the malformed status file.
-
-### Lesson
-
-Do not use ad hoc heredocs for archival status without checking the resulting file.
-
-## 9. Empty Gemma 4B checksum file
-
-### Symptom
-
-The Gemma 4B primary pairwise `.sha256` file exists but is empty in the uploaded artifact bundle.
-
-### Fix
-
-Regenerate:
+Set:
 
 ```bash
-D="artifacts/gen_src_t070_exp_t000/frozen_primary_v1/judgments_eval_t000_scrubbed_v1_staged"
-sha256sum "$D/pairwise_gemma_4b_judge_canonical_masked_scrubbed_v1_t000.jsonl" \
-  > "$D/pairwise_gemma_4b_judge_canonical_masked_scrubbed_v1_t000.sha256"
+TRAILTRAINING_STRUCTURED_MAX_TOKENS=768
+MARKER_MAX_TOKENS=768
 ```
 
-### Lesson
+### Final status
 
-Verify each checksum file is non-empty and matches before archiving.
+Resolved.
 
-## 10. Top-level SHA256SUMS self-hash mismatch
+## Incident 6: Long Qwen 14B runtimes and partial chunks
 
 ### Symptom
 
-The top-level `SHA256SUMS.txt` includes a hash for itself, causing a mismatch after the file is written.
+Qwen 14B marker runs timed out before reaching 2,500 rows.
 
 ### Fix
 
-Regenerate `SHA256SUMS.txt` while excluding itself, or write the checksum file after hashing all other files.
+The marker runner is append/resume-safe and skips existing `record_id`s. Qwen 14B was completed over multiple chunks.
 
-### Lesson
+### Final status
 
-Do not self-hash mutable manifest files.
+Resolved. Final Qwen 14B marker file has 2,500 rows, 0 duplicate record IDs, and 9 markers per row.
 
-## 11. Marker-level nested output path bug
+## Incident 7: Marker SLURM output path bug
 
 ### Symptom
 
-Early marker jobs wrote to nested paths like:
-
-```text
-marker_eval_t000_scrubbed_v1_staged/
-  pairwise_qwen_14b_judge_canonical_masked_scrubbed_v1_t000.jsonl/
-    marker_qwen_14b_judge_canonical_masked_scrubbed_v1_t000.jsonl
-```
+The marker runner wrote outputs into a nested directory named like a pairwise `.jsonl` file.
 
 ### Root cause
 
-The marker SLURM script was copied from the pairwise runner and still passed pairwise-style output path variables. The marker runner expects `--output-dir`, not `--output` or `--failures`.
+The copied SLURM script still used old pairwise-style `--output` and `--failures` arguments instead of the marker runner's `--output-dir` argument.
 
 ### Fix
 
-Patch the marker SLURM script command block to use:
+The marker SLURM `CMD` block was patched to call:
 
 ```bash
-CMD=(
-  "$PY" tools/run_marker_manifest_pairwise.py
-  --manifest "${MANIFEST}"
-  --output-dir "${OUTPUT_DIR}"
-  --judge-name "${JUDGE_NAME}"
-  --temperature "${JUDGE_TEMPERATURE}"
+"$PY" tools/run_marker_manifest_pairwise.py \
+  --manifest "${MANIFEST}" \
+  --output-dir "${OUTPUT_DIR}" \
+  --judge-name "${JUDGE_NAME}" \
+  --temperature "${JUDGE_TEMPERATURE}" \
   --max-tokens "${MARKER_MAX_TOKENS:-768}"
-)
 ```
 
-### Lesson
+### Final status
 
-Runner interface changes must be reflected in SLURM wrappers. Monitor both expected and known-bad paths when debugging.
+Resolved. Final marker outputs are in the intended directory.
 
-## 12. Qwen 14B marker-level resumed chunks
+## Incident 8: Qwen 7B blank `preferred` fields in marker output
 
 ### Symptom
 
-Qwen 14B marker evaluation required multiple chunks due to timeout/runtime.
+A small number of Qwen 7B marker responses left `preferred` blank for a marker.
 
-Observed progress included:
+### Fix
+
+The marker runner was patched to repair blank or invalid `preferred` values from `plan_a_score` and `plan_b_score`. If scores were equal or unavailable, the marker was coded as `tie`. Repaired marker fields were flagged with `normalization_warnings`.
+
+### Final status
+
+Resolved. Final dataset has 31 repaired marker fields out of 90,000 marker decisions.
+
+## Incident 9: Gemma malformed JSON in marker retries
+
+### Symptom
+
+Gemma 12B and Gemma 4B first-pass marker runs produced a small number of JSON decode failures.
+
+### Fix
+
+The marker runner was patched to request compact JSON, use `response_format={"type":"json_object"}`, and set rationale fields to empty strings for retry runs. Failed rows were rerun from missing-record manifests.
+
+### Final status
+
+Resolved. Final Gemma 12B and Gemma 4B marker files each have 2,500 rows and no current failures.
+
+## Incident 10: Source-asymmetric presentation leakage
+
+### Symptom
+
+A post hoc leakage audit found that source masking removed explicit metadata but did not fully remove presentation-level artifacts. LLM-source plans sometimes included:
 
 ```text
-701 rows
-1404 rows
-2106 rows
-2500 rows
+TrailRun |
+avgHR
+km
+m+ / elevation / vertical
+ellipses
+duration-text inconsistencies
 ```
+
+These artifacts were absent from programmatic plans in the scan.
 
 ### Fix
 
-Resubmit the same marker job. The runner skips existing `record_id`s.
+No scrubbed-v2 rerun was performed due to time constraints. Instead, an exclusion-based leakage-filtered sensitivity dataset was created by excluding any matched pair with these artifacts.
 
-### Lesson
+### Final status
 
-Marker jobs are resumable. Do not discard partial marker files.
+Partially mitigated analytically. This remains a limitation and must be reported clearly.
 
-## 13. Qwen 7B blank `preferred` marker fields
+Final leakage-filtered sensitivity state:
 
-### Symptom
+- 103 clean pairs retained
+- 147 flagged pairs excluded
+- 4,120 clean primary records
+- 37,080 clean marker decisions
+- Main conclusions unchanged in the clean subset
 
-Qwen 7B returned valid marker scores but left `preferred` blank for a small number of marker fields:
+## Final incident summary
 
-```text
-Bad preferred value for recovery_safety: ''
-Bad preferred value for readiness_alignment: ''
-```
-
-### Fix
-
-The marker runner was patched to repair blank/invalid `preferred` values deterministically:
-
-- If `plan_a_score > plan_b_score`, set `preferred = plan_a`.
-- If `plan_b_score > plan_a_score`, set `preferred = plan_b`.
-- If scores are tied or unavailable, set `preferred = tie`.
-- Add `normalization_warnings` to repaired marker fields.
-
-Final Qwen 7B marker file contains 31 repaired marker fields and 0 bad preferred values.
-
-### Lesson
-
-Structured LLM outputs may be almost valid but incomplete. Repairs must be deterministic, conservative, and auditable.
-
-## 14. Marker-level status is partial
-
-### Symptom
-
-The uploaded marker artifact contains complete Qwen marker files but no Gemma marker files.
-
-Current marker state:
-
-```text
-qwen_14b_judge: complete
-qwen_7b_judge: complete
-gemma_12b_judge: missing/pending
-gemma_4b_judge: missing/pending
-```
-
-### Fix
-
-Complete Gemma 12B and Gemma 4B marker passes before reporting full four-judge marker-level results.
-
-### Lesson
-
-Label marker-level analyses as Qwen-only until all four judge files are present.
-
-## 15. macOS metadata in archives
-
-### Symptom
-
-Archives include `.DS_Store` and `__MACOSX` files.
-
-### Fix
-
-Exclude from final public archives:
-
-```bash
-zip -r final_primary_artifacts.zip artifacts results \
-  -x "*/.DS_Store" \
-  -x "__MACOSX/*"
-```
-
-### Lesson
-
-Clean archives before release.
+All blocking operational incidents were resolved. The only remaining methodological caveat is presentation leakage, which is now documented and handled through an exclusion-based sensitivity analysis. The study should be treated as complete for the current frozen Qwen/Gemma design.

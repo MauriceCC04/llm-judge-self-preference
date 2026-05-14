@@ -1,50 +1,75 @@
-# Preregistration / Frozen Analysis Plan
+# Preregistration and Final Analysis Plan
 
-This document records the frozen design and analysis plan for the Qwen/Gemma training-plan judge-bias study. Because primary results now exist, this should be treated as the frozen design and analysis protocol for the primary experiment plus a transparent post-freeze record of the secondary marker-level extension.
+This document records the preregistered/intended design and the final completed analysis state for the Qwen/Gemma LLM judge self-preference study. Because the study is now complete, this file also records deviations, post hoc sensitivity analyses, and final limitations.
 
 ## Research question
 
-Controlling for deterministic structural plan quality, do LLM judges systematically favor LLM-generated training plans over programmatically generated plans, and does this effect vary by judge model family, model size, rubric/marker, or whether the plan matches the judge's own family?
+Controlling for deterministic structural training-plan quality, do LLM judges systematically prefer LLM-generated training plans over programmatically generated plans, and does this effect vary by judge model family, model size, explicit evaluation marker, or whether the source plan family matches the judge family?
 
 ## Hypotheses
 
-Primary hypotheses:
+### H1: Overall LLM preference
 
-1. LLM judges may prefer LLM-source plans over structurally matched programmatic plans.
-2. Preference may vary by judge model family and model size.
-3. Self-family preference may occur when the judge family matches the LLM source family.
-4. Presentation-sensitive criteria may show different effects than structural training-plan criteria.
+LLM judges may prefer LLM-generated plans over structurally matched programmatic plans.
 
-Null expectations:
+**Final result:** not supported. In the primary overall pairwise evaluation, LLM-source plans won 36.53% of judgments.
 
-1. After structural matching and source masking, LLM-source and programmatic plans may be preferred at equal rates.
-2. Self-family match may not affect preferences once source labels are masked.
-3. Apparent preference may be driven by order/position effects rather than source preference.
+### H2: Judge-family heterogeneity
 
-## Frozen design
+Preference may vary by judge model family and model size.
 
-Source plans:
+**Final result:** supported as heterogeneity, but not as an LLM-preference effect. Primary row-level LLM win rates varied by judge from 29.60% to 41.68%. Explicit marker-level results also varied strongly by judge and marker.
 
-- `Qwen/Qwen2.5-7B-Instruct`, 192 plans.
-- `google/gemma-3-4b-it`, 192 plans.
-- Programmatic controls, 640 plans.
+### H3: Self-family preference
 
-Matching pool:
+Judges may prefer plans produced by their own model family.
+
+**Final result:** not supported. Marker-level self-family rows were not more favorable to LLM-source plans overall. Crossed judge-family/source-family results also did not show a simple own-family preference pattern.
+
+### H4: Marker-specific effects
+
+LLM-source plans may win on presentation or explanation markers while losing on structural training markers.
+
+**Final result:** not supported in the completed explicit marker pass. Programmatic plans outperformed LLM-source plans on every explicit marker, including `explanation_quality`.
+
+## Final study design
+
+### Source corpora
+
+| Source | Count |
+|---|---:|
+| Qwen LLM plans | 192 |
+| Gemma LLM plans | 192 |
+| Programmatic plans | 640 |
+| Total matching pool | 1,024 |
+
+Source models:
+
+- `Qwen/Qwen2.5-7B-Instruct`
+- `google/gemma-3-4b-it`
+
+No Llama source family is part of the completed study.
+
+### Matching
+
+Plans were matched using source-neutral structural scoring rather than the older TrailTraining quality score as the primary matching criterion. Structural matching excludes presentation/prose quality as a matching criterion.
+
+Final matched set:
+
+- 250 matched LLM-vs-programmatic pairs
+- Same/equivalent fixture constraints preserved
+- Qwen-source pairs: 134
+- Gemma-source pairs: 116
+- Mean structural score gap: 0.3076
+- P95 structural score gap: 2.0
+- Max structural score gap: 2.0
+
+### Primary pairwise evaluation
+
+Primary design:
 
 ```text
-artifacts/gen_src_t070_exp_t000/matching_pool/plans
-```
-
-Frozen matched set:
-
-```text
-artifacts/gen_src_t070_exp_t000/frozen_primary_v1/matched_pairs.json
-```
-
-Matched-pair target and achieved count:
-
-```text
-250 structurally matched LLM-vs-programmatic pairs
+250 matched pairs x 4 judges x 5 repeated runs x 2 AB/BA positions = 10,000 pairwise judgment records
 ```
 
 Judges:
@@ -54,119 +79,15 @@ Judges:
 - `gemma_4b_judge`
 - `gemma_12b_judge`
 
-Primary evaluation:
+Judge-facing artifacts used `canonical_masked_scrubbed_v1` and excluded explicit model/source/provenance metadata.
+
+### Explicit marker evaluation
+
+Secondary explicit marker design:
 
 ```text
-250 matched pairs × 4 judges × 5 repeated runs × 2 AB/BA orders = 10,000 pairwise judgments
+10,000 marker records x 9 markers = 90,000 marker decisions
 ```
-
-Primary view:
-
-```text
-canonical_masked_scrubbed_v1
-```
-
-Primary temperature:
-
-```text
-eval_t000
-```
-
-## Structural matching principle
-
-Matching uses source-neutral structural quality rather than presentation-rich TrailTraining quality scores. This is necessary because equal deterministic score is not equivalent to equal plan quality if the score rewards explanation richness, title wording, citations, or prose style.
-
-Structural matching should account for:
-
-- fixture/cell identity
-- athlete band
-- readiness
-- recovery capability
-- race phase
-- plan days
-- total duration
-- active/rest day counts
-- hard-day count
-- quality-day count
-- long-run count
-- hard/rest spacing
-- impossible durations and contradictions
-
-Structural matching must exclude:
-
-- title wording
-- workout prose richness
-- purpose prose richness
-- rationale length
-- citations
-- claim attributions
-- data notes
-- source model names
-- generation-arm labels
-- file naming artifacts
-
-Frozen matching achieved:
-
-```text
-matched pairs: 250
-mean structural score gap: 0.3076
-p95 structural score gap: 2.0
-max structural score gap: 2.0
-coverage_ok: true
-```
-
-## Source masking
-
-Judge-facing artifacts must not expose:
-
-- source family
-- model name
-- arm label
-- provenance metadata
-- file path or file name
-- fixture ID
-- explicit `llm` or `programmatic` labels
-
-Metadata required for analysis is preserved outside the judge prompt.
-
-## Primary outcome
-
-Primary binary outcome:
-
-```text
-llm_won = true if the judge chooses the LLM-source plan over the matched programmatic plan
-```
-
-Primary estimands:
-
-- overall LLM win rate
-- per-judge LLM win rate
-- judge-family LLM win rate
-- source-family LLM win rate
-- self-family LLM win rate where source and judge families overlap
-- order/position effect
-- AB/BA pair-run source consistency
-
-## Primary analysis plan
-
-Report:
-
-1. Raw row-level LLM win rate.
-2. Per-judge and per-family win rates.
-3. AB vs BA order rates.
-4. Pair-run AB/BA consistency:
-   - `source_consistent_llm`
-   - `source_consistent_programmatic`
-   - `position_consistent_plan_a`
-   - `position_consistent_plan_b`
-5. Bootstrap confidence intervals clustered by matched pair.
-6. Sensitivity by source family, judge family, band, fixture/cell, and structural-score gap.
-
-Order effects are central. If AB and BA disagree, interpretation should privilege pair-run consistency over row-level rates.
-
-## Secondary explicit marker-level extension
-
-After the primary pairwise study, an explicit marker-level evaluation was added to support marker-specific conclusions.
 
 Markers:
 
@@ -180,108 +101,140 @@ Markers:
 - `clarity_actionability`
 - `explanation_quality`
 
-Each marker response records:
+Each marker has a categorical preference (`plan_a`, `plan_b`, or `tie`) and numeric 1-5 scores for each plan.
 
-- `preferred`: `plan_a`, `plan_b`, or `tie`
-- `plan_a_score`: integer 1-5
-- `plan_b_score`: integer 1-5
-- `confidence`: 0.0-1.0
-- `rationale`
+## Primary analysis endpoints
 
-Marker-level analysis should report:
+### Overall pairwise endpoint
 
-1. marker-level LLM win rates, ties included and ties excluded
-2. marker × judge
-3. marker × judge family
-4. marker × source family
-5. marker × self-family match
-6. marker × order
-7. marker-level AB/BA pair-run consistency
-8. repaired marker-field counts
+Outcome: whether the judge selected the LLM-source plan.
 
-Current uploaded marker status is partial:
+Primary summary:
 
-```text
-qwen_14b_judge: complete
-qwen_7b_judge: complete
-gemma_12b_judge: pending/missing
-gemma_4b_judge: pending/missing
-```
+- Overall LLM win rate
+- Per-judge LLM win rate
+- Judge-family and source-family breakdowns
+- Self-family match breakdown
+- AB/BA order-bias audit
+- Pair-run consistency:
+  - `source_consistent_llm`
+  - `source_consistent_programmatic`
+  - `position_consistent_plan_a`
+  - `position_consistent_plan_b`
 
-Therefore marker-level claims must currently be labeled Qwen-only until Gemma marker passes are complete.
+### Marker-level endpoint
 
-## Current primary results to disclose
+Outcome: whether the judge selected the LLM-source plan for each marker.
 
-Primary pairwise results are complete:
+Primary marker summaries:
 
-```text
-LLM wins: 3,653 / 10,000 = 36.53%
-Programmatic wins: 6,347 / 10,000 = 63.47%
-```
+- LLM marker win rate excluding ties
+- LLM marker win rate with ties counted as half
+- Tie rate
+- Marker x judge
+- Marker x judge family
+- Marker x source family
+- Marker x judge family x source family
+- Marker x self-family match
+- Marker-level AB/BA consistency
+
+## Final primary results
+
+Overall pairwise:
+
+| Outcome | Count | Rate |
+|---|---:|---:|
+| LLM wins | 3,653 / 10,000 | 36.53% |
+| Programmatic wins | 6,347 / 10,000 | 63.47% |
 
 Per judge:
 
-```text
-gemma_12b_judge: 29.60% LLM win rate
-gemma_4b_judge:  33.44% LLM win rate
-qwen_14b_judge:  41.40% LLM win rate
-qwen_7b_judge:   41.68% LLM win rate
-```
-
-Order effect:
-
-```text
-AB, LLM as Plan A: 57.54% LLM win rate
-BA, LLM as Plan B: 15.52% LLM win rate
-```
+| Judge | LLM win rate |
+|---|---:|
+| `gemma_12b_judge` | 29.60% |
+| `gemma_4b_judge` | 33.44% |
+| `qwen_14b_judge` | 41.40% |
+| `qwen_7b_judge` | 41.68% |
 
 Pair-run consistency:
 
-```text
-source_consistent_programmatic: 1,973 / 5,000 = 39.46%
-source_consistent_llm:           626 / 5,000 = 12.52%
-position_consistent_plan_a:     2,251 / 5,000 = 45.02%
-position_consistent_plan_b:       150 / 5,000 = 3.00%
-```
+| Category | Count | Rate |
+|---|---:|---:|
+| `source_consistent_programmatic` | 1,973 / 5,000 | 39.46% |
+| `source_consistent_llm` | 626 / 5,000 | 12.52% |
+| `position_consistent_plan_a` | 2,251 / 5,000 | 45.02% |
+| `position_consistent_plan_b` | 150 / 5,000 | 3.00% |
 
-Interpretation:
+## Final marker results
 
-- The primary result does not support broad LLM-over-programmatic preference.
-- Programmatic plans are preferred more often overall and source-consistently.
-- Position bias is large and must be modeled and discussed.
+Marker-level LLM win rates excluding ties:
 
-## Current marker results to disclose cautiously
+| Marker | LLM win rate excluding ties |
+|---|---:|
+| `training_specificity` | 48.54% |
+| `clarity_actionability` | 40.62% |
+| `readiness_alignment` | 39.84% |
+| `recovery_safety` | 39.07% |
+| `plan_coherence` | 36.00% |
+| `load_progression` | 35.11% |
+| `quality_session_design` | 33.44% |
+| `endurance_development` | 32.81% |
+| `explanation_quality` | 32.21% |
 
-Qwen-only explicit marker results show programmatic plans favored over LLM-source plans on all nine markers. Qwen-only marker self-family evidence is weak and inconsistent.
+Programmatic plans outperformed LLM-source plans on every explicit marker.
 
-Do not claim full four-judge marker-level results until Gemma marker files are complete.
+Marker-level pair-run consistency across all 45,000 marker pair-run units:
 
-## Threats to validity
+| Category | Count | Rate |
+|---|---:|---:|
+| `source_consistent_programmatic` | 10,800 | 24.00% |
+| `source_consistent_llm` | 3,262 | 7.25% |
+| `position_consistent_plan_a` | 12,233 | 27.18% |
+| `position_consistent_plan_b` | 4,879 | 10.84% |
+| `consistent_tie` | 2,725 | 6.06% |
+| `other_inconsistent` | 11,101 | 24.67% |
 
-- Equal structural score is not full plan equality.
-- Structural matching cannot remove all surface/style confounds.
-- Programmatic plans may include LLM-written explanation fields.
-- Source masking may not eliminate all stylistic leakage.
-- Strong position effects complicate row-level interpretation.
-- Local judge models may not generalize to external judges.
-- Marker-level Qwen-only results are partial until Gemma marker runs are complete.
-- Some marker responses required deterministic repair of blank `preferred` values from scores.
-- Local HPC quota constraints affected caching and model ordering, though not the frozen manifest.
+## Leakage-filtered sensitivity analysis
 
-## Confirmatory vs exploratory claims
+A post hoc audit found source-asymmetric presentation artifacts in some LLM-source judge-facing plans. Examples include `TrailRun |`, `avgHR`, `km`, elevation strings, ellipses, and duration-text inconsistencies. These artifacts were absent from programmatic plans in the scan.
 
-Confirmatory for the primary pairwise experiment:
+To avoid overclaiming, a leakage-filtered sensitivity dataset was constructed by excluding contaminated pairs.
 
-- full 10,000-record overall LLM-vs-programmatic preference
-- per-judge primary win rates
-- order-bias audit
-- AB/BA pair-run consistency
+- Clean pairs retained: 103
+- Flagged pairs excluded: 147
+- Clean primary records: 4,120
+- Clean marker decisions: 37,080
 
-Secondary/extension:
+Clean-pair primary result:
 
-- explicit marker-level judgments
+- LLM wins: 1,419 / 4,120 = 34.44%
+- Programmatic wins: 2,701 / 4,120 = 65.56%
 
-Exploratory:
+Clean-pair marker results also favored programmatic plans on every marker.
 
-- keyword-coded rationale marker analysis from primary free-text rationales
-- any analysis not pre-specified above
+This analysis is post hoc and exclusion-based. It is not a scrubbed-v2 rerun.
+
+## Deviations and post hoc additions
+
+1. The original deterministic TrailTraining quality score was not used as the primary matching score because diagnostics showed it was unsuitable for source-neutral structural matching.
+2. A source-neutral structural score was introduced for matching.
+3. Explicit marker-level evaluation was added after the primary pairwise run to support marker-specific conclusions.
+4. A post hoc leakage audit identified source-asymmetric presentation artifacts.
+5. A leakage-filtered sensitivity dataset was created by excluding flagged pairs.
+6. The marker runner was patched to repair a small number of blank `preferred` fields and to enforce compact JSON for Gemma retries.
+
+## Validity considerations
+
+The study supports strong descriptive conclusions for the frozen Qwen/Gemma dataset, but the following limitations must be emphasized:
+
+- Equal structural score is not full equality between plans.
+- Source masking removed explicit metadata but did not fully remove all presentation-level artifacts.
+- Large AB/BA position bias is present in both primary and marker-level evaluations.
+- Programmatic plans may contain LLM-written explanation fields, which complicates interpretation of `explanation_quality`.
+- The leakage-filtered clean subset is smaller and less source-family-balanced than the full dataset.
+- Self-family inference is limited to Qwen and Gemma families represented in both source and judge sets.
+- Results are specific to the training-plan domain and the available local judge models.
+
+## Final interpretation
+
+The completed study does not support the hypothesis that Qwen/Gemma LLM judges systematically prefer LLM-source plans over structurally matched programmatic plans. Programmatic plans win more often overall, win more often on every explicit marker, and remain favored in leakage-filtered sensitivity analyses. The study also does not support a robust self-family preference effect. The report should frame position bias and source-asymmetric presentation leakage as central threats to validity that were diagnosed and partially addressed through AB/BA analysis and leakage-filtered sensitivity analysis.

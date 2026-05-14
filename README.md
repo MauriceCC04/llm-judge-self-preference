@@ -189,6 +189,14 @@ Marker-level LLM win rates excluding ties:
 
 Programmatic plans outperformed LLM-source plans on every explicit marker in the full marker dataset.
 
+## Primary vs. marker-level consistency
+
+The primary pairwise evaluation and the secondary marker-level evaluation used the same matched pairs, judge models, repeat indices, and AB/BA ordering. The primary task asked for one overall forced preference, while the marker task asked for nine explicit marker-level preferences and allowed ties.
+
+The aggregate results were consistent: LLM-source plans won 36.53% of primary pairwise judgments and 37.45% of non-tied marker decisions. This small difference is expected because the two tasks use different response formats and because the marker task permits ties; it should not be interpreted as a substantive reversal. Both evaluations indicate that programmatic matched plans were preferred more often than LLM-source plans.
+
+Marker-level results also revealed additional heterogeneity, including higher tie rates for Qwen judges and marker-specific variation in the size of the programmatic advantage. These details are reported in `docs/RESULTS_SUMMARY.md`.
+
 ## Self-family result
 
 The current completed study does not support a simple self-family preference claim.

@@ -92,6 +92,50 @@ LLM marker win rates excluding ties:
 
 Programmatic plans outperform LLM-source plans on every explicit marker.
 
+## Primary vs. marker-level outcome distribution
+
+The primary pairwise evaluation and the secondary marker-level evaluation were aligned in experimental design but differed in response format. Both used the same 250 matched pairs, 4 judges, 5 repeat indices, and 2 AB/BA orders. Therefore, there is no meaningful difference in the evaluation-sampling distribution.
+
+| Dimension | Primary pairwise | Marker-level |
+|---|---:|---:|
+| Records | 10,000 | 10,000 |
+| Judges | 2,500 each | 2,500 each |
+| Orders | 5,000 AB / 5,000 BA | 5,000 AB / 5,000 BA |
+| Runs | 2,000 each for 0-4 | 2,000 each for 0-4 |
+| Matched pairs | 250 | 250 |
+| Marker decisions | n/a | 90,000 |
+
+The outcome distributions differ slightly because the tasks are not identical. The primary task is a forced overall choice with no tie option. The marker task asks for nine separate criteria and allows ties. The marker-level non-tied LLM win rate is therefore not expected to exactly equal the primary pairwise win rate.
+
+| Evaluation | LLM wins | Programmatic wins | Ties | LLM win rate |
+|---|---:|---:|---:|---:|
+| Primary overall pairwise | 3,653 | 6,347 | 0 | 36.53% |
+| Secondary marker-level | 27,504 | 45,945 | 16,551 | 37.45% excluding ties |
+
+The aggregate difference is small and does not change the substantive conclusion. Both evaluations indicate that programmatic plans were preferred more often than LLM-source plans. Some residual variation may reflect stochastic model behavior or local inference nondeterminism, but the more important reasons are the different response format, the marker-level tie option, and the fact that judges may apply different decision criteria when asked for an overall preference versus explicit marker ratings.
+
+Judge-level results show more heterogeneity than the aggregate comparison:
+
+| Judge | Primary LLM win rate | Marker LLM win rate excluding ties | Difference |
+|---|---:|---:|---:|
+| `gemma_4b_judge` | 33.44% | 44.61% | +11.17 pp |
+| `gemma_12b_judge` | 29.60% | 30.65% | +1.05 pp |
+| `qwen_7b_judge` | 41.68% | 44.03% | +2.35 pp |
+| `qwen_14b_judge` | 41.40% | 29.96% | -11.44 pp |
+
+The largest shift is for `qwen_14b_judge`, which was relatively more favorable to LLM-source plans in the primary overall pairwise task but more programmatic-favoring in explicit marker ratings. Conversely, `gemma_4b_judge` was more LLM-favorable in marker ratings than in the forced overall preference task. These differences should be interpreted as task-format and judge-behavior heterogeneity, not as a reversal of the main result.
+
+Tie behavior is a major feature of the marker task:
+
+| Judge | Marker tie rate |
+|---|---:|
+| `qwen_14b_judge` | 25.48% |
+| `qwen_7b_judge` | 24.44% |
+| `gemma_12b_judge` | 13.82% |
+| `gemma_4b_judge` | 9.81% |
+
+This tie behavior is another reason the marker-level distribution should be reported separately from the primary forced-choice distribution. The correct interpretation is that the two evaluation layers are design-aligned and aggregate-consistent, while the marker layer exposes additional judge-specific and marker-specific heterogeneity.
+
 ## Marker-level pair-run consistency
 
 Across 45,000 marker pair-run units:

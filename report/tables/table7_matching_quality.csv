@@ -1,0 +1,12 @@
+Feature,LLM mean,Programmatic mean,Mean absolute gap,Median absolute gap,Max absolute gap,Within exact match?,Notes
+Structural score,88.949088,88.962628,0.30760399999999993,0.0,2.0,no,Tolerance <= 2.0
+Structural-score gap,,,0.307604,0.0,2.0,no,Absolute score difference
+Total minutes,349.04,296.052,64.836,45.0,312.0,no,Structural feature distance term
+Active days,5.624,5.576,0.36,0.0,3.0,no,Structural feature distance term
+Rest days,1.376,1.424,0.36,0.0,3.0,no,Structural feature distance term
+Hard days,0.728,0.936,0.496,0.0,2.0,no,Structural feature distance term
+Quality days,0.728,0.936,0.496,0.0,2.0,no,Structural feature distance term
+Long runs,0.844,0.956,0.568,0.0,3.0,no,Structural feature distance term
+Max day minutes,98.736,88.364,23.7,17.0,166.0,no,Structural feature distance term
+Mean day minutes,49.862857142857145,42.293142857142854,9.262285714285714,6.428571428571431,44.57142857142858,no,Structural feature distance term
+Plan length,7.0,7.0,0.0,0.0,0.0,yes,Same-cell exact constraint

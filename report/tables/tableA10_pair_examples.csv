@@ -1,0 +1,8 @@
+Example category,Pair ID,Athlete band,LLM source family,Structural-score gap,LLM win rate,Order-stable rate,Artifact flags,Short description
+Highest LLM win-rate clean pair,pair_0067,A2,qwen,1.857,1.0,1.0,none,Clean pair with strongest LLM-source preference
+Highest programmatic win-rate clean pair,pair_0006,A1,qwen,2.0,0.0,1.0,none,Clean pair with strongest programmatic preference
+Most order-unstable pair,pair_0002,A1,qwen,0.0,0.5,0.0,"activity_like_fragment, any_presentation_artifact, avg_hr, km_unit, trailrun_pipe",Lowest source-stable AB/BA rate
+Artifact-present LLM-favoring pair,pair_0212,A4,gemma,0.0,1.0,1.0,"activity_like_fragment, any_presentation_artifact, ellipsis, km_unit",Flagged pair with high LLM-source preference
+Artifact-present programmatic-favoring pair,pair_0005,A1,qwen,2.0,0.0,1.0,"any_presentation_artifact, ellipsis",Flagged pair with low LLM-source preference
+A1 programmatic-dominant example,pair_0005,A1,qwen,2.0,0.0,1.0,"any_presentation_artifact, ellipsis",Beginner-band pair strongly favoring programmatic plan
+A4 LLM-favoring example,pair_0212,A4,gemma,0.0,1.0,1.0,"activity_like_fragment, any_presentation_artifact, ellipsis, km_unit",Competitive-band pair favoring LLM-source plan

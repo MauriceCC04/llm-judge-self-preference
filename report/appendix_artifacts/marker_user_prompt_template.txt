@@ -1,0 +1,24 @@
+Compare Plan A and Plan B on the following markers.
+
+MARKERS:
+- plan_coherence: Overall training-plan coherence: whether the week fits together as a coherent training plan, with compatible sessions, sensible sequencing, and no internal contradictions.
+- training_specificity: Specificity to the athlete and trail-running context: terrain, hills, long-run needs, race phase, and appropriate trail/endurance demands.
+- load_progression: Appropriateness of training load and progression: total volume, session duration, stress distribution, and whether the plan avoids abrupt or excessive load.
+- recovery_safety: Recovery, rest, and safety: rest-day placement, hard-day spacing, injury-risk control, and avoidance of unsafe combinations.
+- quality_session_design: Design of quality sessions: workouts such as intervals, tempo, hills, progression runs, or long runs are purposeful, specific, and feasible.
+- endurance_development: Support for aerobic/endurance development: easy volume, long-run stimulus, sustainable aerobic work, and endurance-oriented structure.
+- readiness_alignment: Alignment with readiness/recovery constraints: whether the plan respects the athlete's readiness, recovery capacity, and fatigue constraints.
+- clarity_actionability: Clarity and actionability: whether the athlete can understand and execute the plan without ambiguity.
+- explanation_quality: Quality of explanation/rationale: whether the stated purpose and explanation are helpful, specific, and support the plan. This marker is presentation-sensitive.
+
+Scoring guidance:
+- Scores are 1 to 5, where 5 is best.
+- The preferred plan should normally be the one with the higher score.
+- Use tie when differences are negligible.
+- Keep rationales short.
+
+REQUIRED JSON SCHEMA:
+{"markers":{"clarity_actionability":{"confidence":"number 0.0-1.0","plan_a_score":"integer 1-5","plan_b_score":"integer 1-5","preferred":"plan_a | plan_b | tie","rationale":"brief reason, max 18 words"},"endurance_development":{"confidence":"number 0.0-1.0","plan_a_score":"integer 1-5","plan_b_score":"integer 1-5","preferred":"plan_a | plan_b | tie","rationale":"brief reason, max 18 words"},"explanation_quality":{"confidence":"number 0.0-1.0","plan_a_score":"integer 1-5","plan_b_score":"integer 1-5","preferred":"plan_a | plan_b | tie","rationale":"brief reason, max 18 words"},"load_progression":{"confidence":"number 0.0-1.0","plan_a_score":"integer 1-5","plan_b_score":"integer 1-5","preferred":"plan_a | plan_b | tie","rationale":"brief reason, max 18 words"},"plan_coherence":{"confidence":"number 0.0-1.0","plan_a_score":"integer 1-5","plan_b_score":"integer 1-5","preferred":"plan_a | plan_b | tie","rationale":"brief reason, max 18 words"},"quality_session_design":{"confidence":"number 0.0-1.0","plan_a_score":"integer 1-5","plan_b_score":"integer 1-5","preferred":"plan_a | plan_b | tie","rationale":"brief reason, max 18 words"},"readiness_alignment":{"confidence":"number 0.0-1.0","plan_a_score":"integer 1-5","plan_b_score":"integer 1-5","preferred":"plan_a | plan_b | tie","rationale":"brief reason, max 18 words"},"recovery_safety":{"confidence":"number 0.0-1.0","plan_a_score":"integer 1-5","plan_b_score":"integer 1-5","preferred":"plan_a | plan_b | tie","rationale":"brief reason, max 18 words"},"training_specificity":{"confidence":"number 0.0-1.0","plan_a_score":"integer 1-5","plan_b_score":"integer 1-5","preferred":"plan_a | plan_b | tie","rationale":"brief reason, max 18 words"}},"overall_marker_summary":"one short sentence"}
+
+PLAN INPUT:
+{compact_json(judge_input)}

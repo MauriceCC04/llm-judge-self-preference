@@ -1,0 +1,9 @@
+Pair category,Number of pairs,Share of pairs,Mean LLM win rate,Median LLM win rate,Artifact-present share,Notes
+LLM-dominant pairs,29,0.116,0.8103448275862069,0.75,0.6551724137931034,Pair-level rate over 40 judgments
+Programmatic-dominant pairs,101,0.404,0.08811881188118813,0.125,0.5742574257425742,Pair-level rate over 40 judgments
+Mixed pairs,120,0.48,0.4910416666666667,0.5,0.5833333333333334,Pair-level rate over 40 judgments
+Always LLM,4,0.016,1.0,1.0,0.75,Pair-level rate over 40 judgments
+Always programmatic,49,0.196,0.0,0.0,0.5714285714285714,Pair-level rate over 40 judgments
+Artifact-clean LLM-dominant,10,0.04,0.8,0.75,0.0,Pair-level rate over 40 judgments
+Artifact-clean programmatic-dominant,43,0.172,0.08139534883720931,0.125,0.0,Pair-level rate over 40 judgments
+Order-unstable pairs,101,0.404,0.4905940594059406,0.5,0.5841584158415841,Pair-level rate over 40 judgments

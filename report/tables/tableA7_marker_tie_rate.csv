@@ -1,0 +1,10 @@
+Marker,Overall tie rate,qwen_7b_judge,qwen_14b_judge,gemma_4b_judge,gemma_12b_judge,Non-tied decisions,All decisions
+clarity actionability,0.3328,0.4924,0.764,0.002,0.0728,6672,10000
+endurance development,0.0715,0.06,0.082,0.0,0.144,9285,10000
+explanation quality,0.1997,0.158,0.3172,0.288,0.0356,8003,10000
+load progression,0.0835,0.122,0.136,0.0616,0.0144,9165,10000
+plan coherence,0.2125,0.4664,0.1572,0.0668,0.1596,7875,10000
+quality session design,0.1678,0.2008,0.1764,0.0964,0.1976,8322,10000
+readiness alignment,0.2813,0.1936,0.2968,0.3304,0.3044,7187,10000
+recovery safety,0.2058,0.4212,0.1984,0.0172,0.1864,7942,10000
+training specificity,0.1002,0.0856,0.1656,0.0208,0.1288,8998,10000

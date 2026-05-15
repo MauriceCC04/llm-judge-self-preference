@@ -1,0 +1,9 @@
+Judge,Judge family,LLM source family,Self-family?,Pairs,Judgments,LLM wins,Programmatic wins,LLM win rate
+gemma_12b_judge,gemma,gemma,yes,116,1160,375,785,0.3232758620689655
+gemma_12b_judge,gemma,qwen,no,134,1340,365,975,0.27238805970149255
+gemma_4b_judge,gemma,gemma,yes,116,1160,401,759,0.3456896551724138
+gemma_4b_judge,gemma,qwen,no,134,1340,435,905,0.3246268656716418
+qwen_14b_judge,qwen,gemma,no,116,1160,470,690,0.4051724137931034
+qwen_14b_judge,qwen,qwen,yes,134,1340,565,775,0.4216417910447761
+qwen_7b_judge,qwen,gemma,no,116,1160,547,613,0.47155172413793106
+qwen_7b_judge,qwen,qwen,yes,134,1340,495,845,0.3694029850746269

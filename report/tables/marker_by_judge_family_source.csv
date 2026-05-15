@@ -1,0 +1,5 @@
+judge_family,source_family,llm_wins_ex_ties,non_tie_decisions,llm_win_rate_ex_ties
+gemma,gemma,7052,18895,37.32
+gemma,qwen,7944,20788,38.21
+qwen,gemma,6165,16167,38.13
+qwen,qwen,6343,17599,36.04

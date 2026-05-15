@@ -1,0 +1,6 @@
+Judge,Judgments,LLM wins,Programmatic wins,LLM win rate,Programmatic win rate,95% CI low,95% CI high,Notes
+gemma_12b_judge,2500,740,1760,0.296,0.704,0.254,0.34,pair-cluster bootstrap
+gemma_4b_judge,2500,836,1664,0.3344,0.6656,0.30219,0.36901,pair-cluster bootstrap
+qwen_14b_judge,2500,1035,1465,0.414,0.586,0.38,0.446,pair-cluster bootstrap
+qwen_7b_judge,2500,1042,1458,0.4168,0.5832,0.37436,0.4616,pair-cluster bootstrap
+Overall,10000,3653,6347,0.3653,0.6347,0.33402750000000003,0.3982,pair-cluster bootstrap

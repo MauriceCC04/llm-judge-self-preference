@@ -1,0 +1,28 @@
+{
+  "record_id": "pair_0001__qwen_14b_judge__r00__BA",
+  "pair_id": "pair_0001",
+  "fixture_id": "ab_A1__r_high__rc_high__ph_base",
+  "judge": "qwen_14b_judge",
+  "judge_model_family": "qwen",
+  "run": 0,
+  "order": "BA",
+  "left_plan_role": "programmatic",
+  "right_plan_role": "llm",
+  "llm_plan_id": "ab_A1__r_high__rc_high__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s004",
+  "programmatic_plan_id": "ab_A1__r_high__rc_high__ph_base__prog__exp_t000__s008",
+  "source_model_family": "qwen",
+  "self_family_match": true,
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "feature_gaps": {
+    "max_day_minutes": 35.0,
+    "mean_day_minutes": 13.143,
+    "n_active_days": 1.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 1.0,
+    "total_minutes": 92.0
+  },
+  "judge_view": "canonical_masked"
+}

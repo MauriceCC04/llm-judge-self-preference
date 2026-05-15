@@ -1,0 +1,11 @@
+Artifact flag,LLM plans flagged,LLM flag rate,Programmatic plans flagged,Programmatic flag rate,Source-asymmetric?,Used in clean-filter?
+Any strict artifact,147,0.588,0,0.0,yes,yes
+Activity-log fragment,91,0.364,0,0.0,yes,yes
+TrailRun pipe fragment,56,0.224,0,0.0,yes,yes
+Heart-rate string,51,0.204,0,0.0,yes,yes
+Elevation string,7,0.028,0,0.0,yes,yes
+Distance-unit fragment,91,0.364,0,0.0,yes,yes
+Ellipses,109,0.436,0,0.0,yes,yes
+Duration-text mismatch,40,0.16,0,0.0,yes,yes
+Source/provenance metadata,0,0.0,0,0.0,no,no; scrub audit only
+Fixture/readiness metadata,0,0.0,0,0.0,no,no; scrub audit only

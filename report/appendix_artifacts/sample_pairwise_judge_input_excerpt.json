@@ -1,0 +1,70 @@
+{
+  "plan_a": {
+    "judge_view": "canonical_masked_structural_v1",
+    "plan": {
+      "days": [
+        {
+          "day_index": 1,
+          "duration_minutes": 48,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "Build aerobic consistency while keeping fatigue low.",
+          "session_type": "easy",
+          "target_intensity": "easy",
+          "workout_summary": "48 min easy run at conversational effort."
+        },
+        {
+          "day_index": 2,
+          "duration_minutes": 39,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "Build aerobic consistency while keeping fatigue low.",
+          "session_type": "easy",
+          "target_intensity": "easy",
+          "workout_summary": "39 min easy run at conversational effort."
+        }
+      ],
+      "summary": {
+        "hard_days": 0,
+        "long_runs": 0,
+        "plan_days": 7,
+        "rest_days": 2,
+        "total_minutes": 229
+      }
+    }
+  },
+  "plan_b": {
+    "judge_view": "canonical_masked_structural_v1",
+    "plan": {
+      "days": [
+        {
+          "day_index": 1,
+          "duration_minutes": 38,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "Build confidence and endurance.",
+          "session_type": "easy",
+          "target_intensity": "easy",
+          "workout_summary": "Easy trail run focusing on form and cadence."
+        },
+        {
+          "day_index": 2,
+          "duration_minutes": 41,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "Maintain aerobic base and hill strength.",
+          "session_type": "easy",
+          "target_intensity": "easy",
+          "workout_summary": "Easy trail run to maintain aerobic base."
+        }
+      ],
+      "summary": {
+        "hard_days": 0,
+        "long_runs": 0,
+        "plan_days": 7,
+        "rest_days": 1,
+        "total_minutes": 321
+      }
+    }
+  }
+}

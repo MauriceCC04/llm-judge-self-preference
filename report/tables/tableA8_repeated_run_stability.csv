@@ -1,0 +1,6 @@
+Judge,Pair/order cells,Fully stable cells,Fully stable rate,Mixed cells,Mixed-cell rate,Mean LLM win-rate SD across runs,Interpretation
+gemma_12b_judge,500,500,1.0,0,0.0,0.0,stable repeated calls
+gemma_4b_judge,500,499,0.998,1,0.002,0.0008000000000000007,stable repeated calls
+qwen_14b_judge,500,500,1.0,0,0.0,0.0,stable repeated calls
+qwen_7b_judge,500,496,0.992,4,0.008,0.0016000000000000014,stable repeated calls
+Overall,2000,1995,0.9975,5,0.0025,0.0006000000000000006,stable repeated calls

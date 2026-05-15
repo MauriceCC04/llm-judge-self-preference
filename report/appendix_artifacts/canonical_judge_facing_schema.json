@@ -1,0 +1,27 @@
+{
+  "plan_a": {
+    "judge_view": "canonical_masked_structural_v1",
+    "plan": {
+      "days": [
+        {
+          "day_index": "integer 1..7",
+          "session_type": "string: rest/easy/long/tempo/interval/hill/strength/etc.",
+          "duration_minutes": "integer",
+          "is_rest_day": "boolean",
+          "is_hard_day": "boolean",
+          "target_intensity": "string",
+          "workout_summary": "string, truncated normalized workout text",
+          "purpose_summary": "string, truncated normalized purpose text"
+        }
+      ],
+      "summary": {
+        "plan_days": "integer",
+        "total_minutes": "integer",
+        "rest_days": "integer",
+        "hard_days": "integer",
+        "long_runs": "integer"
+      }
+    }
+  },
+  "plan_b": "same schema as plan_a"
+}

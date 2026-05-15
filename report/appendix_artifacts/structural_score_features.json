@@ -1,0 +1,50 @@
+{
+  "structural_score_version": "structural_score_v1.0.0",
+  "excludes": [
+    "title wording",
+    "workout prose richness",
+    "purpose prose richness",
+    "citations",
+    "claim_attributions",
+    "data_notes verbosity",
+    "rationale/explanation fields",
+    "source model",
+    "generation arm",
+    "file names"
+  ],
+  "score_features": {
+    "plan_days": "number of days in plan, compared with expected plan length",
+    "total_minutes": "sum of daily duration_minutes",
+    "active_days": "count of non-rest days",
+    "rest_days": "count of days marked is_rest_day",
+    "hard_days": "count of days marked is_hard_day",
+    "quality_days": "count of hard days or quality session types",
+    "long_runs": "count of session_type == long",
+    "max_day_minutes": "maximum single-day duration",
+    "mean_day_minutes": "average day duration",
+    "hard_day_indices": "indices of hard days used for spacing checks",
+    "rest_day_indices": "indices of rest days used for rest structure checks",
+    "min_hard_spacing_days": "minimum gap between hard days",
+    "fixture_adjusted_total_range": "expected weekly load range conditioned on athlete band, readiness, recovery capability, and race phase",
+    "expected_hard_range": "expected hard-day range conditioned on athlete band, readiness, recovery capability, and race phase",
+    "expected_rest_range": "expected rest-day range conditioned on readiness and recovery capability"
+  },
+  "matching_distance_features": {
+    "total_minutes": 0.02,
+    "n_rest_days": 2.0,
+    "n_hard_days": 2.0,
+    "n_active_days": 1.0,
+    "n_long_runs": 2.0,
+    "n_quality_days": 2.0,
+    "max_day_minutes": 0.02,
+    "mean_day_minutes": 0.02
+  },
+  "soft_calipers": {
+    "total_minutes": 100.0,
+    "max_day_minutes": 60.0,
+    "n_rest_days": 1.0,
+    "n_hard_days": 1.0,
+    "n_long_runs": 1.0,
+    "n_quality_days": 1.0
+  }
+}

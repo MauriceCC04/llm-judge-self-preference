@@ -1,0 +1,22 @@
+Pairwise prompt interface used by the primary evaluation
+
+The repository invokes the pairwise judge through trailtraining.llm.soft_eval.compare_plans(plan_a, plan_b, rollups=None, cfg=SoftEvalConfig(...)). The literal natural-language prompt is generated inside that external dependency and is not stored as a prompt string in this repository or in samples.zip. The reproducible inputs controlled by this repository are therefore:
+
+1. System/configuration passed to SoftEvalConfig:
+   enabled=True
+   model=<judge model id>
+   reasoning_effort="none"
+   skip_synthesis=True
+   parallel_batches=False
+   temperature=0.0
+
+2. Canonical judge-facing payload:
+   {"plan_a": <canonical masked plan>, "plan_b": <canonical masked plan>}
+
+3. The normalized result fields retained by this project:
+   preferred in {"plan_a", "plan_b", "tie"}
+   reasoning string
+   plan_a_advantages list
+   plan_b_advantages list
+
+The complete canonical payload for one comparison is included in sample_pairwise_judge_input.json.

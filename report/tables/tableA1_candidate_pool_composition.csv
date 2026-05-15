@@ -1,0 +1,13 @@
+Source arm,Source family,Athlete band,Generated plans,Retained valid plans,Deduplicated plans,Matched plans,Retention rate,Match-use rate
+LLM-source,Qwen,A1,archived final pool,48,not separately archived,40,n/a,0.8333333333333334
+LLM-source,Qwen,A2,archived final pool,48,not separately archived,34,n/a,0.7083333333333334
+LLM-source,Qwen,A3,archived final pool,48,not separately archived,33,n/a,0.6875
+LLM-source,Qwen,A4,archived final pool,48,not separately archived,27,n/a,0.5625
+LLM-source,Gemma,A1,archived final pool,48,not separately archived,20,n/a,0.4166666666666667
+LLM-source,Gemma,A2,archived final pool,48,not separately archived,21,n/a,0.4375
+LLM-source,Gemma,A3,archived final pool,48,not separately archived,41,n/a,0.8541666666666666
+LLM-source,Gemma,A4,archived final pool,48,not separately archived,34,n/a,0.7083333333333334
+programmatic,programmatic,A1,archived final pool,0,not separately archived,60,n/a,
+programmatic,programmatic,A2,archived final pool,0,not separately archived,55,n/a,
+programmatic,programmatic,A3,archived final pool,0,not separately archived,74,n/a,
+programmatic,programmatic,A4,archived final pool,0,not separately archived,61,n/a,

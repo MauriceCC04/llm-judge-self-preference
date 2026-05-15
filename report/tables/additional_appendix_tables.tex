@@ -1,0 +1,517 @@
+% Compile in the official ACL template directory with acl.sty present.
+% Copy references_fixed.bib to references.bib or keep the bibliography command below.
+\documentclass[11pt]{article}
+\usepackage{acl}
+\usepackage{times}
+\usepackage{latexsym}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{microtype}
+\usepackage{inconsolata}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{array}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{float}
+\usepackage{placeins}
+\usepackage{adjustbox}
+\usepackage{url}
+\lstset{basicstyle=\ttfamily\footnotesize, breaklines=true, breakatwhitespace=true, columns=fullflexible, keepspaces=true, frame=single, xleftmargin=0.5em, xrightmargin=0.5em}
+\sloppy
+
+\title{Do LLM Judges Prefer LLM-Generated Plans?\\
+Structural Matching, Order Effects, and Source Preference in Pairwise LLM Evaluation}
+
+\author{Cameron Caputa \\
+}
+
+\begin{document}
+
+\maketitle
+\begin{abstract}
+Large language models (LLMs) are increasingly used as judges for open-ended NLP artifacts, but pairwise LLM judging may reflect position, style, or source cues rather than substantive quality. We test whether LLM judges prefer LLM-generated trail-running training plans over programmatically generated plans when plans are matched on a source-neutral deterministic structural score. The final pool contains 384 LLM-source plans and 640 programmatic controls. We match 250 LLM-vs-programmatic pairs and evaluate them with four local Qwen/Gemma judges across five repeated runs and AB/BA order swaps, yielding 10,000 forced judgments. A marker evaluation adds 90,000 criterion-level decisions. Contrary to the LLM-source preference hypothesis, LLM-source plans win only 36.53\% of primary judgments, and programmatic controls win every explicit marker. However, the largest effect is positional: LLM-source plans win 57.54\% of judgments when shown as Plan A but only 15.52\% when shown as Plan B. Athlete profile also moderates the source effect, with LLM-source plans performing worst for beginner profiles and approaching parity for advanced profiles. These findings suggest that structural matching alone is insufficient to isolate source preference. Source-preference studies should treat order swaps, marker decomposition, uncertainty analysis, and presentation-leakage audits as core design requirements rather than optional robustness checks.
+\end{abstract}
+
+\section{Introduction}
+
+LLM-as-judge evaluation has become a common method for assessing open-ended outputs. Pairwise model judging is attractive because many NLP artifacts do not have a single reference answer. Prior work shows, however, that LLM judges can exhibit position bias, verbosity bias, and self-enhancement bias \citep{zheng2023llmasajudge}. Surveys of LLM-as-judge evaluation therefore recommend careful prompt design, order controls, and bias audits \citep{gu2024language}.
+
+This paper studies a narrower source-preference question. When plans are matched on a deterministic structural score, do LLM judges prefer LLM-generated plans over programmatically generated plans? We test this question in trail-running training-plan generation. This domain is useful because a plan has measurable structure, such as total load, rest days, hard days, and long runs, but also subjective presentation features, such as clarity and explanation quality. The domain therefore creates a useful stress test for LLM-as-judge evaluation: a judge can reward concrete weekly structure, but it can also be influenced by source-correlated wording, formatting, or presentation order.
+
+The project design changed after an early generation audit. In the first large LLM-generation run, we retained 254 plans, but the audit showed substantial duplication within generation cells. Repeatedly sampling broad prompt cells did not create enough distinct artifacts. We therefore expanded the conditioning space with athlete profiles. These profiles range from beginner or low-volume runners to high-volume competitive runners. This change matters methodologically: athlete profile is not just a diversity knob. It changes the prompt context under which the LLM generates each plan and changes what counts as an appropriate weekly structure.
+
+We compare Qwen and Gemma LLM-source plans against programmatic controls. The programmatic arm may include LLM-written narrative fields, so the comparison is not LLM text against empty text. Instead, it compares direct LLM-source generation against programmatic structural generation under matched profile and fixture conditions.
+
+This study makes three contributions. First, it provides a controlled source-preference test with 250 structurally matched LLM-vs-programmatic pairs and 10,000 pairwise judgments. In this setting, LLM judges do not prefer LLM-source plans: programmatic controls win 63.47\% of forced judgments. Second, it shows that the dominant threat to interpretation is not source family but presentation order. LLM-source plans win 57.54\% of judgments when presented as Plan A and only 15.52\% when presented as Plan B, a 42.02 percentage-point swing. Third, it decomposes the aggregate result by athlete profile and explicit evaluation marker, showing that source preference is heterogeneous across task regimes and that programmatic plans win every marker, including explanation quality. Together, these results argue that source-preference studies need structural matching, order swaps, marker-level analysis, uncertainty reporting, and leakage audits before drawing conclusions about LLM judge bias.
+
+\section{Related Work}
+
+LLM-as-judge evaluation uses models to score or compare open-ended artifacts. MT-Bench and Chatbot Arena showed that pairwise LLM judging can scale evaluation, but they also identified position bias, verbosity bias, and self-enhancement bias \citep{zheng2023llmasajudge}. Surveys of LLM-as-judge work synthesize these concerns and emphasize that judge outputs require bias audits and careful experimental design \citep{gu2024language}. Our study follows this line but treats source preference as the target phenomenon and asks whether a judge favors artifacts generated by an LLM source rather than by a structurally controlled programmatic source.
+
+Reliability work questions whether LLM judgments remain stable across repeated samples and evaluation settings \citep{schroeder2025trustllmjudgmentsreliability}. This concern directly motivates our repeated-run and AB/BA design. If pairwise judgments change when source position changes, then an aggregate source-preference estimate may be order-balanced while the individual decisions remain unreliable.
+
+Criteria-decomposed evaluation methods argue that broad quality judgments can obscure which dimension drives a preference \citep{liu2024hdevalaligninglargelanguage}. We therefore report both forced overall judgments and nine marker-level judgments. The marker pass lets us test whether a source effect is concentrated in presentation-sensitive criteria, such as clarity or explanation quality, or whether it appears across training-structure criteria, such as recovery safety and load progression.
+
+\section{Experiments}
+
+\subsection{Plan sources and athlete profiles}
+
+The final candidate pool contains 192 Qwen-source plans, 192 Gemma-source plans, and 640 programmatic plans. The LLM source models are \texttt{Qwen/Qwen2.5-7B-Instruct} and \texttt{google/gemma-3-4b-it}. The programmatic arm samples structural constraints such as hard-day count, rest-day placement, recovery capacity, race phase, and load.
+
+The revised fixture design uses four athlete bands, two readiness levels, two recovery-capability levels, and two race phases, for 32 fixture cells. Athlete band A1 represents a beginner or low-volume runner with conservative loading and simpler structure. Athlete band A4 represents a high-volume competitive runner with the highest recent load, highest long-run capacity, and the most race-specific structure. The athlete band changes the generation prompt through fields such as profile summary, recent-volume hint, structure hint, long-run tolerance, training history, and primary goal. We therefore treat athlete band as a matching variable rather than as a nuisance variable.
+
+\subsection{Structured JSON artifacts}
+
+Both sources produce structured JSON plans with a shared high-level schema. The required object contains \texttt{plan.days}, and each day contains structural fields such as session type, duration, rest-day flag, hard-day flag, intensity, workout, and purpose. The final judge-facing payload also uses a shared schema: each comparison contains neutral \texttt{plan\_a} and \texttt{plan\_b} objects, each with \texttt{plan.days} and a summary of plan days, total minutes, rest days, hard days, and long runs. This shared JSON representation reduces trivial source cues. The LLM candidate is selected from the same fixture and athlete-band regime as the programmatic control, then both plans are rendered through the same canonical judge-facing schema.
+
+\subsection{Preprocessing and canonicalization}
+
+Raw artifacts exposed implementation-specific fields and source-identifying cues. Examples include fields such as \texttt{signal\_id}, \texttt{load.last7}, readiness-status metadata, provenance fields, source model names, generation conditions, runtime metadata, citations, and long rationale fields. These fields should not appear in judge-facing artifacts because they can reveal generation machinery, fixture conditions, or non-natural plan metadata. We therefore separate analysis metadata from judge input. Source-relevant fields such as source family, judge family, self-family match, plan IDs, and structural-score gap remain in the evaluation manifest for analysis. The judge-facing JSON removes or masks those fields.
+
+Canonicalization also normalizes presentation. The primary view removes provenance/source metadata and presentation-heavy fields while preserving weekly structure and short workout and purpose summaries. This step is not equivalent to perfect source blinding. A later leakage audit found residual surface artifacts in some LLM-source plans, so we report a leakage-filtered sensitivity analysis rather than treating the primary run as fully presentation-blinded.
+
+\subsection{Structural matching}
+
+We match each LLM-source plan to one programmatic plan using a source-neutral structural score. The score excludes title wording, prose richness, citations, rationale fields, source model, generation arm, and file names. It measures weekly structure, including plan length, total minutes, active days, rest days, hard days, quality days, long runs, duration plausibility, load-band fit, rest-day fit, hard-day fit, and hard-day spacing.
+
+The revised matching algorithm performs same-cell matching before optimizing pair selection. A candidate edge is allowed only when the LLM and programmatic plan share fixture ID, athlete band, readiness, recovery capability, race phase, plan length, and style. Candidate pairs must also fall within a structural-score tolerance of 2.0. The matcher then computes a weighted structural feature distance over total minutes, rest days, hard days, active days, long runs, quality days, maximum day minutes, and mean day minutes. Soft calipers penalize large feature gaps without silently reducing the study below 250 pairs. When enough candidate edges exist, the algorithm selects a target-cardinality minimum-cost matching of 250 pairs; otherwise, it falls back to maximum-cardinality matching. The final set contains 250 pairs with mean structural-score gap 0.3076 and maximum gap 2.0. We interpret this as structural-score matching rather than full quality equalization: unmeasured coaching logic, wording style, and residual presentation cues may still differ between sources.
+
+\subsection{Judge setup and marker evaluation}
+
+The judge panel contains four local models: \texttt{qwen\_7b\_judge}, \texttt{qwen\_14b\_judge}, \texttt{gemma\_4b\_judge}, and \texttt{gemma\_12b\_judge}. Each judge evaluates every pair across five repeated runs and two orders. The primary design is therefore
+\[
+250 \times 4 \times 5 \times 2 = 10{,}000
+\]
+forced pairwise judgments. The primary outcome is whether the judge selects the LLM-source plan.
+
+We also evaluate nine explicit markers: plan coherence, training specificity, load progression, recovery safety, quality session design, endurance development, readiness alignment, clarity/actionability, and explanation quality. The marker task allows ties and produces 10,000 records with 90,000 marker decisions. Recovery safety captures rest-day placement, hard-day spacing, injury-risk control, and safety. Explanation quality captures the helpfulness and specificity of the plan rationale. Criteria-decomposed evaluation follows prior work showing that broad LLM judgments can hide criterion-specific behavior \citep{liu2024hdevalaligninglargelanguage}.
+
+\subsection{Statistical analysis}
+
+We report raw win rates as the main descriptive quantities, but the 10,000 judgments are not treated as 10,000 independent experimental units because each matched pair is evaluated repeatedly across judges, runs, and order conditions. To make this dependence visible, we summarize AB/BA pair-run consistency in the text and interpret row-level rates descriptively rather than as independent-sample inference. The more important inferential point is whether the qualitative pattern is stable across judges, orders, markers, athlete bands, and leakage-filtered subsets.
+
+\section{Results}
+
+We report five results. First, LLM-source plans do not win overall against structurally matched programmatic controls. Second, the source effect varies substantially by athlete profile. Third, order effects are larger than the aggregate source effect. Fourth, marker-level judgments favor programmatic controls on every criterion. Fifth, a leakage-filtered sensitivity analysis does not reverse the conclusion.
+
+\subsection{Primary result}
+
+The primary outcome provides evidence against an aggregate LLM-source preference in this setting. Across 10,000 forced judgments, LLM-source plans win 3,653 times, for a win rate of 36.53\%, while structurally matched programmatic controls win 6,347 times, for a win rate of 63.47\% (Table~\ref{tab:primary}). Because judgments are repeated across the same matched pairs, this percentage should be interpreted as a repeated-measure descriptive estimate rather than as 10,000 independent observations. The result is nevertheless directionally opposite the initial LLM-source preference hypothesis.
+
+All four judges prefer programmatic plans overall. Gemma judges are more programmatic-favoring than Qwen judges, but no judge reaches parity for LLM-source plans. Table~\ref{tab:judge-source} shows source-family heterogeneity but no clean self-family preference. Gemma judges prefer Gemma-source plans more than Qwen-source plans in the primary outcome. Qwen judges do not show the same pattern: Qwen 14B is slightly higher on Qwen-source plans, but Qwen 7B is much higher on Gemma-source plans. Aggregating by judge family gives the same caution: Qwen judges select Gemma-source LLM plans 43.84\% of the time and Qwen-source LLM plans 39.55\% of the time.
+
+\subsection{Athlete-profile heterogeneity}
+
+Athlete profile substantially moderates the source effect. As shown in Table~\ref{tab:athlete}, the aggregate programmatic advantage is concentrated in lower-volume athlete bands. LLM-source plans win only 12.50\% of primary judgments for A1 beginner fixtures and 24.55\% for A2 developing recreational fixtures. By contrast, LLM-source plans reach near parity for A3 advanced amateur fixtures and slightly exceed parity for A4 competitive fixtures, with win rates of 51.08\% and 53.32\%, respectively.
+
+This pattern qualifies the aggregate result. The study does not show a uniform programmatic advantage across all athlete regimes; it shows a strong overall programmatic advantage driven mainly by lower-volume profiles. One plausible explanation is that beginner and developing profiles have a narrower space of acceptable weekly structures: conservative load, rest, and hard-day placement may be easier for the programmatic generator to satisfy consistently. Advanced and competitive profiles may allow a wider range of plausible structures, where LLM-source plans can benefit from more flexible adaptation to race phase, readiness, and training history. The present experiment cannot prove this mechanism, but the monotonic pattern across athlete bands suggests that source-preference estimates should not be collapsed across task regimes without stratified analysis.
+
+Importantly, this moderation does not reverse the full conclusion. Marker-level LLM win rates remain below 50\% for every athlete band, and the overall primary source effect remains below parity. The athlete-band result should therefore be read as heterogeneity in the programmatic advantage, not as evidence for a general LLM-source preference.
+
+\subsection{Order effects}
+
+The dominant methodological finding is the order effect. Table~\ref{tab:order-effect} shows that LLM-source plans win 57.54\% of judgments when placed as Plan A but only 15.52\% when placed as Plan B, a 42.02 percentage-point swing. The AB/BA design balances source position in the aggregate, so the overall 36.53\% estimate is not mechanically caused by putting LLM plans more often in one position. However, the individual judgments are highly position-sensitive. The experiment therefore estimates an order-balanced aggregate source preference, not a stable pairwise decision mechanism.
+
+Pair-run consistency makes the same point more directly. Grouping each AB/BA pair for the same matched pair, judge, and run shows that programmatic plans are source-consistent winners in 39.46\% of pair-run units, while LLM-source plans are source-consistent winners in only 12.52\%. Plan A is the position-consistent winner in 45.02\% of pair-run units. Thus, if a study reported only one order per pair, its estimated source preference could change dramatically depending on whether LLM-source plans appeared first or second. In this experiment, order effects are larger than the aggregate source effect itself. This result supports prior concerns that pairwise LLM judgments can reflect presentation order rather than substantive preference \citep{zheng2023llmasajudge,schroeder2025trustllmjudgmentsreliability}.
+
+\subsection{Marker-level results}
+
+Marker-level evaluation reinforces the primary result rather than rescuing the LLM-source preference hypothesis. Programmatic controls win every explicit marker (Table~\ref{tab:markers}). The closest marker is training specificity, where LLM-source plans win 48.54\% of non-tied decisions, suggesting near parity on athlete- and trail-specific adaptation. However, the remaining markers show clearer programmatic advantages, including load progression, quality session design, endurance development, and explanation quality.
+
+The explanation-quality result is especially informative. LLM-source plans win only 32.21\% of non-tied explanation-quality decisions, the lowest rate among all nine markers. This is counterintuitive because LLM-source plans might be expected to benefit from richer natural-language generation. Three factors may explain the inversion. First, the canonical judge-facing schema compresses both sources into shared plan-day and summary fields, reducing the surface advantage of fluent LLM prose. Second, the programmatic arm may include LLM-written narrative fields, so the comparison is not between rich LLM prose and empty programmatic text. Third, the leakage audit found source-asymmetric presentation artifacts in some LLM-source plans, which may have hurt perceived explanation quality rather than helped it.
+
+Table~\ref{tab:marker-family} further shows that marker behavior does not reduce to a simple self-family story. Some judge-family/source-family cells are more favorable to LLM-source plans than others, but most remain below 50\%, and the pattern is not consistently stronger when judge and source families match. The marker results therefore support two conclusions: programmatic controls are preferred across criteria, and source-family affinity is weaker than criterion- and position-level variation.
+
+\subsection{Leakage-filtered sensitivity}
+
+A post hoc audit found source-asymmetric presentation artifacts in some LLM-source judge-facing plans, including activity-log-like fragments, distance units, heart-rate strings, elevation strings, ellipses, and duration-text inconsistencies. We therefore analyze a clean subset that excludes any flagged matched pair. This leaves 103 clean pairs and 4,120 primary judgments.
+
+The leakage-filtered subset does not reverse the result. After excluding artifact-flagged pairs, LLM-source plans win 1,419 of 4,120 clean-pair judgments, or 34.44\%, compared with 36.53\% in the full sample (Table~\ref{tab:leakage}). Thus, the qualitative conclusion is stable under exclusion of flagged pairs: programmatic controls remain preferred overall.
+
+This analysis should be interpreted cautiously. It is post hoc, exclusion-based, and smaller than the full sample. It also changes the composition of the matched set, so it should not replace the primary analysis. Its value is narrower: it shows that the main programmatic advantage is not driven solely by the artifact-flagged pairs. A stronger future design would prospectively normalize or scrub all artifacts before judging rather than filtering after evaluation.
+
+\section{Discussion}
+
+The main result is not simply that programmatic plans beat LLM-source plans. A stronger interpretation is that source preference is difficult to isolate even under structural matching. The experiment controls many obvious confounds: both sources are rendered through a shared schema, matched pairs are drawn from the same fixture and athlete-band regime, and AB/BA order swaps balance source position in the aggregate. Despite these controls, judgments remain highly sensitive to presentation order, and source effects vary substantially across athlete profiles.
+
+The programmatic advantage may reflect the nature of the task. Training plans have a strong structural component: rest-day placement, hard-day spacing, long-run duration, load progression, and readiness alignment are all constrained by relatively stable coaching logic. A programmatic generator that explicitly samples and enforces these constraints may therefore produce plans that judges perceive as safer and more coherent, especially for beginner and developing athletes. This interpretation is consistent with the athlete-band pattern: LLM-source plans perform worst where conservative structure is most constrained and become more competitive in advanced profiles where a wider range of plans may be defensible.
+
+The order effect is the more general NLP evaluation finding. AB/BA balancing protects the aggregate estimate from source-position imbalance, but it does not make individual pairwise judgments reliable. A judge that chooses the LLM-source plan when it appears first and the programmatic plan when it appears first is not expressing a stable source preference. The study therefore separates two quantities that are often conflated: an order-balanced aggregate preference estimate and the reliability of individual pairwise comparisons. The former can be estimated with swaps; the latter remains poor when position sensitivity is large.
+
+The marker results also complicate a simple source-preference account. If LLM judges were rewarding LLM-like prose, LLM-source plans should have performed well on clarity or explanation quality. Instead, programmatic plans win every marker, including explanation quality. This suggests that the shared schema and programmatic narrative fields may have reduced surface-style differences, or that residual LLM-source artifacts made some plans appear less polished. More broadly, the marker results show why aggregate pairwise judgments should be decomposed: the same overall preference can arise from different criterion-level patterns.
+
+These findings imply that future LLM-as-judge studies should treat source masking, order swaps, marker-level decomposition, uncertainty analysis, and leakage audits as core components of experimental design. Structural matching is valuable, but it is not sufficient. Without order analysis, a source-preference study may mistake position bias for model preference; without marker analysis, it may miss which criteria actually drive the judgment; and without leakage audits, it may overinterpret differences caused by presentation artifacts rather than substantive quality.
+
+\section*{Limitations}
+
+This study has several limitations. First, structural matching does not imply full quality equivalence. The score controls measurable weekly structure, but plans can still differ in specificity, format, style, and unmeasured coaching logic. Second, order effects are large. AB/BA balancing protects the aggregate source estimate but does not make individual judgments reliable. Third, the primary run was not fully presentation-normalized. The leakage-filtered analysis is post hoc and exclusion-based. Fourth, programmatic plans may include LLM-written narrative fields, which complicates interpretation of explanation quality. Fifth, the marker names are not validated constructs. The experiment asks LLMs to judge plan coherence, recovery safety, load progression, and related dimensions, but it does not prove that the models measure those dimensions rather than prompt wording, surface style, or position. Sixth, the marker definitions are not calibrated against real coaching experts. A recovery-safety or load-progression preference may not align with expert trail-running judgment. Seventh, the study includes only Qwen and Gemma models in one trail-running domain and lacks a human expert gold standard, so it measures LLM judge preference rather than objective coaching quality.
+
+\section{Conclusion}
+
+This study tested whether LLM judges prefer LLM-generated training plans over structurally matched programmatic plans. In the completed Qwen/Gemma trail-running setting, they do not: LLM-source plans win 36.53\% of primary forced judgments, and programmatic plans win every explicit marker. The result also does not support a robust self-family preference.
+
+The stronger conclusion is methodological. Structural matching and shared schemas reduce obvious confounds, but they do not make pairwise LLM judgments stable. The AB/BA order effect is larger than the aggregate source effect, and athlete profile substantially moderates the result. Source-preference studies should therefore report order-swapped estimates, criterion-level decompositions, uncertainty intervals, and presentation-leakage audits before making claims about LLM judge bias.
+
+Future work should rerun the study on prospectively presentation-normalized artifacts, include human expert ratings, and test whether the athlete-band moderation observed here generalizes to other structured generation domains.
+
+\clearpage
+\onecolumn
+\section*{Tables}
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{lrr}
+\toprule
+Winner & Count & Rate \\
+\midrule
+LLM-source & 3,653 & 36.53\% \\
+Programmatic & 6,347 & 63.47\% \\
+\bottomrule
+\end{tabular}
+\caption{Primary forced pairwise outcome.}
+\label{tab:primary}
+\end{table}
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{lrr}
+\toprule
+Judge & Gemma source & Qwen source \\
+\midrule
+Gemma 12B & 32.33\% & 27.24\% \\
+Gemma 4B & 34.57\% & 32.46\% \\
+Qwen 14B & 40.52\% & 42.16\% \\
+Qwen 7B & 47.16\% & 36.94\% \\
+\bottomrule
+\end{tabular}
+\caption{Primary LLM-source win rate by judge and LLM source family. Each Gemma-source cell has 1,160 judgments; each Qwen-source cell has 1,340 judgments.}
+\label{tab:judge-source}
+\end{table}
+
+\begin{table}[H]
+\centering
+\small
+\setlength{\tabcolsep}{3.5pt}
+\begin{tabular}{llrrr}
+\toprule
+Band & Profile & Pairs & Primary & Marker \\
+\midrule
+A1 & Beginner & 60 & 12.50\% & 27.16\% \\
+A2 & Developing & 55 & 24.55\% & 28.89\% \\
+A3 & Advanced & 74 & 51.08\% & 44.45\% \\
+A4 & Competitive & 61 & 53.32\% & 45.96\% \\
+\bottomrule
+\end{tabular}
+\caption{LLM-source win rates by athlete band. Primary is the forced pairwise win rate. Marker is the LLM-source win rate excluding ties across all marker decisions.}
+\label{tab:athlete}
+\end{table}
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{lr}
+\toprule
+Marker & LLM win rate excl. ties \\
+\midrule
+Training specificity & 48.54\% \\
+Clarity/actionability & 40.62\% \\
+Readiness alignment & 39.84\% \\
+Recovery safety & 39.07\% \\
+Plan coherence & 36.00\% \\
+Load progression & 35.11\% \\
+Quality session design & 33.44\% \\
+Endurance development & 32.81\% \\
+Explanation quality & 32.21\% \\
+\bottomrule
+\end{tabular}
+\caption{Marker-level LLM-source win rates, excluding ties.}
+\label{tab:markers}
+\end{table}
+
+\begin{table}[H]
+\centering
+\small
+\setlength{\tabcolsep}{4.5pt}
+\begin{tabular}{lrrrr}
+\toprule
+& \multicolumn{2}{c}{Gemma judges} & \multicolumn{2}{c}{Qwen judges} \\
+\cmidrule(lr){2-3}\cmidrule(lr){4-5}
+Marker & Gemma src. & Qwen src. & Gemma src. & Qwen src. \\
+\midrule
+Training specificity & 54.71\% & 50.90\% & 44.47\% & 43.86\% \\
+Clarity/actionability & 40.55\% & 40.13\% & 42.55\% & 40.02\% \\
+Readiness alignment & 41.13\% & 42.37\% & 41.24\% & 35.07\% \\
+Recovery safety & 40.08\% & 40.98\% & 39.95\% & 34.59\% \\
+Plan coherence & 35.55\% & 38.80\% & 36.61\% & 32.28\% \\
+Load progression & 32.29\% & 34.82\% & 38.15\% & 35.48\% \\
+Quality session design & 27.03\% & 31.85\% & 35.56\% & 39.59\% \\
+Endurance development & 36.20\% & 32.58\% & 32.79\% & 30.10\% \\
+Explanation quality & 28.24\% & 31.45\% & 34.43\% & 35.08\% \\
+\bottomrule
+\end{tabular}
+\caption{Marker-level LLM-source win rates excluding ties, split by judge family and LLM source family. Each cell aggregates both models in the judge family, all runs, and both orders. Values below 50\% indicate that the matched programmatic plan won more often for that marker.}
+\label{tab:marker-family}
+\end{table}
+
+\begin{table}[H]
+\centering
+\small
+\setlength{\tabcolsep}{4.5pt}
+\begin{tabular}{lrrr}
+\toprule
+Judge & LLM as Plan A & LLM as Plan B & Plan-A advantage \\
+\midrule
+Gemma 12B & 39.60\% & 19.60\% & 20.00 pp \\
+Gemma 4B & 62.00\% & 4.88\% & 57.12 pp \\
+Qwen 14B & 74.40\% & 8.40\% & 66.00 pp \\
+Qwen 7B & 54.16\% & 29.20\% & 24.96 pp \\
+Overall & 57.54\% & 15.52\% & 42.02 pp \\
+\bottomrule
+\end{tabular}
+\caption{Order effect by judge. Rates are LLM-source win rates when the LLM-source plan appears as Plan A versus Plan B.}
+\label{tab:order-effect}
+\end{table}
+
+\begin{table}[H]
+\centering
+\small
+\setlength{\tabcolsep}{4.5pt}
+\begin{tabular}{lrrrrr}
+\toprule
+Sample & Pairs & Judgments & LLM wins & Programmatic wins & LLM win rate \\
+\midrule
+Full sample & 250 & 10,000 & 3,653 & 6,347 & 36.53\% \\
+Artifact-clean subset & 103 & 4,120 & 1,419 & 2,701 & 34.44\% \\
+Artifact-present subset & 147 & 5,880 & 2,234 & 3,646 & 37.99\% \\
+\bottomrule
+\end{tabular}
+\caption{Full-sample and leakage-filtered sensitivity analysis. The artifact-clean subset excludes any matched pair flagged by the post hoc presentation-artifact audit.}
+\label{tab:leakage}
+\end{table}
+
+
+\appendix
+
+\section{Pairwise Judge Prompt Interface}
+\label{app:pairwise-prompt}
+The primary pairwise task was executed through \texttt{trailtraining.llm.soft\_eval.compare\_plans}. The repository does not store a literal natural-language pairwise prompt string; prompt construction occurs inside that external dependency. The repository-controlled and archived pairwise input is the canonical masked JSON payload passed to \texttt{compare\_plans}, together with the judge configuration. The call used \texttt{SoftEvalConfig(enabled=True, reasoning\_effort=``none'', skip\_synthesis=True, parallel\_batches=False, temperature=0.0)} and returned \texttt{preferred}, \texttt{reasoning}, \texttt{plan\_a\_advantages}, and \texttt{plan\_b\_advantages}. Appendix file \path{appendix_artifacts/pairwise_prompt_interface.txt} records this interface, and \path{appendix_artifacts/sample_pairwise_judge_input.json} contains a complete archived pairwise payload.
+
+\section{Marker-Level Judge Prompt}
+\label{app:marker-prompt}
+The marker-level evaluation used the following system prompt exactly.
+
+\begin{lstlisting}
+You are an expert running coach and careful evaluator.
+
+You will compare two anonymized training plans, Plan A and Plan B.
+The plans have been source-masked. Do not infer or mention whether either plan was generated by a model, a program, or a human.
+
+Evaluate each marker independently. For every marker, choose:
+- "plan_a" if Plan A is better on that marker,
+- "plan_b" if Plan B is better on that marker,
+- "tie" if they are meaningfully equivalent.
+
+Use only the visible plan content. Do not use source labels, file names, IDs, or provenance.
+Return valid JSON only. No markdown.
+\end{lstlisting}
+
+The user prompt template was:
+
+\begin{lstlisting}
+Compare Plan A and Plan B on the following markers.
+
+MARKERS:
+- plan_coherence: Overall training-plan coherence: whether the week fits together as a coherent training plan, with compatible sessions, sensible sequencing, and no internal contradictions.
+- training_specificity: Specificity to the athlete and trail-running context: terrain, hills, long-run needs, race phase, and appropriate trail/endurance demands.
+- load_progression: Appropriateness of training load and progression: total volume, session duration, stress distribution, and whether the plan avoids abrupt or excessive load.
+- recovery_safety: Recovery, rest, and safety: rest-day placement, hard-day spacing, injury-risk control, and avoidance of unsafe combinations.
+- quality_session_design: Design of quality sessions: workouts such as intervals, tempo, hills, progression runs, or long runs are purposeful, specific, and feasible.
+- endurance_development: Support for aerobic/endurance development: easy volume, long-run stimulus, sustainable aerobic work, and endurance-oriented structure.
+- readiness_alignment: Alignment with readiness/recovery constraints: whether the plan respects the athlete's readiness, recovery capacity, and fatigue constraints.
+- clarity_actionability: Clarity and actionability: whether the athlete can understand and execute the plan without ambiguity.
+- explanation_quality: Quality of explanation/rationale: whether the stated purpose and explanation are helpful, specific, and support the plan. This marker is presentation-sensitive.
+
+Scoring guidance:
+- Scores are 1 to 5, where 5 is best.
+- The preferred plan should normally be the one with the higher score.
+- Use tie when differences are negligible.
+- Keep rationales short.
+
+REQUIRED JSON SCHEMA:
+{"markers":{"plan_coherence":{"preferred":"plan_a | plan_b | tie","plan_a_score":"integer 1-5","plan_b_score":"integer 1-5","confidence":"number 0.0-1.0","rationale":"brief reason, max 18 words"}, ...},"overall_marker_summary":"one short sentence"}
+
+PLAN INPUT:
+{compact_json(judge_input)}
+\end{lstlisting}
+A complete instantiated marker prompt for one archived comparison is included as \path{appendix_artifacts/sample_complete_marker_prompt.txt}.
+
+\section{Canonical Judge-Facing Schema}
+\label{app:schema}
+Both sources are rendered into the same canonical judge-facing schema. The judge sees only neutral \texttt{plan\_a} and \texttt{plan\_b} objects.
+
+\begin{lstlisting}
+{
+  "plan_a": {
+    "judge_view": "canonical_masked_structural_v1",
+    "plan": {
+      "days": [
+        {
+          "day_index": "integer 1..7",
+          "session_type": "string",
+          "duration_minutes": "integer",
+          "is_rest_day": "boolean",
+          "is_hard_day": "boolean",
+          "target_intensity": "string",
+          "workout_summary": "short normalized text",
+          "purpose_summary": "short normalized text"
+        }
+      ],
+      "summary": {
+        "plan_days": "integer",
+        "total_minutes": "integer",
+        "rest_days": "integer",
+        "hard_days": "integer",
+        "long_runs": "integer"
+      }
+    }
+  },
+  "plan_b": "same schema as plan_a"
+}
+\end{lstlisting}
+The source family, judge family, source model, plan IDs, structural-score gap, and self-family flag are retained in the manifest outside the prompt for analysis.
+
+\section{Structural-Score Feature Definitions}
+\label{app:structural-features}
+The structural score excludes title wording, prose richness, citations, claim attributions, data-note verbosity, rationale or explanation fields, source model, generation arm, and file names. It uses only plan structure and fixture-conditioned expectations. The scored features are:
+
+\begin{itemize}
+  \item \textbf{plan days}: actual number of plan days compared with expected length;
+  \item \textbf{total minutes}: sum of daily \texttt{duration\_minutes};
+  \item \textbf{active, rest, hard, quality days}: counts derived from rest and hard flags and quality session types;
+  \item \textbf{long runs}: count of \texttt{session\_type == long};
+  \item \textbf{maximum and mean day minutes}: daily load distribution summaries;
+  \item \textbf{hard-day spacing}: minimum distance between hard days;
+  \item \textbf{fixture-adjusted load, hard-day, and rest-day expectations}: ranges conditioned on athlete band, readiness, recovery capability, and race phase.
+\end{itemize}
+
+The matching distance uses weighted gaps in total minutes, number of rest days, number of hard days, number of active days, number of long runs, number of quality days, maximum day minutes, and mean day minutes. Soft calipers penalize large gaps in total minutes, maximum day minutes, rest days, hard days, long runs, and quality days. The machine-readable definition is included as \path{appendix_artifacts/structural_score_features.json}.
+
+\section{Sample Judge-Facing JSON}
+\label{app:sample-json}
+The following excerpt shows one canonical comparison. The full JSON appears in \path{appendix_artifacts/sample_pairwise_judge_input.json}.
+
+\begin{lstlisting}
+{
+  "plan_a": {
+    "judge_view": "canonical_masked_structural_v1",
+    "plan": {
+      "days": [
+        {
+          "day_index": 1,
+          "duration_minutes": 48,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "Build aerobic consistency while keeping fatigue low.",
+          "session_type": "easy",
+          "target_intensity": "easy",
+          "workout_summary": "48 min easy run at conversational effort."
+        },
+        {
+          "day_index": 2,
+          "duration_minutes": 39,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "Build aerobic consistency while keeping fatigue low.",
+          "session_type": "easy",
+          "target_intensity": "easy",
+          "workout_summary": "39 min easy run at conversational effort."
+        }
+      ],
+      "summary": {
+        "hard_days": 0,
+        "long_runs": 0,
+        "plan_days": 7,
+        "rest_days": 2,
+        "total_minutes": 229
+      }
+    }
+  },
+  "plan_b": {
+    "judge_view": "canonical_masked_structural_v1",
+    "plan": {
+      "days": [
+        {
+          "day_index": 1,
+          "duration_minutes": 38,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "Build confidence and endurance.",
+          "session_type": "easy",
+          "target_intensity": "easy",
+          "workout_summary": "Easy trail run focusing on form and cadence."
+        },
+        {
+          "day_index": 2,
+          "duration_minutes": 41,
+          "is_hard_day": false,
+          "is_rest_day": false,
+          "purpose_summary": "Maintain aerobic base and hill strength.",
+          "session_type": "easy",
+          "target_intensity": "easy",
+          "workout_summary": "Easy trail run to maintain aerobic base."
+        }
+      ],
+      "summary": {
+        "hard_days": 0,
+        "long_runs": 0,
+        "plan_days": 7,
+        "rest_days": 1,
+        "total_minutes": 321
+      }
+    }
+  }
+}
+\end{lstlisting}
+
+\section{Sample Metadata Retained Outside the Prompt}
+The manifest retains analysis metadata that the judge does not see. One example is shown below; the full file appears as \path{appendix_artifacts/sample_pair_metadata_outside_prompt.json}.
+
+\begin{lstlisting}
+{
+  "record_id": "pair_0001__qwen_14b_judge__r00__BA",
+  "pair_id": "pair_0001",
+  "fixture_id": "ab_A1__r_high__rc_high__ph_base",
+  "judge": "qwen_14b_judge",
+  "judge_model_family": "qwen",
+  "run": 0,
+  "order": "BA",
+  "left_plan_role": "programmatic",
+  "right_plan_role": "llm",
+  "llm_plan_id": "ab_A1__r_high__rc_high__ph_base__qwen2.5_7b_instruct__src_t070__exp_t000__s004",
+  "programmatic_plan_id": "ab_A1__r_high__rc_high__ph_base__prog__exp_t000__s008",
+  "source_model_family": "qwen",
+  "self_family_match": true,
+  "structural_score_gap": 0.0,
+  "structural_score_version": "structural_score_v1.0.0",
+  "feature_gaps": {
+    "max_day_minutes": 35.0,
+    "mean_day_minutes": 13.143,
+    "n_active_days": 1.0,
+    "n_hard_days": 0.0,
+    "n_long_runs": 0.0,
+    "n_quality_days": 0.0,
+    "n_rest_days": 1.0,
+    "total_minutes": 92.0
+  },
+  "judge_view": "canonical_masked"
+}
+\end{lstlisting}
+
+
+\bibliographystyle{acl_natbib}
+\bibliography{references}
+
+\end{document}

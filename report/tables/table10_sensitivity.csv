@@ -1,0 +1,6 @@
+Sample,Pairs,Primary judgments,LLM wins,Programmatic wins,LLM win rate,Programmatic win rate,Interpretation
+Full sample,250,10000,3653,6347,0.3653,0.6347,primary descriptive
+Artifact-clean subset,103,4120,1419,2701,0.34441747572815534,0.6555825242718447,leakage robustness
+Artifact-present subset,147,5880,2234,3646,0.37993197278911567,0.6200680272108844,diagnostic
+Source-stable subset,212,5198,1252,3946,0.24086186994998077,0.7591381300500193,reliability filter
+Artifact-clean + source-stable subset,89,2218,468,1750,0.2110009017132552,0.7889990982867449,leakage + reliability filter

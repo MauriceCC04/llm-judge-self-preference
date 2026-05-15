@@ -1,0 +1,9 @@
+judge,judge_family,source_family,llm_wins,n,llm_win_rate
+gemma_12b_judge,gemma,gemma,375,1160,32.33
+gemma_12b_judge,gemma,qwen,365,1340,27.24
+gemma_4b_judge,gemma,gemma,401,1160,34.57
+gemma_4b_judge,gemma,qwen,435,1340,32.46
+qwen_14b_judge,qwen,gemma,470,1160,40.52
+qwen_14b_judge,qwen,qwen,565,1340,42.16
+qwen_7b_judge,qwen,gemma,547,1160,47.16
+qwen_7b_judge,qwen,qwen,495,1340,36.94
